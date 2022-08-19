@@ -1,10 +1,9 @@
-namespace COTL_API.InventoryItem;
+namespace COTL_API.CustomInventory;
 
-public class InventoryItemInfo
+public class CustomInventoryItem
 {
-
-    public static int ItemCategory;
-    public static int SeedType;
+    public static InventoryItem.ITEM_CATEGORIES ItemCategory;
+    public static InventoryItem.ITEM_TYPE SeedType;
 
     public static string Name = LocalizedName;
     public static string Lore = LocalizedDescription;
@@ -24,5 +23,4 @@ public class InventoryItemInfo
     public static bool CanBeGivenToFollower;
 
     public static string CapacityString(int amount, int minimum) { return ""; }
-
 }
