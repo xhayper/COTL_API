@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>COLT_API</AssemblyName>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+    </PropertyGroup>
+
+    <Import Project="../COLT_API.Common.props" />
+
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp" Private="false">
+            <HintPath>../lib/Assembly-CSharp.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+</Project>
