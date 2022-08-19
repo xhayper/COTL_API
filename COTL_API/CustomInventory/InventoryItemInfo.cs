@@ -5,13 +5,13 @@ public class CustomInventoryItem
     public static InventoryItem.ITEM_CATEGORIES ItemCategory;
     public static InventoryItem.ITEM_TYPE SeedType;
 
-    public static string Name = LocalizedName;
-    public static string Lore = LocalizedDescription;
-    public static string Description;
+    public static string Name() { return LocalizedName(); }
+    public static string Lore() { return LocalizedDescription(); }
+    public static string Description() { return ""; }
 
-    public static string LocalizedName;
-    public static string LocalizedLore;
-    public static string LocalizedDescription;
+    public static string LocalizedName() { return ""; }
+    public static string LocalizedLore() { return ""; }
+    public static string LocalizedDescription() { return ""; }
 
     public static int FuelWeight;
     public static int FoodSatitation;
