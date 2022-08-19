@@ -6,7 +6,7 @@ using BepInEx;
 
 [assembly: InternalsVisibleTo("Assembly-CSharp")]
 
-namespace COLT_API;
+namespace COTL_API;
 
 [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
 public class Plugin : BaseUnityPlugin
