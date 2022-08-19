@@ -5,22 +5,22 @@ public class CustomInventoryItem
     public static InventoryItem.ITEM_CATEGORIES ItemCategory;
     public static InventoryItem.ITEM_TYPE SeedType;
 
-    public static string Name() { return LocalizedName(); }
-    public static string Lore() { return LocalizedDescription(); }
-    public static string Description() { return ""; }
+    public string Name() { return LocalizedName(); }
+    public string Lore() { return LocalizedDescription(); }
+    public string Description() { return ""; }
 
-    public static string LocalizedName() { return ""; }
-    public static string LocalizedLore() { return ""; }
-    public static string LocalizedDescription() { return ""; }
+    public string LocalizedName() { return ""; }
+    public string LocalizedLore() { return ""; }
+    public string LocalizedDescription() { return ""; }
 
-    public static int FuelWeight;
-    public static int FoodSatitation;
+    public int FuelWeight;
+    public int FoodSatitation;
 
-    public static bool IsFish;
-    public static bool IsFood;
-    public static bool IsBigFish;
+    public bool IsFish;
+    public bool IsFood;
+    public bool IsBigFish;
 
-    public static bool CanBeGivenToFollower;
+    public bool CanBeGivenToFollower;
 
-    public static string CapacityString(int minimum) { return ""; }
+    public string CapacityString(int minimum) { return ""; }
 }
