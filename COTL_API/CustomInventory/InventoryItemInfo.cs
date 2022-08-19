@@ -22,5 +22,5 @@ public class CustomInventoryItem
 
     public static bool CanBeGivenToFollower;
 
-    public static string CapacityString(int amount, int minimum) { return ""; }
+    public static string CapacityString(int minimum) { return ""; }
 }
