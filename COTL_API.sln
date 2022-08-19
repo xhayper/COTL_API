@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # 
-Project("{948A7CA2-4066-4C79-8F81-3965D9988631}") = "COLT_API", "COLT_API/COLT_API.csproj", "{EE7C39EB-3FA7-4EC7-ADE7-86809C28DDE4}"
+Project("{948A7CA2-4066-4C79-8F81-3965D9988631}") = "COTL_API", "COTL_API/COTL_API.csproj", "{EE7C39EB-3FA7-4EC7-ADE7-86809C28DDE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
