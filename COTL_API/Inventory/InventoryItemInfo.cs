@@ -1,4 +1,4 @@
-namespace COLT_API.InventoryItem;
+namespace COTL_API.InventoryItem;
 
 public class InventoryItemInfo
 {
