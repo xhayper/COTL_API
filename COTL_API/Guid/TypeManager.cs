@@ -79,8 +79,6 @@ public static class TypeManager
     [HarmonyPrefix]
     private static bool GetCustomType(string nameSpace, string typeName, ref Type __result)
     {
-        //InscryptionAPIPlugin.Logger.LogInfo($"Trying to get type for {nameSpace}.{typeName}");
-
         if (TypeCache.ContainsKey(typeName))
         {
             __result = TypeCache[typeName];

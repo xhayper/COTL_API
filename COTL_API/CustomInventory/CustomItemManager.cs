@@ -40,7 +40,7 @@ public class CustomItemManager
     {
         __instance._currencyFilter.Add(Plugin.DEBUG_ITEM);
         __instance._currencyFilter.Add(Plugin.DEBUG_ITEM_2);
-        
+
         Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
         Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
         Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
