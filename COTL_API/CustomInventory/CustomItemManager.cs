@@ -7,14 +7,20 @@ namespace COTL_API.CustomInventory;
 public class CustomItemManager
 {
     // Dictionary<modPrefix+ItemName, CustomInventoryItem>
-    private static Dictionary<string, CustomInventoryItem> customItems = new();
+    private static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> customItems = new();
 
-    internal static void Add(CustomInventoryItem item)
+    public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
         // TODO: Implement this
         // Current Plan: Use the same system that InscryptionAPI use
         // Assembly.GetCallingAssembly + Item name
         // Then resolve assign that to an ID
+
+        var generatedItemType = (InventoryItem.ITEM_TYPE)5000;
+
+        customItems.Add(generatedItemType, item);
+
+        return generatedItemType;
     }
 
 }

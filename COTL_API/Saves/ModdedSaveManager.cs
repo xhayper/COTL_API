@@ -8,7 +8,7 @@ public static class ModdedSaveManager
 {
     public static int SAVE_SLOT = 5;
 
-    internal static COTLDataReadWriter<ModdedSaveData> _saveDataReadWriter = new COTLDataReadWriter<ModdedSaveData>();
+    internal static COTLDataReadWriter<ModdedSaveData> _saveDataReadWriter = new();
 
     public static ModdedSaveData SaveData;
 
@@ -23,7 +23,7 @@ public static class ModdedSaveManager
         COTLDataReadWriter<ModdedSaveData> saveFileReadWriter2 = _saveDataReadWriter;
         saveFileReadWriter2.OnCreateDefault = (Action)Delegate.Combine(saveFileReadWriter2.OnCreateDefault, (Action)delegate
         {
-            SaveData = new ModdedSaveData();
+            SaveData = new();
         });
     }
 
@@ -32,7 +32,7 @@ public static class ModdedSaveManager
     public static void ResetSave(int saveSlot, bool newGame)
     {
         SAVE_SLOT = saveSlot;
-        SaveData = new ModdedSaveData();
+        SaveData = new();
         if (!newGame) Save();
     }
 
