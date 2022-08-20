@@ -39,7 +39,10 @@ public class CustomItemManager
     public static void _____(Lamb.UI.InventoryMenu __instance)
     {
         __instance._currencyFilter.Add(Plugin.DEBUG_ITEM);
+        __instance._currencyFilter.Add(Plugin.DEBUG_ITEM_2);
+        
         Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
+        Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
     }
 
     [HarmonyPatch(typeof(InventoryItem), "Name")]
