@@ -38,8 +38,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static void _____(Lamb.UI.InventoryMenu __instance)
     {
-        __instance._currencyFilter.Add(Plugin.ITEM);
-        Inventory.AddItem(Plugin.ITEM, 1, true);
+        __instance._currencyFilter.Add(Plugin.DEBUG_ITEM);
+        Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
     }
 
     [HarmonyPatch(typeof(InventoryItem), "Name")]
