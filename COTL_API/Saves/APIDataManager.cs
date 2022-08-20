@@ -6,6 +6,8 @@ namespace COTL_API.Saves;
 [HarmonyPatch]
 internal static class APIDataManager
 {
+    internal static bool READY = false;
+
     internal static string DATA_PATH = "modded_api_data.json";
 
     internal static COTLDataReadWriter<APIData> _dataReadWriter = new();
@@ -18,12 +20,14 @@ internal static class APIDataManager
         dataFileReadWriter.OnReadCompleted = (Action<APIData>)Delegate.Combine(dataFileReadWriter.OnReadCompleted, (Action<APIData>)delegate (APIData data)
         {
             apiData = data;
+            READY = true;
         });
 
         COTLDataReadWriter<APIData> dataFileReadWriter2 = _dataReadWriter;
         dataFileReadWriter2.OnCreateDefault = (Action)Delegate.Combine(dataFileReadWriter2.OnCreateDefault, (Action)delegate
         {
             apiData = new();
+            READY = true;
         });
     }
 
