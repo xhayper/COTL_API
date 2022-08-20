@@ -37,9 +37,6 @@ public class Plugin : BaseUnityPlugin
         harmony.PatchAll(Assembly.GetExecutingAssembly());
 
         ITEM = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.TestIItemClass());
-        logger.LogInfo((int) ITEM);
-
-        COTL_API.CustomInventory.CustomItemManager.customItems.Add(InventoryItem.ITEM_TYPE.LOG, new COTL_API.CustomInventory.TestIItemClass());
     }
 
     private void OnDisable()

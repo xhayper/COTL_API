@@ -27,11 +27,19 @@ public class CustomItemManager
     {
         if (!customItems.ContainsKey(config)) return true;
 
-        __instance._inventoryIcon.Configure(InventoryItem.ITEM_TYPE.LOG, false);
+        __instance._inventoryIcon.Configure(config, false);
         __instance._itemHeader.text = InventoryItem.Name(config);
         __instance._itemLore.text = InventoryItem.Lore(config);
         __instance._itemDescription.text = InventoryItem.Description(config);
         return false;
+    }
+
+    [HarmonyPatch(typeof(Lamb.UI.InventoryMenu), "OnShowStarted")]
+    [HarmonyPrefix]
+    public static void _____(Lamb.UI.InventoryMenu __instance)
+    {
+        __instance._currencyFilter.Add(Plugin.ITEM);
+        Inventory.AddItem(Plugin.ITEM, 1, true);
     }
 
     [HarmonyPatch(typeof(InventoryItem), "Name")]
@@ -41,8 +49,6 @@ public class CustomItemManager
         if (!customItems.ContainsKey(Type)) return true;
 
         __result = customItems[Type].Name();
-
-        Inventory.AddItem(Plugin.ITEM, 1, true);
 
         return false;
     }
@@ -98,6 +104,83 @@ public class CustomItemManager
         if (!customItems.ContainsKey(type)) return true;
 
         __result = customItems[type].ItemCategory;
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(InventoryItem), "GetSeedType")]
+    [HarmonyPrefix]
+    public static bool InventoryItem_GetSeedType(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_TYPE __result)
+    {
+        if (!customItems.ContainsKey(type)) return true;
+
+        __result = customItems[type].SeedType;
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(InventoryItem), "FuelWeight", typeof(InventoryItem.ITEM_TYPE))]
+    [HarmonyPrefix]
+    public static bool InventoryItem_FuelWeight(InventoryItem.ITEM_TYPE type, ref int __result)
+    {
+        if (!customItems.ContainsKey(type)) return true;
+
+        __result = customItems[type].FuelWeight;
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(InventoryItem), "FoodSatitation")]
+    [HarmonyPrefix]
+    public static bool InventoryItem_FoodSatitation(InventoryItem.ITEM_TYPE Type, ref int __result)
+    {
+        if (!customItems.ContainsKey(Type)) return true;
+
+        __result = customItems[Type].FoodSatitation;
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(InventoryItem), "IsFish")]
+    [HarmonyPrefix]
+    public static bool InventoryItem_IsFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
+    {
+        if (!customItems.ContainsKey(Type)) return true;
+
+        __result = customItems[Type].IsFish;
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(InventoryItem), "IsFood")]
+    [HarmonyPrefix]
+    public static bool InventoryItem_IsFood(InventoryItem.ITEM_TYPE Type, ref bool __result)
+    {
+        if (!customItems.ContainsKey(Type)) return true;
+
+        __result = customItems[Type].IsFood;
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(InventoryItem), "IsBigFish")]
+    [HarmonyPrefix]
+    public static bool InventoryItem_IsBigFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
+    {
+        if (!customItems.ContainsKey(Type)) return true;
+
+        __result = customItems[Type].IsBigFish;
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(InventoryItem), "CanBeGivenToFollower")]
+    [HarmonyPrefix]
+    public static bool InventoryItem_CanBeGivenToFollower(InventoryItem.ITEM_TYPE Type, ref bool __result)
+    {
+        if (!customItems.ContainsKey(Type)) return true;
+
+        __result = customItems[Type].IsBigFish;
 
         return false;
     }
