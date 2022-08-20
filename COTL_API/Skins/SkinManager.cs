@@ -80,7 +80,7 @@ namespace COTL_API.Skins
                                 customAttachment.SetRegion(atlasRegion);
 
                                 customAttachment.HullLength = 4;
-                                customAttachment.Triangles = new int[] { 0, 1, 2, 1, 2, 3 };
+                                customAttachment.Triangles = new int[] { 0, 1, 2, 0, 2, 3 };
                                 customAttachment.UVs = new float[] { 1, 1, 0, 1, 0, 0, 1, 0 };
                                 customAttachment.RegionUVs = new float[] { 1, 1, 0, 1, 0, 0, 1, 0 };
                                 customAttachment.Vertices = new float[] { -1, -1, 1, 1, -1, 1, 1, 1, 1, -1, 1,1 };
