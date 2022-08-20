@@ -17,7 +17,7 @@ public class ModdedSaveData
         if (!SaveData[guid].ContainsKey(key))
             SaveData[guid].Add(key, default(T));
 
-        return SaveData[guid][key] is T res ? res : default(T);
+        return SaveData[guid][key] is T res ? res : (T)SaveData[guid][key];
     }
 
     public string GetValueAsString(string guid, string key)
@@ -27,7 +27,20 @@ public class ModdedSaveData
 
     public int GetValueAsInt(string guid, string key)
     {
-        return GetValue<int>(guid, key);
+        long value = GetValueAsLong(guid, key);
+
+        if (value > int.MaxValue)
+            return int.MaxValue;
+
+        if (value < int.MinValue)
+            return int.MinValue;
+
+        return (int)value;
+    }
+
+    public long GetValueAsLong(string guid, string key)
+    {
+        return GetValue<long>(guid, key);
     }
 
     public float GetValueAsFloat(string guid, string key)

@@ -22,10 +22,24 @@ internal class APIData
         return GetValue<string>(key);
     }
 
-    internal int GetValueAsInt(string key)
+    public int GetValueAsInt(string key)
     {
-        return GetValue<int>(key);
+        long value = GetValueAsLong(key);
+
+        if (value > int.MaxValue)
+            return int.MaxValue;
+
+        if (value < int.MinValue)
+            return int.MinValue;
+
+        return (int)value;
     }
+
+    public long GetValueAsLong(string key)
+    {
+        return GetValue<long>(key);
+    }
+
     internal float GetValueAsFloat(string key)
     {
         return GetValue<float>(key);
