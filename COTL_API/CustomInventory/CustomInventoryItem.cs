@@ -45,5 +45,4 @@ public class CustomInventoryItem
 
         this.CanBeGivenToFollower = false;
     }
-
 }
