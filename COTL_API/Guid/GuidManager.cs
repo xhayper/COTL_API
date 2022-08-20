@@ -28,7 +28,7 @@ public static class GuidManager
     unsafe public static List<T> GetValues<T>() where T : unmanaged, System.Enum
     {
         List<T> itemList = new();
-        foreach(T item in Enum.GetValues(typeof(T)))
+        foreach (T item in Enum.GetValues(typeof(T)))
             itemList.Add(item);
 
         string startKey = typeof(T).Name + "_";
@@ -41,17 +41,17 @@ public static class GuidManager
                 itemList.Add(convertedEnumVal);
             }
         }
-        
+
         return itemList;
     }
 
     unsafe public static T GetEnumValue<T>(string guid, string value) where T : unmanaged, System.Enum
     {
         if (sizeof(T) != sizeof(int))
-            throw new NotSupportedException($"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");        
+            throw new NotSupportedException($"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");
 
         string saveKey = $"{typeof(T).Name}_{guid}_{value}";
-            
+
         int enumValue = APIDataManager.apiData.GetValueAsInt(saveKey);
 
         if (enumValue == default)
@@ -61,8 +61,8 @@ public static class GuidManager
                 enumValue = APIDataManager.apiData.GetValueAsInt(MAX_DATA);
                 if (enumValue < START_INDEX)
                     enumValue = START_INDEX;
-                
-                APIDataManager.apiData.SetValue(MAX_DATA, enumValue+1);
+
+                APIDataManager.apiData.SetValue(MAX_DATA, enumValue + 1);
                 APIDataManager.apiData.SetValue(saveKey, enumValue);
 
                 APIDataManager.Save();
