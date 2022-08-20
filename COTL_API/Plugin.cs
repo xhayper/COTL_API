@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Reflection;
 using BepInEx.Logging;
+using COTL_API.Saves;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
@@ -25,11 +26,17 @@ public class Plugin : BaseUnityPlugin
     {
         logger = base.Logger;
         PLUGIN_PATH = Path.GetDirectoryName(Info.Location);
+
+        APIDataManager.Load();
     }
 
     private void OnEnable()
     {
         harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+        var item = new COTL_API.CustomInventory.CustomInventoryItem();
+        InventoryItem.ITEM_TYPE a = COTL_API.CustomInventory.CustomItemManager.Add(item);
+        logger.LogInfo((int) a);
     }
 
     private void OnDisable()

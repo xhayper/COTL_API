@@ -1,9 +1,12 @@
+using System.Reflection;
+using COTL_API.Guid;
+
 namespace COTL_API.CustomInventory;
 
 public class CustomInventoryItem
 {
-    public static InventoryItem.ITEM_CATEGORIES ItemCategory;
-    public static InventoryItem.ITEM_TYPE SeedType;
+    public InventoryItem.ITEM_CATEGORIES ItemCategory;
+    public InventoryItem.ITEM_TYPE SeedType;
 
     public string Name() { return LocalizedName(); }
     public string Lore() { return LocalizedDescription(); }
@@ -23,4 +26,5 @@ public class CustomInventoryItem
     public bool CanBeGivenToFollower;
 
     public string CapacityString(int minimum) { return ""; }
+
 }

@@ -40,6 +40,8 @@ public static class ModdedSaveManager
     [HarmonyPostfix]
     public static void Save()
     {
+        if (!DataManager.Instance.AllowSaving || CheatConsole.IN_DEMO) return;
+
         _saveDataReadWriter.Write(SaveData, MakeSaveSlot(SAVE_SLOT));
     }
 
@@ -47,6 +49,8 @@ public static class ModdedSaveManager
     [HarmonyPostfix]
     public static void Load(int saveSlot)
     {
+        if (CheatConsole.IN_DEMO) return;
+
         SAVE_SLOT = saveSlot;
         _saveDataReadWriter.Read(MakeSaveSlot(SAVE_SLOT));
     }

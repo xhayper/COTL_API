@@ -40,9 +40,9 @@ public static class TypeManager
         {
             foreach (var d in t.GetCustomAttributes<BepInPlugin>())
             {
-                if (d.GUID == COTL_API.Plugin.PLUGIN_GUID)
+                if (d.GUID == Plugin.PLUGIN_GUID)
                     continue;
-                    
+
                 ModIds.Add(assembly.FullName, d.GUID);
                 return d.GUID;
             }
@@ -71,11 +71,11 @@ public static class TypeManager
 
 
     [HarmonyReversePatch(HarmonyReversePatchType.Original)]
-    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new Type[] { typeof(string), typeof(string) } )]
+    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new Type[] { typeof(string), typeof(string) })]
     [MethodImpl(MethodImplOptions.NoInlining)]
     public static Type OriginalGetType(string nameSpace, string typeName) { throw new NotImplementedException(); }
 
-    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new Type[] { typeof(string), typeof(string) } )]
+    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new Type[] { typeof(string), typeof(string) })]
     [HarmonyPrefix]
     private static bool GetCustomType(string nameSpace, string typeName, ref Type __result)
     {
@@ -92,7 +92,7 @@ public static class TypeManager
         {
             COTL_API.Plugin.logger.LogInfo($"This appears to be a custom type");
         }
-        
+
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");
         TypeCache.Add(typeName, __result);
         return false;
