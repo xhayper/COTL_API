@@ -12,11 +12,12 @@ public class CustomItemManager
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
-        var itemEnum = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly()), item.Name());
+        var itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly()), item.Name());
+        item.ItemType = itemType;
 
-        customItems.Add(itemEnum, item);
+        customItems.Add(itemType, item);
 
-        return itemEnum;
+        return itemType;
     }
 
     // Patch `ItemInfoCard` not using `InventoryItem`'s method
@@ -26,7 +27,7 @@ public class CustomItemManager
     {
         if (!customItems.ContainsKey(config)) return true;
 
-        __instance._inventoryIcon.Configure(config, false);
+        __instance._inventoryIcon.Configure(InventoryItem.ITEM_TYPE.LOG, false);
         __instance._itemHeader.text = InventoryItem.Name(config);
         __instance._itemLore.text = InventoryItem.Lore(config);
         __instance._itemDescription.text = InventoryItem.Description(config);
@@ -40,6 +41,8 @@ public class CustomItemManager
         if (!customItems.ContainsKey(Type)) return true;
 
         __result = customItems[Type].Name();
+
+        Inventory.AddItem(Plugin.ITEM, 1, true);
 
         return false;
     }
@@ -84,6 +87,17 @@ public class CustomItemManager
         if (!customItems.ContainsKey(Type)) return true;
 
         __result = customItems[Type].Lore();
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(InventoryItem), "GetItemCategory")]
+    [HarmonyPrefix]
+    public static bool InventoryItem_ItemCategory(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_CATEGORIES __result)
+    {
+        if (!customItems.ContainsKey(type)) return true;
+
+        __result = customItems[type].ItemCategory;
 
         return false;
     }
