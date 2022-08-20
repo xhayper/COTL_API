@@ -43,13 +43,13 @@ namespace COTL_API.Skins
 
             // Create atlas
             Texture2D placeholder = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            byte[] imgBytes = File.ReadAllBytes(Paths.PluginPath + "/APIAssets/placeholder.png");
+            byte[] imgBytes = File.ReadAllBytes(Plugin.PLUGIN_PATH + "/APIAssets/placeholder.png");
             placeholder.LoadImage(imgBytes);
             placeholder.name = "placeholder";
             Material m1 = new Material(Shader.Find("Spine/Skeleton"));
             m1.mainTexture = placeholder;
             Material[] materials = new Material[] {m1};
-            Atlas a = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(File.ReadAllText(Paths.PluginPath + "/APIAssets/custom_skin_atlas.txt")), materials, true ).GetAtlas();
+            Atlas a = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(File.ReadAllText(Plugin.PLUGIN_PATH + "/APIAssets/custom_skin_atlas.txt")), materials, true ).GetAtlas();
 
             CustomAtlases.Add(a);
 
