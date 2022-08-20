@@ -9,5 +9,6 @@ public class TestIItemClass : CustomInventoryItem
     public TestIItemClass()
     {
         this.ItemCategory = InventoryItem.ITEM_CATEGORIES.LOGS;
+        this.ItemType = InventoryItem.ITEM_TYPE.LOG;
     }
 }
