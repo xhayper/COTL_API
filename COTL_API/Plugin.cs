@@ -24,6 +24,7 @@ public class Plugin : BaseUnityPlugin
 
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM;
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_2;
+    internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_3;
 
     private void Awake()
     {
@@ -31,14 +32,15 @@ public class Plugin : BaseUnityPlugin
         PLUGIN_PATH = Path.GetDirectoryName(Info.Location);
 
         APIDataManager.Load();
+
+        DEBUG_ITEM = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS());
+        DEBUG_ITEM_2 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS_2());
+        DEBUG_ITEM_3 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS_3());
     }
 
     private void OnEnable()
     {
         harmony.PatchAll(Assembly.GetExecutingAssembly());
-
-        DEBUG_ITEM = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS());
-        DEBUG_ITEM_2 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS_2());
     }
 
     private void OnDisable()

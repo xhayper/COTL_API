@@ -43,6 +43,7 @@ public class CustomItemManager
         
         Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
         Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
+        Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
     }
 
     [HarmonyPatch(typeof(InventoryItem), "Name")]
