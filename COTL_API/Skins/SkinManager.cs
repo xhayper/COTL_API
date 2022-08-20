@@ -68,8 +68,7 @@ namespace COTL_API.Skins
                         Skin skin = new Skin(skinName);
                         __instance.FindSkin("Dog").Attachments.ToList().ForEach(att =>
                         {
-                            if (!att.Name.Contains("HEAD_SKIN"))
-                            {
+                            if (!att.Name.Contains("HEAD_SKIN")) {
                                 // Copy all non-head attachments from Dog skin
                                 skin.SetAttachment(att.SlotIndex, att.Name, att.Attachment);
                             }
@@ -77,8 +76,17 @@ namespace COTL_API.Skins
                             {
                                 // Create head
                                 var atlasRegion = CustomAtlases[0].FindRegion("Head/HeadCustomBack_Btm");
-                                Attachment customAttachment = att.Attachment.Copy();
+                                MeshAttachment customAttachment = (MeshAttachment)att.Attachment.Copy();
                                 customAttachment.SetRegion(atlasRegion);
+
+                                customAttachment.HullLength = 4;
+                                customAttachment.Triangles = new int[] { 0, 1, 2, 1, 2, 3 };
+                                customAttachment.UVs = new float[] { 1, 1, 0, 1, 0, 0, 1, 0 };
+                                customAttachment.RegionUVs = new float[] { 1, 1, 0, 1, 0, 0, 1, 0 };
+                                customAttachment.Vertices = new float[] { -1, -1, 1, 1, -1, 1, 1, 1, 1, -1, 1,1 };
+                                customAttachment.WorldVerticesLength = 4;
+
+                                var ma = (MeshAttachment)customAttachment;
                                 skin.SetAttachment(att.SlotIndex, att.Name, customAttachment);
                             }
                         });
