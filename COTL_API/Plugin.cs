@@ -33,7 +33,7 @@ public class Plugin : BaseUnityPlugin
 
         // APIDataManager.Load();
 
-        DEBUG_ITEM_2 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS_2());
+DEBUG_ITEM_2 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS_2());
         DEBUG_ITEM = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS());
         DEBUG_ITEM_3 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS_3());
     }

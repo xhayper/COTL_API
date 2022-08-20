@@ -20,14 +20,17 @@ internal static class APIDataManager
         dataFileReadWriter.OnReadCompleted = (Action<APIData>)Delegate.Combine(dataFileReadWriter.OnReadCompleted, (Action<APIData>)delegate (APIData data)
         {
             apiData = data;
-            READY = true;
+            Plugin.logger.LogInfo("Loaded");
+
+            Plugin.logger.LogInfo(data.data.ToString());
         });
 
         COTLDataReadWriter<APIData> dataFileReadWriter2 = _dataReadWriter;
         dataFileReadWriter2.OnCreateDefault = (Action)Delegate.Combine(dataFileReadWriter2.OnCreateDefault, (Action)delegate
         {
             apiData = new();
-            READY = true;
+
+            Plugin.logger.LogInfo("WriteDefault");
         });
 
         Load();
@@ -36,6 +39,7 @@ internal static class APIDataManager
     internal static void Save()
     {
         _dataReadWriter.Write(apiData, DATA_PATH);
+        Plugin.logger.LogInfo("Save called");
     }
 
     internal static void Load()

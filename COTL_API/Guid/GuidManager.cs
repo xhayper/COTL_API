@@ -67,6 +67,8 @@ public static class GuidManager
 
                 APIDataManager.Save();
             }
+
+            Plugin.logger.LogInfo("Set!");
         }
 
         reverseMapper[enumValue] = typeof(T);
