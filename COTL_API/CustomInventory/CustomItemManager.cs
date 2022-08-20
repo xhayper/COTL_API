@@ -30,7 +30,7 @@ public class CustomItemManager
     {
         if (!customItems.ContainsKey(config)) return true;
 
-        __instance._inventoryIcon.Configure(config, false);
+        // __instance._inventoryIcon.Configure(config, false);
         __instance._itemHeader.text = InventoryItem.Name(config);
         __instance._itemLore.text = InventoryItem.Lore(config);
         __instance._itemDescription.text = InventoryItem.Description(config);
