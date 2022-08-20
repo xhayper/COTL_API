@@ -22,7 +22,7 @@ public class Plugin : BaseUnityPlugin
     internal readonly static Harmony harmony = new Harmony(PLUGIN_GUID);
     internal static ManualLogSource logger;
 
-    internal static InventoryItem.ITEM_TYPE ITEM;
+    internal static InventoryItem.ITEM_TYPE DEBUG_ITEM;
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class Plugin : BaseUnityPlugin
     {
         harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-        ITEM = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS());
+        DEBUG_ITEM = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.CustomInventory.DEBUG_ITEM_CLASS());
     }
 
     private void OnDisable()
