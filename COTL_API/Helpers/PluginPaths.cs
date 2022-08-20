@@ -9,7 +9,7 @@ public static class PluginPaths
 
     public static string ResolvePath(params string[] paths)
     {
-        return Path.Combine((new List<string>() { COTL_API.Plugin.PLUGIN_PATH }).Concat(paths).ToArray());
+        return Path.Combine((new List<string>() { Plugin.PLUGIN_PATH }).Concat(paths).ToArray());
     }
 
 }

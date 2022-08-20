@@ -32,7 +32,7 @@ public static class GuidManager
             itemList.Add(item);
 
         string startKey = typeof(T).Name + "_";
-        foreach (var item in ModdedSaveManager.SaveData.SaveData[COTL_API.Plugin.PLUGIN_GUID])
+        foreach (var item in APIDataManager.apiData.data)
         {
             if (item.Key.StartsWith(startKey))
             {
@@ -52,18 +52,20 @@ public static class GuidManager
 
         string saveKey = $"{typeof(T).Name}_{guid}_{value}";
             
-        int enumValue = ModdedSaveManager.SaveData.GetValueAsInt(COTL_API.Plugin.PLUGIN_GUID, saveKey);
+        int enumValue = APIDataManager.apiData.GetValueAsInt(saveKey);
 
         if (enumValue == default)
         {
             lock (lockObject)
             {
-                enumValue = ModdedSaveManager.SaveData.GetValueAsInt(COTL_API.Plugin.PLUGIN_GUID, MAX_DATA);
+                enumValue = APIDataManager.apiData.GetValueAsInt(MAX_DATA);
                 if (enumValue < START_INDEX)
                     enumValue = START_INDEX;
                 
-                ModdedSaveManager.SaveData.SetValue(COTL_API.Plugin.PLUGIN_GUID, MAX_DATA, enumValue+1);
-                ModdedSaveManager.SaveData.SetValue(COTL_API.Plugin.PLUGIN_GUID, saveKey, enumValue);
+                APIDataManager.apiData.SetValue(MAX_DATA, enumValue+1);
+                APIDataManager.apiData.SetValue(saveKey, enumValue);
+
+                APIDataManager.Save();
             }
         }
 

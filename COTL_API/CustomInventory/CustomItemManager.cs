@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Reflection;
+using COTL_API.Guid;
 using HarmonyLib;
 
 namespace COTL_API.CustomInventory;
@@ -6,21 +8,15 @@ namespace COTL_API.CustomInventory;
 [HarmonyPatch]
 public class CustomItemManager
 {
-    // Dictionary<modPrefix+ItemName, CustomInventoryItem>
-    private static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> customItems = new();
+    public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> customItems = new();
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
-        // TODO: Implement this
-        // Current Plan: Use the same system that InscryptionAPI use
-        // Assembly.GetCallingAssembly + Item name
-        // Then resolve assign that to an ID
+        var itemEnum = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly()), item.Name());
 
-        var generatedItemType = (InventoryItem.ITEM_TYPE)5000;
+        customItems.Add(itemEnum, item);
 
-        customItems.Add(generatedItemType, item);
-
-        return generatedItemType;
+        return itemEnum;
     }
 
 }
