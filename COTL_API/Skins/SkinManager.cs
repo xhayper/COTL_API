@@ -16,6 +16,8 @@ namespace COTL_API.Skins
     {
         public static List<Atlas> CustomAtlases { get; set; }
 
+        public static Skin testSkin;
+
         public static void RunExperimentalCode()
         {
             // Adds a character with name Test and skin Test.
@@ -51,7 +53,32 @@ namespace COTL_API.Skins
 
             CustomAtlases.Add(a);
 
-            Plugin.logger.LogInfo(a.ToString());
+            // Create skin
+            testSkin = new Skin("Test");
+            WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog").Attachments.ToList().ForEach(att =>
+            {
+                if (!att.Name.Contains("HEAD_SKIN"))
+                {
+                    // Copy all non-head attachments from Dog skin
+                    testSkin.SetAttachment(att.SlotIndex, att.Name, att.Attachment);
+                }
+                else
+                {
+                    // Create head
+                    var atlasRegion = CustomAtlases[0].FindRegion("Head/HeadCustomBack_Btm");
+                    MeshAttachment customAttachment = (MeshAttachment)att.Attachment.Copy();
+                    customAttachment.SetRegion(atlasRegion);
+
+                    customAttachment.HullLength = 4;
+                    customAttachment.Triangles = new int[] { 1, 2, 3, 1, 3, 0 };
+                    customAttachment.UVs = new float[] { 1, 0, 1, 1, 0, 1, 0, 0 };
+                    customAttachment.Vertices = new float[] { 0f, -0.35f, 1, 0.5f, -0.35f, 1, 0.5f, 0.5f, 1, 0f, 0.5f, 1 };
+                    customAttachment.WorldVerticesLength = 8;
+
+                    var ma = (MeshAttachment)customAttachment;
+                    testSkin.SetAttachment(att.SlotIndex, att.Name, customAttachment);
+                }
+            });
         }
 
         [HarmonyPatch(typeof(SkeletonData), "FindSkin", new Type[] { typeof(string) })]
@@ -61,38 +88,22 @@ namespace COTL_API.Skins
             {
                 if (__result == null)
                 {
-                    // If name is Test, create new skin (should get from list in future)
+                    // If name is Test, get Test skin
                     if (skinName == "Test")
                     {
                         DataManager.SetFollowerSkinUnlocked(skinName); // Unlocks the Test skin
-                        Skin skin = new Skin(skinName);
-                        __instance.FindSkin("Dog").Attachments.ToList().ForEach(att =>
-                        {
-                            if (!att.Name.Contains("HEAD_SKIN")) {
-                                // Copy all non-head attachments from Dog skin
-                                skin.SetAttachment(att.SlotIndex, att.Name, att.Attachment);
-                            }
-                            else
-                            {
-                                // Create head
-                                var atlasRegion = CustomAtlases[0].FindRegion("Head/HeadCustomBack_Btm");
-                                MeshAttachment customAttachment = (MeshAttachment)att.Attachment.Copy();
-                                customAttachment.SetRegion(atlasRegion);
-
-                                customAttachment.HullLength = 4;
-                                customAttachment.Triangles = new int[] { 0, 1, 2, 0, 2, 3 };
-                                customAttachment.UVs = new float[] { 1, 1, 0, 1, 0, 0, 1, 0 };
-                                customAttachment.RegionUVs = new float[] { 1, 1, 0, 1, 0, 0, 1, 0 };
-                                customAttachment.Vertices = new float[] { -1, -1, 1, 1, -1, 1, 1, 1, 1, -1, 1,1 };
-                                customAttachment.WorldVerticesLength = 4;
-
-                                var ma = (MeshAttachment)customAttachment;
-                                skin.SetAttachment(att.SlotIndex, att.Name, customAttachment);
-                            }
-                        });
-                        __result = skin;
+                        __result = testSkin;
                     }
                 }
+            }
+        }
+
+        [HarmonyPatch(typeof(Lamb.UI.InventoryMenu), "OnShowStarted")]
+        public class InventoryPatch
+        {
+            public static void Prefix(Lamb.UI.InventoryMenu __instance)
+            {
+                FollowerManager.CreateNewRecruit(FollowerLocation.Base, BiomeBaseManager.Instance.RecruitSpawnLocation.transform.position);
             }
         }
     }

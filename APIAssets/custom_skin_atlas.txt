@@ -5,21 +5,21 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Head/HeadCustomBack_Btm
-  rotate: true
+  rotate: false
   xy: 0, 0
   size: 111, 127
   orig: 111, 127
   offset: 0, 0
   index: -1
 Head/HeadCustomBack_Top
-  rotate: true
+  rotate: false
   xy: 111, 0
   size: 111, 127
   orig: 111, 127
   offset: 0, 0
   index: -1
 Head/HeadCustomMarkings
-  rotate: true
+  rotate: false
   xy: 222, 0
   size: 95, 96
   orig: 96, 97
