@@ -15,5 +15,8 @@
         <Reference Include="Unity.TextMeshPro" Private="false">
             <HintPath>../lib/Unity.TextMeshPro.dll</HintPath>
         </Reference>
+        <Reference Include="spine-unity" Private="false">
+            <HintPath>../lib/spine-unity.dll</HintPath>
+        </Reference>
     </ItemGroup>
 </Project>
