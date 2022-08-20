@@ -12,5 +12,8 @@
         <Reference Include="Assembly-CSharp" Private="false">
             <HintPath>../lib/Assembly-CSharp.dll</HintPath>
         </Reference>
+        <Reference Include="Unity.TextMeshPro" Private="false">
+            <HintPath>../lib/Unity.TextMeshPro.dll</HintPath>
+        </Reference>
     </ItemGroup>
 </Project>
