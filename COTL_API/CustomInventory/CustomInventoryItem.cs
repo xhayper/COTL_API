@@ -4,16 +4,19 @@ namespace COTL_API.CustomInventory;
 public class CustomInventoryItem
 {
 
-    public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; set; }
+    public virtual string InternalName { get; set; }
     public InventoryItem.ITEM_TYPE ItemType;
+    public string ModPrefix;
+
+    public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; set; }
     public virtual InventoryItem.ITEM_TYPE SeedType { get; set; }
 
     public virtual string Name() { return LocalizedName(); }
     public virtual string Lore() { return LocalizedLore(); }
     public virtual string Description() { return LocalizedDescription(); }
-    public virtual string LocalizedName() { return LocalizationManager.GetTranslation(string.Format("Inventory/{0}", ItemType), true, 0, true, false, null, null, true); }
-    public virtual string LocalizedLore() { return LocalizationManager.GetTranslation(string.Format("Inventory/{0}/Lore", ItemType), true, 0, true, false, null, null, true); }
-    public virtual string LocalizedDescription() { return LocalizationManager.GetTranslation(string.Format("Inventory/{0}/Description", ItemType), true, 0, true, false, null, null, true); }
+    public virtual string LocalizedName() { return LocalizationManager.GetTranslation(string.Format("Inventory/{0}.{1}", this.ModPrefix, this.InternalName), true, 0, true, false, null, null, true); }
+    public virtual string LocalizedLore() { return LocalizationManager.GetTranslation(string.Format("Inventory/{0}.{1}/Lore", this.ModPrefix, this.InternalName), true, 0, true, false, null, null, true); }
+    public virtual string LocalizedDescription() { return LocalizationManager.GetTranslation(string.Format("Inventory/{0}.{1}/Description", this.ModPrefix, this.InternalName), true, 0, true, false, null, null, true); }
 
     public virtual int FuelWeight { get; set; }
     public virtual int FoodSatitation { get; set; }
