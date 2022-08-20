@@ -184,4 +184,15 @@ public class CustomItemManager
 
         return false;
     }
+
+    [HarmonyPatch(typeof(InventoryItem), "CapacityString")]
+    [HarmonyPrefix]
+    public static bool InventoryItem_CapacityString(InventoryItem.ITEM_TYPE type, int minimum, ref string __result)
+    {
+        if (!customItems.ContainsKey(type)) return true;
+
+        __result = customItems[type].CapacityString(minimum);
+
+        return false;
+    }
 }
