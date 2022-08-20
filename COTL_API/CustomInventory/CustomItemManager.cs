@@ -12,8 +12,11 @@ public class CustomItemManager
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
-        var itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly()), item.Name());
+        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+
+        var itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(guid, item.Name());
         item.ItemType = itemType;
+        item.ModPrefix = guid;
 
         customItems.Add(itemType, item);
 
