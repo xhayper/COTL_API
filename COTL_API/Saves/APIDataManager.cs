@@ -8,7 +8,7 @@ internal static class APIDataManager
 {
     internal static bool READY = false;
 
-    internal static string DATA_PATH = "modded_api_data.json";
+    internal static string DATA_PATH = "cotl_api_data.json";
 
     internal static COTLDataReadWriter<APIData> _dataReadWriter = new();
 
@@ -29,6 +29,8 @@ internal static class APIDataManager
             apiData = new();
             READY = true;
         });
+
+        Load();
     }
 
     internal static void Save()
