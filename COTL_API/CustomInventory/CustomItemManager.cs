@@ -24,6 +24,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool ItemInfoCard_Configure(Lamb.UI.ItemInfoCard __instance, InventoryItem.ITEM_TYPE config)
     {
+        if (!customItems.ContainsKey(config)) return true;
+
         __instance._inventoryIcon.Configure(config, false);
         __instance._itemHeader.text = InventoryItem.Name(config);
         __instance._itemLore.text = InventoryItem.Lore(config);
