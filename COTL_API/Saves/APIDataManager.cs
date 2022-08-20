@@ -29,6 +29,8 @@ internal static class APIDataManager
         Load();
     }
 
+    [HarmonyPatch(typeof(SaveAndLoad), "Save")]
+    [HarmonyPostfix]
     internal static void Save()
     {
         _dataReadWriter.Write(apiData, DATA_PATH);
@@ -38,4 +40,5 @@ internal static class APIDataManager
     {
         _dataReadWriter.Read(DATA_PATH);
     }
+
 }
