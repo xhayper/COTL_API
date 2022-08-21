@@ -4,8 +4,8 @@ using static InventoryItem;
 using System.Reflection;
 using COTL_API.Guid;
 using UnityEngine;
-using HarmonyLib;
 using System.Linq;
+using HarmonyLib;
 using Lamb.UI;
 
 namespace COTL_API.CustomInventory;
