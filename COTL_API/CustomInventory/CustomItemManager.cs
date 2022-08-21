@@ -3,6 +3,10 @@ using System.Reflection;
 using COTL_API.Guid;
 using UnityEngine;
 using HarmonyLib;
+using System.Reflection.Emit;
+using System.Linq;
+using static InventoryItem;
+using Lamb.UI;
 
 namespace COTL_API.CustomInventory;
 
@@ -60,9 +64,6 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static void _____(Lamb.UI.InventoryMenu __instance)
     {
-        __instance._currencyFilter.Add(Plugin.DEBUG_ITEM);
-        __instance._currencyFilter.Add(Plugin.DEBUG_ITEM_2);
-
         Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
         Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
         Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
@@ -192,5 +193,36 @@ public class CustomItemManager
         if (!customItems.ContainsKey(type)) return true;
         __result = customItems[type].CapacityString(minimum);
         return false;
+    }
+
+    [HarmonyPatch(typeof(CookingData), "GetAllFoods")]
+    public static class CookingData_GetAllFoods_Patch
+    {
+        static void Postfix(ref ITEM_TYPE[] __result)
+        {
+            ITEM_TYPE[] copy = __result;
+            __result = __result.Concat((customItems.Where((i) => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key))).ToArray();
+        }
+    }
+
+    [HarmonyPatch(typeof(InventoryMenu), "OnShowStarted")]
+    public static class InventoryMenu_OnShowStarted_Patch
+    {
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (var instruction in instructions)
+            {
+                yield return instruction;
+                if (instruction.LoadsField(typeof(InventoryMenu).GetField("_currencyFilter", BindingFlags.NonPublic | BindingFlags.Instance)))
+                {
+                    yield return new CodeInstruction(OpCodes.Call, SymbolExtensions.GetMethodInfo(() => AppendCustomCurrencies(null)));
+                }
+            }
+        }
+    }
+
+    internal static List<ITEM_TYPE> AppendCustomCurrencies(List<ITEM_TYPE> currencyFilter)
+    {
+        return currencyFilter.Concat(customItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency).Select(i => i.Key)).ToList();
     }
 }
