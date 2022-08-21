@@ -40,10 +40,10 @@ public class CustomItemManager
 
     [HarmonyPatch(typeof(FontImageNames), "GetIconByType")]
     [HarmonyPrefix]
-    public static bool FontImageNames_GetIconByType(InventoryItem.ITEM_TYPE type, ref string __result)
+    public static bool FontImageNames_GetIconByType(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!customItems.ContainsKey(type)) return true;
-        __result = $"<sprite name=\"icon_{customItems[type].ModPrefix}.${customItems[type].InternalName}\">";
+        if (!customItems.ContainsKey(Type)) return true;
+        __result = $"<sprite name=\"icon_{customItems[Type].ModPrefix}.${customItems[Type].InternalName}\">";
         return false;
     }
 
