@@ -38,7 +38,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(Lamb.UI.Assets.InventoryIconMapping), "InventoryIconMapping", typeof(InventoryItem.ITEM_TYPE))]
+    [HarmonyPatch(typeof(Lamb.UI.Assets.InventoryIconMapping), "GetImage", typeof(InventoryItem.ITEM_TYPE))]
     [HarmonyPrefix]
     public static bool InventoryIconMapping_GetImage(InventoryItem.ITEM_TYPE type, ref Sprite __result)
     {

@@ -52,8 +52,6 @@ public static class GuidManager
 
         int enumValue = APIDataManager.apiData.GetValueAsInt(saveKey);
 
-        Plugin.logger.LogInfo($"{saveKey} = {enumValue}");
-
         if (enumValue == default)
         {
             enumValue = APIDataManager.apiData.GetValueAsInt(MAX_DATA);
@@ -64,8 +62,6 @@ public static class GuidManager
 
             APIDataManager.apiData.SetValue<long>(MAX_DATA, enumValue + 1);
             APIDataManager.apiData.SetValue<long>(saveKey, enumValue);
-
-            Plugin.logger.LogInfo($"{MAX_DATA} = {APIDataManager.apiData.GetValueAsInt(MAX_DATA)}");
 
             APIDataManager.Save();
         }
