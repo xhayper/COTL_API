@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using COTL_API.Guid;
+using UnityEngine;
 using HarmonyLib;
 
 namespace COTL_API.CustomInventory;
@@ -30,10 +31,21 @@ public class CustomItemManager
     {
         if (!customItems.ContainsKey(config)) return true;
 
-        // __instance._inventoryIcon.Configure(config, false);
+        __instance._inventoryIcon.Configure(config, false);
         __instance._itemHeader.text = InventoryItem.Name(config);
         __instance._itemLore.text = InventoryItem.Lore(config);
         __instance._itemDescription.text = InventoryItem.Description(config);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Lamb.UI.Assets.InventoryIconMapping), "InventoryIconMapping", typeof(InventoryItem.ITEM_TYPE))]
+    [HarmonyPrefix]
+    public static bool InventoryIconMapping_GetImage(InventoryItem.ITEM_TYPE type, ref Sprite __result)
+    {
+        if (!customItems.ContainsKey(type)) return true;
+
+        __result = customItems[type].InventoryIcon;
+        
         return false;
     }
 
