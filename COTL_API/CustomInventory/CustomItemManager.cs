@@ -219,6 +219,11 @@ public class CustomItemManager
                 }
             }
         }
+
+        internal static List<ITEM_TYPE> AppendCustomCurrencies(List<ITEM_TYPE> currencyFilter)
+        {
+            return currencyFilter.Concat(customItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency).Select(i => i.Key)).ToList();
+        }
     }
 
     [HarmonyPatch(typeof(FontImageNames), "GetIconByType")]
@@ -230,11 +235,5 @@ public class CustomItemManager
             __result = "";
             return false;
         }
-    }
-
-
-    internal static List<ITEM_TYPE> AppendCustomCurrencies(List<ITEM_TYPE> currencyFilter)
-    {
-        return currencyFilter.Concat(customItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency).Select(i => i.Key)).ToList();
     }
 }
