@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using System.Reflection.Emit;
+using static InventoryItem;
 using System.Reflection;
 using COTL_API.Guid;
 using UnityEngine;
 using HarmonyLib;
-using System.Reflection.Emit;
 using System.Linq;
-using static InventoryItem;
 using Lamb.UI;
 
 namespace COTL_API.CustomInventory;
