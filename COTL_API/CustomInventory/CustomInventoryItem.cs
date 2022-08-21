@@ -29,6 +29,7 @@ public class CustomInventoryItem
     public virtual bool IsFish { get; set; }
     public virtual bool IsFood { get; set; }
     public virtual bool IsBigFish { get; set; }
+    public virtual bool IsCurrency { get; set; }
 
     public virtual bool CanBeGivenToFollower { get; set; }
 
@@ -50,6 +51,7 @@ public class CustomInventoryItem
         this.IsFish = false;
         this.IsFood = false;
         this.IsBigFish = false;
+        this.IsCurrency = false;
 
         this.CanBeGivenToFollower = false;
 
