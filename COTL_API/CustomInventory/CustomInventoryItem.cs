@@ -1,3 +1,6 @@
+using COTL_API.Helpers;
+using UnityEngine;
+using System.IO;
 using I2.Loc;
 namespace COTL_API.CustomInventory;
 
@@ -7,6 +10,8 @@ public class CustomInventoryItem
     public virtual string InternalName { get; set; }
     public InventoryItem.ITEM_TYPE ItemType;
     public string ModPrefix;
+
+    public virtual Sprite InventoryIcon { get; set; }
 
     public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; set; }
     public virtual InventoryItem.ITEM_TYPE SeedType { get; set; }
@@ -47,5 +52,9 @@ public class CustomInventoryItem
         this.IsBigFish = false;
 
         this.CanBeGivenToFollower = false;
+
+        var tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
+        tex.LoadImage(File.ReadAllBytes(PluginPaths.ResolvePath("APIAssets", "placeholder_inventory_icon.png")));
+        this.InventoryIcon = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2, tex.height / 2));
     }
 }

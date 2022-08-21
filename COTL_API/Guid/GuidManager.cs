@@ -13,8 +13,6 @@ public static class GuidManager
 
     private static readonly Dictionary<int, Type> reverseMapper = new();
 
-    private static readonly object lockObject = new object();
-
     public const int START_INDEX = 5000;
 
     public const string MAX_DATA = "maximumStoredValueForEnum";
@@ -54,19 +52,22 @@ public static class GuidManager
 
         int enumValue = APIDataManager.apiData.GetValueAsInt(saveKey);
 
+        Plugin.logger.LogInfo($"{saveKey} = {enumValue}");
+
         if (enumValue == default)
         {
-            lock (lockObject)
-            {
-                enumValue = APIDataManager.apiData.GetValueAsInt(MAX_DATA);
-                if (enumValue < START_INDEX)
-                    enumValue = START_INDEX;
+            enumValue = APIDataManager.apiData.GetValueAsInt(MAX_DATA);
+            if (enumValue < START_INDEX)
+                enumValue = START_INDEX;
 
-                APIDataManager.apiData.SetValue(MAX_DATA, enumValue + 1);
-                APIDataManager.apiData.SetValue(saveKey, enumValue);
+            Plugin.logger.LogInfo($"{MAX_DATA} = {enumValue}");
 
-                APIDataManager.Save();
-            }
+            APIDataManager.apiData.SetValue<long>(MAX_DATA, enumValue + 1);
+            APIDataManager.apiData.SetValue<long>(saveKey, enumValue);
+
+            Plugin.logger.LogInfo($"{MAX_DATA} = {APIDataManager.apiData.GetValueAsInt(MAX_DATA)}");
+
+            APIDataManager.Save();
         }
 
         reverseMapper[enumValue] = typeof(T);
