@@ -38,9 +38,9 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(Lamb.UI.ItemInfoCard), "GetIconByType")]
+    [HarmonyPatch(typeof(FontImageNames), "GetIconByType")]
     [HarmonyPrefix]
-    public static bool ItemInfoCard_GetIconByType(InventoryItem.ITEM_TYPE type, ref string __result)
+    public static bool FontImageNames_GetIconByType(InventoryItem.ITEM_TYPE type, ref string __result)
     {
         if (!customItems.ContainsKey(type)) return true;
         __result = $"<sprite name=\"icon_{customItems[type].ModPrefix}.${customItems[type].InternalName}\">";
