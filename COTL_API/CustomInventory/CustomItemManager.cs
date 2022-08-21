@@ -38,14 +38,21 @@ public class CustomItemManager
         return false;
     }
 
+    [HarmonyPatch(typeof(Lamb.UI.ItemInfoCard), "GetIconByType")]
+    [HarmonyPrefix]
+    public static bool ItemInfoCard_GetIconByType(InventoryItem.ITEM_TYPE type, ref string __result)
+    {
+        if (!customItems.ContainsKey(type)) return true;
+        __result = $"<sprite name=\"icon_{customItems[type].ModPrefix}.${customItems[type].InternalName}\">";
+        return false;
+    }
+
     [HarmonyPatch(typeof(Lamb.UI.Assets.InventoryIconMapping), "GetImage", typeof(InventoryItem.ITEM_TYPE))]
     [HarmonyPrefix]
     public static bool InventoryIconMapping_GetImage(InventoryItem.ITEM_TYPE type, ref Sprite __result)
     {
         if (!customItems.ContainsKey(type)) return true;
-
         __result = customItems[type].InventoryIcon;
-        
         return false;
     }
 
@@ -66,9 +73,7 @@ public class CustomItemManager
     public static bool InventoryItem_Name(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].Name();
-
         return false;
     }
 
@@ -77,9 +82,7 @@ public class CustomItemManager
     public static bool InventoryItem_LocalizedName(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].LocalizedName();
-
         return false;
     }
 
@@ -88,9 +91,7 @@ public class CustomItemManager
     public static bool InventoryItem_Description(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].Description();
-
         return false;
     }
 
@@ -99,9 +100,7 @@ public class CustomItemManager
     public static bool InventoryItem_LocalizedDescription(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].LocalizedDescription();
-
         return false;
     }
 
@@ -110,9 +109,7 @@ public class CustomItemManager
     public static bool InventoryItem_Lore(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].Lore();
-
         return false;
     }
 
@@ -121,9 +118,7 @@ public class CustomItemManager
     public static bool InventoryItem_ItemCategory(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_CATEGORIES __result)
     {
         if (!customItems.ContainsKey(type)) return true;
-
         __result = customItems[type].ItemCategory;
-
         return false;
     }
 
@@ -132,9 +127,7 @@ public class CustomItemManager
     public static bool InventoryItem_GetSeedType(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_TYPE __result)
     {
         if (!customItems.ContainsKey(type)) return true;
-
         __result = customItems[type].SeedType;
-
         return false;
     }
 
@@ -143,9 +136,7 @@ public class CustomItemManager
     public static bool InventoryItem_FuelWeight(InventoryItem.ITEM_TYPE type, ref int __result)
     {
         if (!customItems.ContainsKey(type)) return true;
-
         __result = customItems[type].FuelWeight;
-
         return false;
     }
 
@@ -154,9 +145,7 @@ public class CustomItemManager
     public static bool InventoryItem_FoodSatitation(InventoryItem.ITEM_TYPE Type, ref int __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].FoodSatitation;
-
         return false;
     }
 
@@ -165,9 +154,7 @@ public class CustomItemManager
     public static bool InventoryItem_IsFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].IsFish;
-
         return false;
     }
 
@@ -176,9 +163,7 @@ public class CustomItemManager
     public static bool InventoryItem_IsFood(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].IsFood;
-
         return false;
     }
 
@@ -187,9 +172,7 @@ public class CustomItemManager
     public static bool InventoryItem_IsBigFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].IsBigFish;
-
         return false;
     }
 
@@ -198,9 +181,7 @@ public class CustomItemManager
     public static bool InventoryItem_CanBeGivenToFollower(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
         if (!customItems.ContainsKey(Type)) return true;
-
         __result = customItems[Type].IsBigFish;
-
         return false;
     }
 
@@ -209,9 +190,7 @@ public class CustomItemManager
     public static bool InventoryItem_CapacityString(InventoryItem.ITEM_TYPE type, int minimum, ref string __result)
     {
         if (!customItems.ContainsKey(type)) return true;
-
         __result = customItems[type].CapacityString(minimum);
-
         return false;
     }
 }
