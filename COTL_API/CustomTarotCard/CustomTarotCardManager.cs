@@ -1,7 +1,9 @@
+
 using System.Collections.Generic;
 using System.Reflection;
 using COTL_API.Guid;
 using HarmonyLib;
+using Lamb.UI;
 
 namespace COTL_API.CustomTarotCard;
 
@@ -23,54 +25,35 @@ public class CustomTarotCardManager
         return cardType;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "GetUnfoundTrinkets")]
-    [HarmonyPrefix]
-    public static bool _(ref List<TarotCards.Card> __result)
-    {
-        __result = new List<TarotCards.Card>(customTarotCards.Keys);
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "IsUnlocked")]
-    [HarmonyPrefix]
-    public static bool __(ref bool __result)
-    {
-        __result = true;
-
-        return false;
-    }
-
-
     [HarmonyPatch(typeof(TarotCards), "GetCardCategory")]
     [HarmonyPrefix]
-    public static bool TarotCards_GetCardCategory(TarotCards.Card card, ref TarotCards.CardCategory __result)
+    public static bool TarotCards_GetCardCategory(TarotCards.Card Type, ref TarotCards.CardCategory __result)
     {
-        if (!customTarotCards.ContainsKey(card)) return true;
+        if (!customTarotCards.ContainsKey(Type)) return true;
 
-        __result = customTarotCards[card].CardCategory;
+        __result = customTarotCards[Type].CardCategory;
 
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "LocalisedName", typeof(TarotCards.Card))]
+    [HarmonyPatch(typeof(TarotCards), "LocalisedName", new System.Type[] { typeof(TarotCards.Card) })]
     [HarmonyPrefix]
-    public static bool TarotCards_LocalisedName(TarotCards.Card Type, ref string __result)
+    public static bool TarotCards_LocalisedName(TarotCards.Card type, ref string __result)
     {
-        if (!customTarotCards.ContainsKey(Type)) return true;
+        if (!customTarotCards.ContainsKey(type)) return true;
 
-        __result = customTarotCards[Type].LocalisedName();
+        __result = customTarotCards[type].LocalisedName();
 
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "LocalisedName", typeof(TarotCards.Card), typeof(int))]
+    [HarmonyPatch(typeof(TarotCards), "LocalisedName", new System.Type[] { typeof(TarotCards.Card), typeof(int) })]
     [HarmonyPrefix]
-    public static bool TarotCards_LocalisedName(TarotCards.Card Type, int upgradeIndex, ref string __result)
+    public static bool TarotCards_LocalisedName(TarotCards.Card Card, int upgradeIndex, ref string __result)
     {
-        if (!customTarotCards.ContainsKey(Type)) return true;
+        if (!customTarotCards.ContainsKey(Card)) return true;
 
-        __result = customTarotCards[Type].LocalisedName(upgradeIndex);
+        __result = customTarotCards[Card].LocalisedName(upgradeIndex);
 
         return false;
     }
@@ -121,22 +104,22 @@ public class CustomTarotCardManager
 
     [HarmonyPatch(typeof(TarotCards), "GetTarotCardWeight")]
     [HarmonyPrefix]
-    public static bool TarotCards_GetTarotCardWeight(TarotCards.Card Type, ref int __result)
+    public static bool TarotCards_GetTarotCardWeight(TarotCards.Card cardType, ref int __result)
     {
-        if (!customTarotCards.ContainsKey(Type)) return true;
+        if (!customTarotCards.ContainsKey(cardType)) return true;
 
-        __result = customTarotCards[Type].TarotCardWeight;
+        __result = customTarotCards[cardType].TarotCardWeight;
 
         return false;
     }
 
     [HarmonyPatch(typeof(TarotCards), "GetMaxTarotCardLevel")]
     [HarmonyPrefix]
-    public static bool TarotCards_GetMaxTarotCardLevel(TarotCards.Card Type, ref int __result)
+    public static bool TarotCards_GetMaxTarotCardLevel(TarotCards.Card cardType, ref int __result)
     {
-        if (!customTarotCards.ContainsKey(Type)) return true;
+        if (!customTarotCards.ContainsKey(cardType)) return true;
 
-        __result = customTarotCards[Type].MaxTarotCardLevel;
+        __result = customTarotCards[cardType].MaxTarotCardLevel;
 
         return false;
     }
@@ -154,198 +137,11 @@ public class CustomTarotCardManager
 
     [HarmonyPatch(typeof(TarotCards), "IsCurseRelatedTarotCard")]
     [HarmonyPrefix]
-    public static bool TarotCards_IsCurseRelatedTarotCard(TarotCards.Card Type, ref bool __result)
+    public static bool TarotCards_IsCurseRelatedTarotCard(TarotCards.Card card, ref bool __result)
     {
-        if (!customTarotCards.ContainsKey(Type)) return true;
+        if (!customTarotCards.ContainsKey(card)) return true;
 
-        __result = customTarotCards[Type].IsCursedRelated;
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetSpiritHeartCount")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetSpiritHeartCount(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].SpiritHeartCount;
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetSpiritAmmoCount")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetSpiritAmmoCount(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetSpiritAmmoCount();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetWeaponDamageMultiplerIncrease")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetWeaponDamageMultiplerIncrease(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetWeaponDamageMultiplerIncrease();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetCurseDamageMultiplerIncrease")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetCurseDamageMultiplerIncrease(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetCurseDamageMultiplerIncrease();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetWeaponCritChanceIncrease")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetWeaponCritChanceIncrease(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetWeaponCritChanceIncrease();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetLootIncreaseModifier")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetLootIncreaseModifier(TarotCards.Card Type, ref int __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetLootIncreaseModifier();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetMovementSpeedMultiplier")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetMovementSpeedMultiplier(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetMovementSpeedMultiplier();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetAttackRateMultiplier")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetAttackRateMultiplier(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetAttackRateMultiplier();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetBlackSoulsMultiplier")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetBlackSoulsMultiplier(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetBlackSoulsMultiplier();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetHealChance")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetHealChance(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetHealChance();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetNegateDamageChance")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetNegateDamageChance(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetNegateDamageChance();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetDamageAllEnemiesAmount")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetDamageAllEnemiesAmount(TarotCards.Card Type, ref int __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetDamageAllEnemiesAmount();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetHealthAmountMultiplier")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetHealthAmountMultiplier(TarotCards.Card Type, ref int __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetHealthAmountMultiplier();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetAmmoEfficiency")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetAmmoEfficiency(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetAmmoEfficiency();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetBlackSoulsOnDamage")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetBlackSoulsOnDamage(TarotCards.Card Type, ref int __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetBlackSoulsOnDamage();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetItemToDrop")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetItemToDrop(TarotCards.Card Type, ref InventoryItem __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetItemToDrop();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TarotCards), "GetChanceOfGainingBlueHeart")]
-    [HarmonyPrefix]
-    public static bool TarotCards_GetChanceOfGainingBlueHeart(TarotCards.Card Type, ref float __result)
-    {
-        if (!customTarotCards.ContainsKey(Type)) return true;
-
-        __result = customTarotCards[Type].GetChanceOfGainingBlueHeart();
+        __result = customTarotCards[card].IsCursedRelated;
 
         return false;
     }
