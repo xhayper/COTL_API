@@ -173,5 +173,6 @@ public class CustomTarotCard
         this.MaxTarotCardLevel = 0;
         this.AnimationSuffix = "sword";
         this.IsCursedRelated = false;
+        this.SpiritHeartCount = 0;
     }
 }
