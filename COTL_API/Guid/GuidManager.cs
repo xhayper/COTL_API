@@ -58,8 +58,6 @@ public static class GuidManager
             if (enumValue < START_INDEX)
                 enumValue = START_INDEX;
 
-            Plugin.logger.LogInfo($"{MAX_DATA} = {enumValue}");
-
             APIDataManager.apiData.SetValue<long>(MAX_DATA, enumValue + 1);
             APIDataManager.apiData.SetValue<long>(saveKey, enumValue);
 
