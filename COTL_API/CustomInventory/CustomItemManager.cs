@@ -19,7 +19,7 @@ public class CustomItemManager
     {
         var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        var itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(guid, item.Name());
+        var itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(guid, item.InternalName);
         item.ItemType = itemType;
         item.ModPrefix = guid;
 
