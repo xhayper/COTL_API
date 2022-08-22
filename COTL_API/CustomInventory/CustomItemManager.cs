@@ -225,15 +225,4 @@ public class CustomItemManager
             return currencyFilter.Concat(customItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency).Select(i => i.Key)).ToList();
         }
     }
-
-    [HarmonyPatch(typeof(FontImageNames), "GetIconByType")]
-    public static class FontImageNames_GetIconByType_Patch
-    {
-        public static bool Prefix(ref string __result, InventoryItem.ITEM_TYPE Type)
-        {
-            if (!customItems.ContainsKey(Type)) return true;
-            __result = "";
-            return false;
-        }
-    }
 }
