@@ -24,12 +24,23 @@ public class CustomTarotCardManager
     }
 
     [HarmonyPatch(typeof(TarotCards), "GetUnfoundTrinkets")]
+    [HarmonyPrefix]
     public static bool _(ref List<TarotCards.Card> __result)
     {
         __result = new List<TarotCards.Card>(customTarotCards.Keys);
 
         return false;
     }
+
+    [HarmonyPatch(typeof(TarotCards), "IsUnlocked")]
+    [HarmonyPrefix]
+    public static bool __(ref bool __result)
+    {
+        __result = true;
+
+        return false;
+    }
+
 
     [HarmonyPatch(typeof(TarotCards), "GetCardCategory")]
     [HarmonyPrefix]
