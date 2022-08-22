@@ -34,6 +34,8 @@ public class Plugin : BaseUnityPlugin
         DEBUG_ITEM = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.INDEV.DEBUG_ITEM_CLASS());
         DEBUG_ITEM_2 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.INDEV.DEBUG_ITEM_CLASS_2());
         DEBUG_ITEM_3 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.INDEV.DEBUG_ITEM_CLASS_3());
+    
+        COTL_API.CustomTarotCard.CustomTarotCardManager.Add(new COTL_API.INDEV.DEBUG_TAROT_CARD());
     }
 
     private void OnEnable()
