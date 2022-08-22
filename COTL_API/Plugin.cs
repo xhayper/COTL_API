@@ -6,6 +6,7 @@ using System.IO;
 using BepInEx;
 using Lamb.UI;
 using COTL_API.Skins;
+using COTL_API.INDEV;
 
 namespace COTL_API;
 
@@ -46,7 +47,7 @@ public class Plugin : BaseUnityPlugin
 
     private void Start()
     {
-        SkinManager.RunExperimentalCode();
+        DEBUG_CODE.CreateSkin();
     }
 
     private void OnDisable()

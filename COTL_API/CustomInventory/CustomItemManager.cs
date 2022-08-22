@@ -62,15 +62,6 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(Lamb.UI.InventoryMenu), "OnShowStarted")]
-    [HarmonyPrefix]
-    public static void _____(Lamb.UI.InventoryMenu __instance)
-    {
-        Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
-        Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
-        Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
-    }
-
     [HarmonyPatch(typeof(InventoryItem), "Name")]
     [HarmonyPrefix]
     public static bool InventoryItem_Name(InventoryItem.ITEM_TYPE Type, ref string __result)
