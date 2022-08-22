@@ -40,9 +40,6 @@ public static class TypeManager
         {
             foreach (var d in t.GetCustomAttributes<BepInPlugin>())
             {
-                // if (d.GUID == Plugin.PLUGIN_GUID)
-                    // continue;
-
                 ModIds.Add(assembly.FullName, d.GUID);
                 return d.GUID;
             }
