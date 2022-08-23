@@ -196,7 +196,7 @@ public class CustomItemManager
     }
 
     [HarmonyPatch(typeof(InventoryMenu))]
-    public static class InventoryMenu
+    public static class InventoryMenu_Patches
     {
         [HarmonyPatch(nameof(InventoryMenu.OnShowStarted))]
         [HarmonyTranspiler]
