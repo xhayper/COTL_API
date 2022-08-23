@@ -10,14 +10,6 @@
     <Import Project="../COTL_API.Common.props" />
 
     <ItemGroup>
-        <Reference Include="Assembly-CSharp" Private="false">
-            <HintPath>../lib/Assembly-CSharp.dll</HintPath>
-        </Reference>
-        <Reference Include="Unity.TextMeshPro" Private="false">
-            <HintPath>../lib/Unity.TextMeshPro.dll</HintPath>
-        </Reference>
-        <Reference Include="spine-unity" Private="false">
-            <HintPath>../lib/spine-unity.dll</HintPath>
-        </Reference>
+        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.0.11-*" />
     </ItemGroup>
 </Project>

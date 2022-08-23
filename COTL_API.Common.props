@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-        <PackageReference Include="BepInEx.Core" Version="5.*" />
+        <PackageReference Include="BepInEx.Core" Version="5.4.21" />
         <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile" />
     </ItemGroup>
 
