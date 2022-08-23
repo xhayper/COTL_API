@@ -220,6 +220,16 @@ namespace COTL_API.Skins
             {
                 string or = overrides[i];
                 var slot = SLOTS.First(s => or == s.Item2).Item1;
+                if (or.Contains("LEFT_EYE"))
+                {
+                    or = or.Replace("LEFT_EYE", "EYE");
+                    slot = 85;
+                }
+                else if (or.Contains("RIGHT_EYE"))
+                {
+                    or = or.Replace("RIGHT_EYE", "EYE");
+                    slot = 84;
+                }
                 var atlasRegion = customAtlases[name].GetAtlas().FindRegion(or);
                 Attachment a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog").GetAttachment(slot, or).Copy();
                 if (a is MeshAttachment customAttachment)
