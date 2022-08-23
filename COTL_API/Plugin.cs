@@ -1,7 +1,6 @@
 using System.Runtime.CompilerServices;
 using System.Reflection;
 using BepInEx.Logging;
-using COTL_API.Saves;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
@@ -19,7 +18,7 @@ public class Plugin : BaseUnityPlugin
     public const string PLUGIN_NAME = "COTL API";
     public const string PLUGIN_VERSION = "1.0.0";
 
-    internal readonly static Harmony harmony = new Harmony(PLUGIN_GUID);
+    internal readonly static Harmony harmony = new(PLUGIN_GUID);
     internal static ManualLogSource logger;
 
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM;
@@ -28,14 +27,14 @@ public class Plugin : BaseUnityPlugin
 
     private void Awake()
     {
-        logger = base.Logger;
+        logger = Logger;
         PLUGIN_PATH = Path.GetDirectoryName(Info.Location);
 
-        DEBUG_ITEM = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.INDEV.DEBUG_ITEM_CLASS());
-        DEBUG_ITEM_2 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.INDEV.DEBUG_ITEM_CLASS_2());
-        DEBUG_ITEM_3 = COTL_API.CustomInventory.CustomItemManager.Add(new COTL_API.INDEV.DEBUG_ITEM_CLASS_3());
+        DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS());
+        DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_2());
+        DEBUG_ITEM_3 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_3());
     
-        COTL_API.CustomTarotCard.CustomTarotCardManager.Add(new COTL_API.INDEV.DEBUG_TAROT_CARD());
+        CustomTarotCard.CustomTarotCardManager.Add(new INDEV.DEBUG_TAROT_CARD());
     }
 
     private void OnEnable()

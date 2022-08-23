@@ -8,13 +8,12 @@ internal class APIData
 
     internal T GetValue<T>(string key)
     {
-        if (data == null)
-            data = new();
+        data ??= new();
 
         if (!data.ContainsKey(key))
             data.Add(key, default(T));
 
-        return data[key] is T res ? res : default(T);
+        return data[key] is T res ? res : default;
     }
 
     internal string GetValueAsString(string key)

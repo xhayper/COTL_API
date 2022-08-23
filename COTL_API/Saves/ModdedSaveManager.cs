@@ -15,7 +15,7 @@ public static class ModdedSaveManager
     static ModdedSaveManager()
     {
         COTLDataReadWriter<ModdedSaveData> saveFileReadWriter = _saveDataReadWriter;
-        saveFileReadWriter.OnReadCompleted = (Action<ModdedSaveData>)Delegate.Combine(saveFileReadWriter.OnReadCompleted, (Action<ModdedSaveData>)delegate (ModdedSaveData saveData)
+        saveFileReadWriter.OnReadCompleted = (Action<ModdedSaveData>)Delegate.Combine(saveFileReadWriter.OnReadCompleted, delegate (ModdedSaveData saveData)
         {
             SaveData = saveData;
         });

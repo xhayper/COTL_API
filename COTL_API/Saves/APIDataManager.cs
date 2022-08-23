@@ -15,7 +15,7 @@ internal static class APIDataManager
     static APIDataManager()
     {
         COTLDataReadWriter<APIData> dataFileReadWriter = _dataReadWriter;
-        dataFileReadWriter.OnReadCompleted = (Action<APIData>)Delegate.Combine(dataFileReadWriter.OnReadCompleted, (Action<APIData>)delegate (APIData data)
+        dataFileReadWriter.OnReadCompleted = (Action<APIData>)Delegate.Combine(dataFileReadWriter.OnReadCompleted, delegate (APIData data)
         {
             apiData = data;
         });

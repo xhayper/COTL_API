@@ -17,7 +17,7 @@ public class CustomTarotCard
         int upgradeIndex = 0;
         foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
         {
-            if (playerRunTrinket.CardType == this.CardType)
+            if (playerRunTrinket.CardType == CardType)
             {
                 upgradeIndex = playerRunTrinket.UpgradeIndex;
                 break;
@@ -43,7 +43,7 @@ public class CustomTarotCard
                 text2 = "<color=purple>";
                 break;
         }
-        return text2 + LocalizationManager.GetTranslation($"TarotCards/{this.ModPrefix}.{this.InternalName}/Name") + text + "</color>";
+        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name") + text + "</color>";
     }
 
     public virtual string LocalisedDescription()
@@ -51,7 +51,7 @@ public class CustomTarotCard
         int upgradeIndex = 0;
         foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
         {
-            if (playerRunTrinket.CardType == this.CardType)
+            if (playerRunTrinket.CardType == CardType)
             {
                 upgradeIndex = playerRunTrinket.UpgradeIndex;
                 break;
@@ -62,7 +62,7 @@ public class CustomTarotCard
 
     public virtual string LocalisedDescription(int upgradeIndex)
     {
-        string text = $"TarotCards/{this.ModPrefix}.{this.InternalName}/Description";
+        string text = $"TarotCards/{ModPrefix}.{InternalName}/Description";
 
         if (upgradeIndex > 0) text += upgradeIndex;
 
@@ -71,7 +71,7 @@ public class CustomTarotCard
 
     public virtual string LocalisedLore()
     {
-        return LocalizationManager.GetTranslation($"TarotCards/{this.ModPrefix}.{this.InternalName}/Lore");
+        return LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Lore");
     }
 
     public virtual string Skin { get; set; }
@@ -168,11 +168,11 @@ public class CustomTarotCard
 
     public CustomTarotCard()
     {
-        this.Skin = "Template/Default";
-        this.TarotCardWeight = 100;
-        this.MaxTarotCardLevel = 0;
-        this.AnimationSuffix = "sword";
-        this.IsCursedRelated = false;
-        this.SpiritHeartCount = 0;
+        Skin = "Template/Default";
+        TarotCardWeight = 100;
+        MaxTarotCardLevel = 0;
+        AnimationSuffix = "sword";
+        IsCursedRelated = false;
+        SpiritHeartCount = 0;
     }
 }

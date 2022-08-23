@@ -23,7 +23,7 @@ public static class GuidManager
         return res;
     }
 
-    unsafe public static List<T> GetValues<T>() where T : unmanaged, System.Enum
+    unsafe public static List<T> GetValues<T>() where T : unmanaged, Enum
     {
         List<T> itemList = new();
         foreach (T item in Enum.GetValues(typeof(T)))
@@ -43,7 +43,7 @@ public static class GuidManager
         return itemList;
     }
 
-    unsafe public static T GetEnumValue<T>(string guid, string value) where T : unmanaged, System.Enum
+    unsafe public static T GetEnumValue<T>(string guid, string value) where T : unmanaged, Enum
     {
         if (sizeof(T) != sizeof(int))
             throw new NotSupportedException($"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");
