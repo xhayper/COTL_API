@@ -195,10 +195,12 @@ public class CustomItemManager
         }
     }
 
-    [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
-    public static class InventoryMenu_OnShowStarted
+    [HarmonyPatch(typeof(InventoryMenu))]
+    public static class InventoryMenu
     {
-        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        [HarmonyPatch(nameof(InventoryMenu.OnShowStarted))]
+        [HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> OnShowStarted(IEnumerable<CodeInstruction> instructions)
         {
             foreach (var instruction in instructions)
             {
