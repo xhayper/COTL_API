@@ -34,7 +34,7 @@ public class Plugin : BaseUnityPlugin
         DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS());
         DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_2());
         DEBUG_ITEM_3 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_3());
-    
+
         CustomTarotCard.CustomTarotCardManager.Add(new INDEV.DEBUG_TAROT_CARD());
     }
 
@@ -48,14 +48,13 @@ public class Plugin : BaseUnityPlugin
         harmony.UnpatchSelf();
     }
 
-    // DEBUG CODE
 
-    [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
-    [HarmonyPrefix]
-    public static void InventoryMenu_OnShowStarted()
+    [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Load))]
+    [HarmonyPostfix]
+    public static void DEBUG_SAVE_AND_LOAD(int saveSlot)
     {
-        Inventory.AddItem(DEBUG_ITEM, 1, true);
-        Inventory.AddItem(DEBUG_ITEM_2, 1, true);
-        Inventory.AddItem(DEBUG_ITEM_3, 1, true);
+        Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
+        Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
+        Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
     }
 }
