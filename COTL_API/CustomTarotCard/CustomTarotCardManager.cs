@@ -59,8 +59,6 @@ public class CustomTarotCardManager
         {
             foreach (var instruction in instructions)
             {
-                yield return instruction;
-
                 if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedName")))
                 {
                     yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedName(0, 0)));
@@ -72,6 +70,10 @@ public class CustomTarotCardManager
                 else if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedLore")))
                 {
                     yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedLore(0)));
+                }
+                else
+                {
+                    yield return instruction;
                 }
             }
         }
