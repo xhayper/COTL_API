@@ -44,8 +44,10 @@ namespace COTL_API.Skins
             SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
             customAtlases.Add(name, atlas);
 
+            List<string> overrides = atlas.GetAtlas().regions.Select(r => SLOTS.First(s => s.Item3 == r.name).Item2).ToList();
+
             CreateNewFollowerType(name);
-            CreateSkin(name);
+            CreateSkin(name, overrides);
 
         }
 
@@ -70,14 +72,14 @@ namespace COTL_API.Skins
             });
         }
 
-        internal static void CreateSkin(string name)
+        internal static void CreateSkin(string name, List<string> overrides)
         {
             // Create skin
             var skin = new Skin(name);
 
             WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog").Attachments.ToList().ForEach(att =>
             {
-                if (!att.Name.Contains("HEAD"))
+                if (!overrides.Contains(att.Name))
                 {
                     skin.SetAttachment(att.SlotIndex, att.Name, att.Attachment.Copy());
                 }
