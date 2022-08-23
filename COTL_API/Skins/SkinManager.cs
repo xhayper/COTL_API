@@ -20,6 +20,7 @@ namespace COTL_API.Skins
         internal static Dictionary<string, SpineAtlasAsset> customAtlases = new();
         internal static Dictionary<string, Skin> customSkins = new();
         internal static Dictionary<string, Texture> skinTextures = new();
+        internal static Dictionary<string, Material> skinMaterials = new();
 
         internal static readonly List<Tuple<int, string, string>> SLOTS = new List<Tuple<int, string, string>>()
         {
@@ -37,6 +38,8 @@ namespace COTL_API.Skins
 
             Material mat = new Material(Shader.Find("Spine/Skeleton"));
             mat.mainTexture = sheet;
+            skinMaterials.Add(name, mat);
+
             Material[] materials = new Material[] { mat };
             SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
             customAtlases.Add(name, atlas);
@@ -141,38 +144,14 @@ namespace COTL_API.Skins
             }
         }
 
-        [HarmonyPatch(typeof(IndoctrinationCharacterItem<IndoctrinationFormItem>), "Configure", new Type[] { typeof(SkinAndData) })]
-        public class IndoctrinationFormPatch
+        [HarmonyPatch(typeof(MeshGenerator), "GenerateSingleSubmeshInstruction")]
+        public class MeshPatch
         {
-            public static void Postfix(IndoctrinationFormItem __instance)
+            public static void Postfix(ref SkeletonRendererInstruction instructionOutput)
             {
-                if (skinTextures.ContainsKey(__instance.Skin))
+                if (instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null && instructionOutput.attachments.Exists(att => att != null && att.Name.Contains("Custom")))
                 {
-                    __instance._spine.overrideTexture = skinTextures[__instance.Skin];
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(IndoctrinationColourItem), "Configure", new Type[] { typeof(int), typeof(int), typeof(SkinAndData) })]
-        public class IndoctrinationColourPatch
-        {
-            public static void Postfix(IndoctrinationColourItem __instance)
-            {
-                if (skinTextures.ContainsKey(__instance.Skin))
-                {
-                    __instance._spine.overrideTexture = skinTextures[__instance.Skin];
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(IndoctrinationVariantItem), "Configure", new Type[] { typeof(int), typeof(int), typeof(SkinAndData) })]
-        public class IndoctrinationVariantPatch
-        {
-            public static void Postfix(IndoctrinationVariantItem __instance)
-            {
-                if (skinTextures.ContainsKey(__instance.Skin))
-                {
-                    __instance._spine.overrideTexture = skinTextures[__instance.Skin];
+                    instructionOutput.submeshInstructions.Items[0].material = skinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
                 }
             }
         }
@@ -184,10 +163,11 @@ namespace COTL_API.Skins
             {
                 if (skinTextures.ContainsKey(__instance.FollowerInfo.SkinName))
                 {
-                    __instance.FollowerSpine.overrideTexture = skinTextures[__instance.FollowerInfo.SkinName];
+                    __instance.FollowerSpine.Skeleton.Skin = (customSkins[__instance.FollowerInfo.SkinName]);
                 }
             }
         }
+
 
 
         // TODO: Temp fix. Destroy the transparent image used when recruiting follower. It hides custom meshes due to render order.
@@ -199,7 +179,7 @@ namespace COTL_API.Skins
             {
                 var image = __instance.gameObject.GetComponentsInChildren(typeof(TranslucentImage))[0].gameObject;
                 UnityEngine.Object.Destroy(image);
-            }   
+            }
         }
     }
 }
