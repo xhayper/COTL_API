@@ -4,6 +4,7 @@
         <AssemblyVersion>1.0.0</AssemblyVersion>
 
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <ReleaseVersion>1.0.0</ReleaseVersion>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props" />

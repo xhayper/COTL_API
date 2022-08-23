@@ -45,8 +45,8 @@ public static class TypeManager
             }
         }
 
-        ModIds.Add(assembly.FullName, default(string));
-        return default(string);
+        ModIds.Add(assembly.FullName, default);
+        return default;
     }
 
     public static string GetModIdFromCallstack(Assembly callingAssembly)
@@ -55,7 +55,7 @@ public static class TypeManager
         if (!string.IsNullOrEmpty(cacheVal))
             return cacheVal;
 
-        StackTrace trace = new StackTrace();
+        StackTrace trace = new();
         foreach (var frame in trace.GetFrames())
         {
             string newVal = GetModIdFromAssembly(frame.GetMethod().DeclaringType.Assembly);
@@ -82,8 +82,7 @@ public static class TypeManager
             return false;
         }
 
-        int enumValue;
-        if (int.TryParse(typeName, out enumValue))
+        if (int.TryParse(typeName, out _))
         {
             COTL_API.Plugin.logger.LogInfo($"This appears to be a custom type");
         }

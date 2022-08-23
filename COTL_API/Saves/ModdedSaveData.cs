@@ -8,8 +8,7 @@ public class ModdedSaveData
 
     public T GetValue<T>(string guid, string key)
     {
-        if (SaveData == null)
-            SaveData = new();
+        SaveData ??= new();
 
         if (!SaveData.ContainsKey(guid))
             SaveData.Add(guid, new());
@@ -55,8 +54,7 @@ public class ModdedSaveData
 
     public void SetValue<T>(string guid, string key, T value)
     {
-        if (SaveData == null)
-            SaveData = new();
+        SaveData ??= new();
 
         if (!SaveData.ContainsKey(guid))
             SaveData.Add(guid, new());
