@@ -195,28 +195,6 @@ public class CustomItemManager
         }
     }
 
-    //[HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
-    //public static class InventoryMenu_OnShowStarted
-    //{
-    //    static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-    //    {
-    //        foreach (var instruction in instructions)
-    //        {
-    //            yield return instruction;
-
-    //            if (instruction.LoadsField(typeof(InventoryMenu).GetField("_currencyFilter", BindingFlags.NonPublic | BindingFlags.Instance)))
-    //            {
-    //                yield return new CodeInstruction(OpCodes.Call, SymbolExtensions.GetMethodInfo(() => AppendCustomCurrencies(null)));
-    //            }
-    //        }
-    //    }
-
-    //    internal static List<InventoryItem.ITEM_TYPE> AppendCustomCurrencies(List<InventoryItem.ITEM_TYPE> currencyFilter)
-    //    {
-    //        return currencyFilter.Concat(customItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency).Select(i => i.Key)).ToList();
-    //    }
-    //}
-
     [HarmonyPatch(typeof(InventoryMenu))]
     public static class InventoryMenu_Patches
     {
