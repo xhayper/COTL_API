@@ -36,19 +36,21 @@ public class CustomTarotCardManager
         {
             foreach (var instruction in instructions)
             {
-                yield return instruction;
-
-                if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedName")))
+                if (instruction.Calls(SymbolExtensions.GetMethodInfo(() => TarotCards.LocalisedName(0, 0))))
                 {
                     yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedName(0, 0)));
                 }
-                else if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedDescription")))
+                else if (instruction.Calls(SymbolExtensions.GetMethodInfo(() => TarotCards.LocalisedDescription(0, 0))))
                 {
                     yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedDescription(0, 0)));
                 }
-                else if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedLore")))
+                else if (instruction.Calls(SymbolExtensions.GetMethodInfo(() => TarotCards.LocalisedLore(0))))
                 {
                     yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedLore(0)));
+                }
+                else
+                {
+                    yield return instruction;
                 }
             }
         }
@@ -59,15 +61,15 @@ public class CustomTarotCardManager
         {
             foreach (var instruction in instructions)
             {
-                if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedName")))
+                if (instruction.Calls(SymbolExtensions.GetMethodInfo(() => TarotCards.LocalisedName(0, 0))))
                 {
                     yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedName(0, 0)));
                 }
-                else if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedDescription")))
+                else if (instruction.Calls(SymbolExtensions.GetMethodInfo(() => TarotCards.LocalisedDescription(0, 0))))
                 {
                     yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedDescription(0, 0)));
                 }
-                else if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedLore")))
+                else if (instruction.Calls(SymbolExtensions.GetMethodInfo(() => TarotCards.LocalisedLore(0))))
                 {
                     yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedLore(0)));
                 }
