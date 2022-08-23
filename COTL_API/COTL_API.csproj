@@ -2,9 +2,9 @@
     <PropertyGroup>
         <AssemblyName>COTL_API</AssemblyName>
         <AssemblyVersion>1.0.0</AssemblyVersion>
+        <ReleaseVersion>1.0.0</ReleaseVersion>
 
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <ReleaseVersion>1.0.0</ReleaseVersion>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props" />
