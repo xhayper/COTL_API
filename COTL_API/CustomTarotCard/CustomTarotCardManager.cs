@@ -23,7 +23,7 @@ public class CustomTarotCardManager
         return cardType;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "GetCardCategory")]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.GetCardCategory))]
     [HarmonyPrefix]
     public static bool TarotCards_GetCardCategory(TarotCards.Card Type, ref TarotCards.CardCategory __result)
     {
@@ -34,7 +34,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "LocalisedName", new System.Type[] { typeof(TarotCards.Card) })]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedName), new System.Type[] { typeof(TarotCards.Card) })]
     [HarmonyPrefix]
     public static bool TarotCards_LocalisedName(TarotCards.Card type, ref string __result)
     {
@@ -45,7 +45,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "LocalisedName", new System.Type[] { typeof(TarotCards.Card), typeof(int) })]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedName), new System.Type[] { typeof(TarotCards.Card), typeof(int) })]
     [HarmonyPrefix]
     public static bool TarotCards_LocalisedName(TarotCards.Card Card, int upgradeIndex, ref string __result)
     {
@@ -56,7 +56,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "LocalisedDescription", typeof(TarotCards.Card))]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedDescription), typeof(TarotCards.Card))]
     [HarmonyPrefix]
     public static bool TarotCards_LocalisedDescription(TarotCards.Card Type, ref string __result)
     {
@@ -67,7 +67,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "LocalisedDescription", typeof(TarotCards.Card), typeof(int))]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedDescription), typeof(TarotCards.Card), typeof(int))]
     [HarmonyPrefix]
     public static bool TarotCards_LocalisedDescription(TarotCards.Card Type, int upgradeIndex, ref string __result)
     {
@@ -78,7 +78,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "LocalisedLore")]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedLore))]
     [HarmonyPrefix]
     public static bool TarotCards_LocalisedLore(TarotCards.Card Type, ref string __result)
     {
@@ -89,7 +89,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "Skin")]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.Skin))]
     [HarmonyPrefix]
     public static bool TarotCards_Skin(TarotCards.Card Type, ref string __result)
     {
@@ -100,7 +100,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "GetTarotCardWeight")]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.GetTarotCardWeight))]
     [HarmonyPrefix]
     public static bool TarotCards_GetTarotCardWeight(TarotCards.Card cardType, ref int __result)
     {
@@ -111,7 +111,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "GetMaxTarotCardLevel")]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.GetMaxTarotCardLevel))]
     [HarmonyPrefix]
     public static bool TarotCards_GetMaxTarotCardLevel(TarotCards.Card cardType, ref int __result)
     {
@@ -122,7 +122,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "AnimationSuffix")]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.AnimationSuffix))]
     [HarmonyPrefix]
     public static bool TarotCards_AnimationSuffix(TarotCards.Card Type, ref string __result)
     {
@@ -133,7 +133,7 @@ public class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), "IsCurseRelatedTarotCard")]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.IsCurseRelatedTarotCard))]
     [HarmonyPrefix]
     public static bool TarotCards_IsCurseRelatedTarotCard(TarotCards.Card card, ref bool __result)
     {
