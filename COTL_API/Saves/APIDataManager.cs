@@ -29,7 +29,7 @@ internal static class APIDataManager
         Load();
     }
 
-    [HarmonyPatch(typeof(SaveAndLoad), "Save")]
+    [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Save))]
     [HarmonyPostfix]
     internal static void Save()
     {

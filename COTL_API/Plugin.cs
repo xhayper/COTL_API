@@ -4,6 +4,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
+using Lamb.UI;
 
 [assembly: InternalsVisibleTo("Assembly-CSharp")]
 
@@ -45,5 +46,16 @@ public class Plugin : BaseUnityPlugin
     private void OnDisable()
     {
         harmony.UnpatchSelf();
+    }
+
+    // DEBUG CODE
+
+    [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
+    [HarmonyPrefix]
+    public static void InventoryMenu_OnShowStarted()
+    {
+        Inventory.AddItem(DEBUG_ITEM, 1, true);
+        Inventory.AddItem(DEBUG_ITEM_2, 1, true);
+        Inventory.AddItem(DEBUG_ITEM_3, 1, true);
     }
 }

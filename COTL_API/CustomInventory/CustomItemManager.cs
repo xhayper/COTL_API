@@ -28,7 +28,7 @@ public class CustomItemManager
     }
 
     // Patch `ItemInfoCard` not using `InventoryItem`'s method
-    [HarmonyPatch(typeof(ItemInfoCard), "Configure")]
+    [HarmonyPatch(typeof(ItemInfoCard), nameof(ItemInfoCard.Configure))]
     [HarmonyPrefix]
     public static bool ItemInfoCard_Configure(ItemInfoCard __instance, InventoryItem.ITEM_TYPE config)
     {
@@ -41,7 +41,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(FontImageNames), "GetIconByType")]
+    [HarmonyPatch(typeof(FontImageNames), nameof(FontImageNames.GetIconByType))]
     [HarmonyPrefix]
     public static bool FontImageNames_GetIconByType(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
@@ -50,7 +50,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(Lamb.UI.Assets.InventoryIconMapping), "GetImage", typeof(InventoryItem.ITEM_TYPE))]
+    [HarmonyPatch(typeof(Lamb.UI.Assets.InventoryIconMapping), nameof(Lamb.UI.Assets.InventoryIconMapping.GetImage), typeof(InventoryItem.ITEM_TYPE))]
     [HarmonyPrefix]
     public static bool InventoryIconMapping_GetImage(InventoryItem.ITEM_TYPE type, ref Sprite __result)
     {
@@ -59,16 +59,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryMenu), "OnShowStarted")]
-    [HarmonyPrefix]
-    public static void _____()
-    {
-        Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
-        Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
-        Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
-    }
-
-    [HarmonyPatch(typeof(InventoryItem), "Name")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Name))]
     [HarmonyPrefix]
     public static bool InventoryItem_Name(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
@@ -77,7 +68,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "LocalizedName")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.LocalizedName))]
     [HarmonyPrefix]
     public static bool InventoryItem_LocalizedName(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
@@ -86,7 +77,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "Description")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Description))]
     [HarmonyPrefix]
     public static bool InventoryItem_Description(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
@@ -95,7 +86,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "LocalizedDescription")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.LocalizedDescription))]
     [HarmonyPrefix]
     public static bool InventoryItem_LocalizedDescription(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
@@ -104,7 +95,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "Lore")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Lore))]
     [HarmonyPrefix]
     public static bool InventoryItem_Lore(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
@@ -113,7 +104,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "GetItemCategory")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.GetItemCategory))]
     [HarmonyPrefix]
     public static bool InventoryItem_ItemCategory(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_CATEGORIES __result)
     {
@@ -122,7 +113,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "GetSeedType")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.GetSeedType))]
     [HarmonyPrefix]
     public static bool InventoryItem_GetSeedType(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_TYPE __result)
     {
@@ -131,7 +122,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "FuelWeight", typeof(InventoryItem.ITEM_TYPE))]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.FuelWeight), typeof(InventoryItem.ITEM_TYPE))]
     [HarmonyPrefix]
     public static bool InventoryItem_FuelWeight(InventoryItem.ITEM_TYPE type, ref int __result)
     {
@@ -140,7 +131,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "FoodSatitation")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.FoodSatitation))]
     [HarmonyPrefix]
     public static bool InventoryItem_FoodSatitation(InventoryItem.ITEM_TYPE Type, ref int __result)
     {
@@ -149,7 +140,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "IsFish")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.IsFish))]
     [HarmonyPrefix]
     public static bool InventoryItem_IsFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
@@ -158,7 +149,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "IsFood")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.IsFood))]
     [HarmonyPrefix]
     public static bool InventoryItem_IsFood(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
@@ -167,7 +158,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "IsBigFish")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.IsBigFish))]
     [HarmonyPrefix]
     public static bool InventoryItem_IsBigFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
@@ -176,7 +167,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "CanBeGivenToFollower")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.CanBeGivenToFollower))]
     [HarmonyPrefix]
     public static bool InventoryItem_CanBeGivenToFollower(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
@@ -185,7 +176,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "CapacityString")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.CapacityString))]
     [HarmonyPrefix]
     public static bool InventoryItem_CapacityString(InventoryItem.ITEM_TYPE type, int minimum, ref string __result)
     {
@@ -194,7 +185,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(CookingData), "GetAllFoods")]
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllFoods))]
     public static class CookingData_GetAllFoods_Patch
     {
         static void Postfix(ref InventoryItem.ITEM_TYPE[] __result)
@@ -204,8 +195,8 @@ public class CustomItemManager
         }
     }
 
-    [HarmonyPatch(typeof(InventoryMenu), "OnShowStarted")]
-    public static class InventoryMenu_OnShowStarted_Patch
+    [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
+    public static class InventoryMenu_OnShowStarted
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
