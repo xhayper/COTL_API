@@ -204,10 +204,13 @@ public class CustomItemManager
         {
             foreach (var instruction in instructions)
             {
-                yield return instruction;
                 if (instruction.LoadsField(typeof(InventoryMenu).GetField("_currencyFilter", BindingFlags.NonPublic | BindingFlags.Instance)))
                 {
                     yield return new CodeInstruction(OpCodes.Call, SymbolExtensions.GetMethodInfo(() => AppendCustomCurrencies(null)));
+                }
+                else
+                {
+                    yield return instruction;
                 }
             }
         }
