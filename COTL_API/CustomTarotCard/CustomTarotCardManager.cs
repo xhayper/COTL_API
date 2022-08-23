@@ -1,7 +1,11 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Mono.Cecil.Cil;
 using COTL_API.Guid;
+using UnityEngine;
+using System.Linq;
 using HarmonyLib;
+using Lamb.UI;
 
 namespace COTL_API.CustomTarotCard;
 
@@ -21,6 +25,71 @@ public class CustomTarotCardManager
         customTarotCards.Add(cardType, card);
 
         return cardType;
+    }
+
+    [HarmonyPatch(typeof(UIWeaponCard))]
+    public class UIWeaponCard_Patches
+    {
+        [HarmonyPatch(nameof(UIWeaponCard.Play))]
+        [HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> Play(IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (var instruction in instructions)
+            {
+                yield return instruction;
+
+                if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedName")))
+                {
+                    yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedName(TarotCards.Card.Sword, 0)));
+                }
+                else if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedDescription")))
+                {
+                    yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedDescription(TarotCards.Card.Sword, 0)));
+                }
+                else if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedLore")))
+                {
+                    yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedLore(TarotCards.Card.Sword)));
+                }
+            }
+        }
+
+        [HarmonyPatch(nameof(UIWeaponCard.Show))]
+        [HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> Show(IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (var instruction in instructions)
+            {
+                yield return instruction;
+
+                if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedName")))
+                {
+                    yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedName(TarotCards.Card.Sword, 0)));
+                }
+                else if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedDescription")))
+                {
+                    yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedDescription(TarotCards.Card.Sword, 0)));
+                }
+                else if (instruction.Calls(typeof(TarotCards).GetMethod("LocalisedLore")))
+                {
+                    yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call, SymbolExtensions.GetMethodInfo(() => LocalisedLore(TarotCards.Card.Sword)));
+                }
+            }
+        }
+
+        internal static string LocalisedName(TarotCards.Card type, int upgradeIndex)
+        {
+            return customTarotCards.ContainsKey(type) ? customTarotCards[type].LocalisedName(upgradeIndex) : TarotCards.LocalisedName(type, upgradeIndex);
+        }
+
+        internal static string LocalisedDescription(TarotCards.Card type, int upgradeIndex)
+        {
+            return customTarotCards.ContainsKey(type) ? customTarotCards[type].LocalisedDescription(upgradeIndex) : TarotCards.LocalisedDescription(type, upgradeIndex);
+        }
+
+        internal static string LocalisedLore(TarotCards.Card type)
+        {
+            return customTarotCards.ContainsKey(type) ? customTarotCards[type].LocalisedLore() : TarotCards.LocalisedLore(type);
+        }
     }
 
     [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.GetCardCategory))]
