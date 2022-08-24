@@ -10,6 +10,11 @@ namespace COTL_API.INDEV
     {
         public override string InternalName { get => "DEBUG_FOLLOWER_COMMAND_2"; }
 
+        public override List<FollowerCommandCategory> GetCategories()
+        {
+            return new List<FollowerCommandCategory>() { FollowerCommandCategory.MAKE_DEMAND_COMMAND };
+        }
+
         public override bool CheckSelectionPreconditions(Follower follower)
         {
             return base.CheckSelectionPreconditions(follower);
