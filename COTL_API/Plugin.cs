@@ -4,12 +4,14 @@ using BepInEx.Logging;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
+using Lamb.UI;
 
 [assembly: InternalsVisibleTo("Assembly-CSharp")]
 
 namespace COTL_API;
 
 [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
+[HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
     public static string PLUGIN_PATH;
@@ -58,6 +60,15 @@ public class Plugin : BaseUnityPlugin
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Load))]
     [HarmonyPostfix]
     public static void DEBUG_SAVE_AND_LOAD(int saveSlot)
+    {
+        Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
+        Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
+        Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
+    }
+
+    [HarmonyPatch(typeof(InventoryMenu), "OnShowStarted")]
+    [HarmonyPostfix]
+    public static void _____()
     {
         Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
         Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
