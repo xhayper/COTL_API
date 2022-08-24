@@ -25,6 +25,9 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_2;
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_3;
 
+    internal static FollowerCommands DEBUG_FOLLOWER_COMMAND;
+    internal static FollowerCommands DEBUG_FOLLOWER_COMMAND_2;
+
     private void Awake()
     {
         logger = Logger;
@@ -33,6 +36,10 @@ public class Plugin : BaseUnityPlugin
         DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS());
         DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_2());
         DEBUG_ITEM_3 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_3());
+
+        DEBUG_FOLLOWER_COMMAND = CustomFollowerCommand.CustomFollowerCommandManager.Add(new INDEV.DEBUG_FOLLOWER_COMMAND_CLASS());
+
+        DEBUG_FOLLOWER_COMMAND_2 = CustomFollowerCommand.CustomFollowerCommandManager.Add(new INDEV.DEBUG_FOLLOWER_COMMAND_CLASS_2());
 
         CustomTarotCard.CustomTarotCardManager.Add(new INDEV.DEBUG_TAROT_CARD());
     }
