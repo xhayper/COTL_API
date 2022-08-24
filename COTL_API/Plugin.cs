@@ -4,7 +4,6 @@ using BepInEx.Logging;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
-using Lamb.UI;
 
 [assembly: InternalsVisibleTo("Assembly-CSharp")]
 

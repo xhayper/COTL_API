@@ -1,11 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
-using Mono.Cecil.Cil;
 using COTL_API.Guid;
-using UnityEngine;
-using System.Linq;
 using HarmonyLib;
-using Lamb.UI;
 
 namespace COTL_API.CustomTarotCard;
 
