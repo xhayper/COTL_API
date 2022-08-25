@@ -99,7 +99,7 @@ public class CustomFollowerCommandManager
     {
         if (customCommands.ContainsKey(followerCommands))
         {
-            __result = $"<sprite name=\"icon_{customCommands[followerCommands].ModPrefix}.${customCommands[followerCommands].InternalName}\">";
+            __result = $"<sprite name=\"icon_FCOMMAND_{customCommands[followerCommands].ModPrefix}.${customCommands[followerCommands].InternalName}\">";
             return false;
         }
         return true;

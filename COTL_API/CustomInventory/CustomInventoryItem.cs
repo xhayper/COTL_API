@@ -57,7 +57,7 @@ public class CustomInventoryItem
         CanBeGivenToFollower = false;
 
         var tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
-        tex.LoadImage(File.ReadAllBytes(PluginPaths.ResolvePath("APIAssets", "placeholder_inventory_icon.png")));
+        tex.LoadImage(Properties.Resources.missing_texture);
         InventoryIcon = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2, tex.height / 2));
     }
 }
