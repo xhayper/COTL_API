@@ -1,4 +1,5 @@
-﻿using COTL_API.CustomInventory;
+﻿using COTL_API.CustomFollowerCommand;
+using COTL_API.CustomInventory;
 using COTL_API.Helpers;
 using HarmonyLib;
 using System;
@@ -22,10 +23,20 @@ public class IconPatcher
         }
         foreach (CustomInventoryItem item in CustomItemManager.customItems.Values)
         {
-            string name = $"icon_{item.ModPrefix}.${item.InternalName}";
+            string name = $"icon_ITEM_{item.ModPrefix}.${item.InternalName}";
             if (hashCode == HashCode.GetValueHashCode(name)) {
                 spriteIndex = 0;
                 __result = IconManager.GetIcon(item.InventoryIcon, name, spriteAsset.material.shader, hashCode);
+                return false;
+            }
+        }
+        foreach (CustomFollowerCommandItem item in CustomFollowerCommandManager.customCommands.Values)
+        {
+            string name = $"icon_FCOMMAND_{item.ModPrefix}.${item.InternalName}";
+            if (hashCode == HashCode.GetValueHashCode(name))
+            {
+                spriteIndex = 0;
+                __result = IconManager.GetIcon(item.Icon, name, spriteAsset.material.shader, hashCode);
                 return false;
             }
         }
