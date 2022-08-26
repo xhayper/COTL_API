@@ -19,7 +19,8 @@ public class IconPatcher
         foreach (CustomInventoryItem item in CustomItemManager.customItems.Values)
         {
             string name = $"icon_{item.ModPrefix}.${item.InternalName}";
-            if (hashCode == HashCode.GetValueHashCode(name)) {
+            if (hashCode == HashCode.GetValueHashCode(name))
+            {
                 spriteIndex = 0;
                 __result = IconManager.GetIcon(item.InventoryIcon, name, spriteAsset.material.shader, hashCode);
                 return false;

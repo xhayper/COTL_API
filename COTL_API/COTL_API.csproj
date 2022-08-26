@@ -3,8 +3,6 @@
         <AssemblyName>COTL_API</AssemblyName>
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <ReleaseVersion>1.0.0</ReleaseVersion>
-
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props" />

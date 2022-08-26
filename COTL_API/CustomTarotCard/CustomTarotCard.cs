@@ -168,7 +168,7 @@ public class CustomTarotCard
 
     public CustomTarotCard()
     {
-        Skin = "Template/Default";
+        Skin = "TarotCards/placeholder";
         TarotCardWeight = 100;
         MaxTarotCardLevel = 0;
         AnimationSuffix = "sword";

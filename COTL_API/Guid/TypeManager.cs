@@ -84,7 +84,7 @@ public static class TypeManager
 
         if (int.TryParse(typeName, out _))
         {
-            COTL_API.Plugin.logger.LogInfo($"This appears to be a custom type");
+            Plugin.logger.LogInfo($"This appears to be a custom type");
         }
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");
