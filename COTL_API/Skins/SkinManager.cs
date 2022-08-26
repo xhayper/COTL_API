@@ -176,7 +176,7 @@ internal class SkinManager
         SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
         customAtlases.Add(name, atlas);
 
-        List<string> overrides = atlas.GetAtlas().regions.Select(r => SLOTS.First(s => s.Item2 == r.name).Item2).ToList();
+        List<Tuple<int,string>> overrides = atlas.GetAtlas().regions.Select(r => SLOTS.First(s => (s.Item2 == r.name.Split(':')[1]) && (s.Item1 == (int)(SlotsEnum)Enum.Parse(typeof(SlotsEnum), r.name.Split(':')[0])))).ToList();
 
         CreateNewFollowerType(name);
         CreateSkin(name, overrides);
@@ -204,14 +204,14 @@ internal class SkinManager
         });
     }
 
-    internal static void CreateSkin(string name, List<string> overrides)
+    internal static void CreateSkin(string name, List<Tuple<int, string>> overrides)
     {
         // Create skin
         var skin = new Skin(name);
 
         WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog").Attachments.ToList().ForEach(att =>
         {
-            if (!overrides.Contains(att.Name))
+            if (!overrides.Any(o => o.Item1 == att.SlotIndex && o.Item2 == att.Name))
             {
                 skin.SetAttachment(att.SlotIndex, att.Name, att.Attachment.Copy());
             }
@@ -219,20 +219,10 @@ internal class SkinManager
 
         for (int i = 0; i < overrides.Count; i++)
         {
-            string or = overrides[i];
-            var slot = SLOTS.First(s => or == s.Item2).Item1;
-            if (or.Contains("LEFT_EYE"))
-            {
-                or = or.Replace("LEFT_EYE", "EYE");
-                slot = 85;
-            }
-            else if (or.Contains("RIGHT_EYE"))
-            {
-                or = or.Replace("RIGHT_EYE", "EYE");
-                slot = 84;
-            }
-            var atlasRegion = customAtlases[name].GetAtlas().FindRegion(or);
-            Attachment a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog").GetAttachment(slot, or).Copy();
+            string ovrName = overrides[i].Item2;
+            var slot = overrides[i].Item1;
+            var atlasRegion = customAtlases[name].GetAtlas().FindRegion(((SlotsEnum)slot).ToString() + ":" + ovrName);
+            Attachment a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog").GetAttachment(slot, ovrName).Copy();
             if (a is MeshAttachment customAttachment)
             {
 
@@ -256,7 +246,7 @@ internal class SkinManager
                     }
                 }
 
-                customAttachment.Name = "Custom" + or;
+                customAttachment.Name = "Custom" + ovrName;
                 customAttachment.SetRegion(atlasRegion);
                 atlasRegion.name = "Custom" + atlasRegion.name;
                 customAttachment.HullLength = 4;
@@ -271,7 +261,7 @@ internal class SkinManager
                 customAttachment.Vertices = new float[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
                 customAttachment.WorldVerticesLength = 8;
 
-                skin.SetAttachment(slot, or, customAttachment);
+                skin.SetAttachment(slot, ovrName, customAttachment);
             }
             else
             {
@@ -303,7 +293,7 @@ internal class SkinManager
     {
         public static void Postfix(ref SkeletonRendererInstruction instructionOutput)
         {
-            if (instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null && instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("Custom")))
+            if (instructionOutput.submeshInstructions.Items[0].skeleton != null && instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null && instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("Custom")))
             {
                 instructionOutput.submeshInstructions.Items[0].material = skinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
             }
