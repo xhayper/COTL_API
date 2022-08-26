@@ -1,11 +1,7 @@
 ﻿using COTL_API.CustomInventory;
 using COTL_API.Helpers;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TMPro;
-using static TMPro.TMP_Text;
 
 namespace COTL_API.Icons;
 
