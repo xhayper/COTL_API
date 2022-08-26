@@ -14,7 +14,6 @@ namespace COTL_API;
 [HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
-    public static string PLUGIN_PATH;
 
     public const string PLUGIN_GUID = "io.github.xhayper.COTL_API";
     public const string PLUGIN_NAME = "COTL API";
@@ -22,6 +21,8 @@ public class Plugin : BaseUnityPlugin
 
     internal readonly static Harmony harmony = new(PLUGIN_GUID);
     internal static ManualLogSource logger;
+
+    internal static string PLUGIN_PATH;
 
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM;
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_2;

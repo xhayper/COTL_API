@@ -10,4 +10,9 @@ public static class PluginPaths
     {
         return Path.Combine((new List<string>() { Plugin.PLUGIN_PATH }).Concat(paths).ToArray());
     }
+
+    public static string ResolveAssetPath(params string[] paths)
+    {
+        return ResolvePath("APIAssets", Path.Combine(paths));
+    }
 }
