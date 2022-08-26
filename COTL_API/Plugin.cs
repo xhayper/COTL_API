@@ -33,6 +33,8 @@ public class Plugin : BaseUnityPlugin
         logger = Logger;
         PLUGIN_PATH = Path.GetDirectoryName(Info.Location);
 
+        DEBUG_CODE.CreateSkin();
+
         DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS());
         DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_2());
         DEBUG_ITEM_3 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_3());
@@ -43,11 +45,6 @@ public class Plugin : BaseUnityPlugin
     private void OnEnable()
     {
         harmony.PatchAll(Assembly.GetExecutingAssembly());
-    }
-
-    private void Start()
-    {
-        DEBUG_CODE.CreateSkin();
     }
 
     private void OnDisable()
