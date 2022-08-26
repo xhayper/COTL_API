@@ -1,12 +1,12 @@
 using System.Runtime.CompilerServices;
 using System.Reflection;
 using BepInEx.Logging;
+using COTL_API.Skins;
+using COTL_API.INDEV;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
 using Lamb.UI;
-using COTL_API.Skins;
-using COTL_API.INDEV;
 
 namespace COTL_API;
 
@@ -53,24 +53,5 @@ public class Plugin : BaseUnityPlugin
     private void OnDisable()
     {
         harmony.UnpatchSelf();
-    }
-
-
-    [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Load))]
-    [HarmonyPostfix]
-    public static void DEBUG_SAVE_AND_LOAD(int saveSlot)
-    {
-        Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
-        Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
-        Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
-    }
-
-    [HarmonyPatch(typeof(InventoryMenu), "OnShowStarted")]
-    [HarmonyPostfix]
-    public static void _____()
-    {
-        Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
-        Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
-        Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
     }
 }

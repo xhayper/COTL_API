@@ -10,4 +10,10 @@
     <ItemGroup>
         <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.0.12-*" />
     </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="LeTai.TranslucentImage" Private="false">
+            <HintPath>../lib/LeTai.TranslucentImage.dll</HintPath>
+        </Reference>
+    </ItemGroup>
 </Project>
