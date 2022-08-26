@@ -5,6 +5,9 @@ using COTL_API.Guid;
 using UnityEngine;
 using System.Linq;
 using HarmonyLib;
+using System.Reflection.Emit;
+using System.Linq;
+using static InventoryItem;
 using Lamb.UI;
 
 namespace COTL_API.CustomInventory;
@@ -59,7 +62,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Name))]
+    [HarmonyPatch(typeof(InventoryItem), "Name")]
     [HarmonyPrefix]
     public static bool InventoryItem_Name(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
