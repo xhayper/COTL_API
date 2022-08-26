@@ -5,8 +5,8 @@ using HarmonyLib;
 using System.IO;
 using BepInEx;
 using Lamb.UI;
-
-[assembly: InternalsVisibleTo("Assembly-CSharp")]
+using COTL_API.Skins;
+using COTL_API.INDEV;
 
 namespace COTL_API;
 
@@ -43,6 +43,11 @@ public class Plugin : BaseUnityPlugin
     private void OnEnable()
     {
         harmony.PatchAll(Assembly.GetExecutingAssembly());
+    }
+
+    private void Start()
+    {
+        DEBUG_CODE.CreateSkin();
     }
 
     private void OnDisable()
