@@ -15,7 +15,7 @@ using Spine;
 
 namespace COTL_API.Skins;
 
-internal class SkinManager
+public class SkinManager
 {
     internal static Dictionary<string, SpineAtlasAsset> customAtlases = new();
     internal static Dictionary<string, Skin> customSkins = new();
