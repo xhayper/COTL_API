@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEngine.TextCore;
+using UnityEngine;
+using TMPro;
 
 namespace COTL_API.Icons
 {
