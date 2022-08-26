@@ -5,8 +5,6 @@ using COTL_API.Guid;
 using UnityEngine;
 using System.Linq;
 using HarmonyLib;
-using System.Reflection.Emit;
-using System.Linq;
 using static InventoryItem;
 using Lamb.UI;
 
