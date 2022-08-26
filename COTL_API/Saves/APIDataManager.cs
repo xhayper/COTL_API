@@ -15,16 +15,16 @@ internal static class APIDataManager
     static APIDataManager()
     {
         COTLDataReadWriter<APIData> dataFileReadWriter = _dataReadWriter;
-        dataFileReadWriter.OnReadCompleted = (Action<APIData>)Delegate.Combine(dataFileReadWriter.OnReadCompleted, delegate (APIData data)
+        dataFileReadWriter.OnReadCompleted += delegate (APIData data)
         {
             apiData = data;
-        });
+        };
 
         COTLDataReadWriter<APIData> dataFileReadWriter2 = _dataReadWriter;
-        dataFileReadWriter2.OnCreateDefault = (Action)Delegate.Combine(dataFileReadWriter2.OnCreateDefault, (Action)delegate
+        dataFileReadWriter2.OnCreateDefault += delegate
         {
             apiData = new();
-        });
+        };
 
         Load();
     }
