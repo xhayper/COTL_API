@@ -17,18 +17,18 @@ public static class ModdedSaveManager
     static ModdedSaveManager()
     {
         COTLDataReadWriter<ModdedSaveData> saveFileReadWriter = _saveDataReadWriter;
-        saveFileReadWriter.OnReadCompleted = (Action<ModdedSaveData>)Delegate.Combine(saveFileReadWriter.OnReadCompleted, delegate (ModdedSaveData data)
+        saveFileReadWriter.OnReadCompleted += delegate (ModdedSaveData data)
         {
             Data = data;
             Loaded = true;
-        });
+        };
 
         COTLDataReadWriter<ModdedSaveData> saveFileReadWriter2 = _saveDataReadWriter;
-        saveFileReadWriter2.OnCreateDefault = (Action)Delegate.Combine(saveFileReadWriter2.OnCreateDefault, (Action)delegate
+        saveFileReadWriter2.OnCreateDefault += delegate
         {
             Data = new();
             Loaded = true;
-        });
+        };
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.ResetSave))]
