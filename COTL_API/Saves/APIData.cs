@@ -4,7 +4,7 @@ namespace COTL_API.Saves;
 
 internal class APIData
 {
-    public Dictionary<string, object> data = new();
+    internal Dictionary<string, object> data = new();
 
     internal T GetValue<T>(string key)
     {
@@ -21,7 +21,7 @@ internal class APIData
         return GetValue<string>(key);
     }
 
-    public int GetValueAsInt(string key)
+    internal int GetValueAsInt(string key)
     {
         long value = GetValueAsLong(key);
 
@@ -34,7 +34,7 @@ internal class APIData
         return (int)value;
     }
 
-    public long GetValueAsLong(string key)
+    internal long GetValueAsLong(string key)
     {
         return GetValue<long>(key);
     }
