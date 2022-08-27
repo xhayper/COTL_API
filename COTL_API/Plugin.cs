@@ -44,9 +44,6 @@ public class Plugin : BaseUnityPlugin
 
         DEBUG_FOLLOWER_COMMAND = CustomFollowerCommand.CustomFollowerCommandManager.Add(new INDEV.DEBUG_FOLLOWER_COMMAND_CLASS());
         DEBUG_FOLLOWER_COMMAND_2 = CustomFollowerCommand.CustomFollowerCommandManager.Add(new INDEV.DEBUG_FOLLOWER_COMMAND_CLASS_2());
-
-        CustomTarotCard.CustomTarotCardManager.Add(new INDEV.DEBUG_TAROT_CARD());
-        
         
         DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS());
         DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS_2());
