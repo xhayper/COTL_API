@@ -166,9 +166,11 @@ public class CustomTarotCard
         return 0f;
     }
 
+    public virtual void OnPickup() {}
+
     public CustomTarotCard()
     {
-        Skin = "TarotCards/placeholder";
+        Skin = TarotCards.Skin(TarotCards.Card.Hearts1);
         TarotCardWeight = 100;
         MaxTarotCardLevel = 0;
         AnimationSuffix = "sword";
