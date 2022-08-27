@@ -1,6 +1,5 @@
 using COTL_API.Helpers;
 using UnityEngine;
-using System.IO;
 using I2.Loc;
 
 namespace COTL_API.CustomInventory;
@@ -20,9 +19,9 @@ public class CustomInventoryItem
     public virtual string Name() { return LocalizedName(); }
     public virtual string Lore() { return LocalizedLore(); }
     public virtual string Description() { return LocalizedDescription(); }
-    public virtual string LocalizedName() { return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}", true, 0, true, false, null, null, true); }
-    public virtual string LocalizedLore() { return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Lore", true, 0, true, false, null, null, true); }
-    public virtual string LocalizedDescription() { return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Description", true, 0, true, false, null, null, true); }
+    public virtual string LocalizedName() { return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}"); }
+    public virtual string LocalizedLore() { return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Lore"); }
+    public virtual string LocalizedDescription() { return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Description"); }
 
     public virtual int FuelWeight { get; set; }
     public virtual int FoodSatitation { get; set; }
@@ -56,8 +55,6 @@ public class CustomInventoryItem
 
         CanBeGivenToFollower = false;
 
-        var tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
-        tex.LoadImage(Properties.Resources.missing_texture);
-        InventoryIcon = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2, tex.height / 2));
+        InventoryIcon = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
     }
 }

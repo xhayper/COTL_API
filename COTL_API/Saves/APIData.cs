@@ -4,11 +4,11 @@ namespace COTL_API.Saves;
 
 internal class APIData
 {
-    public Dictionary<string, object> data = new();
+    internal Dictionary<string, object> data = new();
 
     internal T GetValue<T>(string key)
     {
-        data ??= new();
+        data ??= new Dictionary<string, object>();
 
         if (!data.ContainsKey(key))
             data.Add(key, default(T));
@@ -21,20 +21,18 @@ internal class APIData
         return GetValue<string>(key);
     }
 
-    public int GetValueAsInt(string key)
+    internal int GetValueAsInt(string key)
     {
         long value = GetValueAsLong(key);
 
-        if (value > int.MaxValue)
-            return int.MaxValue;
-
-        if (value < int.MinValue)
-            return int.MinValue;
-
-        return (int)value;
+        return value switch {
+            > int.MaxValue => int.MaxValue,
+            < int.MinValue => int.MinValue,
+            _ => (int)value
+        };
     }
 
-    public long GetValueAsLong(string key)
+    internal long GetValueAsLong(string key)
     {
         return GetValue<long>(key);
     }
@@ -51,8 +49,7 @@ internal class APIData
 
     internal void SetValue<T>(string key, T value)
     {
-        if (data == null)
-            data = new();
+        data ??= new Dictionary<string, object>();
 
         if (!data.ContainsKey(key))
             data.Add(key, value);

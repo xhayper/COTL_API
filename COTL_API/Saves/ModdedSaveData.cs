@@ -8,7 +8,7 @@ public class ModdedSaveData
 
     public T GetValue<T>(string guid, string key)
     {
-        SaveData ??= new();
+        SaveData ??= new Dictionary<string, Dictionary<string, object>>();
 
         if (!SaveData.ContainsKey(guid))
             SaveData.Add(guid, new());
@@ -28,13 +28,11 @@ public class ModdedSaveData
     {
         long value = GetValueAsLong(guid, key);
 
-        if (value > int.MaxValue)
-            return int.MaxValue;
-
-        if (value < int.MinValue)
-            return int.MinValue;
-
-        return (int)value;
+        return value switch {
+            > int.MaxValue => int.MaxValue,
+            < int.MinValue => int.MinValue,
+            _ => (int)value
+        };
     }
 
     public long GetValueAsLong(string guid, string key)
@@ -54,7 +52,7 @@ public class ModdedSaveData
 
     public void SetValue<T>(string guid, string key, T value)
     {
-        SaveData ??= new();
+        SaveData ??= new Dictionary<string, Dictionary<string, object>>();
 
         if (!SaveData.ContainsKey(guid))
             SaveData.Add(guid, new());
