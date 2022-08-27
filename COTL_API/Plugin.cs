@@ -27,8 +27,10 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_2;
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_3;
 
+    internal static FollowerCommands DEBUG_FOLLOWER_COMMAND;
+    internal static FollowerCommands DEBUG_FOLLOWER_COMMAND_2;
+    
     private static ConfigEntry<bool> _debugEnabled;
-
     internal static bool DebugEnabled => _debugEnabled.Value;
 
     private void Awake()
@@ -39,6 +41,9 @@ public class Plugin : BaseUnityPlugin
         _debugEnabled = Config.Bind("", "debug", false, "");
 
         if (!DebugEnabled) return;
+
+        DEBUG_FOLLOWER_COMMAND = CustomFollowerCommand.CustomFollowerCommandManager.Add(new INDEV.DEBUG_FOLLOWER_COMMAND_CLASS());
+        DEBUG_FOLLOWER_COMMAND_2 = CustomFollowerCommand.CustomFollowerCommandManager.Add(new INDEV.DEBUG_FOLLOWER_COMMAND_CLASS_2());
         
         DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS());
         DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS_2());
