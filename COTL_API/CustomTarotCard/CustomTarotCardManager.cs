@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Reflection;
+using src.Extensions;
 using COTL_API.Guid;
 using HarmonyLib;
+using Lamb.UI;
 
 namespace COTL_API.CustomTarotCard;
 
@@ -21,6 +23,52 @@ public class CustomTarotCardManager
         customTarotCards.Add(cardType, card);
 
         return cardType;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    [HarmonyPatch(typeof(UIManager), nameof(UIManager.ShowTarotChoice))]
+    [HarmonyPrefix]
+    public static bool UIManager_ShowTarotChoice(UIManager __instance, TarotCards.TarotCard card1, TarotCards.TarotCard card2, ref UITarotChoiceOverlayController __result)
+    {
+        if (!customTarotCards.ContainsKey(card1.CardType) && !customTarotCards.ContainsKey(card2.CardType)) return true;
+
+        var uiTarotChoiceOverlayController = __instance.TarotChoiceOverlayTemplate.Instantiate<UITarotChoiceOverlayController>();
+        uiTarotChoiceOverlayController.Show(card1, card2, false);
+        __instance.SetMenuInstance(uiTarotChoiceOverlayController, 1f, false);
+
+        uiTarotChoiceOverlayController.OnTarotCardSelected += delegate (TarotCards.TarotCard obj)
+        {
+            if (!customTarotCards.ContainsKey(obj.CardType)) return;
+
+            customTarotCards[obj.CardType].OnPickup();
+        };
+
+        __result = uiTarotChoiceOverlayController;
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(UIWeaponCard), nameof(UIWeaponCard.Play))]
+    [HarmonyPostfix]
+    public static void UIWeaponCard_Play(UIWeaponCard __instance, TarotCards.TarotCard Card)
+    {
+        if (!customTarotCards.ContainsKey(Card.CardType)) return;
+
+        __instance.NameText.text = customTarotCards[Card.CardType].LocalisedName();
+        __instance.SubtitleText.text = customTarotCards[Card.CardType].LocalisedLore();
+        __instance.EffectText.text = customTarotCards[Card.CardType].LocalisedDescription();
+    }
+    
+    [HarmonyPatch(typeof(UIWeaponCard), nameof(UIWeaponCard.Show))]
+    [HarmonyPostfix]
+    public static void UIWeaponCard_Show(UIWeaponCard __instance, TarotCards.TarotCard Card)
+    {
+        if (!customTarotCards.ContainsKey(Card.CardType)) return;
+
+        __instance.NameText.text = customTarotCards[Card.CardType].LocalisedName();
+        __instance.SubtitleText.text = customTarotCards[Card.CardType].LocalisedLore();
+        __instance.EffectText.text = customTarotCards[Card.CardType].LocalisedDescription();
     }
 
     [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.GetCardCategory))]
