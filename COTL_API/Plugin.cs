@@ -38,7 +38,7 @@ public class Plugin : BaseUnityPlugin
         logger = Logger;
         PLUGIN_PATH = Path.GetDirectoryName(Info.Location);
 
-        _debugEnabled = Config.Bind("Debug", "Enable Debug Mode", false, "");
+        _debugEnabled = Config.Bind("", "debug", false, "");
 
         if (debugEnabled)
         {
