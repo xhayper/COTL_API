@@ -30,16 +30,15 @@ public class CustomItemManager
 
     // Patch `ItemInfoCard` not using `InventoryItem`'s method
     [HarmonyPatch(typeof(ItemInfoCard), nameof(ItemInfoCard.Configure))]
-    [HarmonyPrefix]
-    public static bool ItemInfoCard_Configure(ItemInfoCard __instance, InventoryItem.ITEM_TYPE config)
+    [HarmonyPostfix]
+    public static void ItemInfoCard_Configure(ItemInfoCard __instance, InventoryItem.ITEM_TYPE config)
     {
-        if (!customItems.ContainsKey(config)) return true;
+        if (!customItems.ContainsKey(config)) return;
 
         __instance._inventoryIcon.Configure(config, false);
         __instance._itemHeader.text = InventoryItem.Name(config);
         __instance._itemLore.text = InventoryItem.Lore(config);
         __instance._itemDescription.text = InventoryItem.Description(config);
-        return false;
     }
 
     [HarmonyPatch(typeof(FontImageNames), nameof(FontImageNames.GetIconByType))]
