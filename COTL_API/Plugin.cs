@@ -9,6 +9,7 @@ using BepInEx;
 namespace COTL_API;
 
 [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
+// [BepInProcess("Cult Of The Lamb.exe")] // To be decided
 [HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
