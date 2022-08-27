@@ -29,20 +29,13 @@ public class CustomTarotCard
     public virtual string LocalisedName(int upgradeIndex)
     {
         string text = "";
-        for (int i = 0; i < upgradeIndex; i++)
-        {
-            text += "+";
-        }
-        string text2 = "";
-        switch (upgradeIndex)
-        {
-            case 1:
-                text2 = "<color=green>";
-                break;
-            case 2:
-                text2 = "<color=purple>";
-                break;
-        }
+        for (int i = 0; i < upgradeIndex; i++) text += "+";
+
+        string text2 = upgradeIndex switch {
+            1 => "<color=green>",
+            2 => "<color=purple>",
+            _ => ""
+        };
         return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name") + text + "</color>";
     }
 
@@ -51,11 +44,9 @@ public class CustomTarotCard
         int upgradeIndex = 0;
         foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
         {
-            if (playerRunTrinket.CardType == CardType)
-            {
-                upgradeIndex = playerRunTrinket.UpgradeIndex;
-                break;
-            }
+            if (playerRunTrinket.CardType != CardType) continue;
+            upgradeIndex = playerRunTrinket.UpgradeIndex;
+            break;
         }
         return LocalisedDescription(upgradeIndex);
     }
@@ -166,9 +157,11 @@ public class CustomTarotCard
         return 0f;
     }
 
+    public virtual void OnPickup() {}
+
     public CustomTarotCard()
     {
-        Skin = "Template/Default";
+        Skin = TarotCards.Skin(TarotCards.Card.Hearts1);
         TarotCardWeight = 100;
         MaxTarotCardLevel = 0;
         AnimationSuffix = "sword";
