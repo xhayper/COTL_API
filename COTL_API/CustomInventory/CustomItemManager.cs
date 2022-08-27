@@ -35,10 +35,9 @@ public class CustomItemManager
     {
         if (!customItems.ContainsKey(config)) return;
 
-        __instance._inventoryIcon.Configure(config, false);
-        __instance._itemHeader.text = InventoryItem.Name(config);
-        __instance._itemLore.text = InventoryItem.Lore(config);
-        __instance._itemDescription.text = InventoryItem.Description(config);
+        __instance._itemHeader.text = customItems[config].Name();
+        __instance._itemLore.text = customItems[config].Lore();
+        __instance._itemDescription.text = customItems[config].Description();
     }
 
     [HarmonyPatch(typeof(FontImageNames), nameof(FontImageNames.GetIconByType))]
