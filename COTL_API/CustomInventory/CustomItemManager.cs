@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using static InventoryItem;
 using System.Reflection;
 using COTL_API.Guid;
 using UnityEngine;

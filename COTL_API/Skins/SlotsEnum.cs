@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace COTL_API.Skins;
+﻿namespace COTL_API.Skins;
 
 public enum SlotsEnum
 {

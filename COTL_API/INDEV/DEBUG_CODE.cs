@@ -26,7 +26,7 @@ public class DEBUG_CODE
     [HarmonyPrefix]
     public static void InventoryMenu_OnShowStarted(Lamb.UI.InventoryMenu __instance)
     {
-        if (!Plugin.debug) return;
+        if (!Plugin.debugEnabled) return;
 
         Inventory.AddItem(Plugin.DEBUG_ITEM, 1, true);
         Inventory.AddItem(Plugin.DEBUG_ITEM_2, 1, true);
@@ -37,7 +37,7 @@ public class DEBUG_CODE
     [HarmonyPrefix]
     public static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance, TarotCards.TarotCard card1, TarotCards.TarotCard card2, bool instant)
     {
-        if (!Plugin.debug) return true;
+        if (!Plugin.debugEnabled) return true;
 
         __instance._card1 = GetRandModdedCard();
         __instance._card2 = GetRandModdedCard();

@@ -26,10 +26,10 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_2;
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_3;
 
-    internal static ConfigEntry<bool> debugConfigEntry;
+    private static ConfigEntry<bool> _debugEnabled;
 
-    internal static bool debug {
-        get => debugConfigEntry.Value;
+    internal static bool debugEnabled {
+        get => _debugEnabled.Value;
     }
 
     private void Awake()
@@ -37,9 +37,9 @@ public class Plugin : BaseUnityPlugin
         logger = Logger;
         PLUGIN_PATH = Path.GetDirectoryName(Info.Location);
 
-        debugConfigEntry = Config.Bind("Debug", "Enable Debug Mode", false, "Debug mode used for COTL API dev to test stuff");
+        _debugEnabled = Config.Bind("Debug", "Enable Debug Mode", false, "");
 
-        if (debug)
+        if (debugEnabled)
         {
             DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS());
             DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_2());
