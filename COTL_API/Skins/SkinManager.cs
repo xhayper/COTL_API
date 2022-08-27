@@ -11,6 +11,7 @@ using Spine;
 
 namespace COTL_API.Skins;
 
+[HarmonyPatch]
 public class SkinManager
 {
     internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = new();
