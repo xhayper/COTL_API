@@ -1,12 +1,10 @@
-using System.Runtime.CompilerServices;
+using BepInEx.Configuration;
 using System.Reflection;
 using BepInEx.Logging;
-using COTL_API.Skins;
 using COTL_API.INDEV;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
-using Lamb.UI;
 
 namespace COTL_API;
 
@@ -28,18 +26,29 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_2;
     internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_3;
 
+    internal static ConfigEntry<bool> debugConfigEntry;
+
+    internal static bool debug {
+        get => debugConfigEntry.Value;
+    }
+
     private void Awake()
     {
         logger = Logger;
         PLUGIN_PATH = Path.GetDirectoryName(Info.Location);
 
-        DEBUG_CODE.CreateSkin();
+        debugConfigEntry = Config.Bind("Debug", "Enable Debug Mode", false, "Debug mode used for COTL API dev to test stuff");
 
-        DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS());
-        DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_2());
-        DEBUG_ITEM_3 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_3());
+        if (debug)
+        {
+            DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS());
+            DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_2());
+            DEBUG_ITEM_3 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_3());
 
-        CustomTarotCard.CustomTarotCardManager.Add(new INDEV.DEBUG_TAROT_CARD());
+            CustomTarotCard.CustomTarotCardManager.Add(new INDEV.DEBUG_TAROT_CARD());
+
+            DEBUG_CODE.CreateSkin();
+        }
     }
 
     private void OnEnable()
