@@ -1,14 +1,10 @@
 ﻿using static Spine.Unity.AttachmentTools.AttachmentRegionExtensions;
 using LeTai.Asset.TranslucentImage;
 using System.Collections.Generic;
-using static WorshipperData;
 using Spine.Unity;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using HarmonyLib;
-using System.IO;
-using BepInEx;
 using Lamb.UI;
 using System;
 using Spine;
