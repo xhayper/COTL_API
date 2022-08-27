@@ -22,7 +22,7 @@ internal static class APIDataManager
         COTLDataReadWriter<APIData> dataFileReadWriter2 = _dataReadWriter;
         dataFileReadWriter2.OnCreateDefault += delegate
         {
-            apiData = new();
+            apiData = new APIData();
         };
 
         Load();
