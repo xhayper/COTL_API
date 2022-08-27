@@ -48,18 +48,14 @@ public class DEBUG_CODE
     }
     internal static TarotCards.TarotCard GetRandModdedCard()
     {
-        return new TarotCards.TarotCard(CustomTarotCardManager.CustomTarotCards.Keys.ElementAt(Random.Range(0, CustomTarotCardManager.CustomTarotCards.Count)), 0); ;
+        return new TarotCards.TarotCard(CustomTarotCardManager.CustomTarotCards.Keys.ElementAt(Random.Range(0, CustomTarotCardManager.CustomTarotCards.Count)), 0);
     }
     internal static int getTarotMult(TarotCards.Card obj)
     {
         int mult = 0;
-        if (DataManager.Instance.dungeonRun >= 5)
-        {
-            while (Random.Range(0f, 1f) < 0.275f * DataManager.Instance.GetLuckMultiplier())
-            {
-                mult++;
-            }
-        }
+        if (DataManager.Instance.dungeonRun < 5) return Mathf.Min(mult, TarotCards.GetMaxTarotCardLevel(obj));
+        
+        while (Random.Range(0f, 1f) < 0.275f * DataManager.Instance.GetLuckMultiplier()) mult++;
 
         return Mathf.Min(mult, TarotCards.GetMaxTarotCardLevel(obj));
     }

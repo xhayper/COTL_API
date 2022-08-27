@@ -200,7 +200,7 @@ public class SkinManager
     internal static void CreateSkin(string name, List<Tuple<int, string>> overrides)
     {
         // Create skin
-        var skin = new Skin(name);
+        Skin skin = new(name);
 
         WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog").Attachments.ToList().ForEach(att =>
         {
