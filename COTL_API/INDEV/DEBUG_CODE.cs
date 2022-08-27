@@ -14,17 +14,16 @@ public class DEBUG_CODE
 {
     public static void CreateSkin()
     {
-        var customTex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-        byte[] imgBytes = File.ReadAllBytes(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
-        customTex.LoadImage(imgBytes);
-        var atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
+        Texture2D customTex =
+            TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
+        string atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
 
         SkinManager.AddCustomSkin("Test", customTex, atlasText);
     }
 
-    [HarmonyPatch(typeof(Lamb.UI.InventoryMenu), "OnShowStarted")]
+    [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
     [HarmonyPrefix]
-    public static void InventoryMenu_OnShowStarted(Lamb.UI.InventoryMenu __instance)
+    public static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
     {
         if (!Plugin.DebugEnabled) return;
 
@@ -33,7 +32,7 @@ public class DEBUG_CODE
         Inventory.AddItem(Plugin.DEBUG_ITEM_3, 1, true);
     }
 
-    [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show), new System.Type[] { typeof(TarotCards.TarotCard), typeof(TarotCards.TarotCard), typeof(bool) })]
+    [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show), new[] { typeof(TarotCards.TarotCard), typeof(TarotCards.TarotCard), typeof(bool) })]
     [HarmonyPrefix]
     public static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance, TarotCards.TarotCard card1, TarotCards.TarotCard card2, bool instant)
     {

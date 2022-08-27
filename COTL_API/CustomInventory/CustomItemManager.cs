@@ -48,7 +48,8 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(Lamb.UI.Assets.InventoryIconMapping), nameof(Lamb.UI.Assets.InventoryIconMapping.GetImage), typeof(InventoryItem.ITEM_TYPE))]
+    [HarmonyPatch(typeof(Lamb.UI.Assets.InventoryIconMapping), nameof(Lamb.UI.Assets.InventoryIconMapping.GetImage),
+        typeof(InventoryItem.ITEM_TYPE))]
     [HarmonyPrefix]
     public static bool InventoryIconMapping_GetImage(InventoryItem.ITEM_TYPE type, ref Sprite __result)
     {
@@ -57,7 +58,7 @@ public class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), "Name")]
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Name))]
     [HarmonyPrefix]
     public static bool InventoryItem_Name(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
@@ -104,7 +105,8 @@ public class CustomItemManager
 
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.GetItemCategory))]
     [HarmonyPrefix]
-    public static bool InventoryItem_ItemCategory(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_CATEGORIES __result)
+    public static bool InventoryItem_ItemCategory(InventoryItem.ITEM_TYPE type,
+        ref InventoryItem.ITEM_CATEGORIES __result)
     {
         if (!CustomItems.ContainsKey(type)) return true;
         __result = CustomItems[type].ItemCategory;
@@ -184,13 +186,12 @@ public class CustomItemManager
     }
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllFoods))]
-    public static class CookingData_GetAllFoods_Patch
+    [HarmonyPostfix]
+    public static void CookingData_GetAllFoods(ref InventoryItem.ITEM_TYPE[] __result)
     {
-        public static void Postfix(ref InventoryItem.ITEM_TYPE[] __result)
-        {
-            InventoryItem.ITEM_TYPE[] copy = __result;
-            __result = __result.Concat((CustomItems.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key))).ToArray();
-        }
+        InventoryItem.ITEM_TYPE[] copy = __result;
+        __result = __result.Concat((CustomItems.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key)))
+            .ToArray();
     }
 
     [HarmonyPatch(typeof(InventoryMenu))]
@@ -204,14 +205,18 @@ public class CustomItemManager
             {
                 yield return instruction;
 
-                if (instruction.LoadsField(typeof(InventoryMenu).GetField("_currencyFilter", BindingFlags.NonPublic | BindingFlags.Instance)))
-                    yield return new CodeInstruction(OpCodes.Call, SymbolExtensions.GetMethodInfo(() => AppendCustomCurrencies(null)));
+                if (instruction.LoadsField(typeof(InventoryMenu).GetField("_currencyFilter",
+                        BindingFlags.NonPublic | BindingFlags.Instance)))
+                    yield return new CodeInstruction(OpCodes.Call,
+                        SymbolExtensions.GetMethodInfo(() => AppendCustomCurrencies(null)));
             }
         }
 
-        internal static List<InventoryItem.ITEM_TYPE> AppendCustomCurrencies(List<InventoryItem.ITEM_TYPE> currencyFilter)
+        internal static List<InventoryItem.ITEM_TYPE> AppendCustomCurrencies(
+            List<InventoryItem.ITEM_TYPE> currencyFilter)
         {
-            return currencyFilter.Concat(CustomItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency).Select(i => i.Key)).ToList();
+            return currencyFilter.Concat(CustomItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency)
+                .Select(i => i.Key)).ToList();
         }
     }
 }
