@@ -25,7 +25,7 @@ public static class ModdedSaveManager
         COTLDataReadWriter<ModdedSaveData> saveFileReadWriter2 = _saveDataReadWriter;
         saveFileReadWriter2.OnCreateDefault += delegate
         {
-            Data = new();
+            Data = new ModdedSaveData();
             Loaded = true;
         };
     }
@@ -35,7 +35,7 @@ public static class ModdedSaveManager
     public static void ResetSave(int saveSlot, bool newGame)
     {
         SAVE_SLOT = saveSlot;
-        Data = new();
+        Data = new ModdedSaveData();
         if (!newGame) Save();
         Loaded = true;
     }

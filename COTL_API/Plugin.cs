@@ -29,7 +29,7 @@ public class Plugin : BaseUnityPlugin
 
     private static ConfigEntry<bool> _debugEnabled;
 
-    internal static bool debugEnabled {
+    internal static bool DebugEnabled {
         get => _debugEnabled.Value;
     }
 
@@ -40,16 +40,15 @@ public class Plugin : BaseUnityPlugin
 
         _debugEnabled = Config.Bind("", "debug", false, "");
 
-        if (debugEnabled)
-        {
-            DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS());
-            DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_2());
-            DEBUG_ITEM_3 = CustomInventory.CustomItemManager.Add(new INDEV.DEBUG_ITEM_CLASS_3());
+        if (!DebugEnabled) return;
+        
+        DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS());
+        DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS_2());
+        DEBUG_ITEM_3 = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS_3());
 
-            CustomTarotCard.CustomTarotCardManager.Add(new INDEV.DEBUG_TAROT_CARD());
+        CustomTarotCard.CustomTarotCardManager.Add(new DEBUG_TAROT_CARD());
 
-            DEBUG_CODE.CreateSkin();
-        }
+        DEBUG_CODE.CreateSkin();
     }
 
     private void OnEnable()

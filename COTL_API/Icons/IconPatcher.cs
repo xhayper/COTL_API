@@ -12,19 +12,16 @@ public class IconPatcher
     [HarmonyPrefix]
     public static bool TMP_SpriteAsset_SearchForSpriteByHashCode(TMP_SpriteAsset spriteAsset, int hashCode, bool includeFallbacks, ref int spriteIndex, ref TMP_SpriteAsset __result)
     {
-        if (spriteAsset == null)
-        {
-            return true;
-        }
-        foreach (CustomInventoryItem item in CustomItemManager.customItems.Values)
+        if (spriteAsset == null) return true;
+        
+        foreach (CustomInventoryItem item in CustomItemManager.CustomItems.Values)
         {
             string name = $"icon_{item.ModPrefix}.${item.InternalName}";
-            if (hashCode == HashCode.GetValueHashCode(name))
-            {
-                spriteIndex = 0;
-                __result = IconManager.GetIcon(item.InventoryIcon, name, spriteAsset.material.shader, hashCode);
-                return false;
-            }
+            if (hashCode != HashCode.GetValueHashCode(name)) continue;
+            
+            spriteIndex = 0;
+            __result = IconManager.GetIcon(item.InventoryIcon, name, spriteAsset.material.shader, hashCode);
+            return false;
         }
         return true;
     }

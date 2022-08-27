@@ -8,7 +8,7 @@ internal class APIData
 
     internal T GetValue<T>(string key)
     {
-        data ??= new();
+        data ??= new Dictionary<string, object>();
 
         if (!data.ContainsKey(key))
             data.Add(key, default(T));
@@ -25,13 +25,11 @@ internal class APIData
     {
         long value = GetValueAsLong(key);
 
-        if (value > int.MaxValue)
-            return int.MaxValue;
-
-        if (value < int.MinValue)
-            return int.MinValue;
-
-        return (int)value;
+        return value switch {
+            > int.MaxValue => int.MaxValue,
+            < int.MinValue => int.MinValue,
+            _ => (int)value
+        };
     }
 
     internal long GetValueAsLong(string key)
@@ -51,8 +49,7 @@ internal class APIData
 
     internal void SetValue<T>(string key, T value)
     {
-        if (data == null)
-            data = new();
+        data ??= new Dictionary<string, object>();
 
         if (!data.ContainsKey(key))
             data.Add(key, value);

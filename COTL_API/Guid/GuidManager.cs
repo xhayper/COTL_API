@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using COTL_API.Saves;
+using System.Linq;
 using System;
 
 namespace COTL_API.Guid;
@@ -11,7 +12,7 @@ public static class GuidManager
         return $"{guid}_{value}";
     }
 
-    private static readonly Dictionary<int, Type> reverseMapper = new();
+    private static readonly Dictionary<int, Type> ReverseMapper = new();
 
     public const int START_INDEX = 5000;
 
@@ -19,25 +20,22 @@ public static class GuidManager
 
     public static Type GetEnumType(int number)
     {
-        reverseMapper.TryGetValue(number, out var res);
+        ReverseMapper.TryGetValue(number, out var res);
         return res;
     }
 
     unsafe public static List<T> GetValues<T>() where T : unmanaged, Enum
     {
-        List<T> itemList = new();
-        foreach (T item in Enum.GetValues(typeof(T)))
-            itemList.Add(item);
+        List<T> itemList = Enum.GetValues(typeof(T)).Cast<T>().ToList();
 
         string startKey = typeof(T).Name + "_";
         foreach (var item in APIDataManager.apiData.data)
         {
-            if (item.Key.StartsWith(startKey))
-            {
-                int enumVal = int.Parse((string)item.Value);
-                T convertedEnumVal = *(T*)&enumVal;
-                itemList.Add(convertedEnumVal);
-            }
+            if (!item.Key.StartsWith(startKey)) continue;
+            
+            int enumVal = int.Parse((string)item.Value);
+            T convertedEnumVal = *(T*)&enumVal;
+            itemList.Add(convertedEnumVal);
         }
 
         return itemList;
@@ -46,7 +44,8 @@ public static class GuidManager
     unsafe public static T GetEnumValue<T>(string guid, string value) where T : unmanaged, Enum
     {
         if (sizeof(T) != sizeof(int))
-            throw new NotSupportedException($"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");
+            throw new NotSupportedException(
+                $"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");
 
         string saveKey = $"{typeof(T).Name}_{guid}_{value}";
 
@@ -64,7 +63,7 @@ public static class GuidManager
             APIDataManager.Save();
         }
 
-        reverseMapper[enumValue] = typeof(T);
+        ReverseMapper[enumValue] = typeof(T);
 
         return *(T*)&enumValue;
     }

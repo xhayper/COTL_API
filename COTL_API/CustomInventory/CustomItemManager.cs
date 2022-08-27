@@ -12,17 +12,17 @@ namespace COTL_API.CustomInventory;
 [HarmonyPatch]
 public class CustomItemManager
 {
-    public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> customItems = new();
+    public static readonly Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItems = new();
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
-        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+        string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        var itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(guid, item.InternalName);
+        InventoryItem.ITEM_TYPE itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(guid, item.InternalName);
         item.ItemType = itemType;
         item.ModPrefix = guid;
 
-        customItems.Add(itemType, item);
+        CustomItems.Add(itemType, item);
 
         return itemType;
     }
@@ -32,19 +32,19 @@ public class CustomItemManager
     [HarmonyPostfix]
     public static void ItemInfoCard_Configure(ItemInfoCard __instance, InventoryItem.ITEM_TYPE config)
     {
-        if (!customItems.ContainsKey(config)) return;
+        if (!CustomItems.ContainsKey(config)) return;
 
-        __instance._itemHeader.text = customItems[config].Name();
-        __instance._itemLore.text = customItems[config].Lore();
-        __instance._itemDescription.text = customItems[config].Description();
+        __instance._itemHeader.text = CustomItems[config].Name();
+        __instance._itemLore.text = CustomItems[config].Lore();
+        __instance._itemDescription.text = CustomItems[config].Description();
     }
 
     [HarmonyPatch(typeof(FontImageNames), nameof(FontImageNames.GetIconByType))]
     [HarmonyPrefix]
     public static bool FontImageNames_GetIconByType(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = $"<sprite name=\"icon_{customItems[Type].ModPrefix}.${customItems[Type].InternalName}\">";
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = $"<sprite name=\"icon_{CustomItems[Type].ModPrefix}.${CustomItems[Type].InternalName}\">";
         return false;
     }
 
@@ -52,8 +52,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryIconMapping_GetImage(InventoryItem.ITEM_TYPE type, ref Sprite __result)
     {
-        if (!customItems.ContainsKey(type)) return true;
-        __result = customItems[type].InventoryIcon;
+        if (!CustomItems.ContainsKey(type)) return true;
+        __result = CustomItems[type].InventoryIcon;
         return false;
     }
 
@@ -61,8 +61,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_Name(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].Name();
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].Name();
         return false;
     }
 
@@ -70,8 +70,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_LocalizedName(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].LocalizedName();
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].LocalizedName();
         return false;
     }
 
@@ -79,8 +79,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_Description(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].Description();
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].Description();
         return false;
     }
 
@@ -88,8 +88,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_LocalizedDescription(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].LocalizedDescription();
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].LocalizedDescription();
         return false;
     }
 
@@ -97,8 +97,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_Lore(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].Lore();
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].Lore();
         return false;
     }
 
@@ -106,8 +106,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_ItemCategory(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_CATEGORIES __result)
     {
-        if (!customItems.ContainsKey(type)) return true;
-        __result = customItems[type].ItemCategory;
+        if (!CustomItems.ContainsKey(type)) return true;
+        __result = CustomItems[type].ItemCategory;
         return false;
     }
 
@@ -115,8 +115,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_GetSeedType(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_TYPE __result)
     {
-        if (!customItems.ContainsKey(type)) return true;
-        __result = customItems[type].SeedType;
+        if (!CustomItems.ContainsKey(type)) return true;
+        __result = CustomItems[type].SeedType;
         return false;
     }
 
@@ -124,8 +124,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_FuelWeight(InventoryItem.ITEM_TYPE type, ref int __result)
     {
-        if (!customItems.ContainsKey(type)) return true;
-        __result = customItems[type].FuelWeight;
+        if (!CustomItems.ContainsKey(type)) return true;
+        __result = CustomItems[type].FuelWeight;
         return false;
     }
 
@@ -133,8 +133,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_FoodSatitation(InventoryItem.ITEM_TYPE Type, ref int __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].FoodSatitation;
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].FoodSatitation;
         return false;
     }
 
@@ -142,8 +142,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_IsFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].IsFish;
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].IsFish;
         return false;
     }
 
@@ -151,8 +151,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_IsFood(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].IsFood;
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].IsFood;
         return false;
     }
 
@@ -160,8 +160,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_IsBigFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].IsBigFish;
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].IsBigFish;
         return false;
     }
 
@@ -169,8 +169,8 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_CanBeGivenToFollower(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
-        if (!customItems.ContainsKey(Type)) return true;
-        __result = customItems[Type].IsBigFish;
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].IsBigFish;
         return false;
     }
 
@@ -178,18 +178,18 @@ public class CustomItemManager
     [HarmonyPrefix]
     public static bool InventoryItem_CapacityString(InventoryItem.ITEM_TYPE type, int minimum, ref string __result)
     {
-        if (!customItems.ContainsKey(type)) return true;
-        __result = customItems[type].CapacityString(minimum);
+        if (!CustomItems.ContainsKey(type)) return true;
+        __result = CustomItems[type].CapacityString(minimum);
         return false;
     }
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllFoods))]
     public static class CookingData_GetAllFoods_Patch
     {
-        static void Postfix(ref InventoryItem.ITEM_TYPE[] __result)
+        public static void Postfix(ref InventoryItem.ITEM_TYPE[] __result)
         {
             InventoryItem.ITEM_TYPE[] copy = __result;
-            __result = __result.Concat((customItems.Where((i) => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key))).ToArray();
+            __result = __result.Concat((CustomItems.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key))).ToArray();
         }
     }
 
@@ -200,20 +200,18 @@ public class CustomItemManager
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> OnShowStarted(IEnumerable<CodeInstruction> instructions)
         {
-            foreach (var instruction in instructions)
+            foreach (CodeInstruction instruction in instructions)
             {
                 yield return instruction;
 
                 if (instruction.LoadsField(typeof(InventoryMenu).GetField("_currencyFilter", BindingFlags.NonPublic | BindingFlags.Instance)))
-                {
                     yield return new CodeInstruction(OpCodes.Call, SymbolExtensions.GetMethodInfo(() => AppendCustomCurrencies(null)));
-                }
             }
         }
 
         internal static List<InventoryItem.ITEM_TYPE> AppendCustomCurrencies(List<InventoryItem.ITEM_TYPE> currencyFilter)
         {
-            return currencyFilter.Concat(customItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency).Select(i => i.Key)).ToList();
+            return currencyFilter.Concat(CustomItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency).Select(i => i.Key)).ToList();
         }
     }
 }

@@ -13,13 +13,12 @@ namespace COTL_API.Skins;
 
 public class SkinManager
 {
-    internal static Dictionary<string, SpineAtlasAsset> customAtlases = new();
-    internal static Dictionary<string, Skin> customSkins = new();
-    internal static Dictionary<string, Texture> skinTextures = new();
-    internal static Dictionary<string, Material> skinMaterials = new();
+    internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = new();
+    internal static readonly Dictionary<string, Skin> CustomSkins = new();
+    internal static readonly Dictionary<string, Texture> SkinTextures = new();
+    internal static readonly Dictionary<string, Material> SkinMaterials = new();
 
-    internal static readonly List<Tuple<int, string>> SLOTS = new List<Tuple<int, string>>()
-    {
+    internal static readonly List<Tuple<int, string>> Slots = new() {
         Tuple.Create(38, "ARM_LEFT_SKIN"),
         Tuple.Create(39, "Body/SleeveLeft"),
         Tuple.Create(49, "WEAPON_HAND_SKIN"),
@@ -160,34 +159,32 @@ public class SkinManager
 
     public static void AddCustomSkin(string name, Texture2D sheet, string atlasText)
     {
-
         sheet.name = atlasText.Replace("\r", "").Split('\n')[1].Trim();
-        skinTextures.Add(name, sheet);
+        SkinTextures.Add(name, sheet);
 
-        Material mat = new Material(Shader.Find("Spine/Skeleton"));
-        mat.mainTexture = sheet;
-        skinMaterials.Add(name, mat);
+        Material mat = new(Shader.Find("Spine/Skeleton")) {
+            mainTexture = sheet
+        };
+        SkinMaterials.Add(name, mat);
 
-        Material[] materials = new Material[] { mat };
+        Material[] materials = { mat };
         SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
-        customAtlases.Add(name, atlas);
+        CustomAtlases.Add(name, atlas);
 
-        List<Tuple<int,string>> overrides = atlas.GetAtlas().regions.Select(r => SLOTS.First(s => (s.Item2 == r.name.Split(':')[1]) && (s.Item1 == (int)(SlotsEnum)Enum.Parse(typeof(SlotsEnum), r.name.Split(':')[0])))).ToList();
+        List<Tuple<int, string>> overrides = atlas.GetAtlas().regions.Select(r => Slots.First(s =>
+            (s.Item2 == r.name.Split(':')[1]) &&
+            (s.Item1 == (int)(SlotsEnum)Enum.Parse(typeof(SlotsEnum), r.name.Split(':')[0])))).ToList();
 
         CreateNewFollowerType(name);
         CreateSkin(name, overrides);
-
     }
 
     internal static void CreateNewFollowerType(string name)
     {
-        WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData()
-        {
+        WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData() {
             Title = name,
-            Skin = new List<WorshipperData.CharacterSkin>()
-            {
-                new WorshipperData.CharacterSkin()
-                {
+            Skin = new List<WorshipperData.CharacterSkin> {
+                new() {
                     Skin = name
                 }
             },
@@ -213,15 +210,15 @@ public class SkinManager
             }
         });
 
-        for (int i = 0; i < overrides.Count; i++)
+        foreach (Tuple<int, string> ovr in overrides)
         {
-            string ovrName = overrides[i].Item2;
-            var slot = overrides[i].Item1;
-            var atlasRegion = customAtlases[name].GetAtlas().FindRegion(((SlotsEnum)slot).ToString() + ":" + ovrName);
-            Attachment a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog").GetAttachment(slot, ovrName).Copy();
+            string ovrName = ovr.Item2;
+            int slot = ovr.Item1;
+            AtlasRegion atlasRegion = CustomAtlases[name].GetAtlas().FindRegion((SlotsEnum)slot + ":" + ovrName);
+            Attachment a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog")
+                .GetAttachment(slot, ovrName).Copy();
             if (a is MeshAttachment customAttachment)
             {
-
                 float minX = int.MaxValue;
                 float maxX = int.MinValue;
                 float minY = int.MaxValue;
@@ -236,7 +233,6 @@ public class SkinManager
                     }
                     else if (j % 3 == 1)
                     {
-
                         minX = Math.Min(minX, customAttachment.Vertices[j]);
                         maxX = Math.Max(maxX, customAttachment.Vertices[j]);
                     }
@@ -246,41 +242,37 @@ public class SkinManager
                 customAttachment.SetRegion(atlasRegion);
                 atlasRegion.name = "Custom" + atlasRegion.name;
                 customAttachment.HullLength = 4;
-                customAttachment.Triangles = new int[] { 1, 2, 3, 1, 3, 0 };
+                customAttachment.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
                 float pw = atlasRegion.page.width;
                 float ph = atlasRegion.page.height;
                 float x = atlasRegion.x;
                 float y = atlasRegion.y;
                 float w = atlasRegion.width;
                 float h = atlasRegion.height;
-                customAttachment.UVs = new float[] { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
-                customAttachment.Vertices = new float[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
+                customAttachment.UVs = new[]
+                    { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
+                customAttachment.Vertices = new[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
                 customAttachment.WorldVerticesLength = 8;
 
                 skin.SetAttachment(slot, ovrName, customAttachment);
             }
             else
-            {
-                Plugin.logger.LogWarning(overrides[i] + " is not a MeshAttachment. Skipping.");
-            }
+                Plugin.logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
         }
 
-        customSkins.Add(name, skin);
+        CustomSkins.Add(name, skin);
     }
 
-    [HarmonyPatch(typeof(SkeletonData), "FindSkin", new Type[] { typeof(string) })]
+    [HarmonyPatch(typeof(SkeletonData), "FindSkin", new[] { typeof(string) })]
     public class SkinPatch
     {
         public static void Postfix(ref Skin __result, SkeletonData __instance, string skinName)
         {
-            if (__result == null)
-            {
-                if (customSkins.ContainsKey(skinName))
-                {
-                    DataManager.SetFollowerSkinUnlocked(skinName);
-                    __result = customSkins[skinName];
-                }
-            }
+            if (__result != null) return;
+            if (!CustomSkins.ContainsKey(skinName)) return;
+                
+            DataManager.SetFollowerSkinUnlocked(skinName);
+            __result = CustomSkins[skinName];
         }
     }
 
@@ -289,10 +281,12 @@ public class SkinManager
     {
         public static void Postfix(ref SkeletonRendererInstruction instructionOutput)
         {
-            if (instructionOutput.submeshInstructions.Items[0].skeleton != null && instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null && instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("Custom")))
-            {
-                instructionOutput.submeshInstructions.Items[0].material = skinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
-            }
+            if (instructionOutput.submeshInstructions.Items[0].skeleton != null &&
+                instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null &&
+                instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("Custom")))
+
+                instructionOutput.submeshInstructions.Items[0].material =
+                    SkinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
         }
     }
 
@@ -301,14 +295,12 @@ public class SkinManager
     {
         public static void Postfix(FollowerInformationBox __instance)
         {
-            if (skinTextures.ContainsKey(__instance.FollowerInfo.SkinName))
+            if (SkinTextures.ContainsKey(__instance.FollowerInfo.SkinName))
             {
-                __instance.FollowerSpine.Skeleton.Skin = (customSkins[__instance.FollowerInfo.SkinName]);
+                __instance.FollowerSpine.Skeleton.Skin = (CustomSkins[__instance.FollowerInfo.SkinName]);
             }
         }
     }
-
-
 
     // TODO: Temp fix. Destroy the transparent image used when recruiting follower. It hides custom meshes due to render order.
     // Need to find out how to fix render order.
@@ -317,7 +309,7 @@ public class SkinManager
     {
         public static void Postfix(UIFollowerIndoctrinationMenuController __instance)
         {
-            var image = __instance.gameObject.GetComponentsInChildren(typeof(TranslucentImage))[0].gameObject;
+            GameObject image = __instance.gameObject.GetComponentsInChildren(typeof(TranslucentImage))[0].gameObject;
             UnityEngine.Object.Destroy(image);
         }
     }

@@ -7,36 +7,27 @@ public class CustomType
     {
         string text = nameSpace + "." + typeName;
         Type type = Type.GetType(text);
-        if (type != null)
-        {
-            return type;
-        }
+        if (type != null) return type;
+        
         if (text.Contains("."))
         {
             Assembly assembly = Assembly.Load(text.Substring(0, text.IndexOf('.')));
-            if (assembly == null)
-            {
-                return null;
-            }
+            if (assembly == null) return null;
+
             type = assembly.GetType(text);
-            if (type != null)
-            {
-                return type;
-            }
+            if (type != null) return type;
         }
+        
         AssemblyName[] referencedAssemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
-        for (int i = 0; i < referencedAssemblies.Length; i++)
+        foreach (AssemblyName t in referencedAssemblies)
         {
-            Assembly assembly2 = Assembly.Load(referencedAssemblies[i]);
-            if (assembly2 != null)
-            {
-                type = assembly2.GetType(text);
-                if (type != null)
-                {
-                    return type;
-                }
-            }
+            Assembly assembly2 = Assembly.Load(t);
+            if (assembly2 == null) continue;
+            
+            type = assembly2.GetType(text);
+            if (type != null) return type;
         }
+        
         return null;
     }
 }
