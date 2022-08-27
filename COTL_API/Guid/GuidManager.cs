@@ -14,22 +14,22 @@ public static class GuidManager
 
     private static readonly Dictionary<int, Type> ReverseMapper = new();
 
-    public const int START_INDEX = 5000;
+    private const int StartIndex = 5000;
 
-    public const string MAX_DATA = "maximumStoredValueForEnum";
+    private const string MaxDataKey = "maximumStoredValueForEnum";
 
     public static Type GetEnumType(int number)
     {
-        ReverseMapper.TryGetValue(number, out var res);
+        ReverseMapper.TryGetValue(number, out Type res);
         return res;
     }
 
-    unsafe public static List<T> GetValues<T>() where T : unmanaged, Enum
+    public static unsafe List<T> GetValues<T>() where T : unmanaged, Enum
     {
         List<T> itemList = Enum.GetValues(typeof(T)).Cast<T>().ToList();
 
         string startKey = typeof(T).Name + "_";
-        foreach (var item in APIDataManager.apiData.data)
+        foreach (KeyValuePair<string, object> item in APIDataManager.apiData.data)
         {
             if (!item.Key.StartsWith(startKey)) continue;
             
@@ -41,7 +41,7 @@ public static class GuidManager
         return itemList;
     }
 
-    unsafe public static T GetEnumValue<T>(string guid, string value) where T : unmanaged, Enum
+    public static unsafe T GetEnumValue<T>(string guid, string value) where T : unmanaged, Enum
     {
         if (sizeof(T) != sizeof(int))
             throw new NotSupportedException(
@@ -53,11 +53,11 @@ public static class GuidManager
 
         if (enumValue == default)
         {
-            enumValue = APIDataManager.apiData.GetValueAsInt(MAX_DATA);
-            if (enumValue < START_INDEX)
-                enumValue = START_INDEX;
+            enumValue = APIDataManager.apiData.GetValueAsInt(MaxDataKey);
+            if (enumValue < StartIndex)
+                enumValue = StartIndex;
 
-            APIDataManager.apiData.SetValue<long>(MAX_DATA, enumValue + 1);
+            APIDataManager.apiData.SetValue<long>(MaxDataKey, enumValue + 1);
             APIDataManager.apiData.SetValue<long>(saveKey, enumValue);
 
             APIDataManager.Save();

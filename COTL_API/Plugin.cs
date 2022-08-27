@@ -29,9 +29,7 @@ public class Plugin : BaseUnityPlugin
 
     private static ConfigEntry<bool> _debugEnabled;
 
-    internal static bool DebugEnabled {
-        get => _debugEnabled.Value;
-    }
+    internal static bool DebugEnabled => _debugEnabled.Value;
 
     private void Awake()
     {

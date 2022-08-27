@@ -1,5 +1,7 @@
-using System.Reflection;
 using System;
+using System.Reflection;
+
+namespace COTL_API;
 
 public class CustomType
 {
