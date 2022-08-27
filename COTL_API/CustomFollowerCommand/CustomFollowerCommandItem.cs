@@ -30,9 +30,7 @@ namespace COTL_API.CustomFollowerCommand
 
         public CustomFollowerCommandItem()
         {
-            var tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
-            tex.LoadImage(Properties.Resources.missing_texture);
-            Icon = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2, tex.height / 2));
+            Icon = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
         }
     }
 }
