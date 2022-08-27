@@ -44,7 +44,7 @@ public class CustomItemManager
     public static bool FontImageNames_GetIconByType(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
         if (!CustomItems.ContainsKey(Type)) return true;
-        __result = $"<sprite name=\"icon_{CustomItems[Type].ModPrefix}.${CustomItems[Type].InternalName}\">";
+        __result = $"<sprite name=\"icon_ITEM_{CustomItems[Type].ModPrefix}.${CustomItems[Type].InternalName}\">";
         return false;
     }
 
