@@ -263,54 +263,46 @@ public class SkinManager
         CustomSkins.Add(name, skin);
     }
 
-    [HarmonyPatch(typeof(SkeletonData), "FindSkin", new[] { typeof(string) })]
-    public class SkinPatch
+    [HarmonyPatch(typeof(SkeletonData), nameof(SkeletonData.FindSkin), new[] { typeof(string) })]
+    [HarmonyPostfix]
+    public static void SkinPatch(ref Skin __result, SkeletonData __instance, string skinName)
     {
-        public static void Postfix(ref Skin __result, SkeletonData __instance, string skinName)
-        {
-            if (__result != null) return;
-            if (!CustomSkins.ContainsKey(skinName)) return;
-                
-            DataManager.SetFollowerSkinUnlocked(skinName);
-            __result = CustomSkins[skinName];
-        }
+        if (__result != null) return;
+        if (!CustomSkins.ContainsKey(skinName)) return;
+
+        DataManager.SetFollowerSkinUnlocked(skinName);
+        __result = CustomSkins[skinName];
     }
 
-    [HarmonyPatch(typeof(MeshGenerator), "GenerateSingleSubmeshInstruction")]
-    public class MeshPatch
+    [HarmonyPatch(typeof(MeshGenerator), nameof(MeshGenerator.GenerateSingleSubmeshInstruction))]
+    [HarmonyPostfix]
+    public static void MeshGenerator_GenerateSingleSubmeshInstruction(ref SkeletonRendererInstruction instructionOutput)
     {
-        public static void Postfix(ref SkeletonRendererInstruction instructionOutput)
-        {
-            if (instructionOutput.submeshInstructions.Items[0].skeleton != null &&
-                instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null &&
-                instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("Custom")))
+        if (instructionOutput.submeshInstructions.Items[0].skeleton != null &&
+            instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null &&
+            instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("Custom")))
 
-                instructionOutput.submeshInstructions.Items[0].material =
-                    SkinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
-        }
+            instructionOutput.submeshInstructions.Items[0].material =
+                SkinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
     }
 
-    [HarmonyPatch(typeof(FollowerInformationBox), "ConfigureImpl")]
-    public class FollowerInformationBoxPatch
+    [HarmonyPatch(typeof(FollowerInformationBox), nameof(FollowerInformationBox.ConfigureImpl))]
+    [HarmonyPostfix]
+    public static void FollowerInformationBox_ConfigureImpl(FollowerInformationBox __instance)
     {
-        public static void Postfix(FollowerInformationBox __instance)
-        {
-            if (SkinTextures.ContainsKey(__instance.FollowerInfo.SkinName))
-            {
-                __instance.FollowerSpine.Skeleton.Skin = (CustomSkins[__instance.FollowerInfo.SkinName]);
-            }
-        }
+        if (SkinTextures.ContainsKey(__instance.FollowerInfo.SkinName))
+            __instance.FollowerSpine.Skeleton.Skin = CustomSkins[__instance.FollowerInfo.SkinName];
     }
 
-    // TODO: Temp fix. Destroy the transparent image used when recruiting follower. It hides custom meshes due to render order.
-    // Need to find out how to fix render order.
-    [HarmonyPatch(typeof(UIFollowerIndoctrinationMenuController), "OnShowStarted")]
-    public class TransparencyPatch
+// TODO: Temp fix. Destroy the transparent image used when recruiting follower. It hides custom meshes due to render order.
+// Need to find out how to fix render order.
+    [HarmonyPatch(typeof(UIFollowerIndoctrinationMenuController),
+        nameof(UIFollowerIndoctrinationMenuController.OnShowStarted))]
+    [HarmonyPostfix]
+    public static void UIFollowerIndoctrinationMenuController_OnShowStarted(
+        UIFollowerIndoctrinationMenuController __instance)
     {
-        public static void Postfix(UIFollowerIndoctrinationMenuController __instance)
-        {
-            GameObject image = __instance.gameObject.GetComponentsInChildren(typeof(TranslucentImage))[0].gameObject;
-            UnityEngine.Object.Destroy(image);
-        }
+        GameObject image = __instance.gameObject.GetComponentsInChildren(typeof(TranslucentImage))[0].gameObject;
+        UnityEngine.Object.Destroy(image);
     }
 }

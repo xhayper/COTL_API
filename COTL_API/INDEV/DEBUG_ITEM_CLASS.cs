@@ -6,5 +6,5 @@ public class DEBUG_ITEM_CLASS : CustomInventory.CustomInventoryItem
     public override string LocalizedName() { return "DEBUG_ITEM"; }
     public override string LocalizedDescription() { return "COTL_API'S DEBUG ITEM"; }
 
-    public override bool IsCurrency { get => true; }
+    public override bool IsCurrency => true;
 }
