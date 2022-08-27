@@ -29,7 +29,7 @@ public static class TypeManager
         Add(key, value);
     }
 
-    private static Dictionary<string, string> ModIds = new();
+    private static readonly Dictionary<string, string> ModIds = new();
 
     private static string GetModIdFromAssembly(Assembly assembly)
     {
