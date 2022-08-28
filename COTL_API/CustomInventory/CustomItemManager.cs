@@ -172,7 +172,7 @@ public class CustomItemManager
     public static bool InventoryItem_CanBeGivenToFollower(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
         if (!CustomItems.ContainsKey(Type)) return true;
-        __result = CustomItems[Type].IsBigFish;
+        __result = CustomItems[Type].CanBeGivenToFollower;
         return false;
     }
 

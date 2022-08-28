@@ -41,10 +41,9 @@ public class Plugin : BaseUnityPlugin
 
         if (Debug)
         {
-            DebugFollowerCommand =
-                CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommand());
-            DebugFollowerCommand2 =
-                CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
+            CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommand());
+            CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
+            CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommandClass3());
 
             DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
             DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
@@ -53,10 +52,10 @@ public class Plugin : BaseUnityPlugin
             CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
 
             DebugCode.CreateSkin();
-            
+
             Logger.LogDebug("Debug mode enabled");
         }
-        
+
         Logger.LogInfo("COTL API loaded");
     }
 
