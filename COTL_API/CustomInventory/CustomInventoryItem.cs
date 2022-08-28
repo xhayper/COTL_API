@@ -12,6 +12,11 @@ public class CustomInventoryItem
 
     public virtual Sprite InventoryIcon { get; } = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
+    public virtual string InventoryStringIcon()
+    {
+        return $"<sprite name=\"icon_ITEM_{ModPrefix}.${InternalName}\">";
+    }
+    
     public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; } = InventoryItem.ITEM_CATEGORIES.NONE;
     public virtual InventoryItem.ITEM_TYPE SeedType { get; } = InventoryItem.ITEM_TYPE.NONE;
 
@@ -47,7 +52,7 @@ public class CustomInventoryItem
     public virtual string CapacityString(int minimum)
     {
         int itemQuantity = Inventory.GetItemQuantity(ItemType);
-        string text = $"{FontImageNames.GetIconByType(ItemType)} {itemQuantity}/{minimum}";
+        string text = $"{InventoryStringIcon()} {itemQuantity}/{minimum}";
         return itemQuantity < minimum ? text.Colour(StaticColors.RedColor) : text;
     }
 }

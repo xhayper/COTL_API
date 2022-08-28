@@ -27,7 +27,7 @@ public class IconPatcher
 
         foreach (CustomFollowerCommand.CustomFollowerCommand item in CustomFollowerCommandManager.CustomFollowerCommands.Values)
         {
-            string name = $"icon_FCOMMAND_{item.ModPrefix}.${item.InternalName}";
+            string name = $"icon_FCOMMAND_{item.ModPrefix}.{item.InternalName}";
             if (hashCode != HashCode.GetValueHashCode(name)) continue;
             spriteIndex = 0;
             __result = IconManager.GetIcon(item.CommandIcon, name, spriteAsset.material.shader, hashCode);

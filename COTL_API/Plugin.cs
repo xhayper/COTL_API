@@ -26,9 +26,6 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DebugItem2;
     internal static InventoryItem.ITEM_TYPE DebugItem3;
 
-    internal static FollowerCommands DebugFollowerCommand;
-    internal static FollowerCommands DebugFollowerCommand2;
-
     private static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;
 

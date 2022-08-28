@@ -4,6 +4,11 @@ public class DebugFollowerCommand : CustomFollowerCommand.CustomFollowerCommand
 {
     public override string InternalName => "DEBUG_FOLLOWER_COMMAND";
     
+    public override string CommandStringIcon()
+    {
+        return "<sprite name=\"icon_Poop\">";
+    }
+
     public override string GetTitle(Follower follower)
     {
         return "Poop";
