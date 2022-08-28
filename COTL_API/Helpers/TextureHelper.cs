@@ -6,9 +6,9 @@ namespace COTL_API.Helpers;
 public class TextureHelper
 {
     public static Texture2D CreateTextureFromPath(string path, TextureFormat textureFormat = TextureFormat.RGBA32,
-        bool mipmaps = true)
+        bool mipmaps = false, bool linear = false)
     {
-        Texture2D tex = new(1, 1, textureFormat, mipmaps);
+        Texture2D tex = new(1, 1, textureFormat, mipmaps, linear);
         tex.LoadImage(File.ReadAllBytes(path));
         return tex;
     }
