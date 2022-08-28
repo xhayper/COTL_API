@@ -10,6 +10,7 @@ public class TextureHelper
     {
         Texture2D tex = new(1, 1, textureFormat, mipmaps, linear);
         tex.LoadImage(File.ReadAllBytes(path));
+        tex.filterMode = FilterMode.Point;
         return tex;
     }
 
