@@ -19,11 +19,11 @@ public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCo
 
     public override List<FollowerCommandCategory> Categories => new() { FollowerCommandCategory.MAKE_DEMAND_COMMAND };
 
-    public override bool Execute(interaction_FollowerInteraction interaction,
+    public override void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand)
     {
         interaction.follower.Brain.MakeDissenter();
-        return true;
+        // return true;
     }
 
     public DebugFollowerCommandClass2()

@@ -14,7 +14,7 @@ public class DebugFollowerCommand : CustomFollowerCommand.CustomFollowerCommand
         return "Make this follower poop instantly";
     }
 
-    public override bool Execute(interaction_FollowerInteraction interaction,
+    public override void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand)
     {
         interaction.StartCoroutine(interaction.FrameDelayCallback(delegate
@@ -23,6 +23,6 @@ public class DebugFollowerCommand : CustomFollowerCommand.CustomFollowerCommand
             interaction.follower.Brain.HardSwapToTask(new FollowerTask_InstantPoop());
         }));
 
-        return true;
+        // return true;
     }
 }

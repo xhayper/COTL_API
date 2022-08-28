@@ -19,9 +19,8 @@ public class DebugFollowerCommandClass3 : CustomFollowerCommand.CustomFollowerCo
         return false;
     }
 
-    public override bool Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand)
+    public override void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand)
     {
         Plugin.Logger.LogDebug("W-wh?! this shouldn't be called!");
-        return false;
     }
 }
