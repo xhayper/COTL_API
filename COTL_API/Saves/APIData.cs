@@ -4,16 +4,16 @@ namespace COTL_API.Saves;
 
 internal class APIData
 {
-    internal Dictionary<string, object> data = new();
+    internal Dictionary<string, object> Data = new();
 
     internal T GetValue<T>(string key)
     {
-        data ??= new Dictionary<string, object>();
+        Data ??= new Dictionary<string, object>();
 
-        if (!data.ContainsKey(key))
-            data.Add(key, default(T));
+        if (!Data.ContainsKey(key))
+            Data.Add(key, default(T));
 
-        return data[key] is T res ? res : default;
+        return Data[key] is T res ? res : default;
     }
 
     internal string GetValueAsString(string key)
@@ -49,11 +49,11 @@ internal class APIData
 
     internal void SetValue<T>(string key, T value)
     {
-        data ??= new Dictionary<string, object>();
+        Data ??= new Dictionary<string, object>();
 
-        if (!data.ContainsKey(key))
-            data.Add(key, value);
+        if (!Data.ContainsKey(key))
+            Data.Add(key, value);
         else
-            data[key] = value;
+            Data[key] = value;
     }
 }

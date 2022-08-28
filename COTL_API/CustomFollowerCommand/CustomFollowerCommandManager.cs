@@ -1,107 +1,125 @@
-﻿using COTL_API.CustomInventory;
-using COTL_API.Guid;
-using HarmonyLib;
-using Lamb.UI.FollowerInteractionWheel;
-using System;
+﻿using Lamb.UI.FollowerInteractionWheel;
 using System.Collections.Generic;
 using System.Reflection;
+using COTL_API.Guid;
+using HarmonyLib;
 
 namespace COTL_API.CustomFollowerCommand;
 
 [HarmonyPatch]
 public class CustomFollowerCommandManager
 {
-    internal static Dictionary<FollowerCommands, CustomFollowerCommandItem> customCommands = new Dictionary<FollowerCommands, CustomFollowerCommandItem>();
+    internal static readonly Dictionary<FollowerCommands, CustomFollowerCommand> CustomFollowerCommands = new();
 
-    public static FollowerCommands Add(CustomFollowerCommandItem item)
+    public static FollowerCommands Add(CustomFollowerCommand item)
     {
-        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+        string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        var followerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, item.InternalName);
+        FollowerCommands followerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, item.InternalName);
         item.Command = followerCommand;
-        item.SubCommands = item.GetSubCommands();
         item.ModPrefix = guid;
 
-        customCommands.Add(followerCommand, item);
+        CustomFollowerCommands.Add(followerCommand, item);
 
         return followerCommand;
     }
 
-    [HarmonyPatch(typeof(FollowerCommandGroups), "DefaultCommands", new Type[] { typeof(Follower) })]
+    [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.DefaultCommands))]
     [HarmonyPostfix]
     public static void FollowerCommandGroups_DefaultCommands(Follower follower, List<CommandItem> __result)
     {
-        customCommands.Values.Do(c => { if (c.GetCategories().Contains(FollowerCommandCategory.DEFAULT_COMMAND) && c.CheckSelectionPreconditions(follower)) __result.Add(c); });
+        CustomFollowerCommands.Values.Do(c =>
+        {
+            if (c.Categories.Contains(FollowerCommandCategory.DEFAULT_COMMAND) && c.IsAvailable(follower))
+                __result.Add(c);
+        });
     }
 
-    [HarmonyPatch(typeof(FollowerCommandGroups), "GiveWorkerCommands", new Type[] { typeof(Follower) })]
+    [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.GiveWorkerCommands))]
     [HarmonyPostfix]
     public static void FollowerCommandGroups_GiveWorkerCommands(Follower follower, List<CommandItem> __result)
     {
-        customCommands.Values.Do(c => { if (c.GetCategories().Contains(FollowerCommandCategory.GIVE_WORKER_COMMAND) && c.CheckSelectionPreconditions(follower)) __result.Add(c); });
+        CustomFollowerCommands.Values.Do(c =>
+        {
+            if (c.Categories.Contains(FollowerCommandCategory.GIVE_WORKER_COMMAND) && c.IsAvailableTo(follower))
+                __result.Add(c);
+        });
     }
 
-    [HarmonyPatch(typeof(FollowerCommandGroups), "MakeDemandCommands", new Type[] { typeof(Follower) })]
+    [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.MakeDemandCommands))]
     [HarmonyPostfix]
     public static void FollowerCommandGroups_MakeDemandCommands(Follower follower, List<CommandItem> __result)
     {
-        customCommands.Values.Do(c => { if (c.GetCategories().Contains(FollowerCommandCategory.MAKE_DEMAND_COMMAND) && c.CheckSelectionPreconditions(follower)) __result.Add(c); });
+        CustomFollowerCommands.Values.Do(c =>
+        {
+            if (c.Categories.Contains(FollowerCommandCategory.MAKE_DEMAND_COMMAND) && c.IsAvailableTo(follower))
+                __result.Add(c);
+        });
     }
 
-    [HarmonyPatch(typeof(FollowerCommandGroups), "WakeUpCommands", new Type[] { })]
+    [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.WakeUpCommands))]
     [HarmonyPostfix]
     public static void FollowerCommandGroups_WakeUpCommands(List<CommandItem> __result)
     {
-        customCommands.Values.Do(c => { if (c.GetCategories().Contains(FollowerCommandCategory.WAKE_UP_COMMAND)) __result.Add(c); });
+        CustomFollowerCommands.Values.Do(c =>
+        {
+            if (c.Categories.Contains(FollowerCommandCategory.WAKE_UP_COMMAND)) __result.Add(c);
+        });
     }
 
-    [HarmonyPatch(typeof(FollowerCommandGroups), "OldAgeCommands", new Type[] { typeof(Follower) })]
+    [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.OldAgeCommands))]
     [HarmonyPostfix]
     public static void FollowerCommandGroups_OldAgeCommands(Follower follower, List<CommandItem> __result)
     {
-        customCommands.Values.Do(c => { if (c.GetCategories().Contains(FollowerCommandCategory.OLD_AGE_COMMAND) && c.CheckSelectionPreconditions(follower)) __result.Add(c); });
+        CustomFollowerCommands.Values.Do(c =>
+        {
+            if (c.Categories.Contains(FollowerCommandCategory.OLD_AGE_COMMAND) && c.IsAvailableTo(follower))
+                __result.Add(c);
+        });
     }
 
-    [HarmonyPatch(typeof(FollowerCommandGroups), "DissenterCommands", new Type[] { typeof(Follower) })]
+    [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.DissenterCommands))]
     [HarmonyPostfix]
     public static void FollowerCommandGroups_DissenterCommands(Follower follower, List<CommandItem> __result)
     {
-        customCommands.Values.Do(c => { if (c.GetCategories().Contains(FollowerCommandCategory.DISSENTER_COMMAND) && c.CheckSelectionPreconditions(follower)) __result.Add(c); });
+        CustomFollowerCommands.Values.Do(c =>
+        {
+            if (c.Categories.Contains(FollowerCommandCategory.DISSENTER_COMMAND) && c.IsAvailableTo(follower))
+                __result.Add(c);
+        });
     }
 
-    [HarmonyPatch(typeof(interaction_FollowerInteraction), "OnFollowerCommandFinalized", new Type[] { typeof(FollowerCommands[]) })]
+    [HarmonyPatch(typeof(interaction_FollowerInteraction),
+        nameof(interaction_FollowerInteraction.OnFollowerCommandFinalized))]
     [HarmonyPrefix]
-    public static bool interaction_FollowerInteraction_OnFollowerCommandFinalized(interaction_FollowerInteraction __instance, FollowerCommands[] followerCommands)
+    public static bool interaction_FollowerInteraction_OnFollowerCommandFinalized(
+        interaction_FollowerInteraction __instance, FollowerCommands[] followerCommands)
     {
         FollowerCommands command = followerCommands[0];
-        FollowerCommands preFinalCommand = ((followerCommands.Length > 1) ? followerCommands[1] : FollowerCommands.None);
+        FollowerCommands preFinalCommand = followerCommands.Length > 1 ? followerCommands[1] : FollowerCommands.None;
 
-        if (customCommands.ContainsKey(command) || customCommands.ContainsKey(preFinalCommand))
-        {
-            bool shouldClose = true;
-            if (customCommands.ContainsKey(preFinalCommand))
-            {
-                shouldClose = customCommands[preFinalCommand].Execute(__instance, command);
-            }
-            else
-            {
-                shouldClose = customCommands[command].Execute(__instance);
-            }
-            __instance.Close();
-            return false;
-        }
-        return true;
+        if (!CustomFollowerCommands.ContainsKey(command) &&
+            !CustomFollowerCommands.ContainsKey(preFinalCommand)) return true;
+
+        bool shouldClose = CustomFollowerCommands.ContainsKey(preFinalCommand)
+            ? CustomFollowerCommands[preFinalCommand].Execute(__instance, command)
+            : CustomFollowerCommands[command].Execute(__instance);
+
+        if (shouldClose) __instance.Close();
+
+        return false;
     }
 
-    [HarmonyPatch(typeof(FontImageNames), "IconForCommand", new Type[] { typeof(FollowerCommands) })]
+    [HarmonyPatch(typeof(FontImageNames), nameof(FontImageNames.IconForCommand))]
     [HarmonyPrefix]
-    public static bool interaction_FollowerInteraction_OnFollowerCommandFinalized(FollowerCommands followerCommands, ref string __result)
+    public static bool FontImageNames_IconForCommand(FollowerCommands followerCommands,
+        ref string __result)
     {
-        if (customCommands.ContainsKey(followerCommands))
-        {
-            __result = $"<sprite name=\"icon_FCOMMAND_{customCommands[followerCommands].ModPrefix}.${customCommands[followerCommands].InternalName}\">";
-            return false;
-        }
-        return true;
+        if (!CustomFollowerCommands.ContainsKey(followerCommands)) return true;
+
+        __result =
+            $"<sprite name=\"icon_FCOMMAND_{CustomFollowerCommands[followerCommands].ModPrefix}.${CustomFollowerCommands[followerCommands].InternalName}\">";
+
+        return false;
     }
 }

@@ -81,7 +81,7 @@ public static class TypeManager
             return false;
         }
 
-        if (int.TryParse(typeName, out _)) Plugin.logger.LogInfo("This appears to be a custom type");
+        if (int.TryParse(typeName, out _)) Plugin.Logger.LogInfo("This appears to be a custom type");
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");
         TypeCache.Add(typeName, __result);

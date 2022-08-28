@@ -7,16 +7,16 @@ namespace COTL_API.Icons;
 
 public class IconManager
 {
-    public static Dictionary<Sprite, TMP_SpriteAsset> icons = new();
+    public static readonly Dictionary<Sprite, TMP_SpriteAsset> Icons = new();
 
     public static TMP_SpriteAsset GetIcon(Sprite icon, string name, Shader shader, int hashCode)
     {
-        if (icons.ContainsKey(icon)) return icons[icon];
-        
+        if (Icons.ContainsKey(icon)) return Icons[icon];
+
         icon.name = name;
-        
+
         TMP_SpriteAsset asset = CreateAssetFor(icon, hashCode);
-        icons.Add(icon, asset);
+        Icons.Add(icon, asset);
         return asset;
     }
 
@@ -32,12 +32,13 @@ public class IconManager
         spriteAsset.spriteGlyphTable = new List<TMP_SpriteGlyph>();
         spriteAsset.spriteCharacterTable = new List<TMP_SpriteCharacter>();
 
-        TMP_SpriteGlyph spriteGlyph = new();
-        spriteGlyph.index = 0;
-        spriteGlyph.metrics = new GlyphMetrics(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height, sprite.rect.width);
-        spriteGlyph.glyphRect = new GlyphRect(sprite.rect);
-        spriteGlyph.scale = 1.0f;
-        spriteGlyph.sprite = sprite;
+        TMP_SpriteGlyph spriteGlyph = new() {
+            index = 0,
+            metrics = new GlyphMetrics(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height, sprite.rect.width),
+            glyphRect = new GlyphRect(sprite.rect),
+            scale = 1.0f,
+            sprite = sprite
+        };
 
         spriteAsset.spriteGlyphTable.Add(spriteGlyph);
 

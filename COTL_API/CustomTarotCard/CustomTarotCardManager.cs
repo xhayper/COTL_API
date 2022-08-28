@@ -29,15 +29,17 @@ public class CustomTarotCardManager
 
     [HarmonyPatch(typeof(UIManager), nameof(UIManager.ShowTarotChoice))]
     [HarmonyPrefix]
-    public static bool UIManager_ShowTarotChoice(UIManager __instance, TarotCards.TarotCard card1, TarotCards.TarotCard card2, ref UITarotChoiceOverlayController __result)
+    public static bool UIManager_ShowTarotChoice(UIManager __instance, TarotCards.TarotCard card1,
+        TarotCards.TarotCard card2, ref UITarotChoiceOverlayController __result)
     {
         if (!CustomTarotCards.ContainsKey(card1.CardType) && !CustomTarotCards.ContainsKey(card2.CardType)) return true;
 
-        UITarotChoiceOverlayController uiTarotChoiceOverlayController = __instance.TarotChoiceOverlayTemplate.Instantiate();
+        UITarotChoiceOverlayController uiTarotChoiceOverlayController =
+            __instance.TarotChoiceOverlayTemplate.Instantiate();
         uiTarotChoiceOverlayController.Show(card1, card2);
         __instance.SetMenuInstance(uiTarotChoiceOverlayController, 1f);
 
-        uiTarotChoiceOverlayController.OnTarotCardSelected += delegate (TarotCards.TarotCard obj)
+        uiTarotChoiceOverlayController.OnTarotCardSelected += delegate(TarotCards.TarotCard obj)
         {
             if (!CustomTarotCards.ContainsKey(obj.CardType)) return;
 
@@ -59,7 +61,7 @@ public class CustomTarotCardManager
         __instance.SubtitleText.text = CustomTarotCards[Card.CardType].LocalisedLore();
         __instance.EffectText.text = CustomTarotCards[Card.CardType].LocalisedDescription();
     }
-    
+
     [HarmonyPatch(typeof(UIWeaponCard), nameof(UIWeaponCard.Show))]
     [HarmonyPostfix]
     public static void UIWeaponCard_Show(UIWeaponCard __instance, TarotCards.TarotCard Card)
@@ -77,7 +79,7 @@ public class CustomTarotCardManager
     {
         if (!CustomTarotCards.ContainsKey(Type)) return true;
 
-        __result = CustomTarotCards[Type].CardCategory;
+        __result = CustomTarotCards[Type].Category;
 
         return false;
     }

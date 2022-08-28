@@ -1,7 +1,7 @@
 using BepInEx.Configuration;
 using System.Reflection;
 using BepInEx.Logging;
-using COTL_API.INDEV;
+using COTL_API.Debug;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
@@ -13,54 +13,60 @@ namespace COTL_API;
 [HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
-
     public const string PLUGIN_GUID = "io.github.xhayper.COTL_API";
     public const string PLUGIN_NAME = "COTL API";
     public const string PLUGIN_VERSION = "1.0.0";
 
-    internal readonly static Harmony harmony = new(PLUGIN_GUID);
-    internal static ManualLogSource logger;
+    internal readonly static Harmony Harmony = new(PLUGIN_GUID);
+    internal static new ManualLogSource Logger;
 
-    internal static string PLUGIN_PATH;
+    internal static string PluginPath;
 
-    internal static InventoryItem.ITEM_TYPE DEBUG_ITEM;
-    internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_2;
-    internal static InventoryItem.ITEM_TYPE DEBUG_ITEM_3;
+    internal static InventoryItem.ITEM_TYPE DebugItem;
+    internal static InventoryItem.ITEM_TYPE DebugItem2;
+    internal static InventoryItem.ITEM_TYPE DebugItem3;
 
-    internal static FollowerCommands DEBUG_FOLLOWER_COMMAND;
-    internal static FollowerCommands DEBUG_FOLLOWER_COMMAND_2;
-    
-    private static ConfigEntry<bool> _debugEnabled;
-    internal static bool DebugEnabled => _debugEnabled.Value;
+    internal static FollowerCommands DebugFollowerCommand;
+    internal static FollowerCommands DebugFollowerCommand2;
+
+    private static ConfigEntry<bool> _debug;
+    internal static bool Debug => _debug.Value;
 
     private void Awake()
     {
-        logger = Logger;
-        PLUGIN_PATH = Path.GetDirectoryName(Info.Location);
+        Logger = base.Logger;
+        PluginPath = Path.GetDirectoryName(Info.Location);
 
-        _debugEnabled = Config.Bind("", "debug", false, "");
+        _debug = Config.Bind("", "debug", false, "");
 
-        if (!DebugEnabled) return;
+        if (Debug)
+        {
+            DebugFollowerCommand =
+                CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommand());
+            DebugFollowerCommand2 =
+                CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
 
-        DEBUG_FOLLOWER_COMMAND = CustomFollowerCommand.CustomFollowerCommandManager.Add(new INDEV.DEBUG_FOLLOWER_COMMAND_CLASS());
-        DEBUG_FOLLOWER_COMMAND_2 = CustomFollowerCommand.CustomFollowerCommandManager.Add(new INDEV.DEBUG_FOLLOWER_COMMAND_CLASS_2());
+            DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
+            DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
+            DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
+
+            CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
+
+            DebugCode.CreateSkin();
+            
+            Logger.LogDebug("Debug mode enabled");
+        }
         
-        DEBUG_ITEM = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS());
-        DEBUG_ITEM_2 = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS_2());
-        DEBUG_ITEM_3 = CustomInventory.CustomItemManager.Add(new DEBUG_ITEM_CLASS_3());
-
-        CustomTarotCard.CustomTarotCardManager.Add(new DEBUG_TAROT_CARD());
-
-        DEBUG_CODE.CreateSkin();
+        Logger.LogInfo("COTL API loaded");
     }
 
     private void OnEnable()
     {
-        harmony.PatchAll(Assembly.GetExecutingAssembly());
+        Harmony.PatchAll(Assembly.GetExecutingAssembly());
     }
 
     private void OnDisable()
     {
-        harmony.UnpatchSelf();
+        Harmony.UnpatchSelf();
     }
 }
