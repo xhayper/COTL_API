@@ -2,10 +2,10 @@ using BepInEx.Configuration;
 using System.Reflection;
 using BepInEx.Logging;
 using COTL_API.Debug;
+using System.Linq;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
-using System.Linq;
 
 namespace COTL_API;
 
@@ -66,5 +66,6 @@ public class Plugin : BaseUnityPlugin
     private void OnDisable()
     {
         Harmony.UnpatchSelf();
+        Logger.LogInfo("COTL API unloaded");
     }
 }
