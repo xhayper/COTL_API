@@ -32,6 +32,11 @@ public class CustomFollowerCommand : CommandItem
         return LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}/NotAvailable");
     }
 
+    public virtual bool ShouldAppearFor(Follower follower)
+    {
+        return true;
+    }
+
     public virtual bool Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
     {
