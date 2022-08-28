@@ -30,7 +30,7 @@ public class CustomFollowerCommandManager
     {
         CustomFollowerCommands.Values.Do(c =>
         {
-            if (c.Categories.Contains(FollowerCommandCategory.DEFAULT_COMMAND) && c.IsAvailable(follower))
+            if (c.Categories.Contains(FollowerCommandCategory.DEFAULT_COMMAND) && c.ShouldAppearFor(follower))
                 __result.Add(c);
         });
     }
@@ -41,7 +41,7 @@ public class CustomFollowerCommandManager
     {
         CustomFollowerCommands.Values.Do(c =>
         {
-            if (c.Categories.Contains(FollowerCommandCategory.GIVE_WORKER_COMMAND) && c.IsAvailable(follower))
+            if (c.Categories.Contains(FollowerCommandCategory.GIVE_WORKER_COMMAND) && c.ShouldAppearFor(follower))
                 __result.Add(c);
         });
     }
@@ -52,7 +52,7 @@ public class CustomFollowerCommandManager
     {
         CustomFollowerCommands.Values.Do(c =>
         {
-            if (c.Categories.Contains(FollowerCommandCategory.MAKE_DEMAND_COMMAND) && c.IsAvailable(follower))
+            if (c.Categories.Contains(FollowerCommandCategory.MAKE_DEMAND_COMMAND) && c.ShouldAppearFor(follower))
                 __result.Add(c);
         });
     }
@@ -73,7 +73,7 @@ public class CustomFollowerCommandManager
     {
         CustomFollowerCommands.Values.Do(c =>
         {
-            if (c.Categories.Contains(FollowerCommandCategory.OLD_AGE_COMMAND) && c.IsAvailable(follower))
+            if (c.Categories.Contains(FollowerCommandCategory.OLD_AGE_COMMAND) && c.ShouldAppearFor(follower))
                 __result.Add(c);
         });
     }
@@ -84,7 +84,7 @@ public class CustomFollowerCommandManager
     {
         CustomFollowerCommands.Values.Do(c =>
         {
-            if (c.Categories.Contains(FollowerCommandCategory.DISSENTER_COMMAND) && c.IsAvailable(follower))
+            if (c.Categories.Contains(FollowerCommandCategory.DISSENTER_COMMAND) && c.ShouldAppearFor(follower))
                 __result.Add(c);
         });
     }
