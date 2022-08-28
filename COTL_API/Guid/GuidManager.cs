@@ -29,10 +29,10 @@ public static class GuidManager
         List<T> itemList = Enum.GetValues(typeof(T)).Cast<T>().ToList();
 
         string startKey = typeof(T).Name + "_";
-        foreach (KeyValuePair<string, object> item in APIDataManager.apiData.data)
+        foreach (KeyValuePair<string, object> item in APIDataManager.APIData.Data)
         {
             if (!item.Key.StartsWith(startKey)) continue;
-            
+
             int enumVal = int.Parse((string)item.Value);
             T convertedEnumVal = *(T*)&enumVal;
             itemList.Add(convertedEnumVal);
@@ -49,16 +49,16 @@ public static class GuidManager
 
         string saveKey = $"{typeof(T).Name}_{guid}_{value}";
 
-        int enumValue = APIDataManager.apiData.GetValueAsInt(saveKey);
+        int enumValue = APIDataManager.APIData.GetValueAsInt(saveKey);
 
         if (enumValue == default)
         {
-            enumValue = APIDataManager.apiData.GetValueAsInt(MaxDataKey);
+            enumValue = APIDataManager.APIData.GetValueAsInt(MaxDataKey);
             if (enumValue < StartIndex)
                 enumValue = StartIndex;
 
-            APIDataManager.apiData.SetValue<long>(MaxDataKey, enumValue + 1);
-            APIDataManager.apiData.SetValue<long>(saveKey, enumValue);
+            APIDataManager.APIData.SetValue<long>(MaxDataKey, enumValue + 1);
+            APIDataManager.APIData.SetValue<long>(saveKey, enumValue);
 
             APIDataManager.Save();
         }

@@ -11,7 +11,7 @@ public class ModdedSaveData
         SaveData ??= new Dictionary<string, Dictionary<string, object>>();
 
         if (!SaveData.ContainsKey(guid))
-            SaveData.Add(guid, new());
+            SaveData.Add(guid, new Dictionary<string, object>());
 
         if (!SaveData[guid].ContainsKey(key))
             SaveData[guid].Add(key, default(T));
@@ -55,7 +55,7 @@ public class ModdedSaveData
         SaveData ??= new Dictionary<string, Dictionary<string, object>>();
 
         if (!SaveData.ContainsKey(guid))
-            SaveData.Add(guid, new());
+            SaveData.Add(guid, new Dictionary<string, object>());
 
         if (!SaveData[guid].ContainsKey(key))
             SaveData[guid].Add(key, value);

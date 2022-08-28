@@ -1,12 +1,11 @@
-﻿namespace COTL_API.CustomFollowerCommand
+﻿namespace COTL_API.CustomFollowerCommand;
+
+public enum FollowerCommandCategory
 {
-    public enum FollowerCommandCategory
-    {
-        DEFAULT_COMMAND,
-        DISSENTER_COMMAND,
-        GIVE_WORKER_COMMAND,
-        MAKE_DEMAND_COMMAND,
-        OLD_AGE_COMMAND,
-        WAKE_UP_COMMAND
-    }
+    DEFAULT_COMMAND,
+    DISSENTER_COMMAND,
+    GIVE_WORKER_COMMAND,
+    MAKE_DEMAND_COMMAND,
+    OLD_AGE_COMMAND,
+    WAKE_UP_COMMAND
 }

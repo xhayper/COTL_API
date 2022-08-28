@@ -155,7 +155,7 @@ public class SkinManager
         Tuple.Create(85, "Face/EYE_FIRE4"),
         Tuple.Create(85, "Face/EYE_FIRE5"),
         Tuple.Create(85, "Face/EYE_FIRE6"),
-        Tuple.Create(85, "Face/EYE_FIRE7"),
+        Tuple.Create(85, "Face/EYE_FIRE7")
     };
 
     public static void AddCustomSkin(string name, Texture2D sheet, string atlasText)
@@ -258,7 +258,7 @@ public class SkinManager
                 skin.SetAttachment(slot, ovrName, customAttachment);
             }
             else
-                Plugin.logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
+                Plugin.Logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
         }
 
         CustomSkins.Add(name, skin);

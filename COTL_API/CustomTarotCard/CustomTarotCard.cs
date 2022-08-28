@@ -5,24 +5,25 @@ namespace COTL_API.CustomTarotCard;
 
 public class CustomTarotCard
 {
-    public virtual string InternalName { get; set; }
+    public virtual string InternalName { get; }
+    public TarotCards.CardCategory Category;
     public TarotCards.Card CardType;
-    public TarotCards.CardCategory CardCategory;
     public string ModPrefix;
 
-    public virtual Sprite CardSprite { get; set; }
+    public virtual Sprite CardSprite { get; internal set; }
 
     public virtual string LocalisedName()
     {
         int upgradeIndex = 0;
         foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
         {
-            if (playerRunTrinket.CardType == CardType)
-            {
-                upgradeIndex = playerRunTrinket.UpgradeIndex;
-                break;
-            }
+            if (playerRunTrinket.CardType != CardType) continue;
+
+            upgradeIndex = playerRunTrinket.UpgradeIndex;
+
+            break;
         }
+
         return LocalisedName(upgradeIndex);
     }
 
@@ -36,7 +37,8 @@ public class CustomTarotCard
             2 => "<color=purple>",
             _ => ""
         };
-        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name") + text + "</color>";
+        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name") + text +
+               "</color>";
     }
 
     public virtual string LocalisedDescription()
@@ -48,6 +50,7 @@ public class CustomTarotCard
             upgradeIndex = playerRunTrinket.UpgradeIndex;
             break;
         }
+
         return LocalisedDescription(upgradeIndex);
     }
 
@@ -65,17 +68,17 @@ public class CustomTarotCard
         return LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Lore");
     }
 
-    public virtual string Skin { get; set; }
+    public virtual string Skin { get; } = TarotCards.Skin(TarotCards.Card.Hearts1);
 
-    public virtual int TarotCardWeight { get; set; }
+    public virtual int TarotCardWeight { get; } = 100;
 
-    public virtual int MaxTarotCardLevel { get; set; }
+    public virtual int MaxTarotCardLevel { get; } = 0;
 
-    public virtual string AnimationSuffix { get; set; }
+    public virtual string AnimationSuffix { get; } = "sword";
 
-    public virtual bool IsCursedRelated { get; set; }
+    public virtual bool IsCursedRelated { get; } = false;
 
-    public virtual float SpiritHeartCount { get; set; }
+    public virtual float SpiritHeartCount { get; } = 0;
 
     public virtual float GetSpiritAmmoCount()
     {
@@ -157,15 +160,5 @@ public class CustomTarotCard
         return 0f;
     }
 
-    public virtual void OnPickup() {}
-
-    public CustomTarotCard()
-    {
-        Skin = TarotCards.Skin(TarotCards.Card.Hearts1);
-        TarotCardWeight = 100;
-        MaxTarotCardLevel = 0;
-        AnimationSuffix = "sword";
-        IsCursedRelated = false;
-        SpiritHeartCount = 0;
-    }
+    public virtual void OnPickup() { }
 }
