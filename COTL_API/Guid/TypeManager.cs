@@ -38,11 +38,11 @@ public static class TypeManager
 
         foreach (Type t in assembly.GetTypes())
         {
-            foreach (BepInPlugin d in t.GetCustomAttributes<BepInPlugin>())
-            {
-                ModIds.Add(assembly.FullName, d.GUID);
-                return d.GUID;
-            }
+            BepInPlugin plugin = t.GetCustomAttribute<BepInPlugin>();
+            if (plugin == null) continue;
+
+            ModIds.Add(assembly.FullName, plugin.GUID);
+            return plugin.GUID;
         }
 
         ModIds.Add(assembly.FullName, default);
