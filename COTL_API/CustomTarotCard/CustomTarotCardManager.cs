@@ -25,34 +25,6 @@ public class CustomTarotCardManager
         return cardType;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // [HarmonyPatch(typeof(UIManager), nameof(UIManager.ShowTarotChoice))]
-    // [HarmonyPrefix]
-    // public static bool UIManager_ShowTarotChoice(UIManager __instance, TarotCards.TarotCard card1,
-    //     TarotCards.TarotCard card2, ref UITarotChoiceOverlayController __result)
-    // {
-    //     if (!CustomTarotCards.ContainsKey(card1.CardType) && !CustomTarotCards.ContainsKey(card2.CardType)) return true;
-    //
-    //     UITarotChoiceOverlayController uiTarotChoiceOverlayController =
-    //         __instance.TarotChoiceOverlayTemplate.Instantiate();
-    //     uiTarotChoiceOverlayController.Show(card1, card2);
-    //     __instance.SetMenuInstance(uiTarotChoiceOverlayController, 1f);
-    //
-    //     uiTarotChoiceOverlayController.OnTarotCardSelected += delegate(TarotCards.TarotCard obj)
-    //     {
-    //         if (!CustomTarotCards.ContainsKey(obj.CardType)) return;
-    //         
-    //         Plugin.Logger.LogDebug("OwO");
-    //
-    //         CustomTarotCards[obj.CardType].OnPickup();
-    //     };
-    //
-    //     __result = uiTarotChoiceOverlayController;
-    //
-    //     return false;
-    // }
-
     [HarmonyPatch(typeof(UIWeaponCard), nameof(UIWeaponCard.Play))]
     [HarmonyPostfix]
     public static void UIWeaponCard_Play(UIWeaponCard __instance, TarotCards.TarotCard Card)
