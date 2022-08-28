@@ -1,6 +1,7 @@
 # COTL_API
 
-<!-- This plugin is a BepInEx plugin made for Inscryption as an API. This is the de-facto standard API for Inscryption modders. -->
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=xhayper_COTL_API)](https://sonarcloud.io/summary/new_code?id=xhayper_COTL_API)
+
 A BepInEx plugin made for modder to easily interact with [`Cult of the Lamb`](https://store.steampowered.com/app/1313140/Cult_of_the_Lamb/) game
 
 ## Contribution
