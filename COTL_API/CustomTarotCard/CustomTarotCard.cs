@@ -68,97 +68,100 @@ public class CustomTarotCard
         return LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Lore");
     }
 
-    public virtual string Skin { get; } = TarotCards.Skin(TarotCards.Card.Hearts1);
+    public virtual string Skin { get; } = "";
 
-    public virtual int TarotCardWeight { get; } = 100;
+    public virtual int TarotCardWeight { get; } = 150;
 
     public virtual int MaxTarotCardLevel { get; } = 0;
 
-    public virtual string AnimationSuffix { get; } = "sword";
+    public virtual string AnimationSuffix => $"Card {ModPrefix}.{InternalName} Animation Suffix not set";
 
     public virtual bool IsCursedRelated { get; } = false;
 
-    public virtual float SpiritHeartCount { get; } = 0;
-
-    public virtual float GetSpiritAmmoCount()
+    public virtual float GetSpiritHeartCount(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual float GetWeaponDamageMultiplerIncrease()
-    {
-        return 0f;
-    }
-
-    public virtual float GetCurseDamageMultiplerIncrease()
-    {
-        return 0f;
-    }
-
-    public virtual float GetWeaponCritChanceIncrease()
-    {
-        return 0f;
-    }
-
-    public virtual int GetLootIncreaseModifier()
+    public virtual int GetSpiritAmmoCount(TarotCards.TarotCard card)
     {
         return 0;
     }
 
-    public virtual float GetMovementSpeedMultiplier()
+    public virtual float GetWeaponDamageMultiplerIncrease(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual float GetAttackRateMultiplier()
+    public virtual float GetCurseDamageMultiplerIncrease(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual float GetBlackSoulsMultiplier()
+    public virtual float GetWeaponCritChanceIncrease(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual float GetHealChance()
-    {
-        return 0f;
-    }
-
-    public virtual float GetNegateDamageChance()
-    {
-        return 0f;
-    }
-
-    public virtual int GetDamageAllEnemiesAmount()
+    public virtual int GetLootIncreaseModifier(TarotCards.TarotCard card, InventoryItem.ITEM_TYPE itemType)
     {
         return 0;
     }
 
-    public virtual int GetHealthAmountMultiplier()
-    {
-        return 0;
-    }
-
-    public virtual float GetAmmoEfficiency()
+    public virtual float GetMovementSpeedMultiplier(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual int GetBlackSoulsOnDamage()
+    public virtual float GetAttackRateMultiplier(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual float GetBlackSoulsMultiplier(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual float GetHealChance(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual float GetNegateDamageChance(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual int GetDamageAllEnemiesAmount(TarotCards.TarotCard card)
     {
         return 0;
     }
 
-    public virtual InventoryItem GetItemToDrop()
+    public virtual int GetHealthAmountMultiplier(TarotCards.TarotCard card)
+    {
+        return 0;
+    }
+
+    public virtual float GetAmmoEfficiency(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual int GetBlackSoulsOnDamage(TarotCards.TarotCard card)
+    {
+        return 0;
+    }
+
+    public virtual InventoryItem GetItemToDrop(TarotCards.TarotCard card)
     {
         return null;
     }
 
-    public virtual float GetChanceOfGainingBlueHeart()
+    public virtual float GetChanceOfGainingBlueHeart(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual void OnPickup() { }
+    public virtual void ApplyInstantEffects(TarotCards.TarotCard card) {}
 }

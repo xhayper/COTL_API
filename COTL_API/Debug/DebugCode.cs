@@ -1,4 +1,5 @@
-﻿using COTL_API.CustomTarotCard;
+﻿using System.Collections.Generic;
+using COTL_API.CustomTarotCard;
 using COTL_API.Helpers;
 using COTL_API.Skins;
 using System.Linq;
@@ -39,14 +40,25 @@ public class DebugCode
         TarotCards.TarotCard card1, TarotCards.TarotCard card2, bool instant)
     {
         if (!Plugin.Debug) return true;
-
+        
         __instance._card1 = GetRandModdedCard();
-        __instance._card2 = GetRandModdedCard();
+        __instance._card2 = GetRandVanillaCard();
         __instance._uiCard1.Play(__instance._card1);
         __instance._uiCard2.Play(__instance._card2);
         __instance.Show(instant);
 
         return false;
+    }
+    
+    internal static TarotCards.TarotCard GetRandVanillaCard()
+    {
+        List<TarotCards.Card> vanillaCardList = new(DataManager.Instance.PlayerFoundTrinkets);
+        vanillaCardList.RemoveAll(c =>
+            CustomTarotCardManager.CustomTarotCards.ContainsKey(c));
+
+        return new TarotCards.TarotCard(
+            vanillaCardList.ElementAt(Random.Range(0,
+                vanillaCardList.Count)), 0);
     }
 
     internal static TarotCards.TarotCard GetRandModdedCard()
