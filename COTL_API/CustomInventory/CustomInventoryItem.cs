@@ -46,7 +46,10 @@ public class CustomInventoryItem
     public virtual bool IsFood { get; } = false;
     public virtual bool IsBigFish { get; } = false;
     public virtual bool IsCurrency { get; } = false;
-
+    public virtual bool IsSeed { get; } = false;
+    public virtual bool IsPlantable { get; } = false;
+    public virtual bool IsBurnableFuel { get; } = false;
+    
     public virtual bool CanBeGivenToFollower { get; } = false;
 
     public virtual string CapacityString(int minimum)

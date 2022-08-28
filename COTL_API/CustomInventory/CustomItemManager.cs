@@ -184,7 +184,28 @@ public class CustomItemManager
         __result = CustomItems[type].CapacityString(minimum);
         return false;
     }
+    
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllPlantables), MethodType.Getter)]
+    [HarmonyPostfix]
+    public static void InventoryItem_AllPlantables(ref List<InventoryItem.ITEM_TYPE> __result)
+    {
+        __result.AddRange(CustomItems.Where(x => x.Value.IsPlantable).Select(x => x.Key));
+    }
+    
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllSeeds), MethodType.Getter)]
+    [HarmonyPostfix]
+    public static void InventoryItem_AllSeeds(ref List<InventoryItem.ITEM_TYPE> __result)
+    {
+        __result.AddRange(CustomItems.Where(x => x.Value.IsSeed).Select(x => x.Key));
+    }
 
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllBurnableFuel), MethodType.Getter)]
+    [HarmonyPostfix]
+    public static void InventoryItem_AllBurnableFuel(ref List<InventoryItem.ITEM_TYPE> __result)
+    {
+        __result.AddRange(CustomItems.Where(x => x.Value.IsBurnableFuel).Select(x => x.Key));
+    }
+    
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllFoods))]
     [HarmonyPostfix]
     public static void CookingData_GetAllFoods(ref InventoryItem.ITEM_TYPE[] __result)

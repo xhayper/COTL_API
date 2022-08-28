@@ -5,6 +5,7 @@ using COTL_API.Debug;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
+using System.Linq;
 
 namespace COTL_API;
 
@@ -53,12 +54,13 @@ public class Plugin : BaseUnityPlugin
             Logger.LogDebug("Debug mode enabled");
         }
 
-        Logger.LogInfo("COTL API loaded");
+        Logger.LogInfo($"COTL API loaded");
     }
 
     private void OnEnable()
     {
         Harmony.PatchAll(Assembly.GetExecutingAssembly());
+        Logger.LogInfo($"{Harmony.GetAllPatchedMethods().Count()} harmony patches applied");
     }
 
     private void OnDisable()

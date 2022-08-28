@@ -7,4 +7,5 @@ public class DebugItemClass2 : CustomInventory.CustomInventoryItem
     public override string LocalizedDescription() { return "COTL_API'S 2ND DEBUG ITEM"; }
 
     public override bool IsFood => true;
+    public override bool IsSeed => true;
 }
