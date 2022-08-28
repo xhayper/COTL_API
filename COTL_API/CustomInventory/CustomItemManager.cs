@@ -39,19 +39,19 @@ public class CustomItemManager
         __instance._itemDescription.text = CustomItems[config].Description();
     }
 
-    // // Prepare for lag...
-    // [HarmonyPatch(typeof(Interaction_AddFuel), nameof(Interaction_AddFuel.Update))]
-    // [HarmonyPrefix]
-    // public static void Interaction_AddFuel_Update(Interaction_AddFuel __instance)
-    // {
-    //     foreach (InventoryItem.ITEM_TYPE itemType in CustomItems.Keys)
-    //     {
-    //         if (!CustomItems[itemType].IsBurnableFuel && __instance.fuel.Contains(itemType))
-    //             __instance.fuel.Remove(itemType);
-    //         if (CustomItems[itemType].IsBurnableFuel && !__instance.fuel.Contains(itemType))
-    //             __instance.fuel.Add(itemType);
-    //     }
-    // }
+    // Prepare for lag...
+    [HarmonyPatch(typeof(Interaction_AddFuel), nameof(Interaction_AddFuel.Update))]
+    [HarmonyPrefix]
+    public static void Interaction_AddFuel_Update(Interaction_AddFuel __instance)
+    {
+        foreach (InventoryItem.ITEM_TYPE itemType in CustomItems.Keys)
+        {
+            if (!CustomItems[itemType].IsBurnableFuel && __instance.fuel.Contains(itemType))
+                __instance.fuel.Remove(itemType);
+            if (CustomItems[itemType].IsBurnableFuel && !__instance.fuel.Contains(itemType))
+                __instance.fuel.Add(itemType);
+        }
+    }
 
     [HarmonyPatch(typeof(FontImageNames), nameof(FontImageNames.GetIconByType))]
     [HarmonyPrefix]
@@ -199,26 +199,26 @@ public class CustomItemManager
         return false;
     }
 
-    // [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllPlantables), MethodType.Getter)]
-    // [HarmonyPostfix]
-    // public static void InventoryItem_AllPlantables(ref List<InventoryItem.ITEM_TYPE> __result)
-    // {
-    //     __result.AddRange(CustomItems.Where(x => x.Value.IsPlantable).Select(x => x.Key));
-    // }
-    //
-    // [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllSeeds), MethodType.Getter)]
-    // [HarmonyPostfix]
-    // public static void InventoryItem_AllSeeds(ref List<InventoryItem.ITEM_TYPE> __result)
-    // {
-    //     __result.AddRange(CustomItems.Where(x => x.Value.IsSeed).Select(x => x.Key));
-    // }
-    //
-    // [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllBurnableFuel), MethodType.Getter)]
-    // [HarmonyPostfix]
-    // public static void InventoryItem_AllBurnableFuel(ref List<InventoryItem.ITEM_TYPE> __result)
-    // {
-    //     __result.AddRange(CustomItems.Where(x => x.Value.IsBurnableFuel).Select(x => x.Key));
-    // }
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllPlantables), MethodType.Getter)]
+    [HarmonyPostfix]
+    public static void InventoryItem_AllPlantables(ref List<InventoryItem.ITEM_TYPE> __result)
+    {
+        __result.AddRange(CustomItems.Where(x => x.Value.IsPlantable).Select(x => x.Key));
+    }
+    
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllSeeds), MethodType.Getter)]
+    [HarmonyPostfix]
+    public static void InventoryItem_AllSeeds(ref List<InventoryItem.ITEM_TYPE> __result)
+    {
+        __result.AddRange(CustomItems.Where(x => x.Value.IsSeed).Select(x => x.Key));
+    }
+    
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllBurnableFuel), MethodType.Getter)]
+    [HarmonyPostfix]
+    public static void InventoryItem_AllBurnableFuel(ref List<InventoryItem.ITEM_TYPE> __result)
+    {
+        __result.AddRange(CustomItems.Where(x => x.Value.IsBurnableFuel).Select(x => x.Key));
+    }
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllFoods))]
     [HarmonyPostfix]
