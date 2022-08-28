@@ -11,15 +11,15 @@ public class CustomFollowerCommandManager
 {
     internal static readonly Dictionary<FollowerCommands, CustomFollowerCommand> CustomFollowerCommands = new();
 
-    public static FollowerCommands Add(CustomFollowerCommand item)
+    public static FollowerCommands Add(CustomFollowerCommand command)
     {
         string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        FollowerCommands followerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, item.InternalName);
-        item.Command = followerCommand;
-        item.ModPrefix = guid;
+        FollowerCommands followerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, command.InternalName);
+        command.Command = followerCommand;
+        command.ModPrefix = guid;
 
-        CustomFollowerCommands.Add(followerCommand, item);
+        CustomFollowerCommands.Add(followerCommand, command);
 
         return followerCommand;
     }
@@ -41,7 +41,7 @@ public class CustomFollowerCommandManager
     {
         CustomFollowerCommands.Values.Do(c =>
         {
-            if (c.Categories.Contains(FollowerCommandCategory.GIVE_WORKER_COMMAND) && c.IsAvailableTo(follower))
+            if (c.Categories.Contains(FollowerCommandCategory.GIVE_WORKER_COMMAND) && c.IsAvailable(follower))
                 __result.Add(c);
         });
     }
@@ -52,7 +52,7 @@ public class CustomFollowerCommandManager
     {
         CustomFollowerCommands.Values.Do(c =>
         {
-            if (c.Categories.Contains(FollowerCommandCategory.MAKE_DEMAND_COMMAND) && c.IsAvailableTo(follower))
+            if (c.Categories.Contains(FollowerCommandCategory.MAKE_DEMAND_COMMAND) && c.IsAvailable(follower))
                 __result.Add(c);
         });
     }
@@ -73,7 +73,7 @@ public class CustomFollowerCommandManager
     {
         CustomFollowerCommands.Values.Do(c =>
         {
-            if (c.Categories.Contains(FollowerCommandCategory.OLD_AGE_COMMAND) && c.IsAvailableTo(follower))
+            if (c.Categories.Contains(FollowerCommandCategory.OLD_AGE_COMMAND) && c.IsAvailable(follower))
                 __result.Add(c);
         });
     }
@@ -84,7 +84,7 @@ public class CustomFollowerCommandManager
     {
         CustomFollowerCommands.Values.Do(c =>
         {
-            if (c.Categories.Contains(FollowerCommandCategory.DISSENTER_COMMAND) && c.IsAvailableTo(follower))
+            if (c.Categories.Contains(FollowerCommandCategory.DISSENTER_COMMAND) && c.IsAvailable(follower))
                 __result.Add(c);
         });
     }

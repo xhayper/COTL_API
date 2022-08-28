@@ -37,9 +37,4 @@ public class CustomFollowerCommand : CommandItem
     {
         return true;
     }
-
-    public virtual bool IsAvailableTo(Follower follower)
-    {
-        return true;
-    }
 }
