@@ -15,7 +15,7 @@ public class CustomInventoryItem
 
     public virtual string InventoryStringIcon()
     {
-        return $"<sprite name=\"icon_ITEM_{ModPrefix}.${InternalName}\">";
+        return $"<sprite name=\"icon_ITEM_{ModPrefix}.{InternalName}\">";
     }
 
     public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; } = InventoryItem.ITEM_CATEGORIES.NONE;
