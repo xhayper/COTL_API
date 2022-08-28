@@ -20,7 +20,8 @@ public class CustomTarotCardManager
         card.ModPrefix = guid;
 
         CustomTarotCards.Add(cardType, card);
-        DataManager.AllTrinkets.Add(cardType);
+        if (!DataManager.AllTrinkets.Contains(cardType))
+            DataManager.AllTrinkets.Add(cardType);
 
         return cardType;
     }

@@ -27,6 +27,26 @@ public class CustomItemManager
         return itemType;
     }
 
+    public static void AddGift(InventoryItem.ITEM_TYPE item)
+    {
+        if (!DataManager.AllGifts.Contains(item)) DataManager.AllGifts.Add(item);
+    }
+
+    public static void RemoveGift(InventoryItem.ITEM_TYPE item)
+    {
+        if (DataManager.AllGifts.Contains(item)) DataManager.AllGifts.Remove(item);
+    }
+
+    public static void AddNecklace(InventoryItem.ITEM_TYPE item)
+    {
+        if (!DataManager.AllNecklaces.Contains(item)) DataManager.AllNecklaces.Add(item);
+    }
+
+    public static void RemoveNecklace(InventoryItem.ITEM_TYPE item)
+    {
+        if (DataManager.AllNecklaces.Contains(item)) DataManager.AllNecklaces.Remove(item);
+    }
+
     // Patch `ItemInfoCard` not using `InventoryItem`'s method
     [HarmonyPatch(typeof(ItemInfoCard), nameof(ItemInfoCard.Configure))]
     [HarmonyPostfix]
@@ -205,14 +225,14 @@ public class CustomItemManager
     {
         __result.AddRange(CustomItems.Where(x => x.Value.IsPlantable).Select(x => x.Key));
     }
-    
+
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllSeeds), MethodType.Getter)]
     [HarmonyPostfix]
     public static void InventoryItem_AllSeeds(ref List<InventoryItem.ITEM_TYPE> __result)
     {
         __result.AddRange(CustomItems.Where(x => x.Value.IsSeed).Select(x => x.Key));
     }
-    
+
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllBurnableFuel), MethodType.Getter)]
     [HarmonyPostfix]
     public static void InventoryItem_AllBurnableFuel(ref List<InventoryItem.ITEM_TYPE> __result)
