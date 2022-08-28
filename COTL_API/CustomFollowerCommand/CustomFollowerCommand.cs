@@ -17,6 +17,11 @@ public class CustomFollowerCommand : CommandItem
     public virtual Sprite CommandIcon { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
+    public virtual string CommandStringIcon()
+    {
+        return $"<sprite name=\"icon_FCOMMAND_{ModPrefix}.{InternalName}\">";
+    }
+
     public override string GetTitle(Follower follower)
     {
         return LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}");

@@ -121,9 +121,8 @@ public class CustomFollowerCommandManager
     {
         if (!CustomFollowerCommands.ContainsKey(followerCommands)) return true;
 
-        __result =
-            $"<sprite name=\"icon_FCOMMAND_{CustomFollowerCommands[followerCommands].ModPrefix}.${CustomFollowerCommands[followerCommands].InternalName}\">";
-
+        __result = CustomFollowerCommands[followerCommands].CommandStringIcon();
+        
         return false;
     }
 }
