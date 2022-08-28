@@ -7,7 +7,7 @@ A BepInEx plugin made for modder to easily interact with [`Cult of the Lamb`](ht
 
 ### How can you help?
 
-We are in need of people to help develop the API! you can help by joining the [Cult of the Lamb Modding Discord Server](https://discord.gg/qNhEc2HU)!
+We are in need of people to help develop the API! you can help by joining the [Cult of the Lamb Modding Discord Server](https://discord.gg/NU7xteCaqw)!
 
 ## Credits
 
