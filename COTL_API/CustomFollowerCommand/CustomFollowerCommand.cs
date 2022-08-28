@@ -37,9 +37,9 @@ public class CustomFollowerCommand : CommandItem
         return true;
     }
 
-    public virtual bool Execute(interaction_FollowerInteraction interaction,
+    public virtual void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
     {
-        return true;
+        // return true;
     }
 }
