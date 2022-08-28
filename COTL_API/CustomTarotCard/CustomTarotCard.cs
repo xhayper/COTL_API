@@ -163,5 +163,5 @@ public class CustomTarotCard
         return 0f;
     }
 
-    public virtual void ApplyInstantEffects(TarotCards.TarotCard card) {}
+    public virtual void ApplyInstantEffects(TarotCards.TarotCard card) { }
 }

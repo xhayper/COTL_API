@@ -10,13 +10,14 @@ public class CustomInventoryItem
     public InventoryItem.ITEM_TYPE ItemType;
     public string ModPrefix;
 
-    public virtual Sprite InventoryIcon { get; } = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
+    public virtual Sprite InventoryIcon { get; } =
+        TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
     public virtual string InventoryStringIcon()
     {
         return $"<sprite name=\"icon_ITEM_{ModPrefix}.${InternalName}\">";
     }
-    
+
     public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; } = InventoryItem.ITEM_CATEGORIES.NONE;
     public virtual InventoryItem.ITEM_TYPE SeedType { get; } = InventoryItem.ITEM_TYPE.NONE;
 
@@ -49,7 +50,7 @@ public class CustomInventoryItem
     public virtual bool IsSeed { get; } = false;
     public virtual bool IsPlantable { get; } = false;
     public virtual bool IsBurnableFuel { get; } = false;
-    
+
     public virtual bool CanBeGivenToFollower { get; } = false;
 
     public virtual string CapacityString(int minimum)
