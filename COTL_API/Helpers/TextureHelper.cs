@@ -9,8 +9,8 @@ public class TextureHelper
         bool mipmaps = false, bool linear = false)
     {
         Texture2D tex = new(1, 1, textureFormat, mipmaps, linear);
-        tex.LoadImage(File.ReadAllBytes(path));
         tex.filterMode = FilterMode.Point;
+        tex.LoadImage(File.ReadAllBytes(path));
         return tex;
     }
 
