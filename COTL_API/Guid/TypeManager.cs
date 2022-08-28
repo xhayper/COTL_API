@@ -11,7 +11,7 @@ namespace COTL_API.Guid;
 [HarmonyPatch]
 public static class TypeManager
 {
-    private static Dictionary<string, Type> TypeCache = new();
+    private static readonly Dictionary<string, Type> TypeCache = new();
 
     internal static void Add(string key, Type value)
     {
@@ -29,16 +29,16 @@ public static class TypeManager
         Add(key, value);
     }
 
-    private static Dictionary<string, string> ModIds = new();
+    private static readonly Dictionary<string, string> ModIds = new();
 
     private static string GetModIdFromAssembly(Assembly assembly)
     {
         if (ModIds.ContainsKey(assembly.FullName))
             return ModIds[assembly.FullName];
 
-        foreach (var t in assembly.GetTypes())
+        foreach (Type t in assembly.GetTypes())
         {
-            foreach (var d in t.GetCustomAttributes<BepInPlugin>())
+            foreach (BepInPlugin d in t.GetCustomAttributes<BepInPlugin>())
             {
                 ModIds.Add(assembly.FullName, d.GUID);
                 return d.GUID;
@@ -56,23 +56,22 @@ public static class TypeManager
             return cacheVal;
 
         StackTrace trace = new();
-        foreach (var frame in trace.GetFrames())
+        foreach (StackFrame frame in trace.GetFrames())
         {
             string newVal = GetModIdFromAssembly(frame.GetMethod().DeclaringType.Assembly);
             if (!string.IsNullOrEmpty(newVal))
                 return newVal;
         }
 
-        return default(string);
+        return default;
     }
 
-
-    [HarmonyReversePatch(HarmonyReversePatchType.Original)]
-    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new Type[] { typeof(string), typeof(string) })]
+    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]
     [MethodImpl(MethodImplOptions.NoInlining)]
+    [HarmonyReversePatch]
     public static Type OriginalGetType(string nameSpace, string typeName) { throw new NotImplementedException(); }
 
-    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new Type[] { typeof(string), typeof(string) })]
+    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]
     [HarmonyPrefix]
     private static bool GetCustomType(string nameSpace, string typeName, ref Type __result)
     {
@@ -82,10 +81,7 @@ public static class TypeManager
             return false;
         }
 
-        if (int.TryParse(typeName, out _))
-        {
-            Plugin.logger.LogInfo($"This appears to be a custom type");
-        }
+        if (int.TryParse(typeName, out _)) Plugin.Logger.LogInfo("This appears to be a custom type");
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");
         TypeCache.Add(typeName, __result);

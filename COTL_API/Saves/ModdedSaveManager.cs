@@ -1,32 +1,29 @@
 using HarmonyLib;
-using System;
 
 namespace COTL_API.Saves;
 
 [HarmonyPatch]
 public static class ModdedSaveManager
 {
-    public static int SAVE_SLOT = 5;
+    public static int SaveSlot = 5;
 
-    public static bool Loaded = false;
+    public static bool Loaded;
 
-    internal static COTLDataReadWriter<ModdedSaveData> _saveDataReadWriter = new();
+    internal static readonly COTLDataReadWriter<ModdedSaveData> SaveDataReadWriter = new();
 
     public static ModdedSaveData Data;
 
     static ModdedSaveManager()
     {
-        COTLDataReadWriter<ModdedSaveData> saveFileReadWriter = _saveDataReadWriter;
-        saveFileReadWriter.OnReadCompleted += delegate (ModdedSaveData data)
+        SaveDataReadWriter.OnReadCompleted += delegate(ModdedSaveData data)
         {
             Data = data;
             Loaded = true;
         };
 
-        COTLDataReadWriter<ModdedSaveData> saveFileReadWriter2 = _saveDataReadWriter;
-        saveFileReadWriter2.OnCreateDefault += delegate
+        SaveDataReadWriter.OnCreateDefault += delegate
         {
-            Data = new();
+            Data = new ModdedSaveData();
             Loaded = true;
         };
     }
@@ -35,8 +32,8 @@ public static class ModdedSaveManager
     [HarmonyPostfix]
     public static void ResetSave(int saveSlot, bool newGame)
     {
-        SAVE_SLOT = saveSlot;
-        Data = new();
+        SaveSlot = saveSlot;
+        Data = new ModdedSaveData();
         if (!newGame) Save();
         Loaded = true;
     }
@@ -47,7 +44,7 @@ public static class ModdedSaveManager
     {
         if (!DataManager.Instance.AllowSaving || CheatConsole.IN_DEMO) return;
 
-        _saveDataReadWriter.Write(Data, MakeSaveSlot(SAVE_SLOT));
+        SaveDataReadWriter.Write(Data, MakeSaveSlot(SaveSlot));
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Load))]
@@ -56,20 +53,20 @@ public static class ModdedSaveManager
     {
         if (CheatConsole.IN_DEMO) return;
 
-        SAVE_SLOT = saveSlot;
-        _saveDataReadWriter.Read(MakeSaveSlot(SAVE_SLOT));
+        SaveSlot = saveSlot;
+        SaveDataReadWriter.Read(MakeSaveSlot(SaveSlot));
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.DeleteSaveSlot))]
     [HarmonyPostfix]
     public static void DeleteSaveSlot(int saveSlot)
     {
-        _saveDataReadWriter.Delete(MakeSaveSlot(saveSlot));
+        SaveDataReadWriter.Delete(MakeSaveSlot(saveSlot));
     }
 
     public static bool SaveExist(int saveSlot)
     {
-        return _saveDataReadWriter.FileExists(MakeSaveSlot(saveSlot));
+        return SaveDataReadWriter.FileExists(MakeSaveSlot(saveSlot));
     }
 
     public static string MakeSaveSlot(int slot)
