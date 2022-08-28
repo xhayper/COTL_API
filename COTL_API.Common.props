@@ -1,19 +1,22 @@
-<Project>
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <DebugType>full</DebugType>
+
+        <OutputPath Condition=" '$(SolutionDir)' != '' ">$(SolutionDir)bin\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
+        <OutputPath Condition=" '$(SolutionDir)' == '' ">$(ProjectDir)bin\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-        <PackageReference Include="BepInEx.Core" Version="5.4.21" />
-        <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile" />
+        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
+        <PackageReference Include="BepInEx.Core" Version="5.4.21"/>
+        <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile"/>
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
     </ItemGroup>
 </Project>

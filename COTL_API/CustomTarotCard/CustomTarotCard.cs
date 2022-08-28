@@ -5,45 +5,40 @@ namespace COTL_API.CustomTarotCard;
 
 public class CustomTarotCard
 {
-    public virtual string InternalName { get; set; }
+    public virtual string InternalName { get; }
+    public TarotCards.CardCategory Category;
     public TarotCards.Card CardType;
-    public TarotCards.CardCategory CardCategory;
     public string ModPrefix;
 
-    public virtual Sprite CardSprite { get; set; }
+    public virtual Sprite CardSprite { get; internal set; }
 
     public virtual string LocalisedName()
     {
         int upgradeIndex = 0;
         foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
         {
-            if (playerRunTrinket.CardType == CardType)
-            {
-                upgradeIndex = playerRunTrinket.UpgradeIndex;
-                break;
-            }
+            if (playerRunTrinket.CardType != CardType) continue;
+
+            upgradeIndex = playerRunTrinket.UpgradeIndex;
+
+            break;
         }
+
         return LocalisedName(upgradeIndex);
     }
 
     public virtual string LocalisedName(int upgradeIndex)
     {
         string text = "";
-        for (int i = 0; i < upgradeIndex; i++)
-        {
-            text += "+";
-        }
-        string text2 = "";
-        switch (upgradeIndex)
-        {
-            case 1:
-                text2 = "<color=green>";
-                break;
-            case 2:
-                text2 = "<color=purple>";
-                break;
-        }
-        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name") + text + "</color>";
+        for (int i = 0; i < upgradeIndex; i++) text += "+";
+
+        string text2 = upgradeIndex switch {
+            1 => "<color=green>",
+            2 => "<color=purple>",
+            _ => ""
+        };
+        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name") + text +
+               "</color>";
     }
 
     public virtual string LocalisedDescription()
@@ -51,12 +46,11 @@ public class CustomTarotCard
         int upgradeIndex = 0;
         foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
         {
-            if (playerRunTrinket.CardType == CardType)
-            {
-                upgradeIndex = playerRunTrinket.UpgradeIndex;
-                break;
-            }
+            if (playerRunTrinket.CardType != CardType) continue;
+            upgradeIndex = playerRunTrinket.UpgradeIndex;
+            break;
         }
+
         return LocalisedDescription(upgradeIndex);
     }
 
@@ -74,105 +68,100 @@ public class CustomTarotCard
         return LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Lore");
     }
 
-    public virtual string Skin { get; set; }
+    public virtual string Skin { get; } = "";
 
-    public virtual int TarotCardWeight { get; set; }
+    public virtual int TarotCardWeight { get; } = 150;
 
-    public virtual int MaxTarotCardLevel { get; set; }
+    public virtual int MaxTarotCardLevel { get; } = 0;
 
-    public virtual string AnimationSuffix { get; set; }
+    public virtual string AnimationSuffix => $"Card {ModPrefix}.{InternalName} Animation Suffix not set";
 
-    public virtual bool IsCursedRelated { get; set; }
+    public virtual bool IsCursedRelated { get; } = false;
 
-    public virtual float SpiritHeartCount { get; set; }
-
-    public virtual float GetSpiritAmmoCount()
+    public virtual float GetSpiritHeartCount(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual float GetWeaponDamageMultiplerIncrease()
-    {
-        return 0f;
-    }
-
-    public virtual float GetCurseDamageMultiplerIncrease()
-    {
-        return 0f;
-    }
-
-    public virtual float GetWeaponCritChanceIncrease()
-    {
-        return 0f;
-    }
-
-    public virtual int GetLootIncreaseModifier()
+    public virtual int GetSpiritAmmoCount(TarotCards.TarotCard card)
     {
         return 0;
     }
 
-    public virtual float GetMovementSpeedMultiplier()
+    public virtual float GetWeaponDamageMultiplerIncrease(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual float GetAttackRateMultiplier()
+    public virtual float GetCurseDamageMultiplerIncrease(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual float GetBlackSoulsMultiplier()
+    public virtual float GetWeaponCritChanceIncrease(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual float GetHealChance()
-    {
-        return 0f;
-    }
-
-    public virtual float GetNegateDamageChance()
-    {
-        return 0f;
-    }
-
-    public virtual int GetDamageAllEnemiesAmount()
+    public virtual int GetLootIncreaseModifier(TarotCards.TarotCard card, InventoryItem.ITEM_TYPE itemType)
     {
         return 0;
     }
 
-    public virtual int GetHealthAmountMultiplier()
-    {
-        return 0;
-    }
-
-    public virtual float GetAmmoEfficiency()
+    public virtual float GetMovementSpeedMultiplier(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public virtual int GetBlackSoulsOnDamage()
+    public virtual float GetAttackRateMultiplier(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual float GetBlackSoulsMultiplier(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual float GetHealChance(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual float GetNegateDamageChance(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual int GetDamageAllEnemiesAmount(TarotCards.TarotCard card)
     {
         return 0;
     }
 
-    public virtual InventoryItem GetItemToDrop()
+    public virtual int GetHealthAmountMultiplier(TarotCards.TarotCard card)
+    {
+        return 0;
+    }
+
+    public virtual float GetAmmoEfficiency(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual int GetBlackSoulsOnDamage(TarotCards.TarotCard card)
+    {
+        return 0;
+    }
+
+    public virtual InventoryItem GetItemToDrop(TarotCards.TarotCard card)
     {
         return null;
     }
 
-    public virtual float GetChanceOfGainingBlueHeart()
+    public virtual float GetChanceOfGainingBlueHeart(TarotCards.TarotCard card)
     {
         return 0f;
     }
 
-    public CustomTarotCard()
-    {
-        Skin = "TarotCards/placeholder";
-        TarotCardWeight = 100;
-        MaxTarotCardLevel = 0;
-        AnimationSuffix = "sword";
-        IsCursedRelated = false;
-        SpiritHeartCount = 0;
-    }
+    public virtual void ApplyInstantEffects(TarotCards.TarotCard card) { }
 }

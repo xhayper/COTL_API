@@ -1,29 +1,26 @@
 using HarmonyLib;
-using System;
 
 namespace COTL_API.Saves;
 
 [HarmonyPatch]
 internal static class APIDataManager
 {
-    internal static string DATA_PATH = "cotl_api_data.json";
+    internal const string DataPath = "cotl_api_data.json";
 
-    internal static COTLDataReadWriter<APIData> _dataReadWriter = new();
+    internal static readonly COTLDataReadWriter<APIData> DataReadWriter = new();
 
-    internal static APIData apiData;
+    internal static APIData APIData;
 
     static APIDataManager()
     {
-        COTLDataReadWriter<APIData> dataFileReadWriter = _dataReadWriter;
-        dataFileReadWriter.OnReadCompleted += delegate (APIData data)
+        DataReadWriter.OnReadCompleted += delegate(APIData data)
         {
-            apiData = data;
+            APIData = data;
         };
 
-        COTLDataReadWriter<APIData> dataFileReadWriter2 = _dataReadWriter;
-        dataFileReadWriter2.OnCreateDefault += delegate
+        DataReadWriter.OnCreateDefault += delegate
         {
-            apiData = new();
+            APIData = new APIData();
         };
 
         Load();
@@ -33,12 +30,11 @@ internal static class APIDataManager
     [HarmonyPostfix]
     internal static void Save()
     {
-        _dataReadWriter.Write(apiData, DATA_PATH);
+        DataReadWriter.Write(APIData, DataPath);
     }
 
     internal static void Load()
     {
-        _dataReadWriter.Read(DATA_PATH);
+        DataReadWriter.Read(DataPath);
     }
-
 }
