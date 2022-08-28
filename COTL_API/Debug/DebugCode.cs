@@ -2,6 +2,7 @@
 using COTL_API.CustomTarotCard;
 using COTL_API.Helpers;
 using COTL_API.Skins;
+using src.Extensions;
 using System.Linq;
 using UnityEngine;
 using HarmonyLib;
@@ -32,14 +33,16 @@ public class DebugCode
         Inventory.AddItem(Plugin.DebugItem2, 1, true);
         Inventory.AddItem(Plugin.DebugItem3, 1, true);
     }
-
-    [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show),
-        new[] { typeof(TarotCards.TarotCard), typeof(TarotCards.TarotCard), typeof(bool) })]
+    
+    [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show))]
     [HarmonyPrefix]
     public static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance,
         TarotCards.TarotCard card1, TarotCards.TarotCard card2, bool instant)
     {
         if (!Plugin.Debug) return true;
+
+        DataManager.Instance.PlayerRunTrinkets.Remove(card1);
+        DataManager.Instance.PlayerRunTrinkets.Remove(card2);
         
         __instance._card1 = GetRandModdedCard();
         __instance._card2 = GetRandVanillaCard();
@@ -49,12 +52,12 @@ public class DebugCode
 
         return false;
     }
-    
+
     internal static TarotCards.TarotCard GetRandVanillaCard()
     {
         List<TarotCards.Card> vanillaCardList = new(DataManager.Instance.PlayerFoundTrinkets);
         vanillaCardList.RemoveAll(c =>
-            CustomTarotCardManager.CustomTarotCards.ContainsKey(c));
+            CustomTarotCardManager.CustomTarotCards.ContainsKey(c) || DataManager.Instance.PlayerRunTrinkets.Any((t) => t.CardType == c));
 
         return new TarotCards.TarotCard(
             vanillaCardList.ElementAt(Random.Range(0,
