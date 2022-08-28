@@ -7,13 +7,13 @@ public class DebugTarotCard : CustomTarotCard.CustomTarotCard
     public override string InternalName => "DEBUG_TAROT_CARD";
     public override string LocalisedName(int _) { return "DEBUG_TAROT_CARD"; }
     public override string LocalisedLore() { return "<color=purple>NYOOOOOOOOOOOOOOOOOOOOOOOOOOM</color>"; }
-    public override string LocalisedDescription(int _) { return "<sprite name=\"icon_BlueHeart\"> +3, 5x walk speed"; }
+    public override string LocalisedDescription(int _) { return "<sprite name=\"icon_BlueHeart\"> +3, 10x walk speed"; }
 
     public override string Skin => "Trinkets/TheLovers2";
 
     public override float GetMovementSpeedMultiplier(TarotCards.TarotCard card)
     {
-        return 5;
+        return 10;
     }
 
     public override void ApplyInstantEffects(TarotCards.TarotCard card)
