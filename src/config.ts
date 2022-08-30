@@ -19,7 +19,7 @@ export const KNOWN_LANGUAGES = {
 };
 
 // Uncomment this to add an "Edit this page" button to every page of documentation.
-export const GITHUB_EDIT_URL = `https://github.com/xhayper/COTL_API/tree/gh-pages`;
+export const GITHUB_EDIT_URL = `https://github.com/xhayper/COTL_API/tree/gh-pages/`;
 
 // Uncomment this to add an "Join our Community" button to every page of documentation.
 export const COMMUNITY_INVITE_URL = `https://discord.gg/jZ2DytX3TX`;
@@ -36,11 +36,11 @@ export const SIDEBAR = {
 	en: [
 		{ text: '', header: true },
 		{ text: 'Section Header', header: true },
-		{ text: 'Introduction', link: 'en/introduction' },
-		{ text: 'Page 2', link: 'en/page-2' },
-		{ text: 'Page 3', link: 'en/page-3' },
+		{ text: 'Introduction', link: '/en/introduction' },
+		{ text: 'Page 2', link: '/en/page-2' },
+		{ text: 'Page 3', link: '/en/page-3' },
 
 		{ text: 'Another Section', header: true },
-		{ text: 'Page 4', link: 'en/page-4' },
+		{ text: 'Page 4', link: '/en/page-4' },
 	],
 };
