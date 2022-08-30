@@ -34,7 +34,7 @@ public class SkinSettings : UISubmenuBase
 
     public void Reset()
     {
-        APIDataManager.apiData.SetValue<string>("selectedSkin", null);
+        APIDataManager.APIData.SetValue<string>("selectedSkin", null);
     }
 
     public void Configure()
@@ -45,6 +45,6 @@ public class SkinSettings : UISubmenuBase
     private void OnSkinValueChanged(int index)
     {
         string skinName = _skinName.Content[index];
-        Plugin.logger.LogInfo($"Selected Skin: {skinName}");
+        Plugin.Logger.LogInfo($"Selected Skin: {skinName}");
     }
 }
