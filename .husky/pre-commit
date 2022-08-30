@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn pretty-quick --staged --branch gh-pages
+yarn pretty-quick --staged --branch gh-pages --pattern "src/**/*.*(js|jsx|ts|tsx|astro|css|scss|sass)"
