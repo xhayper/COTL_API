@@ -1,13 +1,10 @@
-﻿using src.UINavigator;
+﻿using Lamb.UI.SettingsMenu;
+using COTL_API.Saves;
 using src.Extensions;
 using UnityEngine;
 using Lamb.UI;
-using Rewired;
-using System;
-using COTL_API.Saves;
 
 namespace COTL_API.UI.Settings;
-
 
 public class SkinSettings : UISubmenuBase
 {
@@ -15,21 +12,31 @@ public class SkinSettings : UISubmenuBase
     [SerializeField]
     private MMHorizontalSelector _skinName;
 
+    public void Init()
+    {
+        name = "SkinSettings";
+        
+        _animator = gameObject.AddComponent<Animator>();
+        _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        _canvas = gameObject.AddComponent<Canvas>();
+        
+        // _skinName = gameObject.AddComponent<MMHorizontalSelector>();
+        // _skinName._animator = gameObject.AddComponent<Animator>();
+        // _skinName._canvasGroup = gameObject.AddComponent<CanvasGroup>();
+    }
+    
     public override void Awake()
     {
         base.Awake();
-        name = "Skins";
-
-        _skinName = new();
-        _skinName.name = "Selected Skin";
-
-        _skinName.PrefillContent("Default");
-        //_skinName._text.text = "Selected Skin";
+        
+        // _skinName.name = "Selected Skin";
+        // _skinName._text.text = "Selected Skin";
     }
 
     private void Start()
     {
-        _skinName.OnSelectionChanged += OnSkinValueChanged;
+        // _skinName.PrefillContent("Default");
+        // _skinName.OnSelectionChanged += OnSkinValueChanged;
     }
 
     public void Reset()
