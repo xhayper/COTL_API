@@ -36,11 +36,11 @@ export const SIDEBAR = {
 	en: [
 		{ text: '', header: true },
 		{ text: 'Section Header', header: true },
-		{ text: 'Introduction', link: '/en/introduction' },
-		{ text: 'Page 2', link: '/en/page-2' },
-		{ text: 'Page 3', link: '/en/page-3' },
+		{ text: 'Introduction', link: 'COTL_API/en/introduction' },
+		{ text: 'Page 2', link: 'COTL_API/en/page-2' },
+		{ text: 'Page 3', link: 'COTL_API/en/page-3' },
 
 		{ text: 'Another Section', header: true },
-		{ text: 'Page 4', link: '/en/page-4' },
+		{ text: 'Page 4', link: 'COTL_API/en/page-4' },
 	],
 };
