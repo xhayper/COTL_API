@@ -21,6 +21,6 @@ public class DebugFollowerCommandClass3 : CustomFollowerCommand.CustomFollowerCo
 
     public override void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand)
     {
-        Plugin.Logger.LogDebug("W-wh?! this shouldn't be called!");
+        interaction.Close();
     }
 }

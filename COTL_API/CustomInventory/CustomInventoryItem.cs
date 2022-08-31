@@ -60,6 +60,11 @@ public class CustomInventoryItem
 
     public virtual FollowerCommands GiftCommand => FollowerCommands.None;
 
+    public virtual System.Action<Follower, InventoryItem.ITEM_TYPE, System.Action> OnGiveToFollower()
+    {
+        return InventoryItem.OnGetGift;
+    }
+
     public virtual string CapacityString(int minimum)
     {
         int itemQuantity = Inventory.GetItemQuantity(ItemType);

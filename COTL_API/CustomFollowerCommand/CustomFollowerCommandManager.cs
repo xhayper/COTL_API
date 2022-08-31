@@ -128,16 +128,10 @@ public class CustomFollowerCommandManager
         if (!CustomFollowerCommands.ContainsKey(command) &&
             !CustomFollowerCommands.ContainsKey(preFinalCommand)) return true;
 
-        // bool shouldClose = 
         if (CustomFollowerCommands.ContainsKey(preFinalCommand))
             CustomFollowerCommands[preFinalCommand].Execute(__instance, command);
         else CustomFollowerCommands[command].Execute(__instance);
-
-        // if (shouldClose)
-        // {
-        __instance.Close();
-        // }
-
+        
         return false;
     }
 
