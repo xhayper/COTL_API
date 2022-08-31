@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEngine;
 
 namespace COTL_API.Debug;
 
@@ -17,8 +16,8 @@ public class DebugGiftFollowerCommand : CustomFollowerCommand.CustomFollowerComm
     private IEnumerator RunEnumerator(interaction_FollowerInteraction interaction, InventoryItem.ITEM_TYPE type)
     {
         interaction.eventListener.PlayFollowerVO(interaction.positiveAcknowledgeVO);
-        yield return new WaitForSeconds(.35f);
         interaction.follower.Brain.HardSwapToTask(new FollowerTask_InstantPoop());
+        Inventory.AddItem(type, -1);
         interaction.Close();
     }
 }
