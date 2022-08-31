@@ -204,9 +204,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/markdown-remark@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@astrojs/markdown-remark@npm:1.1.0"
+"@astrojs/markdown-remark@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@astrojs/markdown-remark@npm:1.1.1"
   dependencies:
     "@astrojs/micromark-extension-mdx-jsx": ^1.0.3
     "@astrojs/prism": ^1.0.0
@@ -224,12 +224,12 @@ __metadata:
     remark-parse: ^10.0.1
     remark-rehype: ^10.1.0
     remark-smartypants: ^2.0.0
-    shiki: ^0.10.1
+    shiki: ^0.11.1
     unified: ^10.1.2
     unist-util-map: ^3.1.1
     unist-util-visit: ^4.1.0
     vfile: ^5.3.2
-  checksum: d8f446bd130fb5fc8f656b387811de5582ca5b16fb85398260a8f2dfc21289730b07d889d3ca3b57e3d77490615636d5e37fce20b2592853efe947ce3d03ef6c
+  checksum: d3585ce3ae7b228d4bbf45308439513faaffd568d94367156cc0a2d7b4fbd5f4ee181896e408017a2b1dbc7102104cbab570a21b2082e392a280a4729f184dc7
   languageName: node
   linkType: hard
 
@@ -273,16 +273,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/react@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@astrojs/react@npm:1.1.0"
+"@astrojs/react@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@astrojs/react@npm:1.1.1"
   dependencies:
     "@babel/core": ">=7.0.0-0 <8.0.0"
     "@babel/plugin-transform-react-jsx": ^7.17.12
   peerDependencies:
     react: ^17.0.2 || ^18.0.0
     react-dom: ^17.0.2 || ^18.0.0
-  checksum: a07a665ec5a09fd8d30a7b0d029c75079c229f4ec8a2b7a4969037fd28e6f6b229529a1aa3b1c9fd529c23674d7415e0e7408f1b0d87a59a375adcdb915c817c
+  checksum: e7e51ae9506d77cf4248b8ec5aa1ad2a76ae97b16708c90a662128d2a923294e6e67f3580fcfcfa51d7669d8a00d00750cc32ef3303b596f9596d615fde59151
   languageName: node
   linkType: hard
 
@@ -640,26 +640,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@example/docs@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@example/docs@workspace:."
-  dependencies:
-    "@algolia/client-search": ^4.14.2
-    "@astrojs/preact": ^1.0.2
-    "@astrojs/react": ^1.1.0
-    "@docsearch/css": ^3.2.1
-    "@docsearch/react": ^3.2.1
-    "@types/react": ^18.0.17
-    astro: ^1.1.1
-    husky: ^8.0.1
-    preact: ^10.10.6
-    pretty-quick: ^3.1.3
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    sass: ^1.54.6
-  languageName: unknown
-  linkType: soft
-
 "@gar/promisify@npm:^1.1.3":
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
@@ -934,14 +914,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.0.17":
-  version: 18.0.17
-  resolution: "@types/react@npm:18.0.17"
+"@types/react@npm:^18.0.18":
+  version: 18.0.18
+  resolution: "@types/react@npm:18.0.18"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 18cae64f5bfd6bb58fbd8ee2ba52ec82de844f114254e26de7b513e4b86621f643f9b71d7066958cd571b0d78cb86cbceda449c5289f9349ca573df29ab69252
+  checksum: 6d72d35ab3eecf382a5e0f225923f5a2c753045fce02e4e29713f36c99a24f0f770666a49dde96167f37c86271f93339d1b7e2b8969d011b137a9ebd24ee6806
   languageName: node
   linkType: hard
 
@@ -1178,13 +1158,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "astro@npm:1.1.1"
+"astro@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "astro@npm:1.1.2"
   dependencies:
     "@astrojs/compiler": ^0.23.4
     "@astrojs/language-server": ^0.23.0
-    "@astrojs/markdown-remark": ^1.1.0
+    "@astrojs/markdown-remark": ^1.1.1
     "@astrojs/telemetry": ^1.0.0
     "@astrojs/webapi": ^1.0.0
     "@babel/core": ^7.18.2
@@ -1225,7 +1205,7 @@ __metadata:
     resolve: ^1.22.0
     rollup: ~2.77.0
     semver: ^7.3.7
-    shiki: ^0.10.1
+    shiki: ^0.11.1
     sirv: ^2.0.2
     slash: ^4.0.0
     string-width: ^5.1.2
@@ -1239,7 +1219,7 @@ __metadata:
     zod: ^3.17.3
   bin:
     astro: astro.js
-  checksum: 284f32f0cf16d789ddb0f2a6f4999f6aa262523dcba3ee7012e0a35af65a6b2915b8b30e3b34c8cf07f0f1458999544bca7a95de21ef4e147be5ad0229b752d7
+  checksum: 41504d13f5961f53f37be16bde63f6cf090ca1157441f4850c249f5b8e97099025a783a8a83aa5604fb48e0eea830b32aef77a77a82a439175902361c43e93f1
   languageName: node
   linkType: hard
 
@@ -1623,6 +1603,26 @@ __metadata:
   checksum: 985d974a2d33e1a2543ada51c93e1ba2f73eaed608dc39f229afc78f71dcc4c8b7d7c684aa647e3c6a3a204027444d69e53e169ce94e8d1fa8d7dee80c9c8fed
   languageName: node
   linkType: hard
+
+"cotl_api_wiki@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "cotl_api_wiki@workspace:."
+  dependencies:
+    "@algolia/client-search": ^4.14.2
+    "@astrojs/preact": ^1.0.2
+    "@astrojs/react": ^1.1.1
+    "@docsearch/css": ^3.2.1
+    "@docsearch/react": ^3.2.1
+    "@types/react": ^18.0.18
+    astro: ^1.1.2
+    husky: ^8.0.1
+    preact: ^10.10.6
+    pretty-quick: ^3.1.3
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    sass: ^1.54.7
+  languageName: unknown
+  linkType: soft
 
 "cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.3":
   version: 7.0.3
@@ -4719,16 +4719,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.54.6":
-  version: 1.54.6
-  resolution: "sass@npm:1.54.6"
+"sass@npm:^1.54.7":
+  version: 1.54.7
+  resolution: "sass@npm:1.54.7"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 0cfd3e1b5d3c79a53cdd84bf0d3bd3160c99a87e9ea948f8d025a93477e058ecf80d64f45127d5e23c62ed2e34279b9672198f640d10e48a6cbd5ccebc5df899
+  checksum: 4b6a10e93387e65dcbad2683d46b4249453ab8777c1bafab7a73ac3900a21fa91fa31d68df7a1b982c7e332a99b5574b1adc6168eb1ac6d7ebb28e18a65c4198
   languageName: node
   linkType: hard
 
@@ -4794,14 +4794,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki@npm:^0.10.1":
-  version: 0.10.1
-  resolution: "shiki@npm:0.10.1"
+"shiki@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "shiki@npm:0.11.1"
   dependencies:
     jsonc-parser: ^3.0.0
     vscode-oniguruma: ^1.6.1
-    vscode-textmate: 5.2.0
-  checksum: fb746f3cb3de7e545e3b10a6cb658d3938f840e4ccc9a3c90ceb7e69a8f89dbb432171faac1e9f02a03f103684dad88ee5e54b5c4964fa6b579fca6e8e26424d
+    vscode-textmate: ^6.0.0
+  checksum: 2a4ebc3b466816263fc244ae4f67a4ff96aa74d863b9c5e7e4affc50f37fd6d1a781405de0dbf763b777bc33e49a0d441de7ff3fededb8b01e3b8dbb37e2927d
   languageName: node
   linkType: hard
 
@@ -5524,10 +5524,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vscode-textmate@npm:5.2.0":
-  version: 5.2.0
-  resolution: "vscode-textmate@npm:5.2.0"
-  checksum: 5449b42d451080f6f3649b66948f4b5ee4643c4e88cfe3558a3b31c84c78060cfdd288c4958c1690eaa5cd65d09992fa6b7c3bef9d4aa72b3651054a04624d20
+"vscode-textmate@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "vscode-textmate@npm:6.0.0"
+  checksum: ff6f17a406c2906586afc14ef01cb122e33acd35312e815abb5c924347a777c6783ce3fe7db8b83f1760ebf843c669843b9390f905b69c433b3395af28e4b483
   languageName: node
   linkType: hard
 
