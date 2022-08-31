@@ -1,6 +1,6 @@
 ---
 title: Follower Commands
-description: Lorem ipsum dolor sit amet - 4
+description: Lorem ipsum dolor sit amet
 layout: ../layouts/MainLayout.astro
 ---
 
