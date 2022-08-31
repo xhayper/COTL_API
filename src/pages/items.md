@@ -1,6 +1,6 @@
 ---
 title: Items
-description: Lorem ipsum dolor sit amet - 3
+description: Lorem ipsum dolor sit amet
 layout: ../layouts/MainLayout.astro
 ---
 
