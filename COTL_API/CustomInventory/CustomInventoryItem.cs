@@ -39,7 +39,7 @@ public class CustomInventoryItem
     {
         return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Description");
     }
-
+    
     public virtual int FuelWeight { get; } = 1;
     public virtual int FoodSatitation { get; } = 75;
 
@@ -51,7 +51,14 @@ public class CustomInventoryItem
     public virtual bool IsPlantable { get; } = false;
     public virtual bool IsBurnableFuel { get; } = false;
 
-    public virtual bool CanBeGivenToFollower { get; } = false;
+    public virtual bool CanBeGivenToFollower => false;
+    
+    public virtual string GiftTitle(Follower follower)
+    {
+        return $"{Name()} ({Inventory.GetItemQuantity(ItemType)})";
+    }
+
+    public virtual FollowerCommands GiftCommand => FollowerCommands.None;
 
     public virtual string CapacityString(int minimum)
     {

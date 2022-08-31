@@ -23,6 +23,33 @@ public class CustomFollowerCommandManager
 
         return followerCommand;
     }
+    
+    [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.GetTitle))]
+    [HarmonyPrefix]
+    public static bool CommandItem_GetTitle(CommandItem __instance, Follower follower, ref string __result)
+    {
+        if (!CustomFollowerCommands.ContainsKey(__instance.Command)) return true;
+        __result = CustomFollowerCommands[__instance.Command].GetTitle(follower);
+        return false;
+    }
+    
+    [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.GetDescription))]
+    [HarmonyPrefix]
+    public static bool CommandItem_GetDescription(CommandItem __instance, Follower follower, ref string __result)
+    {
+        if (!CustomFollowerCommands.ContainsKey(__instance.Command)) return true;
+        __result = CustomFollowerCommands[__instance.Command].GetDescription(follower);
+        return false;
+    }
+    
+    [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.GetLockedDescription))]
+    [HarmonyPrefix]
+    public static bool CommandItem_GetLockedDescription(CommandItem __instance, Follower follower, ref string __result)
+    {
+        if (!CustomFollowerCommands.ContainsKey(__instance.Command)) return true;
+        __result = CustomFollowerCommands[__instance.Command].GetTitle(follower);
+        return false;
+    }
 
     [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.DefaultCommands))]
     [HarmonyPostfix]

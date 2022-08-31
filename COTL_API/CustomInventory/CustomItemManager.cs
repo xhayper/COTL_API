@@ -5,7 +5,9 @@ using COTL_API.Guid;
 using UnityEngine;
 using System.Linq;
 using HarmonyLib;
+using I2.Loc;
 using Lamb.UI;
+using Lamb.UI.FollowerInteractionWheel;
 
 namespace COTL_API.CustomInventory;
 
@@ -47,7 +49,6 @@ public class CustomItemManager
         if (DataManager.AllNecklaces.Contains(item)) DataManager.AllNecklaces.Remove(item);
     }
 
-    // Patch `ItemInfoCard` not using `InventoryItem`'s method
     [HarmonyPatch(typeof(ItemInfoCard), nameof(ItemInfoCard.Configure))]
     [HarmonyPostfix]
     public static void ItemInfoCard_Configure(ItemInfoCard __instance, InventoryItem.ITEM_TYPE config)
@@ -71,6 +72,46 @@ public class CustomItemManager
             if (CustomItems[itemType].IsBurnableFuel && !__instance.fuel.Contains(itemType))
                 __instance.fuel.Add(itemType);
         }
+    }
+
+    [HarmonyPatch(typeof(Inventory), nameof(Inventory.HasGift))]
+    [HarmonyPostfix]
+    public static void Inventory_HasGift(Inventory __instance, ref bool __result)
+    {
+        if (__result) return;
+
+        foreach (InventoryItem item in Inventory.items)
+        {
+            if (!CustomItems.ContainsKey((InventoryItem.ITEM_TYPE) item.type)) continue;
+            if (!CustomItems[(InventoryItem.ITEM_TYPE) item.type].CanBeGivenToFollower) continue;
+
+            __result = true;
+            break;
+        }
+    }
+
+    [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.GiftCommands))]
+    [HarmonyPostfix]
+    public static void FollowerCommandGroups_GiftCommands(ref List<CommandItem> __result)
+    {
+        foreach (CustomInventoryItem item in CustomItems.Values)
+        {
+            if (!item.CanBeGivenToFollower) continue;
+
+            __result.Add(new FollowerCommandItems.GiftCommandItem(item.ItemType) {
+                Command = item.GiftCommand
+            });
+        }
+    }
+
+    [HarmonyPatch(typeof(FollowerCommandItems.GiftCommandItem), nameof(FollowerCommandItems.GiftCommandItem.GetTitle))]
+    [HarmonyPrefix]
+    public static bool FollowerCommandItems_GiftCommandItem_GetTitle(FollowerCommandItems.GiftCommandItem __instance,
+        Follower follower, ref string __result)
+    {
+        if (!CustomItems.ContainsKey(__instance._itemType)) return true;
+        __result = CustomItems[__instance._itemType].GiftTitle(follower);
+        return false;
     }
 
     [HarmonyPatch(typeof(FontImageNames), nameof(FontImageNames.GetIconByType))]

@@ -1,3 +1,4 @@
+using Lamb.UI.FollowerInteractionWheel;
 using BepInEx.Configuration;
 using System.Reflection;
 using BepInEx.Logging;
@@ -26,6 +27,7 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DebugItem;
     internal static InventoryItem.ITEM_TYPE DebugItem2;
     internal static InventoryItem.ITEM_TYPE DebugItem3;
+    internal static FollowerCommands DebugGiftFollowerCommand;
 
     private static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;
@@ -42,6 +44,8 @@ public class Plugin : BaseUnityPlugin
             CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommand());
             CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
             CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommandClass3());
+            DebugGiftFollowerCommand =
+                CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugGiftFollowerCommand());
 
             DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
             DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
