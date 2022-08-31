@@ -49,7 +49,6 @@ public class DebugCode
         __instance._uiCard1.Play(__instance._card1);
         __instance._uiCard2.Play(__instance._card2);
         __instance.Show(instant);
-
         return false;
     }
 
