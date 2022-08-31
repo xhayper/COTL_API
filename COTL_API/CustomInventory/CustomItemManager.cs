@@ -273,7 +273,11 @@ public class CustomItemManager
     public static bool InventoryItem_GiveToFollowerCallbacks(InventoryItem.ITEM_TYPE Type, ref System.Action<Follower, InventoryItem.ITEM_TYPE, System.Action> __result)
     {
         if (!CustomItems.ContainsKey(Type)) return true;
-        __result = CustomItems[Type].OnGiveToFollower();
+        __result = (follower, type, callback) =>
+        {
+            if (!CustomItems.ContainsKey(type)) InventoryItem.GiveToFollowerCallbacks(type)(follower, type, callback);
+            else CustomItems[type].OnGiftTo(follower, callback);
+        };
         return false;
     }
 

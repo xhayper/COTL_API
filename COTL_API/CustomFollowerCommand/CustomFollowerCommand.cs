@@ -45,6 +45,6 @@ public class CustomFollowerCommand : CommandItem
     public virtual void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
     {
-        // return true;
+        interaction.Close();
     }
 }
