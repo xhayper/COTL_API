@@ -1,25 +1,22 @@
 ---
 title: Introduction
-description: Docs intro
+description: API Docs intro
 layout: ../layouts/MainLayout.astro
 ---
 
-**Welcome to Astro!**
+**Welcome to the Cult of the Lamb API documentation!**
 
-This is the `docs` starter template. It contains all of the features that you need to build a Markdown-powered documentation site, including:
+Here you will find all the needed info to make mods using the COTL API.  
+Learn how to set up your project for modding with the API in [Getting Started](COTL_API/getting-started), or look into all the features the API offers with the sidebar on the left.
 
-- ✅ **Full Markdown support**
-- ✅ **Responsive mobile-friendly design**
-- ✅ **Sidebar navigation**
-- ✅ **Search (powered by Algolia)**
-- ✅ **Automatic table of contents**
-- ✅ **Automatic list of contributors**
-- ✅ (and, best of all) **dark mode**
+## Features
+The API currently fully supports the following features:
+- Items
+- Follower Commands
+- Custom Save File Data
 
-## Getting Started
+It also has experimental functionality for:
+- Skins
+- Tarot Cards
 
-To get started with this theme, check out the `README.md` in your new project directory. It provides documentation on how to use and customize this template for your own project. Keep the README around so that you can always refer back to it as you build.
-
-Found a missing feature that you can't live without? Please suggest it on Discord [(#ideas-and-suggestions channel)](https://astro.build/chat) and even consider adding it yourself on GitHub! Astro is an open source project and contributions from developers like you are how we grow!
-
-Good luck out there, Astronaut. 🧑‍🚀
+And many more will be added soon!
