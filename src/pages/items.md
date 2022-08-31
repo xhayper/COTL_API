@@ -1,5 +1,5 @@
 ---
-title: Page 3
+title: Items
 description: Lorem ipsum dolor sit amet - 3
 layout: ../layouts/MainLayout.astro
 ---
