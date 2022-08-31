@@ -1,6 +1,6 @@
 ---
 title: Save Data
-description: Lorem ipsum dolor sit amet - 2
+description: Lorem ipsum dolor sit amet
 layout: ../layouts/MainLayout.astro
 ---
 
