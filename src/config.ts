@@ -29,7 +29,7 @@ export const COMMUNITY_INVITE_URL = `https://discord.gg/jZ2DytX3TX`;
 
 export const SIDEBAR = [
     { text: "Introduction", header: true },
-    { text: "Main Page", link: "COTL_API/introduction" },
+    { text: "Main Page", link: "COTL_API/" },
     { text: "Getting Started", link: "COTL_API/getting-started" },
 
     { text: "Features", header: true },
