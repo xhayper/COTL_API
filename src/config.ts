@@ -28,11 +28,12 @@ export const COMMUNITY_INVITE_URL = `https://discord.gg/jZ2DytX3TX`;
 // }
 
 export const SIDEBAR = [
-    { text: "Section Header", header: true },
-    { text: "Introduction", link: "COTL_API/introduction" },
-    { text: "Page 2", link: "COTL_API/page-2" },
-    { text: "Page 3", link: "COTL_API/page-3" },
+    { text: "Introduction", header: true },
+    { text: "Main Page", link: "COTL_API/introduction" },
+    { text: "Getting Started", link: "COTL_API/getting-started" },
 
-    { text: "Another Section", header: true },
-    { text: "Page 4", link: "COTL_API/page-4" }
+    { text: "Features", header: true },
+    { text: "Items", link: "COTL_API/items" },
+    { text: "Follower Commands", link: "COTL_API/follower-commands" },
+    { text: "Save File Data", link: "COTL_API/save-data" }
 ];
