@@ -5,7 +5,7 @@ export const SITE = {
 
 export const OPEN_GRAPH = {
     image: {
-        src: "https://github.com/xhayper/COTL_API/blob/gh-pages/public/banner.png?raw=true",
+        src: "https://xhayper.github.io/COTL_API/banner.png",
         alt: "Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)"
     },
     twitter: "hayper1919"
