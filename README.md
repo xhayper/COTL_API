@@ -15,7 +15,6 @@ yarn init astro -- --template docs
 - ✅ **Responsive mobile-friendly design**
 - ✅ **Sidebar navigation**
 - ✅ **Search (powered by Algolia)**
-- ✅ **Multi-language i18n**
 - ✅ **Automatic table of contents**
 - ✅ **Automatic list of contributors**
 - ✅ (and, best of all) **dark mode**
@@ -43,7 +42,7 @@ Welcome! Check out [our documentation](https://docs.astro.build) or jump into ou
 
 ### Site metadata
 
-`src/config.ts` contains several data objects that describe metadata about your site like title, description, default language, and Open Graph details. You can customize these to match your project.
+`src/config.ts` contains several data objects that describe metadata about your site like title, description, and Open Graph details. You can customize these to match your project.
 
 ### CSS styling
 
@@ -69,7 +68,7 @@ Astro uses frontmatter in Markdown pages to choose layouts and pass properties t
 ---
 title: Example title
 description: Really cool docs example that uses Astro
-layout: ../../layouts/MainLayout.astro
+layout: ../layouts/MainLayout.astro
 ---
 
 # Page content...
@@ -82,88 +81,16 @@ For more SEO related properties, look at `src/components/HeadSEO.astro`
 The sidebar navigation is controlled by the `SIDEBAR` variable in your `src/config.ts` file. You can customize the sidebar by modifying this object. A default, starter navigation has already been created for you.
 
 ```ts
-export const SIDEBAR = {
-  en: [
-    { text: "Section Header", header: true },
-    { text: "Introduction", link: "en/introduction" },
-    { text: "Page 2", link: "en/page-2" },
-    { text: "Page 3", link: "en/page-3" },
+export const SIDEBAR = [
+  { text: "Section Header", header: true },
+  { text: "Introduction", link: "COTL_API/introduction" },
+  { text: "Page 2", link: "COTL_API/page-2" },
+  { text: "Page 3", link: "COTL_API/page-3" },
 
-    { text: "Another Section", header: true },
-    { text: "Page 4", link: "en/page-4" },
-  ],
-};
+  { text: "Another Section", header: true },
+  { text: "Page 4", link: "COTL_API/page-4" },
+];
 ```
-
-Note the top-level `en` key: This is needed for multi-language support. You can change it to whatever language you'd like, or add new languages as you go. More details on this below.
-
-### Multiple Languages support
-
-The Astro docs template supports multiple langauges out of the box. The default theme only shows `en` documentation, but you can enable multi-language support features by adding a second language to your project.
-
-To add a new language to your project, you'll want to extend the current `src/pages/[lang]/...` layout:
-
-```diff
- 📂 src/pages
- ┣ 📂 en
- ┃ ┣ 📜 page-1.md
- ┃ ┣ 📜 page-2.md
- ┃ ┣ 📜 page-3.astro
-+ ┣ 📂 es
-+ ┃ ┣ 📜 page-1.md
-+ ┃ ┣ 📜 page-2.md
-+ ┃ ┣ 📜 page-3.astro
-```
-
-You'll also need to add the new language name to the `KNOWN_LANGUAGES` map in your `src/config.ts` file. This will enable your new language switcher in the site header.
-
-```diff
-// src/config.ts
-export const KNOWN_LANGUAGES = {
-  English: 'en',
-+  Spanish: 'es',
-};
-```
-
-Last step: you'll need to add a new entry to your sidebar, to create the table of contents for that language. While duplicating every page might not sound ideal to everyone, this extra control allows you to create entirely custom content for every language.
-
-> Make sure the sidebar `link` value points to the correct language!
-
-```diff
-// src/config.ts
-export const SIDEBAR = {
-  en: [
-    { text: 'Section Header', header: true, },
-    { text: 'Introduction', link: 'en/introduction' },
-    // ...
-  ],
-+  es: [
-+    { text: 'Encabezado de sección', header: true, },
-+    { text: 'Introducción', link: 'es/introduction' },
-+    // ...
-+  ],
-};
-
-// ...
-```
-
-If you plan to use Spanish as the the default language, you just need to modify the redirect path in `src/pages/index.astro`:
-
-```diff
-<script>
-- window.location.pathname = `/en/introduction`;
-+ window.location.pathname = `/es/introduction`;
-</script>
-```
-
-You can also remove the above script and write a landing page in Spanish instead.
-
-### What if I don't plan to support multiple languages?
-
-That's totally fine! Not all projects need (or can support) multiple languages. You can continue to use this theme without ever adding a second language.
-
-If that single language is not English, you can just replace `en` in directory layouts and configurations with the preferred language.
-
 ### Search (Powered by Algolia)
 
 [Algolia](https://www.algolia.com/) offers a free service to qualified open source projects called [DocSearch](https://docsearch.algolia.com/). If you are accepted to the DocSearch program, provide your API Key & index name in `src/config.ts` and a search box will automatically appear in your site header.
