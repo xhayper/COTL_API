@@ -11,5 +11,5 @@ export default defineConfig({
     react(),
   ],
   site: "https://xhayper.github.io",
-  base: "/COTL_API",
+  base: "/COTL_API"
 });
