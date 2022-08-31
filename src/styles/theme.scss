@@ -63,14 +63,14 @@
   --theme-text-accent: hsla(var(--color-blue), 1);
   --theme-accent-opacity: 0.15;
   --theme-divider: hsla(var(--color-gray-95), 1);
-//   --theme-text: hsla(var(--color-gray-10), 1);
-  --theme-text: hsla(var(--color-gray-90), 1);
-//   --theme-text-light: hsla(var(--color-gray-40), 1);
-  --theme-text-light: hsla(var(--color-gray-80), 1);
+  --theme-text: hsla(var(--color-gray-10), 1);
+//   --theme-text: hsla(var(--color-gray-90), 1);
+  --theme-text-light: hsla(var(--color-gray-40), 1);
+//   --theme-text-light: hsla(var(--color-gray-80), 1);
   /* @@@: not used anywhere */
   --theme-text-lighter: hsla(var(--color-gray-80), 1);
-//   --theme-bg: hsla(var(--color-base-white), 100%, 1);
-  --theme-bg: rgb(210, 12, 43);
+  --theme-bg: hsla(var(--color-base-white), 100%, 1);
+//   --theme-bg: rgb(210, 12, 43);
   --theme-bg-hover: hsla(var(--color-gray-95), 1);
   --theme-bg-offset: hsla(var(--color-gray-90), 1);
   --theme-bg-accent: hsla(var(--color-blue), var(--theme-accent-opacity));
