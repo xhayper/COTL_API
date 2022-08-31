@@ -97,6 +97,7 @@ public class CustomItemManager
         foreach (CustomInventoryItem item in CustomItems.Values)
         {
             if (!item.CanBeGivenToFollower) continue;
+            if (0 >= Inventory.GetItemQuantity(item.ItemType)) continue;
 
             __result.Add(new FollowerCommandItems.GiftCommandItem(item.ItemType) {
                 Command = item.GiftCommand
@@ -265,6 +266,15 @@ public class CustomItemManager
     public static void InventoryItem_AllPlantables(ref List<InventoryItem.ITEM_TYPE> __result)
     {
         __result.AddRange(CustomItems.Where(x => x.Value.IsPlantable).Select(x => x.Key));
+    }
+    
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.GiveToFollowerCallbacks))]
+    [HarmonyPrefix]
+    public static bool InventoryItem_GiveToFollowerCallbacks(InventoryItem.ITEM_TYPE Type, ref System.Action<Follower, InventoryItem.ITEM_TYPE, System.Action> __result)
+    {
+        if (!CustomItems.ContainsKey(Type)) return true;
+        __result = CustomItems[Type].OnGiveToFollower();
+        return false;
     }
 
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllSeeds), MethodType.Getter)]

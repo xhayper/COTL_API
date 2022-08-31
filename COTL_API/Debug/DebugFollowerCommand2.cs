@@ -23,7 +23,7 @@ public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCo
         FollowerCommands finalCommand)
     {
         interaction.follower.Brain.MakeDissenter();
-        // return true;
+        interaction.Close();
     }
 
     public DebugFollowerCommandClass2()
