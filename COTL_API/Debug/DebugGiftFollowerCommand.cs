@@ -61,7 +61,7 @@ public class DebugGiftFollowerCommand : CustomFollowerCommand.CustomFollowerComm
                 .Stats
                 .MAX_ADORATION)
             yield return interaction.GiveDiscipleRewardRoutine(
-                interaction.previousTaskType, interaction.Close));
+                interaction.previousTaskType, interaction.Close);
         else
             interaction.Close();
 
