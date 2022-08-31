@@ -1,36 +1,69 @@
 ---
 title: Items
-description: Lorem ipsum dolor sit amet
+description: Items Docs
 layout: ../layouts/MainLayout.astro
 ---
 
-This is a fully-featured page, written in Markdown!
+## Creating Items
 
-## Section A
+To create an item, you first need to make a class overriding `CustomInventoryItem`.  
+Example:
+```cs
+using COTL_API.CustomInventory;
+using COTL_API.Helpers;
+using System.IO;
+using UnityEngine;
+```
+```cs
+internal class ExampleItem : CustomInventoryItem
+{
+    public override string InternalName => "Example_Item";
+    public override string LocalizedName() { return "Example Item"; }
+    public override string LocalizedDescription() { return "This is an example item"; }
 
-Lorem ipsum dolor sit amet, **consectetur adipiscing elit**. Sed ut tortor _suscipit_, posuere ante id, vulputate urna. Pellentesque molestie aliquam dui sagittis aliquet. Sed sed felis convallis, lacinia lorem sit amet, fermentum ex. Etiam hendrerit mauris at elementum egestas. Vivamus id gravida ante. Praesent consectetur fermentum turpis, quis blandit tortor feugiat in. Aliquam erat volutpat. In elementum purus et tristique ornare. Suspendisse sollicitudin dignissim est a ultrices. Pellentesque sed ipsum finibus, condimentum metus eget, sagittis elit. Sed id lorem justo. Vivamus in sem ac mi molestie ornare.
+    public override Sprite InventoryIcon => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_item.png"));
+}
+```
+`CustomInventoryItem` supports the following overrides:
+| Type | Name | Default |
+|-|-|-|
+| string | InternalName | \[REQUIRED\] |
+| Sprite | InventoryIcon | TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png")) |
+| InventoryItem.ITEM_CATEGORIES | ItemCategory | InventoryItem.ITEM_CATEGORIES.NONE |
+| InventoryItem.ITEM_TYPE | SeedType | InventoryItem.ITEM_TYPE.NONE; |
+| string | LocalizedName() | LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}") |
+| string | LocalizedLore() | LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Lore") |
+| string | LocalizedDescription() | LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Description") |
+| int | FuelWeight | 1
+| int | FoodSatitation | 75
+| bool | IsFish | false
+| bool | IsFood | false
+| bool | IsBigFish | false
+| bool | IsCurrency | false
+| bool | IsSeed |  false
+| bool | IsPlantable | false
+| bool | IsBurnableFuel | false
+| bool | CanBeGivenToFollower | false
+| string | GiftTitle(Follower follower) | $"{Name()} ({Inventory.GetItemQuantity(ItemType)})"
+| FollowerCommands | GiftCommand | FollowerCommands.None
+| void | OnGiftTo(Follower follower, System.Action onFinish) | onFinish()
 
-## Section B
+## Adding Items
+To add an item to the game, simply use `CustomItemManager.Add()`.  
+Example:
+```cs
+using COTL_API.CustomInventory;
+```
+```cs
+CustomItemManager.Add(new ExampleItem());
+```
 
-Nam quam dolor, pellentesque sed odio euismod, feugiat tempus tellus. Quisque arcu velit, ultricies in faucibus sed, ultrices ac enim. Nunc eget dictum est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ex nisi, egestas mollis ultricies ut, laoreet suscipit libero. Nam condimentum molestie turpis. Sed vestibulum sagittis congue. Maecenas tristique enim et tincidunt tempor. Curabitur ac scelerisque nulla, in malesuada libero. Praesent eu tempus odio. Pellentesque aliquam ullamcorper quam at gravida. Sed non fringilla mauris. Aenean sit amet ultrices erat. Vestibulum congue venenatis tortor, nec suscipit tortor. Aenean pellentesque mauris eget tortor tincidunt pharetra.
-
-## Section C
-
-```markdown
----
-title: Markdown Page!
-layout: ~/layouts/MainLayout.astro
----
-
-# Markdown example
-
-This is a fully-featured page, written in Markdown!
-
-## Section A
-
-Lorem ipsum dolor sit amet, **consectetur adipiscing elit**. Sed ut tortor _suscipit_, posuere ante id, vulputate urna. Pellentesque molestie aliquam dui sagittis aliquet. Sed sed felis convallis, lacinia lorem sit amet, fermentum ex. Etiam hendrerit mauris at elementum egestas. Vivamus id gravida ante. Praesent consectetur fermentum turpis, quis blandit tortor feugiat in. Aliquam erat volutpat. In elementum purus et tristique ornare. Suspendisse sollicitudin dignissim est a ultrices. Pellentesque sed ipsum finibus, condimentum metus eget, sagittis elit. Sed id lorem justo. Vivamus in sem ac mi molestie ornare.
-
-## Section B
-
-Nam quam dolor, pellentesque sed odio euismod, feugiat tempus tellus. Quisque arcu velit, ultricies in faucibus sed, ultrices ac enim. Nunc eget dictum est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ex nisi, egestas mollis ultricies ut, laoreet suscipit libero. Nam condimentum molestie turpis. Sed vestibulum sagittis congue. Maecenas tristique enim et tincidunt tempor. Curabitur ac scelerisque nulla, in malesuada libero. Praesent eu tempus odio. Pellentesque aliquam ullamcorper quam at gravida. Sed non fringilla mauris. Aenean sit amet ultrices erat. Vestibulum congue venenatis tortor, nec suscipit tortor. Aenean pellentesque mauris eget tortor tincidunt pharetra.
+## Final Steps
+For the icon to load, you need to put it in the appropriate location. For the example, this would be `/Assets/example_item.png` relative to the root folder containing the .dll  
+Directory structure:
+```
+📂plugins
+ ┣📂Assets
+ ┃ ┗🖼️example_item.png
+ ┗📜mod_name.dll
 ```
