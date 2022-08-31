@@ -1,5 +1,5 @@
 ---
-title: Page 2
+title: Getting Started
 description: Lorem ipsum dolor sit amet - 2
 layout: ../layouts/MainLayout.astro
 ---
