@@ -8,13 +8,13 @@ layout: ../layouts/MainLayout.astro
 
 To create an item, you first need to make a class overriding `CustomInventoryItem`.  
 Example:
-```cs
+```csharp
 using COTL_API.CustomInventory;
 using COTL_API.Helpers;
 using System.IO;
 using UnityEngine;
 ```
-```cs
+```csharp
 internal class ExampleItem : CustomInventoryItem
 {
     public override string InternalName => "Example_Item";
@@ -51,10 +51,10 @@ internal class ExampleItem : CustomInventoryItem
 ## Adding Items
 To add an item to the game, simply use `CustomItemManager.Add()`.  
 Example:
-```cs
+```csharp
 using COTL_API.CustomInventory;
 ```
-```cs
+```csharp
 CustomItemManager.Add(new ExampleItem());
 ```
 
