@@ -1,5 +1,5 @@
 {
-  "name": "@example/docs",
+  "name": "cotl_api_wiki",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,17 +13,17 @@
   "devDependencies": {
     "@algolia/client-search": "^4.14.2",
     "@astrojs/preact": "^1.0.2",
-    "@astrojs/react": "^1.1.0",
+    "@astrojs/react": "^1.1.1",
     "@docsearch/css": "^3.2.1",
     "@docsearch/react": "^3.2.1",
-    "@types/react": "^18.0.17",
-    "astro": "^1.1.1",
+    "@types/react": "^18.0.18",
+    "astro": "^1.1.2",
     "husky": "^8.0.1",
     "preact": "^10.10.6",
     "pretty-quick": "^3.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.54.6"
+    "sass": "^1.54.7"
   },
   "packageManager": "yarn@3.2.3"
 }
