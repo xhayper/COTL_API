@@ -9,18 +9,18 @@ public class IconManager
 {
     public static readonly Dictionary<Sprite, TMP_SpriteAsset> Icons = new();
 
-    public static TMP_SpriteAsset GetIcon(Sprite icon, string name, Shader shader, int hashCode)
+    public static TMP_SpriteAsset GetIcon(Sprite icon, string name, Shader shader, int hashCode, GlyphMetrics iconMetrics)
     {
         if (Icons.ContainsKey(icon)) return Icons[icon];
 
         icon.name = name;
 
-        TMP_SpriteAsset asset = CreateAssetFor(icon, hashCode);
+        TMP_SpriteAsset asset = CreateAssetFor(icon, hashCode, iconMetrics);
         Icons.Add(icon, asset);
         return asset;
     }
 
-    private static TMP_SpriteAsset CreateAssetFor(Sprite sprite, int hashCode)
+    private static TMP_SpriteAsset CreateAssetFor(Sprite sprite, int hashCode, GlyphMetrics iconMetrics)
     {
         Texture2D texture = sprite.texture;
         TMP_SpriteAsset spriteAsset = ScriptableObject.CreateInstance<TMP_SpriteAsset>();
@@ -34,9 +34,9 @@ public class IconManager
 
         TMP_SpriteGlyph spriteGlyph = new() {
             index = 0,
-            metrics = new GlyphMetrics(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height, sprite.rect.width),
+            metrics = iconMetrics,
             glyphRect = new GlyphRect(sprite.rect),
-            scale = 1.0f,
+            scale = 1.25f,
             sprite = sprite
         };
 
@@ -44,7 +44,7 @@ public class IconManager
 
         TMP_SpriteCharacter spriteCharacter = new(0, spriteGlyph) {
             name = sprite.name,
-            scale = 1.0f
+            scale = 1.25f
         };
 
         spriteAsset.spriteCharacterTable.Add(spriteCharacter);
