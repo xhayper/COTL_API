@@ -1,8 +1,8 @@
 <Project>
     <PropertyGroup>
         <AssemblyName>COTL_API</AssemblyName>
-        <AssemblyVersion>0.0.0.1</AssemblyVersion>
-        <ReleaseVersion>0.0.0.1</ReleaseVersion>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <ReleaseVersion>0.0.1</ReleaseVersion>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props" />

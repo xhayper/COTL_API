@@ -1,0 +1,31 @@
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "xhayper"
+name = "API"
+versionNumber = "0.0.1"
+description = "A BepInEx plugin made for modder to easily interact with Cult of the Lamb game"
+websiteUrl = "https://github.com/xhayper/COTL_API"
+containsNsfwContent = false
+
+[package.dependencies]
+BepInEx-BepInExPack_CultOfTheLamb = "5.4.21"
+
+[build]
+icon = "./APIAssets/placeholder.png"
+readme = "./README.md"
+outdir = "./build"
+
+[[build.copy]]
+source = "bin/debug/COTL_API/COTL_API.dll"
+target = "plugins/COTL_API.dll"
+
+[[build.copy]]
+source = "APIAssets"
+target = "plugins/APIAssets"
+
+[publish]
+repository = "https://cult-of-the-lamb.thunderstore.io"
+communities = ["cult-of-the-lamb"]
+categories = ["libraries"]
