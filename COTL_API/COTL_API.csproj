@@ -1,4 +1,4 @@
-<Project>
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AssemblyName>COTL_API</AssemblyName>
         <AssemblyVersion>0.1.0</AssemblyVersion>
