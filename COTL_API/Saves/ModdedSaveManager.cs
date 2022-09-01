@@ -5,23 +5,21 @@ namespace COTL_API.Saves;
 [HarmonyPatch]
 public static class ModdedSaveManager
 {
-    public static int SaveSlot = 5;
+    private static int SaveSlot = 5;
+    private static readonly COTLDataReadWriter<ModdedSaveData> _readWriter = new();
 
     public static bool Loaded;
-
-    internal static readonly COTLDataReadWriter<ModdedSaveData> SaveDataReadWriter = new();
-
     public static ModdedSaveData Data;
 
     static ModdedSaveManager()
     {
-        SaveDataReadWriter.OnReadCompleted += delegate(ModdedSaveData data)
+        _readWriter.OnReadCompleted += delegate(ModdedSaveData data)
         {
             Data = data;
             Loaded = true;
         };
 
-        SaveDataReadWriter.OnCreateDefault += delegate
+        _readWriter.OnCreateDefault += delegate
         {
             Data = new ModdedSaveData();
             Loaded = true;
@@ -44,7 +42,7 @@ public static class ModdedSaveManager
     {
         if (!DataManager.Instance.AllowSaving || CheatConsole.IN_DEMO) return;
 
-        SaveDataReadWriter.Write(Data, MakeSaveSlot(SaveSlot));
+        _readWriter.Write(Data, MakeSaveSlot(SaveSlot));
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Load))]
@@ -54,19 +52,19 @@ public static class ModdedSaveManager
         if (CheatConsole.IN_DEMO) return;
 
         SaveSlot = saveSlot;
-        SaveDataReadWriter.Read(MakeSaveSlot(SaveSlot));
+        _readWriter.Read(MakeSaveSlot(SaveSlot));
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.DeleteSaveSlot))]
     [HarmonyPostfix]
     public static void DeleteSaveSlot(int saveSlot)
     {
-        SaveDataReadWriter.Delete(MakeSaveSlot(saveSlot));
+        _readWriter.Delete(MakeSaveSlot(saveSlot));
     }
 
     public static bool SaveExist(int saveSlot)
     {
-        return SaveDataReadWriter.FileExists(MakeSaveSlot(saveSlot));
+        return _readWriter.FileExists(MakeSaveSlot(saveSlot));
     }
 
     public static string MakeSaveSlot(int slot)
