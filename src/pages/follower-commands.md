@@ -1,36 +1,76 @@
 ---
 title: Follower Commands
-description: Lorem ipsum dolor sit amet
+description: Follower Command Docs
 layout: ../layouts/MainLayout.astro
 ---
 
-This is a fully-featured page, written in Markdown!
+## Creating Commands
 
-## Section A
+To create a command, you first need to make a class overriding `CustomFollowerCommand`.  
+Example:
+```csharp
+using COTL_API.CustomFollowerCommand;
+using COTL_API.Helpers;
+using System.IO;
+using UnityEngine;
+```
+```csharp
+internal class ExampleFollowerCommand : CustomFollowerCommand
+{
+    public override string InternalName => "Example_Follower_Command";
+    public override string GetTitle(Follower follower) { return "Example Follower Command"; }
+    public override string GetDescription(Follower follower) { return "This is an example follower command"; }
+    public override Sprite CommandIcon => TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("Assets", "example_follower_command.png"));
 
-Lorem ipsum dolor sit amet, **consectetur adipiscing elit**. Sed ut tortor _suscipit_, posuere ante id, vulputate urna. Pellentesque molestie aliquam dui sagittis aliquet. Sed sed felis convallis, lacinia lorem sit amet, fermentum ex. Etiam hendrerit mauris at elementum egestas. Vivamus id gravida ante. Praesent consectetur fermentum turpis, quis blandit tortor feugiat in. Aliquam erat volutpat. In elementum purus et tristique ornare. Suspendisse sollicitudin dignissim est a ultrices. Pellentesque sed ipsum finibus, condimentum metus eget, sagittis elit. Sed id lorem justo. Vivamus in sem ac mi molestie ornare.
+    public override void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand)
+    {
+        interaction.follower.Brain.MakeOld();
+    }
+}
+```
+`CustomFollowerCommand` supports the following overrides:
+| Type | Name | Default |
+|-|-|-|
+| string | InternalName | \[REQUIRED\] |
+| Sprite | InventoryIcon | TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png")) |
+| List\<FollowerCommandCategory\> | Categories | new() { FollowerCommandCategory.DEFAULT_COMMAND } |
+| string | GetTitle(Follower follower) | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}") |
+| string | GetDescription(Follower follower) | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}/Description") |
+| string | GetLockedDescription(Follower follower) | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}/NotAvailable") |
+| bool | ShouldAppearFor(Follower follower) | true |
+| bool | IsAvailable(Follower follower) | true |
+| void | Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand = FollowerCommands.None) | interaction.Close() |
 
-## Section B
+## Coroutines
+Some actions, such as changing tasks, require starting a coroutine using `interaction.StartCoroutine(interaction.FrameDelayCallback())`.  
+Example:
+```csharp
+public override void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand)
+{
+    interaction.StartCoroutine(interaction.FrameDelayCallback(delegate
+    {
+        interaction.eventListener.PlayFollowerVO(interaction.generalAcknowledgeVO);
+        interaction.follower.Brain.HardSwapToTask(new FollowerTask_Vomit());
+    }));
+}
+```
 
-Nam quam dolor, pellentesque sed odio euismod, feugiat tempus tellus. Quisque arcu velit, ultricies in faucibus sed, ultrices ac enim. Nunc eget dictum est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ex nisi, egestas mollis ultricies ut, laoreet suscipit libero. Nam condimentum molestie turpis. Sed vestibulum sagittis congue. Maecenas tristique enim et tincidunt tempor. Curabitur ac scelerisque nulla, in malesuada libero. Praesent eu tempus odio. Pellentesque aliquam ullamcorper quam at gravida. Sed non fringilla mauris. Aenean sit amet ultrices erat. Vestibulum congue venenatis tortor, nec suscipit tortor. Aenean pellentesque mauris eget tortor tincidunt pharetra.
+## Adding Commands
+To add a command to the game, simply use `CustomFollowerCommandManager.Add()`.  
+Example:
+```csharp
+using COTL_API.CustomFollowerCommand;
+```
+```csharp
+CustomFollowerCommandManager.Add(new ExampleFollowerCommand());
+```
 
-## Section C
-
-```markdown
----
-title: Markdown Page!
-layout: ~/layouts/MainLayout.astro
----
-
-# Markdown example
-
-This is a fully-featured page, written in Markdown!
-
-## Section A
-
-Lorem ipsum dolor sit amet, **consectetur adipiscing elit**. Sed ut tortor _suscipit_, posuere ante id, vulputate urna. Pellentesque molestie aliquam dui sagittis aliquet. Sed sed felis convallis, lacinia lorem sit amet, fermentum ex. Etiam hendrerit mauris at elementum egestas. Vivamus id gravida ante. Praesent consectetur fermentum turpis, quis blandit tortor feugiat in. Aliquam erat volutpat. In elementum purus et tristique ornare. Suspendisse sollicitudin dignissim est a ultrices. Pellentesque sed ipsum finibus, condimentum metus eget, sagittis elit. Sed id lorem justo. Vivamus in sem ac mi molestie ornare.
-
-## Section B
-
-Nam quam dolor, pellentesque sed odio euismod, feugiat tempus tellus. Quisque arcu velit, ultricies in faucibus sed, ultrices ac enim. Nunc eget dictum est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ex nisi, egestas mollis ultricies ut, laoreet suscipit libero. Nam condimentum molestie turpis. Sed vestibulum sagittis congue. Maecenas tristique enim et tincidunt tempor. Curabitur ac scelerisque nulla, in malesuada libero. Praesent eu tempus odio. Pellentesque aliquam ullamcorper quam at gravida. Sed non fringilla mauris. Aenean sit amet ultrices erat. Vestibulum congue venenatis tortor, nec suscipit tortor. Aenean pellentesque mauris eget tortor tincidunt pharetra.
+## Final Steps
+For the icon to load, you need to put it in the appropriate location. For the example, this would be `/Assets/example_follower_command.png` relative to the root folder containing the .dll  
+Directory structure:
+```
+📂plugins
+ ┣📂Assets
+ ┃ ┗🖼️example_follower_command.png
+ ┗📜mod_name.dll
 ```
