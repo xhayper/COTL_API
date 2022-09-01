@@ -6,8 +6,8 @@ namespace COTL_API.Helpers;
 
 public class TextureHelper
 {
-    public static readonly Dictionary<string, Sprite> SpriteCache = new();
-    public static readonly Dictionary<string, Texture2D> TextureCache = new();
+    public static Dictionary<string, Sprite> SpriteCache = new();
+    public static Dictionary<string, Texture2D> TextureCache = new();
 
     public static Texture2D CreateTextureFromPath(string path, TextureFormat textureFormat = TextureFormat.RGBA32,
         bool mipmaps = false, bool linear = false)
