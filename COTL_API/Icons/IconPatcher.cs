@@ -3,6 +3,7 @@ using COTL_API.CustomInventory;
 using COTL_API.Helpers;
 using HarmonyLib;
 using TMPro;
+using UnityEngine.TextCore;
 
 namespace COTL_API.Icons;
 
@@ -21,7 +22,9 @@ public class IconPatcher
             string name = $"icon_ITEM_{item.ModPrefix}.{item.InternalName}";
             if (hashCode != HashCode.GetValueHashCode(name)) continue;
             spriteIndex = 0;
-            __result = IconManager.GetIcon(item.InventoryIcon, name, spriteAsset.material.shader, hashCode);
+            var sprite = item.InventoryIcon;
+            var metrics = new GlyphMetrics(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height * 0.75f, sprite.rect.width);
+            __result = IconManager.GetIcon(sprite, name, spriteAsset.material.shader, hashCode, metrics);
             return false;
         }
 
@@ -30,7 +33,9 @@ public class IconPatcher
             string name = $"icon_FCOMMAND_{item.ModPrefix}.{item.InternalName}";
             if (hashCode != HashCode.GetValueHashCode(name)) continue;
             spriteIndex = 0;
-            __result = IconManager.GetIcon(item.CommandIcon, name, spriteAsset.material.shader, hashCode);
+            var sprite = item.CommandIcon;
+            var metrics = new GlyphMetrics(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height, sprite.rect.width);
+            __result = IconManager.GetIcon(sprite, name, spriteAsset.material.shader, hashCode, metrics);
             return false;
         }
 
