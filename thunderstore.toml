@@ -3,7 +3,7 @@ schemaVersion = "0.0.1"
 
 [package]
 namespace = "xhayper"
-name = "API"
+name = "COTL_API"
 versionNumber = "0.0.1"
 description = "A BepInEx plugin made for modder to easily interact with Cult of the Lamb game"
 websiteUrl = "https://github.com/xhayper/COTL_API"
