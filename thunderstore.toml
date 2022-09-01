@@ -13,17 +13,17 @@ containsNsfwContent = false
 BepInEx-BepInExPack_CultOfTheLamb = "5.4.21"
 
 [build]
-icon = "./APIAssets/placeholder.png"
+icon = "./Assets/placeholder.png"
 readme = "./README.md"
 outdir = "./build"
 
 [[build.copy]]
-source = "bin/debug/COTL_API/COTL_API.dll"
+source = "bin/Debug/COTL_API/COTL_API.dll"
 target = "plugins/COTL_API.dll"
 
 [[build.copy]]
-source = "APIAssets"
-target = "plugins/APIAssets"
+source = "Assets"
+target = "plugins/Assets"
 
 [publish]
 repository = "https://cult-of-the-lamb.thunderstore.io"
