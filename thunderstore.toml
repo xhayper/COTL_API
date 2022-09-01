@@ -18,7 +18,7 @@ readme = "./README.md"
 outdir = "./build"
 
 [[build.copy]]
-source = "bin/Debug/COTL_API/COTL_API.dll"
+source = "bin/Release/COTL_API/COTL_API.dll"
 target = "plugins/COTL_API.dll"
 
 [[build.copy]]
