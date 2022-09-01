@@ -4,6 +4,10 @@
 
 A BepInEx plugin made for modder to easily interact with [`Cult of the Lamb`](https://store.steampowered.com/app/1313140/Cult_of_the_Lamb) game
 
+## NOTE
+
+This project is still in alpha, and stuff can changed without any notice!
+
 ## Contribution
 
 ### How can you help?
