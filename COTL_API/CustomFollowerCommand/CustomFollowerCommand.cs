@@ -41,6 +41,11 @@ public class CustomFollowerCommand : CommandItem
     {
         return true;
     }
+    
+    public override bool IsAvailable(Follower follower)
+    {
+        return true;
+    }
 
     public virtual void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
