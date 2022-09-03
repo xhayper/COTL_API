@@ -33,6 +33,15 @@ public class CustomFollowerCommandManager
         return false;
     }
     
+    [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.IsAvailable))]
+    [HarmonyPrefix]
+    public static bool CommandItem_IsAvailable(CommandItem __instance, Follower follower, ref bool __result)
+    {
+        if (!CustomFollowerCommands.ContainsKey(__instance.Command)) return true;
+        __result = CustomFollowerCommands[__instance.Command].IsAvailable(follower);
+        return false;
+    }
+    
     [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.GetDescription))]
     [HarmonyPrefix]
     public static bool CommandItem_GetDescription(CommandItem __instance, Follower follower, ref string __result)
