@@ -8,7 +8,7 @@ namespace COTL_API.Patches;
 [HarmonyPatch]
 public static class UIFollowerInteractionWheelOverlayController_Patches
 {
-    [HarmonyPatch(typeof(UIFollowerInteractionWheelOverlayController),nameof(UIFollowerInteractionWheelOverlayController.MakeChoice),
+    [HarmonyPatch(typeof(UIFollowerInteractionWheelOverlayController), nameof(UIFollowerInteractionWheelOverlayController.MakeChoice),
         typeof(UIFollowerWheelInteractionItem))]
     [HarmonyWrapSafe]
     public static class MakeChoice
