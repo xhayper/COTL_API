@@ -22,6 +22,7 @@ public class SkinManager
     internal static readonly Dictionary<string, Sprite> TarotSprites = new();
     internal static readonly Dictionary<string, Texture> SkinTextures = new();
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
+    internal static readonly Dictionary<string, Material> TarotSkinMaterials = new();
 
     private static int NumGenericAtlases = 0;
 
@@ -257,7 +258,7 @@ public class SkinManager
     private static Skin CreateTarotSkin(Skin template, string skinName)
     {
         Sprite sprite = TarotSprites[skinName];
-        SpineAtlasAsset atlas = CreateSingleTextureAtlas(sprite);
+        SpineAtlasAsset atlas = CreateSingleTextureAtlas(sprite, skinName);
         
         Skin skin = new(skinName);
         
@@ -313,7 +314,7 @@ public class SkinManager
         skin.SetAttachment(slot, ovrName, customAttachment);
     }
 
-    private static SpineAtlasAsset CreateSingleTextureAtlas(Sprite sprite)
+    private static SpineAtlasAsset CreateSingleTextureAtlas(Sprite sprite, string skinName)
     {
         int n = NumGenericAtlases;
         int w = (int) sprite.bounds.size.x;
@@ -327,6 +328,8 @@ public class SkinManager
         Material mat = new(Shader.Find("Spine/Skeleton")) {
             mainTexture = tex
         };
+        
+        TarotSkinMaterials.Add(skinName, mat);
 
         Material[] materials = { mat };
         SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
@@ -339,11 +342,14 @@ public class SkinManager
     public static void MeshGenerator_GenerateSingleSubmeshInstruction(ref SkeletonRendererInstruction instructionOutput)
     {
         if (instructionOutput.submeshInstructions.Items[0].skeleton != null &&
-            instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null &&
-            instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("CustomSkin_")))
-
-            instructionOutput.submeshInstructions.Items[0].material =
-                SkinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
+            instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null)
+            if (instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("CustomSkin_")))
+                instructionOutput.submeshInstructions.Items[0].material =
+                    SkinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
+            else if (instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("CustomTarotSkin_")))
+                instructionOutput.submeshInstructions.Items[0].material =
+                    TarotSkinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
+                
     }
 
     [HarmonyPatch(typeof(FollowerInformationBox), nameof(FollowerInformationBox.ConfigureImpl))]
