@@ -4,7 +4,7 @@ using HarmonyLib;
 
 namespace COTL_API.Patches;
 
-//This fixes custom follower commands with subcommands from raising an exception when the plugin uses IsAvailable as the original method passes null
+// This fixes custom follower commands with subcommands from raising an exception when the plugin uses IsAvailable as the original method passes null
 [HarmonyPatch(typeof(UIFollowerInteractionWheelOverlayController))]
 public static class UIFollowerInteractionWheelOverlayController_Patches
 {
@@ -20,12 +20,12 @@ public static class UIFollowerInteractionWheelOverlayController_Patches
                 item.CommandItem.SubCommands.Count > 0)
 
             {
-                Plugin.Logger.LogDebug($"Custom command with sub commands, not letting normal method run.");
+                if (Plugin.Debug) Plugin.Logger.LogDebug($"Custom command with sub commands, not letting normal method run.");
                 __state = true;
                 return false;
             }
 
-            Plugin.Logger.LogDebug($"Not a custom command or doesnt have sub-commands, letting normal method run.");
+            if (Plugin.Debug) Plugin.Logger.LogDebug($"Not a custom command or doesnt have sub-commands, letting normal method run.");
             __state = false;
             return true;
         }
@@ -41,7 +41,7 @@ public static class UIFollowerInteractionWheelOverlayController_Patches
             ref bool __state)
         {
             if (!__state) return;
-            Plugin.Logger.LogDebug($"Custom command original method skipped, this is from the postfix.");
+            if (Plugin.Debug) Plugin.Logger.LogDebug($"Custom command original method skipped, this is from the postfix.");
             if (item.CommandItem.SubCommands is { Count: > 0 })
             {
                 if (item.CommandItem.IsAvailable(____follower))
@@ -53,9 +53,9 @@ public static class UIFollowerInteractionWheelOverlayController_Patches
                     return;
                 }
 
-                //without this the commands title and descriptions dont update if the user selects a greyed out item, instead
-                //it will now just close the menu instead of raising an exception
-                Plugin.Logger.LogDebug(
+                // without this the commands title and descriptions dont update if the user selects a greyed out item, instead
+                // it will now just close the menu instead of raising an exception
+                if (Plugin.Debug) Plugin.Logger.LogDebug(
                     $"User pressed select on a greyed out sub command, closing menu and aborting choice.");
                 __instance.OnCancelButtonInput();
                 return;
