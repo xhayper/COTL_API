@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using COTL_API.Guid;
+using COTL_API.Skins;
 using HarmonyLib;
 using Lamb.UI;
 
@@ -132,7 +133,7 @@ public class CustomTarotCardManager
     {
         if (!CustomTarotCards.ContainsKey(Type)) return true;
 
-        __result = CustomTarotCards[Type].Skin;
+        __result = SkinManager.GetOrCreateTarotSkin(CustomTarotCards[Type].InternalName, CustomTarotCards[Type].Skin);
 
         return false;
     }
