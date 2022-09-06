@@ -18,13 +18,13 @@
     "@docsearch/css": "^3.2.1",
     "@docsearch/react": "^3.2.1",
     "@types/react": "^18.0.18",
-    "astro": "^1.1.2",
+    "astro": "^1.1.5",
     "husky": "^8.0.1",
     "preact": "^10.10.6",
     "pretty-quick": "^3.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.54.7"
+    "sass": "^1.54.8"
   },
   "packageManager": "yarn@3.2.3"
 }
