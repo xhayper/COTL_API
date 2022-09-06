@@ -23,7 +23,7 @@ public class SkinManager
     internal static readonly Dictionary<string, Texture> SkinTextures = new();
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
 
-    internal static int NumGenericAtlases = 0;
+    private static int NumGenericAtlases = 0;
 
     internal static readonly List<Tuple<int, string>> Slots = new() {
         Tuple.Create(38, "ARM_LEFT_SKIN"),
@@ -226,42 +226,7 @@ public class SkinManager
                 .GetAttachment(slot, ovrName).Copy();
             if (a is MeshAttachment customAttachment)
             {
-                float minX = int.MaxValue;
-                float maxX = int.MinValue;
-                float minY = int.MaxValue;
-                float maxY = int.MinValue;
-
-                for (int j = 0; j < customAttachment.Vertices.Length; j++)
-                {
-                    if (j % 3 == 0)
-                    {
-                        minY = Math.Min(minY, customAttachment.Vertices[j]);
-                        maxY = Math.Max(maxY, customAttachment.Vertices[j]);
-                    }
-                    else if (j % 3 == 1)
-                    {
-                        minX = Math.Min(minX, customAttachment.Vertices[j]);
-                        maxX = Math.Max(maxX, customAttachment.Vertices[j]);
-                    }
-                }
-
-                customAttachment.Name = "CustomSkin_" + ovrName;
-                customAttachment.SetRegion(atlasRegion);
-                atlasRegion.name = "CustomSkin_" + atlasRegion.name;
-                customAttachment.HullLength = 4;
-                customAttachment.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
-                float pw = atlasRegion.page.width;
-                float ph = atlasRegion.page.height;
-                float x = atlasRegion.x;
-                float y = atlasRegion.y;
-                float w = atlasRegion.width;
-                float h = atlasRegion.height;
-                customAttachment.UVs = new[]
-                    { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
-                customAttachment.Vertices = new[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
-                customAttachment.WorldVerticesLength = 8;
-
-                skin.SetAttachment(slot, ovrName, customAttachment);
+                CopyAttachmentFrom(slot, ovrName, customAttachment, skin, name, atlasRegion, "CustomSkin");
             }
             else
                 Plugin.Logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
@@ -302,45 +267,50 @@ public class SkinManager
         Skin.SkinEntry front = template.Attachments.ToList()[1];
         if (front.Attachment is MeshAttachment customAttachment)
         {
-            float minX = int.MaxValue;
-            float maxX = int.MinValue;
-            float minY = int.MaxValue;
-            float maxY = int.MinValue;
-
-            for (int j = 0; j < customAttachment.Vertices.Length; j++)
-            {
-                if (j % 3 == 0)
-                {
-                    minY = Math.Min(minY, customAttachment.Vertices[j]);
-                    maxY = Math.Max(maxY, customAttachment.Vertices[j]);
-                }
-                else if (j % 3 == 1)
-                {
-                    minX = Math.Min(minX, customAttachment.Vertices[j]);
-                    maxX = Math.Max(maxX, customAttachment.Vertices[j]);
-                }
-            }
-
-            customAttachment.Name = "CustomTarotSkin_" + skinName;
-            customAttachment.SetRegion(atlasRegion);
-            atlasRegion.name = "CustomTarotSkin_" + atlasRegion.name;
-            customAttachment.HullLength = 4;
-            customAttachment.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
-            float pw = atlasRegion.page.width;
-            float ph = atlasRegion.page.height;
-            float x = atlasRegion.x;
-            float y = atlasRegion.y;
-            float w = atlasRegion.width;
-            float h = atlasRegion.height;
-            customAttachment.UVs = new[]
-                { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
-            customAttachment.Vertices = new[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
-            customAttachment.WorldVerticesLength = 8;
-
-            skin.SetAttachment(front.SlotIndex, front.Name, customAttachment);
+            CopyAttachmentFrom(front.SlotIndex, front.Name, customAttachment, skin, skinName, atlasRegion, "CustomTarotSkin");
         }
         TarotSkins.Add(skinName, skin);
         return skin;
+    }
+
+    private static void CopyAttachmentFrom(int slot, string ovrName, MeshAttachment customAttachment, Skin skin, string skinName, AtlasRegion atlasRegion, string prefix)
+    {
+        float minX = int.MaxValue;
+        float maxX = int.MinValue;
+        float minY = int.MaxValue;
+        float maxY = int.MinValue;
+
+        for (int j = 0; j < customAttachment.Vertices.Length; j++)
+        {
+            if (j % 3 == 0)
+            {
+                minY = Math.Min(minY, customAttachment.Vertices[j]);
+                maxY = Math.Max(maxY, customAttachment.Vertices[j]);
+            }
+            else if (j % 3 == 1)
+            {
+                minX = Math.Min(minX, customAttachment.Vertices[j]);
+                maxX = Math.Max(maxX, customAttachment.Vertices[j]);
+            }
+        }
+
+        customAttachment.Name = $"{prefix}_CustomTarotSkin_{skinName}";
+        customAttachment.SetRegion(atlasRegion);
+        atlasRegion.name = $"{prefix}_CustomTarotSkin_{atlasRegion.name}";
+        customAttachment.HullLength = 4;
+        customAttachment.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
+        float pw = atlasRegion.page.width;
+        float ph = atlasRegion.page.height;
+        float x = atlasRegion.x;
+        float y = atlasRegion.y;
+        float w = atlasRegion.width;
+        float h = atlasRegion.height;
+        customAttachment.UVs = new[]
+            { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
+        customAttachment.Vertices = new[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
+        customAttachment.WorldVerticesLength = 8;
+
+        skin.SetAttachment(slot, ovrName, customAttachment);
     }
 
     private static SpineAtlasAsset CreateSingleTextureAtlas(Sprite sprite)
