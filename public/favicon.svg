@@ -541,11 +541,11 @@ function jessyInkInit()
     }
 
     // Check effect number.
-    if ((activeEffect &lt; 0) || (!slides[activeSlide].effects))
+    if ((activeEffect &lt; 0) || (slides[activeSlide] &amp;&amp; !slides[activeSlide].effects))
     {
         activeEffect = 0;
     }
-    else if (activeEffect &gt; slides[activeSlide].effects.length)
+    else if (activeEffect &gt; (slides[activeSlide] ? slides[activeSlide].effects.length : 0))
     {
         activeEffect = slides[activeSlide].effects.length;
     }
