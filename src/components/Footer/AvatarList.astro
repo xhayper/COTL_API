@@ -1,10 +1,13 @@
 ---
+const BRANCH = "gh-pages";
+const PER_PAGE = 100;
+
 // fetch all commits for just this page's path
 const path = Astro.props.path;
-const url = `https://api.github.com/repos/xhayper/COTL_API/commits?path=${path}&sha=gh-pages`;
-const commitsURL = `https://github.com/xhayper/COTL_API/commits/gh-pages/${path}`;
+const url = `https://api.github.com/repos/xhayper/COTL_API/commits?path=${path}&sha=${BRANCH}&per_page=${PER_PAGE}`;
+const commitsURL = `https://github.com/xhayper/COTL_API/commits/${BRANCH}/${path}`;
 
-async function getCommits(url: string) {
+async function getCommits(url: string, page = 1) {
     try {
         const token = import.meta.env.SNOWPACK_PUBLIC_GITHUB_TOKEN;
         if (!token) {
@@ -30,7 +33,10 @@ async function getCommits(url: string) {
             );
         }
 
-        console.log(data);
+        if (data.length === PER_PAGE) {
+            const rest = await getCommits(url, page + 1);
+            data.push(...rest);
+        }
 
         return data;
     } catch (e) {
