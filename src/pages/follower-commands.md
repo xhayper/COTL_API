@@ -8,12 +8,14 @@ layout: ../layouts/MainLayout.astro
 
 To create a command, you first need to make a class overriding `CustomFollowerCommand`.  
 Example:
+
 ```csharp
 using COTL_API.CustomFollowerCommand;
 using COTL_API.Helpers;
 using System.IO;
 using UnityEngine;
 ```
+
 ```csharp
 internal class ExampleFollowerCommand : CustomFollowerCommand
 {
@@ -28,6 +30,7 @@ internal class ExampleFollowerCommand : CustomFollowerCommand
     }
 }
 ```
+
 `CustomFollowerCommand` supports the following overrides:
 | Type | Name | Default |
 |-|-|-|
@@ -42,8 +45,10 @@ internal class ExampleFollowerCommand : CustomFollowerCommand
 | void | Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand = FollowerCommands.None) | interaction.Close() |
 
 ## Coroutines
+
 Some actions, such as changing tasks, require starting a coroutine using `interaction.StartCoroutine(interaction.FrameDelayCallback())`.  
 Example:
+
 ```csharp
 public override void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand)
 {
@@ -56,18 +61,23 @@ public override void Execute(interaction_FollowerInteraction interaction, Follow
 ```
 
 ## Adding Commands
+
 To add a command to the game, simply use `CustomFollowerCommandManager.Add()`.  
 Example:
+
 ```csharp
 using COTL_API.CustomFollowerCommand;
 ```
+
 ```csharp
 CustomFollowerCommandManager.Add(new ExampleFollowerCommand());
 ```
 
 ## Final Steps
+
 For the icon to load, you need to put it in the appropriate location. For the example, this would be `/Assets/example_follower_command.png` relative to the root folder containing the .dll  
 Directory structure:
+
 ```
 📂plugins
  ┣📂Assets
