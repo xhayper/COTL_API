@@ -257,9 +257,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/preact@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@astrojs/preact@npm:1.0.2"
+"@astrojs/preact@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@astrojs/preact@npm:1.1.0"
   dependencies:
     "@babel/core": ">=7.0.0-0 <8.0.0"
     "@babel/plugin-transform-react-jsx": ^7.17.12
@@ -267,7 +267,7 @@ __metadata:
     preact-render-to-string: ^5.2.0
   peerDependencies:
     preact: ^10.6.5
-  checksum: 1d0cc48a4abd5323447f016d3f96c4e7c21659db6e4c109e530b55e577a2e5c3d77c4415fac90cc217e451f9da8c3dfe5ac1fc61aad84e71976d55e319d09e04
+  checksum: b2463681d57d5dbe6ad4c57f4560339d07bf1216c9903ecc7ce0b0658807332d4160d30cbed005b10287bd12ba1acbf606d720f39be959c32fe6a33b5c8a6ca4
   languageName: node
   linkType: hard
 
@@ -280,16 +280,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/react@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@astrojs/react@npm:1.1.1"
+"@astrojs/react@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@astrojs/react@npm:1.1.2"
   dependencies:
     "@babel/core": ">=7.0.0-0 <8.0.0"
     "@babel/plugin-transform-react-jsx": ^7.17.12
   peerDependencies:
     react: ^17.0.2 || ^18.0.0
     react-dom: ^17.0.2 || ^18.0.0
-  checksum: e7e51ae9506d77cf4248b8ec5aa1ad2a76ae97b16708c90a662128d2a923294e6e67f3580fcfcfa51d7669d8a00d00750cc32ef3303b596f9596d615fde59151
+  checksum: 752e7d07b324989fa48d21c45a56e185acddc6d1d545ecdd804756f2b6e7c39c41fd30f486ad8521139b57fce9d6c146941a1c873f9f2330d5e5e9d7c885fce3
   languageName: node
   linkType: hard
 
@@ -1006,6 +1006,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/prettier@npm:^2":
+  version: 2.7.0
+  resolution: "@types/prettier@npm:2.7.0"
+  checksum: bf5d0c7c1270909b39399539ac106d20ddaa85fe92eb1d59922dc99159604b4f8d5e41b0045fb29c8011585cf5bca2350b7441ef3d9816c08bd0e10ebd4b31d4
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*":
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
@@ -1280,7 +1287,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^1.1.5":
+"astro@npm:^1.2.1":
   version: 1.2.1
   resolution: "astro@npm:1.2.1"
   dependencies:
@@ -1733,19 +1740,21 @@ __metadata:
   resolution: "cotl_api_wiki@workspace:."
   dependencies:
     "@algolia/client-search": ^4.14.2
-    "@astrojs/preact": ^1.0.2
-    "@astrojs/react": ^1.1.1
+    "@astrojs/preact": ^1.1.0
+    "@astrojs/react": ^1.1.2
     "@astrojs/sitemap": ^1.0.0
     "@docsearch/css": ^3.2.1
     "@docsearch/react": ^3.2.1
+    "@types/prettier": ^2
     "@types/react": ^18.0.18
-    astro: ^1.1.5
+    astro: ^1.2.1
     husky: ^8.0.1
     preact: ^10.10.6
+    prettier: ^2.7.1
     pretty-quick: ^3.1.3
     react: ^18.2.0
     react-dom: ^18.2.0
-    sass: ^1.54.8
+    sass: ^1.54.9
   languageName: unknown
   linkType: soft
 
@@ -4844,7 +4853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.54.8":
+"sass@npm:^1.54.9":
   version: 1.54.9
   resolution: "sass@npm:1.54.9"
   dependencies:
