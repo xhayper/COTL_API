@@ -1,5 +1,5 @@
 export const SITE = {
-    title: "COLT_API's Documentation",
+    title: "COTL_API's Documentation",
     description: "Cult of the Lamb API's Documentation"
 };
 
