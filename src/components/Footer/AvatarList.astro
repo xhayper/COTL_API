@@ -1,7 +1,7 @@
 ---
 // fetch all commits for just this page's path
 const path = Astro.props.path;
-const url = `https://api.github.com/repos/xhayper/COTL_API/commits/gh-pages?path=${path}`;
+const url = `https://api.github.com/repos/xhayper/COTL_API/commits?path=${path}&sha=gh-pages`;
 const commitsURL = `https://github.com/xhayper/COTL_API/commits/gh-pages/${path}`;
 
 async function getCommits(url: string) {
