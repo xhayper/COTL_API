@@ -7,7 +7,6 @@ const commitsURL = `https://github.com/xhayper/COTL_API/commits/gh-pages/${path}
 async function getCommits(url: string) {
     try {
         const token = import.meta.env.SNOWPACK_PUBLIC_GITHUB_TOKEN;
-        console.log(token.length);
         if (!token) {
             throw new Error('Cannot find "SNOWPACK_PUBLIC_GITHUB_TOKEN" used for escaping rate-limiting.');
         }
@@ -30,6 +29,8 @@ async function getCommits(url: string) {
        Message: ${data.message}`
             );
         }
+
+        console.log(data);
 
         return data;
     } catch (e) {
