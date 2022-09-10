@@ -14,12 +14,11 @@ permissions:
   pages: write
   id-token: write
 
-env:
-  SNOWPACK_PUBLIC_GITHUB_TOKEN: ${{ secrets.SNOWPACK_PUBLIC_GITHUB_TOKEN }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SNOWPACK_PUBLIC_GITHUB_TOKEN: ${{ secrets.SNOWPACK_PUBLIC_GITHUB_TOKEN }}
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v2          
