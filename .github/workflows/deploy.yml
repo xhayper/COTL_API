@@ -23,8 +23,8 @@ jobs:
       - name: Install, build, and upload your site
         uses: withastro/action@v0
       - name: help
-        with: 
-          script: yarn cache clean
+        run: 
+          yarn cache clean
 
   deploy:
     needs: build
