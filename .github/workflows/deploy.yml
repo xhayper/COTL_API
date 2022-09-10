@@ -22,6 +22,9 @@ jobs:
         uses: actions/checkout@v2          
       - name: Install, build, and upload your site
         uses: withastro/action@v0
+      - name: help
+        with: 
+          script: yarn cache clean
 
   deploy:
     needs: build
