@@ -12,7 +12,7 @@ public static class MakeChoicePatch
     [HarmonyPrefix]
     public static bool Prefix(ref UIFollowerWheelInteractionItem item, ref bool __state)
     {
-        if (item.CommandItem is CustomFollowerCommand.CustomFollowerCommand && item.CommandItem.SubCommands.Count > 0)
+        if (item.CommandItem.SubCommands != null && item.CommandItem is CustomFollowerCommand.CustomFollowerCommand && item.CommandItem.SubCommands.Count > 0)
 
         {
             Plugin.Logger.LogMessage($"Custom command with sub commands, not letting normal method run.");
