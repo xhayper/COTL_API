@@ -7,6 +7,10 @@ using System.Linq;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
+using COTL_API.CustomFollowerCommand;
+using COTL_API.Structures;
+using COTL_API.Tasks;
+using UnityEngine.SceneManagement;
 
 namespace COTL_API;
 
@@ -29,6 +33,10 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DebugItem3;
     internal static FollowerCommands DebugGiftFollowerCommand;
 
+    internal static StructureBrain.TYPES DebugStructure;
+    internal static StructureBrain.TYPES DebugStructure2;
+    internal static StructureBrain.TYPES DebugStructure3;
+
     private static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;
 
@@ -50,6 +58,10 @@ public class Plugin : BaseUnityPlugin
             DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
             DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
             DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
+
+            DebugStructure = CustomStructureManager.Add(new DebugStructure());
+            DebugStructure2 = CustomStructureManager.Add(new DebugStructure2());
+            DebugStructure3 = CustomStructureManager.Add(new DebugStructure3());
 
             CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
 
