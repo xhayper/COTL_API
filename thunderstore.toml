@@ -4,9 +4,9 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "xhayper"
 name = "COTL_API"
-versionNumber = "0.1.0"
+versionNumber = "0.1.2"
 description = "A BepInEx plugin made for modder to easily interact with Cult of the Lamb game"
-websiteUrl = "https://github.com/xhayper/COTL_API"
+websiteUrl = "https://xhayper.github.io/COTL_API/"
 containsNsfwContent = false
 
 [package.dependencies]
