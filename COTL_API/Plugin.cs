@@ -32,10 +32,13 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DebugItem2;
     internal static InventoryItem.ITEM_TYPE DebugItem3;
     internal static FollowerCommands DebugGiftFollowerCommand;
+    internal static FollowerCommands DebugTaskFollowerCommand;
 
     internal static StructureBrain.TYPES DebugStructure;
     internal static StructureBrain.TYPES DebugStructure2;
     internal static StructureBrain.TYPES DebugStructure3;
+
+    internal static FollowerTaskType DebugTask;
 
     private static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;
@@ -55,6 +58,8 @@ public class Plugin : BaseUnityPlugin
             DebugGiftFollowerCommand =
                 CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugGiftFollowerCommand());
 
+            DebugTaskFollowerCommand = CustomFollowerCommandManager.Add(new DebugTaskFollowerCommand());
+
             DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
             DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
             DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
@@ -64,6 +69,8 @@ public class Plugin : BaseUnityPlugin
             DebugStructure3 = CustomStructureManager.Add(new DebugStructure3());
 
             CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
+
+            DebugTask = CustomTaskManager.Add(new DebugTask());
 
             DebugCode.CreateSkin();
 
