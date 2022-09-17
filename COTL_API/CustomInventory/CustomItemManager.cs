@@ -330,6 +330,26 @@ public class CustomItemManager
         UnityEngine.Object.Destroy(copyObj);
         return false;
     }
+    
+    //add our custom items to the list of images used for the offering shrine items
+    [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.GetImage))]
+    [HarmonyPrefix]
+    public static void InventoryItemDisplay_GetImage(InventoryItem.ITEM_TYPE Type, ref InventoryItemDisplay __instance)
+    {
+        if (__instance.myDictionary == null)
+        {
+            __instance.GetItemImages();
+        }
+
+        foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItems)
+        {
+            bool exists = __instance.myDictionary.TryGetValue(item.Key, out Sprite _);
+            if (!exists)
+            {
+                __instance.myDictionary.Add(item.Key, item.Value.InventoryIcon);
+            }
+        }
+    }
 
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllSeeds), MethodType.Getter)]
     [HarmonyPostfix]
