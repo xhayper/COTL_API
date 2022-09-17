@@ -2,13 +2,16 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Reflection;
 using COTL_API.Guid;
+using COTL_API.Helpers;
 using UnityEngine;
 using System.Linq;
 using HarmonyLib;
+using I2.Loc;
 using Lamb.UI;
 using Lamb.UI.FollowerInteractionWheel;
 using MMBiomeGeneration;
 using MMRoomGeneration;
+using Rewired.Data;
 using System;
 
 namespace COTL_API.CustomInventory;
@@ -311,28 +314,21 @@ public class CustomItemManager
                 break;
             }
 
-            //get plugin sprite
             Sprite mySprite = CustomItems[type].GameObject.GetComponent<SpriteRenderer>().sprite;
-            
+        
             //have to actually instantiate it, and then destroy it when we're done - otherwise, god knows why, all the gold in chests becomes the custom object
-            copyObj = UnityEngine.Object.Instantiate(Resources.Load("Prefabs/Resources/BlackGold") as GameObject, transform, instantiateInWorldSpace:false) as GameObject;
-            
-            //swap sprites
+            copyObj = UnityEngine.Object.Instantiate(ItemPickUp.GetItemPickUpObject(CustomItems[type].ItemPickUpToImitate), transform, instantiateInWorldSpace: false) as GameObject;
+
             copyObj!.GetComponentInChildren<SpriteRenderer>().sprite = mySprite;
-            
-            //set our loot component to the plugin item
             copyObj.GetComponent<PickUp>().type = CustomItems[type].ItemType;
-            
-            //set scale
+
             copyObj.transform.localScale = CustomItems[type].LocalScale;
 
-            //SPAWN
             ObjectPool.Spawn(copyObj, transform, position, Quaternion.identity);
-
         }
+
         UnityEngine.Object.Destroy(copyObj);
         return false;
-
     }
 
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.AllSeeds), MethodType.Getter)]

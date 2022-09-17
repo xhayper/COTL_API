@@ -12,19 +12,18 @@ public class CustomInventoryItem
 
     public virtual Sprite InventoryIcon { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
+    
+    public virtual InventoryItem.ITEM_TYPE ItemPickUpToImitate { get; } = InventoryItem.ITEM_TYPE.NONE;
 
     public virtual string InventoryStringIcon()
     {
         return $"<sprite name=\"icon_ITEM_{ModPrefix}.{InternalName}\">";
     }
-
-    //store the plugin assets
+    
     public static readonly AssetBundle Assets = AssetBundle.LoadFromFile(PluginPaths.ResolveAssetPath("placeholder"));
-
-    //allow plugins to change the scale of their objects
+    
     public virtual Vector3 LocalScale { get; } = new(0.5f, 0.5f, 0.5f);
-
-    //plugin object
+    
     public virtual GameObject GameObject { get; } = Assets.LoadAsset<GameObject>("placeholder");
 
     public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; } = InventoryItem.ITEM_CATEGORIES.NONE;
@@ -48,22 +47,22 @@ public class CustomInventoryItem
     {
         return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Description");
     }
-
+    
     public virtual int FuelWeight { get; } = 1;
-
     public virtual int FoodSatitation { get; } = 75;
+
     public virtual bool IsFish { get; } = false;
     public virtual bool IsFood { get; } = false;
     public virtual bool IsBigFish { get; } = false;
     public virtual bool IsCurrency { get; } = false;
     public virtual bool IsSeed { get; } = false;
-
-    public virtual bool IsTalisman { get; } = false;
+    
+    public virtual bool IsTalisman{ get; } = false;
     public virtual bool IsPlantable { get; } = false;
     public virtual bool IsBurnableFuel { get; } = false;
 
     public virtual bool CanBeGivenToFollower => false;
-
+    
     public virtual string GiftTitle(Follower follower)
     {
         return $"{Name()} ({Inventory.GetItemQuantity(ItemType)})";
