@@ -19,7 +19,7 @@ public abstract class CustomStructure : StructureBrain
 
     public virtual FollowerCategory.Category Category { get; } =  FollowerCategory.Category.Misc;
 
-    internal string PrefabPath => CustomPrefabManager.GetOrCreateBuildingPrefab(this);
+    public virtual string PrefabPath => CustomPrefabManager.GetOrCreateBuildingPrefab(this);
     public virtual int BuildDurationMinutes { get; } = 30;
 
     internal TypeAndPlacementObject GetTypeAndPlacementObject() {
