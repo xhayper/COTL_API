@@ -8,8 +8,11 @@ using HarmonyLib;
 using System.IO;
 using BepInEx;
 using COTL_API.CustomFollowerCommand;
+using COTL_API.Helpers;
+using COTL_API.Skins;
 using COTL_API.Structures;
 using COTL_API.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace COTL_API;
@@ -52,32 +55,40 @@ public class Plugin : BaseUnityPlugin
 
         if (Debug)
         {
-            CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommand());
-            CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
-            CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugFollowerCommandClass3());
-            DebugGiftFollowerCommand =
-                CustomFollowerCommand.CustomFollowerCommandManager.Add(new DebugGiftFollowerCommand());
-
-            DebugTaskFollowerCommand = CustomFollowerCommandManager.Add(new DebugTaskFollowerCommand());
-
-            DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
-            DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
-            DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
-
-            DebugStructure = CustomStructureManager.Add(new DebugStructure());
-            DebugStructure2 = CustomStructureManager.Add(new DebugStructure2());
-            DebugStructure3 = CustomStructureManager.Add(new DebugStructure3());
-
-            CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
-
-            DebugTask = CustomTaskManager.Add(new DebugTask());
-
-            DebugCode.CreateSkin();
-
-            Logger.LogDebug("Debug mode enabled");
+            AddDebugContent();
         }
 
         Logger.LogInfo($"COTL API loaded");
+    }
+
+    private void AddDebugContent()
+    {
+        CustomFollowerCommandManager.Add(new DebugFollowerCommand());
+        CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
+        CustomFollowerCommandManager.Add(new DebugFollowerCommandClass3());
+        DebugGiftFollowerCommand = CustomFollowerCommandManager.Add(new DebugGiftFollowerCommand());
+
+        DebugTaskFollowerCommand = CustomFollowerCommandManager.Add(new DebugTaskFollowerCommand());
+
+        DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
+        DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
+        DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
+
+        DebugStructure = CustomStructureManager.Add(new DebugStructure());
+        DebugStructure2 = CustomStructureManager.Add(new DebugStructure2());
+        DebugStructure3 = CustomStructureManager.Add(new DebugStructure3());
+
+        CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
+
+        DebugTask = CustomTaskManager.Add(new DebugTask());
+
+        Texture2D customTex =
+            TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
+        string atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
+
+        CustomSkinManager.AddCustomSkin("Test", customTex, atlasText);
+
+        Logger.LogDebug("Debug mode enabled");
     }
 
     private void OnEnable()

@@ -17,7 +17,7 @@ public class CustomStructure : StructureBrain
 
     public virtual FollowerCategory.Category Category { get; } =  FollowerCategory.Category.Misc;
 
-    internal string PrefabPath => PrefabManager.GetOrCreateBuildingPrefab(this);
+    internal string PrefabPath => CustomPrefabManager.GetOrCreateBuildingPrefab(this);
     public virtual int BuildDurationMinutes { get; } = 30;
 
     public virtual TypeAndPlacementObject GetTypeAndPlacementObject() {
@@ -25,7 +25,7 @@ public class CustomStructure : StructureBrain
         var tpo = new TypeAndPlacementObject() {
             IconImage = Sprite,
             Category = Categories,
-            PlacementObject = PrefabManager.CreatePlacementObjectFor(this),
+            PlacementObject = CustomPrefabManager.CreatePlacementObjectFor(this),
             Type = StructureType,
             Tier = Tier,
         };

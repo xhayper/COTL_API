@@ -9,7 +9,7 @@ namespace COTL_API.CustomFollowerCommand;
 [HarmonyPatch]
 public class CustomFollowerCommandManager
 {
-    internal static readonly Dictionary<FollowerCommands, CustomFollowerCommand> CustomFollowerCommands = new();
+    public static Dictionary<FollowerCommands, CustomFollowerCommand> CustomFollowerCommands { get; } = new();
 
     public static FollowerCommands Add(CustomFollowerCommand command)
     {
