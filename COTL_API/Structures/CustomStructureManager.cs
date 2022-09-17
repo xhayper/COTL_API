@@ -11,7 +11,8 @@ namespace COTL_API.Structures;
 [HarmonyPatch]
 public class CustomStructureManager
 {
-    public static readonly Dictionary<StructureBrain.TYPES, CustomStructure> CustomStructures = new();
+    public static Dictionary<StructureBrain.TYPES, CustomStructure> CustomStructures { get; } = new();
+
     public static StructureBrain.TYPES Add(CustomStructure structure)
     {
         string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
