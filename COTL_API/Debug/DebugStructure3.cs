@@ -18,4 +18,19 @@ public class DebugStructure3 : CustomStructure
     public override List<StructuresData.ItemCost> Cost => new() {
         new(Plugin.DebugItem3, 3)
     };
+    
+    public override string GetLocalizedName()
+    {
+        return "DEBUG_STRUCTURE_3";
+    }
+
+    public override string GetLocalizedDescription()
+    {
+        return "COTL_API'S 3RD DEBUG STRUCTURE";
+    }
+
+    public override string GetLocalizedLore()
+    {
+        return "DEBUG STRUCTURE 3 LORE";
+    }
 }
