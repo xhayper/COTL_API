@@ -9,8 +9,6 @@ public class DebugTarotCard : CustomTarotCard.CustomTarotCard
     public override string LocalisedLore() { return "<color=\"red\">GOD LIKE!</color>"; }
     public override string LocalisedDescription(int _) { return "<sprite name=\"icon_BlueHeart\"> +25, 25x walk speed"; }
 
-    public override string Skin => "Trinkets/TheLovers2";
-
     public override float GetMovementSpeedMultiplier(TarotCards.TarotCard card)
     {
         return 25;

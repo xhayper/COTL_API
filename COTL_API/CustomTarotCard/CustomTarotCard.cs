@@ -1,3 +1,4 @@
+using COTL_API.Helpers;
 using UnityEngine;
 using I2.Loc;
 
@@ -68,7 +69,7 @@ public class CustomTarotCard
         return LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Lore");
     }
 
-    public virtual string Skin { get; } = "";
+    public virtual Sprite Skin { get; } = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
     public virtual int TarotCardWeight { get; } = 150;
 
