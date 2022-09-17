@@ -1,20 +1,15 @@
 ﻿using COTL_API.Structures;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using Object = UnityEngine.Object;
-
 namespace COTL_API.Prefabs;
 
 [HarmonyPatch]
-public class CustomPrefabManager
+public static class CustomPrefabManager
 {
     public static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
 

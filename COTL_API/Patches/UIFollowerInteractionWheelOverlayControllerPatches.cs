@@ -6,7 +6,7 @@ namespace COTL_API.Patches;
 
 // This fixes custom follower commands with subcommands from raising an exception when the plugin uses IsAvailable as the original method passes null
 [HarmonyPatch]
-public static class UIFollowerInteractionWheelOverlayController_Patches
+public static class UIFollowerInteractionWheelOverlayControllerPatches
 {
     [HarmonyPatch(typeof(UIFollowerInteractionWheelOverlayController), nameof(UIFollowerInteractionWheelOverlayController.MakeChoice),
         typeof(UIFollowerWheelInteractionItem))]
