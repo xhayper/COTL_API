@@ -1,7 +1,5 @@
-﻿using COTL_API.CustomInventory;
-using COTL_API.Guid;
+﻿using COTL_API.Guid;
 using HarmonyLib;
-using Lamb.UI.BuildMenu;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
