@@ -6,7 +6,7 @@ using System.Reflection;
 namespace COTL_API.Tasks;
 
 [HarmonyPatch]
-public class CustomTaskManager
+public static partial class CustomTaskManager
 {
     public static Dictionary<FollowerTaskType, CustomTask> CustomTasks { get; } = new();
 

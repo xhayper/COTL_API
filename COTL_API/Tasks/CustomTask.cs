@@ -2,15 +2,14 @@
 
 namespace COTL_API.Tasks;
 
-public class CustomTask : FollowerTask
+public abstract class CustomTask : FollowerTask
 {
-    public virtual string InternalName { get; }
+    public abstract string InternalName { get; }
+    internal string ModPrefix;
 
-    public FollowerTaskType TaskType;
+    internal FollowerTaskType TaskType;
     public override FollowerTaskType Type => TaskType;
 
-    public string ModPrefix;
-    
     public override int GetSubTaskCode()
     {
         return 0;
