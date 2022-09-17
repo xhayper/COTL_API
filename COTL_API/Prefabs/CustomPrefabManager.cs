@@ -14,12 +14,11 @@ using Object = UnityEngine.Object;
 namespace COTL_API.Prefabs;
 
 [HarmonyPatch]
-public class PrefabManager
+public class CustomPrefabManager
 {
+    public static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
 
-    public static Dictionary<string, CustomStructure> PrefabStrings = new();
 
-    
     public static string GetOrCreateBuildingPrefab(CustomStructure structure)
     {
         string pstr = $"CustomBuildingPrefab_{structure.InternalName}";

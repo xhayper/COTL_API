@@ -5,9 +5,9 @@ using TMPro;
 
 namespace COTL_API.Icons;
 
-public class IconManager
+public class CustomIconManager
 {
-    public static readonly Dictionary<Sprite, TMP_SpriteAsset> Icons = new();
+    public static Dictionary<Sprite, TMP_SpriteAsset> Icons { get; } = new();
 
     public static TMP_SpriteAsset GetIcon(Sprite icon, string name, Shader shader, int hashCode, GlyphMetrics iconMetrics)
     {

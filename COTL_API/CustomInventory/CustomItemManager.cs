@@ -14,7 +14,7 @@ namespace COTL_API.CustomInventory;
 [HarmonyPatch]
 public class CustomItemManager
 {
-    public static readonly Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItems = new();
+    public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItems { get; } = new();
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {

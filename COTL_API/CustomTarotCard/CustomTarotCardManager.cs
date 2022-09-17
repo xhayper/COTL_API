@@ -9,7 +9,7 @@ namespace COTL_API.CustomTarotCard;
 [HarmonyPatch]
 public class CustomTarotCardManager
 {
-    public static readonly Dictionary<TarotCards.Card, CustomTarotCard> CustomTarotCards = new();
+    public static Dictionary<TarotCards.Card, CustomTarotCard> CustomTarotCards { get; } = new();
 
     public static TarotCards.Card Add(CustomTarotCard card)
     {
