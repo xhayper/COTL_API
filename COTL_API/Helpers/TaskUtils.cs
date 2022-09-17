@@ -1,10 +1,9 @@
-﻿using COTL_API.Debug;
-using COTL_API.Structures;
+﻿using COTL_API.Structures;
 using System.Linq;
 
 namespace COTL_API.Helpers;
 
-public class TaskUtils
+public static class TaskUtils
 {
     public static Structure GetAvailableStructureOfType<T>()
     {

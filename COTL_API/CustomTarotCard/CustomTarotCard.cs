@@ -1,15 +1,15 @@
 using UnityEngine;
 using I2.Loc;
+using System.Text;
 
 namespace COTL_API.CustomTarotCard;
 
-public class CustomTarotCard
+public abstract class CustomTarotCard
 {
-    public virtual string InternalName { get; }
-    public TarotCards.CardCategory Category;
-    public TarotCards.Card CardType;
-    public string ModPrefix;
-
+    public abstract string InternalName { get; }
+    internal string ModPrefix;
+    internal TarotCards.Card CardType;
+    public virtual TarotCards.CardCategory Category { get; }
     public virtual Sprite CardSprite { get; internal set; }
 
     public virtual string LocalisedName()
@@ -29,16 +29,15 @@ public class CustomTarotCard
 
     public virtual string LocalisedName(int upgradeIndex)
     {
-        string text = "";
-        for (int i = 0; i < upgradeIndex; i++) text += "+";
+        StringBuilder text = new("");
+        for (int i = 0; i < upgradeIndex; i++) text.Append("+");
 
         string text2 = upgradeIndex switch {
             1 => "<color=green>",
             2 => "<color=purple>",
             _ => ""
         };
-        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name") + text +
-               "</color>";
+        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name{text}</color>");
     }
 
     public virtual string LocalisedDescription()

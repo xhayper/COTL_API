@@ -6,10 +6,10 @@ using I2.Loc;
 
 namespace COTL_API.CustomFollowerCommand;
 
-public class CustomFollowerCommand : CommandItem
+public abstract class CustomFollowerCommand : CommandItem
 {
-    public virtual string InternalName { get; }
-    public string ModPrefix;
+    public abstract string InternalName { get; }
+    internal string ModPrefix;
 
     public virtual List<FollowerCommandCategory> Categories { get; } =
         new() { FollowerCommandCategory.DEFAULT_COMMAND };
@@ -47,9 +47,5 @@ public class CustomFollowerCommand : CommandItem
         return true;
     }
 
-    public virtual void Execute(interaction_FollowerInteraction interaction,
-        FollowerCommands finalCommand = FollowerCommands.None)
-    {
-        interaction.Close();
-    }
+    public abstract void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand = FollowerCommands.None);
 }

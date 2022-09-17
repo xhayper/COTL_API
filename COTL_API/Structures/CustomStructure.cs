@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace COTL_API.Structures;
 
-public class CustomStructure : StructureBrain
+public abstract class CustomStructure : StructureBrain
 {
-    public virtual string InternalName { get; }
-    public StructureBrain.TYPES StructureType;
-    public string ModPrefix;
+    public abstract string InternalName { get; }
+    internal StructureBrain.TYPES StructureType;
+    internal string ModPrefix;
     
     public virtual Sprite Sprite { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));

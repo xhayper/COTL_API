@@ -5,22 +5,22 @@ using TMPro;
 
 namespace COTL_API.Icons;
 
-public class CustomIconManager
+internal static class CustomIconManager
 {
-    public static Dictionary<Sprite, TMP_SpriteAsset> Icons { get; } = new();
+    internal static Dictionary<Sprite, TMP_SpriteAsset> Icons { get; } = new();
 
-    public static TMP_SpriteAsset GetIcon(Sprite icon, string name, Shader shader, int hashCode, GlyphMetrics iconMetrics)
+    internal static TMP_SpriteAsset GetIcon(Sprite icon, string name, GlyphMetrics iconMetrics)
     {
         if (Icons.ContainsKey(icon)) return Icons[icon];
 
         icon.name = name;
 
-        TMP_SpriteAsset asset = CreateAssetFor(icon, hashCode, iconMetrics);
+        TMP_SpriteAsset asset = CreateAssetFor(icon, iconMetrics);
         Icons.Add(icon, asset);
         return asset;
     }
 
-    private static TMP_SpriteAsset CreateAssetFor(Sprite sprite, int hashCode, GlyphMetrics iconMetrics)
+    private static TMP_SpriteAsset CreateAssetFor(Sprite sprite, GlyphMetrics iconMetrics)
     {
         Texture2D texture = sprite.texture;
         TMP_SpriteAsset spriteAsset = ScriptableObject.CreateInstance<TMP_SpriteAsset>();
