@@ -111,6 +111,22 @@ public static class CustomItemSpawnPatches
             }
         }
     }
+    
+    [HarmonyPatch(typeof(Structures_OfferingShrine), nameof(Structures_OfferingShrine.Complete))]
+    public static class StructuresOfferingShrineCompletePatches
+    {
+        [HarmonyPrefix]
+        public static void Prefix(ref Structures_OfferingShrine __instance)
+        {
+            foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItemManager.CustomItems.Where(item => item.Value.AddItemToOfferingShrine))
+            {
+                if (!__instance.Offerings.Contains(item.Key))
+                {
+                    __instance.Offerings.Add(item.Key);
+                }
+            }
+        }
+    }
 
     private static class GetObject
     {

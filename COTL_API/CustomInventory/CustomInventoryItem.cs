@@ -20,6 +20,8 @@ public abstract class CustomInventoryItem
     public static readonly AssetBundle Assets = AssetBundle.LoadFromFile(PluginPaths.ResolveAssetPath("placeholder"));
 
     public virtual Vector3 LocalScale { get; } = new(0.5f, 0.5f, 0.5f);
+    
+    public virtual bool AddItemToOfferingShrine { get; } = false;
     public virtual InventoryItem.ITEM_TYPE ItemPickUpToImitate { get; } = InventoryItem.ITEM_TYPE.NONE;
     
     public virtual GameObject GameObject { get; } = Assets.LoadAsset<GameObject>("placeholder");
