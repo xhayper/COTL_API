@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace COTL_API.Helpers;
 
-public class TextureHelper
+public static class TextureHelper
 {
-    public static Dictionary<string, Sprite> SpriteCache = new();
-    public static Dictionary<string, Texture2D> TextureCache = new();
+    private static Dictionary<string, Sprite> SpriteCache = new();
+    private static Dictionary<string, Texture2D> TextureCache = new();
 
     public static Texture2D CreateTextureFromPath(string path, TextureFormat textureFormat = TextureFormat.RGBA32,
         bool mipmaps = false, bool linear = false)

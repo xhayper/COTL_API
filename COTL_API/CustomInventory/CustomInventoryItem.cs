@@ -4,11 +4,11 @@ using I2.Loc;
 
 namespace COTL_API.CustomInventory;
 
-public class CustomInventoryItem
+public abstract class CustomInventoryItem
 {
-    public virtual string InternalName { get; }
-    public InventoryItem.ITEM_TYPE ItemType;
-    public string ModPrefix;
+    public abstract string InternalName { get; }
+    internal InventoryItem.ITEM_TYPE ItemType;
+    internal string ModPrefix;
 
     public virtual Sprite InventoryIcon { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));

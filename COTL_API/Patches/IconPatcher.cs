@@ -8,7 +8,7 @@ using UnityEngine.TextCore;
 namespace COTL_API.Icons;
 
 [HarmonyPatch]
-public class IconPatcher
+public static class IconPatcher
 {
     [HarmonyPatch(typeof(TMP_SpriteAsset), nameof(TMP_SpriteAsset.SearchForSpriteByHashCode))]
     [HarmonyPrefix]
@@ -24,7 +24,7 @@ public class IconPatcher
             spriteIndex = 0;
             var sprite = item.InventoryIcon;
             var metrics = new GlyphMetrics(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height * 0.75f, sprite.rect.width);
-            __result = IconManager.GetIcon(sprite, name, spriteAsset.material.shader, hashCode, metrics);
+            __result = CustomIconManager.GetIcon(sprite, name, metrics);
             return false;
         }
 
@@ -35,7 +35,7 @@ public class IconPatcher
             spriteIndex = 0;
             var sprite = item.CommandIcon;
             var metrics = new GlyphMetrics(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height, sprite.rect.width);
-            __result = IconManager.GetIcon(sprite, name, spriteAsset.material.shader, hashCode, metrics);
+            __result = CustomIconManager.GetIcon(sprite, name, metrics);
             return false;
         }
 
