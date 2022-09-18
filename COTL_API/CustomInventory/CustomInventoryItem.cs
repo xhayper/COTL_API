@@ -9,16 +9,21 @@ public abstract class CustomInventoryItem
     public abstract string InternalName { get; }
     internal InventoryItem.ITEM_TYPE ItemType;
     internal string ModPrefix;
+    internal string InternalObjectName;
 
     public virtual Sprite InventoryIcon { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
     
-    public static readonly AssetBundle Assets = AssetBundle.LoadFromFile(PluginPaths.ResolveAssetPath("placeholder"));
+    public virtual Sprite Sprite { get; } =
+        TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
     
+    public static readonly AssetBundle Assets = AssetBundle.LoadFromFile(PluginPaths.ResolveAssetPath("placeholder"));
+
     public virtual Vector3 LocalScale { get; } = new(0.5f, 0.5f, 0.5f);
     public virtual InventoryItem.ITEM_TYPE ItemPickUpToImitate { get; } = InventoryItem.ITEM_TYPE.NONE;
     
     public virtual GameObject GameObject { get; } = Assets.LoadAsset<GameObject>("placeholder");
+    
     public virtual string InventoryStringIcon()
     {
         return $"<sprite name=\"icon_ITEM_{ModPrefix}.{InternalName}\">";
