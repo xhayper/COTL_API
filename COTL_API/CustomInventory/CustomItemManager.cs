@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using COTL_API.Guid;
+using COTL_API.Helpers;
+using System.Linq;
+using UnityEngine;
 
 namespace COTL_API.CustomInventory;
 
@@ -15,10 +18,16 @@ public static partial class CustomItemManager
         InventoryItem.ITEM_TYPE itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(guid, item.InternalName);
         item.ItemType = itemType;
         item.ModPrefix = guid;
+        item.InternalObjectName = $"CustomItem_{item.InternalName}";
 
         CustomItems.Add(itemType, item);
-
+        
         return itemType;
+    }
+    
+    public static KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> GetItemObjectByInternalObjectName(string name)
+    {
+        return (from item in CustomItems where item.Value.InternalObjectName == name select item).FirstOrDefault();
     }
 
     public static void AddGift(InventoryItem.ITEM_TYPE item)
@@ -40,4 +49,6 @@ public static partial class CustomItemManager
     {
         if (DataManager.AllNecklaces.Contains(item)) DataManager.AllNecklaces.Remove(item);
     }
+    
+    
 }
