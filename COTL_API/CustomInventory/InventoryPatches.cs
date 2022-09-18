@@ -1,6 +1,10 @@
-﻿using HarmonyLib;
+﻿using COTL_API.Helpers;
+using HarmonyLib;
 using Lamb.UI;
 using Lamb.UI.FollowerInteractionWheel;
+using MMBiomeGeneration;
+using MMRoomGeneration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -265,6 +269,69 @@ public partial class CustomItemManager
         InventoryItem.ITEM_TYPE[] copy = __result;
         __result = __result.Concat((CustomItems.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key)))
             .ToArray();
+    }
+    
+    
+    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Spawn), typeof(InventoryItem.ITEM_TYPE), typeof(int), typeof(Vector3), typeof(float), typeof(Action<PickUp>))]
+    [HarmonyPrefix]
+    public static bool InventoryItem_Spawn(InventoryItem.ITEM_TYPE type, int quantity, Vector3 position)
+    {
+        if (!CustomItems.ContainsKey(type)) return true;
+
+        if (Plugin.Debug) Plugin.Logger.LogDebug($"Custom Object Spawn Running");
+        GameObject gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
+        Transform transform = gameObject != null ? gameObject.transform : null;
+        GameObject copyObj = null;
+        while (--quantity >= 0)
+        {
+            BiomeGenerator instance = BiomeGenerator.Instance;
+            if ((instance != null ? instance.CurrentRoom : null) != null)
+            {
+                transform = BiomeGenerator.Instance.CurrentRoom.GameObject.transform;
+            }
+
+            if (transform == null && GenerateRoom.Instance != null)
+            {
+                transform = GenerateRoom.Instance.transform;
+            }
+
+            if (transform == null)
+            {
+                break;
+            }
+
+            Sprite mySprite = CustomItems[type].GameObject.GetComponent<SpriteRenderer>().sprite;
+        
+            //have to actually instantiate it, and then destroy it when we're done - otherwise, god knows why, all the gold in chests becomes the custom object
+            copyObj = UnityEngine.Object.Instantiate(ItemPickUp.GetItemPickUpObject(CustomItems[type].ItemPickUpToImitate), transform, instantiateInWorldSpace: false) as GameObject;
+
+            copyObj!.GetComponentInChildren<SpriteRenderer>().sprite = mySprite;
+            copyObj.GetComponent<PickUp>().type = CustomItems[type].ItemType;
+
+            copyObj.transform.localScale = CustomItems[type].LocalScale;
+
+            ObjectPool.Spawn(copyObj, transform, position, Quaternion.identity);
+        }
+
+        UnityEngine.Object.Destroy(copyObj);
+        return false;
+    }
+    
+    //add our custom items to the list of images used for the offering shrine items
+    [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.GetItemImages))]
+    [HarmonyPrefix]
+    public static void InventoryItemDisplay_GetItemImages(ref InventoryItemDisplay __instance)
+    {
+        foreach (InventoryItemDisplay.MyDictionaryEntry customItem in CustomItems.Select(type => new InventoryItemDisplay.MyDictionaryEntry {
+                     key = type.Key,
+                     value = type.Value.InventoryIcon
+                 }))
+        {
+            if (!__instance.ItemImages.Contains(customItem))
+            {
+                __instance.ItemImages.Add(customItem);
+            }
+        }
     }
 
     [HarmonyPatch(typeof(InventoryMenu))]
