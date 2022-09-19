@@ -19,6 +19,7 @@ public abstract class CustomInventoryItem
     
     public static readonly AssetBundle Assets = AssetBundle.LoadFromFile(PluginPaths.ResolveAssetPath("placeholder"));
 
+    public virtual CustomItemManager.ItemRarity Rarity { get; } = CustomItemManager.ItemRarity.COMMON;
     public virtual Vector3 LocalScale { get; } = new(0.5f, 0.5f, 0.5f);
     
     public virtual bool AddItemToOfferingShrine { get; } = false;

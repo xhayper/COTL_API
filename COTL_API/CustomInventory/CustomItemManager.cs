@@ -25,6 +25,12 @@ public static partial class CustomItemManager
         return itemType;
     }
     
+    public enum ItemRarity
+    {
+        COMMON,
+        RARE
+    }
+    
     public static KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> GetItemObjectByInternalObjectName(string name)
     {
         return (from item in CustomItems where item.Value.InternalObjectName == name select item).FirstOrDefault();
