@@ -89,7 +89,7 @@ public static class CustomItemSpawnPatches
             KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item = CustomItemManager.GetItemObjectByInternalObjectName(path);
 
             if (ObjectPool.instance.loadedAddressables.TryGetValue(item.Value.InternalObjectName, out GameObject _)) return;
-            
+
             ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName, GetObject.GetCustomObject(item.Value));
         }
     }
@@ -111,7 +111,7 @@ public static class CustomItemSpawnPatches
             }
         }
     }
-    
+
     [HarmonyPatch(typeof(Structures_OfferingShrine), nameof(Structures_OfferingShrine.Complete))]
     public static class StructuresOfferingShrineCompletePatches
     {
@@ -120,9 +120,35 @@ public static class CustomItemSpawnPatches
         {
             foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItemManager.CustomItems.Where(item => item.Value.AddItemToOfferingShrine))
             {
-                if (!__instance.Offerings.Contains(item.Key))
+                switch (item.Value.Rarity)
                 {
-                    __instance.Offerings.Add(item.Key);
+                    case CustomItemManager.ItemRarity.COMMON:
+                    {
+                        if (!__instance.Offerings.Contains(item.Key))
+                        {
+                            __instance.Offerings.Add(item.Key);
+                            if(Plugin.Debug) Plugin.Logger.LogWarning($"Added {item.Key} to common offering shrine");
+                        }
+
+                        break;
+                    }
+                    case CustomItemManager.ItemRarity.RARE:
+                    {
+                        if (!__instance.RareOfferings.Contains(item.Key))
+                        {
+                            __instance.RareOfferings.Add(item.Key);
+                            if(Plugin.Debug) Plugin.Logger.LogWarning($"Added {item.Key} to rare offering shrine");
+                        }
+
+                        break;
+                    }
+                    default:
+                        if (!__instance.Offerings.Contains(item.Key))
+                        {
+                            __instance.Offerings.Add(item.Key);
+                            if(Plugin.Debug) Plugin.Logger.LogWarning($"Something up, we should never hit this.");
+                        }
+                        break;
                 }
             }
         }
@@ -139,6 +165,7 @@ public static class CustomItemSpawnPatches
                 _myObject.SetActive(true);
                 return _myObject;
             }
+
             _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.ItemPickUpToImitate), null, instantiateInWorldSpace: false) as GameObject;
             Sprite customSprite = item.GameObject.GetComponent<SpriteRenderer>().sprite;
             _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = customSprite;
