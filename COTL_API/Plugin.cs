@@ -7,6 +7,7 @@ using HarmonyLib;
 using System.IO;
 using BepInEx;
 using COTL_API.CustomFollowerCommand;
+using COTL_API.CustomObjectives;
 using COTL_API.Helpers;
 using COTL_API.Skins;
 using COTL_API.Structures;
@@ -34,8 +35,12 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DebugItem3;
     internal static FollowerCommands DebugGiftFollowerCommand;
 
+    internal static Objectives.CustomQuestTypes DebugQuestKey;
+    internal static ObjectivesData DebugQuestData;
+
     private static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;
+
 
     private void Awake()
     {
@@ -65,7 +70,6 @@ public class Plugin : BaseUnityPlugin
         DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
         DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
 
-        CustomStructureManager.Add(new DebugStructure());
         CustomStructureManager.Add(new DebugStructure2());
         CustomStructureManager.Add(new DebugStructure3());
 
@@ -78,6 +82,11 @@ public class Plugin : BaseUnityPlugin
         string atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
 
         CustomSkinManager.AddCustomSkin("Test", customTex, atlasText);
+
+        (Objectives.CustomQuestTypes ObjectivesKey, ObjectivesData ObjectiveData) temp = CustomObjectiveManager.Add(new DebugObjective());
+        DebugQuestKey = temp.ObjectivesKey;
+        DebugQuestData = temp.ObjectiveData;
+       
 
         Logger.LogDebug("Debug mode enabled");
     }
