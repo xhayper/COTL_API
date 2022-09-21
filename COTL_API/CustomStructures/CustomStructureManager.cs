@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace COTL_API.Structures;
+namespace COTL_API.CustomStructures;
 
 [HarmonyPatch]
 public static partial class CustomStructureManager

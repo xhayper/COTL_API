@@ -9,7 +9,7 @@ using Lamb.UI;
 using System;
 using Spine;
 
-namespace COTL_API.Skins;
+namespace COTL_API.CustomSkins;
 
 [HarmonyPatch]
 public class CustomSkinManager

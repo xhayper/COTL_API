@@ -3,7 +3,7 @@ using HarmonyLib;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace COTL_API.Tasks;
+namespace COTL_API.CustomTasks;
 
 [HarmonyPatch]
 public static partial class CustomTaskManager
