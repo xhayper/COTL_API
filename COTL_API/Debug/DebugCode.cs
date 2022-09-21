@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using COTL_API.CustomTarotCard;
 using COTL_API.Helpers;
-using COTL_API.Skins;
+using COTL_API.CustomSkins;
 using src.Extensions;
 using System.Linq;
 using UnityEngine;
