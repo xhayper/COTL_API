@@ -1,6 +1,10 @@
-﻿using HarmonyLib;
+﻿using COTL_API.Helpers;
+using HarmonyLib;
 using Lamb.UI;
 using Lamb.UI.FollowerInteractionWheel;
+using MMBiomeGeneration;
+using MMRoomGeneration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;

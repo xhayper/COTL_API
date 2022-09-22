@@ -1,11 +1,12 @@
 ﻿using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomInventory;
 using COTL_API.Helpers;
+using COTL_API.Icons;
 using HarmonyLib;
 using TMPro;
 using UnityEngine.TextCore;
 
-namespace COTL_API.Icons;
+namespace COTL_API.Patches;
 
 [HarmonyPatch]
 public static class IconPatcher
