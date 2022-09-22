@@ -7,6 +7,7 @@ using HarmonyLib;
 using System.IO;
 using BepInEx;
 using COTL_API.CustomFollowerCommand;
+using COTL_API.CustomObjectives;
 using COTL_API.Helpers;
 using COTL_API.CustomSkins;
 using COTL_API.CustomStructures;
@@ -32,10 +33,19 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DebugItem;
     internal static InventoryItem.ITEM_TYPE DebugItem2;
     internal static InventoryItem.ITEM_TYPE DebugItem3;
+    internal static InventoryItem.ITEM_TYPE DebugItem4;
     internal static FollowerCommands DebugGiftFollowerCommand;
+
+    internal static Objectives.CustomQuestTypes DebugQuestKey;
+    internal static ObjectivesData DebugQuestData;
+
+    internal static (Objectives.CustomQuestTypes ObjectivesKey, ObjectivesData ObjectiveData) DebugObjective1;
+    internal static (Objectives.CustomQuestTypes ObjectivesKey, ObjectivesData ObjectiveData) DebugObjective2;
+    internal static (Objectives.CustomQuestTypes ObjectivesKey, ObjectivesData ObjectiveData) DebugObjective3;
 
     private static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;
+
 
     private void Awake()
     {
@@ -64,8 +74,8 @@ public class Plugin : BaseUnityPlugin
         DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
         DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
         DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
+        DebugItem4 = CustomInventory.CustomItemManager.Add(new DebugItemClass4());
 
-        CustomStructureManager.Add(new DebugStructure());
         CustomStructureManager.Add(new DebugStructure2());
         CustomStructureManager.Add(new DebugStructure3());
 
@@ -79,6 +89,11 @@ public class Plugin : BaseUnityPlugin
 
         CustomSkinManager.AddCustomSkin("Test", customTex, atlasText);
 
+        //assignment not necessary unless the plugin would like easy access to the data afterwards
+        DebugObjective1 = CustomObjectiveManager.Add(new DebugObjective());
+        DebugObjective2 = CustomObjectiveManager.Add(new DebugObjective2());
+        DebugObjective3 = CustomObjectiveManager.Add(new DebugObjective3());
+        
         Logger.LogDebug("Debug mode enabled");
     }
 
