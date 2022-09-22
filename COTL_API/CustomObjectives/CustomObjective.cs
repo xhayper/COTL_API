@@ -9,13 +9,14 @@ public abstract class CustomObjective
     /// Internal name of the quest.
     /// </summary>
     /// <returns>The string</returns>
-    public abstract string InternalName();
+    public abstract string InternalName { get; }
+    internal string ModPrefix;
 
     /// <summary>
     /// This is the text that appears in the dialog when the follower is proposing the quest to the player.
     /// </summary>
     /// <returns>string</returns>
-    public abstract string InitialQuestText();
+    public abstract string InitialQuestText { get; }
 
     /// <summary>
     /// This is where the custom objective is created and stored against the plugins ObjectiveKey in CustomObjectivesManager.

@@ -33,9 +33,9 @@ public static class CustomObjectiveManager
     public static (Objectives.CustomQuestTypes ObjectiveKey, ObjectivesData ObjectiveData) Add(CustomObjective customObjective)
     {
         string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
-        Objectives.CustomQuestTypes objectiveKey = GuidManager.GetEnumValue<Objectives.CustomQuestTypes>(guid, customObjective.InternalName());
+        Objectives.CustomQuestTypes objectiveKey = GuidManager.GetEnumValue<Objectives.CustomQuestTypes>(guid, customObjective.InternalName);
         customObjective.ObjectiveKey = objectiveKey;
-        GuidManager.GetEnumValue<Follower.ComplaintType>(guid, customObjective.InternalName());
+        customObjective.ModPrefix = guid;
 
         CustomObjectives.Add(objectiveKey, customObjective);
 

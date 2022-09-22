@@ -81,7 +81,6 @@ internal static class CustomItemSpawnPatches
         [HarmonyPrefix]
         private static void Prefix(ref string path)
         {
-            Plugin.Logger.LogWarning($"ObjectPool.Spawn: {path}");
             if (!path.StartsWith(PathPrefix)) return;
 
             KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item = CustomItemManager.GetItemObjectByInternalObjectName(path);
@@ -140,7 +139,7 @@ internal static class CustomItemSpawnPatches
                         if (!__instance.Offerings.Contains(item.Key))
                         {
                             __instance.Offerings.Add(item.Key);
-                            if (Plugin.Debug) Plugin.Logger.LogWarning($"Added {item.Key} to common offering shrine");
+                            if (Plugin.Debug) Plugin.Logger.LogDebug($"Added {item.Key} to common offering shrine");
                         }
 
                         break;
@@ -150,7 +149,7 @@ internal static class CustomItemSpawnPatches
                         if (!__instance.RareOfferings.Contains(item.Key))
                         {
                             __instance.RareOfferings.Add(item.Key);
-                            if (Plugin.Debug) Plugin.Logger.LogWarning($"Added {item.Key} to rare offering shrine");
+                            if (Plugin.Debug) Plugin.Logger.LogDebug($"Added {item.Key} to rare offering shrine");
                         }
 
                         break;
@@ -159,7 +158,7 @@ internal static class CustomItemSpawnPatches
                         if (!__instance.Offerings.Contains(item.Key))
                         {
                             __instance.Offerings.Add(item.Key);
-                            if (Plugin.Debug) Plugin.Logger.LogWarning($"Somethings up, we should never hit this.");
+                            if (Plugin.Debug) Plugin.Logger.LogDebug($"Somethings up, we should never hit this.");
                         }
 
                         break;

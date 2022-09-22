@@ -31,6 +31,6 @@ public class CustomObjectivePatches
         }
 
         Plugin.Logger.LogWarning($"Matching quest found for {objective.ID}! ListCount: {__result.Count}");
-        __result[0].TermToSpeak = customObjective.InitialQuestText();
+        __result[0].TermToSpeak = customObjective.InitialQuestText;
     }
 }

@@ -42,7 +42,7 @@ public static partial class CustomItemManager
     {
         float roll = Random.Range(0, 101);
         float chance = customInventoryItem.DungeonChestSpawnChance + customInventoryItem.DungeonChestSpawnChance * DataManager.Instance.GetLuckMultiplier();
-        Plugin.Logger.LogWarning($"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");
+        if (Plugin.Debug) Plugin.Logger.LogDebug($"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");
         return roll <= chance;
         //return true;
     }
