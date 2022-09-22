@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace COTL_API.Tasks;
+namespace COTL_API.CustomTasks;
 
 public abstract class CustomTask : FollowerTask
 {

@@ -1,5 +1,5 @@
 ﻿using COTL_API.Helpers;
-using COTL_API.Structures;
+using COTL_API.CustomStructures;
 using Lamb.UI.BuildMenu;
 using System.Collections.Generic;
 using UnityEngine;
