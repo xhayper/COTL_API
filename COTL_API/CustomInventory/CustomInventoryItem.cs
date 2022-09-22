@@ -1,11 +1,10 @@
 using COTL_API.Helpers;
-using I2.Loc;
-using System;
 using UnityEngine;
+using I2.Loc;
 
 namespace COTL_API.CustomInventory;
 
-public abstract class CustomInventoryItem
+public class CustomInventoryItem
 {
     public abstract string InternalName { get; }
 
@@ -77,16 +76,11 @@ public abstract class CustomInventoryItem
         return $"<sprite name=\"icon_ITEM_{ModPrefix}.{InternalName}\">";
     }
 
-
     public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; } = InventoryItem.ITEM_CATEGORIES.NONE;
-
     public virtual InventoryItem.ITEM_TYPE SeedType { get; } = InventoryItem.ITEM_TYPE.NONE;
 
-
     public virtual string Name() { return LocalizedName(); }
-
     public virtual string Lore() { return LocalizedLore(); }
-
     public virtual string Description() { return LocalizedDescription(); }
 
     public virtual string LocalizedName()
@@ -103,27 +97,20 @@ public abstract class CustomInventoryItem
     {
         return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Description");
     }
-
+    
     public virtual int FuelWeight { get; } = 1;
-
     public virtual int FoodSatitation { get; } = 75;
 
     public virtual bool IsFish { get; } = false;
-
     public virtual bool IsFood { get; } = false;
-
     public virtual bool IsBigFish { get; } = false;
-
     public virtual bool IsCurrency { get; } = false;
-
     public virtual bool IsSeed { get; } = false;
-
     public virtual bool IsPlantable { get; } = false;
-
     public virtual bool IsBurnableFuel { get; } = false;
 
     public virtual bool CanBeGivenToFollower => false;
-
+    
     public virtual string GiftTitle(Follower follower)
     {
         return $"{Name()} ({Inventory.GetItemQuantity(ItemType)})";
@@ -131,7 +118,7 @@ public abstract class CustomInventoryItem
 
     public virtual FollowerCommands GiftCommand => FollowerCommands.None;
 
-    public virtual void OnGiftTo(Follower follower, Action onFinish)
+    public virtual void OnGiftTo(Follower follower, System.Action onFinish)
     {
         onFinish();
     }
