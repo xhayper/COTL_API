@@ -3,9 +3,9 @@
         <AssemblyName>COTL_API</AssemblyName>
     </PropertyGroup>
 
-    <Import Project="../COTL_API.Common.props" />
+    <Import Project="../COTL_API.Common.props"/>
 
     <ItemGroup>
-        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.0.15-*" />
+        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.0.15-*"/>
     </ItemGroup>
 </Project>

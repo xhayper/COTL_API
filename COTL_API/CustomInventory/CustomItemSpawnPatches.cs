@@ -7,28 +7,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace COTL_API.CustomInventory;
 
+/// <summary>
+/// This class is used for patches required for the custom items to spawn.
+/// </summary>
 [HarmonyPatch]
-public static class CustomItemSpawnPatches
+internal static class CustomItemSpawnPatches
 {
     private const string PathPrefix = "CustomItem_";
-
+    
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Spawn), typeof(InventoryItem.ITEM_TYPE), typeof(int), typeof(Vector3), typeof(float), typeof(Action<PickUp>))]
-    public static class InventoryItemSpawnPatches
+    private static class InventoryItemSpawnPatches
     {
         [HarmonyPrefix]
-        public static bool Prefix(InventoryItem.ITEM_TYPE type)
+        private static bool Prefix(InventoryItem.ITEM_TYPE type, int quantity, Vector3 position, float StartSpeed, ref Action<PickUp> result, ref PickUp __result)
         {
             if (!CustomItemManager.CustomItems.ContainsKey(type)) return true;
-            return false;
-        }
-
-        [HarmonyPostfix]
-        public static void Postfix(InventoryItem.ITEM_TYPE type, int quantity, Vector3 position, float StartSpeed, ref Action<PickUp> result, ref PickUp __result)
-        {
-            if (!CustomItemManager.CustomItems.ContainsKey(type)) return;
             GameObject gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
             Transform transform = (gameObject != null ? gameObject.transform : null);
             PickUp p = null;
@@ -74,14 +71,15 @@ public static class CustomItemSpawnPatches
             //whatever the user chose to imitate, all those objects get converted into the custom item without this....
             GetObject.SetInactive();
             __result = p;
+            return false;
         }
     }
 
     [HarmonyPatch(typeof(ObjectPool), nameof(ObjectPool.Spawn), typeof(string), typeof(Vector3), typeof(Quaternion), typeof(Transform), typeof(Action<GameObject>))]
-    public static class ObjectPoolSpawnStringPatches
+    private static class ObjectPoolSpawnStringPatches
     {
         [HarmonyPrefix]
-        public static void Prefix(ref string path)
+        private static void Prefix(ref string path)
         {
             Plugin.Logger.LogWarning($"ObjectPool.Spawn: {path}");
             if (!path.StartsWith(PathPrefix)) return;
@@ -94,11 +92,13 @@ public static class CustomItemSpawnPatches
         }
     }
 
-
-    //add our custom items to the list of images used for the offering shrine items
+    /// <summary>
+    ///    This patch adds our custom items to the list of images used for the offering shrine items
+    /// </summary>
+    /// <param name="__instance"></param>
     [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.GetItemImages))]
     [HarmonyPrefix]
-    public static void InventoryItemDisplay_GetItemImages(ref InventoryItemDisplay __instance)
+    private static void InventoryItemDisplay_GetItemImages(ref InventoryItemDisplay __instance)
     {
         foreach (InventoryItemDisplay.MyDictionaryEntry customItem in CustomItemManager.CustomItems.Select(type => new InventoryItemDisplay.MyDictionaryEntry {
                      key = type.Key,
@@ -109,14 +109,27 @@ public static class CustomItemSpawnPatches
             {
                 __instance.ItemImages.Add(customItem);
             }
+
+            if (__instance.myDictionary == null) continue;
+            if (!__instance.myDictionary.ContainsKey(customItem.key))
+            {
+                __instance.myDictionary.Add(customItem.key, customItem.value);
+            }
         }
     }
 
+    /// <summary>
+    /// This is a patch to add our custom items to the list of items that can be offered to the shrine.
+    /// </summary>
     [HarmonyPatch(typeof(Structures_OfferingShrine), nameof(Structures_OfferingShrine.Complete))]
-    public static class StructuresOfferingShrineCompletePatches
+    private static class StructuresOfferingShrineCompletePatches
     {
+        /// <summary>
+        ///    This is a patch to allow custom items to be used in the offering shrine based on the items rarity. If not overriden, default is common.
+        /// </summary>
+        /// <param name="__instance"></param>
         [HarmonyPrefix]
-        public static void Prefix(ref Structures_OfferingShrine __instance)
+        private static void Prefix(ref Structures_OfferingShrine __instance)
         {
             foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItemManager.CustomItems.Where(item => item.Value.AddItemToOfferingShrine))
             {
@@ -127,7 +140,7 @@ public static class CustomItemSpawnPatches
                         if (!__instance.Offerings.Contains(item.Key))
                         {
                             __instance.Offerings.Add(item.Key);
-                            if(Plugin.Debug) Plugin.Logger.LogWarning($"Added {item.Key} to common offering shrine");
+                            if (Plugin.Debug) Plugin.Logger.LogWarning($"Added {item.Key} to common offering shrine");
                         }
 
                         break;
@@ -137,7 +150,7 @@ public static class CustomItemSpawnPatches
                         if (!__instance.RareOfferings.Contains(item.Key))
                         {
                             __instance.RareOfferings.Add(item.Key);
-                            if(Plugin.Debug) Plugin.Logger.LogWarning($"Added {item.Key} to rare offering shrine");
+                            if (Plugin.Debug) Plugin.Logger.LogWarning($"Added {item.Key} to rare offering shrine");
                         }
 
                         break;
@@ -146,10 +159,47 @@ public static class CustomItemSpawnPatches
                         if (!__instance.Offerings.Contains(item.Key))
                         {
                             __instance.Offerings.Add(item.Key);
-                            if(Plugin.Debug) Plugin.Logger.LogWarning($"Something up, we should never hit this.");
+                            if (Plugin.Debug) Plugin.Logger.LogWarning($"Somethings up, we should never hit this.");
                         }
+
                         break;
                 }
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Patches for the custom items to spawn in dungeon chests, if they are set to do so.
+    /// </summary>
+    [HarmonyPatch(typeof(Interaction_Chest))]
+    private static class DungeonChestPatches
+    {
+        /// <summary>
+        /// This is used to spawn the custom items in regular dungeon chests.
+        /// </summary>
+        /// <param name="__instance"></param>
+        [HarmonyPatch(nameof(Interaction_Chest.Reveal))]
+        [HarmonyPostfix]
+        private static void RevealPostfix(Interaction_Chest __instance)
+        {
+            foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItemManager.CustomItems.Where(item => item.Value.AddItemToDungeonChests && CustomItemManager.DropLoot(item.Value)))
+            {
+                InventoryItem.Spawn(item.Key, Random.Range(item.Value.DungeonChestMinAmount, item.Value.DungeonChestMaxAmount + 1), __instance.transform.position);
+            }
+        }
+
+        /// <summary>
+        /// This is used to spawn the custom items in the boss room dungeon chest.
+        /// </summary>
+        /// <param name="__instance"></param>
+        [HarmonyPatch(nameof(Interaction_Chest.RevealBossReward))]
+        [HarmonyPostfix]
+        private static void RevealBossRewardPostfix(Interaction_Chest __instance)
+        {
+            foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItemManager.CustomItems.Where(item => item.Value.AddItemToDungeonChests && CustomItemManager.DropLoot(item.Value)))
+            {
+                InventoryItem.Spawn(item.Key, Random.Range(item.Value.DungeonChestMinAmount, item.Value.DungeonChestMaxAmount + 1), __instance.transform.position);
             }
         }
     }
@@ -167,8 +217,7 @@ public static class CustomItemSpawnPatches
             }
 
             _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.ItemPickUpToImitate), null, instantiateInWorldSpace: false) as GameObject;
-            Sprite customSprite = item.GameObject.GetComponent<SpriteRenderer>().sprite;
-            _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = customSprite;
+            _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Sprite;
             _myObject.name = item.InternalObjectName;
             _myObject.transform.localScale = item.LocalScale;
             return _myObject;

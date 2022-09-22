@@ -3,8 +3,16 @@ using UnityEngine;
 
 namespace COTL_API.Helpers;
 
+/// <summary>
+/// List of defined items from the game. Used to retrieve the game objects prefab object.
+/// </summary>
 public static class ItemPickUp
 {
+    /// <summary>
+    /// Returns a GameObject of the specified item type (if it exists). Will return a gold coin if the item type is not found.
+    /// </summary>
+    /// <param name="type">The type of item to return.</param>
+    /// <returns>The specified item as a game object.</returns>
     public static GameObject GetItemPickUpObject(InventoryItem.ITEM_TYPE type)
     {
         string text = "";
