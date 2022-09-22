@@ -39,7 +39,7 @@ public static class CustomObjectiveManager
 
         CustomObjectives.Add(objectiveKey, customObjective);
 
-        Plugin.Logger.LogWarning($"Added custom objective with TypeID {objectiveKey} and Objective ID: {customObjective.ObjectiveData.ID}. Total custom objectives: {CustomObjectives.Count}.");
+       if(Plugin.Debug) Plugin.Logger.LogDebug($"Added custom objective with TypeID {objectiveKey} and Objective ID: {customObjective.ObjectiveData.ID}. Total custom objectives: {CustomObjectives.Count}.");
 
         AddQuests();
 
@@ -55,7 +55,7 @@ public static class CustomObjectiveManager
         {
             Quests.QuestsAll.Add(quest.Value.ObjectiveData);
 
-            Plugin.Logger.LogWarning($"Added {quest.Key} custom objectives to QuestsAll. Objective ID: {quest.Value.ObjectiveData.ID}");
+            if(Plugin.Debug) Plugin.Logger.LogDebug($"Added {quest.Key} custom objectives to QuestsAll. Objective ID: {quest.Value.ObjectiveData.ID}");
         }
     }
 
