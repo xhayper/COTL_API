@@ -4,7 +4,7 @@ using I2.Loc;
 
 namespace COTL_API.CustomInventory;
 
-public class CustomInventoryItem
+public abstract class CustomInventoryItem
 {
     public abstract string InternalName { get; }
 

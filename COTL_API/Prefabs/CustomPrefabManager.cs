@@ -1,5 +1,4 @@
 ﻿using COTL_API.CustomStructures;
-using COTL_API.Structures;
 using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
