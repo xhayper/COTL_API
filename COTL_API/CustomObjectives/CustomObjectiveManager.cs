@@ -2,6 +2,7 @@ using COTL_API.Guid;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 namespace COTL_API.CustomObjectives;
 
@@ -57,6 +58,16 @@ public static class CustomObjectiveManager
 
             if(Plugin.Debug) Plugin.Logger.LogDebug($"Added {quest.Key} custom objectives to QuestsAll. Objective ID: {quest.Value.ObjectiveData.ID}");
         }
+    }
+    
+    /// <summary>
+    /// Returns a location based on unlocked dungeon doors.
+    /// </summary>
+    /// <returns>FollowerLocation</returns>
+    public static FollowerLocation GetRandomDungeonLocation()
+    {
+
+        return DataManager.Instance.UnlockedDungeonDoor[Random.Range(0, DataManager.Instance.UnlockedDungeonDoor.Count)];
     }
 
     /// <summary>
