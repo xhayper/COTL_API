@@ -9,9 +9,9 @@ using BepInEx;
 using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomObjectives;
 using COTL_API.Helpers;
-using COTL_API.Skins;
-using COTL_API.Structures;
-using COTL_API.Tasks;
+using COTL_API.CustomSkins;
+using COTL_API.CustomStructures;
+using COTL_API.CustomTasks;
 using UnityEngine;
 
 namespace COTL_API;

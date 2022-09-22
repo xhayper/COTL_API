@@ -1,4 +1,4 @@
-﻿namespace COTL_API.Tasks;
+﻿namespace COTL_API.CustomTasks;
 
 public partial class CustomTaskManager
 {

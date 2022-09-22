@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace COTL_API.Structures;
+namespace COTL_API.CustomStructures;
 
 public partial class CustomStructureManager
 {
