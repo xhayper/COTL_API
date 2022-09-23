@@ -16,10 +16,12 @@ The API currently fully supports the following features:
 -   Items
 -   Follower Commands
 -   Custom Save File Data
+-   Objectives
 
 It also has experimental functionality for:
 
 -   Skins
 -   Tarot Cards
+-   Structures
 
 And many more will be added soon!
