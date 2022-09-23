@@ -22,7 +22,12 @@ internal class ExampleItem : CustomInventoryItem
     public override string InternalName => "Example_Item";
     public override string LocalizedName() { return "Example Item"; }
     public override string LocalizedDescription() { return "This is an example item"; }
+    
+    //used for inventory icons
     public override Sprite InventoryIcon => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_item.png"));
+    
+    //used for spawning object in the world
+    public override Sprite Sprite => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_item.png"));
 }
 ```
 
@@ -31,6 +36,7 @@ internal class ExampleItem : CustomInventoryItem
 |-|-|-|
 | string | InternalName | \[REQUIRED\] |
 | Sprite | InventoryIcon | TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png")) |
+| Sprite | Sprite | TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png")) |
 | InventoryItem.ITEM_CATEGORIES | ItemCategory | InventoryItem.ITEM_CATEGORIES.NONE |
 | InventoryItem.ITEM_TYPE | SeedType | InventoryItem.ITEM_TYPE.NONE; |
 | string | LocalizedName() | LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}") |
