@@ -6,7 +6,7 @@ layout: ../layouts/MainLayout.astro
 
 ## Creating Objectives
 
-To create an item, you first need to make a class overriding `CustomObjective`. The example below creates a collect item quest using a custom item with a random number of items to collect.  
+To create a custom objective, you first need to make a class overriding `CustomObjective`. The example below creates a collect item quest using a custom item with a random number of items to collect.  
 Example:
 
 ```csharp
