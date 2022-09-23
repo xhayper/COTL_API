@@ -48,6 +48,9 @@ public static (Objectives.CustomQuestTypes ObjectiveKey, ObjectivesData Objectiv
 private void Awake()
 {
     ExampleObjective = CustomObjectiveManager.Add(new ExampleObjective());
+    
+    //if you need to change something post adding, use:
+    ExampleObjective.<method/field>
 }
 ```
 
