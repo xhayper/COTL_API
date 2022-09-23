@@ -21,6 +21,7 @@ pnpm-debug.log*
 # editor
 .vscode/
 .idea/
+/.idea/
 
 # we are not using zero-install
 .pnp.*
