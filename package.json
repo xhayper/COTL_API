@@ -29,5 +29,8 @@
     "react-dom": "^18.2.0",
     "sass": "^1.55.0"
   },
-  "packageManager": "yarn@3.2.3"
+  "packageManager": "yarn@3.2.3",
+  "dependencies": {
+    "@astrojs/partytown": "^1.0.0"
+  }
 }
