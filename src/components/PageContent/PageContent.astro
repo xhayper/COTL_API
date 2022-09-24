@@ -1,6 +1,6 @@
 ---
-import MoreMenu from "../RightSidebar/MoreMenu.astro";
 import TableOfContents from "../RightSidebar/TableOfContents";
+import MoreMenu from "../RightSidebar/MoreMenu.astro";
 
 const { frontmatter, headings, githubEditUrl } = Astro.props;
 const title = frontmatter.title;
@@ -27,10 +27,6 @@ const title = frontmatter.title;
         height: 100%;
         display: flex;
         flex-direction: column;
-    }
-
-    .content > section {
-        margin-bottom: 4rem;
     }
 
     .block {

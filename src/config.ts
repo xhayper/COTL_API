@@ -3,12 +3,21 @@ export const SITE = {
     description: "Cult of the Lamb API's Documentation"
 };
 
-export const OPEN_GRAPH = {
-    image: {
-        src: "https://xhayper.github.io/COTL_API/banner.png",
-        alt: "Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)"
+export const SEO = {
+    opengraph: {
+        image: {
+            src: "https://xhayper.github.io/COTL_API/banner.png",
+            alt: "Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)",
+            width: 3840,
+            height: 2160,
+            mimeType: "image/png"
+        }
     },
-    twitter: "hayper1919"
+    twitter: {
+        card: "summary_large_image",
+        site: "@hayper1919",
+        creator: "@hayper1919"
+    }
 };
 
 // Uncomment this to add an "Edit this page" button to every page of documentation.
@@ -25,7 +34,7 @@ export const COMMUNITY_INVITE_URL = `https://discord.gg/jZ2DytX3TX`;
 //   apiKey: 'XXXXXXXXXX',
 // }
 
-export const SIDEBAR = [
+export const SIDEBAR: { text: string; header?: boolean; link?: string }[] = [
     { text: "Introduction", header: true },
     { text: "Main Page", link: "COTL_API/" },
     { text: "Getting Started", link: "COTL_API/getting-started" },

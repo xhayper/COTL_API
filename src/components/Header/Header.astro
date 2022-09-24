@@ -1,8 +1,8 @@
 ---
-import * as CONFIG from "../../config";
-import Logo from "./Logo.astro";
 import SkipToContent from "./SkipToContent.astro";
 import SidebarToggle from "./SidebarToggle";
+import * as CONFIG from "../../config";
+import Logo from "./Logo.astro";
 import Search from "./Search";
 ---
 
@@ -13,7 +13,7 @@ import Search from "./Search";
             <SidebarToggle client:idle />
         </div>
         <div class="logo flex">
-            <a href="/COTL_API">
+            <a href="/COTL_API/">
                 <Logo size={64} />
                 <h1>{CONFIG.SITE.title ?? "Documentation"}</h1>
             </a>

@@ -1,5 +1,13 @@
 ---
 import { SIDEBAR } from "../../config";
+
+type Column = {
+    text: string;
+    header?: boolean;
+    link?: string;
+    children?: Column[];
+};
+
 const { currentPage } = Astro.props;
 const currentPageMatch = currentPage.slice(1);
 // SIDEBAR is a flat array. Group it by sections to properly render.
@@ -14,10 +22,11 @@ const sidebarSections = SIDEBAR.reduce((col, item, i) => {
     if (item.header) {
         col.push({ ...item, children: [] });
     } else {
-        col[col.length - 1].children.push(item);
+        const column = col[col.length - 1];
+        if (column) column.children?.push(item);
     }
     return col;
-}, []);
+}, [] as Column[]);
 ---
 
 <nav aria-labelledby="grid-left">
@@ -28,10 +37,10 @@ const sidebarSections = SIDEBAR.reduce((col, item, i) => {
                     <div class="nav-group">
                         <h2 class="nav-group-title">{section.text}</h2>
                         <ul>
-                            {section.children.map((child) => (
+                            {section.children!.map((child) => (
                                 <li class="nav-link">
                                     <a
-                                        href={`${Astro.site.pathname}${child.link}`}
+                                        href={`${Astro.site!.pathname}${child.link}`}
                                         aria-current={`${currentPageMatch === child.link ? "page" : "false"}`}
                                     >
                                         {child.text}
@@ -47,7 +56,7 @@ const sidebarSections = SIDEBAR.reduce((col, item, i) => {
 </nav>
 
 <script is:inline>
-    window.addEventListener("DOMContentLoaded", (event) => {
+    window.addEventListener("DOMContentLoaded", () => {
         var target = document.querySelector('[aria-current="page"]');
         if (target && target.offsetTop > window.innerHeight - 100) {
             document.querySelector(".nav-groups").scrollTop = target.offsetTop;
