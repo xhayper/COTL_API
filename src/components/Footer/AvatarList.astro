@@ -1,4 +1,6 @@
 ---
+import { Image } from '@astrojs/image/components';
+
 const BRANCH = "gh-pages";
 const PER_PAGE = 100;
 
@@ -74,13 +76,12 @@ const additionalContributors = unique.length - recentContributors.length; // lis
             recentContributors.map((item) => (
                 <li>
                     <a href={`https://github.com/${item.login}`}>
-                        <img
+                        <Image 
                             alt={`Contributor ${item.login}`}
                             title={`Contributor ${item.login}`}
                             width="64"
                             height="64"
                             src={`https://avatars.githubusercontent.com/u/${item.id}`}
-                            loading="lazy"
                         />
                     </a>
                 </li>
