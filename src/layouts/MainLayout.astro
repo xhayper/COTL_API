@@ -115,8 +115,8 @@ const githubEditUrl = CONFIG.GITHUB_EDIT_URL && CONFIG.GITHUB_EDIT_URL + current
             <div id="grid-main">
                 <PageContent {frontmatter} {headings} githubEditUrl={githubEditUrl}>
                     <slot />
-                    <Footer path={currentFile} />
                 </PageContent>
+                <Footer path={currentFile} />
             </div>
             <aside id="grid-right" class="grid-sidebar" title="Table of Contents">
                 <RightSidebar {headings} githubEditUrl={githubEditUrl} />
