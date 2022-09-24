@@ -1,5 +1,7 @@
 ---
-import { SITE, OPEN_GRAPH } from "../config";
+import { SITE, SEO as SiteSEOData } from "../config";
+import { SEO } from "astro-seo";
+
 export interface Props {
     frontmatter: any;
     site: any;
@@ -9,35 +11,61 @@ export interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { frontmatter = {} } = Astro.props;
 const formattedContentTitle = frontmatter.title ? `${frontmatter.title} 🚀 ${SITE.title}` : SITE.title;
-const imageSrc = frontmatter?.image?.src ?? OPEN_GRAPH.image.src;
+const imageSrc = frontmatter?.image?.src ?? SiteSEOData.opengraph.image.src;
 const canonicalImageSrc = new URL(imageSrc, Astro.site);
-const imageAlt = frontmatter?.image?.alt ?? OPEN_GRAPH.image.alt;
+const imageAlt = frontmatter?.image?.alt ?? SiteSEOData.opengraph.image.alt;
 ---
 
-<!-- Page Metadata -->
-<link rel="canonical" href={canonicalURL} />
-
-<!-- OpenGraph Tags -->
-<meta property="og:title" content={formattedContentTitle} />
-<meta property="og:type" content="article" />
-<meta property="og:url" content={canonicalURL} />
-<meta property="og:locale" content={frontmatter.ogLocale ?? "en-us"} />
-<meta property="og:image" content={canonicalImageSrc} />
-<meta property="og:image:alt" content={imageAlt} />
-<meta
-    name="description"
-    property="og:description"
-    content={frontmatter.description ? frontmatter.description : SITE.description}
+<SEO
+    title={formattedContentTitle}
+    description={frontmatter.description ? frontmatter.description : SITE.description}
+    canonical={canonicalURL.toString()}
+    noindex={false}
+    nofollow={false}
+    openGraph={{
+        basic: {
+            title: SITE.title,
+            type: "article",
+            image: canonicalImageSrc.toString(),
+            url: canonicalURL.toString()
+        },
+        optional: {
+            description: SITE.description,
+            locale: "en-us",
+            siteName: SITE.title
+        },
+        image: {
+            url: canonicalImageSrc.toString(),
+            type: SiteSEOData.opengraph.image.mimeType ?? "",
+            width: SiteSEOData.opengraph.image.width ?? 0,
+            height: SiteSEOData.opengraph.image.height ?? 0,
+            alt: imageAlt
+        }
+    }}
+    twitter={{
+        card: SiteSEOData.twitter.card ?? "",
+        site: SiteSEOData.twitter.site ?? "",
+        creator: SiteSEOData.twitter.creator ?? ""
+    }}
+    extend={{
+        meta: [
+            { name: "twitter:title", content: SITE.title },
+            {
+                name: "twitter:description",
+                content: SITE.description
+            },
+            {
+                name: "twitter:image",
+                content: canonicalImageSrc.toString()
+            },
+            {
+                name: "twitter:image:alt",
+                content: imageAlt
+            },
+            { name: "theme-color", content: "#CD2524" }
+        ]
+    }}
 />
-<meta property="og:site_name" content={SITE.title} />
-
-<!-- Twitter Tags -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content={OPEN_GRAPH.twitter} />
-<meta name="twitter:title" content={formattedContentTitle} />
-<meta name="twitter:description" content={frontmatter.description ? frontmatter.description : SITE.description} />
-<meta name="twitter:image" content={canonicalImageSrc} />
-<meta name="twitter:image:alt" content={imageAlt} />
 
 <!--
   TODO: Add json+ld data, maybe https://schema.org/APIReference makes sense?

@@ -8,23 +8,22 @@ yarn init astro -- --template docs
 
 ![docs](https://user-images.githubusercontent.com/4677417/186189283-0831b9ab-d6b9-485d-8955-3057e532ab31.png)
 
-
 ## Features
 
-- ✅ **Full Markdown support**
-- ✅ **Responsive mobile-friendly design**
-- ✅ **Sidebar navigation**
-- ✅ **Search (powered by Algolia)**
-- ✅ **Automatic table of contents**
-- ✅ **Automatic list of contributors**
-- ✅ (and, best of all) **dark mode**
+-   ✅ **Full Markdown support**
+-   ✅ **Responsive mobile-friendly design**
+-   ✅ **Sidebar navigation**
+-   ✅ **Search (powered by Algolia)**
+-   ✅ **Automatic table of contents**
+-   ✅ **Automatic list of contributors**
+-   ✅ (and, best of all) **dark mode**
 
 ## Commands Cheatsheet
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
+| Command                 | Action                                           |
+| :---------------------- | :----------------------------------------------- |
 | `yarn install`          | Installs dependencies                            |
 | `yarn run dev`          | Starts local dev server at `localhost:3000`      |
 | `yarn run build`        | Build your production site to `./dist/`          |
@@ -82,15 +81,16 @@ The sidebar navigation is controlled by the `SIDEBAR` variable in your `src/conf
 
 ```ts
 export const SIDEBAR = [
-  { text: "Section Header", header: true },
-  { text: "Introduction", link: "COTL_API/introduction" },
-  { text: "Page 2", link: "COTL_API/page-2" },
-  { text: "Page 3", link: "COTL_API/page-3" },
+    { text: "Section Header", header: true },
+    { text: "Introduction", link: "COTL_API/introduction" },
+    { text: "Page 2", link: "COTL_API/page-2" },
+    { text: "Page 3", link: "COTL_API/page-3" },
 
-  { text: "Another Section", header: true },
-  { text: "Page 4", link: "COTL_API/page-4" },
+    { text: "Another Section", header: true },
+    { text: "Page 4", link: "COTL_API/page-4" }
 ];
 ```
+
 ### Search (Powered by Algolia)
 
 [Algolia](https://www.algolia.com/) offers a free service to qualified open source projects called [DocSearch](https://docsearch.algolia.com/). If you are accepted to the DocSearch program, provide your API Key & index name in `src/config.ts` and a search box will automatically appear in your site header.

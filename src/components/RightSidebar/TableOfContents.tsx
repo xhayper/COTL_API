@@ -1,11 +1,9 @@
-import type { FunctionalComponent } from "preact";
-import { h, Fragment } from "preact";
-import { useState, useEffect, useRef } from "preact/hooks";
-import { MarkdownHeading } from "astro";
+import { useState, useEffect, useRef, type FunctionComponent } from "react";
+import type { MarkdownHeading } from "astro";
 
-const TableOfContents: FunctionalComponent<{ headings: MarkdownHeading[] }> = ({ headings = [] }) => {
-    const itemOffsets = useRef([]);
-    const [activeId, setActiveId] = useState<string>(undefined);
+const TableOfContents: FunctionComponent<{ headings: MarkdownHeading[] }> = ({ headings = [] }) => {
+    const itemOffsets = useRef([] as any[]);
+    const [activeId] = useState<string>();
     useEffect(() => {
         const getItemOffsets = () => {
             const titles = document.querySelectorAll("article :is(h1, h2, h3, h4)");
@@ -25,16 +23,17 @@ const TableOfContents: FunctionalComponent<{ headings: MarkdownHeading[] }> = ({
 
     return (
         <>
-            <h2 class="heading">On this page</h2>
+            <h2 className="heading">On this page</h2>
             <ul>
-                <li class={`heading-link depth-2 ${activeId === "overview" ? "active" : ""}`.trim()}>
+                <li className={`heading-link depth-2 ${activeId === "overview" ? "active" : ""}`.trim()}>
                     <a href="#overview">Overview</a>
                 </li>
                 {headings
                     .filter(({ depth }) => depth > 1 && depth < 4)
                     .map((heading) => (
                         <li
-                            class={`heading-link depth-${heading.depth} ${
+                            key={`heading-${heading.text}`}
+                            className={`heading-link depth-${heading.depth} ${
                                 activeId === heading.slug ? "active" : ""
                             }`.trim()}
                         >

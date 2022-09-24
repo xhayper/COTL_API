@@ -1,11 +1,11 @@
 ---
-import HeadCommon from "../components/HeadCommon.astro";
-import HeadSEO from "../components/HeadSEO.astro";
-import Header from "../components/Header/Header.astro";
+import RightSidebar from "../components/RightSidebar/RightSidebar.astro";
 import PageContent from "../components/PageContent/PageContent.astro";
 import LeftSidebar from "../components/LeftSidebar/LeftSidebar.astro";
-import RightSidebar from "../components/RightSidebar/RightSidebar.astro";
+import HeadCommon from "../components/HeadCommon.astro";
 import Footer from "../components/Footer/Footer.astro";
+import Header from "../components/Header/Header.astro";
+import HeadSEO from "../components/HeadSEO.astro";
 import * as CONFIG from "../config";
 
 const { frontmatter = {}, headings } = Astro.props;
@@ -110,16 +110,16 @@ const githubEditUrl = CONFIG.GITHUB_EDIT_URL && CONFIG.GITHUB_EDIT_URL + current
         <Header />
         <main class="layout">
             <aside id="grid-left" class="grid-sidebar" title="Site Navigation">
-                <LeftSidebar {currentPage} />
+                <LeftSidebar currentPage={currentPage} />
             </aside>
             <div id="grid-main">
-                <PageContent {frontmatter} {headings} {githubEditUrl}>
+                <PageContent {frontmatter} {headings} githubEditUrl={githubEditUrl}>
                     <slot />
+                    <Footer path={currentFile} />
                 </PageContent>
-                <Footer path={currentFile} />
             </div>
             <aside id="grid-right" class="grid-sidebar" title="Table of Contents">
-                <RightSidebar {headings} {githubEditUrl} />
+                <RightSidebar {headings} githubEditUrl={githubEditUrl} />
             </aside>
         </main>
     </body>
