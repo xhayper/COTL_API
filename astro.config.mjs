@@ -1,16 +1,12 @@
 import { defineConfig } from "astro/config";
+import partytown from "@astrojs/partytown";
 import sitemap from "@astrojs/sitemap";
 import preact from "@astrojs/preact";
 import react from "@astrojs/react";
-import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [preact(), react(), sitemap(), partytown({
-    config: {
-      debug: true
-    }
-  })],
+  integrations: [preact(), react(), sitemap(), partytown()],
   vite: {
     build: {
       sourcemap: true
