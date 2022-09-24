@@ -13,20 +13,20 @@
   "devDependencies": {
     "@algolia/client-search": "^4.14.2",
     "@astrojs/preact": "^1.1.0",
-    "@astrojs/react": "^1.1.2",
+    "@astrojs/react": "^1.1.4",
     "@astrojs/sitemap": "^1.0.0",
     "@docsearch/css": "^3.2.1",
     "@docsearch/react": "^3.2.1",
     "@types/prettier": "^2",
-    "@types/react": "^18.0.18",
-    "astro": "^1.2.1",
+    "@types/react": "^18.0.21",
+    "astro": "^1.3.0",
     "husky": "^8.0.1",
-    "preact": "^10.10.6",
+    "preact": "^10.11.0",
     "prettier": "^2.7.1",
     "pretty-quick": "^3.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.54.9"
+    "sass": "^1.55.0"
   },
   "packageManager": "yarn@3.2.3"
 }
