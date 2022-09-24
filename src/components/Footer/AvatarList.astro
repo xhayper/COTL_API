@@ -63,7 +63,7 @@ function removeDups(arr) {
 
 const data = await getCommits(url);
 const unique = removeDups(data);
-const recentContributors = unique.slice(0, 3); // only show avatars for the 3 most recent contributors
+const recentContributors = unique.slice(0, 10); // only show avatars for the 10 most recent contributors
 const additionalContributors = unique.length - recentContributors.length; // list the rest of them as # of extra contributors
 ---
 
@@ -102,7 +102,7 @@ const additionalContributors = unique.length - recentContributors.length; // lis
 <style>
     .avatar-list {
         --avatar-size: 2.5rem;
-        --avatar-count: 3;
+        --avatar-count: 10;
 
         display: grid;
         list-style: none;
