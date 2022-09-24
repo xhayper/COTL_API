@@ -6,7 +6,16 @@ import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [preact(), react(), sitemap(), partytown()],
+  integrations: [preact(), react(), sitemap(), partytown({
+    config: {
+      debug: true
+    }
+  })],
+  vite: {
+    build: {
+      sourcemap: true
+    }
+  },
   site: "https://xhayper.github.io",
   base: "/COTL_API"
 });
