@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <AssemblyVersion>0.1.2</AssemblyVersion>
-        <ReleaseVersion>0.1.2</ReleaseVersion>
+        <AssemblyVersion>0.1.3</AssemblyVersion>
+        <ReleaseVersion>0.1.3</ReleaseVersion>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-<!--        no need for mdb conversion with portable if using unity 2018+-->
         <DebugType>portable</DebugType>
 
         <OutputPath Condition=" '$(SolutionDir)' != '' ">$(SolutionDir)bin\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
@@ -13,7 +12,6 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
-<!--    intellisense documentation-->
     <PropertyGroup>
         <DocumentationFile>$(ProjectDir)bin\$(Configuration)\$(MSBuildProjectName)\$(MSBuildProjectName).xml</DocumentationFile>
     </PropertyGroup>
