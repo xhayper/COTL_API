@@ -42,5 +42,6 @@ export const SIDEBAR: { text: string; header?: boolean; link?: string }[] = [
     { text: "Features", header: true },
     { text: "Items", link: "COTL_API/items" },
     { text: "Follower Commands", link: "COTL_API/follower-commands" },
+    { text: "Objectives", link: "COTL_API/objectives" },
     { text: "Save File Data", link: "COTL_API/save-data" }
 ];
