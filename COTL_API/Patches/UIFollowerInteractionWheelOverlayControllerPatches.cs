@@ -17,7 +17,7 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
         public static bool Prefix(ref UIFollowerWheelInteractionItem item, ref bool __state)
         {
             if (item.CommandItem is CustomFollowerCommand.CustomFollowerCommand &&
-                item.CommandItem.SubCommands.Count > 0)
+                item.CommandItem.SubCommands is { Count: > 0 })
 
             {
                 if (Plugin.Debug) Plugin.Logger.LogDebug($"Custom command with sub commands, not letting normal method run.");
