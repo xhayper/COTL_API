@@ -22,8 +22,12 @@ internal class ExampleItem : CustomInventoryItem
     public override string InternalName => "Example_Item";
     public override string LocalizedName() { return "Example Item"; }
     public override string LocalizedDescription() { return "This is an example item"; }
-
+    
+    //used for inventory icons
     public override Sprite InventoryIcon => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_item.png"));
+    
+    //used for spawning object in the world
+    public override Sprite Sprite => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_item.png"));
 }
 ```
 
@@ -32,6 +36,7 @@ internal class ExampleItem : CustomInventoryItem
 |-|-|-|
 | string | InternalName | \[REQUIRED\] |
 | Sprite | InventoryIcon | TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png")) |
+| Sprite | Sprite | TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png")) |
 | InventoryItem.ITEM_CATEGORIES | ItemCategory | InventoryItem.ITEM_CATEGORIES.NONE |
 | InventoryItem.ITEM_TYPE | SeedType | InventoryItem.ITEM_TYPE.NONE; |
 | string | LocalizedName() | LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}") |
@@ -50,6 +55,20 @@ internal class ExampleItem : CustomInventoryItem
 | string | GiftTitle(Follower follower) | $"{Name()} ({Inventory.GetItemQuantity(ItemType)})"
 | FollowerCommands | GiftCommand | FollowerCommands.None
 | void | OnGiftTo(Follower follower, System.Action onFinish) | onFinish()
+| CustomItemManager.ItemRarity | Rarity | CustomItemManager.ItemRarity.COMMON
+| Vector3 | LocalScale | new(0.5f, 0.5f, 0.5f)
+| bool | AddItemToOfferingShrine | false;
+| InventoryItem.ITEM_TYPE | ItemPickUpToImitate | InventoryItem.ITEM_TYPE.LOG
+| bool | AddItemToDungeonChests | false
+| int | DungeonChestSpawnChance | 100
+| int | DungeonChestMinAmount | 1
+| int | DungeonChestMaxAmount | 1
+
+## Helpers
+| Type | Name | Purpose
+|-|-|-|
+| bool | CustomItemManager.DropLoot(CustomInventoryItem customInventoryItem) | Used to determine if a custom item should drop or not based on the items chance configuration.
+
 
 ## Adding Items
 
@@ -58,11 +77,30 @@ Example:
 
 ```csharp
 using COTL_API.CustomInventory;
+public static InventoryItem.ITEM_TYPE ExampleItem { get; private set; }
 ```
 
 ```csharp
-CustomItemManager.Add(new ExampleItem());
+private void Awake()
+{
+    ExampleItem = CustomItemManager.Add(new ExampleItem());
+}
 ```
+
+Assigning the result of `CustomItemManager.Add()` allows you to reference that item elsewhere in your code using `Plugin.ExampleItem`. Example usage below.
+
+## Spawning Items
+
+To spawn an item into the world, add the neccessary overrides (see table above) and simply use `InventoryItem.Spawn(Plugin.ExampleItem, 5, Position);`.
+The properties the item will take on (such as bounce, speed etc) are determined by `ItemPickUpToImitate`.
+The sprite that is used for spawning is the same as the inventory icon.
+
+Items can be added to dungeon chests. You can control the chance to spawn, and the minimum/maximum amount to spawn.
+There is a helper method to aid in determining chance, simply call `CustomItemManager.DropLoot(Plugin.ExampleItem);` which returns
+a boolean true/false.
+Keep in mind the chance is affected by the players current LuckModifier.
+
+Items can be added to offering shrines. The shrines have two pools, COMMON and RARE. The default for custom items is COMMON.
 
 ## Final Steps
 
