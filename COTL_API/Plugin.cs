@@ -23,7 +23,7 @@ public class Plugin : BaseUnityPlugin
 {
     public const string PLUGIN_GUID = "io.github.xhayper.COTL_API";
     public const string PLUGIN_NAME = "COTL API";
-    public const string PLUGIN_VERSION = "0.1.4";
+    public const string PLUGIN_VERSION = "0.1.5";
 
     internal readonly static Harmony Harmony = new(PLUGIN_GUID);
     internal static new ManualLogSource Logger;
@@ -44,6 +44,7 @@ public class Plugin : BaseUnityPlugin
     internal static (Objectives.CustomQuestTypes ObjectivesKey, ObjectivesData ObjectiveData) DebugObjective3;
 
     private static ConfigEntry<bool> _debug;
+    private static bool _questCleanDone; //flag to prevent multiple calls to clean up quests
     internal static bool Debug => _debug.Value;
 
 
@@ -107,5 +108,22 @@ public class Plugin : BaseUnityPlugin
     {
         Harmony.UnpatchSelf();
         Logger.LogInfo("COTL API unloaded");
+    }
+
+    /// <summary>
+    /// Cleans the users QuestHistory indexes to prevent issues when they remove/disable mods that add custom quests.
+    /// The index stored inside the QuestHistoryData is based on the static Quests.QuestAll list count, which gets changed when we add/remove quests.
+    /// This fix stops Index out of bound errors when accepting a new quest, and keeps the users history intact.
+    /// </summary>
+    private void Update()
+    {
+        if (_questCleanDone) return;
+        if (DataManager.Instance == null) return;
+        foreach (DataManager.QuestHistoryData quest in DataManager.Instance.CompletedQuestsHistorys.Where(a => a.QuestIndex >= Quests.QuestsAll.Count))
+        {
+            if(Debug) Logger.LogDebug("Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
+            quest.QuestIndex = Quests.QuestsAll.Count - 1;
+        }
+        _questCleanDone = true;
     }
 }

@@ -23,14 +23,14 @@ public class CustomObjectivePatches
     [HarmonyPostfix]
     private static void GetConversationEntry(Follower.ComplaintType ComplaintForBark, ObjectivesData objective, ref List<ConversationEntry> __result)
     {
-        CustomObjective customObjective = CustomObjectiveManager.CustomObjectives.Values.FirstOrDefault(x => x.ObjectiveData.ID == objective.ID);
+        CustomObjective customObjective = CustomObjectiveManager.CustomObjectives.Values.FirstOrDefault(x => x != null && x.ObjectiveData.ID == objective.ID);
         if (customObjective == null)
         {
-            Plugin.Logger.LogWarning($"No matching quest found for {objective.ID}!");
+            if(Plugin.Debug) Plugin.Logger.LogDebug($"No matching quest found for {objective.ID}!");
             return;
         }
 
-        Plugin.Logger.LogWarning($"Matching quest found for {objective.ID}! ListCount: {__result.Count}");
+        if(Plugin.Debug) Plugin.Logger.LogDebug($"Matching quest found for {objective.ID}! ListCount: {__result.Count}");
         __result[0].TermToSpeak = customObjective.InitialQuestText;
     }
 }

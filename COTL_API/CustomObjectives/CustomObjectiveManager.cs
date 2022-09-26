@@ -52,7 +52,7 @@ public static class CustomObjectiveManager
     /// </summary>
     private static void AddQuests()
     {
-        foreach (KeyValuePair<Objectives.CustomQuestTypes, CustomObjective> quest in CustomObjectives.Where(quest => !Quests.QuestsAll.Contains(quest.Value.ObjectiveData)))
+        foreach (KeyValuePair<Objectives.CustomQuestTypes, CustomObjective> quest in CustomObjectives)
         {
             Quests.QuestsAll.Add(quest.Value.ObjectiveData);
 
