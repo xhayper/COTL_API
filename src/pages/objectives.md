@@ -49,8 +49,9 @@ private void Awake()
 {
     ExampleObjective = CustomObjectiveManager.Add(new ExampleObjective());
     
-    //if you need to change something post adding, use:
+    //if you need to reference something post adding, use:
     ExampleObjective.ObjectiveData.<method/field>
+    //note you can't make modifications at this stage
 }
 ```
 
