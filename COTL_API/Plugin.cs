@@ -34,14 +34,8 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DebugItem2;
     internal static InventoryItem.ITEM_TYPE DebugItem3;
     internal static InventoryItem.ITEM_TYPE DebugItem4;
+
     internal static FollowerCommands DebugGiftFollowerCommand;
-
-    internal static Objectives.CustomQuestTypes DebugQuestKey;
-    internal static ObjectivesData DebugQuestData;
-
-    internal static (Objectives.CustomQuestTypes ObjectivesKey, ObjectivesData ObjectiveData) DebugObjective1;
-    internal static (Objectives.CustomQuestTypes ObjectivesKey, ObjectivesData ObjectiveData) DebugObjective2;
-    internal static (Objectives.CustomQuestTypes ObjectivesKey, ObjectivesData ObjectiveData) DebugObjective3;
 
     private static ConfigEntry<bool> _debug;
     private static bool _questCleanDone; //flag to prevent multiple calls to clean up quests
@@ -90,11 +84,10 @@ public class Plugin : BaseUnityPlugin
 
         CustomSkinManager.AddCustomSkin("Test", customTex, atlasText);
 
-        //assignment not necessary unless the plugin would like easy access to the data afterwards
-        DebugObjective1 = CustomObjectiveManager.Add(new DebugObjective());
-        DebugObjective2 = CustomObjectiveManager.Add(new DebugObjective2());
-        DebugObjective3 = CustomObjectiveManager.Add(new DebugObjective3());
-        
+        CustomObjective test = CustomObjectiveManager.BedRest("Test");
+        test.InitialQuestText = "This is my custom quest text for this objective.";
+
+
         Logger.LogDebug("Debug mode enabled");
     }
 
