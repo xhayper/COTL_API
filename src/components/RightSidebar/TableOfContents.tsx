@@ -1,48 +1,56 @@
-import { useState, useEffect, useRef, type FunctionComponent } from "react";
-import type { MarkdownHeading } from "astro";
+import { useState, useEffect, useRef } from 'preact/hooks';
+import type { FunctionalComponent } from 'preact';
+import type { MarkdownHeading } from 'astro';
 
-const TableOfContents: FunctionComponent<{ headings: MarkdownHeading[] }> = ({ headings = [] }) => {
-    const itemOffsets = useRef([] as any[]);
-    const [activeId] = useState<string>();
-    useEffect(() => {
-        const getItemOffsets = () => {
-            const titles = document.querySelectorAll("article :is(h1, h2, h3, h4)");
-            itemOffsets.current = Array.from(titles).map((title) => ({
-                id: title.id,
-                topOffset: title.getBoundingClientRect().top + window.scrollY
-            }));
-        };
+type ItemOffsets = {
+	id: string;
+	topOffset: number;
+};
 
-        getItemOffsets();
-        window.addEventListener("resize", getItemOffsets);
+const TableOfContents: FunctionalComponent<{ headings: MarkdownHeading[] }> = ({
+	headings = [],
+}) => {
+	const itemOffsets = useRef<ItemOffsets[]>([]);
+	// FIXME: Not sure what this state is doing. It was never set to anything truthy.
+	const [activeId] = useState<string>('');
+	useEffect(() => {
+		const getItemOffsets = () => {
+			const titles = document.querySelectorAll('article :is(h1, h2, h3, h4)');
+			itemOffsets.current = Array.from(titles).map((title) => ({
+				id: title.id,
+				topOffset: title.getBoundingClientRect().top + window.scrollY,
+			}));
+		};
 
-        return () => {
-            window.removeEventListener("resize", getItemOffsets);
-        };
-    }, []);
+		getItemOffsets();
+		window.addEventListener('resize', getItemOffsets);
 
-    return (
-        <>
-            <h2 className="heading">On this page</h2>
-            <ul>
-                <li className={`heading-link depth-2 ${activeId === "overview" ? "active" : ""}`.trim()}>
-                    <a href="#overview">Overview</a>
-                </li>
-                {headings
-                    .filter(({ depth }) => depth > 1 && depth < 4)
-                    .map((heading) => (
-                        <li
-                            key={`heading-${heading.text}`}
-                            className={`heading-link depth-${heading.depth} ${
-                                activeId === heading.slug ? "active" : ""
-                            }`.trim()}
-                        >
-                            <a href={`#${heading.slug}`}>{heading.text}</a>
-                        </li>
-                    ))}
-            </ul>
-        </>
-    );
+		return () => {
+			window.removeEventListener('resize', getItemOffsets);
+		};
+	}, []);
+
+	return (
+		<>
+			<h2 className="heading">On this page</h2>
+			<ul>
+				<li className={`heading-link depth-2 ${activeId === 'overview' ? 'active' : ''}`.trim()}>
+					<a href="#overview">Overview</a>
+				</li>
+				{headings
+					.filter(({ depth }) => depth > 1 && depth < 4)
+					.map((heading) => (
+						<li
+							className={`heading-link depth-${heading.depth} ${
+								activeId === heading.slug ? 'active' : ''
+							}`.trim()}
+						>
+							<a href={`#${heading.slug}`}>{heading.text}</a>
+						</li>
+					))}
+			</ul>
+		</>
+	);
 };
 
 export default TableOfContents;

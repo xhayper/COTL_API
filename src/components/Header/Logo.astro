@@ -1,7 +1,10 @@
 ---
 import { Image } from "@astrojs/image/components";
 
-const { size } = Astro.props;
+type Props = {
+    size: number;
+};
+const { size } = Astro.props as Props;
 ---
 
 <Image class="logo" src="/icon.svg" alt="Logo" width={size} height={size} quality={100} />

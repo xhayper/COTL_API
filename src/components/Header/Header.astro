@@ -93,14 +93,17 @@ import Search from "./Search";
             position: static;
             padding: 2rem 0rem;
         }
+
         .logo {
             width: auto;
             margin: 0;
             z-index: 0;
         }
+
         .logo h1 {
             display: initial;
         }
+
         .menu-toggle {
             display: none;
         }
@@ -121,12 +124,16 @@ import Search from "./Search";
         display: flex;
         max-width: 200px;
     }
-    :global(.search-item > *) {
-        flex-grow: 1;
-    }
+
     @media (min-width: 50em) {
         .search-item {
             max-width: 400px;
         }
+    }
+</style>
+
+<style is:global>
+    .search-item > * {
+        flex-grow: 1;
     }
 </style>

@@ -4,6 +4,7 @@ import partytown from "@astrojs/partytown";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
+import preact from "@astrojs/preact";
 import react from "@astrojs/react";
 import image from "@astrojs/image";
 
@@ -12,6 +13,9 @@ export default defineConfig({
     output: "server",
     adapter: vercel(),
     integrations: [
+        // Enable Preact to support Preact JSX components.
+        preact(),
+        // Enable React for the Algolia search component.
         react(),
         sitemap({
             customPages: [
