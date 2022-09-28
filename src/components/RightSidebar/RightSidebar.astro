@@ -1,13 +1,18 @@
 ---
 import TableOfContents from "./TableOfContents";
+import type { MarkdownHeading } from "astro";
 import MoreMenu from "./MoreMenu.astro";
 
-const { headings, githubEditUrl } = Astro.props;
+type Props = {
+    headings: MarkdownHeading[];
+    githubEditUrl: string;
+};
+const { headings, githubEditUrl } = Astro.props as Props;
 ---
 
 <nav class="sidebar-nav" aria-labelledby="grid-right">
     <div class="sidebar-nav-inner">
-        <TableOfContents client:media="(min-width: 50em)" {headings} />
+        <TableOfContents client:media="(min-width: 50em)" headings={headings} />
         <MoreMenu editHref={githubEditUrl} />
     </div>
 </nav>

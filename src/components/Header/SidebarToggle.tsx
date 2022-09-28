@@ -1,16 +1,15 @@
-import { useState, useEffect, type FunctionComponent } from "react";
+import { useState, useEffect } from "preact/hooks";
+import type { FunctionalComponent } from "preact";
 
-const MenuToggle: FunctionComponent = () => {
+const MenuToggle: FunctionalComponent = () => {
     const [sidebarShown, setSidebarShown] = useState(false);
 
     useEffect(() => {
-        const body = document.getElementsByTagName("body")[0];
-        if (body) {
-            if (sidebarShown) {
-                body.classList.add("mobile-sidebar-toggle");
-            } else {
-                body.classList.remove("mobile-sidebar-toggle");
-            }
+        const body = document.querySelector("body")!;
+        if (sidebarShown) {
+            body.classList.add("mobile-sidebar-toggle");
+        } else {
+            body.classList.remove("mobile-sidebar-toggle");
         }
     }, [sidebarShown]);
 
@@ -29,7 +28,7 @@ const MenuToggle: FunctionComponent = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
             >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
             <span className="sr-only">Toggle sidebar</span>
         </button>

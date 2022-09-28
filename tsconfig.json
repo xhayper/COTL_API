@@ -1,8 +1,7 @@
 {
-    "extends": "astro/tsconfigs/strictest",
-    "compilerOptions": {
-        "jsx": "react-jsx",
-        "skipLibCheck": true,
-        "types": ["@astrojs/image/client"]
-    }
+  "extends": "astro/tsconfigs/strictest",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "skipLibCheck": true
+  }
 }

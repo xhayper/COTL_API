@@ -1,17 +1,25 @@
 ---
 import { Image } from "@astrojs/image/components";
 
-const BRANCH = "docs";
-const PER_PAGE = 100;
-
 // fetch all commits for just this page's path
-const path = Astro.props.path;
-const url = `https://api.github.com/repos/xhayper/COTL_API/commits?path=${path}&sha=${BRANCH}&per_page=${PER_PAGE}`;
-const commitsURL = `https://github.com/xhayper/COTL_API/commits/${BRANCH}/${path}`;
+type Props = {
+    path: string;
+};
+const { path } = Astro.props as Props;
 
-async function getCommits(url: string, page = 1) {
+const url = `https://github.com/xhayper/COTL_API/commits?path=${path}&sha=docs`;
+const commitsURL = `https://github.com/xhayper/COTL_API/commits/docs/${path}`;
+
+type Commit = {
+    author: {
+        id: string;
+        login: string;
+    };
+};
+
+async function getCommits(url: string) {
     try {
-        const token = import.meta.env.SNOWPACK_PUBLIC_GITHUB_TOKEN;
+        const token = import.meta.env.SNOWPACK_PUBLIC_GITHUB_TOKEN ?? "hello";
         if (!token) {
             throw new Error('Cannot find "SNOWPACK_PUBLIC_GITHUB_TOKEN" used for escaping rate-limiting.');
         }
@@ -35,77 +43,68 @@ async function getCommits(url: string, page = 1) {
             );
         }
 
-        if (data.length === PER_PAGE) {
-            const rest = await getCommits(url, page + 1);
-            data.push(...rest);
-        }
-
-        return data;
-    } catch (e: Error) {
-        console.warn(`[error]  /src/components/AvatarList.astro 
-    ${e?.message ?? e}`);
-        return new Array();
+        return data as Commit[];
+    } catch (e) {
+        console.warn(`[error] /src/components/AvatarList.astro 
+    ${(e as any)?.message ?? e}`);
+        return [] as Commit[];
     }
 }
 
-function removeDups(arr: any[]) {
-    if (!arr) {
-        return new Array();
-    }
-    let map = new Map();
+function removeDups(arr: Commit[]) {
+    const map = new Map<string, Commit["author"]>();
 
     for (let item of arr) {
-        let author = item.author;
+        const author = item.author;
         // Deduplicate based on author.id
         map.set(author.id, { login: author.login, id: author.id });
     }
 
-    return Array.from(map.values());
+    return [...map.values()];
 }
 
 const data = await getCommits(url);
 const unique = removeDups(data);
-const recentContributors = unique.slice(0, 10); // only show avatars for the 10 most recent contributors
+const recentContributors = unique.slice(0, 3); // only show avatars for the 3 most recent contributors
 const additionalContributors = unique.length - recentContributors.length; // list the rest of them as # of extra contributors
 ---
 
 <!-- Thanks to @5t3ph for https://smolcss.dev/#smol-avatar-list! -->
 <div class="contributors">
+    <ul class="avatar-list" style={`--avatar-count: ${recentContributors.length}`}>
+        {
+            recentContributors.map((item) => (
+                <li>
+                    <a href={`https://github.com/${item.login}`}>
+                        <Image
+                            alt={`Contributor ${item.login}`}
+                            title={`Contributor ${item.login}`}
+                            width="64"
+                            height="64"
+                            quality="100"
+                            src={`https://avatars.githubusercontent.com/u/${item.id}`}
+                        />
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
     {
-        (unique.length > 0 || additionalContributors > 0) && (
-            <>
-                <ul class="avatar-list" style={`--avatar-count: ${recentContributors.length}`}>
-                    {recentContributors.map((item) => (
-                        <li>
-                            <a href={`https://github.com/${item.login}`}>
-                                <Image
-                                    alt={`Contributor ${item.login}`}
-                                    title={`Contributor ${item.login}`}
-                                    width="64"
-                                    height="64"
-                                    quality="100"
-                                    src={`https://avatars.githubusercontent.com/u/${item.id}`}
-                                />
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-                {additionalContributors > 0 && (
-                    <span>
-                        <a href={commitsURL}>{`and ${additionalContributors} additional contributor${
-                            additionalContributors > 1 ? "s" : ""
-                        }.`}</a>
-                    </span>
-                )}
-            </>
+        additionalContributors > 0 && (
+            <span>
+                <a href={commitsURL}>{`and ${additionalContributors} additional contributor${
+                    additionalContributors > 1 ? "s" : ""
+                }.`}</a>
+            </span>
         )
     }
+    {unique.length === 0 && <a href={commitsURL}>Contributors</a>}
 </div>
 
 <style>
     .avatar-list {
         --avatar-size: 2.5rem;
-        --avatar-count: 10;
+        --avatar-count: 3;
 
         display: grid;
         list-style: none;

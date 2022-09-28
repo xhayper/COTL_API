@@ -1,4 +1,5 @@
-import { useState, useEffect, type FunctionComponent } from "react";
+import type { FunctionalComponent } from "preact";
+import { useState, useEffect } from "preact/hooks";
 import "./ThemeToggleButton.scss";
 
 const themes = ["light", "dark"];
@@ -16,17 +17,19 @@ const icons = [
     </svg>
 ];
 
-const ThemeToggle: FunctionComponent = () => {
-    const [theme, setTheme] = useState("");
-
-    useEffect(() => {
-        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-            return setTheme(localStorage.getItem("theme")!);
+const ThemeToggle: FunctionalComponent = () => {
+    const [theme, setTheme] = useState(() => {
+        if (import.meta.env.SSR) {
+            return undefined;
+        }
+        if (typeof localStorage !== undefined && localStorage.getItem("theme")) {
+            return localStorage.getItem("theme");
         }
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            return setTheme("dark");
+            return "dark";
         }
-    }, []);
+        return "light";
+    });
 
     useEffect(() => {
         const root = document.documentElement;
@@ -43,15 +46,15 @@ const ThemeToggle: FunctionComponent = () => {
                 const icon = icons[i];
                 const checked = t === theme;
                 return (
-                    <label key={`theme-toggle-${t}`} className={checked ? "checked" : ""}>
+                    <label className={checked ? " checked" : ""}>
                         {icon}
                         <input
                             type="radio"
+                            name="theme-toggle"
                             checked={checked}
                             value={t}
                             title={`Use ${t} theme`}
                             aria-label={`Use ${t} theme`}
-                            className="theme-toggle"
                             onChange={() => {
                                 localStorage.setItem("theme", t);
                                 setTheme(t);
