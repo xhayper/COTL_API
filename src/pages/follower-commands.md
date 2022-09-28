@@ -1,6 +1,6 @@
 ---
 title: Follower Commands
-description: Follower Command Docs
+description: Documentation on how to add a custom follower command
 layout: ../layouts/MainLayout.astro
 ---
 

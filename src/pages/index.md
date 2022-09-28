@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: API Docs intro
+description: Introduction to Cult of the Lamb API
 layout: ../layouts/MainLayout.astro
 ---
 
