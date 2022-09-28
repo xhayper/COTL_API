@@ -1,5 +1,17 @@
-<script is:inline>
-    // Redirect your homepage to the first page of documentation.
-    // If you have a landing page, remove this script and add it here!
-    window.location.pathname = `/introduction`;
-</script>
+---
+import HeadCommon from "../components/HeadCommon.astro";
+import HeadSEO from "../components/HeadSEO.astro";
+import * as CONFIG from "../config";
+---
+
+<html dir={"ltr"} lang={CONFIG.SITE.defaultLanguage} class="initial">
+    <head>
+        <HeadCommon />
+        <HeadSEO frontmatter={{} as any} canonicalUrl={new URL(Astro.url.pathname, Astro.site)} />
+        <script is:inline>
+            // Redirect your homepage to the first page of documentation.
+            // If you have a landing page, remove this script and add it here!
+            window.location.pathname = `/introduction`;
+        </script>
+    </head>
+</html>
