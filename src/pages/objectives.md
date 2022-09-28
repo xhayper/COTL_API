@@ -48,7 +48,7 @@ public static (Objectives.CustomQuestTypes ObjectiveKey, ObjectivesData Objectiv
 private void Awake()
 {
     ExampleObjective = CustomObjectiveManager.Add(new ExampleObjective());
-    
+
     //if you need to change something post adding, use:
     ExampleObjective.ObjectiveData.<method/field>
 }
@@ -57,6 +57,7 @@ private void Awake()
 `CustomObjectiveManager.Add()` returns a tuple containing the assigned `ObjectiveKey` and `ObjectiveData` allowing easy access to the information elsewhere in the plugin.
 
 Example:
+
 ```csharp
 private void SomeMethod()
 {
