@@ -8,7 +8,9 @@
         "build": "astro check && tsc --noEmit && astro build",
         "preview": "astro preview",
         "astro": "astro",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "format": "prettier --write 'src/**/*'",
+        "lint": "prettier --check 'src/**/*'"
     },
     "devDependencies": {
         "@algolia/client-search": "^4.14.2",

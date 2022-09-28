@@ -22,10 +22,10 @@ internal class ExampleItem : CustomInventoryItem
     public override string InternalName => "Example_Item";
     public override string LocalizedName() { return "Example Item"; }
     public override string LocalizedDescription() { return "This is an example item"; }
-    
+
     //used for inventory icons
     public override Sprite InventoryIcon => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_item.png"));
-    
+
     //used for spawning object in the world
     public override Sprite Sprite => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_item.png"));
 }
@@ -65,10 +65,10 @@ internal class ExampleItem : CustomInventoryItem
 | int | DungeonChestMaxAmount | 1
 
 ## Helpers
-| Type | Name | Purpose
-|-|-|-|
-| bool | CustomItemManager.DropLoot(CustomInventoryItem customInventoryItem) | Used to determine if a custom item should drop or not based on the items chance configuration.
 
+| Type | Name                                                                | Purpose                                                                                        |
+| ---- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| bool | CustomItemManager.DropLoot(CustomInventoryItem customInventoryItem) | Used to determine if a custom item should drop or not based on the items chance configuration. |
 
 ## Adding Items
 
