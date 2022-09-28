@@ -5,9 +5,9 @@ import { Image } from "@astrojs/image/components";
 type Props = {
     path: string;
 };
-const { path } = Astro.props as Props;
+let { path } = Astro.props as Props;
 
-const url = `https://github.com/xhayper/COTL_API/commits?path=${path}&sha=docs`;
+const url = `https://api.github.com/repos/xhayper/COTL_API/commits?path=${path}&sha=docs&per_page=100`;
 const commitsURL = `https://github.com/xhayper/COTL_API/commits/docs/${path}`;
 
 type Commit = {
@@ -17,16 +17,17 @@ type Commit = {
     };
 };
 
-async function getCommits(url: string) {
+async function getCommits(url: string, page: number = 1) {
     try {
-        const token = import.meta.env.SNOWPACK_PUBLIC_GITHUB_TOKEN ?? "hello";
-        if (!token) {
-            throw new Error('Cannot find "SNOWPACK_PUBLIC_GITHUB_TOKEN" used for escaping rate-limiting.');
-        }
+        const token = import.meta.env.SNOWPACK_PUBLIC_GITHUB_TOKEN;
+        if (!token)
+            console.warn(
+                '[warn] /src/components/AvatarList.astro\n    Cannot find "SNOWPACK_PUBLIC_GITHUB_TOKEN" used for escaping rate-limiting.'
+            );
 
-        const auth = `Basic ${Buffer.from(token, "binary").toString("base64")}`;
+        const auth = token ? `Basic ${Buffer.from(token, "binary").toString("base64")}` : "";
 
-        const res = await fetch(url, {
+        const res = await fetch(`${url}&page=${page}`, {
             method: "GET",
             headers: {
                 Authorization: auth,
@@ -42,6 +43,8 @@ async function getCommits(url: string) {
        Message: ${data.message}`
             );
         }
+
+        if (data.length === 100) data.concat(await getCommits(url, page + 1));
 
         return data as Commit[];
     } catch (e) {
@@ -65,7 +68,7 @@ function removeDups(arr: Commit[]) {
 
 const data = await getCommits(url);
 const unique = removeDups(data);
-const recentContributors = unique.slice(0, 3); // only show avatars for the 3 most recent contributors
+const recentContributors = unique.slice(0, 25); // only show avatars for the 25 most recent contributors
 const additionalContributors = unique.length - recentContributors.length; // list the rest of them as # of extra contributors
 ---
 
@@ -104,7 +107,7 @@ const additionalContributors = unique.length - recentContributors.length; // lis
 <style>
     .avatar-list {
         --avatar-size: 2.5rem;
-        --avatar-count: 3;
+        --avatar-count: 25;
 
         display: grid;
         list-style: none;

@@ -31,3 +31,5 @@ pnpm-debug.log*
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.vercel
