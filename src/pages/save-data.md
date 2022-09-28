@@ -1,6 +1,6 @@
 ---
 title: Save Data
-description: Lorem ipsum dolor sit amet
+description: Documentation on how to safely save your modded save data
 layout: ../layouts/MainLayout.astro
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Objectives
-description: Objectives Docs
+description: Documentation on how to add a custom objective
 layout: ../layouts/MainLayout.astro
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Items
-description: Items Docs
+description: Documentation on how to add a custom item
 layout: ../layouts/MainLayout.astro
 ---
 
