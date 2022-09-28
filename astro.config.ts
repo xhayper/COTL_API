@@ -11,7 +11,9 @@ import image from "@astrojs/image";
 export default defineConfig({
     output: "server",
     adapter: vercel(),
-    integrations: [react(), sitemap(), partytown({}), image(), robotsTxt()],
+    integrations: [react(), sitemap(), partytown({}), image({
+        serviceEntryPoint: '@astrojs/image/sharp'
+    }), robotsTxt()],
     vite: {
         build: {
             sourcemap: true
