@@ -1,3 +1,5 @@
+using COTL_API.Saves;
+using MonoMod.Utils;
 using System.Collections.Generic;
 
 namespace COTL_API.CustomObjectives;
@@ -12,12 +14,53 @@ public static class CustomObjectiveManager
     /// </summary>
     private const string GroupId = "Objectives/GroupTitles/Quest";
 
+    private const string DataPath = "cotl_api_custom_quest_data.json";
+    private static readonly COTLDataReadWriter<Dictionary<int, CustomObjective>> CustomQuestDataReadWriter = new();
+
+    static CustomObjectiveManager()
+    {
+        ModdedSaveManager.OnLoadComplete += LoadData;
+        ModdedSaveManager.OnSaveComplete += SaveData;
+    }
+
+    private static void LoadData()
+    {
+        CustomQuestDataReadWriter.OnReadCompleted += delegate(Dictionary<int, CustomObjective> objectives)
+        {
+            PluginQuestTracker.AddRange(objectives);
+            Plugin.Logger.LogWarning($"Previous session custom quests loaded! Count: {PluginQuestTracker.Count}");
+        };
+
+        CustomQuestDataReadWriter.OnReadError += delegate
+        {
+            Plugin.Logger.LogWarning("Previous session custom quests failed to load!");
+        };
+
+        CustomQuestDataReadWriter.Read(DataPath);
+    }
+
+
+    private static void SaveData()
+    {
+        CustomQuestDataReadWriter.OnWriteCompleted += delegate
+        {
+            Plugin.Logger.LogWarning($"Backed up {PluginQuestTracker.Count} custom QuestID's!");
+        };
+
+        CustomQuestDataReadWriter.OnWriteError += delegate(MMReadWriteError error)
+        {
+            Plugin.Logger.LogWarning($"There was an issue backing up current QuestID's!: {error.Message}");
+        };
+
+        CustomQuestDataReadWriter.Write(PluginQuestTracker, DataPath, true, false);
+    }
     private static string DefaultQuestText => "I didn't set a custom quest text for this objective!";
 
     /// <summary>
     /// Holds the list of instantiated custom objectives.
     /// </summary>
     internal static Dictionary<int, CustomObjective> PluginQuestTracker { get; } = new();
+
 
     ///  <param name="followerName">The name of the follower.</param>
     ///  <returns>The original instance of the objective if it exists, otherwise returns a new instance.</returns>

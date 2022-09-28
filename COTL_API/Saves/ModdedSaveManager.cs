@@ -10,6 +10,9 @@ public static partial class ModdedSaveManager
 
     public static bool Loaded;
     public static ModdedSaveData Data;
+    
+    internal static System.Action OnSaveComplete;
+    internal static System.Action OnLoadComplete;
 
     static ModdedSaveManager()
     {
@@ -17,12 +20,21 @@ public static partial class ModdedSaveManager
         {
             Data = data;
             Loaded = true;
+            OnLoadComplete?.Invoke();
         };
 
         _readWriter.OnCreateDefault += delegate
         {
             Data = new ModdedSaveData();
             Loaded = true;
+            
+            OnLoadComplete?.Invoke();
+            OnSaveComplete?.Invoke();    
+        };
+        
+        _readWriter.OnWriteCompleted += delegate
+        {
+            OnSaveComplete?.Invoke();
         };
     }
 

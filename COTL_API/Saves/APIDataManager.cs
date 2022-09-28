@@ -1,7 +1,4 @@
-using COTL_API.CustomObjectives;
 using HarmonyLib;
-using MonoMod.Utils;
-using System.Collections.Generic;
 
 namespace COTL_API.Saves;
 
@@ -14,18 +11,29 @@ internal static class APIDataManager
 
     internal static APIData APIData;
 
+    internal static System.Action OnSaveComplete;
+    internal static System.Action OnLoadComplete;
+
     static APIDataManager()
     {
-        DataReadWriter.OnReadCompleted += delegate(APIData data)
+        DataReadWriter.OnReadCompleted += delegate (APIData data)
         {
             APIData = data;
-            Dictionary<int, CustomObjective> savedObjectives = data.GetValue<Dictionary<int, CustomObjective>>("QuestID");
-            if (savedObjectives != null) CustomObjectiveManager.PluginQuestTracker.AddRange(savedObjectives);
+
+            OnLoadComplete?.Invoke();
         };
 
         DataReadWriter.OnCreateDefault += delegate
         {
             APIData = new APIData();
+
+            OnLoadComplete?.Invoke();
+            OnSaveComplete?.Invoke();
+        };
+
+        DataReadWriter.OnWriteCompleted += delegate
+        {
+            OnSaveComplete?.Invoke();
         };
 
         Load();
@@ -35,10 +43,11 @@ internal static class APIDataManager
     [HarmonyPostfix]
     internal static void Save()
     {
-        if (CustomObjectiveManager.PluginQuestTracker.Count > 0) APIData.SetValue("QuestID", CustomObjectiveManager.PluginQuestTracker);
         DataReadWriter.Write(APIData, DataPath);
     }
 
+    [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Save))]
+    [HarmonyPostfix]
     internal static void Load()
     {
         DataReadWriter.Read(DataPath);

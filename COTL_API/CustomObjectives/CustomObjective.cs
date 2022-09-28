@@ -1,4 +1,7 @@
+using System.Runtime.Serialization;
+
 namespace COTL_API.CustomObjectives;
+
 
 public class CustomObjective
 {
