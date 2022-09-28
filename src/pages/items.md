@@ -1,6 +1,6 @@
 ---
 title: Items
-description: Documentation on how to add a custom item
+description: Documentation on how to add a custom item using Cult of the Lamb API
 layout: ../layouts/MainLayout.astro
 ---
 
