@@ -11,9 +11,23 @@ import image from "@astrojs/image";
 export default defineConfig({
     output: "server",
     adapter: vercel(),
-    integrations: [react(), sitemap(), partytown({}), image({
-        serviceEntryPoint: '@astrojs/image/sharp'
-    }), robotsTxt()],
+    integrations: [
+        react(),
+        sitemap({
+            customPages: [
+                "https://cotl-api.vercel.app/follower-commands",
+                "https://cotl-api.vercel.app/getting-started",
+                "https://cotl-api.vercel.app/items",
+                "https://cotl-api.vercel.app/objectives",
+                "https://cotl-api.vercel.app/save-data"
+            ]
+        }),
+        partytown({}),
+        image({
+            serviceEntryPoint: "@astrojs/image/sharp"
+        }),
+        robotsTxt()
+    ],
     vite: {
         build: {
             sourcemap: true
