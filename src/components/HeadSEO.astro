@@ -22,15 +22,15 @@ const imageAlt = frontmatter.image?.alt ?? OPEN_GRAPH.image.alt;
     nofollow={false}
     openGraph={{
         basic: {
-            title: SITE.title,
+            title: formattedContentTitle,
             type: "article",
             image: canonicalImageSrc.toString(),
             url: canonicalUrl.toString()
         },
         optional: {
-            description: SITE.description,
-            locale: "en-us",
-            siteName: SITE.title
+            description: frontmatter.description ? frontmatter.description : SITE.description,
+            locale: SITE.defaultLanguage,
+            siteName: formattedContentTitle
         },
         image: {
             url: canonicalImageSrc.toString(),
@@ -47,10 +47,10 @@ const imageAlt = frontmatter.image?.alt ?? OPEN_GRAPH.image.alt;
     }}
     extend={{
         meta: [
-            { name: "twitter:title", content: SITE.title },
+            { name: "twitter:title", content: formattedContentTitle },
             {
                 name: "twitter:description",
-                content: SITE.description
+                content: frontmatter.description ? frontmatter.description : SITE.description
             },
             {
                 name: "twitter:image",
