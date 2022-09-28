@@ -15,7 +15,7 @@ const imageAlt = frontmatter.image?.alt ?? OPEN_GRAPH.image.alt;
 ---
 
 <SEO
-    title={SITE.title}
+    title={formattedContentTitle}
     description={frontmatter.description ? frontmatter.description : SITE.description}
     canonical={canonicalUrl.toString()}
     noindex={false}
@@ -30,7 +30,7 @@ const imageAlt = frontmatter.image?.alt ?? OPEN_GRAPH.image.alt;
         optional: {
             description: frontmatter.description ? frontmatter.description : SITE.description,
             locale: SITE.defaultLanguage,
-            siteName: formattedContentTitle
+            siteName: SITE.title
         },
         image: {
             url: canonicalImageSrc.toString(),
