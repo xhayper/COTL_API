@@ -6,7 +6,7 @@ export const SITE = {
 export const SEO = {
     opengraph: {
         image: {
-            src: "https://xhayper.github.io/COTL_API/banner.png",
+            src: "https://cotl-api.vercel.app/banner.png",
             alt: "Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)",
             width: 3840,
             height: 2160,
@@ -21,7 +21,7 @@ export const SEO = {
 };
 
 // Uncomment this to add an "Edit this page" button to every page of documentation.
-export const GITHUB_EDIT_URL = `https://github.com/xhayper/COTL_API/tree/gh-pages/`;
+export const GITHUB_EDIT_URL = `https://github.com/xhayper/COTL_API/tree/docs/`;
 
 // Uncomment this to add an "Join our Community" button to every page of documentation.
 export const COMMUNITY_INVITE_URL = `https://discord.gg/jZ2DytX3TX`;
@@ -36,12 +36,12 @@ export const COMMUNITY_INVITE_URL = `https://discord.gg/jZ2DytX3TX`;
 
 export const SIDEBAR: { text: string; header?: boolean; link?: string }[] = [
     { text: "Introduction", header: true },
-    { text: "Main Page", link: "COTL_API/" },
-    { text: "Getting Started", link: "COTL_API/getting-started" },
+    { text: "Main Page", link: "" },
+    { text: "Getting Started", link: "getting-started" },
 
     { text: "Features", header: true },
-    { text: "Items", link: "COTL_API/items" },
-    { text: "Follower Commands", link: "COTL_API/follower-commands" },
-    { text: "Objectives", link: "COTL_API/objectives" },
-    { text: "Save File Data", link: "COTL_API/save-data" }
+    { text: "Items", link: "items" },
+    { text: "Follower Commands", link: "follower-commands" },
+    { text: "Objectives", link: "objectives" },
+    { text: "Save File Data", link: "save-data" }
 ];
