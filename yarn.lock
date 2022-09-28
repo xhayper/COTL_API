@@ -1907,9 +1907,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cotl_api_wiki@workspace:.":
+"cotl_api_docs@workspace:.":
   version: 0.0.0-use.local
-  resolution: "cotl_api_wiki@workspace:."
+  resolution: "cotl_api_docs@workspace:."
   dependencies:
     "@algolia/client-search": ^4.14.2
     "@astrojs/image": ^0.8.0
