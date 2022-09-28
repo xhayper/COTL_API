@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 dotnet build -c Release
 tcli build

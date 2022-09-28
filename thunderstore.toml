@@ -6,7 +6,7 @@ namespace = "xhayper"
 name = "COTL_API"
 versionNumber = "0.1.4"
 description = "A BepInEx plugin made for modder to easily interact with Cult of the Lamb game"
-websiteUrl = "https://xhayper.github.io/COTL_API/"
+websiteUrl = "https://cotl-api.vercel.app/"
 containsNsfwContent = false
 
 [package.dependencies]
