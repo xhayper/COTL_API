@@ -19,7 +19,8 @@ internal static class APIDataManager
         DataReadWriter.OnReadCompleted += delegate(APIData data)
         {
             APIData = data;
-            CustomObjectiveManager.PluginQuestTracker.AddRange(data.GetValue<Dictionary<int, CustomObjective>>("QuestID"));
+            Dictionary<int, CustomObjective> savedObjectives = data.GetValue<Dictionary<int, CustomObjective>>("QuestID");
+            if (savedObjectives != null) CustomObjectiveManager.PluginQuestTracker.AddRange(savedObjectives);
         };
 
         DataReadWriter.OnCreateDefault += delegate
@@ -34,7 +35,7 @@ internal static class APIDataManager
     [HarmonyPostfix]
     internal static void Save()
     {
-        APIData.SetValue("QuestID", CustomObjectiveManager.PluginQuestTracker);
+        if (CustomObjectiveManager.PluginQuestTracker.Count > 0) APIData.SetValue("QuestID", CustomObjectiveManager.PluginQuestTracker);
         DataReadWriter.Write(APIData, DataPath);
     }
 
