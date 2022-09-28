@@ -45,7 +45,7 @@ export const ALGOLIA = {
 export type Sidebar = Record<string, { text: string; link: string }[]>;
 export const SIDEBAR: Sidebar = {
     Introduction: [
-        { text: "Main Page", link: "index" },
+        { text: "Main Page", link: "introduction" },
         { text: "Getting Started", link: "getting-started" }
     ],
     Features: [
