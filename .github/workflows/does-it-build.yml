@@ -2,6 +2,7 @@ name: Does it build?
 on:
   push:
     branches:
+      - '*'
       - '!docs**'
   pull_request:
     types: [opened, synchronize, reopened]
