@@ -310,19 +310,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/react@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "@astrojs/react@npm:1.1.4"
-  dependencies:
-    "@babel/core": ">=7.0.0-0 <8.0.0"
-    "@babel/plugin-transform-react-jsx": ^7.17.12
-  peerDependencies:
-    react: ^17.0.2 || ^18.0.0
-    react-dom: ^17.0.2 || ^18.0.0
-  checksum: 86f97a8e892f186e9eff9ecadcf6cf7f8a192e43c670c2b3f405c2ff8b769c33c6085e3628bb3a777e12de1989cb940d716cb37216f22a956381cf8d9ea3cd2d
-  languageName: node
-  linkType: hard
-
 "@astrojs/sitemap@npm:^1.0.0":
   version: 1.0.0
   resolution: "@astrojs/sitemap@npm:1.0.0"
@@ -366,6 +353,15 @@ __metadata:
     global-agent: ^3.0.0
     node-fetch: ^3.2.5
   checksum: 12f82c603622ac84513262de0408fff06652df7c0c9e6972cee3086e414e5079a8aa47525f2338d1862a22e5fddca8ef521021d350be4387fc462d6d12fb79f1
+  languageName: node
+  linkType: hard
+
+"@astropub/icons@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@astropub/icons@npm:0.2.0"
+  peerDependencies:
+    astro: "*"
+  checksum: 620b6a03e2ca1346a43a913a410fe9b4b86435691979bad3a3e16139fdbaf4580c15ec9c3190b36690c9d207e9bb31e0f55d812742247cb4a3b998400e9da0c2
   languageName: node
   linkType: hard
 
@@ -1055,33 +1051,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*":
-  version: 15.7.5
-  resolution: "@types/prop-types@npm:15.7.5"
-  checksum: 5b43b8b15415e1f298243165f1d44390403bb2bd42e662bca3b5b5633fdd39c938e91b7fce3a9483699db0f7a715d08cef220c121f723a634972fdf596aec980
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:^18.0.6":
-  version: 18.0.6
-  resolution: "@types/react-dom@npm:18.0.6"
-  dependencies:
-    "@types/react": "*"
-  checksum: db571047af1a567631758700b9f7d143e566df939cfe5fbf7535347cc0c726a1cdbb5e3f8566d076e54cf708b6c1166689de194a9ba09ee35efc9e1d45911685
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:*, @types/react@npm:^18.0.21":
-  version: 18.0.21
-  resolution: "@types/react@npm:18.0.21"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: 36c1a7c9d507e81e2e629c1ad3db51d7b84d8b010c2d5008da411874286c6a5ccc711ae1d4c470efc0bdc77153cc8804a40e927e929e5164c669ca41b84b846d
-  languageName: node
-  linkType: hard
-
 "@types/resolve@npm:^1.17.0":
   version: 1.20.2
   resolution: "@types/resolve@npm:1.20.2"
@@ -1095,13 +1064,6 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 2aa50cbf1d1f0cf8541ef1787f94c7442e58e63900afd3b45c354e4140ed5efc5cf26fca8eb9df9970a74c7ea582293ae2083271bd046dedf4c3cc2689a40892
-  languageName: node
-  linkType: hard
-
-"@types/scheduler@npm:*":
-  version: 0.16.2
-  resolution: "@types/scheduler@npm:0.16.2"
-  checksum: b6b4dcfeae6deba2e06a70941860fb1435730576d3689225a421280b7742318d1548b3d22c1f66ab68e414f346a9542f29240bc955b6332c5b11e561077583bc
   languageName: node
   linkType: hard
 
@@ -1915,22 +1877,20 @@ __metadata:
     "@astrojs/image": ^0.8.0
     "@astrojs/partytown": ^1.0.0
     "@astrojs/preact": ^1.1.0
-    "@astrojs/react": ^1.1.4
     "@astrojs/sitemap": ^1.0.0
     "@astrojs/vercel": ^2.0.1
+    "@astropub/icons": ^0.2.0
     "@docsearch/css": ^3.2.1
     "@docsearch/react": ^3.2.1
     "@types/node": ^18.7.23
-    "@types/react": ^18.0.21
-    "@types/react-dom": ^18.0.6
     astro: ^1.3.1
     astro-robots-txt: ^0.3.9
     astro-seo: ^0.6.0
     preact: ^10.11.0
     prettier: ^2.7.1
     prettier-plugin-astro: ^0.5.4
-    react: ^18.2.0
-    react-dom: ^18.2.0
+    react: "npm:@preact/compat@17.1.1"
+    react-dom: "npm:@preact/compat@17.1.1"
     remark-github: ^11.2.4
     sass: ^1.55.0
     sharp: ^0.31.0
@@ -1945,13 +1905,6 @@ __metadata:
     shebang-command: ^2.0.0
     which: ^2.0.1
   checksum: 671cc7c7288c3a8406f3c69a3ae2fc85555c04169e9d611def9a675635472614f1c0ed0ef80955d5b6d4e724f6ced67f0ad1bb006c2ea643488fcfef994d7f52
-  languageName: node
-  linkType: hard
-
-"csstype@npm:^3.0.2":
-  version: 3.1.1
-  resolution: "csstype@npm:3.1.1"
-  checksum: 1f7b4f5fdd955b7444b18ebdddf3f5c699159f13e9cf8ac9027ae4a60ae226aef9bbb14a6e12ca7dba3358b007cee6354b116e720262867c398de6c955ea451d
   languageName: node
   linkType: hard
 
@@ -3639,7 +3592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
+"js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
   checksum: 8a95213a5a77deb6cbe94d86340e8d9ace2b93bc367790b260101d2f36a2eaf4e4e22d9fa9cf459b38af3a32fb4190e638024cf82ec95ef708680e405ea7cc78
@@ -3788,17 +3741,6 @@ __metadata:
   version: 3.0.1
   resolution: "longest-streak@npm:3.0.1"
   checksum: 3b59c4c04ce3c70f137e339c10d574026fa3a711c45dc0e69a63a2c0ac981e57f837e1d5b64b991eee5234c4fa46fa10886a20626fb739ed3b04b77bcf6d14a8
-  languageName: node
-  linkType: hard
-
-"loose-envify@npm:^1.1.0":
-  version: 1.4.0
-  resolution: "loose-envify@npm:1.4.0"
-  dependencies:
-    js-tokens: ^3.0.0 || ^4.0.0
-  bin:
-    loose-envify: cli.js
-  checksum: 6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
   languageName: node
   linkType: hard
 
@@ -5423,24 +5365,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
-  dependencies:
-    loose-envify: ^1.1.0
-    scheduler: ^0.23.0
+"react-dom@npm:@preact/compat@17.1.1, react@npm:@preact/compat@17.1.1":
+  version: 17.1.1
+  resolution: "@preact/compat@npm:17.1.1"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
-  languageName: node
-  linkType: hard
-
-"react@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: 88e38092da8839b830cda6feef2e8505dec8ace60579e46aa5490fc3dc9bba0bd50336507dc166f43e3afc1c42939c09fe33b25fae889d6f402721dcd78fca1b
+    preact: "*"
+  checksum: 4171731dee6f25bdb8a200117c7d5b75527d79080aa864482e6b50a74e08b0fd24329aa7d97feb1c3e1b4aa9cbcc8a8b5e25ac01bab0fdf4d67843a53bda0eab
   languageName: node
   linkType: hard
 
@@ -5838,15 +5768,6 @@ __metadata:
   version: 1.2.4
   resolution: "sax@npm:1.2.4"
   checksum: d3df7d32b897a2c2f28e941f732c71ba90e27c24f62ee918bd4d9a8cfb3553f2f81e5493c7f0be94a11c1911b643a9108f231dd6f60df3fa9586b5d2e3e9e1fe
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "scheduler@npm:0.23.0"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: d79192eeaa12abef860c195ea45d37cbf2bbf5f66e3c4dcd16f54a7da53b17788a70d109ee3d3dde1a0fd50e6a8fc171f4300356c5aee4fc0171de526bf35f8a
   languageName: node
   linkType: hard
 

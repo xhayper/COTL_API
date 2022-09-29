@@ -5,7 +5,6 @@ import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
 import preact from "@astrojs/preact";
-import react from "@astrojs/react";
 import image from "@astrojs/image";
 
 // https://astro.build/config
@@ -13,10 +12,7 @@ export default defineConfig({
     output: "server",
     adapter: vercel(),
     integrations: [
-        // Enable Preact to support Preact JSX components.
-        preact(),
-        // Enable React for the Algolia search component.
-        react(),
+        preact({ compat: true }),
         sitemap({
             customPages: [
                 "https://cotl-api.vercel.app/follower-commands",

@@ -3,6 +3,10 @@
     "compilerOptions": {
         "jsx": "preserve",
         "skipLibCheck": true,
-        "types": ["@astrojs/image/client"]
+        "types": ["@astrojs/image/client"],
+        "paths": {
+            "react": ["./node_modules/preact/compat/"],
+            "react-dom": ["./node_modules/preact/compat/"]
+        }
     }
 }
