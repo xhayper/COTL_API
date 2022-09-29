@@ -15,9 +15,10 @@ export default defineConfig({
         preact({ compat: true }),
         sitemap({
             customPages: [
-                "https://cotl-api.vercel.app/follower-commands",
+                "https://cotl-api.vercel.app/introduction",
                 "https://cotl-api.vercel.app/getting-started",
                 "https://cotl-api.vercel.app/items",
+                "https://cotl-api.vercel.app/follower-commands",
                 "https://cotl-api.vercel.app/objectives",
                 "https://cotl-api.vercel.app/save-data"
             ]

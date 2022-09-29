@@ -1,5 +1,5 @@
 ---
-import "preact/devtools";
+import "preact/debug";
 
 import RightSidebar from "../components/RightSidebar/RightSidebar.astro";
 import PageContent from "../components/PageContent/PageContent.astro";
@@ -11,10 +11,6 @@ import HeadSEO from "../components/HeadSEO.astro";
 import type { MarkdownHeading } from "astro";
 import * as CONFIG from "../config";
 
-if (import.meta.env.DEV) {
-    import("preact/debug");
-}
-
 type Props = {
     frontmatter: CONFIG.Frontmatter;
     headings: MarkdownHeading[];
@@ -22,7 +18,7 @@ type Props = {
 const { frontmatter, headings } = Astro.props as Props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const currentPage = Astro.url.pathname === "/" ? "/index" : Astro.url.pathname;
+const currentPage = Astro.url.pathname;
 const currentFile = `src/pages${currentPage.replace(/\/$/, "")}.md`;
 const githubEditUrl = `${CONFIG.GITHUB_EDIT_URL}/${currentFile}`;
 ---
