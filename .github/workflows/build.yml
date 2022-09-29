@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - '!docs*'
+      - 'main'
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
