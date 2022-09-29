@@ -7,6 +7,7 @@ import "./Search.scss";
 import * as docSearchReact from "@docsearch/react";
 
 /** FIXME: This is still kinda nasty, but DocSearch is not ESM ready. */
+// ^- This cause ton of issue, i gonna disable it for now
 const DocSearchModal = docSearchReact.DocSearchModal || (docSearchReact as any).default.DocSearchModal;
 const useDocSearchKeyboardEvents =
     docSearchReact.useDocSearchKeyboardEvents || (docSearchReact as any).default.useDocSearchKeyboardEvents;
