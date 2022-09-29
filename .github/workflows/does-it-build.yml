@@ -1,4 +1,4 @@
-name: Does it build?
+name: Does it build
 on:
   push:
     branches:
@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   build:
-    name: Build
+    name: 'on'
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
