@@ -1,10 +1,8 @@
 ---
-import { Image } from "@astrojs/image/components";
-
 type Props = {
     size: number;
 };
 const { size } = Astro.props as Props;
 ---
 
-<Image class="logo" src="/icon.svg" alt="Logo" aspectRatio="1:1" width={size} height={size} quality={100} />
+<img alt="Logo" srcset="/icon.svg" width={size} height={size} />
