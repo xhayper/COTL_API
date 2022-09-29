@@ -1,13 +1,10 @@
 ---
-import "preact/devtools";
+import "preact/debug";
 
 import HeadCommon from "../components/HeadCommon.astro";
 import HeadSEO from "../components/HeadSEO.astro";
 import * as CONFIG from "../config";
 
-if (import.meta.env.DEV) {
-    import("preact/debug");
-}
 ---
 
 <html dir={"ltr"} lang={CONFIG.SITE.defaultLanguage ?? "en_US"} class="initial">
