@@ -1,12 +1,9 @@
 {
     "extends": "astro/tsconfigs/strictest",
     "compilerOptions": {
-        "jsx": "preserve",
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact",
         "skipLibCheck": true,
-        "types": ["@astrojs/image/client"],
-        "paths": {
-            "react": ["./node_modules/preact/compat/"],
-            "react-dom": ["./node_modules/preact/compat/"]
-        }
+        "types": ["@astrojs/image/client"]
     }
 }

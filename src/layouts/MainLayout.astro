@@ -10,9 +10,9 @@ import type { MarkdownHeading } from "astro";
 import * as CONFIG from "../config";
 
 if (import.meta.env.PROD) {
-    import("preact/devtools");
+    await import("preact/devtools");
 } else {
-    import("preact/debug");
+    await import("preact/debug");
 }
 
 type Props = {
