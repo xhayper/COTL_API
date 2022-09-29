@@ -11,7 +11,7 @@ internal static class APIDataManager
 
     internal static APIData APIData;
 
-    internal static System.Action OnSaveComplete;
+    internal static System.Action OnSaveCompleted;
     internal static System.Action OnLoadComplete;
 
     static APIDataManager()
@@ -28,12 +28,12 @@ internal static class APIDataManager
             APIData = new APIData();
 
             OnLoadComplete?.Invoke();
-            OnSaveComplete?.Invoke();
+            OnSaveCompleted?.Invoke();
         };
 
         DataReadWriter.OnWriteCompleted += delegate
         {
-            OnSaveComplete?.Invoke();
+            OnSaveCompleted?.Invoke();
         };
 
         Load();
@@ -46,8 +46,6 @@ internal static class APIDataManager
         DataReadWriter.Write(APIData, DataPath);
     }
 
-    [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Save))]
-    [HarmonyPostfix]
     internal static void Load()
     {
         DataReadWriter.Read(DataPath);
