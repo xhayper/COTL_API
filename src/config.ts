@@ -1,7 +1,7 @@
 export const SITE = {
     title: "Cult of the Lamb API Documentation",
     description: "Documentation for Cult of the Lamb API",
-    defaultLanguage: "en_US"
+    defaultLanguage: "en-US"
 };
 
 export const OPEN_GRAPH = {
