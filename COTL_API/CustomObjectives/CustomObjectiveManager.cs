@@ -27,8 +27,21 @@ public static class CustomObjectiveManager
     {
         CustomQuestDataReadWriter.OnReadCompleted += delegate(Dictionary<int, CustomObjective> objectives)
         {
-            PluginQuestTracker.AddRange(objectives);
-            Plugin.Logger.LogWarning($"Previous session custom quests loaded! Count: {PluginQuestTracker.Count}");
+            Dictionary<int, CustomObjective> tempObjectives = new();
+            foreach (KeyValuePair<int, CustomObjective> objective in objectives)
+            {
+                if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
+                {
+                    tempObjectives.Add(objective.Key, objective.Value);
+                }
+                else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
+                {
+                    tempObjectives.Add(objective.Key, objective.Value);
+                }
+            }
+
+            PluginQuestTracker.AddRange(tempObjectives);
+            Plugin.Logger.LogWarning(tempObjectives.Count > 0 ? $"Needed previous session custom quests loaded. Count: {tempObjectives.Count}" : "None of the previous session quests still exist in objective trackers.");
         };
 
         CustomQuestDataReadWriter.OnReadError += delegate
@@ -54,6 +67,7 @@ public static class CustomObjectiveManager
 
         CustomQuestDataReadWriter.Write(PluginQuestTracker, DataPath, true, false);
     }
+
     private static string DefaultQuestText => "I didn't set a custom quest text for this objective!";
 
     /// <summary>
