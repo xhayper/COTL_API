@@ -1879,8 +1879,8 @@ __metadata:
     preact: ^10.11.0
     prettier: ^2.7.1
     prettier-plugin-astro: ^0.5.4
-    react: "npm:@preact/compat@17.1.1"
-    react-dom: "npm:@preact/compat@17.1.1"
+    react: "npm:@preact/compat@latest"
+    react-dom: "npm:@preact/compat@latest"
     remark-github: ^11.2.4
     sass: ^1.55.0
     sharp: ^0.31.0
@@ -5355,7 +5355,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:@preact/compat@17.1.1, react@npm:@preact/compat@17.1.1":
+"react-dom@npm:@preact/compat@latest, react@npm:@preact/compat@latest":
   version: 17.1.1
   resolution: "@preact/compat@npm:17.1.1"
   peerDependencies:
