@@ -1,12 +1,12 @@
 ---
+import "preact/devtools";
+
 import HeadCommon from "../components/HeadCommon.astro";
 import HeadSEO from "../components/HeadSEO.astro";
 import * as CONFIG from "../config";
 
-if (import.meta.env.PROD) {
-    await import("preact/devtools");
-} else {
-    await import("preact/debug");
+if (import.meta.env.DEV) {
+    import("preact/debug");
 }
 ---
 
