@@ -1,9 +1,15 @@
-import { DocSearchModal, useDocSearchKeyboardEvents } from "@docsearch/react";
 import { useState, useCallback, useRef } from "preact/hooks";
 import { createPortal } from "preact/compat";
 import { ALGOLIA } from "../../config";
 import "@docsearch/css";
 import "./Search.scss";
+
+import * as docSearchReact from "@docsearch/react";
+
+/** FIXME: This is still kinda nasty, but DocSearch is not ESM ready. */
+const DocSearchModal = docSearchReact.DocSearchModal || (docSearchReact as any).default.DocSearchModal;
+const useDocSearchKeyboardEvents =
+    docSearchReact.useDocSearchKeyboardEvents || (docSearchReact as any).default.useDocSearchKeyboardEvents;
 
 export default function Search() {
     const [isOpen, setIsOpen] = useState(false);
