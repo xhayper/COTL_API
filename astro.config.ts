@@ -29,6 +29,9 @@ export default defineConfig({
         robotsTxt()
     ],
     vite: {
+        ssr: {
+            noExternal: ["@docsearch/react"]
+        },
         build: {
             sourcemap: true
         }
