@@ -30,7 +30,7 @@ export default defineConfig({
     ],
     vite: {
         ssr: {
-            noExternal: ["@docsearch/react"]
+            noExternal: ["@docsearch/react", "@algolia/autocomplete-core"]
         },
         build: {
             sourcemap: true
