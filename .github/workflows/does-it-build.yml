@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     name: 'on'
-    continue-on-error: true
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
@@ -26,6 +25,7 @@ jobs:
         run: |
           dotnet build -c Release
       - name: Package
+        continue-on-error: true
         run: |
           dotnet tool install -g tcli
           tcli build
