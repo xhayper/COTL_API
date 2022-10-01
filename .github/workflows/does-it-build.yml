@@ -28,6 +28,6 @@ jobs:
       - name: Install TCLI
         run: |
           dotnet tool install -g tcli
-      - name: Paclage
+      - name: Package
         run: |
           tcli build
