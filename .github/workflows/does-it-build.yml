@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     name: 'on'
+    continue-on-error: true
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
