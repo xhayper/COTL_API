@@ -24,4 +24,10 @@ jobs:
           dotnet restore
       - name: Build
         run: |
-          dotnet build
+          dotnet build -c Release
+      - name: Install TCLI
+        run: |
+          dotnet tool install -g tcli
+      - name: Paclage
+        run: |
+          tcli build
