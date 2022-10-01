@@ -25,9 +25,7 @@ jobs:
       - name: Build
         run: |
           dotnet build -c Release
-      - name: Install TCLI
-        run: |
-          dotnet tool install -g tcli
       - name: Package
         run: |
+          dotnet tool install -g tcli
           tcli build
