@@ -4,7 +4,6 @@ allowedChanges=("astro.config.ts" "package.json" "src/" "public/" ".yarnrc.yml" 
 
 for i in "${allowedChanges[@]}"; do
   flag=$(git diff HEAD^ HEAD "$i")
-  echo $flag
   if [ "$flag" != '' ]; then
         exit 1
   fi
