@@ -1,6 +1,6 @@
 #!/bin/bash
 
-allowedChanges=("../astro.config.ts" "../package.json" "../src/" "../public/" "../.yarnrc.yml" "../.yarn/" "../tsconfig.json")
+allowedChanges=("./astro.config.ts" "./package.json" "./src/" "./public/" "./.yarnrc.yml" "./.yarn/" "./tsconfig.json")
 
 for i in "${allowedChanges[@]}"; do
   flag=$(git diff HEAD^ HEAD --quiet -- "$i")
