@@ -22,6 +22,14 @@ public abstract class CustomInventoryItem
 
     #region ItemSpawning Region
 
+    
+    /// <summary>
+    /// This is the Sprite given to custom items when they are spawned into the world.
+    /// </summary>
+    public virtual Sprite Sprite { get; } =
+        TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
+
+    
     /// <summary>
     /// Defines rarity for offering shrine spawn chance.
     /// </summary>
@@ -65,11 +73,6 @@ public abstract class CustomInventoryItem
     public virtual int DungeonChestMaxAmount { get; } = 1;
 
     #endregion
-
-
-    public virtual Sprite Sprite { get; } =
-        TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
-
 
     public virtual string InventoryStringIcon()
     {
