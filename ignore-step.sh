@@ -2,6 +2,8 @@
 
 allowedChanges=("./astro.config.ts" "./package.json" "./src/" "./public/" "./.yarnrc.yml" "./.yarn/" "./tsconfig.json")
 
+ls
+
 for i in "${allowedChanges[@]}"; do
   flag=$(git diff HEAD^ HEAD --quiet -- "$i")
   echo $flag
