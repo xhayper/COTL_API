@@ -23,4 +23,9 @@ jobs:
           dotnet restore
       - name: Build
         run: |
-          dotnet build
+          dotnet build -c Release
+      - name: Package
+        continue-on-error: true
+        run: |
+          dotnet tool install -g tcli
+          tcli build
