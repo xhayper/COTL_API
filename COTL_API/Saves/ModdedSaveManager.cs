@@ -1,4 +1,5 @@
 using HarmonyLib;
+using System;
 
 namespace COTL_API.Saves;
 
@@ -11,7 +12,7 @@ public static partial class ModdedSaveManager
     public static bool Loaded;
     public static ModdedSaveData Data;
 
-    public static System.Action OnSaveCompleted;
+    public static System.Action OnSaveComplete;
     public static System.Action OnLoadComplete;
 
     static ModdedSaveManager()
@@ -30,12 +31,12 @@ public static partial class ModdedSaveManager
             Loaded = true;
 
             OnLoadComplete?.Invoke();
-            OnSaveCompleted?.Invoke();
+            OnSaveComplete?.Invoke();
         };
 
         _readWriter.OnWriteCompleted += delegate
         {
-            OnSaveCompleted?.Invoke();
+            OnSaveComplete?.Invoke();
         };
     }
 
@@ -48,4 +49,6 @@ public static partial class ModdedSaveManager
     {
         return $"modded_slot_{slot}.json";
     }
+
+    
 }
