@@ -87,7 +87,6 @@ public class Plugin : BaseUnityPlugin
         CustomObjective test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
-
         Logger.LogDebug("Debug mode enabled");
     }
 
