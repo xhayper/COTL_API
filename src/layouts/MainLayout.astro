@@ -1,7 +1,4 @@
 ---
-import "preact/debug";
-import "preact/devtools";
-
 import RightSidebar from "../components/RightSidebar/RightSidebar.astro";
 import PageContent from "../components/PageContent/PageContent.astro";
 import LeftSidebar from "../components/LeftSidebar/LeftSidebar.astro";
@@ -11,6 +8,12 @@ import Footer from "../components/Footer/Footer.astro";
 import HeadSEO from "../components/HeadSEO.astro";
 import type { MarkdownHeading } from "astro";
 import * as CONFIG from "../config";
+
+if (import.meta.env.DEV) {
+    import("preact/debug");
+} else {
+    import("preact/devtools");
+}
 
 type Props = {
     frontmatter: CONFIG.Frontmatter;
