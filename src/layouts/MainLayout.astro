@@ -1,5 +1,9 @@
 ---
-import "preact/debug";
+if (import.meta.env.DEV) {
+    require("preact/debug");
+} else {
+    require("preact/devtools");
+}
 
 import RightSidebar from "../components/RightSidebar/RightSidebar.astro";
 import PageContent from "../components/PageContent/PageContent.astro";
