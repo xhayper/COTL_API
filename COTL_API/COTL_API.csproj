@@ -1,9 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AssemblyName>COTL_API</AssemblyName>
-
-        <!-- First one is "Forced Access" warning, second one is "Missing XML" comment -->
-        <NoWarn>Publicizer001,CS1591</NoWarn>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props" />
