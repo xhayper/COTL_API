@@ -1,19 +1,18 @@
+using COTL_API.CustomFollowerCommand;
+using COTL_API.CustomStructures;
+using COTL_API.CustomObjectives;
 using BepInEx.Configuration;
+using COTL_API.CustomSkins;
+using COTL_API.CustomTasks;
 using System.Reflection;
+using COTL_API.Helpers;
 using BepInEx.Logging;
 using COTL_API.Debug;
 using System.Linq;
+using UnityEngine;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
-using COTL_API.CustomFollowerCommand;
-using COTL_API.CustomObjectives;
-using COTL_API.Helpers;
-using COTL_API.CustomSkins;
-using COTL_API.CustomStructures;
-using COTL_API.CustomTasks;
-using COTL_API.Saves;
-using UnityEngine;
 
 namespace COTL_API;
 
@@ -115,7 +114,7 @@ public class Plugin : BaseUnityPlugin
         if (DataManager.Instance == null) return;
         foreach (DataManager.QuestHistoryData quest in DataManager.Instance.CompletedQuestsHistorys.Where(a => a.QuestIndex >= Quests.QuestsAll.Count))
         {
-            if(Debug) Logger.LogDebug("Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
+            if (Debug) Logger.LogDebug("Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
             quest.QuestIndex = Quests.QuestsAll.Count - 1;
         }
         _questCleanDone = true;

@@ -1,5 +1,4 @@
 using HarmonyLib;
-using System;
 
 namespace COTL_API.Saves;
 
@@ -49,6 +48,4 @@ public static partial class ModdedSaveManager
     {
         return $"modded_slot_{slot}.json";
     }
-
-    
 }

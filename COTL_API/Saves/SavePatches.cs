@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 
 namespace COTL_API.Saves;
+
 public static partial class ModdedSaveManager
 {
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.ResetSave))]

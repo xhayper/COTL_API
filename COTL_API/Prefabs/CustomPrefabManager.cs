@@ -1,11 +1,12 @@
-﻿using COTL_API.CustomStructures;
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement;
+﻿using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.ResourceManagement;
+using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
+using COTL_API.CustomStructures;
+using UnityEngine;
+using HarmonyLib;
+
 namespace COTL_API.Prefabs;
 
 [HarmonyPatch]
