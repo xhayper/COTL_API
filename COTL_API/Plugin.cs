@@ -37,10 +37,10 @@ public class Plugin : BaseUnityPlugin
 
     internal static FollowerCommands DebugGiftFollowerCommand;
 
-    private static ConfigEntry<bool> _debug;
     private static bool _questCleanDone; //flag to prevent multiple calls to clean up quests
-    internal static bool Debug => _debug.Value;
 
+    internal static ConfigEntry<bool> _debug;
+    internal static bool Debug => _debug.Value;
 
     private void Awake()
     {
