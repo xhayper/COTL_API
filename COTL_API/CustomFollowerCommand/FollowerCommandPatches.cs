@@ -1,6 +1,6 @@
-﻿using HarmonyLib;
-using Lamb.UI.FollowerInteractionWheel;
+﻿using Lamb.UI.FollowerInteractionWheel;
 using System.Collections.Generic;
+using HarmonyLib;
 
 namespace COTL_API.CustomFollowerCommand;
 

@@ -1,5 +1,3 @@
-using System.Collections;
-
 namespace COTL_API.Debug;
 
 public class DebugGiftFollowerCommand : CustomFollowerCommand.CustomFollowerCommand

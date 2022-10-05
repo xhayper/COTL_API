@@ -1,15 +1,11 @@
-﻿using COTL_API.Helpers;
+﻿using Lamb.UI.FollowerInteractionWheel;
+using System.Collections.Generic;
+using System.Reflection.Emit;
+using System.Reflection;
+using System.Linq;
+using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
-using Lamb.UI.FollowerInteractionWheel;
-using MMBiomeGeneration;
-using MMRoomGeneration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using UnityEngine;
 
 namespace COTL_API.CustomInventory;
 

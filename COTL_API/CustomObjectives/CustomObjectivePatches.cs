@@ -1,6 +1,6 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using HarmonyLib;
 using MMTools;
-using System.Collections.Generic;
 
 namespace COTL_API.CustomObjectives;
 

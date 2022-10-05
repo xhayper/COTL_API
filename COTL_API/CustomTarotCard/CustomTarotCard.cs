@@ -1,6 +1,6 @@
 using UnityEngine;
-using I2.Loc;
 using System.Text;
+using I2.Loc;
 
 namespace COTL_API.CustomTarotCard;
 

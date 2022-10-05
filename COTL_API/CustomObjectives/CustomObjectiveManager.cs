@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using COTL_API.Saves;
 using MonoMod.Utils;
-using System.Collections.Generic;
 
 namespace COTL_API.CustomObjectives;
 
