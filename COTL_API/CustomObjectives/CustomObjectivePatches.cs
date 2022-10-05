@@ -62,7 +62,7 @@ public static class CustomObjectivePatches
         //47 is the hardcoded random quest amount
         //25 is the reverse index of the dud(?) quest in the list
         int adjustedNumber = 25 + (Quests.QuestsAll.Count - 47);
-        Plugin.Logger.LogWarning($"GetAdjustedCount(): Total quests: {Quests.QuestsAll.Count}, Adjusted number: {adjustedNumber}");
+       // Plugin.Logger.LogWarning($"GetAdjustedCount(): Total quests: {Quests.QuestsAll.Count}, Adjusted number: {adjustedNumber}");
         return adjustedNumber;
     }
 
