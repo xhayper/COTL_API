@@ -1,6 +1,5 @@
 ---
 import "preact/debug";
-import "../preact/devtools";
 
 import HeadCommon from "../components/HeadCommon.astro";
 import HeadSEO from "../components/HeadSEO.astro";
@@ -10,6 +9,14 @@ import * as CONFIG from "../config";
 <!DOCTYPE html>
 <html dir={"ltr"} lang={CONFIG.SITE.defaultLanguage ?? "en-US"} class="initial">
     <head>
+        {
+            import.meta.env.PROD ?? (
+                <script type="module" is:inline lang="ts">
+                    import("preact/devtools");
+                </script>
+            )
+        }
+
         <HeadCommon />
         <HeadSEO frontmatter={{} as any} canonicalUrl={new URL(Astro.url.pathname, Astro.site)} />
         <script is:inline>
