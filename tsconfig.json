@@ -3,6 +3,7 @@
     "compilerOptions": {
         "jsx": "react-jsx",
         "jsxImportSource": "preact",
+        "sourceMap": true,
         "skipLibCheck": true,
         "types": ["@astrojs/image/client"]
     }
