@@ -28,6 +28,7 @@ public static class CustomObjectiveManager
         CustomQuestDataReadWriter.OnReadCompleted += delegate(Dictionary<int, CustomObjective> objectives)
         {
             Dictionary<int, CustomObjective> tempObjectives = new();
+            tempObjectives.Clear(); //needed if the user goes back to the mainmenu and loads a new save
             foreach (KeyValuePair<int, CustomObjective> objective in objectives)
             {
                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
