@@ -10,7 +10,7 @@ import * as CONFIG from "../config";
 <html dir={"ltr"} lang={CONFIG.SITE.defaultLanguage ?? "en-US"} class="initial">
     <head>
         {
-            import.meta.env.PROD ?? (
+            import.meta.env.PROD && (
                 <script type="module" is:inline lang="ts">
                     import("preact/devtools");
                 </script>
