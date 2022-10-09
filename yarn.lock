@@ -189,16 +189,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/compiler@npm:^0.25.0":
-  version: 0.25.2
-  resolution: "@astrojs/compiler@npm:0.25.2"
-  checksum: b392128dc6e96cfd35199ecf184e9ac16a5bfd4cdf940e7f067d9283824ffd93c2e2edb23a479cd1c3a801b119c233e35176940239168c2774a101f96dbf175a
+"@astrojs/compiler@npm:^0.26.0":
+  version: 0.26.1
+  resolution: "@astrojs/compiler@npm:0.26.1"
+  checksum: c4751efd93103f727e9b371e0d0a6e3e382fdc6fb737bc7a32de202d7040a75640c3fca50d4d60e3ba46a2445e2c45fa72f64ba74677d87f80d6f3e640097391
   languageName: node
   linkType: hard
 
-"@astrojs/image@npm:^0.9.1":
-  version: 0.9.1
-  resolution: "@astrojs/image@npm:0.9.1"
+"@astrojs/image@npm:^0.9.2":
+  version: 0.9.2
+  resolution: "@astrojs/image@npm:0.9.2"
   dependencies:
     "@altano/tiny-async-pool": ^1.0.2
     http-cache-semantics: ^4.1.0
@@ -211,7 +211,7 @@ __metadata:
   peerDependenciesMeta:
     sharp:
       optional: true
-  checksum: 7a9bce51d56597de45850027d3c6925a4c261c8870da0caf2455da0180ea51cc8cd54e9c018e0f09fb45279585cf36902ba6268170ffaf60cbaa51764ce40bb1
+  checksum: 57ce0b111b4d9250a92f95ba9e45db1517422be527a35e0ee4623fab7c552cd3c5adac776aa16e5119fef3bda6f648012c6aaac36beba1ac614254e282801033
   languageName: node
   linkType: hard
 
@@ -286,13 +286,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/partytown@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@astrojs/partytown@npm:1.0.0"
+"@astrojs/partytown@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@astrojs/partytown@npm:1.0.1"
   dependencies:
-    "@builder.io/partytown": ^0.4.5
+    "@builder.io/partytown": ^0.7.1
     mrmime: ^1.0.0
-  checksum: afef24c2cc91ea5545464993b8aa6f906617d644dcdb65b99c39384f1fec1995a6956fe202127f7909795454f7a1feb22cc02a7f5abbcf0ea32a2923c5d394d4
+  checksum: 5e50b1b10c6ca5c45594ebbcfa6a41d76fdbdc3ec051583f1f86c363833d5b638128f78dc1554762a0387a950681816790862aa071bd963a0e9b5dfaff93029b
   languageName: node
   linkType: hard
 
@@ -632,12 +632,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@builder.io/partytown@npm:^0.4.5":
-  version: 0.4.5
-  resolution: "@builder.io/partytown@npm:0.4.5"
+"@builder.io/partytown@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "@builder.io/partytown@npm:0.7.1"
   bin:
     partytown: bin/partytown.cjs
-  checksum: 55d99da774e2353a5aa3aa3e2389ef08958026db00ffd0321aa4f0c5681d7877abd72910f75b26bb6da54dcd980ffdbe5297c0157095ea9fbb98d44d0b2ede84
+  checksum: 32dd51f98056f1583bfe168141c79c5dca39f71ce6b377e0a645f8709f32a85c9536a1fa419dd14b9433a13c7faa2b4006eda4e66d8ab947c4ce67d4228e9ec0
   languageName: node
   linkType: hard
 
@@ -1030,7 +1030,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.8.2":
+"@types/node@npm:*":
   version: 18.8.2
   resolution: "@types/node@npm:18.8.2"
   checksum: b7c74dea0e835fb7faf69b4a2e87d43c1d228d88adacdff464d9e92d18a0b43bec6147b9eb3287650ac75fe5af730c53391869d02175e6b032dcb99ae2f54c92
@@ -1041,6 +1041,13 @@ __metadata:
   version: 17.0.45
   resolution: "@types/node@npm:17.0.45"
   checksum: aa04366b9103b7d6cfd6b2ef64182e0eaa7d4462c3f817618486ea0422984c51fc69fd0d436eae6c9e696ddfdbec9ccaa27a917f7c2e8c75c5d57827fe3d95e8
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.8.3":
+  version: 18.8.3
+  resolution: "@types/node@npm:18.8.3"
+  checksum: 9201adc6dc389644c9f478f950ef8926a93e5827865dcd80d7d12fefacab665c96879c87cd6ec74d5eccdd998c4603d02e1e07a35d71a63fe4c20670a381f6ef
   languageName: node
   linkType: hard
 
@@ -1352,11 +1359,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^1.4.4":
-  version: 1.4.4
-  resolution: "astro@npm:1.4.4"
+"astro@npm:^1.4.6":
+  version: 1.4.6
+  resolution: "astro@npm:1.4.6"
   dependencies:
-    "@astrojs/compiler": ^0.25.0
+    "@astrojs/compiler": ^0.26.0
     "@astrojs/language-server": ^0.26.2
     "@astrojs/markdown-remark": ^1.1.3
     "@astrojs/telemetry": ^1.0.1
@@ -1417,7 +1424,7 @@ __metadata:
     zod: ^3.17.3
   bin:
     astro: astro.js
-  checksum: 1d194534b2fd1b5a4b146d9ba6eaeb4576fc966d2ba56da597b665959c6b11a6693e61af7242ccbf27b655714f1a035f1936a3e81ad778956546f40b799af728
+  checksum: e50ffc392d8efb3c837bfb389caf3eaa115159a50b8d338bb84456f81316e85e303cbbb8fa8b93f0630ae977736a657ecb478735af697ba21e938e1150d3dbbf
   languageName: node
   linkType: hard
 
@@ -1881,14 +1888,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cotl_api_docs@workspace:."
   dependencies:
-    "@astrojs/image": ^0.9.1
-    "@astrojs/partytown": ^1.0.0
+    "@astrojs/image": ^0.9.2
+    "@astrojs/partytown": ^1.0.1
     "@astrojs/preact": ^1.1.1
     "@astrojs/sitemap": ^1.0.0
     "@astrojs/vercel": ^2.1.0
     "@docsearch/react": 3.2.1
-    "@types/node": ^18.8.2
-    astro: ^1.4.4
+    "@types/node": ^18.8.3
+    astro: ^1.4.6
     astro-robots-txt: ^0.3.10
     astro-seo: ^0.6.0
     preact: ^10.11.1
