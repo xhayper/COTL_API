@@ -1,2 +1,5 @@
 API:
   - COTL_API/**/*
+CI:
+  - .github/workflows/**/*
+  - .github/labeler.yml
