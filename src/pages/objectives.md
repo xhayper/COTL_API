@@ -30,4 +30,3 @@ If you need to access the ObjectiveData created by the game, use:
 ```csharp
 CustomObjective.ObjectiveData.<method/field/etc>
 ```
-
