@@ -65,7 +65,7 @@ internal class ExampleItem : CustomInventoryItem
 | int | DungeonChestMaxAmount | 1
 | bool | CanBeRefined | false
 | InventoryItem.ITEM_TYPE | RefineryInput | InventoryItem.ITEM_TYPE.LOG
-| int | RefineryOutput | 1
+| int | RefineryInputQty | 15
 | float | CustomRefineryDuration | 0
 
 ## Helpers
@@ -111,7 +111,7 @@ Custom items can be added to the refinery as a refinable resource. Simply follow
 - Override the refinery fields.
 - **CanBeRefined** needs to be set to true. The default is false.
 - **RefineryInput** is the item/materials required.
-- **RefineryOutput** is how many items are obtained per refinement.
+- **RefineryInputQty** is how many of the above items are required.
 
 `The default time used by the refinery is 128f, with that then being modified based on the followers attributes.`
 - **CustomRefineryDuration** is optional. Leaving it at 0 or not overriding is off, anything greater than 0 becomes the time to refine.
