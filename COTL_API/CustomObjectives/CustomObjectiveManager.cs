@@ -7,7 +7,7 @@ namespace COTL_API.CustomObjectives;
 /// <summary>
 /// The custom objective manager class.
 /// </summary>
-public static class CustomObjectiveManager
+public static partial class CustomObjectiveManager
 {
     /// <summary>
     /// The group id

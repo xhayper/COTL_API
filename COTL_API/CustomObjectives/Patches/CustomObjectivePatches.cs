@@ -10,7 +10,7 @@ namespace COTL_API.CustomObjectives;
 /// Patch to ensure the correct quest text is loaded as there is no traditional GetLocalised method for the quest text.
 /// </summary>
 [HarmonyPatch]
-public static class CustomObjectivePatches
+public static partial class CustomObjectiveManager
 {
     [HarmonyPatch(typeof(interaction_FollowerInteraction), nameof(interaction_FollowerInteraction.GetConversationEntry), typeof(Follower.ComplaintType), typeof(ObjectivesData))]
     [HarmonyPostfix]
@@ -83,7 +83,7 @@ public static class CustomObjectivePatches
         {
             CodeInstruction instruction = instructionList[index];
             if (instruction.opcode == OpCodes.Ldc_I4_S && (sbyte)instruction.operand == 0x19)
-                instructionList[index] = new CodeInstruction(OpCodes.Call, typeof(CustomObjectivePatches).GetMethod(nameof(GetAdjustedCount)));
+                instructionList[index] = new CodeInstruction(OpCodes.Call, typeof(CustomObjectiveManager).GetMethod(nameof(GetAdjustedCount)));
         }
 
         return instructionList.AsEnumerable();

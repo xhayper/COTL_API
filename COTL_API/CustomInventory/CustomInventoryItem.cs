@@ -123,7 +123,7 @@ public abstract class CustomInventoryItem
     
     public virtual bool CanBeRefined { get; set; } = false;
     public virtual InventoryItem.ITEM_TYPE RefineryInput { get; set; } = InventoryItem.ITEM_TYPE.LOG;
-    public virtual int RefineryOutput { get; set; } = 1;
+    public virtual int RefineryInputQty { get; set; } = 15;
     
     //for comparison, the game default is 128f (which is then modified based on the follower using the refinery)
     public virtual float CustomRefineryDuration{ get; set; } = 0f;

@@ -9,28 +9,28 @@ using UnityEngine;
 namespace COTL_API.CustomInventory;
 
 [HarmonyPatch]
-public static class CustomItemRefineryPatches
+public static partial class CustomItemManager
 {
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Structures_Refinery), nameof(Structures_Refinery.GetCost))]
     public static void Structures_Refinery_GetCost(Structures_Refinery __instance, InventoryItem.ITEM_TYPE Item, ref List<StructuresData.ItemCost> __result)
     {
-        if (!CustomItemManager.CustomItems.ContainsKey(Item)) return;
+        if (!CustomItems.ContainsKey(Item)) return;
 
         __result = new List<StructuresData.ItemCost> {
-            new(CustomItemManager.CustomItems[Item].RefineryInput, CustomItemManager.CustomItems[Item].RefineryOutput)
+            new(CustomItems[Item].RefineryInput, CustomItems[Item].RefineryInputQty)
         };
     }
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Structures_Refinery), nameof(Structures_Refinery.RefineryDuration))]
-    public static void Structures_Refinery_GetCost(Structures_Refinery __instance, InventoryItem.ITEM_TYPE ItemType, ref float __result)
+    public static void Structures_Refinery_RefineryDuration(Structures_Refinery __instance, InventoryItem.ITEM_TYPE ItemType, ref float __result)
     {
-        if (!CustomItemManager.CustomItems.ContainsKey(ItemType)) return;
+        if (!CustomItems.ContainsKey(ItemType)) return;
 
-        if (CustomItemManager.CustomItems[ItemType].CustomRefineryDuration > 0)
+        if (CustomItems[ItemType].CustomRefineryDuration > 0)
         {
-            __result = CustomItemManager.CustomItems[ItemType].CustomRefineryDuration;
+            __result = CustomItems[ItemType].CustomRefineryDuration;
         }
     }
 
@@ -40,7 +40,7 @@ public static class CustomItemRefineryPatches
     {
         if (__instance is not UIRefineryMenuController menu) return;
 
-        foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItemManager.CustomItems.Where(item => item.Value.CanBeRefined))
+        foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItems.Where(item => item.Value.CanBeRefined))
         {
             RefineryItem refineryItem = Object.Instantiate(menu.refineryIconPrefab, menu.Container);
             refineryItem.OnItemSelected += menu.OnItemSelected;
@@ -54,11 +54,11 @@ public static class CustomItemRefineryPatches
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(RefineryInfoCard), nameof(RefineryInfoCard.Configure), typeof(InventoryItem.ITEM_TYPE))]
-    public static void RefineryItemInfoCard_Configure(ref RefineryInfoCard __instance, ref InventoryItem.ITEM_TYPE config)
+    public static void RefineryInfoCard_Configure(ref RefineryInfoCard __instance, ref InventoryItem.ITEM_TYPE config)
     {
-        if (!CustomItemManager.CustomItems.ContainsKey(config)) return;
+        if (!CustomItems.ContainsKey(config)) return;
 
-        __instance._descriptionText.text = CustomItemManager.CustomItems[config].LocalizedDescription();
-        __instance._headerText.text = CustomItemManager.CustomItems[config].LocalizedName();
+        __instance._descriptionText.text = CustomItems[config].LocalizedDescription();
+        __instance._headerText.text = CustomItems[config].LocalizedName();
     }
 }
