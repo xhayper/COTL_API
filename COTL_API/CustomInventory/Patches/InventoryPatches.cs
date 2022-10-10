@@ -10,7 +10,7 @@ using Lamb.UI;
 namespace COTL_API.CustomInventory;
 
 [HarmonyPatch]
-public partial class CustomItemManager
+public static partial class CustomItemManager
 {
     [HarmonyPatch(typeof(ItemInfoCard), nameof(ItemInfoCard.Configure))]
     [HarmonyPostfix]
@@ -45,8 +45,8 @@ public partial class CustomItemManager
 
         foreach (InventoryItem item in Inventory.items)
         {
-            if (!CustomItems.ContainsKey((InventoryItem.ITEM_TYPE) item.type)) continue;
-            if (!CustomItems[(InventoryItem.ITEM_TYPE) item.type].CanBeGivenToFollower) continue;
+            if (!CustomItems.ContainsKey((InventoryItem.ITEM_TYPE)item.type)) continue;
+            if (!CustomItems[(InventoryItem.ITEM_TYPE)item.type].CanBeGivenToFollower) continue;
 
             __result = true;
             break;
@@ -230,7 +230,7 @@ public partial class CustomItemManager
     {
         __result.AddRange(CustomItems.Where(x => x.Value.IsPlantable).Select(x => x.Key));
     }
-    
+
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.GiveToFollowerCallbacks))]
     [HarmonyPrefix]
     private static bool InventoryItem_GiveToFollowerCallbacks(InventoryItem.ITEM_TYPE Type, ref System.Action<Follower, InventoryItem.ITEM_TYPE, System.Action> __result)
@@ -267,6 +267,7 @@ public partial class CustomItemManager
             .ToArray();
     }
 
+
     [HarmonyPatch(typeof(InventoryMenu))]
     private static class InventoryMenu_Patches
     {
@@ -292,4 +293,12 @@ public partial class CustomItemManager
                 .Select(i => i.Key)).ToList();
         }
     }
+
+    // [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
+    // [HarmonyPrefix]
+    // private static void InventoryMenu_OnShowStarted(ref InventoryMenu __instance)
+    // {
+    //     InventoryMenu menu = __instance;
+    //     __instance._currencyFilter.AddRange(CustomItems.Where(a => a.Value.IsCurrency && !menu._currencyFilter.Contains(a.Key)).Select(a => a.Key));
+    // }
 }
