@@ -21,7 +21,7 @@ const currentPageMatch = currentPage.endsWith("/") ? currentPage.slice(1, -1) : 
                                 const url = Astro.site?.pathname + child.link;
                                 return (
                                     <li class="nav-link">
-                                        <a href={url} aria-current={currentPageMatch === child.link ? "page" : false}>
+                                        <a href={url} rel="prefetch" aria-current={currentPageMatch === child.link ? "page" : false}>
                                             {child.text}
                                         </a>
                                     </li>

@@ -7,13 +7,23 @@ import sitemap from "@astrojs/sitemap";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
 
+import prefetch from "@astrojs/prefetch";
+
 // https://astro.build/config
 export default defineConfig({
     output: "server",
     // output: "static",
     adapter: vercel(),
     integrations: [
-        preact({ compat: true }),
+        preact({
+            compat: true
+        }),
+        image({
+            serviceEntryPoint: "@astrojs/image/sharp"
+        }),
+        prefetch({
+            throttle: Number.MAX_SAFE_INTEGER
+        }),
         sitemap({
             customPages: [
                 "https://cotl-api.vercel.app/",
@@ -26,9 +36,6 @@ export default defineConfig({
             ]
         }),
         partytown({}),
-        image({
-            serviceEntryPoint: "@astrojs/image/sharp"
-        }),
         robotsTxt()
     ],
     vite: {
