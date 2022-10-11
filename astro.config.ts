@@ -38,6 +38,9 @@ export default defineConfig({
     },
     markdown: {
         extendDefaultPlugins: true,
+        shikiConfig: {
+            theme: "one-dark-pro"
+        },
         remarkPlugins: [
             [
                 remarkGithub,
