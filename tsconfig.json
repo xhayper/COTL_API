@@ -5,6 +5,10 @@
         "jsxImportSource": "preact",
         "sourceMap": true,
         "skipLibCheck": true,
+        "paths": {
+            "react": ["./node_modules/preact/compat/"],
+            "react-dom": ["./node_modules/preact/compat/"]
+        },
         "types": ["@astrojs/image/client"]
     }
 }
