@@ -7,4 +7,16 @@ type Props = {
 const { size } = Astro.props as Props;
 ---
 
-<Image src="/icon.svg" alt="Logo" quality="100" width={size} aspectRatio="1" />
+<Image
+    class={"logo"}
+    src={"/icon.svg"}
+    alt={"Logo"}
+    quality={100}
+    width={size}
+    height={size}
+    format={"png"}
+    style={{
+        "object-fit": "scale-down",
+        "aspect-ratio": "1"
+    }}
+/>
