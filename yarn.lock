@@ -312,6 +312,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@astrojs/prefetch@npm:^0.0.8":
+  version: 0.0.8
+  resolution: "@astrojs/prefetch@npm:0.0.8"
+  dependencies:
+    throttles: ^1.0.1
+  checksum: 2e68855b570b498bd7431a0be24d8c45975ff7b2b79ad6d853d0539ee03351d24ff281fcc7902ea93da32bcfe6d887187495e412a04b0679cb65da7341f63c92
+  languageName: node
+  linkType: hard
+
 "@astrojs/prism@npm:^1.0.0":
   version: 1.0.1
   resolution: "@astrojs/prism@npm:1.0.1"
@@ -1880,6 +1889,7 @@ __metadata:
     "@astrojs/image": ^0.9.3
     "@astrojs/partytown": ^1.0.1
     "@astrojs/preact": ^1.2.0
+    "@astrojs/prefetch": ^0.0.8
     "@astrojs/sitemap": ^1.0.0
     "@astrojs/vercel": ^2.1.1
     "@docsearch/react": 3.2.1
@@ -5974,6 +5984,13 @@ __metadata:
     mkdirp: ^1.0.3
     yallist: ^4.0.0
   checksum: a04c07bb9e2d8f46776517d4618f2406fb977a74d914ad98b264fc3db0fe8224da5bec11e5f8902c5b9bcb8ace22d95fbe3c7b36b8593b7dfc8391a25898f32f
+  languageName: node
+  linkType: hard
+
+"throttles@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "throttles@npm:1.0.1"
+  checksum: 0f3b36b8fcba720df7ab283f40f4e4d6b1b31939dba7fafac6e4e8bc1743eeaff546916a66344be7af1d7a2d014d799e7924009a15118887aef0cfc5292559a1
   languageName: node
   linkType: hard
 
