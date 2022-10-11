@@ -9,6 +9,9 @@ import * as CONFIG from "../config";
 <!DOCTYPE html>
 <html dir={"ltr"} lang={CONFIG.SITE.defaultLanguage ?? "en-US"} class="initial">
     <head>
+        <!-- This is needed because of SEO not liking the redirect -->
+        <!-- and some OG parser don't follow redirect causing the OG to be blank, so this is the fix, it's in-efficient -->
+        <!-- but works -->
         <HeadCommon />
         <HeadSEO frontmatter={{} as any} canonicalUrl={new URL(Astro.url.pathname, Astro.site)} />
         <script is:inline>
