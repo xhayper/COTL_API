@@ -1,4 +1,4 @@
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel/static";
 import { defineConfig } from "astro/config";
 import partytown from "@astrojs/partytown";
 import robotsTxt from "astro-robots-txt";
@@ -9,12 +9,14 @@ import image from "@astrojs/image";
 
 // https://astro.build/config
 export default defineConfig({
-    output: "server",
+    // output: "server",
+    output: "static",
     adapter: vercel(),
     integrations: [
         preact({ compat: true }),
         sitemap({
             customPages: [
+                "https://cotl-api.vercel.app/",
                 "https://cotl-api.vercel.app/introduction",
                 "https://cotl-api.vercel.app/getting-started",
                 "https://cotl-api.vercel.app/items",

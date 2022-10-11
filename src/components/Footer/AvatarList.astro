@@ -82,9 +82,10 @@ const additionalContributors = unique.length - recentContributors.length; // lis
                         <Image
                             alt={`Contributor ${item.login}`}
                             title={`Contributor ${item.login}`}
-                            width="64"
-                            height="64"
-                            quality="100"
+                            width={"64"}
+                            height={"64"}
+                            quality={100}
+                            format={"png"}
                             src={`https://avatars.githubusercontent.com/u/${item.id}`}
                         />
                     </a>
