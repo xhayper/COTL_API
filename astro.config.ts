@@ -1,4 +1,4 @@
-import vercel from "@astrojs/vercel/static";
+import vercel from "@astrojs/vercel/serverless";
 import { defineConfig } from "astro/config";
 import partytown from "@astrojs/partytown";
 import robotsTxt from "astro-robots-txt";
@@ -9,8 +9,8 @@ import image from "@astrojs/image";
 
 // https://astro.build/config
 export default defineConfig({
-    // output: "server",
-    output: "static",
+    output: "server",
+    // output: "static",
     adapter: vercel(),
     integrations: [
         preact({ compat: true }),
