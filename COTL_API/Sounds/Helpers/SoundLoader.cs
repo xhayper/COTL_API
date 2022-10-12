@@ -36,10 +36,7 @@ public class SoundLoader : MonoBehaviour
     public string CreateSound(string fileName, string name = null)
     {
         Sound sound = SoundHelpers.MakeSound(fileName);
-        if(name == null)
-        {
-            name = fileName;
-        };
+        name ??= fileName;
         Sounds.Add(name, sound);
         return name; // Return name of sound in the 'Sounds' dictionary!
     }
