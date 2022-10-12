@@ -1,6 +1,5 @@
 ﻿using System;
 using HarmonyLib;
-using Lamb.UI;
 using System.Linq;
 using Lamb.UI.PauseMenu;
 using UnityEngine;
@@ -30,17 +29,12 @@ internal static class UIPatches
             GameObject Container = new GameObject("Container");
             Container.transform.SetParent(parentMenu);
             Container.layer = UIHelpers.UILayer;
-            Container.transform.localPosition = new Vector3(0f, 360f, 0);
+            Container.transform.position = Vector3.zero;
             Container.transform.localScale = Vector3.one;
 
             PauseMenuBase.Parent = Container.transform;
 
             List<PauseMenuBase> PauseMenuItems = PauseMenuQueue.Select(x => Container.AddComponent(x) as PauseMenuBase).ToList();
-
-            /*foreach(Type type in PauseMenuQueue)
-            {
-                PauseMenuBase woo = Container.AddComponent(type) as PauseMenuBase;
-            }*/
         }
     }
 }
