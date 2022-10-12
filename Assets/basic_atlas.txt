@@ -6,28 +6,28 @@ filter: Linear,Linear
 repeat: none
 HEAD_SKIN_TOP:HEAD_SKIN_TOP_BACK
   rotate: false
-  xy: 0, 0
+  xy: 0, 127
   size: 111, 127
   orig: 111, 127
   offset: 0, 0
   index: -1
 HEAD_SKIN_BTM:HEAD_SKIN_BTM_BACK
   rotate: false
-  xy: 0, 127
+  xy: 0, 0
   size: 111, 127
   orig: 111, 127
   offset: 0, 0
   index: -1
 HEAD_SKIN_TOP:HEAD_SKIN_TOP
   rotate: false
-  xy: 111, 0
+  xy: 111, 127
   size: 149, 127
   orig: 149, 127
   offset: 0, 0
   index: -1
 HEAD_SKIN_BTM:HEAD_SKIN_BTM
   rotate: false
-  xy: 111, 127
+  xy: 111, 0
   size: 149, 127
   orig: 149, 127
   offset: 0, 0

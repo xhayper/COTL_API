@@ -49,11 +49,6 @@ public class Plugin : BaseUnityPlugin
 
         _debug = Config.Bind("", "debug", false, "");
 
-        if (Debug)
-        {
-            AddDebugContent();
-        }
-
         Logger.LogInfo($"COTL API loaded");
     }
 
@@ -94,6 +89,11 @@ public class Plugin : BaseUnityPlugin
     {
         Harmony.PatchAll(Assembly.GetExecutingAssembly());
         Logger.LogInfo($"{Harmony.GetAllPatchedMethods().Count()} harmony patches applied");
+        
+        if (Debug)
+        {
+            AddDebugContent();
+        }
     }
 
     private void OnDisable()
