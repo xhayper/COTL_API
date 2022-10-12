@@ -8,6 +8,9 @@ using HarmonyLib;
 using Lamb.UI;
 using System;
 using Spine;
+using Spine.Unity.AttachmentTools;
+using System.IO;
+using UnityEngine.Experimental.Rendering;
 
 namespace COTL_API.CustomSkins;
 
@@ -16,7 +19,7 @@ public class CustomSkinManager
 {
     internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = new();
     internal static readonly Dictionary<string, Skin> CustomSkins = new();
-    internal static readonly Dictionary<string, Texture> SkinTextures = new();
+    internal static readonly Dictionary<string, Texture2D> SkinTextures = new();
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
 
     internal static readonly List<Tuple<int, string>> Slots = new() {
@@ -260,8 +263,42 @@ public class CustomSkinManager
             else
                 Plugin.Logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
         }
+        
+        
+        Material runtimeMaterial;
+        Texture2D runtimeTexture;
+        
+    
+        var skin2 = skin.GetRepackedSkin(name, SkinMaterials[name], out runtimeMaterial, out runtimeTexture);
+        
+        foreach (Tuple<int, string> ovr in overrides)
+        {
+            string ovrName = ovr.Item2;
+            int slot = ovr.Item1;
+            Attachment a = skin2.GetAttachment(slot, ovrName).Copy();
+            if (a is MeshAttachment mesh)
+            {
+                AtlasRegion atlasRegion = mesh.RendererObject as AtlasRegion;
+                if (atlasRegion != null)
+                {
+                    float pw = atlasRegion.page.width;
+                    float ph = atlasRegion.page.height;
+                    float x = atlasRegion.x;
+                    float y = atlasRegion.y;
+                    float w = atlasRegion.width;
+                    float h = atlasRegion.height;
+                    mesh.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
+                    mesh.UVs = new[]
+                        { (x + w) / pw, 1-((y + h) / ph), (x + w) / pw, 1-(y / ph), x / pw, 1-(y / ph), x / pw, 1-((y + h) / ph) };
+                    mesh.WorldVerticesLength = 8;
+                }
 
-        CustomSkins.Add(name, skin);
+                skin2.SetAttachment(slot, ovrName, mesh);
+            }
+        }
+        
+        CustomSkins.Add(name, skin2);
+        
     }
 
     [HarmonyPatch(typeof(SkeletonData), nameof(SkeletonData.FindSkin), new[] { typeof(string) })]
@@ -274,23 +311,58 @@ public class CustomSkinManager
         DataManager.SetFollowerSkinUnlocked(skinName);
         __result = CustomSkins[skinName];
     }
-
-    [HarmonyPatch(typeof(MeshGenerator), nameof(MeshGenerator.GenerateSingleSubmeshInstruction))]
-    [HarmonyPostfix]
-    public static void MeshGenerator_GenerateSingleSubmeshInstruction(ref SkeletonRendererInstruction instructionOutput)
+  
+    [HarmonyPatch(typeof(Graphics), "CopyTexture", new[] { typeof(Texture), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int), typeof(Texture), typeof(int), typeof(int), typeof(int), typeof(int) })]
+    [HarmonyPrefix]
+    public static bool Graphics_CopyTexture(ref Texture src, int srcElement, int srcMip, int srcX, int srcY, int srcWidth, int srcHeight, ref Texture dst, int dstElement, int dstMip, int dstX, int dstY)
     {
-        if (instructionOutput.submeshInstructions.Items[0].skeleton != null &&
-            instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null &&
-            instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("Custom")))
+        if (src is Texture2D s2d)
+        {
+            if (src.graphicsFormat != dst.graphicsFormat)
+            {
+                var orig = DuplicateTexture(s2d, dst.graphicsFormat);
+                Texture2D dst2d = (Texture2D)dst;
+                var fullPix = orig.GetPixels32();
+                var croppedPix = new Color32[srcWidth * srcHeight];
+                for (int i = 0; i < srcHeight; i++)
+                {
+                    for (int j = 0; j < srcWidth; j++)
+                    {
+                        croppedPix[(i * srcWidth) + j] = fullPix[((i + srcY) * orig.width) + j + srcX];
+                    }
+                }
+                dst2d.SetPixels32(croppedPix);
+            }
+            return false;
+        }
 
-            instructionOutput.submeshInstructions.Items[0].material =
-                SkinMaterials[instructionOutput.submeshInstructions.Items[0].skeleton.Skin.Name];
+        return true;
     }
-
+    
+    private static Texture2D DuplicateTexture(Texture2D source, GraphicsFormat format)
+    {
+        RenderTexture renderTex = RenderTexture.GetTemporary(
+            source.width,
+            source.height,
+            0,
+            RenderTextureFormat.Default,
+            RenderTextureReadWrite.Linear
+        );
+ 
+        Graphics.Blit(source, renderTex);
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = renderTex;
+        Texture2D readableText = new(source.width, source.height, format, TextureCreationFlags.None);
+        readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
+        readableText.Apply();
+        RenderTexture.active = previous;
+        RenderTexture.ReleaseTemporary(renderTex);
+        return readableText;
+    }
+    
     [HarmonyPatch(typeof(FollowerInformationBox), nameof(FollowerInformationBox.ConfigureImpl))]
     [HarmonyPostfix]
-    public static void FollowerInformationBox_ConfigureImpl(FollowerInformationBox __instance)
-    {
+    public static void FollowerInformationBox_ConfigureImpl(FollowerInformationBox __instance) {
         if (SkinTextures.ContainsKey(__instance.FollowerInfo.SkinName))
             __instance.FollowerSpine.Skeleton.Skin = CustomSkins[__instance.FollowerInfo.SkinName];
     }
