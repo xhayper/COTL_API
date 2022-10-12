@@ -17,9 +17,6 @@ public class SoundLoader : MonoBehaviour
     // All existent SoundLoader instances, for management purposes.
     internal static List<SoundLoader> AllInstances = new List<SoundLoader>();
 
-    GameObject Parent;
-
-
 
     void Start()
     {

@@ -14,7 +14,8 @@ using Unity.Audio;
 namespace COTL_API.Sounds.Handler;
 internal class SoundHandler
 {
-    ChannelSafeHandle handle; // SafeHandle. Important. Please do not remove.
+    // Channel through which all the sound is played.
+    Channel handle;
 
     Sound _sound; // Current sound.
 
@@ -25,76 +26,42 @@ internal class SoundHandler
     {
         _sound = sound;
         _id = id;
-        handle = new ChannelSafeHandle();
+        handle = new Channel();
     }
 
     public RESULT Play()
     {
         var system = RuntimeManager.CoreSystem;
-        RESULT result = system.playSound(_sound, new ChannelGroup(), false, out Channel channel);
-        if(result != RESULT.OK)
+        RESULT result = system.playSound(_sound, new ChannelGroup(), false, out handle);
+        if (result != RESULT.OK)
         {
             result.IfErrorPrintWith($"Play -- SoundHandler instance id: {Id}");
             return result;
         }
 
-        handle.gCHandle = GCHandle.Alloc(channel, GCHandleType.Pinned);
-        handle.SetTheHandle(handle.gCHandle.AddrOfPinnedObject());
         return result;
     }
 
     public void SetVolume(float a)
     {
-        Channel channel = (Channel)handle.gCHandle.Target;
-        RESULT result = channel.setVolume(a);
+        RESULT result = handle.setVolume(a);
         result.IfErrorPrintWith($"SetVolume -- SoundHandler instance id: {Id}");
     }
 
     public void Stop()
     {
-        Channel channel = (Channel)handle.gCHandle.Target;
-        RESULT result = channel.stop();
+        RESULT result = handle.stop();
         result.IfErrorPrintWith($"Stop -- SoundHandler instance id: {Id}");
-
-        handle.Dispose();
     }
 
     public void Pause(bool pause)
     {
-        Channel channel = (Channel)handle.gCHandle.Target;
-        channel.isPlaying(out bool isPlaying);
+        handle.isPlaying(out bool isPlaying);
         bool flag = pause && isPlaying;
         if (flag)
         {
-            RESULT result = channel.setPaused(pause);
+            RESULT result = handle.setPaused(pause);
             result.IfErrorPrintWith($"Pause -- SoundHandler instance id: {Id}");
         }
-    }
-}
-
-internal class ChannelSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
-{
-    public GCHandle gCHandle;
-        
-    public ChannelSafeHandle()
-        : base(true)
-    {
-    }
-
-    public void SetTheHandle(IntPtr handle)
-    {
-        SetHandle(handle);
-    }
-
-    [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-    protected override bool ReleaseHandle()
-    {
-        FileLog.Log("SafeHandle called ReleaseHandle()");
-        if (gCHandle.IsAllocated)
-        {
-            gCHandle.Free();
-            FileLog.Log("SafeHandle did gCHandle.Free()");
-        }
-        return true;
     }
 }
