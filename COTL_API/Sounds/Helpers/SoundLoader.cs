@@ -121,13 +121,40 @@ public class SoundLoader : MonoBehaviour
         Handlers.ForEach(x => x.SetVolume(SoundHelpers.MusicVolume));
     }
 
+    public void ClearSounds()
+    {
+        // Clear all Sounds from the dictionary
+        Sounds = new Dictionary<string, Sound>();
+    }
 
-    // == PLAYBACK CONTROLS ==
 
+    // == CHANNEL INSTANCE ==
     SoundHandler GetHandlerByID(string id)
     {
         return Handlers.Where(x => x.Id == id).First();
     }
+
+    public void SyncVolume(string id)
+    {
+        SoundHandler sl = GetHandlerByID(id);
+        sl.SetVolume(SoundHelpers.MusicVolume);
+    }
+
+    public void VolumeMultiplier(string id, float mul)
+    {
+        SoundHandler sl = GetHandlerByID(id);
+        sl.SetMultiplier(mul);
+        sl.SetVolume(SoundHelpers.MusicVolume);
+    }
+
+    public void SetReverb(string id, bool active, float amount)
+    {
+        SoundHandler sl = GetHandlerByID(id);
+        sl.SetReverb(active, amount);
+    }
+
+
+    // == PLAYBACK CONTROLS ==
 
     public void Stop(string name)
     {

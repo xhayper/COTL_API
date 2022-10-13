@@ -22,7 +22,7 @@ public static class SoundHelpers
     internal static Sound MakeSound(string fileName, bool loop = false)
     {
         string path = GetPath(fileName);
-        var system = FMODUnity.RuntimeManager.CoreSystem;
+        FMOD.System system = RuntimeManager.CoreSystem;
 
         MODE mode = loop ? MODE.LOOP_NORMAL : MODE.LOOP_OFF;
 
@@ -41,7 +41,7 @@ public static class SoundHelpers
 
     internal static RESULT PlaySound(Sound sound, Volume volume = Volume.Master)
     {
-        var system = RuntimeManager.CoreSystem;
+        FMOD.System system = RuntimeManager.CoreSystem;
         RESULT result = system.playSound(sound, new ChannelGroup(), false, out Channel channel);
         channel.SyncVolume(volume);
         return result;
