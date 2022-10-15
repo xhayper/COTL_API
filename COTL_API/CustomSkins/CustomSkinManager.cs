@@ -175,9 +175,45 @@ public class CustomSkinManager
         SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
         CustomAtlases.Add(name, atlas);
 
-        List<Tuple<int, string>> overrides = atlas.GetAtlas().regions.Select(r => Slots.First(s =>
+        List<Tuple<int, string>> overrideRegions = atlas.GetAtlas().regions.Select(r => Slots.First(s =>
             (s.Item2 == r.name.Split(':')[1]) &&
             (s.Item1 == (int)(SlotsEnum)Enum.Parse(typeof(SlotsEnum), r.name.Split(':')[0])))).ToList();
+        
+        List<Tuple<int, string, float, float, float, float>> overrides = new();
+        List<AtlasRegion> list = atlas.GetAtlas().regions;
+        for (int index = 0; index < list.Count; index++)
+        {
+            float[] scale = new[] { 0f, 0f, 1f, 1f };
+            AtlasRegion atlasRegion = list[index];
+            string[] nameSplit = atlasRegion.name.Split(':');
+            if (nameSplit.Length == 3)
+            {
+                string scales = nameSplit[2];
+                string[] scaleSplit = scales.Split(',');
+                if (scaleSplit.Length == 2)
+                {
+                    scale[2] = float.Parse(scaleSplit[0]);
+                    scale[3] = float.Parse(scaleSplit[1]);
+                }
+                else if (scaleSplit.Length == 4)
+                {
+                    scale[0] = float.Parse(scaleSplit[2]);
+                    scale[1] = float.Parse(scaleSplit[3]);
+                    scale[2] = float.Parse(scaleSplit[0]);
+                    scale[3] = float.Parse(scaleSplit[1]);
+                }
+                else
+                {
+                    Plugin.Logger.LogWarning($"Invalid scale length: {scale.Length}");
+                }
+                atlasRegion.name = nameSplit[0] + ":" + nameSplit[1];
+            }
+            else if (nameSplit.Length > 3)
+            {
+                Plugin.Logger.LogWarning($"Invalid name length: {nameSplit.Length}");
+            }
+            overrides.Add(Tuple.Create(overrideRegions[index].Item1, overrideRegions[index].Item2, scale[0], scale[1], scale[2], scale[3]));
+        }
 
         CreateNewFollowerType(name);
         CreateSkin(name, overrides);
@@ -192,8 +228,153 @@ public class CustomSkinManager
                     Skin = name
                 }
             },
-            SlotAndColours = WorshipperData.Instance.Characters[0].SlotAndColours,
-            StartingSlotAndColours = WorshipperData.Instance.Characters[0].StartingSlotAndColours,
+            SlotAndColours = new List<WorshipperData.SlotsAndColours> {
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(1, 1, 0)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                },
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(0, 1, 0)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                },
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(0, 1, 1)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                },
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(0, 0, 1)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                },
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(1, 0, 1)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                },
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(1, 0, 0)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                },
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(1, 0.5f, 0)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                },
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(0.5f, 0, 1f)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                },
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(0.7f, 0.7f, 0.7f)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                },
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(0.1f, 0.1f, 0.1f)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                }
+            },
+            StartingSlotAndColours = new List<WorshipperData.SlotsAndColours> {
+                new() {
+                    SlotAndColours = new List<WorshipperData.SlotAndColor> {
+                        new ("MARKINGS", new Color(1, 1, 0)),
+                        new ("ARM_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("ARM_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_LEFT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("LEG_RIGHT_SKIN", new Color(1, 0.82f, 0)),
+                        new ("BODY_SKIN", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_BOWED", new Color(1, 0.7f, 0)),
+                        new ("BODY_SKIN_UP", new Color(1, 0.7f, 0))
+                    },
+                    AllColor = new Color(1, 0.7f, 0)
+                }
+            },
             TwitchPremium = false,
             _hidden = false,
             _dropLocation = WorshipperData.DropLocation.Other,
@@ -201,33 +382,53 @@ public class CustomSkinManager
         });
     }
 
-    internal static void CreateSkin(string name, List<Tuple<int, string>> overrides)
+    internal static void CreateSkin(string name, List<Tuple<int, string, float, float, float, float>> overrides)
     {
         // Create skin
         Skin skin = new(name);
 
-        WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog").Attachments.ToList().ForEach(att =>
+        Skin dog = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog");
+        dog.Attachments.ToList().ForEach(att =>
         {
             if (!overrides.Any(o => o.Item1 == att.SlotIndex && o.Item2 == att.Name))
             {
                 skin.SetAttachment(att.SlotIndex, att.Name, att.Attachment.Copy());
             }
         });
+        dog.Bones.ToList().ForEach(bone =>
+        {
+            skin.Bones.Add(bone);
+        });
+        dog.Constraints.ToList().ForEach(con =>
+        {
+            skin.Constraints.Add(con);
+        });
 
-        foreach (Tuple<int, string> ovr in overrides)
+        foreach (Tuple<int, string, float, float, float, float> ovr in overrides)
         {
             string ovrName = ovr.Item2;
             int slot = ovr.Item1;
+            float translationX = ovr.Item3;
+            float translationY = ovr.Item4;
+            float scaleX = ovr.Item5;
+            float scaleY = ovr.Item6;
             AtlasRegion atlasRegion = CustomAtlases[name].GetAtlas().FindRegion((SlotsEnum)slot + ":" + ovrName);
             Attachment a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog")
                 .GetAttachment(slot, ovrName).Copy();
+
+            if (ovrName == "MARKINGS")
+            {
+                a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog")
+                    .GetAttachment(78, "HEAD_SKIN_TOP").Copy();
+            }
+            
             if (a is MeshAttachment customAttachment)
             {
                 float minX = int.MaxValue;
                 float maxX = int.MinValue;
                 float minY = int.MaxValue;
                 float maxY = int.MinValue;
-
+                
                 for (int j = 0; j < customAttachment.Vertices.Length; j++)
                 {
                     if (j % 3 == 0)
@@ -241,6 +442,20 @@ public class CustomSkinManager
                         maxX = Math.Max(maxX, customAttachment.Vertices[j]);
                     }
                 }
+                
+                float diffX = maxX - minX;
+                float diffY = maxY - minY;
+
+                minX += translationX;
+                minY += translationY;
+                
+                float centerX = minX + (diffX / 2.0f);
+                float centerY = minY + (diffY / 2.0f);
+                
+                minX = centerX - ((diffX / 2.0f) * scaleX);
+                maxX = centerX + ((diffX / 2.0f) * scaleX);
+                minY = centerY - ((diffY / 2.0f) * scaleY);
+                maxY = centerY + ((diffY / 2.0f) * scaleY);
 
                 customAttachment.Name = "Custom" + ovrName;
                 customAttachment.SetRegion(atlasRegion);
@@ -268,10 +483,9 @@ public class CustomSkinManager
         Material runtimeMaterial;
         Texture2D runtimeTexture;
         
-    
         var skin2 = skin.GetRepackedSkin(name, SkinMaterials[name], out runtimeMaterial, out runtimeTexture);
         
-        foreach (Tuple<int, string> ovr in overrides)
+        foreach (Tuple<int, string, float, float, float, float> ovr in overrides)
         {
             string ovrName = ovr.Item2;
             int slot = ovr.Item1;
