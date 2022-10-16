@@ -59,6 +59,7 @@ public static class GuidManager
 
             APIDataManager.APIData.SetValue<long>(MaxDataKey, enumValue + 1);
             APIDataManager.APIData.SetValue<long>(saveKey, enumValue);
+            APIDataManager.Save();
         }
 
         ReverseMapper[enumValue] = typeof(T);

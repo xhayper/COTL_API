@@ -18,6 +18,8 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void Save()
     {
+        APIDataManager.Save();
+
         if (!DataManager.Instance.AllowSaving || CheatConsole.IN_DEMO) return;
 
         _readWriter.Write(Data, MakeSaveSlot(SaveSlot));
