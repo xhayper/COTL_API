@@ -1,6 +1,5 @@
-﻿using HarmonyLib;
-using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
+using HarmonyLib;
 
 namespace COTL_API.Helpers;
 

@@ -1,10 +1,10 @@
-﻿using HarmonyLib;
-using Lamb.UI;
+﻿using System.Collections.Generic;
 using Lamb.UI.RefineryMenu;
 using src.UI.InfoCards;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using HarmonyLib;
+using Lamb.UI;
 
 //if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
