@@ -110,7 +110,7 @@ public static class GameObjectExtensions
     {
         Image img = obj.GetComponent<Image>();
 
-        if(img = null)
+        if(img == null)
         {
             Plugin.Logger.LogError("EditImage: Image component not found.");
             return obj;
@@ -125,7 +125,7 @@ public static class GameObjectExtensions
         Sprite sprite = UITextureLoader.MakeSprite(imagePath, filter);
 
         Image img = obj.GetComponent<Image>();
-        if (img = null)
+        if (img == null)
         {
             Plugin.Logger.LogError("EditImage: Image component not found.");
             return obj;
@@ -138,7 +138,7 @@ public static class GameObjectExtensions
     public static GameObject ChangeImageOpacity(this GameObject obj, int opacity = 100)
     {
         Image img = obj.GetComponent<Image>();
-        if (img = null)
+        if (img == null)
         {
             Plugin.Logger.LogError("ChangeOpacity: Image component not found.");
             return obj;
