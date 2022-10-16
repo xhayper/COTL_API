@@ -1,7 +1,7 @@
-﻿using HarmonyLib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using HarmonyLib;
 
 //if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;

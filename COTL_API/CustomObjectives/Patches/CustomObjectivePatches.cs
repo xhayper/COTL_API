@@ -1,8 +1,8 @@
-﻿using HarmonyLib;
-using MMTools;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection.Emit;
+using System.Linq;
+using HarmonyLib;
+using MMTools;
 
 //if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomObjectives;
