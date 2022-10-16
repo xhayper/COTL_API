@@ -19,11 +19,11 @@ outdir = "./build"
 
 [[build.copy]]
 source = "bin/Release/COTL_API/COTL_API.dll"
-target = "plugins/COTL_API.dll"
+target = "plugins/io.github.xhayper.COTL_API/COTL_API.dll"
 
 [[build.copy]]
 source = "Assets"
-target = "plugins/Assets"
+target = "plugins/io.github.xhayper.COTL_API/Assets"
 
 [publish]
 repository = "https://cult-of-the-lamb.thunderstore.io"
