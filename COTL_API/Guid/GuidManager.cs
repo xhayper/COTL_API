@@ -29,7 +29,7 @@ public static class GuidManager
         List<T> itemList = Enum.GetValues(typeof(T)).Cast<T>().ToList();
 
         string startKey = typeof(T).Name + "_";
-        foreach (KeyValuePair<string, dynamic> item in APIDataManager.APIData.Data)
+        foreach (KeyValuePair<string, object> item in APIDataManager.APIData.Data)
         {
             if (!item.Key.StartsWith(startKey)) continue;
 
