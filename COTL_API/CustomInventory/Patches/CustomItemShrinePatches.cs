@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+//if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
 
 [HarmonyPatch]
@@ -15,7 +16,7 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static void InventoryItemDisplay_GetItemImages(ref InventoryItemDisplay __instance)
     {
-        foreach (InventoryItemDisplay.MyDictionaryEntry customItem in CustomItems.Select(type => new InventoryItemDisplay.MyDictionaryEntry {
+        foreach (InventoryItemDisplay.MyDictionaryEntry customItem in CustomInventory.CustomItemManager.CustomItems.Select(type => new InventoryItemDisplay.MyDictionaryEntry {
                      key = type.Key,
                      value = type.Value.InventoryIcon
                  }))
@@ -43,7 +44,7 @@ public static partial class CustomItemManager
     [HarmonyPatch(typeof(Interaction_OfferingShrine), nameof(Interaction_OfferingShrine.OnInteract))]
     public static bool OnInteract(ref Interaction_OfferingShrine __instance, ref StateMachine state)
     {
-        if (!CustomItems.ContainsKey((InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type)) return true;
+        if (!CustomInventory.CustomItemManager.CustomItems.ContainsKey((InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type)) return true;
         
         Helpers.OnInteractHelper.Interaction_OnInteract(__instance, state);
         if (__instance.StructureInfo.Inventory.Count > 0)
@@ -78,11 +79,11 @@ public static partial class CustomItemManager
         [HarmonyPrefix]
         private static void Prefix(ref Structures_OfferingShrine __instance)
         {
-            foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItems.Where(item => item.Value.AddItemToOfferingShrine))
+            foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomInventory.CustomItemManager.CustomItems.Where(item => item.Value.AddItemToOfferingShrine))
             {
                 switch (item.Value.Rarity)
                 {
-                    case ItemRarity.COMMON:
+                    case CustomInventory.CustomItemManager.ItemRarity.COMMON:
                     {
                         if (!__instance.Offerings.Contains(item.Key))
                         {
@@ -92,7 +93,7 @@ public static partial class CustomItemManager
 
                         break;
                     }
-                    case ItemRarity.RARE:
+                    case CustomInventory.CustomItemManager.ItemRarity.RARE:
                     {
                         if (!__instance.RareOfferings.Contains(item.Key))
                         {

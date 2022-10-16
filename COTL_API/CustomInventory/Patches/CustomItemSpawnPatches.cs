@@ -9,6 +9,7 @@ using UnityEngine;
 using HarmonyLib;
 using System;
 
+//if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
 
 /// <summary>
@@ -25,7 +26,6 @@ public static partial class CustomItemManager
         [HarmonyPrefix]
         private static bool Prefix(InventoryItem.ITEM_TYPE type, int quantity, Vector3 position, float StartSpeed, ref Action<PickUp> result, ref PickUp __result)
         {
-            Plugin.Logger.LogWarning($"Type: {type}, Qty: {quantity}");
             if (!CustomItems.ContainsKey(type)) return true;
             Plugin.Logger.LogWarning($"Running custom spawn.");
             GameObject gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
