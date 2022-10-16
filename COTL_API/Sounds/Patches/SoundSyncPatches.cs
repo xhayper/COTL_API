@@ -1,12 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using HarmonyLib;
-using Lamb;
+﻿using HarmonyLib;
 using Lamb.UI.SettingsMenu;
-using COTL_API.Sounds.Helpers;
-using FMOD;
-using FMODUnity;
+using COTL_API.Sounds.Load;
 
 namespace COTL_API.Sounds.Patches;
 

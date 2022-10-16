@@ -1,9 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using COTL_API.UI.Base;
 using COTL_API.UI.Patches;
 
 namespace COTL_API.UI.Helpers;
@@ -14,9 +10,13 @@ public static class UIHelpers
     public static LayerMask UILayer => _UILayer;
 
     // UI Helper methods:
-    public static void AddToPauseMenu<T>() where T : PauseMenuBase
+    public static void AddToPauseMenu<T>() where T : UIMenuBase
     {
         UIPatches.PauseMenuQueue.Add(typeof(T));
+    }
+    public static void AddToStartMenu<T>() where T : UIMenuBase
+    {
+        UIPatches.StartMenuQueue.Add(typeof(T));
     }
 
     public static GameObject CreateUIObject(string name)

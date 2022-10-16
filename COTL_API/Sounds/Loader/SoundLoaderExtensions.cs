@@ -1,11 +1,6 @@
-﻿using FMOD;
-using FMODUnity;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace COTL_API.Sounds.Helpers;
+namespace COTL_API.Sounds.Load;
 public static class SoundLoaderExtensions
 {
     public static SoundLoader AddSoundLoader(this GameObject obj)

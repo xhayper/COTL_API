@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
-using COTL_API.Sounds.Handler;
 using UnityEngine;
 using FMOD;
+using COTL_API.Sounds.Helpers;
 
-namespace COTL_API.Sounds.Helpers;
+namespace COTL_API.Sounds.Load;
 public class SoundLoader : MonoBehaviour
 {
     // Sounds -- All users should really care about.
@@ -48,7 +47,7 @@ public class SoundLoader : MonoBehaviour
         return Sounds[name];
     }
 
-    public string AddSound(Sound sound, string name)
+    public string AddExistingSound(Sound sound, string name)
     {
         if (!Sounds.ContainsValue(sound))
         {
@@ -83,7 +82,7 @@ public class SoundLoader : MonoBehaviour
         {
             Plugin.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
-            
+
         Sound sound = Sounds[name];
         sound.setMode(MODE.LOOP_NORMAL); // Music should loop
 
@@ -131,26 +130,32 @@ public class SoundLoader : MonoBehaviour
     // == CHANNEL INSTANCE ==
     SoundHandler GetHandlerByID(string id)
     {
-        return Handlers.Where(x => x.Id == id).First();
+        return Handlers.Where(x => x.Id == id).FirstOrDefault();
     }
 
     public void SyncVolume(string id)
     {
         SoundHandler sl = GetHandlerByID(id);
-        sl.SetVolume(SoundHelpers.MusicVolume);
+        sl?.SetVolume(SoundHelpers.MusicVolume);
     }
 
     public void VolumeMultiplier(string id, float mul)
     {
         SoundHandler sl = GetHandlerByID(id);
-        sl.SetMultiplier(mul);
-        sl.SetVolume(SoundHelpers.MusicVolume);
+        sl?.SetMultiplier(mul);
+        sl?.SetVolume(SoundHelpers.MusicVolume);
     }
 
     public void SetReverb(string id, bool active, float amount)
     {
         SoundHandler sl = GetHandlerByID(id);
-        sl.SetReverb(active, amount);
+        sl?.SetReverb(active, amount);
+    }
+
+    public void SetLowPass(string id, float amount)
+    {
+        SoundHandler sl = GetHandlerByID(id);
+        sl?.SetLowPass(amount);
     }
 
 
@@ -159,19 +164,19 @@ public class SoundLoader : MonoBehaviour
     public void Stop(string name)
     {
         SoundHandler sh = GetHandlerByID(name);
-        sh.Stop();
+        sh?.Stop();
         Handlers.Remove(sh);
     }
 
-    public void Pause(string name)
+    public void Pause(string name, bool pause)
     {
         SoundHandler sh = GetHandlerByID(name);
-        sh.Pause(true);
+        sh?.Pause(pause);
     }
 
-    public void Unpause(string name)
+    public bool IsPlaying(string name, bool pause)
     {
         SoundHandler sh = GetHandlerByID(name);
-        sh.Pause(false);
+        return sh == null ? false : sh.isPlaying();
     }
 }

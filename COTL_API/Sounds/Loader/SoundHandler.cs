@@ -1,18 +1,10 @@
 ﻿using FMOD;
 using FMODUnity;
-using HarmonyLib;
-using Microsoft.Win32.SafeHandles;
 using COTL_API.Sounds.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Runtime.ConstrainedExecution;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using Unity.Audio;
 using UnityEngine;
 
-namespace COTL_API.Sounds.Handler;
+namespace COTL_API.Sounds.Load;
 internal class SoundHandler
 {
     // Channel through which all the sound is played.
@@ -62,10 +54,16 @@ internal class SoundHandler
         result.IfErrorPrintWith($"Stop -- SoundHandler instance id: {Id}");
     }
 
+    public bool isPlaying()
+    {
+        RESULT result = handle.isPlaying(out bool isPlaying);
+        result.IfErrorPrintWith($"isPlaying -- SoundHandler instance id: {Id}");
+        return isPlaying;
+    }
+
     public void Pause(bool pause)
     {
-        handle.isPlaying(out bool isPlaying);
-        bool flag = pause && isPlaying;
+        bool flag = pause && isPlaying();
         if (flag)
         {
             RESULT result = handle.setPaused(pause);
@@ -74,21 +72,18 @@ internal class SoundHandler
     }
     public void SetReverb(bool active, float a)
     {
-        FMOD.System system = RuntimeManager.CoreSystem;
-
         // REVERB PRESET
-        REVERB_PROPERTIES prop = active ? PRESET.HALLWAY() : default;
-        system.setReverbProperties(2, ref prop);
+        // REVERB_PROPERTIES prop = active ? PRESET.HALLWAY() : default;
+        // system.setReverbProperties(2, ref prop);
 
         float x = Mathf.Clamp(a, 0f, 1f) * Convert.ToInt32(active);
 
         // SET REVERB
-        RESULT result = handle.setReverbProperties(2, x);
+        RESULT result = handle.setReverbProperties(0, x);
         result.IfErrorPrintWith($"SetReverb -- SoundHandler instance id: {Id}");
     }
     public void SetLowPass(float a)
     {
-        FMOD.System system = RuntimeManager.CoreSystem;
         Mathf.Clamp(a, 0f, 1f);
         RESULT result = handle.setLowPassGain(a); // 0 to 1
         result.IfErrorPrintWith($"SetLowPass -- SoundHandler instance id: {Id}");
