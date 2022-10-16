@@ -189,16 +189,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/compiler@npm:^0.26.0":
-  version: 0.26.1
-  resolution: "@astrojs/compiler@npm:0.26.1"
-  checksum: c4751efd93103f727e9b371e0d0a6e3e382fdc6fb737bc7a32de202d7040a75640c3fca50d4d60e3ba46a2445e2c45fa72f64ba74677d87f80d6f3e640097391
+"@astrojs/compiler@npm:^0.27.1":
+  version: 0.27.2
+  resolution: "@astrojs/compiler@npm:0.27.2"
+  checksum: 10e823c4c89e63414c4479f966ed2026f5f0c005d741668d4293d09de49a671946481405e1917f6e1c9f574a846993ac18ae4e6367a72b39d0712b0743d91b43
   languageName: node
   linkType: hard
 
-"@astrojs/image@npm:^0.9.3":
-  version: 0.9.3
-  resolution: "@astrojs/image@npm:0.9.3"
+"@astrojs/image@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "@astrojs/image@npm:0.10.0"
   dependencies:
     "@altano/tiny-async-pool": ^1.0.2
     http-cache-semantics: ^4.1.0
@@ -212,7 +212,7 @@ __metadata:
   peerDependenciesMeta:
     sharp:
       optional: true
-  checksum: 42021db9a2174ea84ac3ce2e41e6f1ad63d930bb70ff86a4a5fa9e197bfc2e09aba7c808bae90ca5e9f2b1828b48c62c08b873e67dfdeb2c84923cc0c295f90a
+  checksum: 3c32b1662a1a0c54cce0a2e3d08da66639ba7c9a41980a397c058e5ca7856c08bcbfb5e8dc0940e6cb2e5b26621f2ea4b8bddd8f612693045e29a67c691547e5
   languageName: node
   linkType: hard
 
@@ -356,13 +356,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/vercel@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "@astrojs/vercel@npm:2.1.1"
+"@astrojs/vercel@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@astrojs/vercel@npm:2.2.0"
   dependencies:
     "@astrojs/webapi": ^1.1.0
     "@vercel/nft": ^0.22.1
-  checksum: ea80f9d8e2abe718edfc87f1f2ea29d20065cbc4589b35f6a38b03ffea215fab11446c77efd2b1c94539a73efcaa1c797374e90a767e4ace59a0127953d8c888
+  checksum: 9c612bc8d7e9e82c7a5dfce94f22edf520f6eef1b5e55d324b3402adf11cca75c22416c4be9824aa7a40d792f8d1876e1e6c55a967c3ab4b0587dedef0b0f677
   languageName: node
   linkType: hard
 
@@ -1073,10 +1073,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.8.4":
-  version: 18.8.4
-  resolution: "@types/node@npm:18.8.4"
-  checksum: c2b87f6b0b1f02b2ce61ca7cb93ea287119bda086a3f33e48da8f5e70c24ad7141cc3465946e0e36abb7eba70c7b320c7659842096e4aa573b3a8d557322c818
+"@types/node@npm:^18.11.0":
+  version: 18.11.0
+  resolution: "@types/node@npm:18.11.0"
+  checksum: f27f899ab428e5732f04fadadc9203f44bdf3abf56474540ee27da90e4f2ba133faf87263cada4d2271955f92ee6a142bd50683c86290fe5070c19aac44fd654
   languageName: node
   linkType: hard
 
@@ -1364,11 +1364,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^1.4.7":
-  version: 1.4.7
-  resolution: "astro@npm:1.4.7"
+"astro@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "astro@npm:1.5.0"
   dependencies:
-    "@astrojs/compiler": ^0.26.0
+    "@astrojs/compiler": ^0.27.1
     "@astrojs/language-server": ^0.26.2
     "@astrojs/markdown-remark": ^1.1.3
     "@astrojs/telemetry": ^1.0.1
@@ -1389,6 +1389,7 @@ __metadata:
     common-ancestor-path: ^1.0.1
     cookie: ^0.5.0
     debug: ^4.3.4
+    deepmerge-ts: ^4.2.2
     diff: ^5.1.0
     eol: ^0.9.1
     es-module-lexer: ^0.10.5
@@ -1399,6 +1400,7 @@ __metadata:
     gray-matter: ^4.0.3
     html-entities: ^2.3.3
     html-escaper: ^3.0.3
+    import-meta-resolve: ^2.1.0
     kleur: ^4.1.4
     magic-string: ^0.25.9
     mime: ^3.0.0
@@ -1429,7 +1431,7 @@ __metadata:
     zod: ^3.17.3
   bin:
     astro: astro.js
-  checksum: a4791867f567f9b7207fbfecee81e51ba79f4d21cb815f670523f1c3f4d0c0ddb9bf15f4f542eb573e5e73dc627af935fee4f881d1a598b0f0e8c541eeb37498
+  checksum: daf999583459769e0f7f64791ce209c11be9baa84bbba2eccf5d60ecdb920aa6ef2becd76c39dbc2ec478e902e578dedc3989b5853c30e60b8b24ed64f1b2eeb
   languageName: node
   linkType: hard
 
@@ -1886,18 +1888,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cotl_api_docs@workspace:."
   dependencies:
-    "@astrojs/image": ^0.9.3
+    "@astrojs/image": ^0.10.0
     "@astrojs/partytown": ^1.0.1
     "@astrojs/preact": ^1.2.0
     "@astrojs/prefetch": ^0.0.8
     "@astrojs/sitemap": ^1.0.0
-    "@astrojs/vercel": ^2.1.1
+    "@astrojs/vercel": ^2.2.0
     "@docsearch/react": 3.2.1
-    "@types/node": ^18.8.4
-    astro: ^1.4.7
+    "@types/node": ^18.11.0
+    astro: ^1.5.0
     astro-robots-txt: ^0.3.10
     astro-seo: ^0.6.0
-    preact: ^10.11.1
+    preact: ^10.11.2
     prettier: ^2.7.1
     prettier-plugin-astro: ^0.5.5
     react: "npm:@preact/compat@latest"
@@ -1960,6 +1962,13 @@ __metadata:
   version: 0.6.0
   resolution: "deep-extend@npm:0.6.0"
   checksum: 7be7e5a8d468d6b10e6a67c3de828f55001b6eb515d014f7aeb9066ce36bd5717161eb47d6a0f7bed8a9083935b465bc163ee2581c8b128d29bf61092fdf57a7
+  languageName: node
+  linkType: hard
+
+"deepmerge-ts@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "deepmerge-ts@npm:4.2.2"
+  checksum: 137c3650519d9b1a220db7e23a3f56304cd02e7f97b2b8392e2767251055a29318425bacdb2ab2ff175a4645f7179643acf0e038d5dafbfdbc11bdf322f79697
   languageName: node
   linkType: hard
 
@@ -5006,10 +5015,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.11.1":
-  version: 10.11.1
-  resolution: "preact@npm:10.11.1"
-  checksum: 4c4c450d8d8f6ad9ae027bb2baa7ec36b8a97241d7e40258b6f5480ac6cddb43f3e33011c82fd380fe94727622037253e09241cd1b29e0a2be77b58ef75ee425
+"preact@npm:^10.11.2":
+  version: 10.11.2
+  resolution: "preact@npm:10.11.2"
+  checksum: 92b4087a4048595e43fc5c005e9a1f3c890ec83657689de9b40b1894e26f8c2b6b071c63e08941a44044d1612532f8313483b62e3d6e1aa3c39bde27614ed790
   languageName: node
   linkType: hard
 
