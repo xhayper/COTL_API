@@ -4,11 +4,11 @@ namespace COTL_API.Saves;
 
 internal class APIData
 {
-    internal Dictionary<string, dynamic> Data = new();
+    internal Dictionary<string, object> Data = new();
 
     internal T GetValue<T>(string key)
     {
-        Data ??= new Dictionary<string, dynamic>();
+        Data ??= new Dictionary<string, object>();
 
         if (!Data.ContainsKey(key))
             Data.Add(key, default(T));
@@ -49,7 +49,7 @@ internal class APIData
 
     internal void SetValue<T>(string key, T value)
     {
-        Data ??= new Dictionary<string, dynamic>();
+        Data ??= new Dictionary<string, object>();
 
         if (!Data.ContainsKey(key))
             Data.Add(key, value);
