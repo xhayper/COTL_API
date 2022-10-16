@@ -20,6 +20,13 @@ public static class GameObjectExtensions
         return obj;
     }
 
+    public static GameObject ChangeScale(this GameObject obj,
+        float x = 0, float y = 0, float z = 0)
+    {
+        obj.transform.localScale = new Vector3(x, y, z);
+        return obj;
+    }
+
     public static GameObject CreateChild(this GameObject obj, string name)
     {
         Transform parent = obj.transform;
