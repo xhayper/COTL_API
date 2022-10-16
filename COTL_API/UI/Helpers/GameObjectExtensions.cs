@@ -21,7 +21,7 @@ public static class GameObjectExtensions
     }
 
     public static GameObject ChangeScale(this GameObject obj,
-        float x = 0, float y = 0, float z = 0)
+        float x = 1f, float y = 1f, float z = 1f)
     {
         obj.transform.localScale = new Vector3(x, y, z);
         return obj;
