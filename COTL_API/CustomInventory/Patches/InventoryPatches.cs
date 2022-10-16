@@ -7,6 +7,7 @@ using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
 
+//if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
 
 [HarmonyPatch]

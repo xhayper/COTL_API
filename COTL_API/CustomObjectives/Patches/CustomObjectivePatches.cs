@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 
+//if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomObjectives;
 
 /// <summary>
