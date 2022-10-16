@@ -1,11 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine.TextCore;
-using UnityEngine;
-using Lamb.UI;
-using TMPro;
+﻿using TMPro;
 
 namespace COTL_API.UI.Helpers;
 public static class FontHelpers

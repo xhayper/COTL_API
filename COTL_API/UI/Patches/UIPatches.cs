@@ -6,11 +6,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using COTL_API.UI.Helpers;
 using TMPro;
+using Lamb.UI.MainMenu;
+using COTL_API.UI.Base;
 
 namespace COTL_API.UI.Patches;
 internal static class UIPatches
 {
     public static List<Type> PauseMenuQueue = new List<Type>();
+    public static List<Type> StartMenuQueue = new List<Type>();
 
     [HarmonyPatch]
     public static class PauseMenuPatch
@@ -23,7 +26,7 @@ internal static class UIPatches
             Transform parentMenu = __instance.gameObject.transform.Find("PauseMenuContainer");
 
             // Font
-            TextMeshProUGUI textMesh = parentMenu.Find("Left").Find("Transform").Find("MenuContainer").Find("Settings").Find("Text").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI textMesh = parentMenu.Find("Left").transform.Find("Transform").transform.Find("MenuContainer").transform.Find("Settings").transform.Find("Text").GetComponent<TextMeshProUGUI>();
             FontHelpers._pauseMenu = textMesh.font;
 
             GameObject Container = new GameObject("Container");
@@ -32,9 +35,36 @@ internal static class UIPatches
             Container.transform.position = Vector3.zero;
             Container.transform.localScale = Vector3.one;
 
-            PauseMenuBase.Parent = Container.transform;
+            UIMenuBase.Parent = Container.transform;
 
-            List<PauseMenuBase> PauseMenuItems = PauseMenuQueue.Select(x => Container.AddComponent(x) as PauseMenuBase).ToList();
+            List<UIMenuBase> PauseMenuItems = PauseMenuQueue.Select(x => Container.AddComponent(x) as UIMenuBase).ToList();
+        }
+    }
+
+    [HarmonyPatch]
+    public static class StartMenuPatch
+    {
+        [HarmonyPatch(typeof(MainMenuController), nameof(MainMenuController.Start))]
+        [HarmonyPostfix]
+        static void AddUIItems(MainMenuController __instance)
+        {
+            Transform menuContainer = __instance.gameObject.transform.Find("Main Menu").transform.Find("MainMenuContainer");
+
+            /*Left/Transform/MenusContainer/MainMenu/Settings/Text (TMP)/*/
+
+            // Font
+            TextMeshProUGUI textMesh = menuContainer.Find("Left").transform.Find("Transform").transform.Find("MenusContainer").transform.Find("MainMenu").transform.Find("Settings").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+            FontHelpers._startMenu = textMesh.font;
+
+            GameObject Container = new GameObject("Container");
+            Container.transform.SetParent(menuContainer);
+            Container.layer = UIHelpers.UILayer;
+            Container.transform.position = Vector3.zero;
+            Container.transform.localScale = Vector3.one;
+
+            UIMenuBase.Parent = Container.transform;
+
+            List<UIMenuBase> StartMenuItems = StartMenuQueue.Select(x => Container.AddComponent(x) as UIMenuBase).ToList();
         }
     }
 }

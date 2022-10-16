@@ -1,14 +1,8 @@
 ﻿using BepInEx;
-using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using FMOD;
-using HarmonyLib;
-using FMOD.Studio;
 using FMODUnity;
-using UnityEngine.Networking;
 
 namespace COTL_API.Sounds.Helpers;
 public static class SoundHelpers
@@ -22,6 +16,8 @@ public static class SoundHelpers
     internal static Sound MakeSound(string fileName, bool loop = false)
     {
         string path = GetPath(fileName);
+        if(path == null) return new Sound();
+
         FMOD.System system = RuntimeManager.CoreSystem;
 
         MODE mode = loop ? MODE.LOOP_NORMAL : MODE.LOOP_OFF;

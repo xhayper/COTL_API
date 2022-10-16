@@ -1,12 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
-using UnityEngine.UI;
-using Image = UnityEngine.UI.Image;
-using COTL_API.UI.Patches;
+﻿using UnityEngine;
 using TMPro;
+using Image = UnityEngine.UI.Image;
+using COTL_API.UI.Base;
 
 namespace COTL_API.UI.Helpers;
 public static class GameObjectExtensions
@@ -25,44 +20,6 @@ public static class GameObjectExtensions
         return obj;
     }
 
-    public static GameObject AttachImage(this GameObject obj, Sprite sprite, int opacity = 100)
-    {
-        Image img = obj.AddComponent<Image>();
-        img.sprite = sprite;
-        img.SetNativeSize();
-        img.preserveAspect = true;
-
-        if(opacity < 100 && opacity >= 0)
-        {
-            Color color = img.color;
-            color.a = (float)opacity / 100f;
-            img.color = color;
-        }
-        return obj;
-    }
-
-    // I wanted opacity to be an int from 0-100 because I think most people are more used to terms like "100% opacity" and "50% opacity" than "1f opacity" and "0.5f opacity".
-    // I can change it if necessary (or make a variation of this method that takes a float).
-
-    public static GameObject AttachImage(this GameObject obj, string imagePath, int opacity = 100,
-        FilterMode filter = FilterMode.Bilinear)
-    {
-        Sprite sprite = UITextureLoader.MakeSprite(imagePath, filter);
-
-        Image img = obj.AddComponent<Image>();
-        img.sprite = sprite;
-        img.SetNativeSize();
-        img.preserveAspect = true;
-
-        if (opacity < 100 && opacity >= 0)
-        {
-            Color color = img.color;
-            color.a = (float)opacity / 100f;
-            img.color = color;
-        }
-        return obj;
-    }
-
     public static GameObject CreateChild(this GameObject obj, string name)
     {
         Transform parent = obj.transform;
@@ -73,6 +30,12 @@ public static class GameObjectExtensions
     {
         var script = obj.AddComponent<UIBehaviourHelpers.DraggableUIObject>();
         return obj;
+    }
+
+    public static UIButton MakeButton(this GameObject obj)
+    {
+        var button = obj.AddComponent<UIButton>();
+        return button;
     }
 
     public static GameObject AddText(this GameObject obj, string message, float fontSize = 10f, TextAlignmentOptions alignment = TextAlignmentOptions.Center)
@@ -96,4 +59,90 @@ public static class GameObjectExtensions
         textMesh.text = message;
         return obj;
     }
+
+
+    // -- IMAGE-RELATED --
+    // I wanted opacity to be an int from 0-100 because I think most people are more used to terms like "100% opacity" and "50% opacity" than "1f opacity" and "0.5f opacity".
+    // I can change it if necessary (or make a variation of this method that takes a float).
+
+    public static GameObject AttachImage(this GameObject obj, Sprite sprite, int opacity = 100)
+    {
+        Image img = obj.AddComponent<Image>();
+        img.sprite = sprite;
+        img.SetNativeSize();
+        img.preserveAspect = true;
+
+        if (opacity < 100 && opacity >= 0)
+        {
+            Color color = img.color;
+            color.a = (float)opacity / 100f;
+            img.color = color;
+        }
+        return obj;
+    }
+
+    public static GameObject AttachImage(this GameObject obj, string imagePath, int opacity = 100,
+        FilterMode filter = FilterMode.Bilinear)
+    {
+        Sprite sprite = UITextureLoader.MakeSprite(imagePath, filter);
+
+        Image img = obj.AddComponent<Image>();
+        img.sprite = sprite;
+        img.SetNativeSize();
+        img.preserveAspect = true;
+
+        Mathf.Clamp(opacity, 0, 100);
+        Color color = img.color;
+        color.a = (float)opacity / 100f;
+        img.color = color;
+
+        return obj;
+    }
+
+    public static GameObject EditImage(this GameObject obj, Sprite sprite)
+    {
+        Image img = obj.GetComponent<Image>();
+
+        if(img = null)
+        {
+            Plugin.Logger.LogError("EditImage: Image component not found.");
+            return obj;
+        }
+
+        img.sprite = sprite;
+        return obj;
+    }
+
+    public static GameObject EditImage(this GameObject obj, string imagePath, FilterMode filter = FilterMode.Bilinear)
+    {
+        Sprite sprite = UITextureLoader.MakeSprite(imagePath, filter);
+
+        Image img = obj.GetComponent<Image>();
+        if (img = null)
+        {
+            Plugin.Logger.LogError("EditImage: Image component not found.");
+            return obj;
+        }
+        img.sprite = sprite;
+
+        return obj;
+    }
+
+    public static GameObject ChangeImageOpacity(this GameObject obj, int opacity = 100)
+    {
+        Image img = obj.GetComponent<Image>();
+        if (img = null)
+        {
+            Plugin.Logger.LogError("ChangeOpacity: Image component not found.");
+            return obj;
+        }
+
+        Mathf.Clamp(opacity, 0, 100);
+        Color color = img.color;
+        color.a = (float)opacity / 100f;
+        img.color = color;
+
+        return obj;
+    }
+
 }
