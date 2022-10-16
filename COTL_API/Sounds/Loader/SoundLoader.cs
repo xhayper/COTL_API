@@ -174,7 +174,7 @@ public class SoundLoader : MonoBehaviour
         sh?.Pause(pause);
     }
 
-    public bool IsPlaying(string name, bool pause)
+    public bool IsPlaying(string name)
     {
         SoundHandler sh = GetHandlerByID(name);
         return sh == null ? false : sh.isPlaying();
