@@ -26,23 +26,22 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         OnClick?.Invoke();
     }
 
-    public void AddClickAnimation(Sprite spriteOnClick, float waitTime)
+    public void AddClickAnimation(Sprite spriteOn, Sprite spriteOff, float waitTime)
     {
-        OnClick += () => StartCoroutine(ClickAnimation(spriteOnClick, waitTime));
+        OnClick += () => StartCoroutine(ClickAnimation(spriteOn, spriteOff, waitTime));
     }
 
-    public void AddClickAnimation(string spriteOnClick, float waitTime, FilterMode filter = FilterMode.Point)
+    public void AddClickAnimation(string spriteOn, string spriteOff, float waitTime, FilterMode filter = FilterMode.Point)
     {
-        Sprite sprite = UITextureLoader.MakeSprite(spriteOnClick, filter);
-        OnClick += () => StartCoroutine(ClickAnimation(sprite, waitTime));
+        Sprite sprite1 = UITextureLoader.MakeSprite(spriteOn, filter);
+        Sprite sprite2 = UITextureLoader.MakeSprite(spriteOff, filter);
+        OnClick += () => StartCoroutine(ClickAnimation(sprite1, sprite2, waitTime));
     }
 
-    IEnumerator ClickAnimation(Sprite on, float waitTime = 1f)
+    IEnumerator ClickAnimation(Sprite on, Sprite off, float waitTime = 1f)
     {
         Image img = gameObject.GetComponent<Image>();
         if (img == null) yield break;
-
-        Sprite off = img.sprite;
 
         img.sprite = on;
         yield return new WaitForSeconds(waitTime);
