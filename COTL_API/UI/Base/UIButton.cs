@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using COTL_API.UI.Helpers;
 
 namespace COTL_API.UI.Base;
 public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
@@ -28,6 +29,12 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void AddClickAnimation(Sprite spriteOnClick, float waitTime)
     {
         OnClick += () => StartCoroutine(ClickAnimation(spriteOnClick, waitTime));
+    }
+
+    public void AddClickAnimation(string spriteOnClick, float waitTime, FilterMode filter = FilterMode.Point)
+    {
+        Sprite sprite = UITextureLoader.MakeSprite(spriteOnClick, filter);
+        OnClick += () => StartCoroutine(ClickAnimation(sprite, waitTime));
     }
 
     IEnumerator ClickAnimation(Sprite on, float waitTime = 1f)
