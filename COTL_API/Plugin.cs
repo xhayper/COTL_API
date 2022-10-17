@@ -23,7 +23,7 @@ public class Plugin : BaseUnityPlugin
 {
     public const string PLUGIN_GUID = "io.github.xhayper.COTL_API";
     public const string PLUGIN_NAME = "COTL API";
-    public const string PLUGIN_VERSION = "0.1.6";
+    public const string PLUGIN_VERSION = "0.1.7";
 
     internal readonly static Harmony Harmony = new(PLUGIN_GUID);
     internal static new ManualLogSource Logger;
