@@ -27,18 +27,18 @@ internal class ExampleFollowerCommand : CustomFollowerCommand
 }
 ```
 
-`CustomFollowerCommand` supports the following overrides:
-| Type | Name | Default |
-|-|-|-|
-| string | InternalName | \[REQUIRED\] |
-| Sprite | InventoryIcon | TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png")) |
-| List\<FollowerCommandCategory\> | Categories | new() { FollowerCommandCategory.DEFAULT_COMMAND } |
-| string | GetTitle(Follower follower) | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}") |
-| string | GetDescription(Follower follower) | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}/Description") |
-| string | GetLockedDescription(Follower follower) | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}/NotAvailable") |
-| bool | ShouldAppearFor(Follower follower) | true |
-| bool | IsAvailable(Follower follower) | true |
-| void | Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand = FollowerCommands.None) | interaction.Close() |
+`CustomFollowerCommand` supports the following overrides:<br>
+| Type   | Name                                                                                                        | Default                                                                                             |
+|--------|-------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| string | InternalName                                                                                                | \[REQUIRED\]                                                                                        |
+| Sprite | InventoryIcon                                                                                               | TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"))                 |
+| List\  | Categories                                                                                                  | new() { FollowerCommandCategory.DEFAULT_COMMAND }                                                   |
+| string | GetTitle(Follower follower)                                                                                 | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}")              |
+| string | GetDescription(Follower follower)                                                                           | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}/Description")  |
+| string | GetLockedDescription(Follower follower)                                                                     | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}/NotAvailable") |
+| bool   | ShouldAppearFor(Follower follower)                                                                          | true                                                                                                |
+| bool   | IsAvailable(Follower follower)                                                                              | true                                                                                                |
+| void   | Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand = FollowerCommands.None) | interaction.Close()                                                                                 |
 
 ## Coroutines
 
