@@ -2,9 +2,8 @@
   "name": "cotldev",
   "version": "1.0.0",
   "description": "Documentation website for the unofficial Cult of the Lamb API.",
-  "main": "index.js",
+  "main": "./docs/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
