@@ -1,6 +1,6 @@
-﻿using COTL_API.CustomObjectives;
+﻿using System.Collections.Generic;
+using COTL_API.CustomObjectives;
 using MonoMod.Utils;
-using System.Collections.Generic;
 
 namespace COTL_API.Saves;
 
@@ -11,7 +11,7 @@ public static class CustomQuestData
 
     internal static void LoadData()
     {
-        CustomQuestDataReadWriter.OnReadCompleted += delegate(Dictionary<int, CustomObjective> objectives)
+        CustomQuestDataReadWriter.OnReadCompleted += delegate (Dictionary<int, CustomObjective> objectives)
         {
             Dictionary<int, CustomObjective> tempObjectives = new();
             tempObjectives.Clear(); //needed if the user goes back to the mainmenu and loads a new save
@@ -47,11 +47,11 @@ public static class CustomQuestData
             Plugin.Logger.LogWarning($"Backed up {CustomObjectiveManager.PluginQuestTracker.Count} custom QuestID's!");
         };
 
-        CustomQuestDataReadWriter.OnWriteError += delegate(MMReadWriteError error)
+        CustomQuestDataReadWriter.OnWriteError += delegate (MMReadWriteError error)
         {
             Plugin.Logger.LogWarning($"There was an issue backing up current QuestID's!: {error.Message}");
         };
 
         CustomQuestDataReadWriter.Write(CustomObjectiveManager.PluginQuestTracker, DataPath, true, false);
-    }  
+    }
 }

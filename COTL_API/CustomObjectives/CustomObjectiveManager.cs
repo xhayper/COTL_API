@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using COTL_API.Saves;
-using MonoMod.Utils;
 
 namespace COTL_API.CustomObjectives;
 
@@ -22,7 +21,7 @@ public static partial class CustomObjectiveManager
         ModdedSaveManager.OnSaveComplete += CustomQuestData.SaveData;
     }
 
- 
+
 
     private static string DefaultQuestText => "I didn't set a custom quest text for this objective!";
 
