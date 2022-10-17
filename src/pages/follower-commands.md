@@ -32,6 +32,8 @@ internal class ExampleFollowerCommand : CustomFollowerCommand
 ```
 
 `CustomFollowerCommand` supports the following overrides:
+
+
 | Type | Name | Default |
 |-|-|-|
 | string | InternalName | \[REQUIRED\] |
