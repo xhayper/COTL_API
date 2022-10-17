@@ -1,5 +1,5 @@
 # cotldev
-Documentation website for the unofficial Cult of the Lamb API.
+Documentation website for the unofficial Cult of the Lamb API. Created using [Docsify](https://docsify.js.org/).
 
 ## Contributing
 
