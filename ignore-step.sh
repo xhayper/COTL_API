@@ -1,6 +1,6 @@
 #!/bin/bash
 
-allowedChanges=("package.json" "docs/" "ignore-step.sh")
+allowedChanges=("package.json" "vercel.json" "docs/" "ignore-step.sh")
 
 for i in "${allowedChanges[@]}"; do
   flag=$(git diff HEAD^ HEAD "$i")
