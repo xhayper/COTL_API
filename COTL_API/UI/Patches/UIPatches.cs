@@ -48,12 +48,10 @@ internal static class UIPatches
         [HarmonyPostfix]
         static void AddUIItems(MainMenuController __instance)
         {
-            Transform menuContainer = __instance.gameObject.transform.Find("Main Menu").transform.Find("MainMenuContainer");
-
-            /*Left/Transform/MenusContainer/MainMenu/Settings/Text (TMP)/*/
+            Transform menuContainer = __instance.gameObject.transform.Find("Main Menu");
 
             // Font
-            TextMeshProUGUI textMesh = menuContainer.Find("Left").transform.Find("Transform").transform.Find("MenusContainer").transform.Find("MainMenu").transform.Find("Settings").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI textMesh = menuContainer.transform.Find("MainMenuContainer").transform.Find("Left").transform.Find("Transform").transform.Find("MenusContainer").transform.Find("MainMenu").transform.Find("Settings").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
             FontHelpers._startMenu = textMesh.font;
 
             GameObject Container = new GameObject("Container");

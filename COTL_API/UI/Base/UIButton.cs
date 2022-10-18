@@ -25,29 +25,4 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         OnClick?.Invoke();
     }
-
-    // This coroutine doesn't work for some reason. I don't know why. I'll look into it some other time.
-    /*
-    public void AddClickAnimation(Sprite spriteOn, float waitTime)
-    {
-        OnClick += () => this.StartCoroutine(ClickAnimation(spriteOn, waitTime));
-    }
-
-    public void AddClickAnimation(string spriteOn, float waitTime, FilterMode filter = FilterMode.Point)
-    {
-        Sprite sprite1 = UITextureLoader.MakeSprite(spriteOn, filter);
-        OnClick += () => StartCoroutine(ClickAnimation(sprite1, waitTime));
-    }
-
-    IEnumerator ClickAnimation(Sprite on, float waitTime = 1f)
-    {
-        Image img = gameObject.GetComponent<Image>();
-        if (img == null) yield break;
-
-        Sprite off = img.sprite;
-
-        img.sprite = on;
-        yield return new WaitForSeconds(waitTime);
-        img.sprite = off;
-    }*/
 }
