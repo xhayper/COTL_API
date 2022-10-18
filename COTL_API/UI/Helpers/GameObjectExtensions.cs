@@ -2,6 +2,7 @@
 using TMPro;
 using Image = UnityEngine.UI.Image;
 using COTL_API.UI.Base;
+using COTL_API.Helpers;
 
 namespace COTL_API.UI.Helpers;
 public static class GameObjectExtensions
@@ -21,6 +22,12 @@ public static class GameObjectExtensions
     }
 
     public static GameObject ChangeScale(this GameObject obj,
+        float x = 1f, float y = 1f, float z = 1f)
+    {
+        obj.transform.localScale = new Vector3(x, y, z);
+        return obj;
+    }
+    public static GameObject ChangeRotation(this GameObject obj,
         float x = 1f, float y = 1f, float z = 1f)
     {
         obj.transform.localScale = new Vector3(x, y, z);
@@ -88,10 +95,9 @@ public static class GameObjectExtensions
         return obj;
     }
 
-    public static GameObject AttachImage(this GameObject obj, string imagePath, int opacity = 100,
-        FilterMode filter = FilterMode.Bilinear)
+    public static GameObject AttachImage(this GameObject obj, string imagePath, int opacity = 100)
     {
-        Sprite sprite = UITextureLoader.MakeSprite(imagePath, filter);
+        Sprite sprite = TextureHelper.CreateSpriteFromPath(imagePath);
 
         Image img = obj.AddComponent<Image>();
         img.sprite = sprite;
@@ -120,9 +126,9 @@ public static class GameObjectExtensions
         return obj;
     }
 
-    public static GameObject EditImage(this GameObject obj, string imagePath, FilterMode filter = FilterMode.Bilinear)
+    public static GameObject EditImage(this GameObject obj, string imagePath)
     {
-        Sprite sprite = UITextureLoader.MakeSprite(imagePath, filter);
+        Sprite sprite = TextureHelper.CreateSpriteFromPath(imagePath);
 
         Image img = obj.GetComponent<Image>();
         if (img == null)
