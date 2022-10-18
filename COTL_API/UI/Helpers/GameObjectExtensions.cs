@@ -28,7 +28,7 @@ public static class GameObjectExtensions
         return obj;
     }
     public static GameObject ChangeRotation(this GameObject obj,
-        float x = 1f, float y = 1f, float z = 1f)
+        float x = 0f, float y = 0f, float z = 0f)
     {
         obj.transform.localScale = new Vector3(x, y, z);
         return obj;
