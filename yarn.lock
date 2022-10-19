@@ -182,17 +182,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@astrojs/compiler@npm:0.27.2, @astrojs/compiler@npm:^0.27.1":
+  version: 0.27.2
+  resolution: "@astrojs/compiler@npm:0.27.2"
+  checksum: 10e823c4c89e63414c4479f966ed2026f5f0c005d741668d4293d09de49a671946481405e1917f6e1c9f574a846993ac18ae4e6367a72b39d0712b0743d91b43
+  languageName: node
+  linkType: hard
+
 "@astrojs/compiler@npm:^0.23.4":
   version: 0.23.5
   resolution: "@astrojs/compiler@npm:0.23.5"
   checksum: 9779b8a7fab2b467ea8637fca8129110fe3b6dbee4fc2e9fe4ec162c3f91ffd77fd447abab01a926b7440749e03c269dda65c4ca1d8759d9662f9198e56eeb01
-  languageName: node
-  linkType: hard
-
-"@astrojs/compiler@npm:^0.27.1":
-  version: 0.27.2
-  resolution: "@astrojs/compiler@npm:0.27.2"
-  checksum: 10e823c4c89e63414c4479f966ed2026f5f0c005d741668d4293d09de49a671946481405e1917f6e1c9f574a846993ac18ae4e6367a72b39d0712b0743d91b43
   languageName: node
   linkType: hard
 
@@ -356,13 +356,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/vercel@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@astrojs/vercel@npm:2.2.0"
+"@astrojs/vercel@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@astrojs/vercel@npm:2.3.0"
   dependencies:
     "@astrojs/webapi": ^1.1.0
     "@vercel/nft": ^0.22.1
-  checksum: 9c612bc8d7e9e82c7a5dfce94f22edf520f6eef1b5e55d324b3402adf11cca75c22416c4be9824aa7a40d792f8d1876e1e6c55a967c3ab4b0587dedef0b0f677
+  checksum: b791997df30ce44a5cf4811d8d6b52f0e0382f64d78fddaafb0fc072178cce9c3b4444842abc7b166003a40b3724af7e47efff6ea4f6f32661ba29dfc33ef3e5
   languageName: node
   linkType: hard
 
@@ -860,7 +860,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pkgr/utils@npm:^2.3.0":
+"@pkgr/utils@npm:^2.3.0, @pkgr/utils@npm:^2.3.1":
   version: 2.3.1
   resolution: "@pkgr/utils@npm:2.3.1"
   dependencies:
@@ -1073,10 +1073,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.11.0":
-  version: 18.11.0
-  resolution: "@types/node@npm:18.11.0"
-  checksum: f27f899ab428e5732f04fadadc9203f44bdf3abf56474540ee27da90e4f2ba133faf87263cada4d2271955f92ee6a142bd50683c86290fe5070c19aac44fd654
+"@types/node@npm:^18.11.2":
+  version: 18.11.2
+  resolution: "@types/node@npm:18.11.2"
+  checksum: 0ff5c90fb9ab653e018b858479aea4d2f763b07b31f9502383d408936f525ca37cac82ea27774a0dd0356ff9badba2792a6a3fff94f79fd7c82ee2a892c43ed5
   languageName: node
   linkType: hard
 
@@ -1364,9 +1364,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "astro@npm:1.5.0"
+"astro@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "astro@npm:1.5.1"
   dependencies:
     "@astrojs/compiler": ^0.27.1
     "@astrojs/language-server": ^0.26.2
@@ -1431,7 +1431,7 @@ __metadata:
     zod: ^3.17.3
   bin:
     astro: astro.js
-  checksum: daf999583459769e0f7f64791ce209c11be9baa84bbba2eccf5d60ecdb920aa6ef2becd76c39dbc2ec478e902e578dedc3989b5853c30e60b8b24ed64f1b2eeb
+  checksum: e84429fb90f779664ef1864ef5760f839a01565285d967d3f3a914fffb85596c24c788ef0253916e3c8b977b3531f08618b9a404d9f483a256205449b0be2c03
   languageName: node
   linkType: hard
 
@@ -1893,15 +1893,15 @@ __metadata:
     "@astrojs/preact": ^1.2.0
     "@astrojs/prefetch": ^0.0.8
     "@astrojs/sitemap": ^1.0.0
-    "@astrojs/vercel": ^2.2.0
+    "@astrojs/vercel": ^2.3.0
     "@docsearch/react": 3.2.1
-    "@types/node": ^18.11.0
-    astro: ^1.5.0
+    "@types/node": ^18.11.2
+    astro: ^1.5.1
     astro-robots-txt: ^0.3.10
     astro-seo: ^0.6.0
     preact: ^10.11.2
     prettier: ^2.7.1
-    prettier-plugin-astro: ^0.5.5
+    prettier-plugin-astro: ^0.6.0
     react: "npm:@preact/compat@latest"
     react-dom: "npm:@preact/compat@latest"
     remark-github: ^11.2.4
@@ -5056,7 +5056,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-astro@npm:^0.5.3, prettier-plugin-astro@npm:^0.5.5":
+"prettier-plugin-astro@npm:^0.5.3":
   version: 0.5.5
   resolution: "prettier-plugin-astro@npm:0.5.5"
   dependencies:
@@ -5065,6 +5065,18 @@ __metadata:
     sass-formatter: ^0.7.5
     synckit: ^0.7.0
   checksum: b0e527645158c97c2726aaf532e920ff4a1b98fe9cd594612e2c9c399f64eaa395255ec4371b2d0a527e5dc80af93b214adbcfe2a306e622878c35e128b6a761
+  languageName: node
+  linkType: hard
+
+"prettier-plugin-astro@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "prettier-plugin-astro@npm:0.6.0"
+  dependencies:
+    "@astrojs/compiler": 0.27.2
+    prettier: ^2.7.1
+    sass-formatter: ^0.7.5
+    synckit: ^0.8.4
+  checksum: a2632b625e7fa048f6ddb522e0f2a20ad20b9215c83286b9450ee94271fd628747ea0ffd812dd626102a7d80599a549d2f18447ef481bf64140c93e9e649ca7c
   languageName: node
   linkType: hard
 
@@ -5954,6 +5966,16 @@ __metadata:
     "@pkgr/utils": ^2.3.0
     tslib: ^2.4.0
   checksum: 15b1841c16e80e84e4eb7b43680f37ad94377a032cd9f5f6fd1c9cbd32bb1b7d1cf1c32111821d4f1b5477dffb599aeda7f0c1e70c7333fbedd80951d41bf5e8
+  languageName: node
+  linkType: hard
+
+"synckit@npm:^0.8.4":
+  version: 0.8.4
+  resolution: "synckit@npm:0.8.4"
+  dependencies:
+    "@pkgr/utils": ^2.3.1
+    tslib: ^2.4.0
+  checksum: 83e054fe4494dab42114fc4ed36a11b85e18742d304ade3f40d3afb4ba4145d76183adba1f29e2c36e9a0a453b93a83e2387505f96a0efd901f562927a968c44
   languageName: node
   linkType: hard
 
