@@ -61,6 +61,15 @@ internal class SoundHandler
         return isPlaying;
     }
 
+    public bool isPaused()
+    {
+        if (!isPlaying()) return false;
+
+        RESULT result = handle.getPaused(out bool isPaused);
+        result.IfErrorPrintWith($"isPaused -- SoundHandler instance id: {Id}");
+        return isPaused;
+    }
+
     public void Pause(bool pause)
     {
         bool flag = pause && isPlaying();
