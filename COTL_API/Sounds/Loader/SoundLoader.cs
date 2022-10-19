@@ -179,4 +179,10 @@ public class SoundLoader : MonoBehaviour
         SoundHandler sh = GetHandlerByID(name);
         return sh == null ? false : sh.isPlaying();
     }
+
+    public bool IsPaused(string name)
+    {
+        SoundHandler sh = GetHandlerByID(name);
+        return sh == null ? false : sh.isPaused();
+    }
 }
