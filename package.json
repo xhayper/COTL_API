@@ -17,12 +17,12 @@
         "@astrojs/image": "^0.10.0",
         "@astrojs/partytown": "^1.0.1",
         "@astrojs/preact": "^1.2.0",
-        "@astrojs/prefetch": "^0.0.8",
+        "@astrojs/prefetch": "^0.1.0",
         "@astrojs/sitemap": "^1.0.0",
-        "@astrojs/vercel": "^2.3.0",
-        "@docsearch/react": "3.2.1",
-        "@types/node": "^18.11.2",
-        "astro": "^1.5.1",
+        "@astrojs/vercel": "^2.3.1",
+        "@docsearch/react": "^3.2.2",
+        "@types/node": "^18.11.3",
+        "astro": "^1.5.2",
         "astro-robots-txt": "^0.3.10",
         "astro-seo": "^0.6.0",
         "preact": "^10.11.2",
@@ -33,5 +33,6 @@
         "remark-github": "^11.2.4",
         "sass": "^1.55.0",
         "sharp": "^0.31.1"
-    }
+    },
+    "packageManager": "yarn@3.2.4"
 }

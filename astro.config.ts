@@ -1,18 +1,16 @@
 import vercel from "@astrojs/vercel/serverless";
 import { defineConfig } from "astro/config";
 import partytown from "@astrojs/partytown";
+import prefetch from "@astrojs/prefetch";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
 
-import prefetch from "@astrojs/prefetch";
-
 // https://astro.build/config
 export default defineConfig({
     output: "server",
-    // output: "static",
     adapter: vercel(),
     integrations: [
         preact({
