@@ -15,22 +15,35 @@ public static class GameObjectExtensions
     }
 
     public static GameObject ChangePosition(this GameObject obj,
-        float x = 0, float y = 0, float z = 0)
+        float? x = null, float? y = null, float? z = null)
     {
-        obj.transform.localPosition = new Vector3(x, y, z);
+        x ??= obj.transform.localRotation.x;
+        y ??= obj.transform.localRotation.y;
+        z ??= obj.transform.localRotation.z;
+
+        obj.transform.localPosition = new Vector3((float)x, (float)y, (float)z);
         return obj;
     }
 
     public static GameObject ChangeScale(this GameObject obj,
-        float x = 1f, float y = 1f, float z = 1f)
+        float? x = null, float? y = null, float? z = null)
     {
-        obj.transform.localScale = new Vector3(x, y, z);
+        x ??= obj.transform.localScale.x;
+        y ??= obj.transform.localScale.y;
+        z ??= obj.transform.localScale.z;
+
+        obj.transform.localScale = new Vector3((float)x, (float)y, (float)z);
         return obj;
     }
+
     public static GameObject ChangeRotation(this GameObject obj,
-        float x = 0f, float y = 0f, float z = 0f)
+        float? x = null, float? y = null, float? z = null)
     {
-        obj.transform.localScale = new Vector3(x, y, z);
+        x ??= obj.transform.eulerAngles.x;
+        y ??= obj.transform.eulerAngles.y;
+        z ??= obj.transform.eulerAngles.z;
+
+        obj.transform.Rotate(new Vector3((float)x, (float)y, (float)z));
         return obj;
     }
 

@@ -29,7 +29,7 @@ internal static class UIPatches
             TextMeshProUGUI textMesh = parentMenu.Find("Left").transform.Find("Transform").transform.Find("MenuContainer").transform.Find("Settings").transform.Find("Text").GetComponent<TextMeshProUGUI>();
             FontHelpers._pauseMenu = textMesh.font;
 
-            GameObject Container = new GameObject("Container");
+            GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(parentMenu);
             Container.layer = UIHelpers.UILayer;
             Container.transform.position = Vector3.zero;
@@ -54,7 +54,7 @@ internal static class UIPatches
             TextMeshProUGUI textMesh = menuContainer.transform.Find("MainMenuContainer").transform.Find("Left").transform.Find("Transform").transform.Find("MenusContainer").transform.Find("MainMenu").transform.Find("Settings").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
             FontHelpers._startMenu = textMesh.font;
 
-            GameObject Container = new GameObject("Container");
+            GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(menuContainer);
             Container.layer = UIHelpers.UILayer;
             Container.transform.position = Vector3.zero;
