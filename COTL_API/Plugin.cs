@@ -72,12 +72,8 @@ public class Plugin : BaseUnityPlugin
         CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
 
         CustomTaskManager.Add(new DebugTask());
-
-        Texture2D customTex =
-            TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
-        string atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
-
-        CustomSkinManager.AddCustomSkin("Test", customTex, atlasText);
+        
+        CustomSkinManager.Add(new DebugSkin());
 
         CustomObjective test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
