@@ -4,7 +4,7 @@ namespace COTL_API.Saves;
 
 internal class APIData
 {
-    internal Dictionary<string, object> Data = new();
+    public Dictionary<string, object> Data = new();
 
     internal T GetValue<T>(string key)
     {
