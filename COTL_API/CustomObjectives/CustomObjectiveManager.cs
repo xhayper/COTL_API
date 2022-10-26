@@ -1,72 +1,27 @@
 using System.Collections.Generic;
 using COTL_API.Saves;
-using MonoMod.Utils;
 
 namespace COTL_API.CustomObjectives;
 
 /// <summary>
 /// The custom objective manager class.
 /// </summary>
-public static class CustomObjectiveManager
+public static partial class CustomObjectiveManager
 {
     /// <summary>
     /// The group id
     /// </summary>
     private const string GroupId = "Objectives/GroupTitles/Quest";
 
-    private const string DataPath = "cotl_api_custom_quest_data.json";
-    private static readonly COTLDataReadWriter<Dictionary<int, CustomObjective>> CustomQuestDataReadWriter = new();
+
 
     static CustomObjectiveManager()
     {
-        ModdedSaveManager.OnLoadComplete += LoadData;
-        ModdedSaveManager.OnSaveComplete += SaveData;
-    }
-
-    private static void LoadData()
-    {
-        CustomQuestDataReadWriter.OnReadCompleted += delegate(Dictionary<int, CustomObjective> objectives)
-        {
-            Dictionary<int, CustomObjective> tempObjectives = new();
-            foreach (KeyValuePair<int, CustomObjective> objective in objectives)
-            {
-                if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
-                {
-                    tempObjectives.Add(objective.Key, objective.Value);
-                }
-                else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
-                {
-                    tempObjectives.Add(objective.Key, objective.Value);
-                }
-            }
-
-            PluginQuestTracker.AddRange(tempObjectives);
-            Plugin.Logger.LogWarning(tempObjectives.Count > 0 ? $"Needed previous session custom quests loaded. Count: {tempObjectives.Count}" : "None of the previous session quests still exist in objective trackers.");
-        };
-
-        CustomQuestDataReadWriter.OnReadError += delegate
-        {
-            Plugin.Logger.LogWarning("Previous session custom quests failed to load!");
-        };
-
-        CustomQuestDataReadWriter.Read(DataPath);
+        ModdedSaveManager.OnLoadComplete += CustomQuestData.LoadData;
+        ModdedSaveManager.OnSaveComplete += CustomQuestData.SaveData;
     }
 
 
-    private static void SaveData()
-    {
-        CustomQuestDataReadWriter.OnWriteCompleted += delegate
-        {
-            Plugin.Logger.LogWarning($"Backed up {PluginQuestTracker.Count} custom QuestID's!");
-        };
-
-        CustomQuestDataReadWriter.OnWriteError += delegate(MMReadWriteError error)
-        {
-            Plugin.Logger.LogWarning($"There was an issue backing up current QuestID's!: {error.Message}");
-        };
-
-        CustomQuestDataReadWriter.Write(PluginQuestTracker, DataPath, true, false);
-    }
 
     private static string DefaultQuestText => "I didn't set a custom quest text for this objective!";
 
