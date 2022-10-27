@@ -1,10 +1,11 @@
 import vercel from "@astrojs/vercel/serverless";
+import minifyHtml from "astro-html-minifier";
 import { defineConfig } from "astro/config";
 import partytown from "@astrojs/partytown";
-import prefetch from "@astrojs/prefetch";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
+import purgecss from "astro-purgecss";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
 
@@ -19,9 +20,7 @@ export default defineConfig({
         image({
             serviceEntryPoint: "@astrojs/image/sharp"
         }),
-        prefetch({
-            throttle: Number.MAX_SAFE_INTEGER
-        }),
+        partytown({}),
         sitemap({
             customPages: [
                 "https://cotl-api.vercel.app/",
@@ -33,8 +32,9 @@ export default defineConfig({
                 "https://cotl-api.vercel.app/save-data"
             ]
         }),
-        partytown({}),
-        robotsTxt()
+        robotsTxt(),
+        purgecss(),
+        minifyHtml()
     ],
     vite: {
         build: {

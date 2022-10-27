@@ -19,9 +19,7 @@ pnpm-debug.log*
 .DS_Store
 
 # editor
-.vscode/
 .idea/
-/.idea/
 
 # we are not using zero-install
 .pnp.*
