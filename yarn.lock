@@ -319,15 +319,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/prefetch@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@astrojs/prefetch@npm:0.1.0"
-  dependencies:
-    throttles: ^1.0.1
-  checksum: c91adb117c4e700f71655cd4b061fc69ab8731fa68e884bdfc5eaa8a1b1609276d476c420f779ab1f79f11bed9962fed35f70846a8ed310c97d01968ece59aef
-  languageName: node
-  linkType: hard
-
 "@astrojs/prism@npm:^1.0.0":
   version: 1.0.1
   resolution: "@astrojs/prism@npm:1.0.1"
@@ -817,6 +808,17 @@ __metadata:
   bin:
     node-pre-gyp: bin/node-pre-gyp
   checksum: 1a98db05d955b74dad3814679593df293b9194853698f3f5f1ed00ecd93128cdd4b14fb8767fe44ac6981ef05c23effcfdc88710e7c1de99ccb6f647890597c8
+  languageName: node
+  linkType: hard
+
+"@minify-html/node@npm:0.9.2":
+  version: 0.9.2
+  resolution: "@minify-html/node@npm:0.9.2"
+  dependencies:
+    cargo-cp-artifact: ^0.1
+  bin:
+    minify-html: cli.js
+  checksum: 95cf20ea3cab80a18719fb672bcf81dcecc24825c04e99144851f45dd5772cd59b43dd6f275082026b5d7a2f09bc24a066d91c7ceb42b393528fe612025619cc
   languageName: node
   linkType: hard
 
@@ -1346,6 +1348,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"astro-html-minifier@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "astro-html-minifier@npm:0.2.0"
+  dependencies:
+    "@minify-html/node": 0.9.2
+    globby: 13.1.2
+  checksum: ad35a2efa27dc5d522e0f191246678224078b39aa39d9aee333f0b0e39cd56675e526420b4e2767b5b52f4fd4bcc0023a4aa83d4c43c0822c97d17c90884780f
+  languageName: node
+  linkType: hard
+
+"astro-purgecss@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "astro-purgecss@npm:1.2.2"
+  dependencies:
+    purgecss: ^5.0.0
+  peerDependencies:
+    astro: ^1.0.0
+  checksum: dd518c9279f927c91a4fa26485f89912542948cbf837dc97548dbca65507d82844f9ecf4bb58d37f07fad9b6768871b4f1ac032e6441e995fffa1381e9322869
+  languageName: node
+  linkType: hard
+
 "astro-robots-txt@npm:^0.3.10":
   version: 0.3.10
   resolution: "astro-robots-txt@npm:0.3.10"
@@ -1639,6 +1662,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cargo-cp-artifact@npm:^0.1":
+  version: 0.1.6
+  resolution: "cargo-cp-artifact@npm:0.1.6"
+  bin:
+    cargo-cp-artifact: bin/cargo-cp-artifact.js
+  checksum: 2f5d2f3e73372c9d398746372e8d1f7b171f27c8d4e4e9f7de898ead93b29631d62ea26c1ae352fa2c1542e124c2c77ac8a60acc5634bb433133ee2c7c6f1e09
+  languageName: node
+  linkType: hard
+
 "ccount@npm:^2.0.0":
   version: 2.0.1
   resolution: "ccount@npm:2.0.1"
@@ -1847,6 +1879,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^9.0.0":
+  version: 9.4.1
+  resolution: "commander@npm:9.4.1"
+  checksum: bfb18e325a5bdf772763c2213d5c7d9e77144d944124e988bcd8e5e65fb6d45d5d4e86b09155d0f2556c9a59c31e428720e57968bcd050b2306e910a0bf3cf13
+  languageName: node
+  linkType: hard
+
 "common-ancestor-path@npm:^1.0.1":
   version: 1.0.1
   resolution: "common-ancestor-path@npm:1.0.1"
@@ -1889,12 +1928,13 @@ __metadata:
     "@astrojs/image": ^0.11.0
     "@astrojs/partytown": ^1.0.1
     "@astrojs/preact": ^1.2.0
-    "@astrojs/prefetch": ^0.1.0
     "@astrojs/sitemap": ^1.0.0
     "@astrojs/vercel": ^2.3.2
     "@docsearch/react": ^3.3.0
     "@types/node": ^18.11.7
     astro: ^1.5.2
+    astro-html-minifier: ^0.2.0
+    astro-purgecss: ^1.2.2
     astro-robots-txt: ^0.3.10
     astro-seo: ^0.6.0
     preact: ^10.11.2
@@ -1916,6 +1956,15 @@ __metadata:
     shebang-command: ^2.0.0
     which: ^2.0.1
   checksum: 671cc7c7288c3a8406f3c69a3ae2fc85555c04169e9d611def9a675635472614f1c0ed0ef80955d5b6d4e724f6ced67f0ad1bb006c2ea643488fcfef994d7f52
+  languageName: node
+  linkType: hard
+
+"cssesc@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "cssesc@npm:3.0.0"
+  bin:
+    cssesc: bin/cssesc
+  checksum: f8c4ababffbc5e2ddf2fa9957dda1ee4af6048e22aeda1869d0d00843223c1b13ad3f5d88b51caa46c994225eacb636b764eb807a8883e2fb6f99b4f4e8c48b2
   languageName: node
   linkType: hard
 
@@ -2042,6 +2091,15 @@ __metadata:
   version: 5.1.0
   resolution: "diff@npm:5.1.0"
   checksum: c7bf0df7c9bfbe1cf8a678fd1b2137c4fb11be117a67bc18a0e03ae75105e8533dbfb1cda6b46beb3586ef5aed22143ef9d70713977d5fb1f9114e21455fba90
+  languageName: node
+  linkType: hard
+
+"dir-glob@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "dir-glob@npm:3.0.1"
+  dependencies:
+    path-type: ^4.0.0
+  checksum: fa05e18324510d7283f55862f3161c6759a3f2f8dbce491a2fc14c8324c498286c54282c1f0e933cb930da8419b30679389499b919122952a4f8592362ef4615
   languageName: node
   linkType: hard
 
@@ -2954,7 +3012,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^8.0.1":
+"glob@npm:^8.0.1, glob@npm:^8.0.3":
   version: 8.0.3
   resolution: "glob@npm:8.0.3"
   dependencies:
@@ -3001,6 +3059,19 @@ __metadata:
   version: 0.1.0
   resolution: "globalyzer@npm:0.1.0"
   checksum: 419a0f95ba542534fac0842964d31b3dc2936a479b2b1a8a62bad7e8b61054faa9b0a06ad9f2e12593396b9b2621cac93358d9b3071d33723fb1778608d358a1
+  languageName: node
+  linkType: hard
+
+"globby@npm:13.1.2":
+  version: 13.1.2
+  resolution: "globby@npm:13.1.2"
+  dependencies:
+    dir-glob: ^3.0.1
+    fast-glob: ^3.2.11
+    ignore: ^5.2.0
+    merge2: ^1.4.1
+    slash: ^4.0.0
+  checksum: c148fcda0c981f00fb434bb94ca258f0a9d23cedbde6fb3f37098e1abde5b065019e2c63fe2aa2fad4daf2b54bf360b4d0423d85fb3a63d09ed75a2837d4de0f
   languageName: node
   linkType: hard
 
@@ -3284,6 +3355,13 @@ __metadata:
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
   checksum: 5144c0c9815e54ada181d80a0b810221a253562422e7c6c3a60b1901154184f49326ec239d618c416c1c5945a2e197107aee8d986a3dd836b53dffefd99b5e7e
+  languageName: node
+  linkType: hard
+
+"ignore@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "ignore@npm:5.2.0"
+  checksum: 6b1f926792d614f64c6c83da3a1f9c83f6196c2839aa41e1e32dd7b8d174cef2e329d75caabb62cb61ce9dc432f75e67d07d122a037312db7caa73166a1bdb77
   languageName: node
   linkType: hard
 
@@ -3953,7 +4031,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"merge2@npm:^1.3.0":
+"merge2@npm:^1.3.0, merge2@npm:^1.4.1":
   version: 1.4.1
   resolution: "merge2@npm:1.4.1"
   checksum: 7268db63ed5169466540b6fb947aec313200bcf6d40c5ab722c22e242f651994619bcd85601602972d3c85bd2cc45a358a4c61937e9f11a061919a1da569b0c2
@@ -4934,6 +5012,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"path-type@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "path-type@npm:4.0.0"
+  checksum: 5b1e2daa247062061325b8fdbfd1fb56dde0a448fb1455453276ea18c60685bdad23a445dc148cf87bc216be1573357509b7d4060494a6fd768c7efad833ee45
+  languageName: node
+  linkType: hard
+
 "picocolors@npm:^1.0.0":
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
@@ -4991,7 +5076,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.14, postcss@npm:^8.4.16":
+"postcss-selector-parser@npm:^6.0.7":
+  version: 6.0.10
+  resolution: "postcss-selector-parser@npm:6.0.10"
+  dependencies:
+    cssesc: ^3.0.0
+    util-deprecate: ^1.0.2
+  checksum: 46afaa60e3d1998bd7adf6caa374baf857cc58d3ff944e29459c9a9e4680a7fe41597bd5b755fc81d7c388357e9bf67c0251d047c640a09f148e13606b8a8608
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.4.14, postcss@npm:^8.4.16, postcss@npm:^8.4.4":
   version: 8.4.18
   resolution: "postcss@npm:8.4.18"
   dependencies:
@@ -5142,6 +5237,20 @@ __metadata:
     end-of-stream: ^1.1.0
     once: ^1.3.1
   checksum: e42e9229fba14732593a718b04cb5e1cfef8254544870997e0ecd9732b189a48e1256e4e5478148ecb47c8511dca2b09eae56b4d0aad8009e6fac8072923cfc9
+  languageName: node
+  linkType: hard
+
+"purgecss@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "purgecss@npm:5.0.0"
+  dependencies:
+    commander: ^9.0.0
+    glob: ^8.0.3
+    postcss: ^8.4.4
+    postcss-selector-parser: ^6.0.7
+  bin:
+    purgecss: bin/purgecss.js
+  checksum: ea1e1d0d33b8a887ad324b0562b6ae73ef69304422f88f95ea2c4a2a73b975c344e6b65dba77e9502c8bc6f1b0ae0512a7a395365724a85c4686415b5f08a580
   languageName: node
   linkType: hard
 
@@ -6009,13 +6118,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"throttles@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "throttles@npm:1.0.1"
-  checksum: 0f3b36b8fcba720df7ab283f40f4e4d6b1b31939dba7fafac6e4e8bc1743eeaff546916a66344be7af1d7a2d014d799e7924009a15118887aef0cfc5292559a1
-  languageName: node
-  linkType: hard
-
 "tiny-glob@npm:^0.2.9":
   version: 0.2.9
   resolution: "tiny-glob@npm:0.2.9"
@@ -6305,7 +6407,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"util-deprecate@npm:^1.0.1":
+"util-deprecate@npm:^1.0.1, util-deprecate@npm:^1.0.2":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 474acf1146cb2701fe3b074892217553dfcf9a031280919ba1b8d651a068c9b15d863b7303cb15bd00a862b498e6cf4ad7b4a08fb134edd5a6f7641681cb54a2
