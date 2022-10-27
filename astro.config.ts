@@ -1,6 +1,6 @@
-import vercel from "@astrojs/vercel/edge";
 import { defineConfig } from "astro/config";
 import partytown from "@astrojs/partytown";
+import vercel from "@astrojs/vercel/edge";
 import prefetch from "@astrojs/prefetch";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
