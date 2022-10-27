@@ -1,5 +1,4 @@
-import { useState, useCallback, useRef } from "preact/hooks";
-import { createPortal } from "preact/compat";
+import { useState, useCallback, useRef, createPortal } from "preact/compat";
 import { ALGOLIA } from "../../config";
 import "@docsearch/css";
 import "./Search.scss";
