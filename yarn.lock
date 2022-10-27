@@ -5,31 +5,31 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@algolia/autocomplete-core@npm:1.7.1":
-  version: 1.7.1
-  resolution: "@algolia/autocomplete-core@npm:1.7.1"
+"@algolia/autocomplete-core@npm:1.7.2":
+  version: 1.7.2
+  resolution: "@algolia/autocomplete-core@npm:1.7.2"
   dependencies:
-    "@algolia/autocomplete-shared": 1.7.1
-  checksum: 511176e9c2a9f2e2be62552e48e72dadfcc6638cda4a2990fd3453aed3ce4e7d8ca1bd6a9ccb912430c77734b00a8b836aaad97facc1987157af4ac00f590f4a
+    "@algolia/autocomplete-shared": 1.7.2
+  checksum: 7d3e879ac74f2d3fd6f80a01d6c05bd22264c428030396234112be7628a80d3a7c250613b2d4102f8ef63115be7b96d8d0231bdf8a02aa9b58873500aa61ffcc
   languageName: node
   linkType: hard
 
-"@algolia/autocomplete-preset-algolia@npm:1.7.1":
-  version: 1.7.1
-  resolution: "@algolia/autocomplete-preset-algolia@npm:1.7.1"
+"@algolia/autocomplete-preset-algolia@npm:1.7.2":
+  version: 1.7.2
+  resolution: "@algolia/autocomplete-preset-algolia@npm:1.7.2"
   dependencies:
-    "@algolia/autocomplete-shared": 1.7.1
+    "@algolia/autocomplete-shared": 1.7.2
   peerDependencies:
-    "@algolia/client-search": ^4.9.1
-    algoliasearch: ^4.9.1
-  checksum: cb031d5ed43f2e10f325f6291cfab851cc5622d96ae8ba1913815ead16b7ce2969b0c51f921d54c47195b2200af8ceecf1c587d2580f842c337f1d8e2f6317c2
+    "@algolia/client-search": ">= 4.9.1 < 6"
+    algoliasearch: ">= 4.9.1 < 6"
+  checksum: 7120ce1d312dbe6d898a0cecd9b28e45f9162a2fd9208a4c4e2efa77027455ee083c11cb782196374da717e990d6ca362c286ace475db97916e52bd277061d77
   languageName: node
   linkType: hard
 
-"@algolia/autocomplete-shared@npm:1.7.1":
-  version: 1.7.1
-  resolution: "@algolia/autocomplete-shared@npm:1.7.1"
-  checksum: 0e137f1a470fab9b1bc493284b0be9b83503bda8aa37be9726a8fddf4791dccbd28f9eec399a7c75c1eb3196510dac7be454307fc97fbca2999f3fbc30756c28
+"@algolia/autocomplete-shared@npm:1.7.2":
+  version: 1.7.2
+  resolution: "@algolia/autocomplete-shared@npm:1.7.2"
+  checksum: 8336cd1e79e56e3901196862ae17896c6e9542e269a05860ab72d869e35f17ab0f40ecbe35d1e34617cc70749d3f8323d09b347c443a7b7b2b126dddb44779aa
   languageName: node
   linkType: hard
 
@@ -182,7 +182,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/compiler@npm:0.27.2, @astrojs/compiler@npm:^0.27.1":
+"@astrojs/compiler@npm:0.27.2":
   version: 0.27.2
   resolution: "@astrojs/compiler@npm:0.27.2"
   checksum: 10e823c4c89e63414c4479f966ed2026f5f0c005d741668d4293d09de49a671946481405e1917f6e1c9f574a846993ac18ae4e6367a72b39d0712b0743d91b43
@@ -196,9 +196,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/image@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "@astrojs/image@npm:0.10.0"
+"@astrojs/compiler@npm:^0.28.0":
+  version: 0.28.1
+  resolution: "@astrojs/compiler@npm:0.28.1"
+  checksum: a8db586e24db7999c40c36bee9629c8fb6f5ce21788b0ed8508dd1217ba8905b19a8a4e444dcce4e5b885dfa384ffb997ec8fe0347751d5b8cfdaaf28aba5abf
+  languageName: node
+  linkType: hard
+
+"@astrojs/image@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@astrojs/image@npm:0.11.0"
   dependencies:
     "@altano/tiny-async-pool": ^1.0.2
     http-cache-semantics: ^4.1.0
@@ -212,7 +219,7 @@ __metadata:
   peerDependenciesMeta:
     sharp:
       optional: true
-  checksum: 3c32b1662a1a0c54cce0a2e3d08da66639ba7c9a41980a397c058e5ca7856c08bcbfb5e8dc0940e6cb2e5b26621f2ea4b8bddd8f612693045e29a67c691547e5
+  checksum: 1b3ec3ed2e54844b0c88d03184c86d747c70bc8311dbf43b36969790426859b89490a3b85e45b2ac04379cdd44f6e36cf156160ca5bde0a97322884041566fbc
   languageName: node
   linkType: hard
 
@@ -356,13 +363,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/vercel@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "@astrojs/vercel@npm:2.3.1"
+"@astrojs/vercel@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "@astrojs/vercel@npm:2.3.2"
   dependencies:
     "@astrojs/webapi": ^1.1.0
     "@vercel/nft": ^0.22.1
-  checksum: 87d427ca3d3df985fa84d3740f0601ca2af056dac5a4e3938f17a3e1a82f5e4b2ba52f51d27d18d608c4ab06bf2f68cc1f7803422218c593e31928681ce00159
+  checksum: 1c7f5704c65b916f801735f014e2c7f83b34a9aede325a8ddd274f48ffb17a082a40a70f4b2e0aee3e39e038e145c31acb8029f6c4f2750b85394daad5415c83
   languageName: node
   linkType: hard
 
@@ -652,20 +659,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/css@npm:3.2.2":
-  version: 3.2.2
-  resolution: "@docsearch/css@npm:3.2.2"
-  checksum: 8e0555249047c0313466ffe149c9ab7d091485649b4267dc22899b1e7a94cd8deef9b9e8d75997e66e289d16a8b0cb86f05212ab750b25741cdd03ba2aab1e3e
+"@docsearch/css@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@docsearch/css@npm:3.3.0"
+  checksum: 1cbf381fe0b454f933e736d04fe8a2d9f86c375022ef738b44d67a0b4c187b0d8fcb945a1ba5a404059e50e3968d9fe769de22779d071f6189f07c161239892c
   languageName: node
   linkType: hard
 
-"@docsearch/react@npm:^3.2.2":
-  version: 3.2.2
-  resolution: "@docsearch/react@npm:3.2.2"
+"@docsearch/react@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@docsearch/react@npm:3.3.0"
   dependencies:
-    "@algolia/autocomplete-core": 1.7.1
-    "@algolia/autocomplete-preset-algolia": 1.7.1
-    "@docsearch/css": 3.2.2
+    "@algolia/autocomplete-core": 1.7.2
+    "@algolia/autocomplete-preset-algolia": 1.7.2
+    "@docsearch/css": 3.3.0
     algoliasearch: ^4.0.0
   peerDependencies:
     "@types/react": ">= 16.8.0 < 19.0.0"
@@ -678,7 +685,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 7653f72e4044907a64d46ceb5b34b9ad14b42a18317b2a2025a8bae71728c007ea7a25b617faf9ed10da396c35f679c335157f6d535537f14f9f4d1d6a67728c
+  checksum: 2bc4aa649fad3ff74e61537e674e658903c01509b2835827943f23895b40b7697476399179d43bc721f7e72044c797d4d793fcdaa394ff4f9fca1389a197a78c
   languageName: node
   linkType: hard
 
@@ -1059,10 +1066,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.11.3":
-  version: 18.11.3
-  resolution: "@types/node@npm:18.11.3"
-  checksum: 3a2a9142d891a90a195c296149bf64a69cc0abcc42f543be911ab22b2e0ead85ff077f90af92f0f13f6e3e5e72501469200fd753dfd1101825d4646a89d3ee47
+"@types/node@npm:*, @types/node@npm:^18.11.7":
+  version: 18.11.7
+  resolution: "@types/node@npm:18.11.7"
+  checksum: 69d630825cf6fbf580d08d76a4d4836ef8c34ed4fe0842221ade87d275f517099cbfabe8e22397208e564bd24926db97699ab9db5c091383269a432b336665e2
   languageName: node
   linkType: hard
 
@@ -1162,11 +1169,11 @@ __metadata:
   linkType: hard
 
 "acorn@npm:^8.6.0, acorn@npm:^8.7.1":
-  version: 8.8.0
-  resolution: "acorn@npm:8.8.0"
+  version: 8.8.1
+  resolution: "acorn@npm:8.8.1"
   bin:
     acorn: bin/acorn
-  checksum: 7270ca82b242eafe5687a11fea6e088c960af712683756abf0791b68855ea9cace3057bd5e998ffcef50c944810c1e0ca1da526d02b32110e13c722aa959afdc
+  checksum: 4079b67283b94935157698831967642f24a075c52ce3feaaaafe095776dfbe15d86a1b33b1e53860fc0d062ed6c83f4284a5c87c85b9ad51853a01173da6097f
   languageName: node
   linkType: hard
 
@@ -1358,10 +1365,10 @@ __metadata:
   linkType: hard
 
 "astro@npm:^1.5.2":
-  version: 1.5.2
-  resolution: "astro@npm:1.5.2"
+  version: 1.5.3
+  resolution: "astro@npm:1.5.3"
   dependencies:
-    "@astrojs/compiler": ^0.27.1
+    "@astrojs/compiler": ^0.28.0
     "@astrojs/language-server": ^0.26.2
     "@astrojs/markdown-remark": ^1.1.3
     "@astrojs/telemetry": ^1.0.1
@@ -1424,7 +1431,7 @@ __metadata:
     zod: ^3.17.3
   bin:
     astro: astro.js
-  checksum: 0893ee9880203ce0ff577c3ee66647912c56487ecfceb01d16dab857a023d14ddf39c2d0dd32fddd9ed2b0d1afa09291033ec13a028cea7ee9cba3476b806f23
+  checksum: 59844185dec1f997354e3a97f49dc0d51e3bb975a1ce7d9c0ab8b73d678ae23dc49e1eb4c8c641a41843d4a0c96aad128f514846f83628a4766921750b7ed494
   languageName: node
   linkType: hard
 
@@ -1626,9 +1633,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001400":
-  version: 1.0.30001423
-  resolution: "caniuse-lite@npm:1.0.30001423"
-  checksum: fe443f323f5dc6a858ef7d7deddb93db5e5f9a35e22970c4a65c4ef793bb696c1e2f038df572722d9edf29021e43ed16f5131faafde783563bd0d9eccf486592
+  version: 1.0.30001425
+  resolution: "caniuse-lite@npm:1.0.30001425"
+  checksum: 4fbf9f5b125b15a3eeaf7b75ca611f417ab9ce1a9fc07ee1023b2a7c0cc9844ad61ff089e814e4af6f747b9b532b6b50e7cb7844e6c29900f68ac9d171193ece
   languageName: node
   linkType: hard
 
@@ -1879,14 +1886,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cotl_api_docs@workspace:."
   dependencies:
-    "@astrojs/image": ^0.10.0
+    "@astrojs/image": ^0.11.0
     "@astrojs/partytown": ^1.0.1
     "@astrojs/preact": ^1.2.0
     "@astrojs/prefetch": ^0.1.0
     "@astrojs/sitemap": ^1.0.0
-    "@astrojs/vercel": ^2.3.1
-    "@docsearch/react": ^3.2.2
-    "@types/node": ^18.11.3
+    "@astrojs/vercel": ^2.3.2
+    "@docsearch/react": ^3.3.0
+    "@types/node": ^18.11.7
     astro: ^1.5.2
     astro-robots-txt: ^0.3.10
     astro-seo: ^0.6.0
@@ -2918,9 +2925,9 @@ __metadata:
   linkType: hard
 
 "github-slugger@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "github-slugger@npm:1.4.0"
-  checksum: 4f52e7a21f5c6a4c5328f01fe4fe13ae8881fea78bfe31f9e72c4038f97e3e70d52fb85aa7633a52c501dc2486874474d9abd22aa61cbe9b113099a495551c6b
+  version: 1.5.0
+  resolution: "github-slugger@npm:1.5.0"
+  checksum: c70988224578b3bdaa25df65973ffc8c24594a77a28550c3636e495e49d17aef5cdb04c04fa3f1744babef98c61eecc6a43299a13ea7f3cc33d680bf9053ffbe
   languageName: node
   linkType: hard
 
@@ -4996,13 +5003,13 @@ __metadata:
   linkType: hard
 
 "preact-render-to-string@npm:^5.2.4":
-  version: 5.2.5
-  resolution: "preact-render-to-string@npm:5.2.5"
+  version: 5.2.6
+  resolution: "preact-render-to-string@npm:5.2.6"
   dependencies:
     pretty-format: ^3.8.0
   peerDependencies:
     preact: ">=10"
-  checksum: 42a735274a190577e3a1fc785ab179a8ec422345d0fd24402146aa2e3c2b216b724c94d569677f744e366c2fbbe5619bc4ab8270cb8036c366d524b54e82fd3f
+  checksum: be8d5d8fb502d422c503e68af7bcccb6facd942f3ae9a4d093ebe3f1d4f0b15c540624bdac434d53a2a8e8fb7afa4606383414e937c40933ca43445470a026ff
   languageName: node
   linkType: hard
 
