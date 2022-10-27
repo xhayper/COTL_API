@@ -5,7 +5,6 @@ import partytown from "@astrojs/partytown";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
-import purgecss from "astro-purgecss";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
 
@@ -33,7 +32,6 @@ export default defineConfig({
             ]
         }),
         robotsTxt(),
-        purgecss(),
         minifyHtml()
     ],
     vite: {
