@@ -1,8 +1,9 @@
-import { useState, useCallback, useRef, createPortal } from "preact/compat";
+import { useState, useCallback, useRef } from "preact/compat";
 import { ALGOLIA } from "../../config";
 import "@docsearch/css";
 import "./Search.scss";
 
+import { createPortal } from "preact/compat";
 import * as docSearchReact from "@docsearch/react";
 
 /** FIXME: This is still kinda nasty, but DocSearch is not ESM ready. */
