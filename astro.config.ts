@@ -1,4 +1,4 @@
-import vercel from "@astrojs/vercel/static";
+import vercel from "@astrojs/vercel/edge";
 import { defineConfig } from "astro/config";
 import partytown from "@astrojs/partytown";
 import prefetch from "@astrojs/prefetch";
@@ -10,7 +10,7 @@ import image from "@astrojs/image";
 
 // https://astro.build/config
 export default defineConfig({
-    output: "static",
+    output: "server",
     adapter: vercel(),
     integrations: [
         preact({
