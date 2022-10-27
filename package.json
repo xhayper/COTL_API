@@ -23,7 +23,6 @@
         "@types/node": "^18.11.7",
         "astro": "^1.5.2",
         "astro-html-minifier": "^0.2.0",
-        "astro-purgecss": "^1.2.2",
         "astro-robots-txt": "^0.3.10",
         "astro-seo": "^0.6.0",
         "preact": "^10.11.2",
