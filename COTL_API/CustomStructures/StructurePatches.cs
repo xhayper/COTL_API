@@ -3,6 +3,7 @@ using Lamb.UI.BuildMenu;
 using System.Linq;
 using HarmonyLib;
 using System;
+using UnityEngine;
 
 namespace COTL_API.CustomStructures;
 
@@ -13,7 +14,10 @@ public partial class CustomStructureManager
     private static bool StructureBrain_CreateBrain(ref StructureBrain __result, StructuresData data)
     {
         if (!CustomStructures.ContainsKey(data.Type)) return true;
-        StructureBrain structureBrain = new StructureBrain();
+        //StructureBrain structureBrain = new StructureBrain();
+        Type t = CustomStructures[data.Type].GetType();
+        StructureBrain structureBrain = Activator.CreateInstance(t) as StructureBrain;
+
         StructureBrain.ApplyConfigToData(data);
         structureBrain.Init(data);
         StructureBrain._brainsByID.Add(data.ID, structureBrain);
@@ -216,5 +220,25 @@ public partial class CustomStructureManager
         if (!CustomStructures.ContainsKey(type)) return true;
         __result = CustomStructures[type].CanBeFlipped();
         return false;
+    }
+
+    [HarmonyPatch(typeof(Structure), nameof(Structure.Start))]
+    [HarmonyPostfix]
+    public static void Structure_Start(Structure __instance)
+    {
+
+        if (!CustomStructures.ContainsKey(__instance.Type)) return;
+
+        
+        if (CustomStructures[__instance.Type].Interaction != null)
+        {
+            Plugin.Logger.LogDebug("adding structure interaction " + CustomStructures[__instance.Type].Interaction);
+            var parent = __instance.GetComponentInParent<Transform>();
+            parent.gameObject.AddComponent(CustomStructures[__instance.Type].Interaction);
+        }
+
+
+
+
     }
 }
