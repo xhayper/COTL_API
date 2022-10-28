@@ -31,7 +31,7 @@ internal static class UIPatches
 
             GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(parentMenu);
-            Container.layer = UIHelpers.UILayer;
+            Container.layer = UIManager.UILayer;
             Container.transform.position = Vector3.zero;
             Container.transform.localScale = Vector3.one;
 
@@ -56,7 +56,7 @@ internal static class UIPatches
 
             GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(menuContainer);
-            Container.layer = UIHelpers.UILayer;
+            Container.layer = UIManager.UILayer;
             Container.transform.position = Vector3.zero;
             Container.transform.localScale = Vector3.one;
 

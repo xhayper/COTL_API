@@ -50,7 +50,7 @@ public static class GameObjectExtensions
     public static GameObject CreateChild(this GameObject obj, string name)
     {
         Transform parent = obj.transform;
-        return UIHelpers.CreateUIObject(name, parent);
+        return UIManager.CreateUIObject(name, parent);
     }
 
     public static GameObject MakeDraggable(this GameObject obj)
