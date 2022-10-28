@@ -59,6 +59,22 @@ public static class GameObjectExtensions
         return obj;
     }
 
+    public static GameObject MakeDraggable(this GameObject obj, in RectTransform dragRect)
+    {
+        var script = obj.AddComponent<UIBehaviourHelpers.DraggableUIObject>();
+        script.dragRectTransform = dragRect;
+        return obj;
+    }
+
+    public static GameObject MakeDraggable(this GameObject obj, in GameObject dragObj)
+    {
+        var script = obj.AddComponent<UIBehaviourHelpers.DraggableUIObject>();
+        var dragRect = dragObj.GetComponent<RectTransform>();
+        script.dragRectTransform = dragRect;
+        return obj;
+    }
+
+
     public static UIButton MakeButton(this GameObject obj)
     {
         var button = obj.AddComponent<UIButton>();
