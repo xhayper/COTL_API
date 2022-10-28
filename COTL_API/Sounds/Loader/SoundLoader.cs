@@ -7,15 +7,14 @@ using COTL_API.Sounds.Helpers;
 namespace COTL_API.Sounds.Load;
 public class SoundLoader : MonoBehaviour
 {
-    // Sounds -- All users should really care about.
+    // Sound cache.
     Dictionary<string, Sound> Sounds = new Dictionary<string, Sound>();
 
-    // SoundHandlers -- They should be used only for music that requires: 1. Looping 2. Volume syncing.
+    // SoundHandlers -- For looping audio that requires volume-syncing.
     List<SoundHandler> Handlers = new List<SoundHandler>();
 
     // All existent SoundLoader instances, for management purposes.
     internal static List<SoundLoader> AllInstances = new List<SoundLoader>();
-
 
     void Start()
     {

@@ -8,26 +8,26 @@ namespace COTL_API.Sounds.Load;
 internal class SoundHandler
 {
     // Channel through which all the sound is played.
-    Channel handle;
+    Channel channel;
 
-    Sound _sound; // Current sound.
+    Sound currentSound;
+    string currentSoundId;
+    public string Id => currentSoundId;
 
-    string _id; // Sound id
-    public string Id => _id;
-
-    float volumeMultiplier = 1f; // Volume control while still in sync with Master
+    // Volume control while still in sync with Master
+    float volumeMultiplier = 1f;
 
     public SoundHandler(Sound sound, string id)
     {
-        _sound = sound;
-        _id = id;
-        handle = new Channel();
+        currentSound = sound;
+        currentSoundId = id;
+        channel = new Channel();
     }
 
     public RESULT Play()
     {
         FMOD.System system = RuntimeManager.CoreSystem;
-        RESULT result = system.playSound(_sound, new ChannelGroup(), false, out handle);
+        RESULT result = system.playSound(currentSound, new ChannelGroup(), false, out channel);
         if (result != RESULT.OK)
         {
             result.IfErrorPrintWith($"Play -- SoundHandler instance id: {Id}");
@@ -39,7 +39,7 @@ internal class SoundHandler
 
     public void SetVolume(float a)
     {
-        RESULT result = handle.setVolume(a * volumeMultiplier);
+        RESULT result = channel.setVolume(a * volumeMultiplier);
         result.IfErrorPrintWith($"SetVolume -- SoundHandler instance id: {Id}");
     }
 
@@ -50,13 +50,13 @@ internal class SoundHandler
 
     public void Stop()
     {
-        RESULT result = handle.stop();
+        RESULT result = channel.stop();
         result.IfErrorPrintWith($"Stop -- SoundHandler instance id: {Id}");
     }
 
     public bool isPlaying()
     {
-        RESULT result = handle.isPlaying(out bool isPlaying);
+        RESULT result = channel.isPlaying(out bool isPlaying);
         result.IfErrorPrintWith($"isPlaying -- SoundHandler instance id: {Id}");
         return isPlaying;
     }
@@ -65,7 +65,7 @@ internal class SoundHandler
     {
         if (!isPlaying()) return false;
 
-        RESULT result = handle.getPaused(out bool isPaused);
+        RESULT result = channel.getPaused(out bool isPaused);
         result.IfErrorPrintWith($"isPaused -- SoundHandler instance id: {Id}");
         return isPaused;
     }
@@ -74,7 +74,7 @@ internal class SoundHandler
     {
         if (isPlaying())
         {
-            RESULT result = handle.setPaused(pause);
+            RESULT result = channel.setPaused(pause);
             result.IfErrorPrintWith($"Pause -- SoundHandler instance id: {Id}");
         }
     }
@@ -87,13 +87,13 @@ internal class SoundHandler
         float x = Mathf.Clamp(a, 0f, 1f) * Convert.ToInt32(active);
 
         // SET REVERB
-        RESULT result = handle.setReverbProperties(0, x);
+        RESULT result = channel.setReverbProperties(0, x);
         result.IfErrorPrintWith($"SetReverb -- SoundHandler instance id: {Id}");
     }
     public void SetLowPass(float a)
     {
         Mathf.Clamp(a, 0f, 1f);
-        RESULT result = handle.setLowPassGain(a); // 0 to 1
+        RESULT result = channel.setLowPassGain(a); // 0 to 1
         result.IfErrorPrintWith($"SetLowPass -- SoundHandler instance id: {Id}");
     }
 }
