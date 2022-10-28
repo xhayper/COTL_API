@@ -11,8 +11,8 @@ internal class UIBehaviourHelpers
 
         void Start()
         {
-            dragRectTransform = GetComponent<RectTransform>();
-            canvas = GetComponentInParent<Canvas>();
+            dragRectTransform ??= GetComponent<RectTransform>();
+            canvas ??= GetComponentInParent<Canvas>();
         }
 
         public void OnDrag(PointerEventData eventData)
