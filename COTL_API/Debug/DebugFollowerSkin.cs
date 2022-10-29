@@ -5,13 +5,9 @@ using UnityEngine;
 
 namespace COTL_API.Debug;
 
-public class DebugSkin : CustomSkin
+public class DebugFollowerSkin : CustomFollowerSkin
 {
     public override string Name => "Debug Skin";
-    public override bool TwitchPremium { get; }
-    public override bool Hidden { get; }
-    public override bool Unlocked { get; }
-    public override bool Invariant { get; }
     public override Texture2D Texture => TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("debug_sheet.png"));
 
     public override List<SkinOverride> Overrides => new() {

@@ -8,10 +8,6 @@ namespace COTL_API.CustomSkins;
 public abstract class CustomSkin
 {
     public abstract string Name { get; }
-    public virtual bool TwitchPremium { get; } = false;
-    public virtual bool Hidden { get; } = false;
-    public virtual bool Unlocked { get; } = true;
-    public virtual bool Invariant { get; } = false;
     
     public abstract Texture2D Texture { get; }
     public abstract List<SkinOverride> Overrides { get; }
@@ -50,25 +46,9 @@ public abstract class CustomSkin
         public Vector2 Translate { get; private set; }
     }
     
-    public virtual List<WorshipperData.SlotsAndColours> Colors { get; } = new() {
-        new() {
-            SlotAndColours = new() {
-                new("ARM_LEFT_SKIN", new Color(1, 0, 1)),
-                new("ARM_RIGHT_SKIN", new Color(0, 0, 0)),
-                new("LEG_LEFT_SKIN", new Color(1, 0, 1)),
-                new("LEG_RIGHT_SKIN", new Color(0, 0, 0)),
-                new("BODY_SKIN", new Color(1, 0, 1)),
-                new("BODY_SKIN_BOWED", new Color(1, 0, 1)),
-                new("BODY_SKIN_UP", new Color(1, 0, 1)),
-                new("HEAD_SKIN_BTM", new Color(1, 0, 1)),
-                new("HEAD_SKIN_TOP", new Color(0, 0, 0)),
-            }
-        }
-    };
-
     public string GenerateAtlasText()
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         sb.AppendLine();
         sb.AppendLine($"{Name}");
         sb.AppendLine($"size: {Texture.width}, {Texture.height}");

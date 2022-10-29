@@ -5,14 +5,13 @@ using BepInEx.Configuration;
 using COTL_API.CustomSkins;
 using COTL_API.CustomTasks;
 using System.Reflection;
-using COTL_API.Helpers;
 using BepInEx.Logging;
 using COTL_API.Debug;
 using System.Linq;
-using UnityEngine;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
+using System;
 
 namespace COTL_API;
 
@@ -42,6 +41,9 @@ public class Plugin : BaseUnityPlugin
     internal static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;
 
+    internal static event Action OnStart = delegate { };
+    internal static bool Started { get; private set; }
+
     private void Awake()
     {
         Logger = base.Logger;
@@ -50,6 +52,12 @@ public class Plugin : BaseUnityPlugin
         _debug = Config.Bind("", "debug", false, "");
 
         Logger.LogInfo($"COTL API loaded");
+    }
+
+    private void Start()
+    {
+        OnStart.Invoke();
+        Started = true;
     }
 
     private void AddDebugContent()
@@ -73,7 +81,8 @@ public class Plugin : BaseUnityPlugin
 
         CustomTaskManager.Add(new DebugTask());
         
-        CustomSkinManager.Add(new DebugSkin());
+        CustomSkinManager.Add(new DebugFollowerSkin());
+        CustomSkinManager.SetPlayerSkinOverride(new DebugPlayerSkin());
 
         CustomObjective test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
