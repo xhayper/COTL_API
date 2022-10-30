@@ -11,7 +11,6 @@ public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
     public bool CheckOverrideComplete() => true;
     public FollowerTask GetOverrideTask(FollowerBrain brain) => null;
 
-
     public void GetAvailableTasks(ScheduledActivity activity, SortedList<float, FollowerTask> sortedTasks)
     {
         if (activity != ScheduledActivity.Work || this.ReservedForTask)
