@@ -226,19 +226,13 @@ public partial class CustomStructureManager
     [HarmonyPostfix]
     public static void Structure_Start(Structure __instance)
     {
-
         if (!CustomStructures.ContainsKey(__instance.Type)) return;
 
-        
         if (CustomStructures[__instance.Type].Interaction != null)
         {
             Plugin.Logger.LogDebug("adding structure interaction " + CustomStructures[__instance.Type].Interaction);
             var parent = __instance.GetComponentInParent<Transform>();
             parent.gameObject.AddComponent(CustomStructures[__instance.Type].Interaction);
         }
-
-
-
-
     }
 }
