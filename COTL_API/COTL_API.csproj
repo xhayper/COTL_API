@@ -7,6 +7,6 @@
     <Import Project="../COTL_API.Common.props" />
 
     <ItemGroup>
-        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.0.17-*" />
+        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.0.18-*" />
     </ItemGroup>
 </Project>
