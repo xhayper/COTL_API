@@ -20,7 +20,7 @@
         "@astrojs/sitemap": "^1.0.0",
         "@astrojs/vercel": "^2.3.3",
         "@docsearch/react": "^3.3.0",
-        "@types/node": "^18.11.8",
+        "@types/node": "^18.11.9",
         "astro": "^1.6.2",
         "astro-html-minifier": "^0.2.0",
         "astro-robots-txt": "^0.3.10",
