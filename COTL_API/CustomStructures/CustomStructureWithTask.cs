@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace COTL_API.CustomStructures;
 public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
@@ -9,7 +7,11 @@ public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
     public abstract FollowerTask StructureTask { get; }
 
     public bool CheckOverrideComplete() => true;
-    public FollowerTask GetOverrideTask(FollowerBrain brain) => null;
+    
+    public FollowerTask GetOverrideTask(FollowerBrain brain)
+    {
+        return null;
+    }
 
     public void GetAvailableTasks(ScheduledActivity activity, SortedList<float, FollowerTask> sortedTasks)
     {
@@ -18,5 +20,4 @@ public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
 
         sortedTasks.Add(StructureTask.Priorty, StructureTask);
     }
-
 }
