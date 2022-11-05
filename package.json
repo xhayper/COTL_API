@@ -32,7 +32,8 @@
         "react-dom": "npm:@preact/compat@latest",
         "remark-github": "^11.2.4",
         "sass": "^1.56.0",
-        "sharp": "^0.31.2"
+        "sharp": "^0.31.2",
+        "source-map-support": "^0.5.21"
     },
     "packageManager": "yarn@3.2.4"
 }
