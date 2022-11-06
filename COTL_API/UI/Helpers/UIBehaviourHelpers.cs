@@ -9,7 +9,7 @@ internal class UIBehaviourHelpers
         public RectTransform dragRectTransform;
         public Canvas canvas;
 
-        void Start()
+        public void Start()
         {
             dragRectTransform ??= GetComponent<RectTransform>();
             canvas ??= GetComponentInParent<Canvas>();

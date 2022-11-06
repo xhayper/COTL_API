@@ -6,7 +6,7 @@ public abstract class UIMenuBase : MonoBehaviour
 {
     public static Transform Parent;
 
-    void Start()
+    public void Start()
     {
         InitializeMenu(Parent);
     }
