@@ -8,6 +8,7 @@ using COTL_API.UI.Helpers;
 using TMPro;
 using Lamb.UI.MainMenu;
 using COTL_API.UI.Base;
+using System.Reflection;
 
 namespace COTL_API.UI.Patches;
 internal static class UIPatches
@@ -64,5 +65,35 @@ internal static class UIPatches
 
             List<UIMenuBase> StartMenuItems = StartMenuQueue.Select(x => Container.AddComponent(x) as UIMenuBase).ToList();
         }
+    }
+
+    public class CultBasePatch
+    {
+        //TODO
+    }
+
+    [HarmonyPatch]
+    public class DungeonPatches
+    {
+        [HarmonyTargetMethod]
+        static IEnumerable<MethodBase> BaseAndDungeons()
+        {
+            yield return AccessTools.Method(typeof(BiomeBaseManager), nameof(BiomeBaseManager.Start));
+            yield return AccessTools.Method(typeof(DungeonLocationManager), nameof(DungeonLocationManager.Start));
+        }
+
+        [HarmonyPrefix]
+        static void AddUI()
+        {
+            Transform parent = GameObject.Find("Main Camera").transform;
+
+            GameObject Container = new GameObject("COTL_API_UIContainer");
+            Container.transform.SetParent(parent);
+            Container.layer = UIManager.UILayer;
+            Container.transform.position = Vector3.zero;
+            Container.transform.localScale = Vector3.one;
+        }
+
+        //TODO
     }
 }

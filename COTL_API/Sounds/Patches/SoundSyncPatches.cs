@@ -9,14 +9,14 @@ internal class SoundSyncPatches
 {
     [HarmonyPatch(typeof(AudioSettings), nameof(AudioSettings.OnMasterVolumeChanged))]
     [HarmonyPostfix]
-    static void SyncMaster()
+    private static void SyncMaster()
     {
         SoundLoader.AllInstances.ForEach(x => x.SyncAllVolume());
     }
 
     [HarmonyPatch(typeof(AudioSettings), nameof(AudioSettings.OnMusicVolumeChanged))]
     [HarmonyPostfix]
-    static void SyncMusic()
+    private static void SyncMusic()
     {
         SoundLoader.AllInstances.ForEach(x => x.SyncAllVolume());
     }

@@ -16,11 +16,11 @@ public class SoundLoader : MonoBehaviour
     // All existent SoundLoader instances, for management purposes.
     internal static List<SoundLoader> AllInstances = new List<SoundLoader>();
 
-    void Start()
+    private void Start()
     {
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         AllInstances.Remove(this);
         StopAll();
@@ -127,7 +127,7 @@ public class SoundLoader : MonoBehaviour
 
 
     // == CHANNEL INSTANCE ==
-    SoundHandler GetHandlerByID(string id)
+    private SoundHandler GetHandlerByID(string id)
     {
         return Handlers.Where(x => x.Id == id).FirstOrDefault();
     }
