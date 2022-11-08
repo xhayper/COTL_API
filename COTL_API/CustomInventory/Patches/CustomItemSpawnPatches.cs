@@ -45,38 +45,6 @@ public static partial class CustomItemManager
         return customItemObject;
     }
 
-    // [HarmonyTranspiler]
-    // [HarmonyDebug]
-    // [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Spawn), typeof(InventoryItem.ITEM_TYPE), typeof(int), typeof(Vector3), typeof(float), typeof(Action<PickUp>))]
-    // public static IEnumerable<CodeInstruction> TranspilerOne(IEnumerable<CodeInstruction> instructions, MethodBase originalMethod)
-    // {
-    //     List<CodeInstruction> codes = new(instructions);
-    //     List<CodeInstruction> newCode = new() {
-    //         new CodeInstruction(OpCodes.Ldloc_2),
-    //         new CodeInstruction(OpCodes.Ldarg_0),
-    //         new CodeInstruction(OpCodes.Call, typeof(CustomItemManager).GetMethod(nameof(ReplaceSpawn), AccessTools.all)),
-    //         new CodeInstruction(OpCodes.Ldloc_S, 4),
-    //     };
-    //     int index = 0;
-    //     for (int i = 0; i < codes.Count; i++)
-    //     {
-    //         if (codes[i].operand != null && codes[i].operand.ToString().Contains("Prefabs/Resources"))
-    //         {
-    //             Plugin.Logger.LogWarning("Found insert spot!");
-    //             index = i;
-    //             break;
-    //         }
-    //     }
-    //
-    //     if (index != 0)
-    //     {
-    //         codes.RemoveRange(index,6);
-    //         codes.InsertRange(index, newCode);
-    //         codes[index - 1].opcode = OpCodes.Br_S;
-    //     }
-    //
-    //     return codes.AsEnumerable();
-    // }
 
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Spawn), typeof(InventoryItem.ITEM_TYPE), typeof(int), typeof(Vector3), typeof(float), typeof(Action<PickUp>))]
     private static class InventoryItemSpawnPatches
