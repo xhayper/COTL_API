@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AssemblyName>COTL_API</AssemblyName>
-        <AssemblyVersion>0.1.1</AssemblyVersion>
-        <ReleaseVersion>0.1.1</ReleaseVersion>
+        <PackageVersion>0.1.7</PackageVersion>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props" />
 
     <ItemGroup>
-        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.0.12-*" />
+        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.0.18-*" />
     </ItemGroup>
 </Project>

@@ -1,13 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System.Collections.Generic;
 
 namespace COTL_API.Helpers;
 
-public class TextureHelper
+public static class TextureHelper
 {
-    public static Dictionary<string, Sprite> SpriteCache = new();
-    public static Dictionary<string, Texture2D> TextureCache = new();
+    private static Dictionary<string, Sprite> SpriteCache = new();
+    private static Dictionary<string, Texture2D> TextureCache = new();
 
     public static Texture2D CreateTextureFromPath(string path, TextureFormat textureFormat = TextureFormat.RGBA32,
         bool mipmaps = false, bool linear = false)
@@ -24,7 +24,7 @@ public class TextureHelper
     {
         if (SpriteCache.ContainsKey(path)) return SpriteCache[path];
         Texture2D tex = CreateTextureFromPath(path);
-        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2, tex.height / 2));
+        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
         SpriteCache[path] = sprite;
         return sprite;
     }

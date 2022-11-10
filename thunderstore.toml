@@ -4,9 +4,9 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "xhayper"
 name = "COTL_API"
-versionNumber = "0.1.1"
+versionNumber = "0.1.6"
 description = "A BepInEx plugin made for modder to easily interact with Cult of the Lamb game"
-websiteUrl = "https://xhayper.github.io/COTL_API/"
+websiteUrl = "https://cotl-api.vercel.app/"
 containsNsfwContent = false
 
 [package.dependencies]
@@ -19,11 +19,11 @@ outdir = "./build"
 
 [[build.copy]]
 source = "bin/Release/COTL_API/COTL_API.dll"
-target = "plugins/COTL_API.dll"
+target = "plugins/io.github.xhayper.COTL_API/COTL_API.dll"
 
 [[build.copy]]
 source = "Assets"
-target = "plugins/Assets"
+target = "plugins/io.github.xhayper.COTL_API/Assets"
 
 [publish]
 repository = "https://cult-of-the-lamb.thunderstore.io"

@@ -5,10 +5,10 @@ using HarmonyLib;
 namespace COTL_API.Patches;
 
 // This fixes custom follower commands with subcommands from raising an exception when the plugin uses IsAvailable as the original method passes null
-[HarmonyPatch(typeof(UIFollowerInteractionWheelOverlayController))]
-public static class UIFollowerInteractionWheelOverlayController_Patches
+[HarmonyPatch]
+public static class UIFollowerInteractionWheelOverlayControllerPatches
 {
-    [HarmonyPatch(nameof(UIFollowerInteractionWheelOverlayController.MakeChoice),
+    [HarmonyPatch(typeof(UIFollowerInteractionWheelOverlayController), nameof(UIFollowerInteractionWheelOverlayController.MakeChoice),
         typeof(UIFollowerWheelInteractionItem))]
     [HarmonyWrapSafe]
     public static class MakeChoice
@@ -17,7 +17,7 @@ public static class UIFollowerInteractionWheelOverlayController_Patches
         public static bool Prefix(ref UIFollowerWheelInteractionItem item, ref bool __state)
         {
             if (item.CommandItem is CustomFollowerCommand.CustomFollowerCommand &&
-                item.CommandItem.SubCommands.Count > 0)
+                item.CommandItem.SubCommands is { Count: > 0 })
 
             {
                 if (Plugin.Debug) Plugin.Logger.LogDebug($"Custom command with sub commands, not letting normal method run.");

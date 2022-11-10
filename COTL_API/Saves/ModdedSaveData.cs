@@ -4,11 +4,11 @@ namespace COTL_API.Saves;
 
 public class ModdedSaveData
 {
-    public Dictionary<string, Dictionary<string, object>> SaveData = new();
+    public Dictionary<string, Dictionary<string, object>> SaveData { get; private set; } = new();
 
     public T GetValue<T>(string guid, string key)
     {
-        SaveData ??= new Dictionary<string, Dictionary<string, object>>();
+        SaveData = SaveData ?? new Dictionary<string, Dictionary<string, object>>();
 
         if (!SaveData.ContainsKey(guid))
             SaveData.Add(guid, new Dictionary<string, object>());
@@ -52,7 +52,7 @@ public class ModdedSaveData
 
     public void SetValue<T>(string guid, string key, T value)
     {
-        SaveData ??= new Dictionary<string, Dictionary<string, object>>();
+        SaveData = SaveData ?? new Dictionary<string, Dictionary<string, object>>();
 
         if (!SaveData.ContainsKey(guid))
             SaveData.Add(guid, new Dictionary<string, object>());
