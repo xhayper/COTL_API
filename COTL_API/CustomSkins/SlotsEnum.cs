@@ -1,4 +1,4 @@
-﻿namespace COTL_API.Skins;
+﻿namespace COTL_API.CustomSkins;
 
 public enum SlotsEnum
 {

@@ -13,7 +13,7 @@ internal static class APIDataManager
 
     static APIDataManager()
     {
-        DataReadWriter.OnReadCompleted += delegate(APIData data)
+        DataReadWriter.OnReadCompleted += delegate (APIData data)
         {
             APIData = data;
         };
@@ -26,8 +26,6 @@ internal static class APIDataManager
         Load();
     }
 
-    [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Save))]
-    [HarmonyPostfix]
     internal static void Save()
     {
         DataReadWriter.Write(APIData, DataPath);

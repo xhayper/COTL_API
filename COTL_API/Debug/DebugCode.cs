@@ -1,12 +1,8 @@
 ﻿using System.Collections.Generic;
 using COTL_API.CustomTarotCard;
-using COTL_API.Helpers;
-using COTL_API.Skins;
-using src.Extensions;
 using System.Linq;
 using UnityEngine;
 using HarmonyLib;
-using System.IO;
 using Lamb.UI;
 
 namespace COTL_API.Debug;
@@ -14,15 +10,6 @@ namespace COTL_API.Debug;
 [HarmonyPatch]
 public class DebugCode
 {
-    public static void CreateSkin()
-    {
-        Texture2D customTex =
-            TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
-        string atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
-
-        SkinManager.AddCustomSkin("Test", customTex, atlasText);
-    }
-
     [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
     [HarmonyPrefix]
     public static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
