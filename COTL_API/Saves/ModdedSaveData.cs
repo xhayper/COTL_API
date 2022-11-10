@@ -8,7 +8,7 @@ public class ModdedSaveData
 
     public T GetValue<T>(string guid, string key)
     {
-        SaveData = SaveData ?? new Dictionary<string, Dictionary<string, object>>();
+        SaveData ??= new Dictionary<string, Dictionary<string, object>>();
 
         if (!SaveData.ContainsKey(guid))
             SaveData.Add(guid, new Dictionary<string, object>());

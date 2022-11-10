@@ -16,45 +16,46 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static void InventoryItemDisplay_GetItemImages(ref InventoryItemDisplay __instance)
     {
-        foreach (InventoryItemDisplay.MyDictionaryEntry customItem in CustomInventory.CustomItemManager.CustomItems.Select(type => new InventoryItemDisplay.MyDictionaryEntry {
-                     key = type.Key,
-                     value = type.Value.InventoryIcon
-                 }))
+        foreach (InventoryItemDisplay.MyDictionaryEntry customItem in CustomItems.Select(type =>
+                     new InventoryItemDisplay.MyDictionaryEntry {
+                         key = type.Key,
+                         value = type.Value.InventoryIcon
+                     }))
         {
             if (!__instance.ItemImages.Contains(customItem))
-            {
                 __instance.ItemImages.Add(customItem);
-            }
 
             if (__instance.myDictionary == null) continue;
+
             if (!__instance.myDictionary.ContainsKey(customItem.key))
-            {
                 __instance.myDictionary.Add(customItem.key, customItem.value);
-            }
         }
     }
 
-/// <summary>
-/// The original method fails to spawn the custom items when qty is greater than 1 for some reason. This patch fixes that.
-/// </summary>
-/// <param name="__instance"></param>
-/// <param name="state"></param>
-/// <returns></returns>
+    /// <summary>
+    /// The original method fails to spawn the custom items when qty is greater than 1 for some reason. This patch fixes that.
+    /// </summary>
+    /// <param name="__instance"></param>
+    /// <param name="state"></param>
+    /// <returns></returns>
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Interaction_OfferingShrine), nameof(Interaction_OfferingShrine.OnInteract))]
     public static bool OnInteract(ref Interaction_OfferingShrine __instance, ref StateMachine state)
     {
-        if (!CustomInventory.CustomItemManager.CustomItems.ContainsKey((InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type)) return true;
-        
+        if (!CustomItems.ContainsKey(
+                (InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type)) return true;
+
         Helpers.OnInteractHelper.Interaction_OnInteract(__instance, state);
         if (__instance.StructureInfo.Inventory.Count > 0)
         {
             InventoryItem.ITEM_TYPE type = (InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type;
             int quantity = __instance.StructureInfo.Inventory[0].quantity;
-           // for (int i = 0; i < quantity; i++) //i dont know why, the original method spawns 1 then stops
-           // {
-                InventoryItem.Spawn(type, quantity, __instance.Item.transform.position, 0f).SetInitialSpeedAndDiraction(4f + UnityEngine.Random.Range(-0.5f, 1f), 270 + UnityEngine.Random.Range(-90, 90));
-           // }
+            // for (int i = 0; i < quantity; i++) //i dont know why, the original method spawns 1 then stops
+            // {
+            InventoryItem.Spawn(type, quantity, __instance.Item.transform.position, 0f)
+                .SetInitialSpeedAndDiraction(4f + UnityEngine.Random.Range(-0.5f, 1f),
+                    270 + UnityEngine.Random.Range(-90, 90));
+            // }
 
             __instance.StructureInfo.Inventory.Clear();
             __instance.StructureInfo.LastPrayTime = TimeManager.TotalElapsedGameTime;
@@ -79,11 +80,11 @@ public static partial class CustomItemManager
         [HarmonyPrefix]
         private static void Prefix(ref Structures_OfferingShrine __instance)
         {
-            foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomInventory.CustomItemManager.CustomItems.Where(item => item.Value.AddItemToOfferingShrine))
-            {
+            foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItems.Where(item =>
+                         item.Value.AddItemToOfferingShrine))
                 switch (item.Value.Rarity)
                 {
-                    case CustomInventory.CustomItemManager.ItemRarity.COMMON:
+                    case ItemRarity.COMMON:
                     {
                         if (!__instance.Offerings.Contains(item.Key))
                         {
@@ -93,7 +94,7 @@ public static partial class CustomItemManager
 
                         break;
                     }
-                    case CustomInventory.CustomItemManager.ItemRarity.RARE:
+                    case ItemRarity.RARE:
                     {
                         if (!__instance.RareOfferings.Contains(item.Key))
                         {
@@ -112,7 +113,6 @@ public static partial class CustomItemManager
 
                         break;
                 }
-            }
         }
     }
 }

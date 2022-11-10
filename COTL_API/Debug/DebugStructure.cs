@@ -8,10 +8,12 @@ namespace COTL_API.Debug;
 
 public class DebugStructure : CustomStructure
 {
-    public override Sprite Sprite => TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder_1.png"));
+    public override Sprite Sprite =>
+        TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder_1.png"));
+
     public override string InternalName => "DEBUG_STRUCTURE";
     public override FollowerCategory.Category Category => FollowerCategory.Category.Misc;
-    public override Vector2Int Bounds => new Vector2Int(1, 1);
+    public override Vector2Int Bounds => new(1, 1);
 
     public override int BuildDurationMinutes => 15;
 

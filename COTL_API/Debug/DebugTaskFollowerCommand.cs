@@ -5,7 +5,7 @@ namespace COTL_API.Debug;
 public class DebugTaskFollowerCommand : CustomFollowerCommand.CustomFollowerCommand
 {
     public override string InternalName => "DEBUG_TASK_FOLLOWER_COMMAND";
-    
+
 
     public override string GetTitle(Follower follower)
     {
@@ -31,6 +31,7 @@ public class DebugTaskFollowerCommand : CustomFollowerCommand.CustomFollowerComm
                 interaction.CloseAndSpeak("No_Debug_Structures");
                 return;
             }
+
             interaction.follower.Brain.HardSwapToTask(new DebugTask());
         }));
         interaction.Close();

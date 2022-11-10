@@ -50,9 +50,7 @@ public class Plugin : BaseUnityPlugin
         _debug = Config.Bind("", "debug", false, "");
 
         if (Debug)
-        {
             AddDebugContent();
-        }
 
         Logger.LogInfo($"COTL API loaded");
     }
@@ -111,11 +109,15 @@ public class Plugin : BaseUnityPlugin
     {
         if (_questCleanDone) return;
         if (DataManager.Instance == null) return;
-        foreach (DataManager.QuestHistoryData quest in DataManager.Instance.CompletedQuestsHistorys.Where(a => a.QuestIndex >= Quests.QuestsAll.Count))
+        foreach (DataManager.QuestHistoryData quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
+                     a.QuestIndex >= Quests.QuestsAll.Count))
         {
-            if (Debug) Logger.LogDebug("Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
+            if (Debug)
+                Logger.LogDebug(
+                    "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
             quest.QuestIndex = Quests.QuestsAll.Count - 1;
         }
+
         _questCleanDone = true;
     }
 }

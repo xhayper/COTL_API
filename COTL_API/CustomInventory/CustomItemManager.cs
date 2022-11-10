@@ -41,8 +41,11 @@ public static partial class CustomItemManager
     public static bool DropLoot(CustomInventoryItem customInventoryItem)
     {
         float roll = Random.Range(0, 101);
-        float chance = customInventoryItem.DungeonChestSpawnChance + customInventoryItem.DungeonChestSpawnChance * DataManager.Instance.GetLuckMultiplier();
-        if (Plugin.Debug) Plugin.Logger.LogDebug($"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");
+        float chance = customInventoryItem.DungeonChestSpawnChance +
+                       customInventoryItem.DungeonChestSpawnChance * DataManager.Instance.GetLuckMultiplier();
+        if (Plugin.Debug)
+            Plugin.Logger.LogDebug(
+                $"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");
         return roll <= chance;
         //return true;
     }
@@ -52,7 +55,8 @@ public static partial class CustomItemManager
     /// </summary>
     /// <param name="name">Name of the items internal object to search for.</param>
     /// <returns>If found, returns the CustomInventoryItem object.</returns>
-    public static KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> GetItemObjectByInternalObjectName(string name)
+    public static KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem>
+        GetItemObjectByInternalObjectName(string name)
     {
         return (from item in CustomItems where item.Value.InternalObjectName == name select item).FirstOrDefault();
     }

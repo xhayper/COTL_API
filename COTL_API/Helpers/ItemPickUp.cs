@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using Object = UnityEngine.Object;
+using System;
 
 namespace COTL_API.Helpers;
 
@@ -374,11 +369,8 @@ public static class ItemPickUp
         Plugin.Logger.LogWarning($"ImitateItemPickUpText: {text}");
 
         if (!text.EndsWith(".prefab", StringComparison.InvariantCultureIgnoreCase))
-        {
             return Resources.Load("Prefabs/Resources/" + text) as GameObject;
-        }
-   
+        
         return Resources.Load(text) as GameObject;
-
     }
 }

@@ -15,7 +15,7 @@ public partial class CustomFollowerCommandManager
         __result = CustomFollowerCommands[__instance.Command].GetTitle(follower);
         return false;
     }
-    
+
     [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.IsAvailable))]
     [HarmonyPrefix]
     private static bool CommandItem_IsAvailable(CommandItem __instance, Follower follower, ref bool __result)
@@ -24,7 +24,7 @@ public partial class CustomFollowerCommandManager
         __result = CustomFollowerCommands[__instance.Command].IsAvailable(follower);
         return false;
     }
-    
+
     [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.GetDescription))]
     [HarmonyPrefix]
     private static bool CommandItem_GetDescription(CommandItem __instance, Follower follower, ref string __result)
@@ -33,7 +33,7 @@ public partial class CustomFollowerCommandManager
         __result = CustomFollowerCommands[__instance.Command].GetDescription(follower);
         return false;
     }
-    
+
     [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.GetLockedDescription))]
     [HarmonyPrefix]
     private static bool CommandItem_GetLockedDescription(CommandItem __instance, Follower follower, ref string __result)
@@ -123,7 +123,7 @@ public partial class CustomFollowerCommandManager
         if (CustomFollowerCommands.ContainsKey(preFinalCommand))
             CustomFollowerCommands[preFinalCommand].Execute(__instance, command);
         else CustomFollowerCommands[command].Execute(__instance);
-        
+
         return false;
     }
 
@@ -135,7 +135,7 @@ public partial class CustomFollowerCommandManager
         if (!CustomFollowerCommands.ContainsKey(followerCommands)) return true;
 
         __result = CustomFollowerCommands[followerCommands].CommandStringIcon();
-        
+
         return false;
     }
 }

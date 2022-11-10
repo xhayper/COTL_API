@@ -16,7 +16,7 @@ public static partial class ModdedSaveManager
 
     static ModdedSaveManager()
     {
-        _readWriter.OnReadCompleted += delegate (ModdedSaveData data)
+        _readWriter.OnReadCompleted += delegate(ModdedSaveData data)
         {
             Data = data;
             Loaded = true;

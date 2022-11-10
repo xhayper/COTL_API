@@ -13,8 +13,9 @@ public static class TextureHelper
         bool mipmaps = false, bool linear = false)
     {
         if (TextureCache.ContainsKey(path)) return TextureCache[path];
-        Texture2D tex = new(1, 1, textureFormat, mipmaps, linear);
-        tex.filterMode = FilterMode.Point;
+        Texture2D tex = new(1, 1, textureFormat, mipmaps, linear) {
+            filterMode = FilterMode.Point
+        };
         tex.LoadImage(File.ReadAllBytes(path));
         TextureCache[path] = tex;
         return tex;

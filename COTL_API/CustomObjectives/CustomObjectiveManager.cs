@@ -13,15 +13,11 @@ public static partial class CustomObjectiveManager
     /// </summary>
     private const string GroupId = "Objectives/GroupTitles/Quest";
 
-
-
     static CustomObjectiveManager()
     {
         ModdedSaveManager.OnLoadComplete += CustomQuestData.LoadData;
         ModdedSaveManager.OnSaveComplete += CustomQuestData.SaveData;
     }
-
-
 
     private static string DefaultQuestText => "I didn't set a custom quest text for this objective!";
 
@@ -29,7 +25,6 @@ public static partial class CustomObjectiveManager
     /// Holds the list of instantiated custom objectives.
     /// </summary>
     internal static Dictionary<int, CustomObjective> PluginQuestTracker { get; } = new();
-
 
     ///  <param name="followerName">The name of the follower.</param>
     ///  <returns>The original instance of the objective if it exists, otherwise returns a new instance.</returns>
@@ -43,12 +38,12 @@ public static partial class CustomObjectiveManager
     /// <param name="target">The target amount to complete the objective.</param>
     /// <param name="expireTimestamp">How long the player has to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
-    public static CustomObjective BuildStructure(StructureBrain.TYPES structureType, int target = 1, float expireTimestamp = -1f)
+    public static CustomObjective BuildStructure(StructureBrain.TYPES structureType, int target = 1,
+        float expireTimestamp = -1f)
     {
         Objectives_BuildStructure q = new(GroupId, structureType, target, expireTimestamp);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <param name="itemType">The target item to collect.</param>
     /// <param name="target">The target amount to complete the objective.</param>
@@ -56,12 +51,12 @@ public static partial class CustomObjectiveManager
     /// <param name="targetLocation">The location the objective takes place. i.e. Dungeon1_1</param>
     /// <param name="expireTimestamp">How long the player has to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
-    public static CustomObjective CollectItem(InventoryItem.ITEM_TYPE itemType, int target, bool targetIsTotal = true, FollowerLocation targetLocation = FollowerLocation.Base, float expireTimestamp = -1f)
+    public static CustomObjective CollectItem(InventoryItem.ITEM_TYPE itemType, int target, bool targetIsTotal = true,
+        FollowerLocation targetLocation = FollowerLocation.Base, float expireTimestamp = -1f)
     {
         Objectives_CollectItem q = new(GroupId, itemType, target, targetIsTotal, targetLocation, expireTimestamp);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <param name="mealType">The type of meal that is to be cooked to complete the objective.</param>
     /// <param name="count">How many required to complete the objective.</param>
@@ -73,17 +68,16 @@ public static partial class CustomObjectiveManager
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
 
-
     /// <param name="customQuestType">The type of custom quest.</param>
     /// <param name="targetFollowerID">The target followers ID.</param>
     /// <param name="questExpireDuration">How long the player has to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
-    public static CustomObjective Custom(Objectives.CustomQuestTypes customQuestType, int targetFollowerID = -1, float questExpireDuration = -1f)
+    public static CustomObjective Custom(Objectives.CustomQuestTypes customQuestType, int targetFollowerID = -1,
+        float questExpireDuration = -1f)
     {
         Objectives_Custom q = new(GroupId, customQuestType, targetFollowerID, questExpireDuration);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <param name="characterNameTerm"></param>
     /// <param name="expireTimestamp">How long the player has to complete the objective.</param>
@@ -94,14 +88,12 @@ public static partial class CustomObjectiveManager
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
 
-
     /// <returns>Returns a CustomObjective object.</returns>
     public static CustomObjective DepositFood()
     {
         Objectives_DepositFood q = new(GroupId);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <param name="mealType">The type of meal that is to be eaten to complete the objective.</param>
     /// <param name="questExpireDuration">How long the user has to complete.</param>
@@ -112,7 +104,6 @@ public static partial class CustomObjectiveManager
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
 
-
     /// <param name="targetLocation">The location that the objective takes place. i.e. Dungeon1_1</param>
     /// <param name="followerSkin">Specify what skin the follower has.</param>
     /// <param name="followerColour">Specify what colour the follower is.</param>
@@ -121,12 +112,13 @@ public static partial class CustomObjectiveManager
     /// <param name="objectiveVariant"></param>
     /// <param name="expireTimestamp">How long the player has to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
-    public static CustomObjective FindFollower(FollowerLocation targetLocation, string followerSkin, int followerColour, int followerVariant, string targetFollowerName, int objectiveVariant, float expireTimestamp = -1f)
+    public static CustomObjective FindFollower(FollowerLocation targetLocation, string followerSkin, int followerColour,
+        int followerVariant, string targetFollowerName, int objectiveVariant, float expireTimestamp = -1f)
     {
-        Objectives_FindFollower q = new(GroupId, targetLocation, followerSkin, followerColour, followerVariant, targetFollowerName, objectiveVariant, expireTimestamp);
+        Objectives_FindFollower q = new(GroupId, targetLocation, followerSkin, followerColour, followerVariant,
+            targetFollowerName, objectiveVariant, expireTimestamp);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <param name="enemyType">The target enemy.</param>
     /// <param name="killsRequired">Kills required to complete.</param>
@@ -138,7 +130,6 @@ public static partial class CustomObjectiveManager
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
 
-
     /// <param name="roomsRequired">How many rooms required with no curses to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
     public static CustomObjective NoCurses(int roomsRequired)
@@ -146,7 +137,6 @@ public static partial class CustomObjectiveManager
         Objectives_NoCurses q = new(GroupId, roomsRequired);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <param name="roomsRequired">How many rooms required with no damage to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
@@ -156,7 +146,6 @@ public static partial class CustomObjectiveManager
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
 
-
     /// <param name="roomsRequired">How many rooms required with no dodging to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
     public static CustomObjective NoDodge(int roomsRequired)
@@ -164,7 +153,6 @@ public static partial class CustomObjectiveManager
         Objectives_NoDodge q = new(GroupId, roomsRequired);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <param name="roomsRequired">How many rooms required with no healing to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
@@ -174,18 +162,17 @@ public static partial class CustomObjectiveManager
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
 
-
     /// <param name="ritual">The type of ritual to perform.</param>
     /// <param name="targetFollowerID">The target follower ID.</param>
     /// <param name="requiredFollowers">How many followers are required.</param>
     /// <param name="questExpireDuration">How long the player has to complete the ritual.</param>
     /// <returns>Returns a CustomObjective object.</returns>
-    public static CustomObjective PerformRitual(UpgradeSystem.Type ritual, int targetFollowerID = 1, int requiredFollowers = 0, float questExpireDuration = -1f)
+    public static CustomObjective PerformRitual(UpgradeSystem.Type ritual, int targetFollowerID = 1,
+        int requiredFollowers = 0, float questExpireDuration = -1f)
     {
         Objectives_PerformRitual q = new(GroupId, ritual, targetFollowerID, requiredFollowers, questExpireDuration);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <param name="category">The category of structure to place.</param>
     /// <param name="target">The target amount to complete the objective.</param>
@@ -197,17 +184,16 @@ public static partial class CustomObjectiveManager
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
 
-
     /// <param name="cursedState">Set the curse the follower has.</param>
     /// <param name="target">The target amount to complete the objective.</param>
     /// <param name="expireTimestamp">How long the player has to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
-    public static CustomObjective RecruitCursedFollower(Thought cursedState, int target = 1, float expireTimestamp = -1f)
+    public static CustomObjective RecruitCursedFollower(Thought cursedState, int target = 1,
+        float expireTimestamp = -1f)
     {
         Objectives_RecruitCursedFollower q = new(GroupId, cursedState, target, expireTimestamp);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <param name="count">How many required to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
@@ -217,7 +203,6 @@ public static partial class CustomObjectiveManager
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
 
-
     /// <param name="structureType">The type of structure to remove.</param>
     /// <returns>Returns a CustomObjective object.</returns>
     public static CustomObjective RemoveStructure(StructureBrain.TYPES structureType)
@@ -225,7 +210,6 @@ public static partial class CustomObjectiveManager
         Objectives_RemoveStructure q = new(GroupId, structureType);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
-
 
     /// <summary>
     /// ShootDummy

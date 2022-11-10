@@ -7,10 +7,10 @@ public class DebugItemClass : CustomInventory.CustomInventoryItem
     public override string LocalizedDescription() { return "COTL_API'S DEBUG ITEM"; }
 
     public override bool IsCurrency => true;
-    
+
     public override bool IsBurnableFuel => true;
     public override int FuelWeight => 100;
-    
+
     public override bool CanBeGivenToFollower => true;
     public override FollowerCommands GiftCommand => Plugin.DebugGiftFollowerCommand;
 }

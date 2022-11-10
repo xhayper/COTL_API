@@ -19,7 +19,7 @@ public partial class CustomStructureManager
         StructureBrain structureBrain = Activator.CreateInstance(t) as StructureBrain;
 
         StructureBrain.ApplyConfigToData(data);
-        structureBrain.Init(data);
+        structureBrain?.Init(data);
         StructureBrain._brainsByID.Add(data.ID, structureBrain);
         StructureManager.StructuresAtLocation(data.Location).Add(structureBrain);
         __result = structureBrain;
@@ -33,7 +33,7 @@ public partial class CustomStructureManager
         if (!CustomStructures.ContainsKey(Type)) return true;
         __result = CustomStructures[Type].StructuresData;
         
-        if (__result.PrefabPath == null) __result.PrefabPath = CustomStructures[Type].PrefabPath;
+        __result.PrefabPath ??= CustomStructures[Type].PrefabPath;
         
         __result.Type = Type;
         __result.VariantIndex = variantIndex;
@@ -227,12 +227,10 @@ public partial class CustomStructureManager
     public static void Structure_Start(Structure __instance)
     {
         if (!CustomStructures.ContainsKey(__instance.Type)) return;
-
-        if (CustomStructures[__instance.Type].Interaction != null)
-        {
-            Plugin.Logger.LogDebug("adding structure interaction " + CustomStructures[__instance.Type].Interaction);
-            var parent = __instance.GetComponentInParent<Transform>();
-            parent.gameObject.AddComponent(CustomStructures[__instance.Type].Interaction);
-        }
+        if (CustomStructures[__instance.Type].Interaction == null) return;
+        
+        Plugin.Logger.LogDebug("adding structure interaction " + CustomStructures[__instance.Type].Interaction);
+        Transform parent = __instance.GetComponentInParent<Transform>();
+        parent.gameObject.AddComponent(CustomStructures[__instance.Type].Interaction);
     }
 }

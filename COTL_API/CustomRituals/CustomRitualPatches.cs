@@ -1,12 +1,8 @@
-﻿using HarmonyLib;
-using I2.Loc;
+﻿using System.Collections.Generic;
 using Lamb.UI.Rituals;
-using Socket.Newtonsoft.Json.Utilities.LinqBridge;
 using src.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
+using HarmonyLib;
 
 namespace COTL_API.CustomRituals;
 
@@ -100,7 +96,7 @@ internal class RitualPatches
     {
         if (!CustomRitualManager.CustomRituals.ContainsKey(RitualType)) return;
 
-        var ritual = (CustomRitual)__instance.gameObject.AddComponent(CustomRitualManager.CustomRituals[RitualType].GetType());
+        CustomRitual ritual = (CustomRitual)__instance.gameObject.AddComponent(CustomRitualManager.CustomRituals[RitualType].GetType());
         ritual.upgradeType = CustomRitualManager.CustomRituals[RitualType].upgradeType;
         ritual.ModPrefix = CustomRitualManager.CustomRituals[RitualType].ModPrefix;
         __instance.CurrentRitual = ritual;
