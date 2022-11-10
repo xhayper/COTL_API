@@ -20,7 +20,7 @@ public class DebugCode
         Inventory.AddItem(Plugin.DebugItem2, 1, true);
         Inventory.AddItem(Plugin.DebugItem3, 1, true);
     }
-    
+
     [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show))]
     [HarmonyPrefix]
     public static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance,
@@ -30,7 +30,7 @@ public class DebugCode
 
         DataManager.Instance.PlayerRunTrinkets.Remove(card1);
         DataManager.Instance.PlayerRunTrinkets.Remove(card2);
-        
+
         __instance._card1 = GetRandModdedCard();
         __instance._card2 = GetRandVanillaCard();
         __instance._uiCard1.Play(__instance._card1);
@@ -43,7 +43,8 @@ public class DebugCode
     {
         List<TarotCards.Card> vanillaCardList = new(DataManager.Instance.PlayerFoundTrinkets);
         vanillaCardList.RemoveAll(c =>
-            CustomTarotCardManager.CustomTarotCards.ContainsKey(c) || DataManager.Instance.PlayerRunTrinkets.Any((t) => t.CardType == c));
+            CustomTarotCardManager.CustomTarotCards.ContainsKey(c) ||
+            DataManager.Instance.PlayerRunTrinkets.Any((t) => t.CardType == c));
 
         return new TarotCards.TarotCard(
             vanillaCardList.ElementAt(Random.Range(0,

@@ -5,9 +5,11 @@ using System.Reflection;
 using HarmonyLib;
 using BepInEx;
 using System;
+using System.Linq;
 
 namespace COTL_API.Guid;
 
+// TODO: Refactor this system
 [HarmonyPatch]
 public static class TypeManager
 {
@@ -56,14 +58,8 @@ public static class TypeManager
             return cacheVal;
 
         StackTrace trace = new();
-        foreach (StackFrame frame in trace.GetFrames())
-        {
-            string newVal = GetModIdFromAssembly(frame.GetMethod().DeclaringType.Assembly);
-            if (!string.IsNullOrEmpty(newVal))
-                return newVal;
-        }
-
-        return default;
+        return trace.GetFrames()?.Select(frame => GetModIdFromAssembly(frame.GetMethod().DeclaringType?.Assembly))
+            .FirstOrDefault(newVal => !string.IsNullOrEmpty(newVal));
     }
 
     [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]

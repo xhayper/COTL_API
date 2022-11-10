@@ -7,10 +7,10 @@ namespace COTL_API.Debug;
 public class DebugTask : CustomTask
 {
     public override string InternalName => "DEBUG_TASK";
-    
+
     public override bool BlockReactTasks => true;
     public override bool BlockTaskChanges => true;
-    
+
     private Structure _structure;
 
     private Follower _follower;
@@ -48,7 +48,7 @@ public class DebugTask : CustomTask
         StructureBrain structureByID = GetStructure().Brain;
         structureByID.ReservedForTask = true;
     }
-    
+
     public override void ReleaseReservations()
     {
         StructureBrain structureByID = GetStructure().Brain;
@@ -80,5 +80,4 @@ public class DebugTask : CustomTask
     {
         SetState(FollowerTaskState.GoingTo);
     }
-
 }

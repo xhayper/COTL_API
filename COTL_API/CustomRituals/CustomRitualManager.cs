@@ -1,6 +1,6 @@
-﻿using COTL_API.Guid;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
+using COTL_API.Guid;
 
 namespace COTL_API.CustomRituals;
 

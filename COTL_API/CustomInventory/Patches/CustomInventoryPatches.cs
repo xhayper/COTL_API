@@ -234,7 +234,8 @@ public static partial class CustomItemManager
 
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.GiveToFollowerCallbacks))]
     [HarmonyPrefix]
-    private static bool InventoryItem_GiveToFollowerCallbacks(InventoryItem.ITEM_TYPE Type, ref System.Action<Follower, InventoryItem.ITEM_TYPE, System.Action> __result)
+    private static bool InventoryItem_GiveToFollowerCallbacks(InventoryItem.ITEM_TYPE Type,
+        ref System.Action<Follower, InventoryItem.ITEM_TYPE, System.Action> __result)
     {
         if (!CustomItems.ContainsKey(Type)) return true;
         __result = (follower, type, callback) =>

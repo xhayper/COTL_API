@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace COTL_API.Debug;
 
-public class DebugItemClass4 : CustomInventory.CustomInventoryItem
+public class DebugItemClass4 : CustomInventoryItem
 {
     public override string InternalName => "DEBUG_ITEM_4";
     public override string LocalizedName() { return "DEBUG_ITEM_4"; }

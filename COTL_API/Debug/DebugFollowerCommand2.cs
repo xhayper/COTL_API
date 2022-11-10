@@ -6,7 +6,7 @@ namespace COTL_API.Debug;
 public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCommand
 {
     public override string InternalName => "DEBUG_FOLLOWER_COMMAND_2";
-    
+
     public override string GetTitle(Follower follower)
     {
         return "Dissent";

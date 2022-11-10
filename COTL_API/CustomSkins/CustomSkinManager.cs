@@ -1,5 +1,5 @@
-﻿using static Spine.Unity.AttachmentTools.AttachmentRegionExtensions;
-using LeTai.Asset.TranslucentImage;
+﻿using LeTai.Asset.TranslucentImage;
+using Spine.Unity.AttachmentTools;
 using System.Collections.Generic;
 using Spine.Unity;
 using System.Linq;
@@ -279,8 +279,7 @@ public class CustomSkinManager
     [HarmonyPostfix]
     public static void MeshGenerator_GenerateSingleSubmeshInstruction(ref SkeletonRendererInstruction instructionOutput)
     {
-        if (instructionOutput.submeshInstructions.Items[0].skeleton != null &&
-            instructionOutput.submeshInstructions.Items[0].skeleton.Skin != null &&
+        if (instructionOutput.submeshInstructions.Items[0].skeleton is { Skin: { } } &&
             instructionOutput.attachments.Exists(att => att != null && att.Name.StartsWith("Custom")))
 
             instructionOutput.submeshInstructions.Items[0].material =

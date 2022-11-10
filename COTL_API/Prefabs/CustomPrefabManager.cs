@@ -14,7 +14,6 @@ public static class CustomPrefabManager
 {
     public static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
 
-
     public static string GetOrCreateBuildingPrefab(CustomStructure structure)
     {
         string pstr = $"CustomBuildingPrefab_{structure.InternalName}";
@@ -24,6 +23,7 @@ public static class CustomPrefabManager
             PrefabStrings.Add(pstr, structure);
             PrefabStrings.Add(altstr, structure);
         }
+
         return pstr;
     }
 
@@ -33,6 +33,7 @@ public static class CustomPrefabManager
         {
             GetOrCreateBuildingPrefab(CustomStructureManager.GetStructureByPrefabName(name));
         }
+
         Sprite sprite = PrefabStrings[name].Sprite;
         handle.Completed += delegate(AsyncOperationHandle<GameObject> obj)
         {
@@ -47,12 +48,12 @@ public static class CustomPrefabManager
 
     private static string pathOverride;
     private static bool getOverride;
-    
-    [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters), typeof(bool))]
+
+    [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters),
+        typeof(bool))]
     [HarmonyPrefix]
     public static void Addressables_InstantiateAsync(ref object key)
     {
-
         if (key is string path)
         {
             // Run the original code with a generic structure
@@ -76,9 +77,11 @@ public static class CustomPrefabManager
 
     public static GameObject CreatePlacementObjectFor(CustomStructure structure)
     {
-        AsyncOperationHandle<GameObject> obj = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Placement Objects/Placement Object Security Turret Lvl2.prefab");
+        AsyncOperationHandle<GameObject> obj =
+            Addressables.LoadAssetAsync<GameObject>(
+                "Assets/Prefabs/Placement Objects/Placement Object Security Turret Lvl2.prefab");
         obj.WaitForCompletion();
-        
+
         Plugin.Logger.LogInfo(obj.Result);
         PlacementObject po = obj.Result.GetComponentInChildren<PlacementObject>();
         po.ToBuildAsset = structure.PrefabPath;

@@ -19,13 +19,8 @@ public abstract class CustomTask : FollowerTask
 
     public override Vector3 UpdateDestination(Follower follower)
     {
-        if (follower == null)
-        {
-            return _brain.LastPosition;
-        }
-        return follower.transform.position;
+        return follower == null ? _brain.LastPosition : follower.transform.position;
     }
-    
-    public override FollowerLocation Location => FollowerLocation.Base;
 
+    public override FollowerLocation Location => FollowerLocation.Base;
 }

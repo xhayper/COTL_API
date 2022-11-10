@@ -5,6 +5,7 @@ using COTL_API.Helpers;
 using COTL_API.Icons;
 using HarmonyLib;
 using TMPro;
+using UnityEngine;
 
 namespace COTL_API.Patches;
 
@@ -23,19 +24,21 @@ public static class IconPatcher
             string name = $"icon_ITEM_{item.ModPrefix}.{item.InternalName}";
             if (hashCode != HashCode.GetValueHashCode(name)) continue;
             spriteIndex = 0;
-            var sprite = item.InventoryIcon;
-            var metrics = new GlyphMetrics(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height * 0.75f, sprite.rect.width);
+            Sprite sprite = item.InventoryIcon;
+            GlyphMetrics metrics = new(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height * 0.75f,
+                sprite.rect.width);
             __result = CustomIconManager.GetIcon(sprite, name, metrics);
             return false;
         }
 
-        foreach (CustomFollowerCommand.CustomFollowerCommand item in CustomFollowerCommandManager.CustomFollowerCommands.Values)
+        foreach (CustomFollowerCommand.CustomFollowerCommand item in CustomFollowerCommandManager.CustomFollowerCommands
+                     .Values)
         {
             string name = $"icon_FCOMMAND_{item.ModPrefix}.{item.InternalName}";
             if (hashCode != HashCode.GetValueHashCode(name)) continue;
             spriteIndex = 0;
-            var sprite = item.CommandIcon;
-            var metrics = new GlyphMetrics(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height, sprite.rect.width);
+            Sprite sprite = item.CommandIcon;
+            GlyphMetrics metrics = new(sprite.rect.width, sprite.rect.height, 0, sprite.rect.height, sprite.rect.width);
             __result = CustomIconManager.GetIcon(sprite, name, metrics);
             return false;
         }

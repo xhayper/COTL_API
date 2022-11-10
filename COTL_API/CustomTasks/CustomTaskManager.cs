@@ -19,7 +19,7 @@ public static partial class CustomTaskManager
         task.ModPrefix = guid;
 
         CustomTasks.Add(taskType, task);
-        
+
         return taskType;
     }
 }

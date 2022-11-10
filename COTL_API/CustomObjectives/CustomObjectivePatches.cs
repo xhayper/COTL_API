@@ -4,7 +4,6 @@ using System.Linq;
 using HarmonyLib;
 using MMTools;
 
-//if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomObjectives;
 
 /// <summary>
@@ -13,16 +12,18 @@ namespace COTL_API.CustomObjectives;
 [HarmonyPatch]
 public static partial class CustomObjectiveManager
 {
-    [HarmonyPatch(typeof(interaction_FollowerInteraction), nameof(interaction_FollowerInteraction.GetConversationEntry), typeof(Follower.ComplaintType), typeof(ObjectivesData))]
+    [HarmonyPatch(typeof(interaction_FollowerInteraction), nameof(interaction_FollowerInteraction.GetConversationEntry),
+        typeof(Follower.ComplaintType), typeof(ObjectivesData))]
     [HarmonyPostfix]
-    private static void interaction_FollowerInteraction_GetConversationEntry(ObjectivesData objective, ref List<ConversationEntry> __result)
+    private static void interaction_FollowerInteraction_GetConversationEntry(ObjectivesData objective,
+        ref List<ConversationEntry> __result)
     {
         if (objective == null)
         {
             return;
         }
 
-        if (CustomObjectiveManager.PluginQuestTracker.TryGetValue(objective.ID, out CustomObjective customObjective))
+        if (PluginQuestTracker.TryGetValue(objective.ID, out CustomObjective customObjective))
         {
             Plugin.Logger.LogWarning($"Matching quest found for {objective.ID}!");
             __result[0].TermToSpeak = customObjective.InitialQuestText;
@@ -41,9 +42,11 @@ public static partial class CustomObjectiveManager
     [HarmonyPatch(typeof(Quests), nameof(Quests.GetQuest))]
     public static void Quests_GetQuest()
     {
-        foreach (DataManager.QuestHistoryData quest in DataManager.Instance.CompletedQuestsHistorys.Where(a => a.QuestIndex >= Quests.QuestsAll.Count))
+        foreach (DataManager.QuestHistoryData quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
+                     a.QuestIndex >= Quests.QuestsAll.Count))
         {
-            Plugin.Logger.LogWarning("Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
+            Plugin.Logger.LogWarning(
+                "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
             quest.QuestIndex = Quests.QuestsAll.Count - 1;
         }
     }
@@ -56,18 +59,15 @@ public static partial class CustomObjectiveManager
     public static int GetAdjustedCount()
     {
         if (DataManager.Instance is null)
-        {
             return 25;
-        }
-
+        
         //47 is the hardcoded random quest amount
         //25 is the reverse index of the dud(?) quest in the list
         int adjustedNumber = 25 + (Quests.QuestsAll.Count - 47);
-       // Plugin.Logger.LogWarning($"GetAdjustedCount(): Total quests: {Quests.QuestsAll.Count}, Adjusted number: {adjustedNumber}");
+        // Plugin.Logger.LogWarning($"GetAdjustedCount(): Total quests: {Quests.QuestsAll.Count}, Adjusted number: {adjustedNumber}");
         return adjustedNumber;
     }
-
-
+    
     //[HarmonyDebug]
     /// <summary>
     /// This is a patch to fix the hardcoded quest count in the Quests.GetQuest method. This is done by replacing the hardcoded value with a call to our own method.
@@ -84,7 +84,8 @@ public static partial class CustomObjectiveManager
         {
             CodeInstruction instruction = instructionList[index];
             if (instruction.opcode == OpCodes.Ldc_I4_S && (sbyte)instruction.operand == 0x19)
-                instructionList[index] = new CodeInstruction(OpCodes.Call, typeof(CustomObjectiveManager).GetMethod(nameof(GetAdjustedCount)));
+                instructionList[index] = new CodeInstruction(OpCodes.Call,
+                    typeof(CustomObjectiveManager).GetMethod(nameof(GetAdjustedCount)));
         }
 
         return instructionList.AsEnumerable();

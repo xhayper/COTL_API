@@ -23,9 +23,9 @@ public abstract class CustomTask : FollowerTask
         {
             return _brain.LastPosition;
         }
+
         return follower.transform.position;
     }
-    
-    public override FollowerLocation Location => FollowerLocation.Base;
 
+    public override FollowerLocation Location => FollowerLocation.Base;
 }

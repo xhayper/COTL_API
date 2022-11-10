@@ -15,7 +15,8 @@ public static partial class CustomStructureManager
     {
         string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        StructureBrain.TYPES structureType = GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, structure.InternalName);
+        StructureBrain.TYPES structureType =
+            GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, structure.InternalName);
         structure.StructureType = structureType;
         structure.ModPrefix = guid;
 
@@ -32,6 +33,7 @@ public static partial class CustomStructureManager
 
     public static CustomStructure GetStructureByPrefabName(string name)
     {
-        return CustomStructures.First(x => (x.Value.PrefabPath == name) || ($"Assets/{x.Value.PrefabPath}.prefab" == name)).Value;
+        return CustomStructures
+            .First(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name).Value;
     }
 }

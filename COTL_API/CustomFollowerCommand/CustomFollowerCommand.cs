@@ -41,11 +41,12 @@ public abstract class CustomFollowerCommand : CommandItem
     {
         return true;
     }
-    
+
     public override bool IsAvailable(Follower follower)
     {
         return true;
     }
 
-    public abstract void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand = FollowerCommands.None);
+    public abstract void Execute(interaction_FollowerInteraction interaction,
+        FollowerCommands finalCommand = FollowerCommands.None);
 }

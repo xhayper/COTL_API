@@ -8,7 +8,8 @@ namespace COTL_API.Patches;
 [HarmonyPatch]
 public static class UIFollowerInteractionWheelOverlayControllerPatches
 {
-    [HarmonyPatch(typeof(UIFollowerInteractionWheelOverlayController), nameof(UIFollowerInteractionWheelOverlayController.MakeChoice),
+    [HarmonyPatch(typeof(UIFollowerInteractionWheelOverlayController),
+        nameof(UIFollowerInteractionWheelOverlayController.MakeChoice),
         typeof(UIFollowerWheelInteractionItem))]
     [HarmonyWrapSafe]
     public static class MakeChoice
@@ -20,12 +21,14 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
                 item.CommandItem.SubCommands is { Count: > 0 })
 
             {
-                if (Plugin.Debug) Plugin.Logger.LogDebug($"Custom command with sub commands, not letting normal method run.");
+                if (Plugin.Debug)
+                    Plugin.Logger.LogDebug($"Custom command with sub commands, not letting normal method run.");
                 __state = true;
                 return false;
             }
 
-            if (Plugin.Debug) Plugin.Logger.LogDebug($"Not a custom command or doesnt have sub-commands, letting normal method run.");
+            if (Plugin.Debug)
+                Plugin.Logger.LogDebug($"Not a custom command or doesnt have sub-commands, letting normal method run.");
             __state = false;
             return true;
         }
@@ -41,7 +44,8 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
             ref bool __state)
         {
             if (!__state) return;
-            if (Plugin.Debug) Plugin.Logger.LogDebug($"Custom command original method skipped, this is from the postfix.");
+            if (Plugin.Debug)
+                Plugin.Logger.LogDebug($"Custom command original method skipped, this is from the postfix.");
             if (item.CommandItem.SubCommands is { Count: > 0 })
             {
                 if (item.CommandItem.IsAvailable(____follower))
@@ -55,8 +59,9 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
 
                 // without this the commands title and descriptions dont update if the user selects a greyed out item, instead
                 // it will now just close the menu instead of raising an exception
-                if (Plugin.Debug) Plugin.Logger.LogDebug(
-                    $"User pressed select on a greyed out sub command, closing menu and aborting choice.");
+                if (Plugin.Debug)
+                    Plugin.Logger.LogDebug(
+                        $"User pressed select on a greyed out sub command, closing menu and aborting choice.");
                 __instance.OnCancelButtonInput();
                 return;
             }

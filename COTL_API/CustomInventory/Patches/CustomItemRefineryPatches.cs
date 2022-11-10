@@ -30,9 +30,7 @@ public static partial class CustomItemManager
         if (!CustomItems.ContainsKey(ItemType)) return;
 
         if (CustomItems[ItemType].CustomRefineryDuration > 0)
-        {
             __result = CustomItems[ItemType].CustomRefineryDuration;
-        }
     }
 
     [HarmonyPrefix]

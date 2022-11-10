@@ -22,14 +22,13 @@ public abstract class CustomInventoryItem
 
     #region ItemSpawning Region
 
-    
     /// <summary>
     /// This is the Sprite given to custom items when they are spawned into the world.
     /// </summary>
     public virtual Sprite Sprite { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
-    
+
     /// <summary>
     /// Defines rarity for offering shrine spawn chance.
     /// </summary>
@@ -100,7 +99,7 @@ public abstract class CustomInventoryItem
     {
         return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Description");
     }
-    
+
     public virtual int FuelWeight { get; } = 1;
     public virtual int FoodSatitation { get; } = 75;
 
@@ -113,21 +112,21 @@ public abstract class CustomInventoryItem
     public virtual bool IsBurnableFuel { get; } = false;
 
     public virtual bool CanBeGivenToFollower => false;
-    
+
     public virtual string GiftTitle(Follower follower)
     {
         return $"{Name()} ({Inventory.GetItemQuantity(ItemType)})";
     }
 
     public virtual FollowerCommands GiftCommand => FollowerCommands.None;
-    
+
     public virtual bool CanBeRefined { get; set; } = false;
     public virtual InventoryItem.ITEM_TYPE RefineryInput { get; set; } = InventoryItem.ITEM_TYPE.LOG;
     public virtual int RefineryInputQty { get; set; } = 15;
-    
+
     //for comparison, the game default is 128f (which is then modified based on the follower using the refinery)
-    public virtual float CustomRefineryDuration{ get; set; } = 0f;
-    
+    public virtual float CustomRefineryDuration { get; set; } = 0f;
+
     public virtual void OnGiftTo(Follower follower, System.Action onFinish)
     {
         onFinish();
