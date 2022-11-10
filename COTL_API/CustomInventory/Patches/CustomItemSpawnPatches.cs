@@ -1,11 +1,15 @@
-﻿using Object = UnityEngine.Object;
+using Object = UnityEngine.Object;
 using System.Collections.Generic;
-using MMBiomeGeneration;
-using MMRoomGeneration;
 using COTL_API.Helpers;
 using UnityEngine;
 using HarmonyLib;
+using MMBiomeGeneration;
+using MMRoomGeneration;
 using System;
+using System.Collections;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 
 //if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
@@ -18,6 +22,30 @@ public static partial class CustomItemManager
 {
     private const string PathPrefix = "CustomItem_";
 
+    private static bool IsCustomItem(InventoryItem.ITEM_TYPE type)
+    {
+        return CustomItems.ContainsKey(type);
+    }
+
+    private static GameObject ReplaceSpawn(InventoryItem.ITEM_TYPE type)
+    {
+        CustomInventoryItem customItem = CustomItems[type];
+        GameObject customItemObject = ItemPickUp.GetItemPickUpObject(customItem.ItemPickUpToImitate);
+        customItemObject.GetComponentInChildren<SpriteRenderer>().sprite = customItem.Sprite;
+
+        PickUp pickup = customItemObject.GetComponentInChildren<PickUp>();
+        if (pickup != null)
+        {
+            pickup.type = type;
+        }
+
+        customItemObject.name = customItem.InternalObjectName;
+        customItemObject.transform.localScale = customItem.LocalScale;
+        Plugin.Logger.LogWarning($"Custom item, returning custom GameObject!");
+        return customItemObject;
+    }
+
+
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Spawn), typeof(InventoryItem.ITEM_TYPE), typeof(int), typeof(Vector3), typeof(float), typeof(Action<PickUp>))]
     private static class InventoryItemSpawnPatches
     {
@@ -25,9 +53,11 @@ public static partial class CustomItemManager
         private static bool Prefix(InventoryItem.ITEM_TYPE type, int quantity, Vector3 position, float StartSpeed, ref Action<PickUp> result, ref PickUp __result)
         {
             if (!CustomItems.ContainsKey(type)) return true;
-            Plugin.Logger.LogWarning($"Running custom spawn.");
+            Plugin.Logger.LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
+
             GameObject gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
-            Transform transform = (gameObject != null ? gameObject.transform : null);
+            GameObject customObject = null;
+            Transform transform = ((gameObject != null) ? gameObject.transform : null);
             PickUp p = null;
             while (--quantity >= 0)
             {
@@ -44,29 +74,18 @@ public static partial class CustomItemManager
 
                 if (transform == null)
                 {
-                    Plugin.Logger.LogWarning($"Transform is null, skipping spawn");
                     break;
                 }
 
-                InventoryItem.ITEM_TYPE pType = type;
-                Action<PickUp> action = result;
-
-                ObjectPool.Spawn(CustomItems[type].InternalObjectName, position, Quaternion.identity, transform, delegate(GameObject obj)
+                customObject = GetObject.GetCustomObject(CustomItems[type]).Spawn(transform);
+                customObject.transform.position = position;
+                customObject.transform.eulerAngles = Vector3.zero;
+                p = customObject.GetComponent<PickUp>();
+                if (p != null)
                 {
-                    p = obj.GetComponent<PickUp>();
-                    if (p != null)
-                    {
-                        p.type = pType;
-                        p.Speed = StartSpeed;
-                    }
-
-                    if (action == null)
-                    {
-                        return;
-                    }
-
-                    action(p);
-                });
+                    p.type = type;
+                    p.Speed = StartSpeed;
+                }
             }
 
             //whatever the user chose to imitate, all those objects get converted into the custom item without this....
@@ -93,8 +112,6 @@ public static partial class CustomItemManager
     }
 
 
-
-
     private static class GetObject
     {
         private static GameObject _myObject;
@@ -107,12 +124,17 @@ public static partial class CustomItemManager
                 return _myObject;
             }
 
+
             _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.ItemPickUpToImitate), null, instantiateInWorldSpace: false) as GameObject;
+            Plugin.Logger.LogWarning($"_myObject is NULL? {_myObject == null}");
             _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Sprite;
             _myObject.name = item.InternalObjectName;
             _myObject.transform.localScale = item.LocalScale;
+
+
             return _myObject;
         }
+
 
         public static void SetInactive()
         {
