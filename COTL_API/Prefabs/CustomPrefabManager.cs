@@ -46,7 +46,6 @@ public static class CustomPrefabManager
     }
 
     private static string pathOverride;
-    private static bool getOverride;
 
     [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters),
         typeof(bool))]
@@ -58,7 +57,6 @@ public static class CustomPrefabManager
         // Run the original code with a generic structure
         if (!path.Contains("CustomBuildingPrefab_")) return;
         pathOverride = path;
-        getOverride = true;
         key = "Assets/Prefabs/Structures/Buildings/Decoration Wreath Stick.prefab";
     }
 

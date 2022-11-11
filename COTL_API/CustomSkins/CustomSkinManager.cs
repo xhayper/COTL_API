@@ -12,7 +12,7 @@ using Spine;
 namespace COTL_API.CustomSkins;
 
 [HarmonyPatch]
-public class CustomSkinManager
+public static class CustomSkinManager
 {
     internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = new();
     internal static readonly Dictionary<string, Skin> CustomSkins = new();
@@ -176,7 +176,7 @@ public class CustomSkinManager
 
         var overrides = atlas.GetAtlas().regions.Select(r => Slots.First(s =>
             s.Item2 == r.name.Split(':')[1] &&
-            s.Item1 == (int)(SlotsEnum)Enum.Parse(typeof(SlotsEnum), r.name.Split(':')[0]))).ToList();
+            s.Item1 == (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), r.name.Split(':')[0]))).ToList();
 
         CreateNewFollowerType(name);
         CreateSkin(name, overrides);
@@ -220,7 +220,7 @@ public class CustomSkinManager
         {
             var ovrName = ovr.Item2;
             var slot = ovr.Item1;
-            var atlasRegion = CustomAtlases[name].GetAtlas().FindRegion((SlotsEnum)slot + ":" + ovrName);
+            var atlasRegion = CustomAtlases[name].GetAtlas().FindRegion((SkinSlots)slot + ":" + ovrName);
             var a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog")
                 .GetAttachment(slot, ovrName).Copy();
             if (a is MeshAttachment customAttachment)

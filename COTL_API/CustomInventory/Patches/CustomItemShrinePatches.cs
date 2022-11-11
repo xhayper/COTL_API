@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 
 //if it asks, choose "Does not introduce namespace"
@@ -79,37 +80,33 @@ public static partial class CustomItemManager
         {
             foreach (var item in CustomItems.Where(item =>
                          item.Value.AddItemToOfferingShrine))
+            {
+                List<InventoryItem.ITEM_TYPE> listToAdd;
+
                 switch (item.Value.Rarity)
                 {
                     case ItemRarity.COMMON:
                     {
-                        if (!__instance.Offerings.Contains(item.Key))
-                        {
-                            __instance.Offerings.Add(item.Key);
-                            if (Plugin.Debug) Plugin.Logger.LogDebug($"Added {item.Key} to common offering shrine");
-                        }
-
+                        listToAdd = __instance.Offerings;
                         break;
                     }
                     case ItemRarity.RARE:
                     {
-                        if (!__instance.RareOfferings.Contains(item.Key))
-                        {
-                            __instance.RareOfferings.Add(item.Key);
-                            if (Plugin.Debug) Plugin.Logger.LogDebug($"Added {item.Key} to rare offering shrine");
-                        }
-
+                        listToAdd = __instance.RareOfferings;
                         break;
                     }
                     default:
-                        if (!__instance.Offerings.Contains(item.Key))
-                        {
-                            __instance.Offerings.Add(item.Key);
-                            if (Plugin.Debug) Plugin.Logger.LogDebug($"Somethings up, we should never hit this.");
-                        }
-
+                    {
+                        listToAdd = __instance.Offerings;
+                        if (Plugin.Debug)
+                            Plugin.Logger.LogDebug($"Something went horribly wrong here... we should never hit this.");
                         break;
+                    }
                 }
+
+                if (listToAdd != null && !listToAdd.Contains(item.Key))
+                    listToAdd.Add(item.Key);
+            }
         }
     }
 }

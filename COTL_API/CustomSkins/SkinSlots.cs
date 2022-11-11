@@ -1,6 +1,6 @@
 ﻿namespace COTL_API.CustomSkins;
 
-public enum SlotsEnum
+public enum SkinSlots
 {
     OTHER_STOCKS,
     OTHER_CRUCIFIX_BTM,

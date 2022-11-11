@@ -27,12 +27,12 @@ public class Plugin : BaseUnityPlugin
     private static readonly Harmony Harmony = new(PLUGIN_GUID);
     internal new static ManualLogSource Logger;
 
-    internal static string PluginPath;
+    internal static string PluginPath { get; private set; }
 
-    internal static InventoryItem.ITEM_TYPE DebugItem;
-    internal static InventoryItem.ITEM_TYPE DebugItem2;
-    internal static InventoryItem.ITEM_TYPE DebugItem3;
-    internal static InventoryItem.ITEM_TYPE DebugItem4;
+    internal static InventoryItem.ITEM_TYPE DebugItem { get; private set; }
+    internal static InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
+    internal static InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
+    internal static InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
     internal static FollowerCommands DebugGiftFollowerCommand;
 

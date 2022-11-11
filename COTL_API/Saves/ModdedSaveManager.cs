@@ -8,8 +8,8 @@ public static partial class ModdedSaveManager
     private static int SaveSlot = 5;
     private static readonly COTLDataReadWriter<ModdedSaveData> _readWriter = new();
 
-    public static bool Loaded;
-    public static ModdedSaveData Data;
+    public static bool Loaded { get; internal set; }
+    public static ModdedSaveData Data { get; internal set; }
 
     public static System.Action OnSaveComplete;
     public static System.Action OnLoadComplete;
