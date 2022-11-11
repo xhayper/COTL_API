@@ -5,7 +5,7 @@ schemaVersion = "0.0.1"
 namespace = "xhayper"
 name = "COTL_API"
 versionNumber = "0.1.7"
-description = "A BepInEx plugin made for modder to easily interact with Cult of the Lamb game"
+description = "A library to easily interact with Cult of the Lamb"
 websiteUrl = "https://cotl-api.vercel.app/"
 containsNsfwContent = false
 
