@@ -47,7 +47,6 @@ public static partial class CustomItemManager
             Plugin.Logger.LogDebug(
                 $"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");
         return roll <= chance;
-        //return true;
     }
 
     /// <summary>

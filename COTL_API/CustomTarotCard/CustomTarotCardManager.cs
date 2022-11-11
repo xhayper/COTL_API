@@ -10,9 +10,9 @@ public static partial class CustomTarotCardManager
 
     public static TarotCards.Card Add(CustomTarotCard card)
     {
-        string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        TarotCards.Card cardType = GuidManager.GetEnumValue<TarotCards.Card>(guid, card.InternalName);
+        var cardType = GuidManager.GetEnumValue<TarotCards.Card>(guid, card.InternalName);
         card.CardType = cardType;
         card.ModPrefix = guid;
 

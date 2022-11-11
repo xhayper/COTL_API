@@ -10,9 +10,9 @@ internal class CustomRitualManager
 
     public static UpgradeSystem.Type Add(CustomRitual ritual)
     {
-        string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        UpgradeSystem.Type upgradeType = GuidManager.GetEnumValue<UpgradeSystem.Type>(guid, ritual.InternalName);
+        var upgradeType = GuidManager.GetEnumValue<UpgradeSystem.Type>(guid, ritual.InternalName);
         ritual.ModPrefix = guid;
         ritual.upgradeType = upgradeType;
 

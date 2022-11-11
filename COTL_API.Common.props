@@ -10,7 +10,7 @@
 
     <PropertyGroup>
         <!-- First one is "Forced Access" warning, second one is "Missing XML" comment -->
-        <NoWarn>Publicizer001,CS1591</NoWarn>
+        <NoWarn>Publicizer001, CS1591</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>

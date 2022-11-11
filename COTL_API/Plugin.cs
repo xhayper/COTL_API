@@ -24,8 +24,8 @@ public class Plugin : BaseUnityPlugin
     public const string PLUGIN_NAME = "COTL API";
     public const string PLUGIN_VERSION = "0.1.7";
 
-    internal readonly static Harmony Harmony = new(PLUGIN_GUID);
-    internal static new ManualLogSource Logger;
+    private static readonly Harmony Harmony = new(PLUGIN_GUID);
+    internal new static ManualLogSource Logger;
 
     internal static string PluginPath;
 
@@ -38,7 +38,7 @@ public class Plugin : BaseUnityPlugin
 
     private static bool _questCleanDone; //flag to prevent multiple calls to clean up quests
 
-    internal static ConfigEntry<bool> _debug;
+    private static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;
 
     private void Awake()
