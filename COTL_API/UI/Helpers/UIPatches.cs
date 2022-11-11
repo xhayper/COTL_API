@@ -23,10 +23,14 @@ internal static class UIPatches
         {
             Transform parentMenu = __instance.gameObject.transform.Find("PauseMenuContainer");
 
-            // Font
-            TextMeshProUGUI textMesh = parentMenu.Find("Left").transform.Find("Transform").transform.Find("MenuContainer").transform.Find("Settings").transform.Find("Text").GetComponent<TextMeshProUGUI>();
-            FontHelpers._pauseMenu = textMesh.font;
+            // FontAsset reference.
+            TextMeshProUGUI getTextAsset = parentMenu.Find("Left")
+                .transform.Find("Transform").transform.Find("MenuContainer")
+                .transform.Find("Settings")
+                .transform.Find("Text").GetComponent<TextMeshProUGUI>();
+            FontHelpers._pauseMenu = getTextAsset.font;
 
+            // API container.
             GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(parentMenu);
             Container.layer = UIHelpers.UILayer;
@@ -51,13 +55,18 @@ internal static class UIPatches
         {
             Transform menuContainer = __instance.gameObject.transform.Find("Main Menu");
 
-            // Font
-            TextMeshProUGUI textMesh = menuContainer.transform.Find("MainMenuContainer").transform.Find("Left").transform.Find("Transform").transform.Find("MenusContainer").transform.Find("MainMenu").transform.Find("Settings").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
-            FontHelpers._startMenu = textMesh.font;
+            // FontAsset reference.
+            TextMeshProUGUI getTextAsset = menuContainer.transform.Find("MainMenuContainer")
+                .transform.Find("Left").transform.Find("Transform")
+                .transform.Find("MenusContainer").transform.Find("MainMenu")
+                .transform.Find("Settings").transform.Find("Text (TMP)")
+                .GetComponent<TextMeshProUGUI>();
+            FontHelpers._startMenu = getTextAsset.font;
 
+            // API container.
             GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(menuContainer);
-            Container.layer = UIManager.UILayer;
+            Container.layer = UIHelpers.UILayer;
             Container.transform.position = Vector3.zero;
             Container.transform.localScale = Vector3.one;
 
