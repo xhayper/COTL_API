@@ -4,8 +4,7 @@
 [![Wiki](https://img.shields.io/static/v1?label=wiki&message=read&style=flat&color=informational)](https://cotl-api.vercel.app/)
 [![Thunderstore](https://img.shields.io/static/v1?label=&message=thunderstore&style=flat&color=informational)](https://cult-of-the-lamb.thunderstore.io/package/xhayper/COTL_API/)
 
-A BepInEx plugin made for modder to easily interact
-with [`Cult of the Lamb`](https://store.steampowered.com/app/1313140/Cult_of_the_Lamb) game
+A library to easily interact with [`Cult of the Lamb`](https://store.steampowered.com/app/1313140/Cult_of_the_Lamb)
 
 ## NOTE
 
