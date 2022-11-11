@@ -152,7 +152,7 @@ public static class GameObjectExtensions
     public static GameObject AddText(this GameObject obj, string message, float fontSize = 10f, TextAlignmentOptions alignment = TextAlignmentOptions.Center)
     {
         TextMeshProUGUI textMesh = obj.AddComponent<TextMeshProUGUI>();
-        textMesh.font = FontHelpers.GetAnyFont;
+        textMesh.font = FontHelpers.UIFont;
         textMesh.fontSize = fontSize;
         textMesh.text = message;
         textMesh.alignment = alignment;
