@@ -36,7 +36,7 @@ public class Plugin : BaseUnityPlugin
 
     internal static FollowerCommands DebugGiftFollowerCommand { get; private set; }
 
-    private static ConfigEntry<bool> _debug;
+    private static ConfigEntry<bool> _debug { get; set; }
     internal static bool Debug => _debug.Value;
 
     private bool _questCleanDone; //flag to prevent multiple calls to clean up quests
