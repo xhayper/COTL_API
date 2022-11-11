@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using COTL_API.UI.Helpers;
 
-namespace COTL_API.UI.Base;
+namespace COTL_API.UI;
 public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     public delegate void ButtonAction();
 
+    /// <summary>
+    /// UIButton cursor event. You can subscribe void methods with no parameters to it.
+    /// </summary>
     public event ButtonAction OnClick, OnCursorEnter, OnCursorExit;
 
     public void OnPointerEnter(PointerEventData eventData)
