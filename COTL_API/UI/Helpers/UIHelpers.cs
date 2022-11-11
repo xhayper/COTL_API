@@ -3,6 +3,9 @@
 namespace COTL_API.UI.Helpers;
 public static class UIHelpers
 {
+    /// <summary>
+    /// The game's UI layer.
+    /// </summary>
     public static LayerMask UILayer => LayerMask.NameToLayer("UI");
 
     /// <summary>
@@ -13,7 +16,6 @@ public static class UIHelpers
     {
         UIPatches.PauseMenuQueue.Add(typeof(T));
     }
-
 
     // Private as this is non-functional. I have to change how I patch the start menu.
     private static void AddToStartMenu<T>() where T : UIMenuBase 
