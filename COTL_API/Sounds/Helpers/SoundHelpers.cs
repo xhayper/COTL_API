@@ -7,9 +7,24 @@ using FMODUnity;
 namespace COTL_API.Sounds.Helpers;
 public static class SoundHelpers
 {
+    /// <summary>
+    /// The game's Master Volume.
+    /// </summary>
     public static float MasterVolume => SettingsManager.Settings.Audio.MasterVolume;
+
+    /// <summary>
+    /// The game's Music Volume.
+    /// </summary>
     public static float MusicVolume => SettingsManager.Settings.Audio.MusicVolume * MasterVolume;
+
+    /// <summary>
+    /// The game's SFX Volume.
+    /// </summary>
     public static float SFXVolume => SettingsManager.Settings.Audio.SFXVolume * MasterVolume;
+
+    /// <summary>
+    /// The game's VO Volume.
+    /// </summary>
     public static float VOVolume => SettingsManager.Settings.Audio.VOVolume * MasterVolume ;
 
     // Sound helpers -- all personal and not meant for users, so they're internal
@@ -67,7 +82,7 @@ public static class SoundHelpers
         return channel.setVolume(x);
     }
 
-    public static void IfErrorPrintWith(this RESULT result, string where)
+    internal static void IfErrorPrintWith(this RESULT result, string where)
     {
         if(result != RESULT.OK)
         {

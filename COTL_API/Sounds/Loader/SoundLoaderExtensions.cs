@@ -3,6 +3,11 @@
 namespace COTL_API.Sounds.Load;
 public static class SoundLoaderExtensions
 {
+    /// <summary>
+    /// Add the SoundLoader component to a GameObject, making it able to play sound in the scene. 
+    /// </summary>
+    /// <param name="obj">The GameObject you wish to attach the SoundLoader to.</param>
+    /// <returns>The SoundLoader component attached to the GameObject.</returns>
     public static SoundLoader AddSoundLoader(this GameObject obj)
     {
         SoundLoader sound = obj.AddComponent<SoundLoader>();

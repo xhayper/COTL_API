@@ -4,11 +4,8 @@ using System.Linq;
 using Lamb.UI.PauseMenu;
 using UnityEngine;
 using System.Collections.Generic;
-using COTL_API.UI.Helpers;
 using TMPro;
 using Lamb.UI.MainMenu;
-using COTL_API.UI.Base;
-using System.Reflection;
 
 namespace COTL_API.UI.Patches;
 internal static class UIPatches
@@ -67,7 +64,8 @@ internal static class UIPatches
         }
     }
 
-    public class CultBasePatch
+    /*
+     public class CultBasePatch
     {
         //TODO
     }
@@ -96,4 +94,5 @@ internal static class UIPatches
 
         //TODO
     }
+     */
 }

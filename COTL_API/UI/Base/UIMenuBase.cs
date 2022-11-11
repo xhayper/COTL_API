@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace COTL_API.UI.Base;
+namespace COTL_API.UI;
 
 public abstract class UIMenuBase : MonoBehaviour
 {
