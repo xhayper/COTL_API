@@ -26,8 +26,9 @@ public abstract class CustomStructure : StructureBrain
 
     internal TypeAndPlacementObject GetTypeAndPlacementObject()
     {
-        TypeAndPlacementObject orig = TypeAndPlacementObjects.GetByType(TYPES.DECORATION_WREATH_STICK);
-        TypeAndPlacementObject tpo = new() {
+        var orig = TypeAndPlacementObjects.GetByType(TYPES.DECORATION_WREATH_STICK);
+        TypeAndPlacementObject tpo = new()
+        {
             IconImage = Sprite,
             Category = Categories,
             PlacementObject = CustomPrefabManager.CreatePlacementObjectFor(this),
@@ -40,7 +41,8 @@ public abstract class CustomStructure : StructureBrain
     public virtual Categories Categories => Categories.CULT;
     public virtual TypeAndPlacementObjects.Tier Tier => TypeAndPlacementObjects.Tier.Zero;
 
-    internal StructuresData StructuresData => new() {
+    internal StructuresData StructuresData => new()
+    {
         PrefabPath = PrefabPath,
         Bounds = Bounds,
         TILE_WIDTH = Bounds.x,
@@ -94,8 +96,8 @@ public abstract class CustomStructure : StructureBrain
     [Obsolete("This is never used")]
     public virtual string GetLocalizedName(bool plural, bool withArticle, bool definite)
     {
-        string text = "Structures/" + StructureType + (plural ? "/Plural" : "") +
-                      (!withArticle ? "" : definite ? "/Definite" : "/Indefinite");
+        var text = "Structures/" + StructureType + (plural ? "/Plural" : "") +
+                   (!withArticle ? "" : definite ? "/Definite" : "/Indefinite");
         return LocalizationManager.GetTranslation(text);
     }
 

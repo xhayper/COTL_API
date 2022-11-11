@@ -20,7 +20,7 @@ public class DebugFollowerCommand : CustomFollowerCommand.CustomFollowerCommand
     }
 
     public override void Execute(interaction_FollowerInteraction interaction,
-        FollowerCommands finalCommand)
+        FollowerCommands finalCommand = FollowerCommands.None)
     {
         interaction.StartCoroutine(interaction.FrameDelayCallback(delegate
         {

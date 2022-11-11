@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using System.Text;
 using I2.Loc;
@@ -14,15 +15,10 @@ public abstract class CustomTarotCard
 
     public virtual string LocalisedName()
     {
-        int upgradeIndex = 0;
-        foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
-        {
-            if (playerRunTrinket.CardType != CardType) continue;
-
-            upgradeIndex = playerRunTrinket.UpgradeIndex;
-
-            break;
-        }
+        var upgradeIndex =
+            (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
+                where playerRunTrinket.CardType == CardType
+                select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedName(upgradeIndex);
     }
@@ -30,32 +26,31 @@ public abstract class CustomTarotCard
     public virtual string LocalisedName(int upgradeIndex)
     {
         StringBuilder text = new("");
-        for (int i = 0; i < upgradeIndex; i++) text.Append("+");
+        for (var i = 0; i < upgradeIndex; i++) text.Append("+");
 
-        string text2 = upgradeIndex switch {
+        var text2 = upgradeIndex switch
+        {
             1 => "<color=green>",
             2 => "<color=purple>",
             _ => ""
         };
+
         return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name{text}</color>");
     }
 
     public virtual string LocalisedDescription()
     {
-        int upgradeIndex = 0;
-        foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
-        {
-            if (playerRunTrinket.CardType != CardType) continue;
-            upgradeIndex = playerRunTrinket.UpgradeIndex;
-            break;
-        }
+        var upgradeIndex =
+            (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
+                where playerRunTrinket.CardType == CardType
+                select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedDescription(upgradeIndex);
     }
 
     public virtual string LocalisedDescription(int upgradeIndex)
     {
-        string text = $"TarotCards/{ModPrefix}.{InternalName}/Description";
+        var text = $"TarotCards/{ModPrefix}.{InternalName}/Description";
 
         if (upgradeIndex > 0) text += upgradeIndex;
 
@@ -162,5 +157,7 @@ public abstract class CustomTarotCard
         return 0f;
     }
 
-    public virtual void ApplyInstantEffects(TarotCards.TarotCard card) { }
+    public virtual void ApplyInstantEffects(TarotCards.TarotCard card)
+    {
+    }
 }

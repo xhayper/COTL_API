@@ -1,5 +1,4 @@
 using Object = UnityEngine.Object;
-using System.Collections.Generic;
 using MMBiomeGeneration;
 using MMRoomGeneration;
 using COTL_API.Helpers;
@@ -25,11 +24,11 @@ public static partial class CustomItemManager
 
     private static GameObject ReplaceSpawn(InventoryItem.ITEM_TYPE type)
     {
-        CustomInventoryItem customItem = CustomItems[type];
-        GameObject customItemObject = ItemPickUp.GetItemPickUpObject(customItem.ItemPickUpToImitate);
+        var customItem = CustomItems[type];
+        var customItemObject = ItemPickUp.GetItemPickUpObject(customItem.ItemPickUpToImitate);
         customItemObject.GetComponentInChildren<SpriteRenderer>().sprite = customItem.Sprite;
 
-        PickUp pickup = customItemObject.GetComponentInChildren<PickUp>();
+        var pickup = customItemObject.GetComponentInChildren<PickUp>();
         if (pickup != null)
             pickup.type = type;
 
@@ -50,13 +49,12 @@ public static partial class CustomItemManager
             if (!CustomItems.ContainsKey(type)) return true;
             Plugin.Logger.LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
 
-            GameObject gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
-            GameObject customObject;
-            Transform transform = gameObject != null ? gameObject.transform : null;
+            var gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
+            var transform = gameObject != null ? gameObject.transform : null;
             PickUp p = null;
             while (--quantity >= 0)
             {
-                BiomeGenerator instance = BiomeGenerator.Instance;
+                var instance = BiomeGenerator.Instance;
                 if ((instance != null ? instance.CurrentRoom : null) != null)
                     transform = BiomeGenerator.Instance.CurrentRoom.GameObject.transform;
 
@@ -66,7 +64,7 @@ public static partial class CustomItemManager
                 if (transform == null)
                     break;
 
-                customObject = GetObject.GetCustomObject(CustomItems[type]).Spawn(transform);
+                var customObject = GetObject.GetCustomObject(CustomItems[type]).Spawn(transform);
                 customObject.transform.position = position;
                 customObject.transform.eulerAngles = Vector3.zero;
                 p = customObject.GetComponent<PickUp>();
@@ -93,7 +91,7 @@ public static partial class CustomItemManager
         {
             if (!path.StartsWith(PathPrefix)) return;
 
-            KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item = GetItemObjectByInternalObjectName(path);
+            var item = GetItemObjectByInternalObjectName(path);
 
             if (ObjectPool.instance.loadedAddressables.TryGetValue(item.Value.InternalObjectName, out GameObject _))
                 return;

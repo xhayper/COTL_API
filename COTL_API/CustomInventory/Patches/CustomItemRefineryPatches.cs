@@ -14,18 +14,21 @@ public static partial class CustomItemManager
 {
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Structures_Refinery), nameof(Structures_Refinery.GetCost))]
-    public static void Structures_Refinery_GetCost(Structures_Refinery __instance, InventoryItem.ITEM_TYPE Item, ref List<StructuresData.ItemCost> __result)
+    public static void Structures_Refinery_GetCost(Structures_Refinery __instance, InventoryItem.ITEM_TYPE Item,
+        ref List<StructuresData.ItemCost> __result)
     {
         if (!CustomItems.ContainsKey(Item)) return;
 
-        __result = new List<StructuresData.ItemCost> {
+        __result = new List<StructuresData.ItemCost>
+        {
             new(CustomItems[Item].RefineryInput, CustomItems[Item].RefineryInputQty)
         };
     }
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Structures_Refinery), nameof(Structures_Refinery.RefineryDuration))]
-    public static void Structures_Refinery_RefineryDuration(Structures_Refinery __instance, InventoryItem.ITEM_TYPE ItemType, ref float __result)
+    public static void Structures_Refinery_RefineryDuration(Structures_Refinery __instance,
+        InventoryItem.ITEM_TYPE ItemType, ref float __result)
     {
         if (!CustomItems.ContainsKey(ItemType)) return;
 
@@ -39,11 +42,12 @@ public static partial class CustomItemManager
     {
         if (__instance is not UIRefineryMenuController menu) return;
 
-        foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItems.Where(item => item.Value.CanBeRefined))
+        foreach (var item in CustomItems.Where(item =>
+                     item.Value.CanBeRefined))
         {
-            RefineryItem refineryItem = Object.Instantiate(menu.refineryIconPrefab, menu.Container);
+            var refineryItem = Object.Instantiate(menu.refineryIconPrefab, menu.Container);
             refineryItem.OnItemSelected += menu.OnItemSelected;
-            MMButton button = refineryItem.Button;
+            var button = refineryItem.Button;
             button.OnSelected += menu.OnQueueableItemSelected;
             refineryItem.Configure(item.Key);
             refineryItem.FadeIn(menu._refineryItems.Count * 0.03f);

@@ -20,7 +20,7 @@ public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCo
     public override List<FollowerCommandCategory> Categories => new() { FollowerCommandCategory.MAKE_DEMAND_COMMAND };
 
     public override void Execute(interaction_FollowerInteraction interaction,
-        FollowerCommands finalCommand)
+        FollowerCommands finalCommand = FollowerCommands.None)
     {
         interaction.follower.Brain.MakeDissenter();
         interaction.Close();

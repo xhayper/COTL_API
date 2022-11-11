@@ -12,9 +12,9 @@ public static partial class CustomTaskManager
 
     public static FollowerTaskType Add(CustomTask task)
     {
-        string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        FollowerTaskType taskType = GuidManager.GetEnumValue<FollowerTaskType>(guid, task.InternalName);
+        var taskType = GuidManager.GetEnumValue<FollowerTaskType>(guid, task.InternalName);
         task.TaskType = taskType;
         task.ModPrefix = guid;
 

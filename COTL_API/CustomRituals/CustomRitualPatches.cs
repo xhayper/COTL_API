@@ -13,10 +13,11 @@ internal class RitualPatches
     [HarmonyPrefix]
     public static void UIRitualsMenuController_OnShowStarted(UIRitualsMenuController __instance)
     {
-        foreach (UpgradeSystem.Type customRitual in CustomRitualManager.CustomRituals.Keys)
+        foreach (var customRitual in CustomRitualManager.CustomRituals.Keys)
         {
             Plugin.Logger.LogInfo("Custom Ritual: " + customRitual);
-            __instance.ConfigureItem(__instance._ritualItemTemplate.Instantiate(__instance._ritualsContent), customRitual);
+            __instance.ConfigureItem(__instance._ritualItemTemplate.Instantiate(__instance._ritualsContent),
+                customRitual);
         }
     }
 
@@ -26,7 +27,8 @@ internal class RitualPatches
     {
         if (!CustomRitualManager.CustomRituals.ContainsKey(ritualType)) return true;
 
-        if (!DataManager.Instance.UnlockedUpgrades.Contains(ritualType)) DataManager.Instance.UnlockedUpgrades.Add(ritualType);
+        if (!DataManager.Instance.UnlockedUpgrades.Contains(ritualType))
+            DataManager.Instance.UnlockedUpgrades.Add(ritualType);
         return true;
     }
 
@@ -92,11 +94,13 @@ internal class RitualPatches
 
     [HarmonyPatch(typeof(Interaction_TempleAltar), nameof(Interaction_TempleAltar.PerformRitual))]
     [HarmonyPostfix]
-    public static void Interaction_TempleAltar_PerformRitual(Interaction_TempleAltar __instance, UpgradeSystem.Type RitualType)
+    public static void Interaction_TempleAltar_PerformRitual(Interaction_TempleAltar __instance,
+        UpgradeSystem.Type RitualType)
     {
         if (!CustomRitualManager.CustomRituals.ContainsKey(RitualType)) return;
 
-        CustomRitual ritual = (CustomRitual)__instance.gameObject.AddComponent(CustomRitualManager.CustomRituals[RitualType].GetType());
+        var ritual =
+            (CustomRitual)__instance.gameObject.AddComponent(CustomRitualManager.CustomRituals[RitualType].GetType());
         ritual.upgradeType = CustomRitualManager.CustomRituals[RitualType].upgradeType;
         ritual.ModPrefix = CustomRitualManager.CustomRituals[RitualType].ModPrefix;
         __instance.CurrentRitual = ritual;
@@ -110,6 +114,7 @@ internal class RitualPatches
         if (!CustomRitualManager.CustomRituals.ContainsKey(__instance.RitualType)) return;
 
         if (!cancelled)
-            UpgradeSystem.AddCooldown(__instance.RitualType, CustomRitualManager.CustomRituals[__instance.RitualType].Cooldown);
+            UpgradeSystem.AddCooldown(__instance.RitualType,
+                CustomRitualManager.CustomRituals[__instance.RitualType].Cooldown);
     }
 }

@@ -10,9 +10,9 @@ public static partial class CustomFollowerCommandManager
 
     public static FollowerCommands Add(CustomFollowerCommand command)
     {
-        string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        FollowerCommands followerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, command.InternalName);
+        var followerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, command.InternalName);
         command.Command = followerCommand;
         command.ModPrefix = guid;
 

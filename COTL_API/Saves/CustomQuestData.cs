@@ -14,9 +14,9 @@ public static class CustomQuestData
         CustomQuestDataReadWriter.OnReadCompleted += delegate(Dictionary<int, CustomObjective> objectives)
         {
             Dictionary<int, CustomObjective> tempObjectives = new();
-            tempObjectives.Clear(); //needed if the user goes back to the mainmenu and loads a new save
-            
-            foreach (KeyValuePair<int, CustomObjective> objective in objectives)
+            tempObjectives.Clear(); //needed if the user goes back to the main-menu and loads a new save
+
+            foreach (var objective in objectives)
                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
                     tempObjectives.Add(objective.Key, objective.Value);
                 else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
@@ -36,12 +36,12 @@ public static class CustomQuestData
         CustomQuestDataReadWriter.Read(DataPath);
     }
 
-
     internal static void SaveData()
     {
         CustomQuestDataReadWriter.OnWriteCompleted += delegate
         {
-            Plugin.Logger.LogWarning($"Backed up {CustomObjectiveManager.PluginQuestTracker.Count} custom QuestID's!");
+            Plugin.Logger.LogWarning(
+                $"Backed up {CustomObjectiveManager.PluginQuestTracker.Count} custom QuestID's!");
         };
 
         CustomQuestDataReadWriter.OnWriteError += delegate(MMReadWriteError error)

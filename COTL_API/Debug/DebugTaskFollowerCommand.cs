@@ -5,8 +5,7 @@ namespace COTL_API.Debug;
 public class DebugTaskFollowerCommand : CustomFollowerCommand.CustomFollowerCommand
 {
     public override string InternalName => "DEBUG_TASK_FOLLOWER_COMMAND";
-
-
+    
     public override string GetTitle(Follower follower)
     {
         return "Debug Task";
@@ -18,13 +17,13 @@ public class DebugTaskFollowerCommand : CustomFollowerCommand.CustomFollowerComm
     }
 
     public override void Execute(interaction_FollowerInteraction interaction,
-        FollowerCommands finalCommand)
+        FollowerCommands finalCommand = FollowerCommands.None)
     {
         interaction.StartCoroutine(interaction.FrameDelayCallback(delegate
         {
             interaction.eventListener.PlayFollowerVO(interaction.generalAcknowledgeVO);
 
-            Structure str = TaskUtils.GetAvailableStructureOfType<DebugStructure>();
+            var str = TaskUtils.GetAvailableStructureOfType<DebugStructure>();
             if (str == null)
             {
                 interaction.eventListener.PlayFollowerVO(interaction.negativeAcknowledgeVO);

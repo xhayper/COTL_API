@@ -114,8 +114,8 @@ public partial class CustomFollowerCommandManager
     private static bool interaction_FollowerInteraction_OnFollowerCommandFinalized(
         interaction_FollowerInteraction __instance, FollowerCommands[] followerCommands)
     {
-        FollowerCommands command = followerCommands[0];
-        FollowerCommands preFinalCommand = followerCommands.Length > 1 ? followerCommands[1] : FollowerCommands.None;
+        var command = followerCommands[0];
+        var preFinalCommand = followerCommands.Length > 1 ? followerCommands[1] : FollowerCommands.None;
 
         if (!CustomFollowerCommands.ContainsKey(command) &&
             !CustomFollowerCommands.ContainsKey(preFinalCommand)) return true;

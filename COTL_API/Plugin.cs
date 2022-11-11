@@ -9,7 +9,6 @@ using COTL_API.Helpers;
 using BepInEx.Logging;
 using COTL_API.Debug;
 using System.Linq;
-using UnityEngine;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
@@ -76,13 +75,13 @@ public class Plugin : BaseUnityPlugin
 
         CustomTaskManager.Add(new DebugTask());
 
-        Texture2D customTex =
+        var customTex =
             TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
-        string atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
+        var atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
 
         CustomSkinManager.AddCustomSkin("Test", customTex, atlasText);
 
-        CustomObjective test = CustomObjectiveManager.BedRest("Test");
+        var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
         Logger.LogDebug("Debug mode enabled");
@@ -109,7 +108,7 @@ public class Plugin : BaseUnityPlugin
     {
         if (_questCleanDone) return;
         if (DataManager.Instance == null) return;
-        foreach (DataManager.QuestHistoryData quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
+        foreach (var quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
                      a.QuestIndex >= Quests.QuestsAll.Count))
         {
             if (Debug)

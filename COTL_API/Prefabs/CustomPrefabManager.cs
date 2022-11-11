@@ -16,14 +16,13 @@ public static class CustomPrefabManager
 
     public static string GetOrCreateBuildingPrefab(CustomStructure structure)
     {
-        string pstr = $"CustomBuildingPrefab_{structure.InternalName}";
-        string altstr = $"Assets/{pstr}.prefab";
-        if (!PrefabStrings.ContainsValue(structure))
-        {
-            PrefabStrings.Add(pstr, structure);
-            PrefabStrings.Add(altstr, structure);
-        }
+        var pstr = $"CustomBuildingPrefab_{structure.InternalName}";
+        var altstr = $"Assets/{pstr}.prefab";
 
+        if (PrefabStrings.ContainsValue(structure)) return pstr;
+
+        PrefabStrings.Add(pstr, structure);
+        PrefabStrings.Add(altstr, structure);
         return pstr;
     }
 
@@ -34,13 +33,13 @@ public static class CustomPrefabManager
             GetOrCreateBuildingPrefab(CustomStructureManager.GetStructureByPrefabName(name));
         }
 
-        Sprite sprite = PrefabStrings[name].Sprite;
+        var sprite = PrefabStrings[name].Sprite;
         handle.Completed += delegate(AsyncOperationHandle<GameObject> obj)
         {
-            SpriteRenderer spriteRenderer = obj.Result.GetComponentInChildren<SpriteRenderer>();
-            Structure structure = obj.Result.GetComponentInChildren<Structure>();
+            var spriteRenderer = obj.Result.GetComponentInChildren<SpriteRenderer>();
+            var structure = obj.Result.GetComponentInChildren<Structure>();
             structure.Type = PrefabStrings[name].StructureType;
-            Sprite scaledSprite = Sprite.Create(sprite.texture, sprite.rect, new Vector2(0.5f, 0));
+            var scaledSprite = Sprite.Create(sprite.texture, sprite.rect, new Vector2(0.5f, 0));
             spriteRenderer.sprite = scaledSprite;
             obj.Result.name = name + " (Custom Structure)";
         };
@@ -54,36 +53,34 @@ public static class CustomPrefabManager
     [HarmonyPrefix]
     public static void Addressables_InstantiateAsync(ref object key)
     {
-        if (key is string path)
-        {
-            // Run the original code with a generic structure
-            if (!path.Contains("CustomBuildingPrefab_")) return;
-            pathOverride = path;
-            getOverride = true;
-            key = "Assets/Prefabs/Structures/Buildings/Decoration Wreath Stick.prefab";
-        }
+        if (key is not string path) return;
+
+        // Run the original code with a generic structure
+        if (!path.Contains("CustomBuildingPrefab_")) return;
+        pathOverride = path;
+        getOverride = true;
+        key = "Assets/Prefabs/Structures/Buildings/Decoration Wreath Stick.prefab";
     }
 
     [HarmonyPatch(typeof(ResourceManager), "ProvideInstance")]
     [HarmonyPostfix]
     public static void ResourceManager_ProvideInstance(ref AsyncOperationHandle<GameObject> __result)
     {
-        if (pathOverride != null)
-        {
-            CreateBuildingPrefabOverride(pathOverride, ref __result);
-            pathOverride = null;
-        }
+        if (pathOverride == null) return;
+
+        CreateBuildingPrefabOverride(pathOverride, ref __result);
+        pathOverride = null;
     }
 
     public static GameObject CreatePlacementObjectFor(CustomStructure structure)
     {
-        AsyncOperationHandle<GameObject> obj =
+        var obj =
             Addressables.LoadAssetAsync<GameObject>(
                 "Assets/Prefabs/Placement Objects/Placement Object Security Turret Lvl2.prefab");
         obj.WaitForCompletion();
 
         Plugin.Logger.LogInfo(obj.Result);
-        PlacementObject po = obj.Result.GetComponentInChildren<PlacementObject>();
+        var po = obj.Result.GetComponentInChildren<PlacementObject>();
         po.ToBuildAsset = structure.PrefabPath;
         po.StructureType = structure.StructureType;
         po.Bounds = structure.Bounds;

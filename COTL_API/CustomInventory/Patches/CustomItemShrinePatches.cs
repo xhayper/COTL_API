@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using HarmonyLib;
-using System.Linq;
 
 //if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
@@ -16,8 +15,9 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static void InventoryItemDisplay_GetItemImages(ref InventoryItemDisplay __instance)
     {
-        foreach (InventoryItemDisplay.MyDictionaryEntry customItem in CustomItems.Select(type =>
-                     new InventoryItemDisplay.MyDictionaryEntry {
+        foreach (var customItem in CustomItems.Select(type =>
+                     new InventoryItemDisplay.MyDictionaryEntry
+                     {
                          key = type.Key,
                          value = type.Value.InventoryIcon
                      }))
@@ -46,23 +46,20 @@ public static partial class CustomItemManager
                 (InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type)) return true;
 
         Helpers.OnInteractHelper.Interaction_OnInteract(__instance, state);
-        if (__instance.StructureInfo.Inventory.Count > 0)
-        {
-            InventoryItem.ITEM_TYPE type = (InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type;
-            int quantity = __instance.StructureInfo.Inventory[0].quantity;
-            // for (int i = 0; i < quantity; i++) //i dont know why, the original method spawns 1 then stops
-            // {
-            InventoryItem.Spawn(type, quantity, __instance.Item.transform.position, 0f)
-                .SetInitialSpeedAndDiraction(4f + UnityEngine.Random.Range(-0.5f, 1f),
-                    270 + UnityEngine.Random.Range(-90, 90));
-            // }
+        if (__instance.StructureInfo.Inventory.Count <= 0) return false;
 
-            __instance.StructureInfo.Inventory.Clear();
-            __instance.StructureInfo.LastPrayTime = TimeManager.TotalElapsedGameTime;
-            __instance.ShowItem();
-            AudioManager.Instance.PlayOneShot("event:/Stings/generic_positive", __instance.transform.position);
-            MMVibrate.Haptic(MMVibrate.HapticTypes.LightImpact);
-        }
+        var type = (InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type;
+        var quantity = __instance.StructureInfo.Inventory[0].quantity;
+
+        InventoryItem.Spawn(type, quantity, __instance.Item.transform.position, 0f)
+            .SetInitialSpeedAndDiraction(4f + UnityEngine.Random.Range(-0.5f, 1f),
+                270 + UnityEngine.Random.Range(-90, 90));
+
+        __instance.StructureInfo.Inventory.Clear();
+        __instance.StructureInfo.LastPrayTime = TimeManager.TotalElapsedGameTime;
+        __instance.ShowItem();
+        AudioManager.Instance.PlayOneShot("event:/Stings/generic_positive", __instance.transform.position);
+        MMVibrate.Haptic(MMVibrate.HapticTypes.LightImpact);
 
         return false;
     }
@@ -80,7 +77,7 @@ public static partial class CustomItemManager
         [HarmonyPrefix]
         private static void Prefix(ref Structures_OfferingShrine __instance)
         {
-            foreach (KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem> item in CustomItems.Where(item =>
+            foreach (var item in CustomItems.Where(item =>
                          item.Value.AddItemToOfferingShrine))
                 switch (item.Value.Rarity)
                 {

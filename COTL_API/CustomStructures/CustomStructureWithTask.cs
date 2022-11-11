@@ -19,7 +19,7 @@ public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
 
     public void GetAvailableTasks(ScheduledActivity activity, SortedList<float, FollowerTask> sortedTasks)
     {
-        if (activity != ScheduledActivity.Work || this.ReservedForTask)
+        if (activity != ScheduledActivity.Work || ReservedForTask)
             return;
 
         sortedTasks.Add(StructureTask.Priorty, StructureTask);

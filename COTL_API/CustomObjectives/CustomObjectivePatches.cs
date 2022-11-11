@@ -42,7 +42,7 @@ public static partial class CustomObjectiveManager
     [HarmonyPatch(typeof(Quests), nameof(Quests.GetQuest))]
     public static void Quests_GetQuest()
     {
-        foreach (DataManager.QuestHistoryData quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
+        foreach (var quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
                      a.QuestIndex >= Quests.QuestsAll.Count))
         {
             Plugin.Logger.LogWarning(
@@ -60,14 +60,14 @@ public static partial class CustomObjectiveManager
     {
         if (DataManager.Instance is null)
             return 25;
-        
+
         //47 is the hardcoded random quest amount
         //25 is the reverse index of the dud(?) quest in the list
-        int adjustedNumber = 25 + (Quests.QuestsAll.Count - 47);
+        var adjustedNumber = 25 + (Quests.QuestsAll.Count - 47);
         // Plugin.Logger.LogWarning($"GetAdjustedCount(): Total quests: {Quests.QuestsAll.Count}, Adjusted number: {adjustedNumber}");
         return adjustedNumber;
     }
-    
+
     //[HarmonyDebug]
     /// <summary>
     /// This is a patch to fix the hardcoded quest count in the Quests.GetQuest method. This is done by replacing the hardcoded value with a call to our own method.
@@ -78,11 +78,11 @@ public static partial class CustomObjectiveManager
     [HarmonyPatch(typeof(Quests), nameof(Quests.GetQuest))]
     public static IEnumerable<CodeInstruction> Quests_GetQuest_Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        List<CodeInstruction> instructionList = instructions.ToList();
+        var instructionList = instructions.ToList();
 
-        for (int index = 0; index < instructionList.Count; index++)
+        for (var index = 0; index < instructionList.Count; index++)
         {
-            CodeInstruction instruction = instructionList[index];
+            var instruction = instructionList[index];
             if (instruction.opcode == OpCodes.Ldc_I4_S && (sbyte)instruction.operand == 0x19)
                 instructionList[index] = new CodeInstruction(OpCodes.Call,
                     typeof(CustomObjectiveManager).GetMethod(nameof(GetAdjustedCount)));

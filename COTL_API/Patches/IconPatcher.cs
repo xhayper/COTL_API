@@ -3,9 +3,9 @@ using COTL_API.CustomInventory;
 using UnityEngine.TextCore;
 using COTL_API.Helpers;
 using COTL_API.Icons;
+using UnityEngine;
 using HarmonyLib;
 using TMPro;
-using UnityEngine;
 
 namespace COTL_API.Patches;
 
@@ -19,9 +19,9 @@ public static class IconPatcher
     {
         if (spriteAsset == null) return true;
 
-        foreach (CustomInventoryItem item in CustomItemManager.CustomItems.Values)
+        foreach (var item in CustomItemManager.CustomItems.Values)
         {
-            string name = $"icon_ITEM_{item.ModPrefix}.{item.InternalName}";
+            var name = $"icon_ITEM_{item.ModPrefix}.{item.InternalName}";
             if (hashCode != HashCode.GetValueHashCode(name)) continue;
             spriteIndex = 0;
             Sprite sprite = item.InventoryIcon;
@@ -31,10 +31,10 @@ public static class IconPatcher
             return false;
         }
 
-        foreach (CustomFollowerCommand.CustomFollowerCommand item in CustomFollowerCommandManager.CustomFollowerCommands
+        foreach (var item in CustomFollowerCommandManager.CustomFollowerCommands
                      .Values)
         {
-            string name = $"icon_FCOMMAND_{item.ModPrefix}.{item.InternalName}";
+            var name = $"icon_FCOMMAND_{item.ModPrefix}.{item.InternalName}";
             if (hashCode != HashCode.GetValueHashCode(name)) continue;
             spriteIndex = 0;
             Sprite sprite = item.CommandIcon;

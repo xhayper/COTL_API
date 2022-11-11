@@ -134,8 +134,8 @@ public abstract class CustomInventoryItem
 
     public virtual string CapacityString(int minimum)
     {
-        int itemQuantity = Inventory.GetItemQuantity(ItemType);
-        string text = $"{InventoryStringIcon()} {itemQuantity}/{minimum}";
+        var itemQuantity = Inventory.GetItemQuantity(ItemType);
+        var text = $"{InventoryStringIcon()} {itemQuantity}/{minimum}";
         return itemQuantity < minimum ? text.Colour(StaticColors.RedColor) : text;
     }
 }
