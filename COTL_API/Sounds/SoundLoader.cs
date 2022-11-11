@@ -192,18 +192,22 @@ public class SoundLoader : MonoBehaviour
     }
 
     // Still being tested!
+    /*
     internal void SetReverb(string id, bool active, float amount)
     {
         SoundHandler sl = GetHandlerByID(id);
         sl?.SetReverb(active, amount);
     }
+    /*
 
     // Still being tested!
+    /*
     internal void SetLowPass(string id, float amount)
     {
         SoundHandler sl = GetHandlerByID(id);
         sl?.SetLowPass(amount);
     }
+    */
 
 
     // == PLAYBACK CONTROLS ==
