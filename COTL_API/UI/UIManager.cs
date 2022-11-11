@@ -123,7 +123,7 @@ public class UIManager
         sliderSlider.maxValue = maxValue;
         sliderSlider._increment = increment;
         sliderSlider._valueDisplayFormat = format;
-        sliderSlider.onValueChanged.AddListener(onChange);
+        if (onChange != null) sliderSlider.onValueChanged.AddListener(onChange);
     }
     
     private static void AddToggle(Transform parent, string text, bool value, Action<bool> onChange = null)
@@ -134,7 +134,7 @@ public class UIManager
         toggleText.text = text;
         MMToggle toggleToggle = toggle.GetComponentInChildren<MMToggle>();
         toggleToggle.Value = value;
-        toggleToggle.OnValueChanged += (bool b) => onChange?.Invoke(b);
+        if (onChange != null) toggleToggle.OnValueChanged += onChange;
     }
     
     private static void AddHorizontalSelector(Transform parent, string text, string[] options, int index = 0, Action<int> onChange = null, string indexStringOverride = null)
@@ -147,6 +147,6 @@ public class UIManager
         selector._localizeContent = false;
         selector.UpdateContent(options);
         selector.ContentIndex = indexStringOverride != null ? (options.IndexOf(indexStringOverride) == -1 ? 0 : options.IndexOf(indexStringOverride)) : index;
-        selector.OnSelectionChanged += (int i) => onChange?.Invoke(i);
+        if (onChange != null) selector.OnSelectionChanged += onChange;
     }
 }
