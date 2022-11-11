@@ -7,6 +7,7 @@ using System;
 
 namespace COTL_API.CustomStructures;
 
+[HarmonyPatch]
 public partial class CustomStructureManager
 {
     [HarmonyPatch(typeof(StructureBrain), "CreateBrain")]
