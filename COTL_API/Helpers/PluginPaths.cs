@@ -8,7 +8,7 @@ internal static class PluginPaths
 {
     internal static string ResolvePath(params string[] paths)
     {
-        return Path.Combine((new List<string> { Plugin.PluginPath }).Concat(paths).ToArray());
+        return Path.Combine(new List<string> { Plugin.PluginPath }.Concat(paths).ToArray());
     }
 
     internal static string ResolveAssetPath(params string[] paths)

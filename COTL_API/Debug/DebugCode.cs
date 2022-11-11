@@ -19,6 +19,7 @@ public class DebugCode
         Inventory.AddItem(Plugin.DebugItem, 1, true);
         Inventory.AddItem(Plugin.DebugItem2, 1, true);
         Inventory.AddItem(Plugin.DebugItem3, 1, true);
+        Inventory.AddItem(Plugin.DebugItem4, 1, true);
     }
 
     [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show))]
@@ -44,7 +45,7 @@ public class DebugCode
         List<TarotCards.Card> vanillaCardList = new(DataManager.Instance.PlayerFoundTrinkets);
         vanillaCardList.RemoveAll(c =>
             CustomTarotCardManager.CustomTarotCards.ContainsKey(c) ||
-            DataManager.Instance.PlayerRunTrinkets.Any((t) => t.CardType == c));
+            DataManager.Instance.PlayerRunTrinkets.Any(t => t.CardType == c));
 
         return new TarotCards.TarotCard(
             vanillaCardList.ElementAt(Random.Range(0,
@@ -60,7 +61,7 @@ public class DebugCode
 
     internal static int getTarotMult(TarotCards.Card obj)
     {
-        int mult = 0;
+        var mult = 0;
         if (DataManager.Instance.dungeonRun < 5) return Mathf.Min(mult, TarotCards.GetMaxTarotCardLevel(obj));
 
         while (Random.Range(0f, 1f) < 0.275f * DataManager.Instance.GetLuckMultiplier()) mult++;

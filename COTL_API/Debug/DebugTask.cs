@@ -27,31 +27,30 @@ public class DebugTask : CustomTask
 
     public override void TaskTick(float deltaGameTime)
     {
-        if (State == FollowerTaskState.Doing)
+        if (State != FollowerTaskState.Doing) return;
+        
+        _progress += deltaGameTime;
+        if (_progress >= 50)
         {
-            _progress += deltaGameTime;
-            if (_progress >= 50)
-            {
-                _follower.Brain.AddAdoration(FollowerBrain.AdorationActions.PetDog, null);
-                _progress -= 50;
-            }
+            _follower.Brain.AddAdoration(FollowerBrain.AdorationActions.PetDog, null);
+            _progress -= 50;
+        }
 
-            if (_follower.Brain.Stats.Adoration >= _follower.Brain.Stats.MAX_ADORATION)
-            {
-                Complete();
-            }
+        if (_follower.Brain.Stats.Adoration >= _follower.Brain.Stats.MAX_ADORATION)
+        {
+            Complete();
         }
     }
 
     public override void ClaimReservations()
     {
-        StructureBrain structureByID = GetStructure().Brain;
+        var structureByID = GetStructure().Brain;
         structureByID.ReservedForTask = true;
     }
 
     public override void ReleaseReservations()
     {
-        StructureBrain structureByID = GetStructure().Brain;
+        var structureByID = GetStructure().Brain;
         structureByID.ReservedForTask = false;
     }
 
@@ -70,12 +69,11 @@ public class DebugTask : CustomTask
 
     public override Vector3 UpdateDestination(Follower follower)
     {
-        StructureBrain structureByID = GetStructure().Brain;
-        Vector3 pos = structureByID.Data.Position;
+        var structureByID = GetStructure().Brain;
+        var pos = structureByID.Data.Position;
         return new Vector3(pos.x, pos.y, pos.z);
     }
-
-
+    
     public override void OnStart()
     {
         SetState(FollowerTaskState.GoingTo);

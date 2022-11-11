@@ -16,326 +16,326 @@ public static class ItemPickUp
     public static GameObject GetItemPickUpObject(InventoryItem.ITEM_TYPE type)
     {
         Plugin.Logger.LogWarning($"ImitatePickUpObject: {type}");
-        string text = "";
+        var itemText = "";
         switch (type)
         {
             case InventoryItem.ITEM_TYPE.LOG:
-                text = "Log";
+                itemText = "Log";
                 break;
             case InventoryItem.ITEM_TYPE.STONE:
-                text = "Rock1";
+                itemText = "Rock1";
                 break;
             case InventoryItem.ITEM_TYPE.ROCK2:
-                text = "Rock2";
+                itemText = "Rock2";
                 break;
             case InventoryItem.ITEM_TYPE.ROCK3:
-                text = "Rock3";
+                itemText = "Rock3";
                 break;
             case InventoryItem.ITEM_TYPE.SEED_SWORD:
-                text = "Seed - Sword";
+                itemText = "Seed - Sword";
                 break;
             case InventoryItem.ITEM_TYPE.MEAT:
-                text = "Meat";
+                itemText = "Meat";
                 break;
             case InventoryItem.ITEM_TYPE.WHEAT:
-                text = "Wheat";
+                itemText = "Wheat";
                 break;
             case InventoryItem.ITEM_TYPE.SEED:
-                text = "Seed";
+                itemText = "Seed";
                 break;
             case InventoryItem.ITEM_TYPE.BONE:
-                text = "VileBones";
+                itemText = "VileBones";
                 break;
             case InventoryItem.ITEM_TYPE.SOUL:
-                text = "Soul";
+                itemText = "Soul";
                 break;
             case InventoryItem.ITEM_TYPE.VINES:
-                text = "GildedVine";
+                itemText = "GildedVine";
                 break;
             case InventoryItem.ITEM_TYPE.RED_HEART:
-                text = "Red Heart";
+                itemText = "Red Heart";
                 break;
             case InventoryItem.ITEM_TYPE.HALF_HEART:
-                text = "Half Heart";
+                itemText = "Half Heart";
                 break;
             case InventoryItem.ITEM_TYPE.BLUE_HEART:
-                text = "Blue Heart";
+                itemText = "Blue Heart";
                 break;
             case InventoryItem.ITEM_TYPE.HALF_BLUE_HEART:
-                text = "Half Blue Heart";
+                itemText = "Half Blue Heart";
                 break;
             case InventoryItem.ITEM_TYPE.TIME_TOKEN:
-                text = "Time Token";
+                itemText = "Time Token";
                 break;
             case InventoryItem.ITEM_TYPE.GENERIC:
-                text = "Generic Pick Up";
+                itemText = "Generic Pick Up";
                 break;
             case InventoryItem.ITEM_TYPE.STAINED_GLASS:
-                text = "StainedGlass";
+                itemText = "StainedGlass";
                 break;
             case InventoryItem.ITEM_TYPE.FLOWERS:
-                text = "SacredFlower";
+                itemText = "SacredFlower";
                 break;
             case InventoryItem.ITEM_TYPE.BLACK_GOLD:
-                text = "BlackGold";
+                itemText = "BlackGold";
                 break;
             case InventoryItem.ITEM_TYPE.BERRY:
-                text = "Berries";
+                itemText = "Berries";
                 break;
             case InventoryItem.ITEM_TYPE.MONSTER_HEART:
-                text = "Monster Heart";
+                itemText = "Monster Heart";
                 break;
             case InventoryItem.ITEM_TYPE.TRINKET_CARD:
-                text = "TarotCard";
+                itemText = "TarotCard";
                 break;
             case InventoryItem.ITEM_TYPE.SOUL_FRAGMENT:
-                text = "SoulFragment";
+                itemText = "SoulFragment";
                 break;
             case InventoryItem.ITEM_TYPE.FISH:
-                text = "Fish";
+                itemText = "Fish";
                 break;
             case InventoryItem.ITEM_TYPE.MUSHROOM_SMALL:
-                text = "Mushroom Small";
+                itemText = "Mushroom Small";
                 break;
             case InventoryItem.ITEM_TYPE.BLACK_SOUL:
-                text = "Black Soul";
+                itemText = "Black Soul";
                 break;
             case InventoryItem.ITEM_TYPE.MUSHROOM_BIG:
-                text = "Mushroom Big";
+                itemText = "Mushroom Big";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL:
-                text = "Assets/Prefabs/Structures/Other/Meal.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.FISH_SMALL:
-                text = "Fish Small";
+                itemText = "Fish Small";
                 break;
             case InventoryItem.ITEM_TYPE.FISH_BIG:
-                text = "Fish Big";
+                itemText = "Fish Big";
                 break;
             case InventoryItem.ITEM_TYPE.GRASS:
-                text = "Grass";
+                itemText = "Grass";
                 break;
             case InventoryItem.ITEM_TYPE.THORNS:
-                text = "Thorns";
+                itemText = "Thorns";
                 break;
             case InventoryItem.ITEM_TYPE.KEY_PIECE:
-                text = "Key Piece";
+                itemText = "Key Piece";
                 break;
             case InventoryItem.ITEM_TYPE.POOP:
-                text = "Poop";
+                itemText = "Poop";
                 break;
             case InventoryItem.ITEM_TYPE.FOUND_ITEM_DECORATION:
-                text = "FoundItem";
+                itemText = "FoundItem";
                 break;
             case InventoryItem.ITEM_TYPE.FOUND_ITEM_WEAPON:
-                text = "FoundItemWeapon";
+                itemText = "FoundItemWeapon";
                 break;
             case InventoryItem.ITEM_TYPE.FOUND_ITEM_CURSE:
-                text = "FoundItemCurse";
+                itemText = "FoundItemCurse";
                 break;
             case InventoryItem.ITEM_TYPE.GIFT_SMALL:
-                text = "Gift Small";
+                itemText = "Gift Small";
                 break;
             case InventoryItem.ITEM_TYPE.GIFT_MEDIUM:
-                text = "Gift Medium";
+                itemText = "Gift Medium";
                 break;
             case InventoryItem.ITEM_TYPE.Necklace_1:
-                text = "Necklace 1";
+                itemText = "Necklace 1";
                 break;
             case InventoryItem.ITEM_TYPE.Necklace_2:
-                text = "Necklace 2";
+                itemText = "Necklace 2";
                 break;
             case InventoryItem.ITEM_TYPE.Necklace_3:
-                text = "Necklace 3";
+                itemText = "Necklace 3";
                 break;
             case InventoryItem.ITEM_TYPE.Necklace_4:
-                text = "Necklace 4";
+                itemText = "Necklace 4";
                 break;
             case InventoryItem.ITEM_TYPE.Necklace_5:
-                text = "Necklace 5";
+                itemText = "Necklace 5";
                 break;
             case InventoryItem.ITEM_TYPE.PUMPKIN:
-                text = "Pumpkin";
+                itemText = "Pumpkin";
                 break;
             case InventoryItem.ITEM_TYPE.SEED_PUMPKIN:
-                text = "Seed Pumpkin";
+                itemText = "Seed Pumpkin";
                 break;
             case InventoryItem.ITEM_TYPE.FOUND_ITEM_FOLLOWERSKIN:
-                text = "FoundItemSkin";
+                itemText = "FoundItemSkin";
                 break;
             case InventoryItem.ITEM_TYPE.BLACK_HEART:
-                text = "Black Heart";
+                itemText = "Black Heart";
                 break;
             case InventoryItem.ITEM_TYPE.PERMANENT_HALF_HEART:
-                text = "Permanent Half Heart";
+                itemText = "Permanent Half Heart";
                 break;
             case InventoryItem.ITEM_TYPE.FLOWER_RED:
-                text = "Flower_red";
+                itemText = "Flower_red";
                 break;
             case InventoryItem.ITEM_TYPE.FLOWER_WHITE:
-                text = "Flower_White";
+                itemText = "Flower_White";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_GRASS:
-                text = "Assets/Prefabs/Structures/Other/Meal Grass.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Grass.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_MEAT:
-                text = "Assets/Prefabs/Structures/Other/Meal Good.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Good.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_GREAT:
-                text = "Assets/Prefabs/Structures/Other/Meal Great.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Great.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_GOOD_FISH:
-                text = "Assets/Prefabs/Structures/Other/Meal Good Fish.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Good Fish.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAT_ROTTEN:
-                text = "Meat Rotten";
+                itemText = "Meat Rotten";
                 break;
             case InventoryItem.ITEM_TYPE.FOLLOWER_MEAT:
-                text = "Follower Meat";
+                itemText = "Follower Meat";
                 break;
             case InventoryItem.ITEM_TYPE.FOLLOWER_MEAT_ROTTEN:
-                text = "Follower Meat";
+                itemText = "Follower Meat";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_FOLLOWER_MEAT:
-                text = "Assets/Prefabs/Structures/Other/Meal Follower Meat.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Follower Meat.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_POOP:
-                text = "Assets/Prefabs/Structures/Other/Meal Poop.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Poop.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.SEED_MUSHROOM:
-                text = "Seed Mushroom";
+                itemText = "Seed Mushroom";
                 break;
             case InventoryItem.ITEM_TYPE.SEED_FLOWER_WHITE:
-                text = "Seed White Flower";
+                itemText = "Seed White Flower";
                 break;
             case InventoryItem.ITEM_TYPE.SEED_FLOWER_RED:
-                text = "Seed Red Flower";
+                itemText = "Seed Red Flower";
                 break;
             case InventoryItem.ITEM_TYPE.GRASS2:
-                text = "Grass 2";
+                itemText = "Grass 2";
                 break;
             case InventoryItem.ITEM_TYPE.GRASS3:
-                text = "Grass 3";
+                itemText = "Grass 3";
                 break;
             case InventoryItem.ITEM_TYPE.GRASS4:
-                text = "Grass 4";
+                itemText = "Grass 4";
                 break;
             case InventoryItem.ITEM_TYPE.GRASS5:
-                text = "Grass 5";
+                itemText = "Grass 5";
                 break;
             case InventoryItem.ITEM_TYPE.FLOWER_PURPLE:
-                text = "Flower_Purple";
+                itemText = "Flower_Purple";
                 break;
             case InventoryItem.ITEM_TYPE.SEED_TREE:
-                text = "Seed_tree";
+                itemText = "Seed_tree";
                 break;
             case InventoryItem.ITEM_TYPE.MAP:
-                text = "FoundItemMap";
+                itemText = "FoundItemMap";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_MUSHROOMS:
-                text = "Assets/Prefabs/Structures/Other/Meal Mushrooms.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Mushrooms.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.LOG_REFINED:
-                text = "Log Refined";
+                itemText = "Log Refined";
                 break;
             case InventoryItem.ITEM_TYPE.STONE_REFINED:
-                text = "Stone Refined";
+                itemText = "Stone Refined";
                 break;
             case InventoryItem.ITEM_TYPE.GOLD_NUGGET:
-                text = "Gold Nugget";
+                itemText = "Gold Nugget";
                 break;
             case InventoryItem.ITEM_TYPE.ROPE:
-                text = "Rope";
+                itemText = "Rope";
                 break;
             case InventoryItem.ITEM_TYPE.GOLD_REFINED:
-                text = "Gold Refined";
+                itemText = "Gold Refined";
                 break;
             case InventoryItem.ITEM_TYPE.BLOOD_STONE:
-                text = "Bloodstone";
+                itemText = "Bloodstone";
                 break;
             case InventoryItem.ITEM_TYPE.TRINKET_CARD_UNLOCKED:
-                text = "TarotCardUnlocked";
+                itemText = "TarotCardUnlocked";
                 break;
             case InventoryItem.ITEM_TYPE.CRYSTAL:
-                text = "Crystal";
+                itemText = "Crystal";
                 break;
             case InventoryItem.ITEM_TYPE.SPIDER_WEB:
-                text = "Spider Web";
+                itemText = "Spider Web";
                 break;
             case InventoryItem.ITEM_TYPE.FISH_CRAB:
-                text = "Fish Crab";
+                itemText = "Fish Crab";
                 break;
             case InventoryItem.ITEM_TYPE.FISH_LOBSTER:
-                text = "Fish Lobster";
+                itemText = "Fish Lobster";
                 break;
             case InventoryItem.ITEM_TYPE.FISH_OCTOPUS:
-                text = "Fish Octopus";
+                itemText = "Fish Octopus";
                 break;
             case InventoryItem.ITEM_TYPE.FISH_SQUID:
-                text = "Fish Squid";
+                itemText = "Fish Squid";
                 break;
             case InventoryItem.ITEM_TYPE.FISH_SWORDFISH:
-                text = "Fish Swordfish";
+                itemText = "Fish Swordfish";
                 break;
             case InventoryItem.ITEM_TYPE.FISH_BLOWFISH:
-                text = "Fish Blowfish";
+                itemText = "Fish Blowfish";
                 break;
             case InventoryItem.ITEM_TYPE.BEETROOT:
-                text = "Beetroot";
+                itemText = "Beetroot";
                 break;
             case InventoryItem.ITEM_TYPE.SEED_BEETROOT:
-                text = "Seed Beetroot";
+                itemText = "Seed Beetroot";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_GREAT_FISH:
-                text = "Assets/Prefabs/Structures/Other/Meal Great Fish.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Great Fish.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_BAD_FISH:
-                text = "Assets/Prefabs/Structures/Other/Meal Bad Fish.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Bad Fish.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.BEHOLDER_EYE:
-                text = "Beholder Eye";
+                itemText = "Beholder Eye";
                 break;
             case InventoryItem.ITEM_TYPE.CAULIFLOWER:
-                text = "Cauliflower";
+                itemText = "Cauliflower";
                 break;
             case InventoryItem.ITEM_TYPE.SEED_CAULIFLOWER:
-                text = "Seed Cauliflower";
+                itemText = "Seed Cauliflower";
                 break;
             case InventoryItem.ITEM_TYPE.MEAT_MORSEL:
-                text = "Meat Morsel";
+                itemText = "Meat Morsel";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_BERRIES:
-                text = "Assets/Prefabs/Structures/Other/Meal Berries.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Berries.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_MEDIUM_VEG:
-                text = "Assets/Prefabs/Structures/Other/Meal Medium Veg.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Medium Veg.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_BAD_MIXED:
-                text = "Assets/Prefabs/Structures/Other/Meal Bad Mixed.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Bad Mixed.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_MEDIUM_MIXED:
-                text = "Assets/Prefabs/Structures/Other/Meal Medium Mixed.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Medium Mixed.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_GREAT_MIXED:
-                text = "Assets/Prefabs/Structures/Other/Meal Great Mixed.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Great Mixed.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_DEADLY:
-                text = "Assets/Prefabs/Structures/Other/Meal Deadly.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Deadly.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_BAD_MEAT:
-                text = "Assets/Prefabs/Structures/Other/Meal Bad Meat.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Bad Meat.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_GREAT_MEAT:
-                text = "Assets/Prefabs/Structures/Other/Meal Great Meat.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Great Meat.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.MEAL_BURNED:
-                text = "Assets/Prefabs/Structures/Other/Meal Burned.prefab";
+                itemText = "Assets/Prefabs/Structures/Other/Meal Burned.prefab";
                 break;
             case InventoryItem.ITEM_TYPE.DOCTRINE_STONE:
-                text = "Doctrine Stone Piece";
+                itemText = "Doctrine Stone Piece";
                 break;
             case InventoryItem.ITEM_TYPE.SHELL:
-                text = "Shell";
+                itemText = "Shell";
                 break;
             case InventoryItem.ITEM_TYPE.NONE:
                 break;
@@ -362,15 +362,15 @@ public static class ItemPickUp
             case InventoryItem.ITEM_TYPE.TALISMAN:
                 break;
             default:
-                text = "BlackGold";
+                itemText = "BlackGold";
                 break;
         }
 
-        Plugin.Logger.LogWarning($"ImitateItemPickUpText: {text}");
+        Plugin.Logger.LogWarning($"ImitateItemPickUpText: {itemText}");
 
-        if (!text.EndsWith(".prefab", StringComparison.InvariantCultureIgnoreCase))
-            return Resources.Load("Prefabs/Resources/" + text) as GameObject;
-        
-        return Resources.Load(text) as GameObject;
+        if (!itemText.EndsWith(".prefab", StringComparison.InvariantCultureIgnoreCase))
+            return Resources.Load("Prefabs/Resources/" + itemText) as GameObject;
+
+        return Resources.Load(itemText) as GameObject;
     }
 }

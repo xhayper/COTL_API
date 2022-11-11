@@ -13,9 +13,9 @@ public static partial class CustomStructureManager
 
     public static StructureBrain.TYPES Add(CustomStructure structure)
     {
-        string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        StructureBrain.TYPES structureType =
+        var structureType =
             GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, structure.InternalName);
         structure.StructureType = structureType;
         structure.ModPrefix = guid;

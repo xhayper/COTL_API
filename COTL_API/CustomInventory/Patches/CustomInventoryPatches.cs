@@ -29,7 +29,7 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static void Interaction_AddFuel_Update(Interaction_AddFuel __instance)
     {
-        foreach (InventoryItem.ITEM_TYPE itemType in CustomItems.Keys)
+        foreach (var itemType in CustomItems.Keys)
         {
             if (!CustomItems[itemType].IsBurnableFuel && __instance.fuel.Contains(itemType))
                 __instance.fuel.Remove(itemType);
@@ -44,13 +44,10 @@ public static partial class CustomItemManager
     {
         if (__result) return;
 
-        foreach (InventoryItem item in Inventory.items)
+        if (Inventory.items.Where(item => CustomItems.ContainsKey((InventoryItem.ITEM_TYPE)item.type)).Any(item =>
+                CustomItems[(InventoryItem.ITEM_TYPE)item.type].CanBeGivenToFollower))
         {
-            if (!CustomItems.ContainsKey((InventoryItem.ITEM_TYPE)item.type)) continue;
-            if (!CustomItems[(InventoryItem.ITEM_TYPE)item.type].CanBeGivenToFollower) continue;
-
             __result = true;
-            break;
         }
     }
 
@@ -58,15 +55,10 @@ public static partial class CustomItemManager
     [HarmonyPostfix]
     private static void FollowerCommandGroups_GiftCommands(ref List<CommandItem> __result)
     {
-        foreach (CustomInventoryItem item in CustomItems.Values)
-        {
-            if (!item.CanBeGivenToFollower) continue;
-            if (0 >= Inventory.GetItemQuantity(item.ItemType)) continue;
-
-            __result.Add(new FollowerCommandItems.GiftCommandItem(item.ItemType) {
-                Command = item.GiftCommand
-            });
-        }
+        __result.AddRange(from item in CustomItems.Values
+            where item.CanBeGivenToFollower
+            where 0 < Inventory.GetItemQuantity(item.ItemType)
+            select new FollowerCommandItems.GiftCommandItem(item.ItemType) { Command = item.GiftCommand });
     }
 
     [HarmonyPatch(typeof(FollowerCommandItems.GiftCommandItem), nameof(FollowerCommandItems.GiftCommandItem.GetTitle))]
@@ -264,8 +256,8 @@ public static partial class CustomItemManager
     [HarmonyPostfix]
     private static void CookingData_GetAllFoods(ref InventoryItem.ITEM_TYPE[] __result)
     {
-        InventoryItem.ITEM_TYPE[] copy = __result;
-        __result = __result.Concat((CustomItems.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key)))
+        var copy = __result;
+        __result = __result.Concat(CustomItems.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key))
             .ToArray();
     }
 
@@ -277,7 +269,7 @@ public static partial class CustomItemManager
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> OnShowStarted(IEnumerable<CodeInstruction> instructions)
         {
-            foreach (CodeInstruction instruction in instructions)
+            foreach (var instruction in instructions)
             {
                 yield return instruction;
 
@@ -289,18 +281,10 @@ public static partial class CustomItemManager
         }
 
         internal static List<InventoryItem.ITEM_TYPE> AppendCustomCurrencies(
-            List<InventoryItem.ITEM_TYPE> currencyFilter)
+            ICollection<InventoryItem.ITEM_TYPE> currencyFilter)
         {
-            return currencyFilter.Concat(CustomItems.Where((i) => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency)
+            return currencyFilter.Concat(CustomItems.Where(i => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency)
                 .Select(i => i.Key)).ToList();
         }
     }
-
-    // [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
-    // [HarmonyPrefix]
-    // private static void InventoryMenu_OnShowStarted(ref InventoryMenu __instance)
-    // {
-    //     InventoryMenu menu = __instance;
-    //     __instance._currencyFilter.AddRange(CustomItems.Where(a => a.Value.IsCurrency && !menu._currencyFilter.Contains(a.Key)).Select(a => a.Key));
-    // }
 }

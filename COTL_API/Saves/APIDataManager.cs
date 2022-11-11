@@ -13,15 +13,9 @@ internal static class APIDataManager
 
     static APIDataManager()
     {
-        DataReadWriter.OnReadCompleted += delegate(APIData data)
-        {
-            APIData = data;
-        };
+        DataReadWriter.OnReadCompleted += delegate(APIData data) { APIData = data; };
 
-        DataReadWriter.OnCreateDefault += delegate
-        {
-            APIData = new APIData();
-        };
+        DataReadWriter.OnCreateDefault += delegate { APIData = new APIData(); };
 
         Load();
     }

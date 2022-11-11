@@ -26,15 +26,17 @@ public static class GuidManager
 
     public static unsafe List<T> GetValues<T>() where T : unmanaged, Enum
     {
-        List<T> itemList = Enum.GetValues(typeof(T)).Cast<T>().ToList();
+        var itemList = Enum.GetValues(typeof(T)).Cast<T>().ToList();
 
-        string startKey = typeof(T).Name + "_";
-        foreach (KeyValuePair<string, object> item in APIDataManager.APIData.Data)
+        var startKey = typeof(T).Name + "_";
+        // It cannot do pointer-hack stuff when using query
+        // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var item in APIDataManager.APIData.Data)
         {
             if (!item.Key.StartsWith(startKey)) continue;
 
-            int enumVal = int.Parse((string)item.Value);
-            T convertedEnumVal = *(T*)&enumVal;
+            var enumVal = int.Parse((string)item.Value);
+            var convertedEnumVal = *(T*)&enumVal;
             itemList.Add(convertedEnumVal);
         }
 
@@ -47,9 +49,8 @@ public static class GuidManager
             throw new NotSupportedException(
                 $"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");
 
-        string saveKey = $"{typeof(T).Name}_{guid}_{value}";
-
-        int enumValue = APIDataManager.APIData.GetValueAsInt(saveKey);
+        var saveKey = $"{typeof(T).Name}_{guid}_{value}";
+        var enumValue = APIDataManager.APIData.GetValueAsInt(saveKey);
 
         if (enumValue == default)
         {

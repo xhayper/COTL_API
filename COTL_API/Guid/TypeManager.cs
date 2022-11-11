@@ -2,10 +2,10 @@ using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Linq;
 using HarmonyLib;
 using BepInEx;
 using System;
-using System.Linq;
 
 namespace COTL_API.Guid;
 
@@ -38,9 +38,9 @@ public static class TypeManager
         if (ModIds.ContainsKey(assembly.FullName))
             return ModIds[assembly.FullName];
 
-        foreach (Type t in assembly.GetTypes())
+        foreach (var t in assembly.GetTypes())
         {
-            BepInPlugin plugin = t.GetCustomAttribute<BepInPlugin>();
+            var plugin = t.GetCustomAttribute<BepInPlugin>();
             if (plugin == null) continue;
 
             ModIds.Add(assembly.FullName, plugin.GUID);
@@ -65,7 +65,10 @@ public static class TypeManager
     [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]
     [MethodImpl(MethodImplOptions.NoInlining)]
     [HarmonyReversePatch]
-    public static Type OriginalGetType(string nameSpace, string typeName) { throw new NotImplementedException(); }
+    public static Type OriginalGetType(string nameSpace, string typeName)
+    {
+        throw new NotImplementedException();
+    }
 
     [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]
     [HarmonyPrefix]

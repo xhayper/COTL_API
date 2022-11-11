@@ -19,7 +19,7 @@ public class DebugFollowerCommandClass3 : CustomFollowerCommand.CustomFollowerCo
         return false;
     }
 
-    public override void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand)
+    public override void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand = FollowerCommands.None)
     {
         interaction.Close();
     }

@@ -23,9 +23,10 @@ internal class APIData
 
     internal int GetValueAsInt(string key)
     {
-        long value = GetValueAsLong(key);
+        var value = GetValueAsLong(key);
 
-        return value switch {
+        return value switch
+        {
             > int.MaxValue => int.MaxValue,
             < int.MinValue => int.MinValue,
             _ => (int)value

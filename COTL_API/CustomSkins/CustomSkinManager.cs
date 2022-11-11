@@ -19,7 +19,8 @@ public class CustomSkinManager
     internal static readonly Dictionary<string, Texture> SkinTextures = new();
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
 
-    internal static readonly List<Tuple<int, string>> Slots = new() {
+    internal static readonly List<Tuple<int, string>> Slots = new()
+    {
         Tuple.Create(38, "ARM_LEFT_SKIN"),
         Tuple.Create(39, "Body/SleeveLeft"),
         Tuple.Create(49, "WEAPON_HAND_SKIN"),
@@ -160,21 +161,22 @@ public class CustomSkinManager
 
     public static void AddCustomSkin(string name, Texture2D sheet, string atlasText)
     {
-        sheet.name = atlasText.Replace("\r", "").Split('\n')[1].Trim();
+        sheet.name = atlasText.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n')[1].Trim();
         SkinTextures.Add(name, sheet);
 
-        Material mat = new(Shader.Find("Spine/Skeleton")) {
+        Material mat = new(Shader.Find("Spine/Skeleton"))
+        {
             mainTexture = sheet
         };
         SkinMaterials.Add(name, mat);
 
         Material[] materials = { mat };
-        SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
+        var atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
         CustomAtlases.Add(name, atlas);
 
-        List<Tuple<int, string>> overrides = atlas.GetAtlas().regions.Select(r => Slots.First(s =>
-            (s.Item2 == r.name.Split(':')[1]) &&
-            (s.Item1 == (int)(SlotsEnum)Enum.Parse(typeof(SlotsEnum), r.name.Split(':')[0])))).ToList();
+        var overrides = atlas.GetAtlas().regions.Select(r => Slots.First(s =>
+            s.Item2 == r.name.Split(':')[1] &&
+            s.Item1 == (int)(SlotsEnum)Enum.Parse(typeof(SlotsEnum), r.name.Split(':')[0]))).ToList();
 
         CreateNewFollowerType(name);
         CreateSkin(name, overrides);
@@ -182,10 +184,13 @@ public class CustomSkinManager
 
     internal static void CreateNewFollowerType(string name)
     {
-        WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData() {
+        WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData()
+        {
             Title = name,
-            Skin = new List<WorshipperData.CharacterSkin> {
-                new() {
+            Skin = new List<WorshipperData.CharacterSkin>
+            {
+                new()
+                {
                     Skin = name
                 }
             },
@@ -211,12 +216,12 @@ public class CustomSkinManager
             }
         });
 
-        foreach (Tuple<int, string> ovr in overrides)
+        foreach (var ovr in overrides)
         {
-            string ovrName = ovr.Item2;
-            int slot = ovr.Item1;
-            AtlasRegion atlasRegion = CustomAtlases[name].GetAtlas().FindRegion((SlotsEnum)slot + ":" + ovrName);
-            Attachment a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog")
+            var ovrName = ovr.Item2;
+            var slot = ovr.Item1;
+            var atlasRegion = CustomAtlases[name].GetAtlas().FindRegion((SlotsEnum)slot + ":" + ovrName);
+            var a = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog")
                 .GetAttachment(slot, ovrName).Copy();
             if (a is MeshAttachment customAttachment)
             {
@@ -302,7 +307,7 @@ public class CustomSkinManager
     public static void UIFollowerIndoctrinationMenuController_OnShowStarted(
         UIFollowerIndoctrinationMenuController __instance)
     {
-        GameObject image = __instance.gameObject.GetComponentsInChildren(typeof(TranslucentImage))[0].gameObject;
+        var image = __instance.gameObject.GetComponentsInChildren(typeof(TranslucentImage))[0].gameObject;
         UnityEngine.Object.Destroy(image);
     }
 }

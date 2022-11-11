@@ -12,9 +12,9 @@ public static partial class CustomItemManager
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
-        string guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        InventoryItem.ITEM_TYPE itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(guid, item.InternalName);
+        var itemType = GuidManager.GetEnumValue<InventoryItem.ITEM_TYPE>(guid, item.InternalName);
         item.ItemType = itemType;
         item.ModPrefix = guid;
         item.InternalObjectName = $"CustomItem_{item.InternalName}";
@@ -41,8 +41,8 @@ public static partial class CustomItemManager
     public static bool DropLoot(CustomInventoryItem customInventoryItem)
     {
         float roll = Random.Range(0, 101);
-        float chance = customInventoryItem.DungeonChestSpawnChance +
-                       customInventoryItem.DungeonChestSpawnChance * DataManager.Instance.GetLuckMultiplier();
+        var chance = customInventoryItem.DungeonChestSpawnChance +
+                     customInventoryItem.DungeonChestSpawnChance * DataManager.Instance.GetLuckMultiplier();
         if (Plugin.Debug)
             Plugin.Logger.LogDebug(
                 $"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");

@@ -26,7 +26,7 @@ public class ModdedSaveData
 
     public int GetValueAsInt(string guid, string key)
     {
-        long value = GetValueAsLong(guid, key);
+        var value = GetValueAsLong(guid, key);
 
         return value switch {
             > int.MaxValue => int.MaxValue,
@@ -52,7 +52,7 @@ public class ModdedSaveData
 
     public void SetValue<T>(string guid, string key, T value)
     {
-        SaveData = SaveData ?? new Dictionary<string, Dictionary<string, object>>();
+        SaveData ??= new Dictionary<string, Dictionary<string, object>>();
 
         if (!SaveData.ContainsKey(guid))
             SaveData.Add(guid, new Dictionary<string, object>());

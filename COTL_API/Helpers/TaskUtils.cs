@@ -9,7 +9,8 @@ public static class TaskUtils
     {
         return Structure.Structures.FirstOrDefault(str => str.Structure_Info != null &&
                                                           str.Structure_Info.Type ==
-                                                          CustomStructureManager.GetStructureByType<T>() && str.Brain is {
+                                                          CustomStructureManager.GetStructureByType<T>() && str.Brain is
+                                                          {
                                                               ReservedForTask: false
                                                           });
     }

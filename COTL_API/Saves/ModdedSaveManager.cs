@@ -33,10 +33,7 @@ public static partial class ModdedSaveManager
             OnSaveComplete?.Invoke();
         };
 
-        _readWriter.OnWriteCompleted += delegate
-        {
-            OnSaveComplete?.Invoke();
-        };
+        _readWriter.OnWriteCompleted += delegate { OnSaveComplete?.Invoke(); };
     }
 
     public static bool SaveExists(int saveSlot)
