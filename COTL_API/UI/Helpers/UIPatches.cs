@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using HarmonyLib;
 using System.Linq;
 using Lamb.UI.PauseMenu;
@@ -46,9 +46,7 @@ internal static class UIPatches
     [HarmonyPatch]
     public static class StartMenuPatch
     {
-        // I have been struggling with this for a while now. I'll get back to this later.
 
-        /*
         [HarmonyPatch(typeof(MainMenuController), nameof(MainMenuController.Start))]
         [HarmonyPostfix]
         static void AddUIItems(MainMenuController __instance)
@@ -63,7 +61,10 @@ internal static class UIPatches
                 .GetComponent<TextMeshProUGUI>();
             FontHelpers._startMenu = getTextAsset.font;
 
+
+            // I have been struggling with this for a while now. I'll get back to this later.
             // API container.
+            /*
             GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(menuContainer);
             Container.layer = UIHelpers.UILayer;
@@ -73,7 +74,7 @@ internal static class UIPatches
             UIMenuBase.Parent = Container.transform;
 
             List<UIMenuBase> StartMenuItems = StartMenuQueue.Select(x => Container.AddComponent(x) as UIMenuBase).ToList();
+            */
         }
-        */
     }
 }
