@@ -3,7 +3,7 @@ using System;
 
 namespace COTL_API;
 
-public class CustomType
+public static class CustomType
 {
     public static Type GetType(string nameSpace, string typeName)
     {

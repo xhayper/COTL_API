@@ -36,10 +36,11 @@ public class Plugin : BaseUnityPlugin
 
     internal static FollowerCommands DebugGiftFollowerCommand;
 
-    private static bool _questCleanDone; //flag to prevent multiple calls to clean up quests
 
     private static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;
+
+    private bool _questCleanDone; //flag to prevent multiple calls to clean up quests
 
     private void Awake()
     {
@@ -52,39 +53,6 @@ public class Plugin : BaseUnityPlugin
             AddDebugContent();
 
         Logger.LogInfo($"COTL API loaded");
-    }
-
-    private void AddDebugContent()
-    {
-        CustomFollowerCommandManager.Add(new DebugFollowerCommand());
-        CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
-        CustomFollowerCommandManager.Add(new DebugFollowerCommandClass3());
-        DebugGiftFollowerCommand = CustomFollowerCommandManager.Add(new DebugGiftFollowerCommand());
-
-        CustomFollowerCommandManager.Add(new DebugTaskFollowerCommand());
-
-        DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
-        DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
-        DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
-        DebugItem4 = CustomInventory.CustomItemManager.Add(new DebugItemClass4());
-
-        CustomStructureManager.Add(new DebugStructure2());
-        CustomStructureManager.Add(new DebugStructure3());
-
-        CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
-
-        CustomTaskManager.Add(new DebugTask());
-
-        var customTex =
-            TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
-        var atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
-
-        CustomSkinManager.AddCustomSkin("Test", customTex, atlasText);
-
-        var test = CustomObjectiveManager.BedRest("Test");
-        test.InitialQuestText = "This is my custom quest text for this objective.";
-
-        Logger.LogDebug("Debug mode enabled");
     }
 
     private void OnEnable()
@@ -118,5 +86,38 @@ public class Plugin : BaseUnityPlugin
         }
 
         _questCleanDone = true;
+    }
+
+    private static void AddDebugContent()
+    {
+        CustomFollowerCommandManager.Add(new DebugFollowerCommand());
+        CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
+        CustomFollowerCommandManager.Add(new DebugFollowerCommandClass3());
+        DebugGiftFollowerCommand = CustomFollowerCommandManager.Add(new DebugGiftFollowerCommand());
+
+        CustomFollowerCommandManager.Add(new DebugTaskFollowerCommand());
+
+        DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
+        DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
+        DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
+        DebugItem4 = CustomInventory.CustomItemManager.Add(new DebugItemClass4());
+
+        CustomStructureManager.Add(new DebugStructure2());
+        CustomStructureManager.Add(new DebugStructure3());
+
+        CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
+
+        CustomTaskManager.Add(new DebugTask());
+
+        var customTex =
+            TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
+        var atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
+
+        CustomSkinManager.AddCustomSkin("Test", customTex, atlasText);
+
+        var test = CustomObjectiveManager.BedRest("Test");
+        test.InitialQuestText = "This is my custom quest text for this objective.";
+
+        Logger.LogDebug("Debug mode enabled");
     }
 }
