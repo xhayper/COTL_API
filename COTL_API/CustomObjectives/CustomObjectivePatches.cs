@@ -23,7 +23,7 @@ public static partial class CustomObjectiveManager
             return;
         }
 
-        if (PluginQuestTracker.TryGetValue(objective.ID, out CustomObjective customObjective))
+        if (PluginQuestTracker.TryGetValue(objective.ID, out var customObjective))
         {
             Plugin.Logger.LogWarning($"Matching quest found for {objective.ID}!");
             __result[0].TermToSpeak = customObjective.InitialQuestText;
@@ -64,7 +64,6 @@ public static partial class CustomObjectiveManager
         //47 is the hardcoded random quest amount
         //25 is the reverse index of the dud(?) quest in the list
         var adjustedNumber = 25 + (Quests.QuestsAll.Count - 47);
-        // Plugin.Logger.LogWarning($"GetAdjustedCount(): Total quests: {Quests.QuestsAll.Count}, Adjusted number: {adjustedNumber}");
         return adjustedNumber;
     }
 

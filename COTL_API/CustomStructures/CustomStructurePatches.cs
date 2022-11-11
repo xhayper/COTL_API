@@ -14,9 +14,8 @@ public partial class CustomStructureManager
     private static bool StructureBrain_CreateBrain(ref StructureBrain __result, StructuresData data)
     {
         if (!CustomStructures.ContainsKey(data.Type)) return true;
-        //StructureBrain structureBrain = new StructureBrain();
-        Type t = CustomStructures[data.Type].GetType();
-        StructureBrain structureBrain = Activator.CreateInstance(t) as StructureBrain;
+        var t = CustomStructures[data.Type].GetType();
+        var structureBrain = Activator.CreateInstance(t) as StructureBrain;
 
         StructureBrain.ApplyConfigToData(data);
         structureBrain?.Init(data);

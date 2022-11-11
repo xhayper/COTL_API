@@ -28,7 +28,7 @@ public class DebugTask : CustomTask
     public override void TaskTick(float deltaGameTime)
     {
         if (State != FollowerTaskState.Doing) return;
-        
+
         _progress += deltaGameTime;
         if (_progress >= 50)
         {
@@ -73,7 +73,7 @@ public class DebugTask : CustomTask
         var pos = structureByID.Data.Position;
         return new Vector3(pos.x, pos.y, pos.z);
     }
-    
+
     public override void OnStart()
     {
         SetState(FollowerTaskState.GoingTo);

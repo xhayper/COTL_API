@@ -28,7 +28,8 @@ public class ModdedSaveData
     {
         var value = GetValueAsLong(guid, key);
 
-        return value switch {
+        return value switch
+        {
             > int.MaxValue => int.MaxValue,
             < int.MinValue => int.MinValue,
             _ => (int)value

@@ -53,7 +53,7 @@ public static class TypeManager
 
     public static string GetModIdFromCallstack(Assembly callingAssembly)
     {
-        string cacheVal = GetModIdFromAssembly(callingAssembly);
+        var cacheVal = GetModIdFromAssembly(callingAssembly);
         if (!string.IsNullOrEmpty(cacheVal))
             return cacheVal;
 

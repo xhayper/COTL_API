@@ -15,7 +15,9 @@ public abstract class CustomTask : FollowerTask
         return 0;
     }
 
-    public override void TaskTick(float deltaGameTime) { }
+    public override void TaskTick(float deltaGameTime)
+    {
+    }
 
     public override Vector3 UpdateDestination(Follower follower)
     {

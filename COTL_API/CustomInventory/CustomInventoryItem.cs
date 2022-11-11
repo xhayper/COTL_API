@@ -81,9 +81,20 @@ public abstract class CustomInventoryItem
     public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; } = InventoryItem.ITEM_CATEGORIES.NONE;
     public virtual InventoryItem.ITEM_TYPE SeedType { get; } = InventoryItem.ITEM_TYPE.NONE;
 
-    public virtual string Name() { return LocalizedName(); }
-    public virtual string Lore() { return LocalizedLore(); }
-    public virtual string Description() { return LocalizedDescription(); }
+    public virtual string Name()
+    {
+        return LocalizedName();
+    }
+
+    public virtual string Lore()
+    {
+        return LocalizedLore();
+    }
+
+    public virtual string Description()
+    {
+        return LocalizedDescription();
+    }
 
     public virtual string LocalizedName()
     {
