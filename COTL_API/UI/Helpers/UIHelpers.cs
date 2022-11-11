@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using COTL_API.UI.Patches;
 
-namespace COTL_API.UI;
-public static class UIManager
+namespace COTL_API.UI.Helpers;
+public static class UIHelpers
 {
     public static LayerMask UILayer => LayerMask.NameToLayer("UI");
 
@@ -15,11 +14,9 @@ public static class UIManager
         UIPatches.PauseMenuQueue.Add(typeof(T));
     }
 
-    /// <summary>
-    /// Add your UI menu to the game's start menu.
-    /// </summary>
-    /// <typeparam name="T">A class that inherits from UIMenuBase.</typeparam>
-    public static void AddToStartMenu<T>() where T : UIMenuBase
+
+    // Private as this is non-functional. I have to change how I patch the start menu.
+    private static void AddToStartMenu<T>() where T : UIMenuBase 
     {
         UIPatches.StartMenuQueue.Add(typeof(T));
     }

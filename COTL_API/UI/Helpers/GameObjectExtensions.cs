@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using TMPro;
+using System.Linq;
 using Image = UnityEngine.UI.Image;
 using COTL_API.Helpers;
+using System.IO;
+using BepInEx;
 
-namespace COTL_API.UI;
+namespace COTL_API.UI.Helpers;
 public static class GameObjectExtensions
 {
     // Extension methods for GameObjects.
@@ -86,7 +89,7 @@ public static class GameObjectExtensions
     public static GameObject CreateChild(this GameObject obj, string name)
     {
         Transform parent = obj.transform;
-        return UIManager.CreateUIObject(name, parent);
+        return UIHelpers.CreateUIObject(name, parent);
     }
 
     /// <summary>
@@ -202,6 +205,12 @@ public static class GameObjectExtensions
         return obj;
     }
 
+    private static string GetPathToImage(string filename)
+    {
+        if (Path.IsPathRooted(filename)) return filename;
+        return Directory.GetFiles(Paths.PluginPath, filename, SearchOption.AllDirectories).FirstOrDefault();
+    }
+
     /// <summary>
     /// Display an image by attaching an Image component to a GameObject.
     /// </summary>
@@ -211,7 +220,13 @@ public static class GameObjectExtensions
     /// <returns>The GameObject with all changes applied.</returns>
     public static GameObject AttachImage(this GameObject obj, string imagePath, int opacity = 100)
     {
-        Sprite sprite = TextureHelper.CreateSpriteFromPath(imagePath);
+        string path = GetPathToImage(imagePath);
+        if(path == null)
+        {
+            Plugin.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
+            return obj;
+        };
+        Sprite sprite = TextureHelper.CreateSpriteFromPath(path);
 
         Image img = obj.AddComponent<Image>();
         img.sprite = sprite;
@@ -254,7 +269,13 @@ public static class GameObjectExtensions
     /// <returns>The GameObject with all changes applied.</returns>
     public static GameObject EditImage(this GameObject obj, string imagePath)
     {
-        Sprite sprite = TextureHelper.CreateSpriteFromPath(imagePath);
+        string path = GetPathToImage(imagePath);
+        if (path == null)
+        {
+            Plugin.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
+            return obj;
+        };
+        Sprite sprite = TextureHelper.CreateSpriteFromPath(path);
 
         Image img = obj.GetComponent<Image>();
         if (img == null)

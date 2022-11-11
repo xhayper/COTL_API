@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using Lamb.UI.MainMenu;
 
-namespace COTL_API.UI.Patches;
+namespace COTL_API.UI.Helpers;
 internal static class UIPatches
 {
     public static List<Type> PauseMenuQueue = new List<Type>();
@@ -29,7 +29,7 @@ internal static class UIPatches
 
             GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(parentMenu);
-            Container.layer = UIManager.UILayer;
+            Container.layer = UIHelpers.UILayer;
             Container.transform.position = Vector3.zero;
             Container.transform.localScale = Vector3.one;
 
@@ -42,7 +42,9 @@ internal static class UIPatches
     [HarmonyPatch]
     public static class StartMenuPatch
     {
-        [HarmonyPatch(typeof(MainMenuController), nameof(MainMenuController.Start))]
+        // I have been struggling with this for a while now. I'll get back to this later.
+
+        /*[HarmonyPatch(typeof(MainMenuController), nameof(MainMenuController.Start))]
         [HarmonyPostfix]
         static void AddUIItems(MainMenuController __instance)
         {
@@ -51,6 +53,8 @@ internal static class UIPatches
             // Font
             TextMeshProUGUI textMesh = menuContainer.transform.Find("MainMenuContainer").transform.Find("Left").transform.Find("Transform").transform.Find("MenusContainer").transform.Find("MainMenu").transform.Find("Settings").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
             FontHelpers._startMenu = textMesh.font;
+
+            return;
 
             GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(menuContainer);
@@ -61,38 +65,6 @@ internal static class UIPatches
             UIMenuBase.Parent = Container.transform;
 
             List<UIMenuBase> StartMenuItems = StartMenuQueue.Select(x => Container.AddComponent(x) as UIMenuBase).ToList();
-        }
+        }*/
     }
-
-    /*
-     public class CultBasePatch
-    {
-        //TODO
-    }
-
-    [HarmonyPatch]
-    public class DungeonPatches
-    {
-        [HarmonyTargetMethod]
-        static IEnumerable<MethodBase> BaseAndDungeons()
-        {
-            yield return AccessTools.Method(typeof(BiomeBaseManager), nameof(BiomeBaseManager.Start));
-            yield return AccessTools.Method(typeof(DungeonLocationManager), nameof(DungeonLocationManager.Start));
-        }
-
-        [HarmonyPrefix]
-        static void AddUI()
-        {
-            Transform parent = GameObject.Find("Main Camera").transform;
-
-            GameObject Container = new GameObject("COTL_API_UIContainer");
-            Container.transform.SetParent(parent);
-            Container.layer = UIManager.UILayer;
-            Container.transform.position = Vector3.zero;
-            Container.transform.localScale = Vector3.one;
-        }
-
-        //TODO
-    }
-     */
 }
