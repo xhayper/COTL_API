@@ -21,10 +21,10 @@ internal static class UIPatches
         [HarmonyPostfix]
         static void AddUIItems (UIPauseMenuController __instance)
         {
-            Transform parentMenu = __instance.gameObject.transform.Find("PauseMenuContainer");
+            Transform menu = __instance.gameObject.transform.Find("PauseMenuContainer");
 
             // FontAsset reference.
-            TextMeshProUGUI getTextAsset = parentMenu.Find("Left")
+            TextMeshProUGUI getTextAsset = menu.Find("Left")
                 .transform.Find("Transform").transform.Find("MenuContainer")
                 .transform.Find("Settings")
                 .transform.Find("Text").GetComponent<TextMeshProUGUI>();
@@ -32,7 +32,7 @@ internal static class UIPatches
 
             // API container.
             GameObject Container = new GameObject("COTL_API_MenuContainer");
-            Container.transform.SetParent(parentMenu);
+            Container.transform.SetParent(menu);
             Container.layer = UIHelpers.UILayer;
             Container.transform.position = Vector3.zero;
             Container.transform.localScale = Vector3.one;
@@ -51,10 +51,10 @@ internal static class UIPatches
         [HarmonyPostfix]
         static void AddUIItems(MainMenuController __instance)
         {
-            Transform menuContainer = __instance.gameObject.transform.Find("Main Menu");
+            Transform menu = __instance.gameObject.transform.Find("Main Menu");
 
             // FontAsset reference.
-            TextMeshProUGUI getTextAsset = menuContainer.transform.Find("MainMenuContainer")
+            TextMeshProUGUI getTextAsset = menu.transform.Find("MainMenuContainer")
                 .transform.Find("Left").transform.Find("Transform")
                 .transform.Find("MenusContainer").transform.Find("MainMenu")
                 .transform.Find("Settings").transform.Find("Text (TMP)")
