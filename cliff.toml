@@ -23,9 +23,11 @@ body = """
     ### {{ group | upper_first }}
     {% for commit in commits %}
         - {{ commit.message | upper_first }} ([{{ commit.id | truncate(length=7, end="") }}](https://github.com/xhayper/COTL_API/commit/{{ commit.id }}))\
-          {% for footer in commit.footers -%}
+{% if commit.footers %}\
+        {% for footer in commit.footers -%}
             , {{ footer.token }}{{ footer.separator }}{{ footer.value }}\
-          {% endfor %}\
+        {% endfor %}\
+{% endif %}\
     {% endfor %}
 {% endfor %}\n
 """
@@ -55,6 +57,7 @@ commit_parsers = [
     { message = "^chore\\(release\\): prepare for", skip = true},
     { message = "^chore", group = "Miscellaneous Tasks"},
     { body = ".*security", group = "Security"},
+    { message = "^[.]*", group = "Uncategorized"}
 ]
 # protect breaking changes from being skipped due to matching a skipping commit_parser
 protect_breaking_commits = false

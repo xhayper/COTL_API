@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [0.1.7] - 2022-11-11
+
+[b3eb6ed...a709991](https://github.com/xhayper/COTL_API/compare/b3eb6ed143fd383aad4d7e8d2ee87f83f6903758...a7099915f2ab225ce5955b82e7a6a1d15c5ab3a1)
 
 ### Features
 
@@ -25,14 +27,12 @@ All notable changes to this project will be documented in this file.
 - Code smell ([469ad8c](https://github.com/xhayper/COTL_API/commit/469ad8c17393e93712f256225739dd48aba6d6cb))
 - Code smell ([7a5803c](https://github.com/xhayper/COTL_API/commit/7a5803c47a404ae869c6ee8da5c56dc30f07f464))
 - Code smell ([ea6b969](https://github.com/xhayper/COTL_API/commit/ea6b9690d80750cc288a550256cc72ddd15a39f1))
+- Changelog ([a709991](https://github.com/xhayper/COTL_API/commit/a7099915f2ab225ce5955b82e7a6a1d15c5ab3a1))
 
-### Ci
-
-- Update dotnet to 7 ([c461c67](https://github.com/xhayper/COTL_API/commit/c461c6761035e7f23e1f37a20d0b4a252653aac3))
-
-### Remove
+### Uncategorized
 
 - DotSettings ([27915f5](https://github.com/xhayper/COTL_API/commit/27915f553538cf2f65a950ef0ffe177fecf762de))
+- Update dotnet to 7 ([c461c67](https://github.com/xhayper/COTL_API/commit/c461c6761035e7f23e1f37a20d0b4a252653aac3))
 
 ## [0.1.6] - 2022-10-17
 
@@ -90,14 +90,14 @@ All notable changes to this project will be documented in this file.
 
 [9914c8d...568bea9](https://github.com/xhayper/COTL_API/compare/9914c8dbe620a171f9f359250b019716b74f0393...568bea9b66793943256ae82dbcd5a86234587c96)
 
-### Cleanup
-
-- Naming and encapsulation ([d5a089a](https://github.com/xhayper/COTL_API/commit/d5a089af361a988050d7a4eb3066672ae4f42815))
-
 ### Features
 
 - Bump version ([cc81643](https://github.com/xhayper/COTL_API/commit/cc81643ef6e365a36e2555c41c0540adda02b253))
 - Bump thunderstore ([568bea9](https://github.com/xhayper/COTL_API/commit/568bea9b66793943256ae82dbcd5a86234587c96))
+
+### Uncategorized
+
+- Naming and encapsulation ([d5a089a](https://github.com/xhayper/COTL_API/commit/d5a089af361a988050d7a4eb3066672ae4f42815))
 
 ## [0.1.2] - 2022-09-10
 
@@ -245,7 +245,7 @@ All notable changes to this project will be documented in this file.
 
 - Debug code ([cf2a812](https://github.com/xhayper/COTL_API/commit/cf2a8124f849f4af1ac530f3f73cbf22f3c9e578))
 
-### Removed
+### Uncategorized
 
 - Amount from CapacityString ([023193f](https://github.com/xhayper/COTL_API/commit/023193f27cba550b06f4db664732e56887216880))
 - Fuel, seed and plantable, too unstable ([ac9f840](https://github.com/xhayper/COTL_API/commit/ac9f840908258ab75580a179434cf2afb8f96620))
