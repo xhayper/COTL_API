@@ -23,12 +23,11 @@ public abstract class CustomStructure
     public virtual int BuildDurationMinutes { get; } = 30;
 
     public virtual Type Interaction => null;
-    
+
     public virtual bool ReservedForTask => false;
 
     internal TypeAndPlacementObject GetTypeAndPlacementObject()
     {
-        var orig = TypeAndPlacementObjects.GetByType(StructureBrain.TYPES.DECORATION_WREATH_STICK);
         TypeAndPlacementObject tpo = new()
         {
             IconImage = Sprite,
@@ -87,6 +86,14 @@ public abstract class CustomStructure
         return LocalizationManager.GetTranslation($"Structures/{StructureType}");
     }
 
+    public virtual string GetLocalizedName(bool plural, bool withArticle, bool definite)
+    {
+        var article = definite ? "/Definite" : "/Indefinite";
+
+        var text = $"Structures/{StructureType}{(plural ? "/Plural" : "")}{(!withArticle ? "" : article)}";
+        return LocalizationManager.GetTranslation(text);
+    }
+
     public virtual string GetLocalizedDescription()
     {
         return LocalizationManager.GetTranslation($"Structures/{StructureType}/Description");
@@ -95,14 +102,6 @@ public abstract class CustomStructure
     public virtual string GetLocalizedLore()
     {
         return LocalizationManager.GetTranslation("Structures/" + StructureType + "/Lore");
-    }
-
-    public virtual string GetLocalizedName(bool plural, bool withArticle, bool definite)
-    {
-        var article = definite ? "/Definite" : "/Indefinite";
-
-        var text = $"Structures/{StructureType}{(plural ? "/Plural" : "")}{(!withArticle ? "" : article)}";
-        return LocalizationManager.GetTranslation(text);
     }
 
     public virtual int GetResearchCost()

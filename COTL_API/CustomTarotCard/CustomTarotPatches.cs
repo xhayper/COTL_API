@@ -6,26 +6,27 @@ namespace COTL_API.CustomTarotCard;
 [HarmonyPatch]
 public partial class CustomTarotCardManager
 {
+    private static void UpdateUIWeaponCard(UIWeaponCard UICard, TarotCards.TarotCard Card)
+    {
+        if (!CustomTarotCards.ContainsKey(Card.CardType)) return;
+
+        UICard.NameText.text = CustomTarotCards[Card.CardType].LocalisedName();
+        UICard.SubtitleText.text = CustomTarotCards[Card.CardType].LocalisedLore();
+        UICard.EffectText.text = CustomTarotCards[Card.CardType].LocalisedDescription();
+    }
+
     [HarmonyPatch(typeof(UIWeaponCard), nameof(UIWeaponCard.Play))]
     [HarmonyPostfix]
     private static void UIWeaponCard_Play(UIWeaponCard __instance, TarotCards.TarotCard Card)
     {
-        if (!CustomTarotCards.ContainsKey(Card.CardType)) return;
-
-        __instance.NameText.text = CustomTarotCards[Card.CardType].LocalisedName();
-        __instance.SubtitleText.text = CustomTarotCards[Card.CardType].LocalisedLore();
-        __instance.EffectText.text = CustomTarotCards[Card.CardType].LocalisedDescription();
+        UpdateUIWeaponCard(__instance, Card);
     }
 
     [HarmonyPatch(typeof(UIWeaponCard), nameof(UIWeaponCard.Show))]
     [HarmonyPostfix]
     private static void UIWeaponCard_Show(UIWeaponCard __instance, TarotCards.TarotCard Card)
     {
-        if (!CustomTarotCards.ContainsKey(Card.CardType)) return;
-
-        __instance.NameText.text = CustomTarotCards[Card.CardType].LocalisedName();
-        __instance.SubtitleText.text = CustomTarotCards[Card.CardType].LocalisedLore();
-        __instance.EffectText.text = CustomTarotCards[Card.CardType].LocalisedDescription();
+        UpdateUIWeaponCard(__instance, Card);
     }
 
     [HarmonyPatch(typeof(TarotInfoCard), nameof(TarotInfoCard.Configure))]
