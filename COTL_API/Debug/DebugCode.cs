@@ -5,18 +5,14 @@ using System.Linq;
 using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
+using Spine;
 
 namespace COTL_API.Debug;
 
 [HarmonyPatch]
 public class DebugCode
 {
-    private static int _currentOverride = -1;
-    private static string[] _testSkinOverrides = {
-        "Goat", "Owl", "Snake", "Lamb_0", "Lamb_0_BW", "Lamb_1", "Lamb_1_BW", "Lamb_2", "Lamb_2_BW", "Lamb_3",
-        "Lamb_3_BW", "Lamb_4", "Lamb_4_BW", "Lamb_5", "Lamb_5_BW", "Lamb_Intro", "Lamb_BW", "Lamb"
-    };
-    
+
     [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
     [HarmonyPrefix]
     public static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
@@ -26,11 +22,6 @@ public class DebugCode
         Inventory.AddItem(Plugin.DebugItem, 1, true);
         Inventory.AddItem(Plugin.DebugItem2, 1, true);
         Inventory.AddItem(Plugin.DebugItem3, 1, true);
-        
-        // Cycle skin overrides
-        _currentOverride = (_currentOverride + 1) % _testSkinOverrides.Length;
-        CustomSkinManager.SetPlayerSkinOverride(PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin(_testSkinOverrides[_currentOverride]));
-        PlayerFarming.Instance.SetSkin();
     }
     
     [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show))]

@@ -16,10 +16,10 @@ public partial class CustomSkinManager
     public static void SkinPatch(ref Skin __result, SkeletonData __instance, string skinName)
     {
         if (__result != null) return;
-        if (!CustomSkins.ContainsKey(skinName)) return;
+        if (!CustomFollowerSkins.ContainsKey(skinName)) return;
 
         if (AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
-        __result = CustomSkins[skinName];
+        __result = CustomFollowerSkins[skinName];
     }
 
     internal static Dictionary<string, Texture2D> _cachedTextures = new();
@@ -97,7 +97,7 @@ public partial class CustomSkinManager
     public static void FollowerInformationBox_ConfigureImpl(FollowerInformationBox __instance)
     {
         if (SkinTextures.ContainsKey(__instance.FollowerInfo.SkinName))
-            __instance.FollowerSpine.Skeleton.Skin = CustomSkins[__instance.FollowerInfo.SkinName];
+            __instance.FollowerSpine.Skeleton.Skin = CustomFollowerSkins[__instance.FollowerInfo.SkinName];
     }
 
     // TODO: Temp fix. Destroy the transparent image used when recruiting follower. It hides custom meshes due to render order.
