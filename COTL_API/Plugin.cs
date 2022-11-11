@@ -11,6 +11,7 @@ using System.Linq;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
+using Spine;
 using System;
 
 namespace COTL_API;
@@ -81,8 +82,15 @@ public class Plugin : BaseUnityPlugin
 
         CustomTaskManager.Add(new DebugTask());
         
-        CustomSkinManager.Add(new DebugFollowerSkin());
-        CustomSkinManager.SetPlayerSkinOverride(new DebugPlayerSkin());
+        CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
+        CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
+        
+        Func<Skin> s1 = () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
+        Func<Skin> s2 = () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
+        Func<Skin> s3 = () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake");
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", s1));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", s2));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", s3));
 
         CustomObjective test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";

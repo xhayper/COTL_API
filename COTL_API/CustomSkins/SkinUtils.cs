@@ -10,8 +10,16 @@ namespace COTL_API.CustomSkins;
 
 internal class SkinUtils
 {
-    public static event Action OnFindSkin = delegate { };
+    public static bool SkinsLoaded = false;
     
+    public static event Action OnFindSkin = () =>
+    {
+        SkinToLoad.Invoke();
+        SkinsLoaded = true;
+    };
+    
+    public static Action SkinToLoad = () => { };
+
     public static void ApplyOverride(Skin skin, Attachment a, int slot, string ovrName, AtlasRegion atlasRegion, float scaleX, float scaleY, float translationX, float translationY)
     {
         if (a is MeshAttachment meshAttachment)
