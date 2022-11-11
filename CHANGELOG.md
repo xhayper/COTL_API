@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.7] - 2022-11-11
 
-[b3eb6ed...a709991](https://github.com/xhayper/COTL_API/compare/b3eb6ed143fd383aad4d7e8d2ee87f83f6903758...a7099915f2ab225ce5955b82e7a6a1d15c5ab3a1)
+[b3eb6ed...5865ede](https://github.com/xhayper/COTL_API/compare/b3eb6ed143fd383aad4d7e8d2ee87f83f6903758...5865ede7358d5717c1fe421e51371ced693859bf)
 
 ### Features
 
@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Fix nuget ([a9340b2](https://github.com/xhayper/COTL_API/commit/a9340b2fcab9effbbc0b8fa427a434f63bb9a47b))
 - Fix nuget sources ([858c01d](https://github.com/xhayper/COTL_API/commit/858c01ddf20ac931bb0353eac4971533565937fe))
 - Update description ([f038a4b](https://github.com/xhayper/COTL_API/commit/f038a4be1d0c75dfec040c495e12e58ae5217ab5))
+- Changelog ([5865ede](https://github.com/xhayper/COTL_API/commit/5865ede7358d5717c1fe421e51371ced693859bf))
 
 ### Miscellaneous Tasks
 
