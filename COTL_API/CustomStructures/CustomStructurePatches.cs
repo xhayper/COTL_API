@@ -147,6 +147,16 @@ public partial class CustomStructureManager
         return false;
     }
 
+    [HarmonyPatch(typeof(StructuresData), "GetLocalizedName", new Type[] { typeof(bool), typeof(bool), typeof(bool) })]
+    [HarmonyPrefix]
+    public static bool StructuresData_GetLocalizedName(StructuresData __instance, bool plural, bool withArticle,
+        bool definite, ref string __result)
+    {
+        if (!CustomStructures.ContainsKey(__instance.Type)) return true;
+        __result = CustomStructures[__instance.Type].GetLocalizedName(plural, withArticle, definite);
+        return false;
+    }
+
     [HarmonyPatch(typeof(StructuresData), "GetLocalizedDescription", new Type[] { })]
     [HarmonyPrefix]
     public static bool StructuresData_GetLocalizedDescription(StructuresData __instance, ref string __result)
@@ -162,16 +172,6 @@ public partial class CustomStructureManager
     {
         if (!CustomStructures.ContainsKey(__instance.Type)) return true;
         __result = CustomStructures[__instance.Type].GetLocalizedLore();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(StructuresData), "GetLocalizedName", new Type[] { typeof(bool), typeof(bool), typeof(bool) })]
-    [HarmonyPrefix]
-    public static bool StructuresData_GetLocalizedName(StructuresData __instance, bool plural, bool withArticle,
-        bool definite, ref string __result)
-    {
-        if (!CustomStructures.ContainsKey(__instance.Type)) return true;
-        __result = CustomStructures[__instance.Type].GetLocalizedName(plural, withArticle, definite);
         return false;
     }
 

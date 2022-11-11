@@ -11,29 +11,19 @@ public static partial class ModdedSaveManager
     public static bool Loaded { get; internal set; }
     public static ModdedSaveData Data { get; internal set; }
 
-    public static System.Action OnSaveComplete;
-    public static System.Action OnLoadComplete;
-
     static ModdedSaveManager()
     {
         _readWriter.OnReadCompleted += delegate(ModdedSaveData data)
         {
             Data = data;
             Loaded = true;
-
-            OnLoadComplete?.Invoke();
         };
 
         _readWriter.OnCreateDefault += delegate
         {
             Data = new ModdedSaveData();
             Loaded = true;
-
-            OnLoadComplete?.Invoke();
-            OnSaveComplete?.Invoke();
         };
-
-        _readWriter.OnWriteCompleted += delegate { OnSaveComplete?.Invoke(); };
     }
 
     public static bool SaveExists(int saveSlot)
