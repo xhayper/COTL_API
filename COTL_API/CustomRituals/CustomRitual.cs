@@ -8,7 +8,7 @@ public abstract class CustomRitual : Ritual
 {
     public abstract string InternalName { get; }
     internal string ModPrefix;
-    public UpgradeSystem.Type upgradeType;
+    public UpgradeSystem.Type upgradeType { get; set; }
 
     public virtual Sprite Sprite { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));

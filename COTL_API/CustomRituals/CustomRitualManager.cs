@@ -4,7 +4,7 @@ using COTL_API.Guid;
 
 namespace COTL_API.CustomRituals;
 
-internal class CustomRitualManager
+public static partial class CustomRitualManager
 {
     public static Dictionary<UpgradeSystem.Type, CustomRitual> CustomRituals { get; } = new();
 

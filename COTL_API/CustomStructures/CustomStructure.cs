@@ -96,8 +96,9 @@ public abstract class CustomStructure : StructureBrain
     [Obsolete("This is never used")]
     public virtual string GetLocalizedName(bool plural, bool withArticle, bool definite)
     {
-        var text = "Structures/" + StructureType + (plural ? "/Plural" : "") +
-                   (!withArticle ? "" : definite ? "/Definite" : "/Indefinite");
+        var article = definite ? "/Definite" : "/Indefinite";
+
+        var text = $"Structures/{StructureType}{(plural ? "/Plural" : "")}{(!withArticle ? "" : article)}";
         return LocalizationManager.GetTranslation(text);
     }
 

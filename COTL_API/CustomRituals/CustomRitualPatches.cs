@@ -7,13 +7,13 @@ using HarmonyLib;
 namespace COTL_API.CustomRituals;
 
 [HarmonyPatch]
-internal class RitualPatches
+public static partial class CustomRitualManager
 {
     [HarmonyPatch(typeof(UIRitualsMenuController), nameof(UIRitualsMenuController.OnShowStarted))]
     [HarmonyPrefix]
     public static void UIRitualsMenuController_OnShowStarted(UIRitualsMenuController __instance)
     {
-        foreach (var customRitual in CustomRitualManager.CustomRituals.Keys)
+        foreach (var customRitual in CustomRituals.Keys)
         {
             Plugin.Logger.LogInfo("Custom Ritual: " + customRitual);
             __instance.ConfigureItem(__instance._ritualItemTemplate.Instantiate(__instance._ritualsContent),
@@ -25,7 +25,7 @@ internal class RitualPatches
     [HarmonyPrefix]
     public static bool RitualItem_Configure(RitualItem __instance, UpgradeSystem.Type ritualType)
     {
-        if (!CustomRitualManager.CustomRituals.ContainsKey(ritualType)) return true;
+        if (!CustomRituals.ContainsKey(ritualType)) return true;
 
         if (!DataManager.Instance.UnlockedUpgrades.Contains(ritualType))
             DataManager.Instance.UnlockedUpgrades.Add(ritualType);
@@ -36,9 +36,9 @@ internal class RitualPatches
     [HarmonyPrefix]
     public static bool DoctrineUpgradeSystem_GetIconForRitual(ref Sprite __result, UpgradeSystem.Type type)
     {
-        if (!CustomRitualManager.CustomRituals.ContainsKey(type)) return true;
+        if (!CustomRituals.ContainsKey(type)) return true;
 
-        __result = CustomRitualManager.CustomRituals[type].Sprite;
+        __result = CustomRituals[type].Sprite;
         return false;
     }
 
@@ -46,9 +46,9 @@ internal class RitualPatches
     [HarmonyPrefix]
     public static bool UpgradeSystem_GetCost(ref List<StructuresData.ItemCost> __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualManager.CustomRituals.ContainsKey(Type)) return true;
+        if (!CustomRituals.ContainsKey(Type)) return true;
 
-        __result = CustomRitualManager.CustomRituals[Type].ItemCosts;
+        __result = CustomRituals[Type].ItemCosts;
         return false;
     }
 
@@ -56,9 +56,9 @@ internal class RitualPatches
     [HarmonyPrefix]
     public static bool UpgradeSystem_GetLocalizedName(ref string __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualManager.CustomRituals.ContainsKey(Type)) return true;
+        if (!CustomRituals.ContainsKey(Type)) return true;
 
-        __result = CustomRitualManager.CustomRituals[Type].GetLocalizedName;
+        __result = CustomRituals[Type].GetLocalizedName;
         return false;
     }
 
@@ -66,9 +66,9 @@ internal class RitualPatches
     [HarmonyPrefix]
     public static bool UpgradeSystem_GetLocalizedDescription(ref string __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualManager.CustomRituals.ContainsKey(Type)) return true;
+        if (!CustomRituals.ContainsKey(Type)) return true;
 
-        __result = CustomRitualManager.CustomRituals[Type].GetLocalizedDescription;
+        __result = CustomRituals[Type].GetLocalizedDescription;
         return false;
     }
 
@@ -76,9 +76,9 @@ internal class RitualPatches
     [HarmonyPrefix]
     public static bool UpgradeSystem_GetRitualFaithChange(ref float __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualManager.CustomRituals.ContainsKey(Type)) return true;
+        if (!CustomRituals.ContainsKey(Type)) return true;
 
-        __result = CustomRitualManager.CustomRituals[Type].FaithChange;
+        __result = CustomRituals[Type].FaithChange;
         return false;
     }
 
@@ -86,9 +86,9 @@ internal class RitualPatches
     [HarmonyPrefix]
     public static bool UpgradeSystem_GetRitualTrait(ref FollowerTrait.TraitType __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualManager.CustomRituals.ContainsKey(Type)) return true;
+        if (!CustomRituals.ContainsKey(Type)) return true;
 
-        __result = CustomRitualManager.CustomRituals[Type].RitualTrait;
+        __result = CustomRituals[Type].RitualTrait;
         return false;
     }
 
@@ -97,12 +97,12 @@ internal class RitualPatches
     public static void Interaction_TempleAltar_PerformRitual(Interaction_TempleAltar __instance,
         UpgradeSystem.Type RitualType)
     {
-        if (!CustomRitualManager.CustomRituals.ContainsKey(RitualType)) return;
+        if (!CustomRituals.ContainsKey(RitualType)) return;
 
         var ritual =
-            (CustomRitual)__instance.gameObject.AddComponent(CustomRitualManager.CustomRituals[RitualType].GetType());
-        ritual.upgradeType = CustomRitualManager.CustomRituals[RitualType].upgradeType;
-        ritual.ModPrefix = CustomRitualManager.CustomRituals[RitualType].ModPrefix;
+            (CustomRitual)__instance.gameObject.AddComponent(CustomRituals[RitualType].GetType());
+        ritual.upgradeType = CustomRituals[RitualType].upgradeType;
+        ritual.ModPrefix = CustomRituals[RitualType].ModPrefix;
         __instance.CurrentRitual = ritual;
         __instance.CurrentRitual.Play();
     }
@@ -111,10 +111,10 @@ internal class RitualPatches
     [HarmonyPostfix]
     public static void Interaction_TempleAltar_RitualOnEnd(Interaction_TempleAltar __instance, bool cancelled)
     {
-        if (!CustomRitualManager.CustomRituals.ContainsKey(__instance.RitualType)) return;
+        if (!CustomRituals.ContainsKey(__instance.RitualType)) return;
 
         if (!cancelled)
             UpgradeSystem.AddCooldown(__instance.RitualType,
-                CustomRitualManager.CustomRituals[__instance.RitualType].Cooldown);
+                CustomRituals[__instance.RitualType].Cooldown);
     }
 }
