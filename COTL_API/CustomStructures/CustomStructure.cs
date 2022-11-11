@@ -8,10 +8,10 @@ using System;
 
 namespace COTL_API.CustomStructures;
 
-public abstract class CustomStructure : StructureBrain
+public abstract class CustomStructure
 {
     public abstract string InternalName { get; }
-    internal TYPES StructureType;
+    internal StructureBrain.TYPES StructureType;
     internal string ModPrefix;
 
     public virtual Sprite Sprite { get; } =
@@ -23,10 +23,12 @@ public abstract class CustomStructure : StructureBrain
     public virtual int BuildDurationMinutes { get; } = 30;
 
     public virtual Type Interaction => null;
+    
+    public virtual bool ReservedForTask => false;
 
     internal TypeAndPlacementObject GetTypeAndPlacementObject()
     {
-        var orig = TypeAndPlacementObjects.GetByType(TYPES.DECORATION_WREATH_STICK);
+        var orig = TypeAndPlacementObjects.GetByType(StructureBrain.TYPES.DECORATION_WREATH_STICK);
         TypeAndPlacementObject tpo = new()
         {
             IconImage = Sprite,
@@ -38,8 +40,10 @@ public abstract class CustomStructure : StructureBrain
         return tpo;
     }
 
-    public virtual Categories Categories => Categories.CULT;
-    public virtual TypeAndPlacementObjects.Tier Tier => TypeAndPlacementObjects.Tier.Zero;
+    public virtual StructureBrain.Categories Categories { get; } = StructureBrain.Categories.CULT;
+
+    public virtual TypeAndPlacementObjects.Tier Tier { get; } =
+        TypeAndPlacementObjects.Tier.Zero;
 
     internal StructuresData StructuresData => new()
     {
@@ -93,7 +97,6 @@ public abstract class CustomStructure : StructureBrain
         return LocalizationManager.GetTranslation("Structures/" + StructureType + "/Lore");
     }
 
-    [Obsolete("This is never used")]
     public virtual string GetLocalizedName(bool plural, bool withArticle, bool definite)
     {
         var article = definite ? "/Definite" : "/Indefinite";
