@@ -44,7 +44,8 @@ internal static class UIPatches
     {
         // I have been struggling with this for a while now. I'll get back to this later.
 
-        /*[HarmonyPatch(typeof(MainMenuController), nameof(MainMenuController.Start))]
+        /*
+        [HarmonyPatch(typeof(MainMenuController), nameof(MainMenuController.Start))]
         [HarmonyPostfix]
         static void AddUIItems(MainMenuController __instance)
         {
@@ -53,8 +54,6 @@ internal static class UIPatches
             // Font
             TextMeshProUGUI textMesh = menuContainer.transform.Find("MainMenuContainer").transform.Find("Left").transform.Find("Transform").transform.Find("MenusContainer").transform.Find("MainMenu").transform.Find("Settings").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
             FontHelpers._startMenu = textMesh.font;
-
-            return;
 
             GameObject Container = new GameObject("COTL_API_MenuContainer");
             Container.transform.SetParent(menuContainer);
@@ -65,6 +64,7 @@ internal static class UIPatches
             UIMenuBase.Parent = Container.transform;
 
             List<UIMenuBase> StartMenuItems = StartMenuQueue.Select(x => Container.AddComponent(x) as UIMenuBase).ToList();
-        }*/
+        }
+        */
     }
 }
