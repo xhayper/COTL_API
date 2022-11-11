@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace COTL_API.Sounds.Load;
+namespace COTL_API.Sounds;
 public static class SoundLoaderExtensions
 {
     /// <summary>
