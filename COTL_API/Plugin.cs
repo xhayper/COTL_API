@@ -25,7 +25,7 @@ public class Plugin : BaseUnityPlugin
     public const string PLUGIN_VERSION = "0.1.7";
 
     private static readonly Harmony Harmony = new(PLUGIN_GUID);
-    internal new static ManualLogSource Logger;
+    internal new static ManualLogSource Logger { get; private set; }
 
     internal static string PluginPath { get; private set; }
 
@@ -34,8 +34,7 @@ public class Plugin : BaseUnityPlugin
     internal static InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
     internal static InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
-    internal static FollowerCommands DebugGiftFollowerCommand;
-
+    internal static FollowerCommands DebugGiftFollowerCommand { get; private set; }
 
     private static ConfigEntry<bool> _debug;
     internal static bool Debug => _debug.Value;

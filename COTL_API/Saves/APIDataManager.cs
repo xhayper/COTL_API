@@ -9,12 +9,11 @@ internal static class APIDataManager
 
     internal static readonly COTLDataReadWriter<APIData> DataReadWriter = new();
 
-    internal static APIData APIData;
+    internal static APIData APIData { get; private set; }
 
     static APIDataManager()
     {
         DataReadWriter.OnReadCompleted += delegate(APIData data) { APIData = data; };
-
         DataReadWriter.OnCreateDefault += delegate { APIData = new APIData(); };
 
         Load();
