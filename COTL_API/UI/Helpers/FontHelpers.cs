@@ -1,6 +1,6 @@
 ﻿using TMPro;
 
-namespace COTL_API.UI;
+namespace COTL_API.UI.Helpers;
 public static class FontHelpers
 {
     internal static TMP_FontAsset _startMenu, _pauseMenu;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace COTL_API.UI;
+namespace COTL_API.UI.Helpers;
 
 /// <summary>
 /// An abstract class that serves as a base for an UI menu controller.
