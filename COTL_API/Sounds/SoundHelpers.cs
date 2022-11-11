@@ -4,7 +4,7 @@ using System.IO;
 using FMOD;
 using FMODUnity;
 
-namespace COTL_API.Sounds.Helpers;
+namespace COTL_API.Sounds;
 public static class SoundHelpers
 {
     /// <summary>

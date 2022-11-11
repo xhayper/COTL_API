@@ -1,10 +1,9 @@
-﻿using FMOD;
+﻿using System;
+using FMOD;
 using FMODUnity;
-using COTL_API.Sounds.Helpers;
-using System;
 using UnityEngine;
 
-namespace COTL_API.Sounds.Load;
+namespace COTL_API.Sounds;
 internal class SoundHandler
 {
     // Channel through which all the sound is played.

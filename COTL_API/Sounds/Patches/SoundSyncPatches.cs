@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using Lamb.UI.SettingsMenu;
-using COTL_API.Sounds.Load;
 
 namespace COTL_API.Sounds.Patches;
 

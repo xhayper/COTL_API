@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FMOD;
-using COTL_API.Sounds.Helpers;
 
-namespace COTL_API.Sounds.Load;
+namespace COTL_API.Sounds;
 public class SoundLoader : MonoBehaviour
 {
     /// <summary>
