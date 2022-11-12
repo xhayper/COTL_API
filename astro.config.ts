@@ -4,6 +4,7 @@ import { defineConfig } from "astro/config";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
+import AstroPWA from "@vite-pwa/astro";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
 
@@ -39,7 +40,8 @@ export default defineConfig({
                 "https://cotl-api.vercel.app/ui"
             ]
         }),
-        robotsTxt()
+        robotsTxt(),
+        AstroPWA()
     ],
     vite: {
         build: {
