@@ -31,7 +31,7 @@ public class Plugin : BaseUnityPlugin
 
     internal new ManualLogSource Logger { get; private set; }
 
-    private readonly Harmony Harmony = new(PLUGIN_GUID);
+    private readonly Harmony _harmony = new(PLUGIN_GUID);
     internal readonly BaseModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
 
     internal string PluginPath { get; private set; }
@@ -69,13 +69,13 @@ public class Plugin : BaseUnityPlugin
 
     private void OnEnable()
     {
-        Harmony.PatchAll(Assembly.GetExecutingAssembly());
+        _harmony.PatchAll(Assembly.GetExecutingAssembly());
         Logger.LogInfo($"{Harmony.GetAllPatchedMethods().Count()} harmony patches applied");
     }
 
     private void OnDisable()
     {
-        Harmony.UnpatchSelf();
+        _harmony.UnpatchSelf();
         Logger.LogInfo("COTL_API unloaded");
     }
 

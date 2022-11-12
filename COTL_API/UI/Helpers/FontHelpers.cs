@@ -16,7 +16,7 @@ public static class FontHelpers
     public static TMP_FontAsset StartMenu => _startMenu;
 
     /// <summary>
-    /// The game's UI's font as a TextMeshPro FontAsset.
+    /// The game's UI font as a TextMeshPro FontAsset.
     /// </summary>
     public static TMP_FontAsset UIFont => PauseMenu ? PauseMenu : StartMenu;
 

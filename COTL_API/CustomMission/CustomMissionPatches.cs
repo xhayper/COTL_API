@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.ProBuilder;
 using src.UI.Menus;
 using UnityEngine;
@@ -34,18 +35,18 @@ public static partial class CustomMissionManager
     {
         MissionInstanceList.RemoveAll(a => a.Button == null);
 
-        foreach (var customMission in CustomMissionList)
+        foreach (var customMission in CustomMissionList.Select(x => x.Value))
         {
             var instance = __instance;
             var existing = MissionInstanceList.FindAll(a =>
-                a.Instance == instance.GetInstanceID() && a.Mission == customMission.Value);
+                a.Instance == instance.GetInstanceID() && a.Mission == customMission);
             if (existing.Count > 0)
             {
-                foreach (var mi in existing)
+                foreach (var mi in existing.Select(x => x.Button))
                 {
-                    _newMissionButton = mi.Button;
-                    mi.Button.Configure(config);
-                    mi.Button.Start();
+                    _newMissionButton = mi;
+                    mi.Configure(config);
+                    mi.Start();
                 }
 
                 continue;
@@ -56,8 +57,8 @@ public static partial class CustomMissionManager
             _newMissionButton = Object.Instantiate(mission, mission.transform.parent);
             __instance._missionButtons.Add(_newMissionButton);
 
-            _newMissionButton.name = "MISSION_BUTTON_" + customMission.Value.InternalName;
-            _newMissionButton._type = customMission.Value.InnerType;
+            _newMissionButton.name = "MISSION_BUTTON_" + customMission.InternalName;
+            _newMissionButton._type = customMission.InnerType;
 
             _newMissionButton.Configure(config);
             _newMissionButton.Start();
@@ -73,7 +74,7 @@ public static partial class CustomMissionManager
                 onMissionSelected(itemType);
             };
             MissionInstanceList.Add(new MissionInstance(__instance.GetInstanceID(), _newMissionButton,
-                customMission.Value.InnerType, customMission.Value));
+                customMission.InnerType, customMission));
         }
     }
 

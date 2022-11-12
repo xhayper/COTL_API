@@ -81,7 +81,7 @@ public class SoundLoader : MonoBehaviour
         var sound = _soundList[name];
         sound.setMode(MODE.LOOP_OFF);
 
-        SoundHelpers.PlaySound(sound, Volume.SFX);
+        SoundHelpers.PlaySound(sound, VolumeCategory.SFX);
     }
 
     /// <summary>
@@ -157,7 +157,7 @@ public class SoundLoader : MonoBehaviour
     // == CHANNEL INSTANCE ==
     private SoundHandler GetHandlerByID(string id)
     {
-        return _handlerList.FirstOrDefault(x => x.Id == id);
+        return _handlerList.FirstOrDefault(x => x.ID == id);
     }
 
     internal void SyncVolume(string id)
@@ -178,25 +178,6 @@ public class SoundLoader : MonoBehaviour
         sl?.SetMultiplier(mul);
         sl?.SetVolume(SoundHelpers.MusicVolume);
     }
-
-    // Still being tested!
-    /*
-    internal void SetReverb(string id, bool active, float amount)
-    {
-        SoundHandler sl = GetHandlerByID(id);
-        sl?.SetReverb(active, amount);
-    }
-    /*
-
-    // Still being tested!
-    /*
-    internal void SetLowPass(string id, float amount)
-    {
-        SoundHandler sl = GetHandlerByID(id);
-        sl?.SetLowPass(amount);
-    }
-    */
-
 
     // == PLAYBACK CONTROLS ==
 

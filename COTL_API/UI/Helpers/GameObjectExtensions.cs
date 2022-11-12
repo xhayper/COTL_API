@@ -185,33 +185,6 @@ public static class GameObjectExtensions
     }
 
 
-    // -- IMAGE-RELATED --
-    // I wanted opacity to be an int from 0-100 because I think most people are more used to terms like "100% opacity" and "50% opacity" than "1f opacity" and "0.5f opacity".
-    // I can change it if necessary (or make a variation of this method that takes a float).
-
-    /// <summary>
-    /// Display an image by attaching an Image component to a GameObject.
-    /// </summary>
-    /// <param name="obj">The GameObject you wish to attach the Image component to.</param>
-    /// <param name="sprite">The sprite to be displayed.</param>
-    /// <param name="opacity">The opacity of the image (from 0 to 100).</param>
-    /// <returns>The GameObject with all changes applied.</returns>
-    public static GameObject AttachImage(this GameObject obj, Sprite sprite, int opacity = 100)
-    {
-        var img = obj.AddComponent<Image>();
-        img.sprite = sprite;
-        img.SetNativeSize();
-        img.preserveAspect = true;
-
-        if (opacity is >= 100 or < 0) return obj;
-
-        var color = img.color;
-        color.a = opacity / 100f;
-        img.color = color;
-
-        return obj;
-    }
-
     private static string GetPathToImage(string filename)
     {
         return Path.IsPathRooted(filename)
@@ -243,6 +216,33 @@ public static class GameObjectExtensions
         img.preserveAspect = true;
 
         opacity = Mathf.Clamp(opacity, 0, 100);
+        var color = img.color;
+        color.a = opacity / 100f;
+        img.color = color;
+
+        return obj;
+    }
+
+    // -- IMAGE-RELATED --
+    // I wanted opacity to be an int from 0-100 because I think most people are more used to terms like "100% opacity" and "50% opacity" than "1f opacity" and "0.5f opacity".
+    // I can change it if necessary (or make a variation of this method that takes a float).
+
+    /// <summary>
+    /// Display an image by attaching an Image component to a GameObject.
+    /// </summary>
+    /// <param name="obj">The GameObject you wish to attach the Image component to.</param>
+    /// <param name="sprite">The sprite to be displayed.</param>
+    /// <param name="opacity">The opacity of the image (from 0 to 100).</param>
+    /// <returns>The GameObject with all changes applied.</returns>
+    public static GameObject AttachImage(this GameObject obj, Sprite sprite, int opacity = 100)
+    {
+        var img = obj.AddComponent<Image>();
+        img.sprite = sprite;
+        img.SetNativeSize();
+        img.preserveAspect = true;
+
+        if (opacity is >= 100 or < 0) return obj;
+
         var color = img.color;
         color.a = opacity / 100f;
         img.color = color;
