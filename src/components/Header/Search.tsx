@@ -1,7 +1,9 @@
-import { DocSearchModal, useDocSearchKeyboardEvents } from "@docsearch/react";
-import { useCallback, useRef, useState } from "preact/hooks";
+import { useDocSearchKeyboardEvents, DocSearchModal } from "@docsearch/react";
+import { useState, useCallback, useRef } from "preact/hooks";
 import { createPortal } from "preact/compat";
 import { ALGOLIA } from "../../config";
+
+import "@docsearch/css";
 import "./Search.scss";
 
 export default function Search() {
