@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using COTL_API.Saves;
 using System.Linq;
 using System;
 
@@ -31,7 +30,7 @@ public static class GuidManager
         var startKey = typeof(T).Name + "_";
         // It cannot do pointer-hack stuff when using query
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-        foreach (var item in APIDataManager.APIData.Data)
+        foreach (var item in Plugin.Instance.APIData.Data.Enum)
         {
             if (!item.Key.StartsWith(startKey)) continue;
 
@@ -50,21 +49,20 @@ public static class GuidManager
                 $"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");
 
         var saveKey = $"{typeof(T).Name}_{guid}_{value}";
-        var enumValue = APIDataManager.APIData.GetValueAsInt(saveKey);
+        var enumValue = Plugin.Instance.APIData.Data.Enum.GetValueAsInt(saveKey);
 
         if (enumValue == default)
         {
-            enumValue = APIDataManager.APIData.GetValueAsInt(MaxDataKey);
+            enumValue = Plugin.Instance.APIData.Data.Enum.GetValueAsInt(MaxDataKey);
             if (enumValue < StartIndex)
                 enumValue = StartIndex;
 
-            APIDataManager.APIData.SetValue<long>(MaxDataKey, enumValue + 1);
-            APIDataManager.APIData.SetValue<long>(saveKey, enumValue);
-            APIDataManager.Save();
+            Plugin.Instance.APIData.Data.Enum.SetValue<long>(MaxDataKey, enumValue + 1);
+            Plugin.Instance.APIData.Data.Enum.SetValue<long>(saveKey, enumValue);
+            Plugin.Instance.APIData.Save();
         }
 
         ReverseMapper[enumValue] = typeof(T);
-
         return *(T*)&enumValue;
     }
 }

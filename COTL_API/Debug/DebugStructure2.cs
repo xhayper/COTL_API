@@ -17,7 +17,7 @@ public class DebugStructure2 : CustomStructure
 
     public override List<StructuresData.ItemCost> Cost => new()
     {
-        new StructuresData.ItemCost(Plugin.DebugItem2, 2)
+        new StructuresData.ItemCost(Plugin.Instance.DebugItem2, 2)
     };
 
     public override string GetLocalizedName()

@@ -5,40 +5,42 @@ namespace COTL_API.Saves;
 public static partial class ModdedSaveManager
 {
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.ResetSave))]
-    [HarmonyPostfix]
-    private static void ResetSave(int saveSlot, bool newGame)
+    [HarmonyPrefix]
+    private static void SaveAndLoad_ResetSave(int saveSlot, bool newGame)
     {
-        SaveSlot = saveSlot;
-        Data = new ModdedSaveData();
-        if (!newGame) Save();
-        Loaded = true;
+        foreach (var saveData in _moddedSaveData.Values)
+        {
+            saveData.ResetSave();
+        }
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Save))]
-    [HarmonyPostfix]
-    private static void Save()
+    [HarmonyPrefix]
+    private static void SaveAndLoad_Save()
     {
-        APIDataManager.Save();
-
-        if (!DataManager.Instance.AllowSaving || CheatConsole.IN_DEMO) return;
-
-        _readWriter.Write(Data, MakeSaveSlot(SaveSlot));
+        foreach (var saveData in _moddedSaveData.Values)
+        {
+            saveData.Save();
+        }
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Load))]
-    [HarmonyPostfix]
-    private static void Load(int saveSlot)
+    [HarmonyPrefix]
+    private static void SaveAndLoad_Load(int saveSlot)
     {
-        if (CheatConsole.IN_DEMO) return;
-
-        SaveSlot = saveSlot;
-        _readWriter.Read(MakeSaveSlot(SaveSlot));
+        foreach (var saveData in _moddedSaveData.Values)
+        {
+            saveData.Load(saveData.LoadOnStart ? null : saveSlot);
+        }
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.DeleteSaveSlot))]
-    [HarmonyPostfix]
-    private static void DeleteSaveSlot(int saveSlot)
+    [HarmonyPrefix]
+    private static void SaveAndLoad_DeleteSaveSlot(int saveSlot)
     {
-        _readWriter.Delete(MakeSaveSlot(saveSlot));
+        foreach (var saveData in _moddedSaveData.Values)
+        {
+            saveData.DeleteSaveSlot(saveData.LoadOnStart ? null : saveSlot);
+        }
     }
 }

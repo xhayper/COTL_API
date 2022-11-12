@@ -263,7 +263,7 @@ public static class CustomSkinManager
                 skin.SetAttachment(slot, ovrName, customAttachment);
             }
             else
-                Plugin.Logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
+                Plugin.Instance.Logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
         }
 
         CustomSkins.Add(name, skin);

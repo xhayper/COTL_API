@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HarmonyLib;
 
 namespace COTL_API.Saves;
@@ -5,44 +6,11 @@ namespace COTL_API.Saves;
 [HarmonyPatch]
 public static partial class ModdedSaveManager
 {
-    private static int SaveSlot = 5;
-    private static readonly COTLDataReadWriter<ModdedSaveData> _readWriter = new();
+    private static Dictionary<string, IModdedSaveData> _moddedSaveData = new();
 
-    public static bool Loaded { get; internal set; }
-    public static ModdedSaveData Data { get; internal set; }
-
-    public static System.Action OnSaveComplete { get; set; }
-    public static System.Action OnLoadComplete { get; set; }
-
-    static ModdedSaveManager()
+    public static void RegisterModdedSave(IModdedSaveData saveData)
     {
-        _readWriter.OnReadCompleted += delegate(ModdedSaveData data)
-        {
-            Data = data;
-            Loaded = true;
-
-            OnLoadComplete?.Invoke();
-        };
-
-        _readWriter.OnCreateDefault += delegate
-        {
-            Data = new ModdedSaveData();
-            Loaded = true;
-
-            OnLoadComplete?.Invoke();
-            OnSaveComplete?.Invoke();
-        };
-
-        _readWriter.OnWriteCompleted += delegate { OnSaveComplete?.Invoke(); };
-    }
-
-    public static bool SaveExists(int saveSlot)
-    {
-        return _readWriter.FileExists(MakeSaveSlot(saveSlot));
-    }
-
-    public static string MakeSaveSlot(int slot)
-    {
-        return $"modded_slot_{slot}.json";
+        _moddedSaveData.Add(saveData.GUID, saveData);
+        if (saveData.LoadOnStart) saveData.Load();
     }
 }

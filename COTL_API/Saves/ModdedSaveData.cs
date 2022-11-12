@@ -1,66 +1,81 @@
-using System.Collections.Generic;
-
 namespace COTL_API.Saves;
 
-public class ModdedSaveData
+public class ModdedSaveData<T> : IModdedSaveData where T : class, new()
 {
-    public Dictionary<string, Dictionary<string, object>> SaveData { get; private set; } = new();
+    public override int SAVE_SLOT { get; protected set; } = 5;
+    public override bool LoadOnStart { get; set; }
+    public override bool IsLoaded { get; protected set; }
+    public sealed override string GUID { get; protected set; }
 
-    public T GetValue<T>(string guid, string key)
+    public T Data { get; private set; }
+
+    private COTLDataReadWriter<T> _dataReadWriter = new();
+
+    public ModdedSaveData(string guid)
     {
-        SaveData ??= new Dictionary<string, Dictionary<string, object>>();
+        GUID = guid;
 
-        if (!SaveData.ContainsKey(guid))
-            SaveData.Add(guid, new Dictionary<string, object>());
-
-        if (!SaveData[guid].ContainsKey(key))
-            SaveData[guid].Add(key, default(T));
-
-        return SaveData[guid][key] is T res ? res : (T)SaveData[guid][key];
-    }
-
-    public string GetValueAsString(string guid, string key)
-    {
-        return GetValue<string>(guid, key);
-    }
-
-    public int GetValueAsInt(string guid, string key)
-    {
-        var value = GetValueAsLong(guid, key);
-
-        return value switch
+        _dataReadWriter.OnReadCompleted += delegate(T saveData)
         {
-            > int.MaxValue => int.MaxValue,
-            < int.MinValue => int.MinValue,
-            _ => (int)value
+            Data = saveData;
+            IsLoaded = true;
         };
+
+        _dataReadWriter.OnCreateDefault += delegate
+        {
+            CreateDefault();
+            OnLoadComplete?.Invoke();
+            IsLoaded = true;
+            OnSaveCompleted?.Invoke();
+        };
+
+        _dataReadWriter.OnWriteCompleted += delegate { OnSaveCompleted?.Invoke(); };
+        _dataReadWriter.OnWriteError += delegate(MMReadWriteError error) { OnSaveError?.Invoke(error); };
     }
 
-    public long GetValueAsLong(string guid, string key)
+    public override void CreateDefault()
     {
-        return GetValue<long>(guid, key);
+        Data = new T();
     }
 
-    public float GetValueAsFloat(string guid, string key)
+    public override void Save(bool encrypt = true, bool backup = true)
     {
-        return GetValue<float>(guid, key);
+        if (!LoadOnStart && (!DataManager.Instance.AllowSaving || CheatConsole.IN_DEMO))
+            return;
+
+        _dataReadWriter.Write(Data, MakeSaveSlot(LoadOnStart ? null : SAVE_SLOT), encrypt, backup);
     }
 
-    public bool GetValueAsBoolean(string guid, string key)
+    public override void Load(int? saveSlot = null)
     {
-        return GetValue<bool>(guid, key);
+        if (!LoadOnStart && CheatConsole.IN_DEMO)
+            return;
+
+        if (saveSlot != null)
+            SAVE_SLOT = saveSlot.Value;
+
+        _dataReadWriter.Read(MakeSaveSlot(LoadOnStart ? null : SAVE_SLOT));
     }
 
-    public void SetValue<T>(string guid, string key, T value)
+    public override bool SaveExist(int? saveSlot = null) => _dataReadWriter.FileExists(MakeSaveSlot(saveSlot));
+
+    public override void DeleteSaveSlot(int? saveSlot = null)
     {
-        SaveData ??= new Dictionary<string, Dictionary<string, object>>();
-
-        if (!SaveData.ContainsKey(guid))
-            SaveData.Add(guid, new Dictionary<string, object>());
-
-        if (!SaveData[guid].ContainsKey(key))
-            SaveData[guid].Add(key, value);
-        else
-            SaveData[guid][key] = value;
+        _dataReadWriter.Delete(MakeSaveSlot(saveSlot));
+        if (saveSlot != null)
+            OnSaveSlotDeleted?.Invoke(saveSlot.Value);
     }
+
+    public override void ResetSave(int? saveSlot = null, bool newGame = false)
+    {
+        if (saveSlot != null)
+            SAVE_SLOT = saveSlot.Value;
+        CreateDefault();
+        if (!newGame)
+            Save();
+        IsLoaded = true;
+    }
+
+    public override string MakeSaveSlot(int? slot = null) =>
+        slot != null ? $"ModdedSave_{GUID}_{slot}" : $"ModdedSave_{GUID}";
 }
