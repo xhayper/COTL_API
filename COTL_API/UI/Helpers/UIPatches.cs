@@ -38,9 +38,6 @@ internal static class UIPatches
             container.transform.localScale = Vector3.one;
 
             UIMenuBase.Parent = container.transform;
-
-            var pauseMenuItems =
-                PauseMenuQueue.Select(x => container.AddComponent(x) as UIMenuBase).ToList();
         }
     }
 
@@ -60,21 +57,6 @@ internal static class UIPatches
                 .transform.Find("Settings").transform.Find("Text (TMP)")
                 .GetComponent<TextMeshProUGUI>();
             FontHelpers._startMenu = getTextAsset.font;
-
-
-            // I have been struggling with this for a while now. I'll get back to this later.
-            // API container.
-            /*
-            GameObject Container = new GameObject("COTL_API_MenuContainer");
-            Container.transform.SetParent(menuContainer);
-            Container.layer = UIHelpers.UILayer;
-            Container.transform.position = Vector3.zero;
-            Container.transform.localScale = Vector3.one;
-
-            UIMenuBase.Parent = Container.transform;
-
-            List<UIMenuBase> StartMenuItems = StartMenuQueue.Select(x => Container.AddComponent(x) as UIMenuBase).ToList();
-            */
         }
     }
 }
