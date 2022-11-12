@@ -1,7 +1,6 @@
 import vercel from "@astrojs/vercel/serverless";
 import minifyHtml from "astro-html-minifier";
 import { defineConfig } from "astro/config";
-import partytown from "@astrojs/partytown";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
@@ -19,7 +18,6 @@ export default defineConfig({
         image({
             serviceEntryPoint: "@astrojs/image/sharp"
         }),
-        partytown({}),
         sitemap({
             customPages: [
                 "https://cotl-api.vercel.app/",
