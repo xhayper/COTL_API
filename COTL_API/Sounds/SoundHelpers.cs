@@ -1,10 +1,11 @@
-﻿using BepInEx;
-using System.Linq;
+﻿using System.Linq;
 using System.IO;
-using FMOD;
 using FMODUnity;
+using BepInEx;
+using FMOD;
 
 namespace COTL_API.Sounds;
+
 public static class SoundHelpers
 {
     /// <summary>
@@ -20,47 +21,44 @@ public static class SoundHelpers
     /// <summary>
     /// The game's SFX Volume.
     /// </summary>
-    public static float SFXVolume => SettingsManager.Settings.Audio.SFXVolume * MasterVolume;
+    public static float SfxVolume => SettingsManager.Settings.Audio.SFXVolume * MasterVolume;
 
     /// <summary>
     /// The game's VO Volume.
     /// </summary>
-    public static float VOVolume => SettingsManager.Settings.Audio.VOVolume * MasterVolume ;
+    public static float VoVolume => SettingsManager.Settings.Audio.VOVolume * MasterVolume;
 
     // Sound helpers -- all personal and not meant for users, so they're internal
     internal static Sound MakeSound(string fileName, bool loop = false)
     {
-        string path = GetPath(fileName);
-        if(path == null) return new Sound();
+        var path = GetPath(fileName);
+        if (path == null) return new Sound();
 
-        FMOD.System system = RuntimeManager.CoreSystem;
+        var system = RuntimeManager.CoreSystem;
 
-        MODE mode = loop ? MODE.LOOP_NORMAL : MODE.LOOP_OFF;
+        var mode = loop ? MODE.LOOP_NORMAL : MODE.LOOP_OFF;
 
-        RESULT result = system.createSound(path, mode, out Sound sound);
+        var result = system.createSound(path, mode, out var sound);
 
-        if (result != RESULT.OK)
-        {
-            Plugin.Logger.LogError($"Error making sound from file {fileName}!");
-            result.IfErrorPrintWith($"MakeSound() -- fileName: {fileName}");
+        if (result == RESULT.OK) return sound;
 
-            return new Sound(); // Return empty sound in the case of an error
-        }
+        Plugin.Instance.Logger.LogError($"Error making sound from file {fileName}!");
+        result.IfErrorPrintWith($"MakeSound() -- fileName: {fileName}");
 
-        return sound;
+        return new Sound(); // Return empty sound in the case of an error
     }
 
     internal static RESULT PlaySound(Sound sound, Volume volume = Volume.Master)
     {
-        FMOD.System system = RuntimeManager.CoreSystem;
-        RESULT result = system.playSound(sound, new ChannelGroup(), false, out Channel channel);
+        var system = RuntimeManager.CoreSystem;
+        var result = system.playSound(sound, new ChannelGroup(), false, out var channel);
         channel.SyncVolume(volume);
         return result;
     }
 
     internal static RESULT SyncVolume(this Channel channel, Volume volume = Volume.Master)
     {
-        float x = 0f;
+        float x;
         switch (volume)
         {
             case Volume.Master:
@@ -70,10 +68,10 @@ public static class SoundHelpers
                 x = MusicVolume;
                 break;
             case Volume.SFX:
-                x = SFXVolume;
+                x = SfxVolume;
                 break;
             case Volume.VO:
-                x = VOVolume;
+                x = VoVolume;
                 break;
             default:
                 goto case Volume.Master;
@@ -84,9 +82,9 @@ public static class SoundHelpers
 
     internal static void IfErrorPrintWith(this RESULT result, string where)
     {
-        if(result != RESULT.OK)
+        if (result != RESULT.OK)
         {
-            Plugin.Logger.LogError($"Sound Error: {result} caught at {where}");
+            Plugin.Instance.Logger.LogError($"Sound Error: {result} caught at {where}");
         }
     }
 
@@ -94,16 +92,17 @@ public static class SoundHelpers
     // Find file
     internal static string GetPath(string fileName)
     {
-        string[] files = Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories);
+        var files = Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories);
 
-        if (files.Length == 0)
+        switch (files.Length)
         {
-            Plugin.Logger.LogError($"Error: Couldn't find \"{fileName}\"");
-            return null;
-        }
-        else if (files.Length > 1)
-        {
-            Plugin.Logger.LogWarning($"More than one file named \"{fileName}\" found. This may lead to weird behavior.");
+            case 0:
+                Plugin.Instance.Logger.LogError($"Error: Couldn't find \"{fileName}\"");
+                return null;
+            case > 1:
+                Plugin.Instance.Logger.LogWarning(
+                    $"More than one file named \"{fileName}\" found. This may lead to weird behavior.");
+                break;
         }
 
         return files.First();

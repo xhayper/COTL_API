@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
+using UnityEngine;
 
 namespace COTL_API.UI.Helpers;
+
 public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     public delegate void ButtonAction();

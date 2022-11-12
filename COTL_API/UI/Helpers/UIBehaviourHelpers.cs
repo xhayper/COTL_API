@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
+using UnityEngine;
 
 namespace COTL_API.UI.Helpers;
+
 internal class UIBehaviourHelpers
 {
     public class DraggableUIObject : MonoBehaviour, IDragHandler

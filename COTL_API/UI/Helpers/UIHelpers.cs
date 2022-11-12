@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 namespace COTL_API.UI.Helpers;
+
 public static class UIHelpers
 {
     /// <summary>
@@ -18,7 +19,7 @@ public static class UIHelpers
     }
 
     // Private as this is non-functional. I have to change how I patch the start menu.
-    private static void AddToStartMenu<T>() where T : UIMenuBase 
+    private static void AddToStartMenu<T>() where T : UIMenuBase
     {
         UIPatches.StartMenuQueue.Add(typeof(T));
     }
@@ -30,10 +31,15 @@ public static class UIHelpers
     /// <returns>The GameObject created.</returns>
     public static GameObject CreateUIObject(string name)
     {
-        GameObject obj = new GameObject(name);
-        obj.layer = UILayer;
-        obj.transform.localPosition = Vector3.zero;
-        obj.transform.localScale = Vector3.one;
+        var obj = new GameObject(name)
+        {
+            layer = UILayer,
+            transform =
+            {
+                localPosition = Vector3.zero,
+                localScale = Vector3.one
+            }
+        };
         return obj;
     }
 
@@ -45,8 +51,10 @@ public static class UIHelpers
     /// <returns>The GameObject created.</returns>
     public static GameObject CreateUIObject(string name, Transform parent)
     {
-        GameObject obj = new GameObject(name);
-        obj.layer = UILayer;
+        var obj = new GameObject(name)
+        {
+            layer = UILayer
+        };
         obj.transform.SetParent(parent);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localScale = Vector3.one;

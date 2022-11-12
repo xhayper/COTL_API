@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 namespace COTL_API.Sounds;
+
 public static class SoundLoaderExtensions
 {
     /// <summary>
@@ -10,8 +11,8 @@ public static class SoundLoaderExtensions
     /// <returns>The SoundLoader component attached to the GameObject.</returns>
     public static SoundLoader AddSoundLoader(this GameObject obj)
     {
-        SoundLoader sound = obj.AddComponent<SoundLoader>();
-        SoundLoader.AllInstances.Add(sound);
+        var sound = obj.AddComponent<SoundLoader>();
+        SoundLoader.InstanceList.Add(sound);
         return sound;
     }
 

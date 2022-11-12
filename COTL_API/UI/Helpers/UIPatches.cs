@@ -1,60 +1,60 @@
-using System;
-using HarmonyLib;
-using System.Linq;
-using Lamb.UI.PauseMenu;
-using UnityEngine;
 using System.Collections.Generic;
-using TMPro;
+using Lamb.UI.PauseMenu;
 using Lamb.UI.MainMenu;
+using UnityEngine;
+using System.Linq;
+using HarmonyLib;
+using System;
+using TMPro;
 
 namespace COTL_API.UI.Helpers;
+
 internal static class UIPatches
 {
-    public static List<Type> PauseMenuQueue = new List<Type>();
-    public static List<Type> StartMenuQueue = new List<Type>();
+    public static readonly List<Type> PauseMenuQueue = new();
+    public static readonly List<Type> StartMenuQueue = new();
 
     [HarmonyPatch]
     public static class PauseMenuPatch
     {
-
         [HarmonyPatch(typeof(UIPauseMenuController), nameof(UIPauseMenuController.Start))]
         [HarmonyPostfix]
-        static void AddUIItems (UIPauseMenuController __instance)
+        public static void AddUIItems(UIPauseMenuController __instance)
         {
-            Transform menu = __instance.gameObject.transform.Find("PauseMenuContainer");
+            var menu = __instance.gameObject.transform.Find("PauseMenuContainer");
 
             // FontAsset reference.
-            TextMeshProUGUI getTextAsset = menu.Find("Left")
+            var getTextAsset = menu.Find("Left")
                 .transform.Find("Transform").transform.Find("MenuContainer")
                 .transform.Find("Settings")
                 .transform.Find("Text").GetComponent<TextMeshProUGUI>();
             FontHelpers._pauseMenu = getTextAsset.font;
 
             // API container.
-            GameObject Container = new GameObject("COTL_API_MenuContainer");
-            Container.transform.SetParent(menu);
-            Container.layer = UIHelpers.UILayer;
-            Container.transform.position = Vector3.zero;
-            Container.transform.localScale = Vector3.one;
+            var container = new GameObject("COTL_API_MenuContainer");
+            container.transform.SetParent(menu);
+            container.layer = UIHelpers.UILayer;
+            container.transform.position = Vector3.zero;
+            container.transform.localScale = Vector3.one;
 
-            UIMenuBase.Parent = Container.transform;
+            UIMenuBase.Parent = container.transform;
 
-            List<UIMenuBase> PauseMenuItems = PauseMenuQueue.Select(x => Container.AddComponent(x) as UIMenuBase).ToList();
+            var pauseMenuItems =
+                PauseMenuQueue.Select(x => container.AddComponent(x) as UIMenuBase).ToList();
         }
     }
 
     [HarmonyPatch]
     public static class StartMenuPatch
     {
-
         [HarmonyPatch(typeof(MainMenuController), nameof(MainMenuController.Start))]
         [HarmonyPostfix]
-        static void AddUIItems(MainMenuController __instance)
+        public static void AddUIItems(MainMenuController __instance)
         {
-            Transform menu = __instance.gameObject.transform.Find("Main Menu");
+            var menu = __instance.gameObject.transform.Find("Main Menu");
 
             // FontAsset reference.
-            TextMeshProUGUI getTextAsset = menu.transform.Find("MainMenuContainer")
+            var getTextAsset = menu.transform.Find("MainMenuContainer")
                 .transform.Find("Left").transform.Find("Transform")
                 .transform.Find("MenusContainer").transform.Find("MainMenu")
                 .transform.Find("Settings").transform.Find("Text (TMP)")
