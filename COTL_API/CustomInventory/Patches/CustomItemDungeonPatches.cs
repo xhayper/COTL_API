@@ -2,7 +2,6 @@
 using UnityEngine;
 using HarmonyLib;
 
-//if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
 
 [HarmonyPatch]
@@ -22,7 +21,7 @@ public static partial class CustomItemManager
         [HarmonyPostfix]
         private static void RevealPostfix(Interaction_Chest __instance)
         {
-            foreach (var item in CustomItems.Where(item => item.Value.AddItemToDungeonChests && DropLoot(item.Value)))
+            foreach (var item in CustomItemList.Where(item => item.Value.AddItemToDungeonChests && DropLoot(item.Value)))
                 InventoryItem.Spawn(item.Key,
                     Random.Range(item.Value.DungeonChestMinAmount, item.Value.DungeonChestMaxAmount + 1),
                     __instance.transform.position);
@@ -36,7 +35,7 @@ public static partial class CustomItemManager
         [HarmonyPostfix]
         private static void RevealBossRewardPostfix(Interaction_Chest __instance)
         {
-            foreach (var item in CustomItems.Where(item => item.Value.AddItemToDungeonChests && DropLoot(item.Value)))
+            foreach (var item in CustomItemList.Where(item => item.Value.AddItemToDungeonChests && DropLoot(item.Value)))
                 InventoryItem.Spawn(item.Key,
                     Random.Range(item.Value.DungeonChestMinAmount, item.Value.DungeonChestMaxAmount + 1),
                     __instance.transform.position);

@@ -8,7 +8,7 @@ namespace COTL_API.CustomTasks;
 [HarmonyPatch]
 public static partial class CustomTaskManager
 {
-    public static Dictionary<FollowerTaskType, CustomTask> CustomTasks { get; } = new();
+    public static Dictionary<FollowerTaskType, CustomTask> CustomTaskList { get; } = new();
 
     public static FollowerTaskType Add(CustomTask task)
     {
@@ -18,7 +18,7 @@ public static partial class CustomTaskManager
         task.TaskType = taskType;
         task.ModPrefix = guid;
 
-        CustomTasks.Add(taskType, task);
+        CustomTaskList.Add(taskType, task);
 
         return taskType;
     }

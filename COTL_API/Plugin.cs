@@ -91,7 +91,7 @@ public class Plugin : BaseUnityPlugin
                 else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
                     tempObjectives.Add(objective.Key, objective.Value);
 
-            CustomObjectiveManager.PluginQuestTracker.AddRange(tempObjectives);
+            CustomObjectiveManager.CustomObjectiveList.AddRange(tempObjectives);
         };
     }
 

@@ -32,7 +32,7 @@ public abstract class CustomInventoryItem
     /// <summary>
     /// Defines rarity for offering shrine spawn chance.
     /// </summary>
-    public virtual CustomItemManager.ItemRarity Rarity { get; } = CustomItemManager.ItemRarity.COMMON;
+    public virtual CustomItemManager.ItemRarity Rarity => CustomItemManager.ItemRarity.COMMON;
 
     /// <summary>
     /// Defines the scale (size) of the object when spawned.
@@ -43,33 +43,33 @@ public abstract class CustomInventoryItem
     /// <summary>
     /// Defines whether to add the item to offering shrines.
     /// </summary>
-    public virtual bool AddItemToOfferingShrine { get; } = false;
+    public virtual bool AddItemToOfferingShrine => false;
 
 
     /// <summary>
     /// Defines the item properties (bounce, speed, magnet etc..) to imitate when spawned.
     /// </summary>
-    public virtual InventoryItem.ITEM_TYPE ItemPickUpToImitate { get; } = InventoryItem.ITEM_TYPE.LOG;
+    public virtual InventoryItem.ITEM_TYPE ItemPickUpToImitate => InventoryItem.ITEM_TYPE.LOG;
 
     /// <summary>
     /// Defines if the item should be added to dungeon chests.
     /// </summary>
-    public virtual bool AddItemToDungeonChests { get; } = false;
+    public virtual bool AddItemToDungeonChests => false;
 
     /// <summary>
     /// The chance for the item to be spawned from dungeon chests. Keep in mind that the chance is affected by the current Dungeon luck modifier.
     /// </summary>
-    public virtual int DungeonChestSpawnChance { get; } = 100;
+    public virtual int DungeonChestSpawnChance => 100;
 
     /// <summary>
     /// The minimum amount of items to spawn from dungeon chests.
     /// </summary>
-    public virtual int DungeonChestMinAmount { get; } = 1;
+    public virtual int DungeonChestMinAmount => 1;
 
     /// <summary>
     /// The maximum amount of items to spawn from dungeon chests.
     /// </summary>
-    public virtual int DungeonChestMaxAmount { get; } = 1;
+    public virtual int DungeonChestMaxAmount => 1;
 
     #endregion
 
@@ -78,8 +78,8 @@ public abstract class CustomInventoryItem
         return $"<sprite name=\"icon_ITEM_{ModPrefix}.{InternalName}\">";
     }
 
-    public virtual InventoryItem.ITEM_CATEGORIES ItemCategory { get; } = InventoryItem.ITEM_CATEGORIES.NONE;
-    public virtual InventoryItem.ITEM_TYPE SeedType { get; } = InventoryItem.ITEM_TYPE.NONE;
+    public virtual InventoryItem.ITEM_CATEGORIES ItemCategory => InventoryItem.ITEM_CATEGORIES.NONE;
+    public virtual InventoryItem.ITEM_TYPE SeedType => InventoryItem.ITEM_TYPE.NONE;
 
     public virtual string Name()
     {
@@ -111,16 +111,16 @@ public abstract class CustomInventoryItem
         return LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Description");
     }
 
-    public virtual int FuelWeight { get; } = 1;
-    public virtual int FoodSatitation { get; } = 75;
+    public virtual int FuelWeight => 1;
+    public virtual int FoodSatitation => 75;
 
-    public virtual bool IsFish { get; } = false;
-    public virtual bool IsFood { get; } = false;
-    public virtual bool IsBigFish { get; } = false;
-    public virtual bool IsCurrency { get; } = false;
-    public virtual bool IsSeed { get; } = false;
-    public virtual bool IsPlantable { get; } = false;
-    public virtual bool IsBurnableFuel { get; } = false;
+    public virtual bool IsFish => false;
+    public virtual bool IsFood => false;
+    public virtual bool IsBigFish => false;
+    public virtual bool IsCurrency => false;
+    public virtual bool IsSeed => false;
+    public virtual bool IsPlantable => false;
+    public virtual bool IsBurnableFuel => false;
 
     public virtual bool CanBeGivenToFollower => false;
 

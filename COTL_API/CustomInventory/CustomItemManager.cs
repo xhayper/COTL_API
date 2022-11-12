@@ -8,7 +8,7 @@ namespace COTL_API.CustomInventory;
 
 public static partial class CustomItemManager
 {
-    public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItems { get; } = new();
+    public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItemList { get; } = new();
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
@@ -19,7 +19,7 @@ public static partial class CustomItemManager
         item.ModPrefix = guid;
         item.InternalObjectName = $"CustomItem_{item.InternalName}";
 
-        CustomItems.Add(itemType, item);
+        CustomItemList.Add(itemType, item);
 
         return itemType;
     }
@@ -57,7 +57,7 @@ public static partial class CustomItemManager
     public static KeyValuePair<InventoryItem.ITEM_TYPE, CustomInventoryItem>
         GetItemObjectByInternalObjectName(string name)
     {
-        return (from item in CustomItems where item.Value.InternalObjectName == name select item).FirstOrDefault();
+        return (from item in CustomItemList where item.Value.InternalObjectName == name select item).FirstOrDefault();
     }
 
     public static void AddGift(InventoryItem.ITEM_TYPE item)

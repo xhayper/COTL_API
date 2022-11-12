@@ -19,7 +19,7 @@ public static partial class CustomObjectiveManager
     /// <summary>
     /// Holds the list of instantiated custom objectives.
     /// </summary>
-    internal static Dictionary<int, CustomObjective> PluginQuestTracker { get; } = new();
+    internal static Dictionary<int, CustomObjective> CustomObjectiveList { get; } = new();
 
     ///  <param name="followerName">The name of the follower.</param>
     ///  <returns>The original instance of the objective if it exists, otherwise returns a new instance.</returns>
@@ -236,7 +236,7 @@ public static partial class CustomObjectiveManager
     private static CustomObjective WorkMagic(int id, string text, ObjectivesData objectiveData)
     {
         CustomObjective customObjective = new(id, text, objectiveData);
-        PluginQuestTracker.Add(id, customObjective);
+        CustomObjectiveList.Add(id, customObjective);
         Plugin.Instance.APIData.Data.QuestData.Add(id, customObjective);
         Quests.QuestsAll.Add(objectiveData);
         return customObjective;

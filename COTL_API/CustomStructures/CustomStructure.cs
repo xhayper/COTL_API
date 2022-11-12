@@ -17,10 +17,10 @@ public abstract class CustomStructure
     public virtual Sprite Sprite { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
-    public virtual FollowerCategory.Category Category { get; } = FollowerCategory.Category.Misc;
+    public virtual FollowerCategory.Category Category => FollowerCategory.Category.Misc;
 
     public virtual string PrefabPath => CustomPrefabManager.GetOrCreateBuildingPrefab(this);
-    public virtual int BuildDurationMinutes { get; } = 30;
+    public virtual int BuildDurationMinutes => 30;
 
     public virtual Type Interaction => null;
 
@@ -39,10 +39,9 @@ public abstract class CustomStructure
         return tpo;
     }
 
-    public virtual StructureBrain.Categories Categories { get; } = StructureBrain.Categories.CULT;
+    public virtual StructureBrain.Categories Categories => StructureBrain.Categories.CULT;
 
-    public virtual TypeAndPlacementObjects.Tier Tier { get; } =
-        TypeAndPlacementObjects.Tier.Zero;
+    public virtual TypeAndPlacementObjects.Tier Tier => TypeAndPlacementObjects.Tier.Zero;
 
     internal StructuresData StructuresData => new()
     {

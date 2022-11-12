@@ -44,7 +44,7 @@ public class DebugCode
     {
         List<TarotCards.Card> vanillaCardList = new(DataManager.Instance.PlayerFoundTrinkets);
         vanillaCardList.RemoveAll(c =>
-            CustomTarotCardManager.CustomTarotCards.ContainsKey(c) ||
+            CustomTarotCardManager.CustomTarotCardList.ContainsKey(c) ||
             DataManager.Instance.PlayerRunTrinkets.Any(t => t.CardType == c));
 
         return new TarotCards.TarotCard(
@@ -55,8 +55,8 @@ public class DebugCode
     internal static TarotCards.TarotCard GetRandModdedCard()
     {
         return new TarotCards.TarotCard(
-            CustomTarotCardManager.CustomTarotCards.Keys.ElementAt(Random.Range(0,
-                CustomTarotCardManager.CustomTarotCards.Count)), 0);
+            CustomTarotCardManager.CustomTarotCardList.Keys.ElementAt(Random.Range(0,
+                CustomTarotCardManager.CustomTarotCardList.Count)), 0);
     }
 
     internal static int getTarotMult(TarotCards.Card obj)

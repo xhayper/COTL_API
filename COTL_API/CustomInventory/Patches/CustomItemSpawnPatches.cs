@@ -6,7 +6,6 @@ using UnityEngine;
 using HarmonyLib;
 using System;
 
-//if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
 
 /// <summary>
@@ -19,12 +18,12 @@ public static partial class CustomItemManager
 
     private static bool IsCustomItem(InventoryItem.ITEM_TYPE type)
     {
-        return CustomItems.ContainsKey(type);
+        return CustomItemList.ContainsKey(type);
     }
 
     private static GameObject ReplaceSpawn(InventoryItem.ITEM_TYPE type)
     {
-        var customItem = CustomItems[type];
+        var customItem = CustomItemList[type];
         var customItemObject = ItemPickUp.GetItemPickUpObject(customItem.ItemPickUpToImitate);
         customItemObject.GetComponentInChildren<SpriteRenderer>().sprite = customItem.Sprite;
 
@@ -46,7 +45,7 @@ public static partial class CustomItemManager
         private static bool Prefix(InventoryItem.ITEM_TYPE type, int quantity, Vector3 position, float StartSpeed,
             ref Action<PickUp> result, ref PickUp __result)
         {
-            if (!CustomItems.ContainsKey(type)) return true;
+            if (!CustomItemList.ContainsKey(type)) return true;
             Plugin.Instance.Logger.LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
 
             var gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
@@ -64,7 +63,7 @@ public static partial class CustomItemManager
                 if (transform == null)
                     break;
 
-                var customObject = GetObject.GetCustomObject(CustomItems[type]).Spawn(transform);
+                var customObject = GetObject.GetCustomObject(CustomItemList[type]).Spawn(transform);
                 customObject.transform.position = position;
                 customObject.transform.eulerAngles = Vector3.zero;
                 p = customObject.GetComponent<PickUp>();

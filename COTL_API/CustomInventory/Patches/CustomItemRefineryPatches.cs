@@ -6,7 +6,6 @@ using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
 
-//if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
 
 [HarmonyPatch]
@@ -17,11 +16,11 @@ public static partial class CustomItemManager
     public static void Structures_Refinery_GetCost(Structures_Refinery __instance, InventoryItem.ITEM_TYPE Item,
         ref List<StructuresData.ItemCost> __result)
     {
-        if (!CustomItems.ContainsKey(Item)) return;
+        if (!CustomItemList.ContainsKey(Item)) return;
 
         __result = new List<StructuresData.ItemCost>
         {
-            new(CustomItems[Item].RefineryInput, CustomItems[Item].RefineryInputQty)
+            new(CustomItemList[Item].RefineryInput, CustomItemList[Item].RefineryInputQty)
         };
     }
 
@@ -30,10 +29,10 @@ public static partial class CustomItemManager
     public static void Structures_Refinery_RefineryDuration(Structures_Refinery __instance,
         InventoryItem.ITEM_TYPE ItemType, ref float __result)
     {
-        if (!CustomItems.ContainsKey(ItemType)) return;
+        if (!CustomItemList.ContainsKey(ItemType)) return;
 
-        if (CustomItems[ItemType].CustomRefineryDuration > 0)
-            __result = CustomItems[ItemType].CustomRefineryDuration;
+        if (CustomItemList[ItemType].CustomRefineryDuration > 0)
+            __result = CustomItemList[ItemType].CustomRefineryDuration;
     }
 
     [HarmonyPrefix]
@@ -42,7 +41,7 @@ public static partial class CustomItemManager
     {
         if (__instance is not UIRefineryMenuController menu) return;
 
-        foreach (var item in CustomItems.Where(item =>
+        foreach (var item in CustomItemList.Where(item =>
                      item.Value.CanBeRefined))
         {
             var refineryItem = Object.Instantiate(menu.refineryIconPrefab, menu.Container);
@@ -59,9 +58,9 @@ public static partial class CustomItemManager
     [HarmonyPatch(typeof(RefineryInfoCard), nameof(RefineryInfoCard.Configure), typeof(InventoryItem.ITEM_TYPE))]
     public static void RefineryInfoCard_Configure(ref RefineryInfoCard __instance, ref InventoryItem.ITEM_TYPE config)
     {
-        if (!CustomItems.ContainsKey(config)) return;
+        if (!CustomItemList.ContainsKey(config)) return;
 
-        __instance._descriptionText.text = CustomItems[config].LocalizedDescription();
-        __instance._headerText.text = CustomItems[config].LocalizedName();
+        __instance._descriptionText.text = CustomItemList[config].LocalizedDescription();
+        __instance._headerText.text = CustomItemList[config].LocalizedName();
     }
 }

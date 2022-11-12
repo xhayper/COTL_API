@@ -23,7 +23,7 @@ public static partial class CustomObjectiveManager
             return;
         }
 
-        if (PluginQuestTracker.TryGetValue(objective.ID, out var customObjective))
+        if (CustomObjectiveList.TryGetValue(objective.ID, out var customObjective))
         {
             Plugin.Instance.Logger.LogWarning($"Matching quest found for {objective.ID}!");
             __result[0].TermToSpeak = customObjective.InitialQuestText;

@@ -6,7 +6,7 @@ namespace COTL_API.CustomFollowerCommand;
 
 public static partial class CustomFollowerCommandManager
 {
-    public static Dictionary<FollowerCommands, CustomFollowerCommand> CustomFollowerCommands { get; } = new();
+    public static Dictionary<FollowerCommands, CustomFollowerCommand> CustomFollowerCommandList { get; } = new();
 
     public static FollowerCommands Add(CustomFollowerCommand command)
     {
@@ -16,7 +16,7 @@ public static partial class CustomFollowerCommandManager
         command.Command = followerCommand;
         command.ModPrefix = guid;
 
-        CustomFollowerCommands.Add(followerCommand, command);
+        CustomFollowerCommandList.Add(followerCommand, command);
 
         return followerCommand;
     }
