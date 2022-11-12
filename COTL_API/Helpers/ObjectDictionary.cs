@@ -15,7 +15,7 @@ public class ObjectDictionary : Dictionary<string, object>
     {
     }
 
-    public T GetValue<T>(string key)
+    public T? GetValue<T>(string key)
     {
         if (ContainsKey(key))
             return (T)this[key];
@@ -23,7 +23,7 @@ public class ObjectDictionary : Dictionary<string, object>
         return default;
     }
 
-    public string GetValueAsString(string key)
+    public string? GetValueAsString(string key)
     {
         return GetValue<string>(key);
     }
@@ -55,8 +55,14 @@ public class ObjectDictionary : Dictionary<string, object>
         return GetValue<bool>(key);
     }
 
-    public void SetValue<T>(string key, T value)
+    public void SetValue<T>(string key, T? value)
     {
+        if (value == null)
+        {
+            Remove(key);
+            return;
+        }
+
         if (ContainsKey(key))
             this[key] = value;
         else

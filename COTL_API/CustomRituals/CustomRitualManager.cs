@@ -14,7 +14,7 @@ public static partial class CustomRitualManager
 
         var upgradeType = GuidManager.GetEnumValue<UpgradeSystem.Type>(guid, ritual.InternalName);
         ritual.ModPrefix = guid;
-        ritual.upgradeType = upgradeType;
+        ritual.UpgradeType = upgradeType;
 
         CustomRitualList.Add(upgradeType, ritual);
         return upgradeType;

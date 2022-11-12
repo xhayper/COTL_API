@@ -17,7 +17,8 @@ public static partial class CustomMissionManager
         mission.ModPrefix = guid;
 
         CustomMissionList.Add(innerType, mission);
-        Plugin.Instance.Logger.LogWarning($"Added: {innerType} {mission.InternalName} {mission.ModPrefix}");
+        if (Plugin.Instance != null)
+            Plugin.Instance.Logger.LogWarning($"Added: {innerType} {mission.InternalName} {mission.ModPrefix}");
         return innerType;
     }
 }

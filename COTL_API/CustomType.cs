@@ -5,7 +5,7 @@ namespace COTL_API;
 
 public static class CustomType
 {
-    public static Type GetType(string nameSpace, string typeName)
+    public static Type? GetType(string nameSpace, string typeName)
     {
         var text = nameSpace + "." + typeName;
         var type = Type.GetType(text);

@@ -8,7 +8,7 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
     public sealed override string GUID { get; protected set; }
     public override bool IsLoaded { get; protected set; }
 
-    public T Data { get; private set; }
+    public T? Data { get; private set; }
 
     private readonly COTLDataReadWriter<T> _dataReadWriter = new();
 
@@ -46,9 +46,10 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
             (!DataManager.Instance.AllowSaving || CheatConsole.IN_DEMO))
             return;
 
-        _dataReadWriter.Write(Data,
-            MakeSaveSlot(LoadOrder == ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE ? null : SAVE_SLOT), encrypt,
-            backup);
+        if (Data != null)
+            _dataReadWriter.Write(Data,
+                MakeSaveSlot(LoadOrder == ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE ? null : SAVE_SLOT), encrypt,
+                backup);
     }
 
     public override void Load(int? saveSlot = null)

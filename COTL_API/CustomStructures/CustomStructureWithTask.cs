@@ -12,7 +12,7 @@ public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
         return true;
     }
 
-    public FollowerTask GetOverrideTask(FollowerBrain brain)
+    public FollowerTask? GetOverrideTask(FollowerBrain brain)
     {
         return null;
     }

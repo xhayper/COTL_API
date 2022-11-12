@@ -10,6 +10,7 @@ public static class OnInteractHelper
     [MethodImpl(MethodImplOptions.NoInlining)]
     public static void Interaction_OnInteract(Interaction instance, StateMachine state)
     {
-        if (Plugin.Instance.Debug) Plugin.Instance.Logger.LogWarning($"Interaction.OnInteract Test({instance}, {state})");
+        if (Plugin.Instance != null && Plugin.Instance.Debug)
+            Plugin.Instance.Logger.LogWarning($"Interaction.OnInteract Test({instance}, {state})");
     }
 }

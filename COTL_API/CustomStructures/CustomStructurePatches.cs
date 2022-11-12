@@ -22,7 +22,7 @@ public partial class CustomStructureManager
         structureBrain?.Init(data);
         StructureBrain._brainsByID.Add(data.ID, structureBrain);
         StructureManager.StructuresAtLocation(data.Location).Add(structureBrain);
-        __result = structureBrain;
+        __result = structureBrain!;
         return false;
     }
 
@@ -236,7 +236,9 @@ public partial class CustomStructureManager
         if (!CustomStructureList.ContainsKey(__instance.Type)) return;
         if (CustomStructureList[__instance.Type].Interaction == null) return;
 
-        Plugin.Instance.Logger.LogDebug("adding structure interaction " + CustomStructureList[__instance.Type].Interaction);
+        if (Plugin.Instance != null)
+            Plugin.Instance.Logger.LogDebug("adding structure interaction " +
+                                            CustomStructureList[__instance.Type].Interaction);
         var parent = __instance.GetComponentInParent<Transform>();
         parent.gameObject.AddComponent(CustomStructureList[__instance.Type].Interaction);
     }

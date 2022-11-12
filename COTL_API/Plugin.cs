@@ -27,9 +27,9 @@ public class Plugin : BaseUnityPlugin
     public const string PLUGIN_NAME = "COTL_API";
     public const string PLUGIN_VERSION = "0.1.7";
 
-    internal static Plugin Instance { get; private set; }
+    internal static Plugin? Instance { get; private set; }
 
-    internal new ManualLogSource Logger { get; private set; }
+    internal new ManualLogSource Logger { get; private set; } = new(PLUGIN_NAME);
 
     private readonly Harmony _harmony = new(PLUGIN_GUID);
 
@@ -40,7 +40,7 @@ public class Plugin : BaseUnityPlugin
 
     public readonly ModdedSaveData<ApiSlotData> APISlotData = new($"{PLUGIN_GUID}_slot");
 
-    internal string PluginPath { get; private set; }
+    internal string PluginPath { get; private set; } = "";
 
     internal InventoryItem.ITEM_TYPE DebugItem { get; private set; }
     internal InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
@@ -48,8 +48,8 @@ public class Plugin : BaseUnityPlugin
     internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
     internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
-    private ConfigEntry<bool> _debug { get; set; }
-    public bool Debug => _debug.Value;
+    private ConfigEntry<bool>? _debug { get; set; }
+    public bool Debug => _debug?.Value ?? false;
 
     private bool _questCleanDone; //flag to prevent multiple calls to clean up quests
 
@@ -58,7 +58,7 @@ public class Plugin : BaseUnityPlugin
         Instance = this;
         Logger = base.Logger;
 
-        PluginPath = Path.GetDirectoryName(Info.Location);
+        PluginPath = Path.GetDirectoryName(Info.Location) ?? string.Empty;
         _debug = Config.Bind("", "debug", false, "");
 
         ModdedSaveManager.RegisterModdedSave(APIData);
@@ -88,7 +88,7 @@ public class Plugin : BaseUnityPlugin
     {
         Singleton<SaveAndLoad>.Instance._saveFileReadWriter.OnReadCompleted += delegate
         {
-            Instance.Logger.LogWarning($"Loading Modded Save Data with LoadAfterMainSave=true.");
+            Logger.LogWarning($"Loading Modded Save Data with LoadAfterMainSave=true.");
             foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save =>
                          save.LoadOrder == ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START))
             {
@@ -98,6 +98,8 @@ public class Plugin : BaseUnityPlugin
             Logger.LogWarning($"Re-adding any custom quests from the players existing objectives.");
             Dictionary<int, CustomObjective> tempObjectives = new();
 
+            if (APISlotData.Data?.QuestData == null) return;
+
             foreach (var objective in APISlotData.Data.QuestData)
                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
                     tempObjectives.Add(objective.Key, objective.Value);
@@ -106,10 +108,10 @@ public class Plugin : BaseUnityPlugin
 
             CustomObjectiveManager.CustomObjectiveList.AddRange(tempObjectives);
 
-            Instance.Logger.LogWarning($"Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
+            Logger.LogWarning($"Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
             foreach (var quest in CustomObjectiveManager.CustomObjectiveList)
             {
-                Instance.APISlotData.Data.QuestData.TryAdd(quest.Key, quest.Value);
+                APISlotData.Data.QuestData.TryAdd(quest.Key, quest.Value);
             }
         };
     }

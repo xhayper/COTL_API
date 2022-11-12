@@ -10,7 +10,10 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /// <summary>
     /// UIButton cursor event. You can subscribe void methods with no parameters to it.
     /// </summary>
-    public event ButtonAction OnClick, OnCursorEnter, OnCursorExit;
+    public event ButtonAction? OnClick;
+
+    public event ButtonAction? OnCursorEnter;
+    public event ButtonAction? OnCursorExit;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

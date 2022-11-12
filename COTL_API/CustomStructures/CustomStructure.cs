@@ -12,7 +12,7 @@ public abstract class CustomStructure
 {
     public abstract string InternalName { get; }
     internal StructureBrain.TYPES StructureType;
-    internal string ModPrefix;
+    internal string ModPrefix = "";
 
     public virtual Sprite Sprite { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
@@ -22,7 +22,7 @@ public abstract class CustomStructure
     public virtual string PrefabPath => CustomPrefabManager.GetOrCreateBuildingPrefab(this);
     public virtual int BuildDurationMinutes => 30;
 
-    public virtual Type Interaction => null;
+    public virtual Type? Interaction => null;
 
     public virtual bool ReservedForTask => false;
 

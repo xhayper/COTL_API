@@ -47,8 +47,8 @@ public static class TypeManager
             return plugin.GUID;
         }
 
-        ModIds.Add(assembly.FullName, default);
-        return default;
+        ModIds.Add(assembly.FullName, default!);
+        return default!;
     }
 
     public static string GetModIdFromCallstack(Assembly callingAssembly)
@@ -58,8 +58,8 @@ public static class TypeManager
             return cacheVal;
 
         StackTrace trace = new();
-        return trace.GetFrames()?.Select(frame => GetModIdFromAssembly(frame.GetMethod().DeclaringType?.Assembly))
-            .FirstOrDefault(newVal => !string.IsNullOrEmpty(newVal));
+        return trace.GetFrames()?.Select(frame => GetModIdFromAssembly(frame.GetMethod().DeclaringType?.Assembly!))
+            .FirstOrDefault(newVal => !string.IsNullOrEmpty(newVal))!;
     }
 
     [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]
@@ -80,7 +80,10 @@ public static class TypeManager
             return false;
         }
 
-        if (int.TryParse(typeName, out _)) Plugin.Instance.Logger.LogInfo("This appears to be a custom type");
+        if (int.TryParse(typeName, out _))
+        {
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogInfo("This appears to be a custom type");
+        }
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");
         TypeCache.Add(typeName, __result);

@@ -10,12 +10,12 @@ public abstract class CustomInventoryItem
 
     internal InventoryItem.ITEM_TYPE ItemType;
 
-    internal string ModPrefix;
+    internal string ModPrefix = "";
 
     /// <summary>
     /// This is the name given to custom items when they are spawned into the world.
     /// </summary>
-    internal string InternalObjectName;
+    internal string InternalObjectName = "";
 
     public virtual Sprite InventoryIcon { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));

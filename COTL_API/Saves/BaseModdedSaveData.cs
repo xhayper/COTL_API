@@ -1,4 +1,6 @@
-﻿namespace COTL_API.Saves;
+﻿using System;
+
+namespace COTL_API.Saves;
 
 public enum ModdedSaveLoadOrder
 {
@@ -14,10 +16,10 @@ public abstract class BaseModdedSaveData
 
     public abstract ModdedSaveLoadOrder LoadOrder { get; set; }
 
-    public System.Action OnSaveCompleted { get; set; }
-    public System.Action<MMReadWriteError> OnSaveError { get; set; }
-    public System.Action OnLoadComplete { get; set; }
-    public System.Action<int> OnSaveSlotDeleted { get; set; }
+    public Action? OnSaveCompleted { get; set; }
+    public Action<MMReadWriteError>? OnSaveError { get; set; }
+    public Action? OnLoadComplete { get; set; }
+    public Action<int>? OnSaveSlotDeleted { get; set; }
 
     public abstract void CreateDefault();
     public abstract void Save(bool encrypt = true, bool backup = true);

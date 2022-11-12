@@ -8,10 +8,10 @@ namespace COTL_API.CustomTarotCard;
 public abstract class CustomTarotCard
 {
     public abstract string InternalName { get; }
-    internal string ModPrefix;
+    internal string ModPrefix = "";
     internal TarotCards.Card CardType;
     public virtual TarotCards.CardCategory Category { get; }
-    public virtual Sprite CardSprite { get; internal set; }
+    public virtual Sprite? CardSprite { get; internal set; }
 
     public virtual string LocalisedName()
     {
@@ -147,7 +147,7 @@ public abstract class CustomTarotCard
         return 0;
     }
 
-    public virtual InventoryItem GetItemToDrop(TarotCards.TarotCard card)
+    public virtual InventoryItem? GetItemToDrop(TarotCards.TarotCard card)
     {
         return null;
     }

@@ -7,8 +7,8 @@ internal class UIBehaviourHelpers
 {
     public class DraggableUIObject : MonoBehaviour, IDragHandler
     {
-        public RectTransform dragRectTransform;
-        public Canvas canvas;
+        public RectTransform? dragRectTransform;
+        public Canvas? canvas;
 
         public void Start()
         {
@@ -18,7 +18,8 @@ internal class UIBehaviourHelpers
 
         public void OnDrag(PointerEventData eventData)
         {
-            dragRectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+            if (dragRectTransform != null && canvas != null)
+                dragRectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         }
     }
 }

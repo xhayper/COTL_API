@@ -16,27 +16,6 @@ public static partial class CustomItemManager
 {
     private const string PathPrefix = "CustomItem_";
 
-    private static bool IsCustomItem(InventoryItem.ITEM_TYPE type)
-    {
-        return CustomItemList.ContainsKey(type);
-    }
-
-    private static GameObject ReplaceSpawn(InventoryItem.ITEM_TYPE type)
-    {
-        var customItem = CustomItemList[type];
-        var customItemObject = ItemPickUp.GetItemPickUpObject(customItem.ItemPickUpToImitate);
-        customItemObject.GetComponentInChildren<SpriteRenderer>().sprite = customItem.Sprite;
-
-        var pickup = customItemObject.GetComponentInChildren<PickUp>();
-        if (pickup != null)
-            pickup.type = type;
-
-        customItemObject.name = customItem.InternalObjectName;
-        customItemObject.transform.localScale = customItem.LocalScale;
-        Plugin.Instance.Logger.LogWarning($"Custom item, returning custom GameObject!");
-        return customItemObject;
-    }
-
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Spawn), typeof(InventoryItem.ITEM_TYPE), typeof(int),
         typeof(Vector3), typeof(float), typeof(Action<PickUp>))]
     private static class InventoryItemSpawnPatches
@@ -46,11 +25,12 @@ public static partial class CustomItemManager
             ref Action<PickUp> result, ref PickUp __result)
         {
             if (!CustomItemList.ContainsKey(type)) return true;
-            Plugin.Instance.Logger.LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
+            if (Plugin.Instance != null)
+                Plugin.Instance.Logger.LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
 
             var gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
             var transform = gameObject != null ? gameObject.transform : null;
-            PickUp p = null;
+            PickUp? pickUp = null;
             while (--quantity >= 0)
             {
                 var instance = BiomeGenerator.Instance;
@@ -66,17 +46,17 @@ public static partial class CustomItemManager
                 var customObject = GetObject.GetCustomObject(CustomItemList[type]).Spawn(transform);
                 customObject.transform.position = position;
                 customObject.transform.eulerAngles = Vector3.zero;
-                p = customObject.GetComponent<PickUp>();
+                pickUp = customObject.GetComponent<PickUp>();
 
-                if (p == null) continue;
+                if (pickUp == null) continue;
 
-                p.type = type;
-                p.Speed = StartSpeed;
+                pickUp.type = type;
+                pickUp.Speed = StartSpeed;
             }
 
             //whatever the user chose to imitate, all those objects get converted into the custom item without this....
             GetObject.SetInactive();
-            __result = p;
+            __result = pickUp!;
             return false;
         }
     }
@@ -92,7 +72,7 @@ public static partial class CustomItemManager
 
             var item = GetItemObjectByInternalObjectName(path);
 
-            if (ObjectPool.instance.loadedAddressables.TryGetValue(item.Value.InternalObjectName, out GameObject _))
+            if (ObjectPool.instance.loadedAddressables.TryGetValue(item.Value.InternalObjectName, out _))
                 return;
 
             ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName,
@@ -102,7 +82,7 @@ public static partial class CustomItemManager
 
     private static class GetObject
     {
-        private static GameObject _myObject;
+        private static GameObject? _myObject;
 
         public static GameObject GetCustomObject(CustomInventoryItem item)
         {
@@ -114,7 +94,7 @@ public static partial class CustomItemManager
 
             _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.ItemPickUpToImitate), null,
                 instantiateInWorldSpace: false) as GameObject;
-            Plugin.Instance.Logger.LogWarning($"_myObject is NULL? {_myObject == null}");
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogWarning($"_myObject is NULL? {_myObject == null}");
             _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Sprite;
             _myObject.name = item.InternalObjectName;
             _myObject.transform.localScale = item.LocalScale;

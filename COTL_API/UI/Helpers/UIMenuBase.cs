@@ -10,11 +10,11 @@ public abstract class UIMenuBase : MonoBehaviour
     /// <summary>
     /// The parent GameObject you should attach your GameObject(s) to.
     /// </summary>
-    public static Transform Parent { get; set; }
+    public static Transform? Parent { get; set; }
 
     public void Start()
     {
-        InitializeMenu(Parent);
+        if (Parent != null) InitializeMenu(Parent);
     }
 
     /// <summary>

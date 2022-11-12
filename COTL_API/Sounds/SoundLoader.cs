@@ -31,7 +31,7 @@ public class SoundLoader : MonoBehaviour
     /// <param name="fileName">The name of your audio file.</param>
     /// <param name="name">A string key you can access the Sound with.</param>
     /// <returns>The Sound's string key.</returns>
-    public string CreateSound(string fileName, string name = null)
+    public string CreateSound(string fileName, string? name = null)
     {
         var sound = SoundHelpers.MakeSound(fileName);
         name ??= fileName;
@@ -47,7 +47,8 @@ public class SoundLoader : MonoBehaviour
     public Sound GetSound(string name)
     {
         if (_soundList.ContainsKey(name)) return _soundList[name];
-        Plugin.Instance.Logger.LogError($"Couldn't get sound {name}: Sound doesn't exist!");
+        if (Plugin.Instance != null)
+            Plugin.Instance.Logger.LogError($"Couldn't get sound {name}: Sound doesn't exist!");
         return new Sound(); // Return empty Sound
     }
 
@@ -75,7 +76,8 @@ public class SoundLoader : MonoBehaviour
     {
         if (!_soundList.ContainsKey(name))
         {
-            Plugin.Instance.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
+            if (Plugin.Instance != null)
+                Plugin.Instance.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
 
         var sound = _soundList[name];
@@ -92,7 +94,8 @@ public class SoundLoader : MonoBehaviour
     {
         if (!_soundList.ContainsKey(name))
         {
-            Plugin.Instance.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
+            if (Plugin.Instance != null)
+                Plugin.Instance.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
 
         var sound = _soundList[name];
@@ -110,7 +113,7 @@ public class SoundLoader : MonoBehaviour
     /// </summary>
     /// <param name="fileName">The audio file's name.</param>
     /// <param name="name">The string key with which you can access this cached Sound later.</param>
-    public void CreateAndPlayMusic(string fileName, string name = null)
+    public void CreateAndPlayMusic(string fileName, string? name = null)
     {
         var soundName = CreateSound(fileName, name);
         PlayMusic(soundName);
@@ -121,7 +124,7 @@ public class SoundLoader : MonoBehaviour
     /// </summary>
     /// <param name="fileName">The audio file's name.</param>
     /// <param name="name">The string key with which you can access this cached Sound later.</param>
-    public void CreateAndPlaySFX(string fileName, string name = null)
+    public void CreateAndPlaySFX(string fileName, string? name = null)
     {
         var soundName = CreateSound(fileName, name);
         PlaySFX(soundName);
@@ -155,7 +158,7 @@ public class SoundLoader : MonoBehaviour
 
 
     // == CHANNEL INSTANCE ==
-    private SoundHandler GetHandlerByID(string id)
+    private SoundHandler? GetHandlerByID(string id)
     {
         return _handlerList.FirstOrDefault(x => x.ID == id);
     }
@@ -190,7 +193,7 @@ public class SoundLoader : MonoBehaviour
     {
         var sh = GetHandlerByID(name);
         sh?.Stop();
-        _handlerList.Remove(sh);
+        if (sh != null) _handlerList.Remove(sh);
     }
 
     /// <summary>

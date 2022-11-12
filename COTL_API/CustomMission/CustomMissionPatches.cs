@@ -13,11 +13,11 @@ public static partial class CustomMissionManager
     public class MissionInstance
     {
         public int Instance { get; }
-        public MissionButton Button { get; }
+        public MissionButton? Button { get; }
         private InventoryItem.ITEM_TYPE Type { get; }
         public CustomMission Mission { get; }
 
-        public MissionInstance(int instance, MissionButton button, InventoryItem.ITEM_TYPE type, CustomMission mission)
+        public MissionInstance(int instance, MissionButton? button, InventoryItem.ITEM_TYPE type, CustomMission mission)
         {
             Instance = instance;
             Button = button;
@@ -26,7 +26,7 @@ public static partial class CustomMissionManager
         }
     }
 
-    private static MissionButton _newMissionButton;
+    private static MissionButton? _newMissionButton;
     private static readonly List<MissionInstance> MissionInstanceList = new();
 
     [HarmonyPostfix]
@@ -45,6 +45,9 @@ public static partial class CustomMissionManager
                 foreach (var mi in existing.Select(x => x.Button))
                 {
                     _newMissionButton = mi;
+
+                    if (mi == null) continue;
+
                     mi.Configure(config);
                     mi.Start();
                 }

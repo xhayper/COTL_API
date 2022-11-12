@@ -9,7 +9,7 @@ namespace COTL_API.CustomFollowerCommand;
 public abstract class CustomFollowerCommand : CommandItem
 {
     public abstract string InternalName { get; }
-    internal string ModPrefix;
+    internal string ModPrefix = "";
 
     public virtual List<FollowerCommandCategory> Categories { get; } =
         new() { FollowerCommandCategory.DEFAULT_COMMAND };
