@@ -21,6 +21,7 @@
         "@docsearch/react": "^3.3.0",
         "@types/node": "^18.11.9",
         "astro": "^1.6.7",
+        "astro-html-beautifier": "^1.0.4",
         "astro-html-minifier": "^0.2.0",
         "astro-robots-txt": "^0.3.10",
         "astro-seo": "^0.6.0",
