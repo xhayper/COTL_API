@@ -32,8 +32,9 @@ public class Plugin : BaseUnityPlugin
     internal new ManualLogSource Logger { get; private set; }
 
     private readonly Harmony _harmony = new(PLUGIN_GUID);
+    
     internal readonly ModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
-    private readonly ModdedSaveData<APIData> _apiDataLoadOnSaveLoad = new(PLUGIN_GUID + "_LoadOnSaveLoad");
+    internal readonly ModdedSaveData<Dictionary<int, CustomObjective>> APIQuestData = new(PLUGIN_GUID);
 
     internal string PluginPath { get; private set; }
 
@@ -54,8 +55,6 @@ public class Plugin : BaseUnityPlugin
         Instance = this;
         Logger = base.Logger;
 
-        ModdedSaveManager.RegisterModdedSave(_apiDataLoadOnSaveLoad);
-        
         BindEvent();
 
         PluginPath = Path.GetDirectoryName(Info.Location);
@@ -63,6 +62,7 @@ public class Plugin : BaseUnityPlugin
 
         APIData.LoadOnStart = true;
         ModdedSaveManager.RegisterModdedSave(APIData);
+        ModdedSaveManager.RegisterModdedSave(APIQuestData);
 
         if (Debug)
             AddDebugContent();
@@ -84,12 +84,12 @@ public class Plugin : BaseUnityPlugin
 
     private void BindEvent()
     {
-        _apiDataLoadOnSaveLoad.OnLoadComplete += delegate
+        APIQuestData.OnLoadComplete += delegate
         {
             Logger.LogWarning($"Re-added any custom quests from the players existing objectives.");
             Dictionary<int, CustomObjective> tempObjectives = new();
 
-            foreach (var objective in _apiDataLoadOnSaveLoad.Data.QuestData)
+            foreach (var objective in APIQuestData.Data)
                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
                     tempObjectives.Add(objective.Key, objective.Value);
                 else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))

@@ -21,7 +21,7 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
             IsLoaded = true;
             OnLoadComplete?.Invoke();
         };
-        
+
         _dataReadWriter.OnCreateDefault += delegate
         {
             CreateDefault();

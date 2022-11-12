@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using COTL_API.Saves;
-using MonoMod.Utils;
 
 namespace COTL_API.CustomObjectives;
 
@@ -237,7 +235,7 @@ public static partial class CustomObjectiveManager
     {
         CustomObjective customObjective = new(id, text, objectiveData);
         CustomObjectiveList.Add(id, customObjective);
-        Plugin.Instance.APIData.Data.QuestData.Add(id, customObjective);
+        Plugin.Instance.APIQuestData.Data.Add(id, customObjective);
         Quests.QuestsAll.Add(objectiveData);
         return customObjective;
     }
