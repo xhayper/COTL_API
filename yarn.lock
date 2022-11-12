@@ -182,23 +182,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/compiler@npm:^0.23.4":
-  version: 0.23.5
-  resolution: "@astrojs/compiler@npm:0.23.5"
-  checksum: 9779b8a7fab2b467ea8637fca8129110fe3b6dbee4fc2e9fe4ec162c3f91ffd77fd447abab01a926b7440749e03c269dda65c4ca1d8759d9662f9198e56eeb01
+"@astrojs/compiler@npm:^0.29.11, @astrojs/compiler@npm:^0.29.3":
+  version: 0.29.13
+  resolution: "@astrojs/compiler@npm:0.29.13"
+  checksum: 0d28c4b861c659a4f9c22035db32d074f37fa14b62c19e902a25a5437c4b12961650314781d2c6ae3255d4970f7c44309aa1efa476d0c5580c4069ea2f860a94
   languageName: node
   linkType: hard
 
-"@astrojs/compiler@npm:^0.29.3, @astrojs/compiler@npm:^0.29.5":
-  version: 0.29.11
-  resolution: "@astrojs/compiler@npm:0.29.11"
-  checksum: cd8a215a7415dc866b05b72e0fec7392143250da685c9c297a71b46c0842ca5e69ca4152b84efa52ef81dcb56a85660f1cf9fcf0fcaab44cd0a9da6e6f6e0060
-  languageName: node
-  linkType: hard
-
-"@astrojs/image@npm:^0.11.2":
-  version: 0.11.2
-  resolution: "@astrojs/image@npm:0.11.2"
+"@astrojs/image@npm:^0.11.4":
+  version: 0.11.4
+  resolution: "@astrojs/image@npm:0.11.4"
   dependencies:
     "@altano/tiny-async-pool": ^1.0.2
     http-cache-semantics: ^4.1.0
@@ -213,18 +206,18 @@ __metadata:
   peerDependenciesMeta:
     sharp:
       optional: true
-  checksum: fb225d2790c7484dde9c68e898c92563819ceef7979d79051716df8ced24d6ef7d06c9c761a2ac58ebfffa7e0c6d44bea8d6e011bc7adcfe8e7601295a57fba7
+  checksum: a65493ee04a059bc7a178c861097ee205280f651c3ad20b6aa572bb99f551ef608f771dac86848b2468e85bbde408895fef1b0e10f143c70c6605e93d09c0854
   languageName: node
   linkType: hard
 
-"@astrojs/language-server@npm:^0.26.2":
-  version: 0.26.2
-  resolution: "@astrojs/language-server@npm:0.26.2"
+"@astrojs/language-server@npm:^0.28.3":
+  version: 0.28.3
+  resolution: "@astrojs/language-server@npm:0.28.3"
   dependencies:
     "@vscode/emmet-helper": ^2.8.4
     events: ^3.3.0
     prettier: ^2.7.1
-    prettier-plugin-astro: ^0.5.3
+    prettier-plugin-astro: ^0.7.0
     source-map: ^0.7.3
     vscode-css-languageservice: ^6.0.1
     vscode-html-languageservice: ^5.0.0
@@ -235,7 +228,7 @@ __metadata:
     vscode-uri: ^3.0.3
   bin:
     astro-ls: bin/nodeServer.js
-  checksum: 1e130a011a9ac8c6e45808e8564c352bb75028e2696ba673e8db7ba4ff7aa8c0132e70ac7c9b3df0b59dc7eca94f57447b85bc7d9a392dd72c48d0dd0c055ab6
+  checksum: 41da1e6388c314103e8f1539a01c4b516885d7b4f6faa29ab0ee064909c47d91315bac8d71c591a7792896463e6eab5ee6b608f40413c04afc6aa33caf71fd8e
   languageName: node
   linkType: hard
 
@@ -863,7 +856,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pkgr/utils@npm:^2.3.0, @pkgr/utils@npm:^2.3.1":
+"@pkgr/utils@npm:^2.3.1":
   version: 2.3.1
   resolution: "@pkgr/utils@npm:2.3.1"
   dependencies:
@@ -1370,12 +1363,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^1.6.5":
-  version: 1.6.5
-  resolution: "astro@npm:1.6.5"
+"astro@npm:^1.6.7":
+  version: 1.6.7
+  resolution: "astro@npm:1.6.7"
   dependencies:
-    "@astrojs/compiler": ^0.29.5
-    "@astrojs/language-server": ^0.26.2
+    "@astrojs/compiler": ^0.29.11
+    "@astrojs/language-server": ^0.28.3
     "@astrojs/markdown-remark": ^1.1.3
     "@astrojs/telemetry": ^1.0.1
     "@astrojs/webapi": ^1.1.1
@@ -1397,7 +1390,6 @@ __metadata:
     debug: ^4.3.4
     deepmerge-ts: ^4.2.2
     diff: ^5.1.0
-    eol: ^0.9.1
     es-module-lexer: ^0.10.5
     esbuild: ^0.14.43
     execa: ^6.1.0
@@ -1438,7 +1430,7 @@ __metadata:
     zod: ^3.17.3
   bin:
     astro: astro.js
-  checksum: 9f0ac95494db523e8bfb399a6f3c980eabbec6bac80f7d72c48b8ea2132e43f4125d4d17e8baf3d5591f71c98c3f124a4fad489e7d190ba8a0a99fd3f9ff485e
+  checksum: 9000e746eed9a0ab5ec8fcd5d18945e0b8cec09873081970eb7b19de3a9c0af78bf03dd1326992c096557daa98683dbd95adf1976cf3c29c4cd3c4772dd86efd
   languageName: node
   linkType: hard
 
@@ -1654,11 +1646,11 @@ __metadata:
   linkType: hard
 
 "cargo-cp-artifact@npm:^0.1":
-  version: 0.1.6
-  resolution: "cargo-cp-artifact@npm:0.1.6"
+  version: 0.1.7
+  resolution: "cargo-cp-artifact@npm:0.1.7"
   bin:
     cargo-cp-artifact: bin/cargo-cp-artifact.js
-  checksum: 2f5d2f3e73372c9d398746372e8d1f7b171f27c8d4e4e9f7de898ead93b29631d62ea26c1ae352fa2c1542e124c2c77ac8a60acc5634bb433133ee2c7c6f1e09
+  checksum: cd3c87f0374ee2dd171f01d4c7da7661b9095516275a9f83240e14e014ed507b404bfeb348f8dc5935edfaf9faafed00373356cf11290227ae595ba5cb81db71
   languageName: node
   linkType: hard
 
@@ -1909,14 +1901,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cotl_api_docs@workspace:."
   dependencies:
-    "@astrojs/image": ^0.11.2
+    "@astrojs/image": ^0.11.4
     "@astrojs/partytown": ^1.0.1
     "@astrojs/preact": ^1.2.0
     "@astrojs/sitemap": ^1.0.0
     "@astrojs/vercel": ^2.3.3
     "@docsearch/react": ^3.3.0
     "@types/node": ^18.11.9
-    astro: ^1.6.5
+    astro: ^1.6.7
     astro-html-minifier: ^0.2.0
     astro-robots-txt: ^0.3.10
     astro-seo: ^0.6.0
@@ -2152,13 +2144,6 @@ __metadata:
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
   checksum: 65b5df55a8bab92229ab2b40dad3b387fad24613263d103a97f91c9fe43ceb21965cd3392b1ccb5d77088021e525c4e0481adb309625d0cb94ade1d1fb8dc17e
-  languageName: node
-  linkType: hard
-
-"eol@npm:^0.9.1":
-  version: 0.9.1
-  resolution: "eol@npm:0.9.1"
-  checksum: ba9fa998bc8148b935dcf85585eacf049eeaf18d2ab6196710d4d1f59e7dfd0e87b18508dc67144ff8ba12f835a4a4989aeea64c98b13cca77b74b9d4b33bce5
   languageName: node
   linkType: hard
 
@@ -4650,13 +4635,13 @@ __metadata:
   linkType: hard
 
 "node-fetch@npm:^3.2.5":
-  version: 3.2.10
-  resolution: "node-fetch@npm:3.2.10"
+  version: 3.3.0
+  resolution: "node-fetch@npm:3.3.0"
   dependencies:
     data-uri-to-buffer: ^4.0.0
     fetch-blob: ^3.1.4
     formdata-polyfill: ^4.0.10
-  checksum: e65322431f4897ded04197aa5923eaec63a8d53e00432de4e70a4f7006625c8dc32629c5c35f4fe8ee719a4825544d07bf53f6e146a7265914262f493e8deac1
+  checksum: e9936908d2783d3c48a038e187f8062de294d75ef43ec8ab812d7cbd682be2b67605868758d2e9cad6103706dcfe4a9d21d78f6df984e8edf10e7a5ce2e665f8
   languageName: node
   linkType: hard
 
@@ -5045,13 +5030,13 @@ __metadata:
   linkType: hard
 
 "postcss@npm:^8.4.14, postcss@npm:^8.4.18":
-  version: 8.4.18
-  resolution: "postcss@npm:8.4.18"
+  version: 8.4.19
+  resolution: "postcss@npm:8.4.19"
   dependencies:
     nanoid: ^3.3.4
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
-  checksum: 9349fd99849b2e3d2e134ff949b7770ecb12375f352723ce2bcc06167eba3850ea7844c1b191a85cd915d6a396b4e8ee9a5267e6cc5d8d003d0cbc7a97555d39
+  checksum: 62782723a385f92b7525f66d29614624de7c5643855423db3a5efd9287e677650300192749adddbbb6734cea9b1d5f5fd4f6ea00ca3f9a95dbbb88f835f5ca64
   languageName: node
   linkType: hard
 
@@ -5104,18 +5089,6 @@ __metadata:
     path-exists: ^4.0.0
     which-pm: 2.0.0
   checksum: 0de0948cb6ae22213f2ad7868032d89f1e1443d9caabc22ceeb9d284f19d359d65b67fab178f4db5c8c6ca6ae34642bdc72730b70ab1899ea158e2677a88a6d0
-  languageName: node
-  linkType: hard
-
-"prettier-plugin-astro@npm:^0.5.3":
-  version: 0.5.5
-  resolution: "prettier-plugin-astro@npm:0.5.5"
-  dependencies:
-    "@astrojs/compiler": ^0.23.4
-    prettier: ^2.7.1
-    sass-formatter: ^0.7.5
-    synckit: ^0.7.0
-  checksum: b0e527645158c97c2726aaf532e920ff4a1b98fe9cd594612e2c9c399f64eaa395255ec4371b2d0a527e5dc80af93b214adbcfe2a306e622878c35e128b6a761
   languageName: node
   linkType: hard
 
@@ -6013,16 +5986,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synckit@npm:^0.7.0":
-  version: 0.7.3
-  resolution: "synckit@npm:0.7.3"
-  dependencies:
-    "@pkgr/utils": ^2.3.0
-    tslib: ^2.4.0
-  checksum: 15b1841c16e80e84e4eb7b43680f37ad94377a032cd9f5f6fd1c9cbd32bb1b7d1cf1c32111821d4f1b5477dffb599aeda7f0c1e70c7333fbedd80951d41bf5e8
-  languageName: node
-  linkType: hard
-
 "synckit@npm:^0.8.4":
   version: 0.8.4
   resolution: "synckit@npm:0.8.4"
@@ -6321,11 +6284,11 @@ __metadata:
   linkType: hard
 
 "unist-util-visit-children@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "unist-util-visit-children@npm:2.0.0"
+  version: 2.0.1
+  resolution: "unist-util-visit-children@npm:2.0.1"
   dependencies:
     "@types/unist": ^2.0.0
-  checksum: 81ae462c3476855371668153d92e67f21405b10cb598dbb5289b33ac6abef8a4d6de07a377a5738b02f6f156c00d55da2f68e9608c4ac1e978be7e54901f2f5f
+  checksum: 60b49477b9a81dbda6227f3a7109f59461e6dae63d9cedb01954a60d147fb0692ad2508516d71921ece84affadc94c5591a97be25d977e07f8cd1bad37d49024
   languageName: node
   linkType: hard
 
