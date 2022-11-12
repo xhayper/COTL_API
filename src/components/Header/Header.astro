@@ -10,7 +10,7 @@ import Search from "./Search";
     <SkipToContent />
     <nav class="nav-wrapper" title="Top Navigation">
         <div class="menu-toggle">
-            <SidebarToggle client:idle />
+            <SidebarToggle client:only="preact" />
         </div>
         <div class="logo flex">
             <a href="/introduction">
@@ -20,7 +20,7 @@ import Search from "./Search";
         </div>
         <div style="flex-grow: 1;"></div>
         <div class="search-item">
-            <Search client:idle />
+            <Search client:only="preact" />
         </div>
     </nav>
 </header>
