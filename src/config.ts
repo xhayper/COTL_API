@@ -55,7 +55,7 @@ export const SIDEBAR: Sidebar = {
         { text: "Mission", link: "mission" },
         { text: "Objectives", link: "objectives" },
         { text: "Ritual", link: "ritual" },
-        { text: "Save File Data", link: "save-data" },
+        { text: "Save Data", link: "save-data" },
         { text: "Skin", link: "skin" },
         { text: "Sound", link: "sound" },
         { text: "Structures", link: "structures" },
