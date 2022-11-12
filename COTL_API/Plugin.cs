@@ -15,7 +15,6 @@ using System.Linq;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
-using UnityEngine.ProBuilder.MeshOperations;
 
 namespace COTL_API;
 
@@ -33,9 +32,9 @@ public class Plugin : BaseUnityPlugin
     internal new ManualLogSource Logger { get; private set; }
 
     private readonly Harmony _harmony = new(PLUGIN_GUID);
-    
-    internal readonly ModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
 
+    internal readonly ModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
+    public readonly ModdedSaveData<APISlotData> APISlotData = new($"{PLUGIN_GUID}_slot");
 
     internal string PluginPath { get; private set; }
 
@@ -45,7 +44,6 @@ public class Plugin : BaseUnityPlugin
     internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
     internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
-    public ModdedSaveData<APISlotData> APIQuestData = new($"{PLUGIN_GUID}_slot");
     private ConfigEntry<bool> _debug { get; set; }
     public bool Debug => _debug.Value;
 
@@ -60,12 +58,12 @@ public class Plugin : BaseUnityPlugin
         _debug = Config.Bind("", "debug", false, "");
 
         APIData.LoadOnStart = true;
-        APIQuestData.LoadAfterMainSave = true;
+        APISlotData.LoadAfterMainSave = true;
         ModdedSaveManager.RegisterModdedSave(APIData);
-        ModdedSaveManager.RegisterModdedSave(APIQuestData);
+        ModdedSaveManager.RegisterModdedSave(APISlotData);
 
         BeginLoadAfterMainSave();
-        
+
         if (Debug)
             AddDebugContent();
 
@@ -89,15 +87,15 @@ public class Plugin : BaseUnityPlugin
         Singleton<SaveAndLoad>.Instance._saveFileReadWriter.OnReadCompleted += delegate
         {
             Instance.Logger.LogWarning($"Loading Modded Save Data with LoadAfterMainSave=true.");
-            foreach (var saveData in ModdedSaveManager.ModdedSaveData.Values.Where(save => save.LoadAfterMainSave))
+            foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save => save.LoadAfterMainSave))
             {
                 saveData.Load(SaveAndLoad.SAVE_SLOT);
             }
-            
+
             Logger.LogWarning($"Re-adding any custom quests from the players existing objectives.");
             Dictionary<int, CustomObjective> tempObjectives = new();
 
-            foreach (var objective in APIQuestData.Data.QuestData)
+            foreach (var objective in APISlotData.Data.QuestData)
                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
                     tempObjectives.Add(objective.Key, objective.Value);
                 else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
@@ -108,11 +106,11 @@ public class Plugin : BaseUnityPlugin
             Instance.Logger.LogWarning($"Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
             foreach (var quest in CustomObjectiveManager.CustomObjectiveList)
             {
-                Instance.APIQuestData.Data.QuestData.TryAdd(quest.Key, quest.Value);
+                Instance.APISlotData.Data.QuestData.TryAdd(quest.Key, quest.Value);
             }
-        };  
+        };
     }
-    
+
 
     /// <summary>
     /// Cleans the users QuestHistory indexes to prevent issues when they remove/disable mods that add custom quests.

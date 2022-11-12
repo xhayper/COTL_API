@@ -5,5 +5,10 @@ namespace COTL_API.Saves;
 
 public class APISlotData
 {
-    public readonly Dictionary<int, CustomObjective> QuestData = new();
+    private string[] RandomEasteregg =
+        { "Rawr~", "Hello world!", "Another day another unstable API! Hello!", "Proud bug maker!" };
+
+    public string OwO => RandomEasteregg[UnityEngine.Random.Range(0, RandomEasteregg.Length)];
+
+    public Dictionary<int, CustomObjective> QuestData { get; } = new();
 }

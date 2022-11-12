@@ -30,7 +30,7 @@ public static class GuidManager
         var startKey = typeof(T).Name + "_";
         // It cannot do pointer-hack stuff when using query
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-        foreach (var item in Plugin.Instance.APIData.Data.Enum)
+        foreach (var item in Plugin.Instance.APIData.Data.EnumData)
         {
             if (!item.Key.StartsWith(startKey)) continue;
 
@@ -49,16 +49,16 @@ public static class GuidManager
                 $"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");
 
         var saveKey = $"{typeof(T).Name}_{guid}_{value}";
-        var enumValue = Plugin.Instance.APIData.Data.Enum.GetValueAsInt(saveKey);
+        var enumValue = Plugin.Instance.APIData.Data.EnumData.GetValueAsInt(saveKey);
 
         if (enumValue == default)
         {
-            enumValue = Plugin.Instance.APIData.Data.Enum.GetValueAsInt(MaxDataKey);
+            enumValue = Plugin.Instance.APIData.Data.EnumData.GetValueAsInt(MaxDataKey);
             if (enumValue < StartIndex)
                 enumValue = StartIndex;
 
-            Plugin.Instance.APIData.Data.Enum.SetValue<long>(MaxDataKey, enumValue + 1);
-            Plugin.Instance.APIData.Data.Enum.SetValue<long>(saveKey, enumValue);
+            Plugin.Instance.APIData.Data.EnumData.SetValue<long>(MaxDataKey, enumValue + 1);
+            Plugin.Instance.APIData.Data.EnumData.SetValue<long>(saveKey, enumValue);
             Plugin.Instance.APIData.Save();
         }
 
