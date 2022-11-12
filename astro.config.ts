@@ -1,3 +1,4 @@
+import htmlBeautifier from 'astro-html-beautifier';
 import vercel from "@astrojs/vercel/serverless";
 import minifyHtml from "astro-html-minifier";
 import { defineConfig } from "astro/config";
@@ -39,7 +40,8 @@ export default defineConfig({
             ]
         }),
         robotsTxt(),
-        minifyHtml()
+        minifyHtml(),
+        htmlBeautifier()
     ],
     vite: {
         build: {
