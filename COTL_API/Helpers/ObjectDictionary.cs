@@ -1,9 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace COTL_API.Saves;
 
+[Serializable]
 public class ObjectDictionary : Dictionary<string, object>
 {
+    protected ObjectDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+    }
+
     public T GetValue<T>(string key)
     {
         if (ContainsKey(key))

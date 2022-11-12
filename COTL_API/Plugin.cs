@@ -1,4 +1,5 @@
 using COTL_API.CustomFollowerCommand;
+using System.Collections.Generic;
 using COTL_API.CustomStructures;
 using COTL_API.CustomObjectives;
 using BepInEx.Configuration;
@@ -9,6 +10,7 @@ using COTL_API.Helpers;
 using BepInEx.Logging;
 using COTL_API.Saves;
 using COTL_API.Debug;
+using MonoMod.Utils;
 using System.Linq;
 using HarmonyLib;
 using System.IO;
@@ -22,15 +24,15 @@ namespace COTL_API;
 public class Plugin : BaseUnityPlugin
 {
     public const string PLUGIN_GUID = "io.github.xhayper.COTL_API";
-    public const string PLUGIN_NAME = "COTL API";
+    public const string PLUGIN_NAME = "COTL_API";
     public const string PLUGIN_VERSION = "0.1.7";
-    
+
     internal static Plugin Instance { get; private set; }
 
     internal new ManualLogSource Logger { get; private set; }
 
     private readonly Harmony Harmony = new(PLUGIN_GUID);
-    internal readonly ModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
+    internal readonly BaseModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
 
     internal string PluginPath { get; private set; }
 
@@ -51,6 +53,8 @@ public class Plugin : BaseUnityPlugin
         Instance = this;
         Logger = base.Logger;
 
+        BindEvent();
+
         PluginPath = Path.GetDirectoryName(Info.Location);
         _debug = Config.Bind("", "debug", false, "");
 
@@ -60,7 +64,7 @@ public class Plugin : BaseUnityPlugin
         if (Debug)
             AddDebugContent();
 
-        Logger.LogInfo($"COTL API loaded");
+        Logger.LogInfo($"COTL_API loaded");
     }
 
     private void OnEnable()
@@ -72,7 +76,23 @@ public class Plugin : BaseUnityPlugin
     private void OnDisable()
     {
         Harmony.UnpatchSelf();
-        Logger.LogInfo("COTL API unloaded");
+        Logger.LogInfo("COTL_API unloaded");
+    }
+
+    private void BindEvent()
+    {
+        APIData.OnLoadComplete += delegate
+        {
+            Dictionary<int, CustomObjective> tempObjectives = new();
+
+            foreach (var objective in APIData.Data.QuestData)
+                if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
+                    tempObjectives.Add(objective.Key, objective.Value);
+                else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
+                    tempObjectives.Add(objective.Key, objective.Value);
+
+            CustomObjectiveManager.PluginQuestTracker.AddRange(tempObjectives);
+        };
     }
 
     /// <summary>

@@ -8,7 +8,7 @@ public class DebugTarotCard : CustomTarotCard.CustomTarotCard
 
     public override string LocalisedName(int upgradeIndex)
     {
-        return "COTL API'S DEBUG TAROT CARD";
+        return "COTL_API'S DEBUG TAROT CARD";
     }
 
     public override string LocalisedLore()
