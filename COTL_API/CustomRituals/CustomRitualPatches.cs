@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using COTL_API.Helpers;
 using Lamb.UI.Rituals;
 using src.Extensions;
 using UnityEngine;
@@ -15,7 +16,7 @@ public static partial class CustomRitualManager
     {
         foreach (var customRitual in CustomRitualList.Keys)
         {
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogInfo("Custom Ritual: " + customRitual);
+            LogHelper.LogInfo("Custom Ritual: " + customRitual);
             __instance.ConfigureItem(__instance._ritualItemTemplate.Instantiate(__instance._ritualsContent),
                 customRitual);
         }

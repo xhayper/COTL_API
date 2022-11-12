@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using COTL_API.Helpers;
 using System.Linq;
 using UnityEngine;
 using FMOD;
@@ -47,8 +48,7 @@ public class SoundLoader : MonoBehaviour
     public Sound GetSound(string name)
     {
         if (_soundList.ContainsKey(name)) return _soundList[name];
-        if (Plugin.Instance != null)
-            Plugin.Instance.Logger.LogError($"Couldn't get sound {name}: Sound doesn't exist!");
+        LogHelper.LogError($"Couldn't get sound {name}: Sound doesn't exist!");
         return new Sound(); // Return empty Sound
     }
 
@@ -76,8 +76,7 @@ public class SoundLoader : MonoBehaviour
     {
         if (!_soundList.ContainsKey(name))
         {
-            if (Plugin.Instance != null)
-                Plugin.Instance.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
+            LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
 
         var sound = _soundList[name];
@@ -94,8 +93,7 @@ public class SoundLoader : MonoBehaviour
     {
         if (!_soundList.ContainsKey(name))
         {
-            if (Plugin.Instance != null)
-                Plugin.Instance.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
+            LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
 
         var sound = _soundList[name];

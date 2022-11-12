@@ -1,5 +1,6 @@
 ﻿using Lamb.UI.FollowerInteractionWheel;
 using System.Collections.Generic;
+using COTL_API.Helpers;
 using HarmonyLib;
 
 namespace COTL_API.Patches;
@@ -21,15 +22,14 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
                 item.CommandItem.SubCommands is { Count: > 0 })
 
             {
-                if (Plugin.Instance != null && Plugin.Instance.Debug)
-                    Plugin.Instance.Logger.LogDebug(
-                        $"Custom command with sub commands, not letting normal method run.");
+                LogHelper.LogDebug(
+                    $"Custom command with sub commands, not letting normal method run.");
                 __state = true;
                 return false;
             }
 
             if (Plugin.Instance != null && Plugin.Instance.Debug)
-                Plugin.Instance.Logger.LogDebug(
+                LogHelper.LogDebug(
                     $"Not a custom command or doesnt have sub-commands, letting normal method run.");
             __state = false;
             return true;
@@ -47,7 +47,7 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
         {
             if (!__state) return;
             if (Plugin.Instance != null && Plugin.Instance.Debug)
-                Plugin.Instance.Logger.LogDebug($"Custom command original method skipped, this is from the postfix.");
+                LogHelper.LogDebug($"Custom command original method skipped, this is from the postfix.");
             if (item.CommandItem.SubCommands is { Count: > 0 })
             {
                 if (item.CommandItem.IsAvailable(____follower))
@@ -62,7 +62,7 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
                 // without this the commands title and descriptions dont update if the user selects a greyed out item, instead
                 // it will now just close the menu instead of raising an exception
                 if (Plugin.Instance != null && Plugin.Instance.Debug)
-                    Plugin.Instance.Logger.LogDebug(
+                    LogHelper.LogDebug(
                         $"User pressed select on a greyed out sub command, closing menu and aborting choice.");
                 __instance.OnCancelButtonInput();
                 return;

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using COTL_API.Helpers;
+using System.Linq;
 using System.IO;
 using FMODUnity;
 using BepInEx;
@@ -50,7 +51,7 @@ public static class SoundHelpers
 
         if (result == RESULT.OK) return sound;
 
-        if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"Error making sound from file {fileName}!");
+        LogHelper.LogError($"Error making sound from file {fileName}!");
         result.IfErrorPrintWith($"MakeSound() -- fileName: {fileName}");
 
         return new Sound(); // Return empty sound in the case of an error
@@ -90,7 +91,7 @@ public static class SoundHelpers
     {
         if (result != RESULT.OK)
         {
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"Sound Error: {result} caught at {where}");
+            LogHelper.LogError($"Sound Error: {result} caught at {where}");
         }
     }
 
@@ -103,11 +104,10 @@ public static class SoundHelpers
         switch (files.Length)
         {
             case 0:
-                if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"Error: Couldn't find \"{fileName}\"");
+                LogHelper.LogError($"Error: Couldn't find \"{fileName}\"");
                 return null;
             case > 1:
-                if (Plugin.Instance != null)
-                    Plugin.Instance.Logger.LogWarning(
+                LogHelper.LogWarning(
                         $"More than one file named \"{fileName}\" found. This may lead to weird behavior.");
                 break;
         }

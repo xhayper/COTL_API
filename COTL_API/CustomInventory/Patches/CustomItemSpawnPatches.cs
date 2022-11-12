@@ -25,8 +25,7 @@ public static partial class CustomItemManager
             ref Action<PickUp> result, ref PickUp __result)
         {
             if (!CustomItemList.ContainsKey(type)) return true;
-            if (Plugin.Instance != null)
-                Plugin.Instance.Logger.LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
+            LogHelper.LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
 
             var gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
             var transform = gameObject != null ? gameObject.transform : null;
@@ -94,7 +93,7 @@ public static partial class CustomItemManager
 
             _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.ItemPickUpToImitate), null,
                 instantiateInWorldSpace: false) as GameObject;
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogWarning($"_myObject is NULL? {_myObject == null}");
+            LogHelper.LogWarning($"_myObject is NULL? {_myObject == null}");
             _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Sprite;
             _myObject.name = item.InternalObjectName;
             _myObject.transform.localScale = item.LocalScale;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.ProBuilder;
+using COTL_API.Helpers;
 using Lamb.UI.Settings;
 using System.Linq;
 using HarmonyLib;
@@ -44,12 +45,11 @@ public static class Localization
                 LocalizationMap[name].Add(key, value);
             }
 
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogInfo($"Loaded localization: {name}");
+            LogHelper.LogInfo($"Loaded localization: {name}");
         }
         else
         {
-            if (Plugin.Instance != null)
-                Plugin.Instance.Logger.LogError(
+            LogHelper.LogError(
                     $"Localization file not found! Please make sure that the path \"{path}\" contains the localization file.");
         }
     }

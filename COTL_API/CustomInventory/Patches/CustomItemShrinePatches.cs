@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using COTL_API.Helpers;
 using System.Linq;
 using HarmonyLib;
 
@@ -98,7 +99,7 @@ public static partial class CustomItemManager
                     {
                         listToAdd = __instance.Offerings;
                         if (Plugin.Instance != null && Plugin.Instance.Debug)
-                            Plugin.Instance.Logger.LogDebug(
+                            LogHelper.LogDebug(
                                 $"Something went horribly wrong here... we should never hit this.");
                         break;
                     }

@@ -176,8 +176,7 @@ public static class GameObjectExtensions
         var textMesh = obj.GetComponent<TextMeshProUGUI>();
         if (textMesh == null)
         {
-            if (Plugin.Instance != null)
-                Plugin.Instance.Logger.LogWarning("EditText: TextMeshProUGUI component not found.");
+            LogHelper.LogWarning("EditText: TextMeshProUGUI component not found.");
             return obj;
         }
 
@@ -205,7 +204,7 @@ public static class GameObjectExtensions
         var path = GetPathToImage(imagePath);
         if (path == null)
         {
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"File {imagePath} not found.");
+            LogHelper.LogError($"File {imagePath} not found.");
             return obj;
         }
 
@@ -263,7 +262,7 @@ public static class GameObjectExtensions
 
         if (img == null)
         {
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError("EditImage: Image component not found.");
+            LogHelper.LogError("EditImage: Image component not found.");
             return obj;
         }
 
@@ -282,7 +281,7 @@ public static class GameObjectExtensions
         var path = GetPathToImage(imagePath);
         if (path == null)
         {
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
+            LogHelper.LogError($"File {imagePath ?? "(null)"} not found.");
             return obj;
         }
 
@@ -291,7 +290,7 @@ public static class GameObjectExtensions
         var img = obj.GetComponent<Image>();
         if (img == null)
         {
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError("EditImage: Image component not found.");
+            LogHelper.LogError("EditImage: Image component not found.");
             return obj;
         }
 
@@ -311,7 +310,7 @@ public static class GameObjectExtensions
         var img = obj.GetComponent<Image>();
         if (img == null)
         {
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError("ChangeOpacity: Image component not found.");
+            LogHelper.LogError("ChangeOpacity: Image component not found.");
             return obj;
         }
 
