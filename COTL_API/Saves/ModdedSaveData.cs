@@ -3,10 +3,10 @@ namespace COTL_API.Saves;
 public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
 {
     public override int SAVE_SLOT { get; protected set; } = 5;
-    public override bool LoadOnStart { get; set; }
-    public override bool LoadAfterMainSave { get; set; }
-    public override bool IsLoaded { get; protected set; }
+    public override ModdedSaveLoadOrder LoadOrder { get; set; } = ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START;
+
     public sealed override string GUID { get; protected set; }
+    public override bool IsLoaded { get; protected set; }
 
     public T Data { get; private set; }
 
@@ -42,21 +42,26 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
 
     public override void Save(bool encrypt = true, bool backup = true)
     {
-        if (!LoadOnStart && (!DataManager.Instance.AllowSaving || CheatConsole.IN_DEMO))
+        if (LoadOrder != ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE &&
+            (!DataManager.Instance.AllowSaving || CheatConsole.IN_DEMO))
             return;
 
-        _dataReadWriter.Write(Data, MakeSaveSlot(LoadOnStart ? null : SAVE_SLOT), encrypt, backup);
+        _dataReadWriter.Write(Data,
+            MakeSaveSlot(LoadOrder == ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE ? null : SAVE_SLOT), encrypt,
+            backup);
     }
 
     public override void Load(int? saveSlot = null)
     {
-        if (!LoadOnStart && CheatConsole.IN_DEMO)
+        if (LoadOrder != ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE && CheatConsole.IN_DEMO)
             return;
 
         if (saveSlot != null)
             SAVE_SLOT = saveSlot.Value;
 
-        _dataReadWriter.Read(MakeSaveSlot(LoadOnStart ? null : SAVE_SLOT));
+        _dataReadWriter.Read(MakeSaveSlot(LoadOrder == ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE
+            ? null
+            : SAVE_SLOT));
     }
 
     public override bool SaveExist(int? saveSlot = null) => _dataReadWriter.FileExists(MakeSaveSlot(saveSlot));
