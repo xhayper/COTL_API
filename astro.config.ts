@@ -43,7 +43,8 @@ export default defineConfig({
         robotsTxt(),
         AstroPWA({
             manifest: {
-                name: "COTL API",
+                name: "Cult of the Lamb API Documentation",
+                short_name: "COTL API Docs",
                 description: "Documentation for Cult of the Lamb API",
                 icons: [
                     {
