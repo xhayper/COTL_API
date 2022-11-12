@@ -1,16 +1,16 @@
 ---
 import SkipToContent from "./SkipToContent.astro";
 import SidebarToggle from "./SidebarToggle";
+import DocSearch from "./DocSearch.astro";
 import * as CONFIG from "../../config";
 import Logo from "./Logo.astro";
-import Search from "./Search";
 ---
 
 <header>
     <SkipToContent />
     <nav class="nav-wrapper" title="Top Navigation">
         <div class="menu-toggle">
-            <SidebarToggle client:only="preact" />
+            <SidebarToggle client:idle />
         </div>
         <div class="logo flex">
             <a href="/introduction">
@@ -20,7 +20,7 @@ import Search from "./Search";
         </div>
         <div style="flex-grow: 1;"></div>
         <div class="search-item">
-            <Search client:only="preact" />
+            <DocSearch client:idle />
         </div>
     </nav>
 </header>
