@@ -29,7 +29,7 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void SaveAndLoad_ResetSave(int saveSlot, bool newGame)
     {
-        foreach (var saveData in _moddedSaveData.Values.Where(save => !save.LoadOnStart))
+        foreach (var saveData in _moddedSaveData.Values)
         {
             saveData.ResetSave(saveSlot, newGame);
         }
@@ -39,9 +39,20 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void SaveAndLoad_DeleteSaveSlot(int saveSlot)
     {
-        foreach (var saveData in _moddedSaveData.Values.Where(save => !save.LoadOnStart))
+        foreach (var saveData in _moddedSaveData.Values)
         {
             saveData.DeleteSaveSlot(saveSlot);
+        }
+    }
+
+    [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.Awake))]
+    [HarmonyPostfix]
+    private static void PlayerFarming_Awake()
+    {
+        Plugin.Instance.Logger.LogWarning($"Loading Modded Save Data with LoadAfterMainSave=true.");
+        foreach (var saveData in _moddedSaveData.Values.Where(save => save.LoadAfterMainSave))
+        {
+            saveData.Load(SaveAndLoad.SAVE_SLOT);
         }
     }
 }

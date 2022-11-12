@@ -15,6 +15,7 @@ using System.Linq;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
+using UnityEngine.ProBuilder.MeshOperations;
 
 namespace COTL_API;
 
@@ -34,7 +35,7 @@ public class Plugin : BaseUnityPlugin
     private readonly Harmony _harmony = new(PLUGIN_GUID);
     
     internal readonly ModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
-    internal readonly ModdedSaveData<APISlotData> APIQuestData = new($"{PLUGIN_GUID}_slot");
+
 
     internal string PluginPath { get; private set; }
 
@@ -44,7 +45,7 @@ public class Plugin : BaseUnityPlugin
     internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
     internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
-
+    public ModdedSaveData<APISlotData> APIQuestData = new($"{PLUGIN_GUID}_slot");
     private ConfigEntry<bool> _debug { get; set; }
     public bool Debug => _debug.Value;
 
@@ -54,13 +55,14 @@ public class Plugin : BaseUnityPlugin
     {
         Instance = this;
         Logger = base.Logger;
-
+        
         BindEvent();
 
         PluginPath = Path.GetDirectoryName(Info.Location);
         _debug = Config.Bind("", "debug", false, "");
 
         APIData.LoadOnStart = true;
+        APIQuestData.LoadAfterMainSave = true;
         ModdedSaveManager.RegisterModdedSave(APIData);
         ModdedSaveManager.RegisterModdedSave(APIQuestData);
 
