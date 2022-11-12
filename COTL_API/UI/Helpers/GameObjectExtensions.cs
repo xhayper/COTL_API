@@ -1,12 +1,13 @@
-﻿using UnityEngine;
-using TMPro;
-using System.Linq;
-using Image = UnityEngine.UI.Image;
+﻿using Image = UnityEngine.UI.Image;
 using COTL_API.Helpers;
+using System.Linq;
+using UnityEngine;
 using System.IO;
 using BepInEx;
+using TMPro;
 
 namespace COTL_API.UI.Helpers;
+
 public static class GameObjectExtensions
 {
     // Extension methods for GameObjects.
@@ -34,9 +35,10 @@ public static class GameObjectExtensions
     public static GameObject ChangePosition(this GameObject obj,
         float? x = null, float? y = null, float? z = null)
     {
-        x ??= obj.transform.localRotation.x;
-        y ??= obj.transform.localRotation.y;
-        z ??= obj.transform.localRotation.z;
+        var localRotation = obj.transform.localRotation;
+        x ??= localRotation.x;
+        y ??= localRotation.y;
+        z ??= localRotation.z;
 
         obj.transform.localPosition = new Vector3((float)x, (float)y, (float)z);
         return obj;
@@ -53,11 +55,13 @@ public static class GameObjectExtensions
     public static GameObject ChangeScale(this GameObject obj,
         float? x = null, float? y = null, float? z = null)
     {
-        x ??= obj.transform.localScale.x;
-        y ??= obj.transform.localScale.y;
-        z ??= obj.transform.localScale.z;
+        var localScale = obj.transform.localScale;
+        x ??= localScale.x;
+        y ??= localScale.y;
+        z ??= localScale.z;
 
-        obj.transform.localScale = new Vector3((float)x, (float)y, (float)z);
+        localScale = new Vector3((float)x, (float)y, (float)z);
+        obj.transform.localScale = localScale;
         return obj;
     }
 
@@ -72,9 +76,10 @@ public static class GameObjectExtensions
     public static GameObject ChangeRotation(this GameObject obj,
         float? x = null, float? y = null, float? z = null)
     {
-        x ??= obj.transform.eulerAngles.x;
-        y ??= obj.transform.eulerAngles.y;
-        z ??= obj.transform.eulerAngles.z;
+        var eulerAngles = obj.transform.eulerAngles;
+        x ??= eulerAngles.x;
+        y ??= eulerAngles.y;
+        z ??= eulerAngles.z;
 
         obj.transform.Rotate(new Vector3((float)x, (float)y, (float)z));
         return obj;
@@ -88,7 +93,7 @@ public static class GameObjectExtensions
     /// <returns>The child GameObject.</returns>
     public static GameObject CreateChild(this GameObject obj, string name)
     {
-        Transform parent = obj.transform;
+        var parent = obj.transform;
         return UIHelpers.CreateUIObject(name, parent);
     }
 
@@ -99,7 +104,7 @@ public static class GameObjectExtensions
     /// <returns>The GameObject with all changes applied.</returns>
     public static GameObject MakeDraggable(this GameObject obj)
     {
-        var script = obj.AddComponent<UIBehaviourHelpers.DraggableUIObject>();
+        obj.AddComponent<UIBehaviourHelpers.DraggableUIObject>();
         return obj;
     }
 
@@ -149,9 +154,10 @@ public static class GameObjectExtensions
     /// <param name="fontSize">The size of the font.</param>
     /// <param name="alignment">The alignment of the text (i.e. center, left, right).-</param>
     /// <returns>The GameObject with all changes applied.</returns>
-    public static GameObject AddText(this GameObject obj, string message, float fontSize = 10f, TextAlignmentOptions alignment = TextAlignmentOptions.Center)
+    public static GameObject AddText(this GameObject obj, string message, float fontSize = 10f,
+        TextAlignmentOptions alignment = TextAlignmentOptions.Center)
     {
-        TextMeshProUGUI textMesh = obj.AddComponent<TextMeshProUGUI>();
+        var textMesh = obj.AddComponent<TextMeshProUGUI>();
         textMesh.font = FontHelpers.UIFont;
         textMesh.fontSize = fontSize;
         textMesh.text = message;
@@ -167,12 +173,13 @@ public static class GameObjectExtensions
     /// <returns>The GameObject with all changes applied.</returns>
     public static GameObject EditText(this GameObject obj, string message)
     {
-        TextMeshProUGUI textMesh = obj.GetComponent<TextMeshProUGUI>();
-        if(textMesh == null)
+        var textMesh = obj.GetComponent<TextMeshProUGUI>();
+        if (textMesh == null)
         {
-            Plugin.Logger.LogWarning("EditText: TextMeshProUGUI component not found.");
+            Plugin.Instance.Logger.LogWarning("EditText: TextMeshProUGUI component not found.");
             return obj;
         }
+
         textMesh.text = message;
         return obj;
     }
@@ -191,24 +198,25 @@ public static class GameObjectExtensions
     /// <returns>The GameObject with all changes applied.</returns>
     public static GameObject AttachImage(this GameObject obj, Sprite sprite, int opacity = 100)
     {
-        Image img = obj.AddComponent<Image>();
+        var img = obj.AddComponent<Image>();
         img.sprite = sprite;
         img.SetNativeSize();
         img.preserveAspect = true;
 
-        if (opacity < 100 && opacity >= 0)
-        {
-            Color color = img.color;
-            color.a = (float)opacity / 100f;
-            img.color = color;
-        }
+        if (opacity is >= 100 or < 0) return obj;
+
+        var color = img.color;
+        color.a = opacity / 100f;
+        img.color = color;
+
         return obj;
     }
 
     private static string GetPathToImage(string filename)
     {
-        if (Path.IsPathRooted(filename)) return filename;
-        return Directory.GetFiles(Paths.PluginPath, filename, SearchOption.AllDirectories).FirstOrDefault();
+        return Path.IsPathRooted(filename)
+            ? filename
+            : Directory.GetFiles(Paths.PluginPath, filename, SearchOption.AllDirectories).FirstOrDefault();
     }
 
     /// <summary>
@@ -220,22 +228,23 @@ public static class GameObjectExtensions
     /// <returns>The GameObject with all changes applied.</returns>
     public static GameObject AttachImage(this GameObject obj, string imagePath, int opacity = 100)
     {
-        string path = GetPathToImage(imagePath);
-        if(path == null)
+        var path = GetPathToImage(imagePath);
+        if (path == null)
         {
-            Plugin.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
+            Plugin.Instance.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
             return obj;
-        };
-        Sprite sprite = TextureHelper.CreateSpriteFromPath(path);
+        }
 
-        Image img = obj.AddComponent<Image>();
+        var sprite = TextureHelper.CreateSpriteFromPath(path);
+
+        var img = obj.AddComponent<Image>();
         img.sprite = sprite;
         img.SetNativeSize();
         img.preserveAspect = true;
 
-        Mathf.Clamp(opacity, 0, 100);
-        Color color = img.color;
-        color.a = (float)opacity / 100f;
+        opacity = Mathf.Clamp(opacity, 0, 100);
+        var color = img.color;
+        color.a = opacity / 100f;
         img.color = color;
 
         return obj;
@@ -249,11 +258,11 @@ public static class GameObjectExtensions
     /// <returns>The GameObject with all changes applied.</returns>
     public static GameObject EditImage(this GameObject obj, Sprite sprite)
     {
-        Image img = obj.GetComponent<Image>();
+        var img = obj.GetComponent<Image>();
 
-        if(img == null)
+        if (img == null)
         {
-            Plugin.Logger.LogError("EditImage: Image component not found.");
+            Plugin.Instance.Logger.LogError("EditImage: Image component not found.");
             return obj;
         }
 
@@ -269,20 +278,22 @@ public static class GameObjectExtensions
     /// <returns>The GameObject with all changes applied.</returns>
     public static GameObject EditImage(this GameObject obj, string imagePath)
     {
-        string path = GetPathToImage(imagePath);
+        var path = GetPathToImage(imagePath);
         if (path == null)
         {
-            Plugin.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
-            return obj;
-        };
-        Sprite sprite = TextureHelper.CreateSpriteFromPath(path);
-
-        Image img = obj.GetComponent<Image>();
-        if (img == null)
-        {
-            Plugin.Logger.LogError("EditImage: Image component not found.");
+            Plugin.Instance.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
             return obj;
         }
+
+        var sprite = TextureHelper.CreateSpriteFromPath(path);
+
+        var img = obj.GetComponent<Image>();
+        if (img == null)
+        {
+            Plugin.Instance.Logger.LogError("EditImage: Image component not found.");
+            return obj;
+        }
+
         img.sprite = sprite;
 
         return obj;
@@ -296,19 +307,18 @@ public static class GameObjectExtensions
     /// <returns>The GameObject with all changes applied.</returns>
     public static GameObject ChangeImageOpacity(this GameObject obj, int opacity = 100)
     {
-        Image img = obj.GetComponent<Image>();
+        var img = obj.GetComponent<Image>();
         if (img == null)
         {
-            Plugin.Logger.LogError("ChangeOpacity: Image component not found.");
+            Plugin.Instance.Logger.LogError("ChangeOpacity: Image component not found.");
             return obj;
         }
 
-        Mathf.Clamp(opacity, 0, 100);
-        Color color = img.color;
-        color.a = (float)opacity / 100f;
+        var color = img.color;
+        opacity = Mathf.Clamp(opacity, 0, 100);
+        color.a = opacity / 100f;
         img.color = color;
 
         return obj;
     }
-
 }

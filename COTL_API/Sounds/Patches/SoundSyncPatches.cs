@@ -1,5 +1,5 @@
-﻿using HarmonyLib;
-using Lamb.UI.SettingsMenu;
+﻿using Lamb.UI.SettingsMenu;
+using HarmonyLib;
 
 namespace COTL_API.Sounds.Patches;
 
@@ -10,13 +10,13 @@ internal class SoundSyncPatches
     [HarmonyPostfix]
     private static void SyncMaster()
     {
-        SoundLoader.AllInstances.ForEach(x => x.SyncAllVolume());
+        SoundLoader.InstanceList.ForEach(x => x.SyncAllVolume());
     }
 
     [HarmonyPatch(typeof(AudioSettings), nameof(AudioSettings.OnMusicVolumeChanged))]
     [HarmonyPostfix]
     private static void SyncMusic()
     {
-        SoundLoader.AllInstances.ForEach(x => x.SyncAllVolume());
+        SoundLoader.InstanceList.ForEach(x => x.SyncAllVolume());
     }
 }

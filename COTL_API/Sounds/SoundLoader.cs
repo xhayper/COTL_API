@@ -1,29 +1,26 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using FMOD;
 
 namespace COTL_API.Sounds;
+
 public class SoundLoader : MonoBehaviour
 {
     /// <summary>
     /// All Sounds loaded in this SoundLoader instance, accessible through their respective string keys.
     /// </summary>
-    public Dictionary<string, Sound> Sounds = new Dictionary<string, Sound>();
+    private Dictionary<string, Sound> _soundList = new();
 
     // SoundHandlers -- For looping audio that requires volume-syncing.
-    private List<SoundHandler> Handlers = new List<SoundHandler>();
+    private List<SoundHandler> _handlerList = new();
 
     // All existent SoundLoader instances, for management purposes.
-    internal static List<SoundLoader> AllInstances = new List<SoundLoader>();
-
-    private void Start()
-    {
-    }
+    internal static readonly List<SoundLoader> InstanceList = new();
 
     private void OnDestroy()
     {
-        AllInstances.Remove(this);
+        InstanceList.Remove(this);
         StopAll();
     }
 
@@ -36,9 +33,9 @@ public class SoundLoader : MonoBehaviour
     /// <returns>The Sound's string key.</returns>
     public string CreateSound(string fileName, string name = null)
     {
-        Sound sound = SoundHelpers.MakeSound(fileName);
+        var sound = SoundHelpers.MakeSound(fileName);
         name ??= fileName;
-        Sounds.Add(name, sound);
+        _soundList.Add(name, sound);
         return name; // Return name of sound in the 'Sounds' dictionary!
     }
 
@@ -49,12 +46,9 @@ public class SoundLoader : MonoBehaviour
     /// <returns>The Sound that matches that string key, or an empty Sound if none is found.</returns>
     public Sound GetSound(string name)
     {
-        if (!Sounds.ContainsKey(name))
-        {
-            Plugin.Logger.LogError($"Couldn't get sound {name}: Sound doesn't exist!");
-            return new Sound(); // Return empty Sound
-        }
-        return Sounds[name];
+        if (_soundList.ContainsKey(name)) return _soundList[name];
+        Plugin.Instance.Logger.LogError($"Couldn't get sound {name}: Sound doesn't exist!");
+        return new Sound(); // Return empty Sound
     }
 
     /// <summary>
@@ -65,16 +59,9 @@ public class SoundLoader : MonoBehaviour
     /// <returns></returns>
     public string AddExistingSound(Sound sound, string name)
     {
-        if (!Sounds.ContainsValue(sound))
-        {
-            Sounds.Add(name, sound);
-            return name;
-        }
-        else
-        {
-            // If sound is already in dictionary, return key.
-            return Sounds.Where(x => x.Value.Equals(sound)).First().Key;
-        }
+        if (_soundList.ContainsValue(sound)) return _soundList.First(x => x.Value.Equals(sound)).Key;
+        _soundList.Add(name, sound);
+        return name;
     }
 
 
@@ -86,35 +73,36 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The string key for the Sound you wanna play..</param>
     public void PlaySFX(string name)
     {
-        if (!Sounds.ContainsKey(name))
+        if (!_soundList.ContainsKey(name))
         {
-            Plugin.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
+            Plugin.Instance.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
-        Sound sound = Sounds[name];
+
+        var sound = _soundList[name];
         sound.setMode(MODE.LOOP_OFF);
 
         SoundHelpers.PlaySound(sound, Volume.SFX);
     }
-    
+
     /// <summary>
     /// Play a cached Sound in a loop.
     /// </summary>
     /// <param name="name">The string key of the cached Sound.</param>
     public void PlayMusic(string name)
     {
-        if (!Sounds.ContainsKey(name))
+        if (!_soundList.ContainsKey(name))
         {
-            Plugin.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
+            Plugin.Instance.Logger.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
 
-        Sound sound = Sounds[name];
+        var sound = _soundList[name];
         sound.setMode(MODE.LOOP_NORMAL); // Music should loop
 
-        SoundHandler sh = new SoundHandler(sound, name);
-        RESULT result = sh.Play();
+        var sh = new SoundHandler(sound, name);
+        var result = sh.Play();
         sh.SetVolume(SoundHelpers.MusicVolume);
         if (result != RESULT.OK) return; // Return before adding to the Handlers list.
-        Handlers.Add(sh);
+        _handlerList.Add(sh);
     }
 
     /// <summary>
@@ -124,7 +112,7 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The string key with which you can access this cached Sound later.</param>
     public void CreateAndPlayMusic(string fileName, string name = null)
     {
-        string soundName = CreateSound(fileName, name);
+        var soundName = CreateSound(fileName, name);
         PlayMusic(soundName);
     }
 
@@ -135,7 +123,7 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The string key with which you can access this cached Sound later.</param>
     public void CreateAndPlaySFX(string fileName, string name = null)
     {
-        string soundName = CreateSound(fileName, name);
+        var soundName = CreateSound(fileName, name);
         PlaySFX(soundName);
     }
 
@@ -147,13 +135,13 @@ public class SoundLoader : MonoBehaviour
     /// </summary>
     public void StopAll()
     {
-        Handlers.ForEach(x => x.Stop());
-        Handlers = new List<SoundHandler>(); // Empty list.
+        _handlerList.ForEach(x => x.Stop());
+        _handlerList = new List<SoundHandler>(); // Empty list.
     }
 
     internal void SyncAllVolume()
     {
-        Handlers.ForEach(x => x.SetVolume(SoundHelpers.MusicVolume));
+        _handlerList.ForEach(x => x.SetVolume(SoundHelpers.MusicVolume));
     }
 
     /// <summary>
@@ -162,19 +150,19 @@ public class SoundLoader : MonoBehaviour
     public void ClearSounds()
     {
         // Clear all Sounds from the dictionary
-        Sounds = new Dictionary<string, Sound>();
+        _soundList = new Dictionary<string, Sound>();
     }
 
 
     // == CHANNEL INSTANCE ==
     private SoundHandler GetHandlerByID(string id)
     {
-        return Handlers.Where(x => x.Id == id).FirstOrDefault();
+        return _handlerList.FirstOrDefault(x => x.Id == id);
     }
 
     internal void SyncVolume(string id)
     {
-        SoundHandler sl = GetHandlerByID(id);
+        var sl = GetHandlerByID(id);
         sl?.SetVolume(SoundHelpers.MusicVolume);
     }
 
@@ -186,7 +174,7 @@ public class SoundLoader : MonoBehaviour
     /// <param name="mul">The volume multiplier.</param>
     public void VolumeMultiplier(string id, float mul)
     {
-        SoundHandler sl = GetHandlerByID(id);
+        var sl = GetHandlerByID(id);
         sl?.SetMultiplier(mul);
         sl?.SetVolume(SoundHelpers.MusicVolume);
     }
@@ -219,9 +207,9 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The ID of the channel.</param>
     public void Stop(string name)
     {
-        SoundHandler sh = GetHandlerByID(name);
+        var sh = GetHandlerByID(name);
         sh?.Stop();
-        Handlers.Remove(sh);
+        _handlerList.Remove(sh);
     }
 
     /// <summary>
@@ -232,7 +220,7 @@ public class SoundLoader : MonoBehaviour
     /// <param name="pause"><c>true</c> to pause, <c>false</c> to unpause.</param>
     public void Pause(string name, bool pause)
     {
-        SoundHandler sh = GetHandlerByID(name);
+        var sh = GetHandlerByID(name);
         sh?.Pause(pause);
     }
 
@@ -243,8 +231,8 @@ public class SoundLoader : MonoBehaviour
     /// <returns><c>true</c> if any channel is playing the sound; <c>false</c> if not.</returns>
     public bool IsPlaying(string name)
     {
-        SoundHandler sh = GetHandlerByID(name);
-        return sh?.isPlaying() ?? false;
+        var sh = GetHandlerByID(name);
+        return sh?.IsPlaying() ?? false;
     }
 
     /// <summary>
@@ -255,7 +243,7 @@ public class SoundLoader : MonoBehaviour
     /// <returns><c>true</c> if the Channel is paused, <c>false</c> if not.</returns>
     public bool IsPaused(string name)
     {
-        SoundHandler sh = GetHandlerByID(name);
-        return sh?.isPaused() ?? false;
+        var sh = GetHandlerByID(name);
+        return sh?.IsPaused() ?? false;
     }
 }
