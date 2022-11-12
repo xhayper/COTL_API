@@ -9,7 +9,7 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void SaveAndLoad_Load(int saveSlot)
     {
-        foreach (var saveData in ModdedSaveData.Values.Where(save => !save.LoadOnStart))
+        foreach (var saveData in ModdedSaveDataList.Values.Where(save => !save.LoadOnStart))
         {
             saveData.Load(saveSlot);
         }
@@ -19,7 +19,7 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void SaveAndLoad_Save()
     {
-        foreach (var saveData in ModdedSaveData.Values)
+        foreach (var saveData in ModdedSaveDataList.Values)
         {
             saveData.Save();
         }
@@ -29,7 +29,7 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void SaveAndLoad_ResetSave(int saveSlot, bool newGame)
     {
-        foreach (var saveData in ModdedSaveData.Values.Where(save => !save.LoadOnStart))
+        foreach (var saveData in ModdedSaveDataList.Values.Where(save => !save.LoadOnStart))
         {
             saveData.ResetSave(saveSlot, newGame);
         }
@@ -39,7 +39,7 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void SaveAndLoad_DeleteSaveSlot(int saveSlot)
     {
-        foreach (var saveData in ModdedSaveData.Values.Where(save => !save.LoadOnStart))
+        foreach (var saveData in ModdedSaveDataList.Values.Where(save => !save.LoadOnStart))
         {
             saveData.DeleteSaveSlot(saveSlot);
         }

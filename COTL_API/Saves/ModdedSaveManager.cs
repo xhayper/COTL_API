@@ -6,7 +6,7 @@ namespace COTL_API.Saves;
 [HarmonyPatch]
 public static partial class ModdedSaveManager
 {
-    internal static readonly Dictionary<string, BaseModdedSaveData> ModdedSaveData = new();
+    internal static readonly Dictionary<string, BaseModdedSaveData> ModdedSaveDataList = new();
 
     public static void RegisterModdedSave(BaseModdedSaveData saveData)
     {
@@ -14,7 +14,7 @@ public static partial class ModdedSaveManager
         {
             throw new System.Exception("Modded save data cannot be loaded on start and loaded after main save!");
         }
-        ModdedSaveData.Add(saveData.GUID, saveData);
+        ModdedSaveDataList.Add(saveData.GUID, saveData);
         if (saveData.LoadOnStart) saveData.Load();
     }
 }
