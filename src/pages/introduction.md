@@ -22,6 +22,12 @@ It also has experimental functionality for:
 
 -   Skins
 -   Tarot Cards
+-   Task
+-   Ritual
 -   Structures
+-   Localization
+-   Mission
+-   Sound
+-   UI
 
 And many more will be added soon!

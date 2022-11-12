@@ -49,9 +49,18 @@ export const SIDEBAR: Sidebar = {
         { text: "Getting Started", link: "getting-started" }
     ],
     Features: [
-        { text: "Items", link: "items" },
         { text: "Follower Commands", link: "follower-commands" },
+        { text: "Items", link: "items" },
+        { text: "Localization", link: "localization" },
+        { text: "Mission", link: "mission" },
         { text: "Objectives", link: "objectives" },
-        { text: "Save File Data", link: "save-data" }
+        { text: "Ritual", link: "ritual" },
+        { text: "Save File Data", link: "save-data" },
+        { text: "Skin", link: "skin" },
+        { text: "Sound", link: "sound" },
+        { text: "Structures", link: "structures" },
+        { text: "Tarot Card", link: "tarot-card" },
+        { text: "Task", link: "task" },
+        { text: "UI", link: "ui" }
     ]
 };
