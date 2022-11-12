@@ -41,7 +41,16 @@ export default defineConfig({
             ]
         }),
         robotsTxt(),
-        AstroPWA()
+        AstroPWA({
+            manifest: {
+                description: "Cult of the Lamb API documentation",
+                start_url: "/introduction",
+                orientation: "landscape",
+                theme_color: "#1F2937",
+                background_color: "#FF1438",
+                categories: ["documentation", "code", "api", "library"]
+            }
+        })
     ],
     vite: {
         build: {
