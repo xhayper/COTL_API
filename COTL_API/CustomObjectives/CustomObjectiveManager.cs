@@ -235,7 +235,6 @@ public static partial class CustomObjectiveManager
     {
         CustomObjective customObjective = new(id, text, objectiveData);
         CustomObjectiveList.Add(id, customObjective);
-        Plugin.Instance.APIQuestData.Data.QuestData.Add(id, customObjective);
         Quests.QuestsAll.Add(objectiveData);
         return customObjective;
     }
