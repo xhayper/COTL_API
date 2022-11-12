@@ -55,8 +55,6 @@ public class Plugin : BaseUnityPlugin
     {
         Instance = this;
         Logger = base.Logger;
-        
-        BindEvent();
 
         PluginPath = Path.GetDirectoryName(Info.Location);
         _debug = Config.Bind("", "debug", false, "");
@@ -66,6 +64,8 @@ public class Plugin : BaseUnityPlugin
         ModdedSaveManager.RegisterModdedSave(APIData);
         ModdedSaveManager.RegisterModdedSave(APIQuestData);
 
+        BeginLoadAfterMainSave();
+        
         if (Debug)
             AddDebugContent();
 
@@ -84,11 +84,17 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo("COTL_API unloaded");
     }
 
-    private void BindEvent()
+    private void BeginLoadAfterMainSave()
     {
-        APIQuestData.OnLoadComplete += delegate
+        Singleton<SaveAndLoad>.Instance._saveFileReadWriter.OnReadCompleted += delegate
         {
-            Logger.LogWarning($"Re-added any custom quests from the players existing objectives.");
+            Instance.Logger.LogWarning($"Loading Modded Save Data with LoadAfterMainSave=true.");
+            foreach (var saveData in ModdedSaveManager.ModdedSaveData.Values.Where(save => save.LoadAfterMainSave))
+            {
+                saveData.Load(SaveAndLoad.SAVE_SLOT);
+            }
+            
+            Logger.LogWarning($"Re-adding any custom quests from the players existing objectives.");
             Dictionary<int, CustomObjective> tempObjectives = new();
 
             foreach (var objective in APIQuestData.Data.QuestData)
@@ -98,8 +104,15 @@ public class Plugin : BaseUnityPlugin
                     tempObjectives.Add(objective.Key, objective.Value);
 
             CustomObjectiveManager.CustomObjectiveList.AddRange(tempObjectives);
-        };
+
+            Instance.Logger.LogWarning($"Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
+            foreach (var quest in CustomObjectiveManager.CustomObjectiveList)
+            {
+                Instance.APIQuestData.Data.QuestData.TryAdd(quest.Key, quest.Value);
+            }
+        };  
     }
+    
 
     /// <summary>
     /// Cleans the users QuestHistory indexes to prevent issues when they remove/disable mods that add custom quests.

@@ -13,19 +13,6 @@ namespace COTL_API.CustomObjectives;
 [HarmonyPatch]
 public static partial class CustomObjectiveManager
 {
-    [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.OnEnable))]
-    [HarmonyPostfix]
-    private static void PlayerFarming_OnEnable()
-    {
-        foreach (var quest in CustomObjectiveList)
-        {
-            Plugin.Instance.APIQuestData.Data.QuestData.TryAdd(quest.Key, quest.Value);
-        }
-        Plugin.Instance.Logger.LogWarning($"Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
-    }
-    
-    
-    
     [HarmonyPatch(typeof(interaction_FollowerInteraction), nameof(interaction_FollowerInteraction.GetConversationEntry),
         typeof(Follower.ComplaintType), typeof(ObjectivesData))]
     [HarmonyPostfix]
@@ -96,7 +83,7 @@ public static partial class CustomObjectiveManager
         for (var index = 0; index < instructionList.Count; index++)
         {
             var instruction = instructionList[index];
-            if (instruction.opcode == OpCodes.Ldc_I4_S && (sbyte)instruction.operand == 0x19)
+            if (instruction.opcode == OpCodes.Ldc_I4_S && (sbyte) instruction.operand == 0x19)
                 instructionList[index] = new CodeInstruction(OpCodes.Call,
                     typeof(CustomObjectiveManager).GetMethod(nameof(GetAdjustedCount)));
         }
