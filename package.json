@@ -15,7 +15,6 @@
     },
     "devDependencies": {
         "@astrojs/image": "^0.11.4",
-        "@astrojs/partytown": "^1.0.1",
         "@astrojs/preact": "^1.2.0",
         "@astrojs/sitemap": "^1.0.0",
         "@astrojs/vercel": "^2.3.3",
