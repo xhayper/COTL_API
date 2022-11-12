@@ -29,7 +29,7 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void SaveAndLoad_ResetSave(int saveSlot, bool newGame)
     {
-        foreach (var saveData in _moddedSaveData.Values)
+        foreach (var saveData in _moddedSaveData.Values.Where(save => !save.LoadOnStart))
         {
             saveData.ResetSave(saveSlot, newGame);
         }
@@ -39,7 +39,7 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void SaveAndLoad_DeleteSaveSlot(int saveSlot)
     {
-        foreach (var saveData in _moddedSaveData.Values)
+        foreach (var saveData in _moddedSaveData.Values.Where(save => !save.LoadOnStart))
         {
             saveData.DeleteSaveSlot(saveSlot);
         }
