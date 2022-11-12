@@ -1,9 +1,11 @@
 ﻿using TMPro;
 
 namespace COTL_API.UI.Helpers;
+
 public static class FontHelpers
 {
-    internal static TMP_FontAsset _startMenu, _pauseMenu;
+    internal static TMP_FontAsset _startMenu { get; set; }
+    internal static TMP_FontAsset _pauseMenu { get; set; }
 
     /// <summary>
     /// The pause menu's font as a TextMeshPro FontAsset.
@@ -19,5 +21,4 @@ public static class FontHelpers
     /// The game's UI font as a TextMeshPro FontAsset.
     /// </summary>
     public static TMP_FontAsset UIFont => PauseMenu ? PauseMenu : StartMenu;
-
 }
