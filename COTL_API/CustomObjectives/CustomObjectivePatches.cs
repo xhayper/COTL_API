@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Linq;
+using COTL_API.Helpers;
 using HarmonyLib;
 using MMTools;
 
@@ -12,6 +13,19 @@ namespace COTL_API.CustomObjectives;
 [HarmonyPatch]
 public static partial class CustomObjectiveManager
 {
+    [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.OnEnable))]
+    [HarmonyPostfix]
+    private static void PlayerFarming_OnEnable()
+    {
+        foreach (var quest in CustomObjectiveList)
+        {
+            Plugin.Instance.APIQuestData.Data.QuestData.TryAdd(quest.Key, quest.Value);
+        }
+        Plugin.Instance.Logger.LogWarning($"Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
+    }
+    
+    
+    
     [HarmonyPatch(typeof(interaction_FollowerInteraction), nameof(interaction_FollowerInteraction.GetConversationEntry),
         typeof(Follower.ComplaintType), typeof(ObjectivesData))]
     [HarmonyPostfix]

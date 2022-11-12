@@ -4,6 +4,7 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
 {
     public override int SAVE_SLOT { get; protected set; } = 5;
     public override bool LoadOnStart { get; set; }
+    public override bool LoadAfterMainSave { get; set; }
     public override bool IsLoaded { get; protected set; }
     public sealed override string GUID { get; protected set; }
 
