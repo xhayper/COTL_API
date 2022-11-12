@@ -1,6 +1,6 @@
 namespace COTL_API.Saves;
 
-public class ModdedSaveData<T> : IModdedSaveData where T : class, new()
+public class BaseModdedSaveData<T> : BaseModdedSaveData where T : class, new()
 {
     public override int SAVE_SLOT { get; protected set; } = 5;
     public override bool LoadOnStart { get; set; }
@@ -9,9 +9,9 @@ public class ModdedSaveData<T> : IModdedSaveData where T : class, new()
 
     public T Data { get; private set; }
 
-    private COTLDataReadWriter<T> _dataReadWriter = new();
+    private readonly COTLDataReadWriter<T> _dataReadWriter = new();
 
-    public ModdedSaveData(string guid)
+    public BaseModdedSaveData(string guid)
     {
         GUID = guid;
 

@@ -14,22 +14,6 @@ public static partial class CustomObjectiveManager
     /// </summary>
     private const string GroupId = "Objectives/GroupTitles/Quest";
 
-    static CustomObjectiveManager()
-    {
-        Plugin.Instance.APIData.OnLoadComplete += delegate
-        {
-            Dictionary<int, CustomObjective> tempObjectives = new();
-
-            foreach (var objective in Plugin.Instance.APIData.Data.QuestData)
-                if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
-                    tempObjectives.Add(objective.Key, objective.Value);
-                else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
-                    tempObjectives.Add(objective.Key, objective.Value);
-
-            PluginQuestTracker.AddRange(tempObjectives);
-        };
-    }
-
     private static string DefaultQuestText => "I didn't set a custom quest text for this objective!";
 
     /// <summary>

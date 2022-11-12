@@ -1,16 +1,16 @@
 ﻿namespace COTL_API.Saves;
 
-public abstract class IModdedSaveData
+public abstract class BaseModdedSaveData
 {
     public abstract int SAVE_SLOT { get; protected set; }
     public abstract bool IsLoaded { get; protected set; }
     public abstract string GUID { get; protected set; }
     public abstract bool LoadOnStart { get; set; }
 
-    public System.Action OnSaveCompleted;
-    public System.Action<MMReadWriteError> OnSaveError;
-    public System.Action OnLoadComplete;
-    public System.Action<int> OnSaveSlotDeleted;
+    public System.Action OnSaveCompleted { get; set; }
+    public System.Action<MMReadWriteError> OnSaveError { get; set; }
+    public System.Action OnLoadComplete { get; set; }
+    public System.Action<int> OnSaveSlotDeleted { get; set; }
 
     public abstract void CreateDefault();
     public abstract void Save(bool encrypt = true, bool backup = true);

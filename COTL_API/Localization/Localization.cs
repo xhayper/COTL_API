@@ -12,8 +12,8 @@ namespace COTL_API.Localization;
 [HarmonyPatch]
 public static class Localization
 {
-    public readonly static Dictionary<string, Dictionary<string, string>> LocalizationMap = new();
-    public readonly static List<string> LanguageList = new();
+    public static Dictionary<string, Dictionary<string, string>> LocalizationMap = new();
+    public static List<string> LanguageList = new();
 
     public static void LoadLocalization(string name, string path)
     {
