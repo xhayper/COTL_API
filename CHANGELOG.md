@@ -2,9 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.7] - 2022-11-11
+## [0.1.7] - 2022-11-12
 
-[b3eb6ed...28b3968](https://github.com/xhayper/COTL_API/compare/b3eb6ed143fd383aad4d7e8d2ee87f83f6903758...28b3968c5518730f732859247b2a931a6690fd82)
+[b3eb6ed...eb970e9](https://github.com/xhayper/COTL_API/compare/b3eb6ed143fd383aad4d7e8d2ee87f83f6903758...eb970e99a2f9e67cbca1a37b94c3069a11f9a775)
+
+### Bug Fixes
+
+- Build error ([438cfb4](https://github.com/xhayper/COTL_API/commit/438cfb40a08ac31cdcaaf16fce99a02129a71eaa))
+- Error caused by PR being old ([1fedfdd](https://github.com/xhayper/COTL_API/commit/1fedfdd4643141486a3e64b0eb4e56c5a2ea24bb))
+- Error caused by PR being old ([e346ec9](https://github.com/xhayper/COTL_API/commit/e346ec9bf8657a7388b4ae15ae8dc41fa6ec8ee1))
 
 ### Features
 
@@ -14,6 +20,8 @@ All notable changes to this project will be documented in this file.
 - Fix nuget sources ([858c01d](https://github.com/xhayper/COTL_API/commit/858c01ddf20ac931bb0353eac4971533565937fe))
 - Update description ([f038a4b](https://github.com/xhayper/COTL_API/commit/f038a4be1d0c75dfec040c495e12e58ae5217ab5))
 - Changelog ([5865ede](https://github.com/xhayper/COTL_API/commit/5865ede7358d5717c1fe421e51371ced693859bf))
+- Update cliff ([ea59e7c](https://github.com/xhayper/COTL_API/commit/ea59e7c91ebe6a46c10cbfd80700af036e191bc7))
+- Save system rewrite, plugin non-static ([6968efb](https://github.com/xhayper/COTL_API/commit/6968efb6abc25ebd7a4cfc5c941384e933336464))
 
 ### Miscellaneous Tasks
 
@@ -30,6 +38,13 @@ All notable changes to this project will be documented in this file.
 - Code smell ([ea6b969](https://github.com/xhayper/COTL_API/commit/ea6b9690d80750cc288a550256cc72ddd15a39f1))
 - Changelog ([a709991](https://github.com/xhayper/COTL_API/commit/a7099915f2ab225ce5955b82e7a6a1d15c5ab3a1))
 - Update cliff ([28b3968](https://github.com/xhayper/COTL_API/commit/28b3968c5518730f732859247b2a931a6690fd82))
+- Code smell ([b594eb4](https://github.com/xhayper/COTL_API/commit/b594eb4f29df0a3e8386afebde756e9e4a335ec0))
+- Code smell ([2addf95](https://github.com/xhayper/COTL_API/commit/2addf95a82d386a7c037ea09c566016b4d68c7bb))
+- Code cleanup ([ebcbdb6](https://github.com/xhayper/COTL_API/commit/ebcbdb6c152f43da847ace28ce57b02708325450))
+- Code smell ([e7bb3f6](https://github.com/xhayper/COTL_API/commit/e7bb3f63000b19aa3a1f5bc65355d5b4008bbbe5))
+- Import order ([8ded5b7](https://github.com/xhayper/COTL_API/commit/8ded5b71f41aa2f80f93715d356f3bb4945e8ac8))
+- Code smell ([80ddaa0](https://github.com/xhayper/COTL_API/commit/80ddaa0833ed73bb13426b7e04650434f2689ef3))
+- Code smell ([eb970e9](https://github.com/xhayper/COTL_API/commit/eb970e99a2f9e67cbca1a37b94c3069a11f9a775))
 
 ### Uncategorized
 

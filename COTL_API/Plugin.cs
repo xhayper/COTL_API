@@ -32,7 +32,7 @@ public class Plugin : BaseUnityPlugin
     internal new ManualLogSource Logger { get; private set; }
 
     private readonly Harmony _harmony = new(PLUGIN_GUID);
-    internal readonly BaseModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
+    internal readonly ModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
 
     internal string PluginPath { get; private set; }
 
