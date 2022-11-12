@@ -7,6 +7,10 @@ namespace COTL_API.Saves;
 [Serializable]
 public class ObjectDictionary : Dictionary<string, object>
 {
+    public ObjectDictionary()
+    {
+    }
+
     protected ObjectDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
     {
     }
