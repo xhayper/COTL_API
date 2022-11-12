@@ -78,7 +78,6 @@ public static class SoundHelpers
             case VolumeCategory.VO:
                 x = VoVolume;
                 break;
-            case VolumeCategory.Master:
             default:
                 x = MasterVolume;
                 break;
