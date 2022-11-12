@@ -236,7 +236,7 @@ public partial class CustomStructureManager
         if (!CustomStructures.ContainsKey(__instance.Type)) return;
         if (CustomStructures[__instance.Type].Interaction == null) return;
 
-        Plugin.Logger.LogDebug("adding structure interaction " + CustomStructures[__instance.Type].Interaction);
+        Plugin.Instance.Logger.LogDebug("adding structure interaction " + CustomStructures[__instance.Type].Interaction);
         var parent = __instance.GetComponentInParent<Transform>();
         parent.gameObject.AddComponent(CustomStructures[__instance.Type].Interaction);
     }

@@ -15,7 +15,7 @@ public static partial class CustomRitualManager
     {
         foreach (var customRitual in CustomRituals.Keys)
         {
-            Plugin.Logger.LogInfo("Custom Ritual: " + customRitual);
+            Plugin.Instance.Logger.LogInfo("Custom Ritual: " + customRitual);
             __instance.ConfigureItem(__instance._ritualItemTemplate.Instantiate(__instance._ritualsContent),
                 customRitual);
         }

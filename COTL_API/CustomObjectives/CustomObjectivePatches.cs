@@ -25,12 +25,12 @@ public static partial class CustomObjectiveManager
 
         if (PluginQuestTracker.TryGetValue(objective.ID, out var customObjective))
         {
-            Plugin.Logger.LogWarning($"Matching quest found for {objective.ID}!");
+            Plugin.Instance.Logger.LogWarning($"Matching quest found for {objective.ID}!");
             __result[0].TermToSpeak = customObjective.InitialQuestText;
         }
         else
         {
-            Plugin.Logger.LogWarning($"No matching quest found for {objective.ID}!");
+            Plugin.Instance.Logger.LogWarning($"No matching quest found for {objective.ID}!");
         }
     }
 
@@ -45,7 +45,7 @@ public static partial class CustomObjectiveManager
         foreach (var quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
                      a.QuestIndex >= Quests.QuestsAll.Count))
         {
-            Plugin.Logger.LogWarning(
+            Plugin.Instance.Logger.LogWarning(
                 "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
             quest.QuestIndex = Quests.QuestsAll.Count - 1;
         }

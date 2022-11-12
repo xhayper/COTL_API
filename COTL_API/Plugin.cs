@@ -7,6 +7,7 @@ using COTL_API.CustomTasks;
 using System.Reflection;
 using COTL_API.Helpers;
 using BepInEx.Logging;
+using COTL_API.Saves;
 using COTL_API.Debug;
 using System.Linq;
 using HarmonyLib;
@@ -23,30 +24,38 @@ public class Plugin : BaseUnityPlugin
     public const string PLUGIN_GUID = "io.github.xhayper.COTL_API";
     public const string PLUGIN_NAME = "COTL API";
     public const string PLUGIN_VERSION = "0.1.7";
+    
+    internal static Plugin Instance { get; private set; }
 
-    private static readonly Harmony Harmony = new(PLUGIN_GUID);
-    internal new static ManualLogSource Logger { get; private set; }
+    internal new ManualLogSource Logger { get; private set; }
 
-    internal static string PluginPath { get; private set; }
+    private readonly Harmony Harmony = new(PLUGIN_GUID);
+    internal readonly ModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
 
-    internal static InventoryItem.ITEM_TYPE DebugItem { get; private set; }
-    internal static InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
-    internal static InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
-    internal static InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
+    internal string PluginPath { get; private set; }
 
-    internal static FollowerCommands DebugGiftFollowerCommand { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
-    private static ConfigEntry<bool> _debug { get; set; }
-    internal static bool Debug => _debug.Value;
+    internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
+
+    private ConfigEntry<bool> _debug { get; set; }
+    public bool Debug => _debug.Value;
 
     private bool _questCleanDone; //flag to prevent multiple calls to clean up quests
 
     private void Awake()
     {
+        Instance = this;
         Logger = base.Logger;
-        PluginPath = Path.GetDirectoryName(Info.Location);
 
+        PluginPath = Path.GetDirectoryName(Info.Location);
         _debug = Config.Bind("", "debug", false, "");
+
+        APIData.LoadOnStart = true;
+        ModdedSaveManager.RegisterModdedSave(APIData);
 
         if (Debug)
             AddDebugContent();
@@ -87,7 +96,7 @@ public class Plugin : BaseUnityPlugin
         _questCleanDone = true;
     }
 
-    private static void AddDebugContent()
+    private void AddDebugContent()
     {
         CustomFollowerCommandManager.Add(new DebugFollowerCommand());
         CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());

@@ -12,7 +12,7 @@ namespace COTL_API.Prefabs;
 [HarmonyPatch]
 public static class CustomPrefabManager
 {
-    public static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
+    private static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
 
     public static string GetOrCreateBuildingPrefab(CustomStructure structure)
     {
@@ -77,7 +77,7 @@ public static class CustomPrefabManager
                 "Assets/Prefabs/Placement Objects/Placement Object Security Turret Lvl2.prefab");
         obj.WaitForCompletion();
 
-        Plugin.Logger.LogInfo(obj.Result);
+        Plugin.Instance.Logger.LogInfo(obj.Result);
         var po = obj.Result.GetComponentInChildren<PlacementObject>();
         po.ToBuildAsset = structure.PrefabPath;
         po.StructureType = structure.StructureType;

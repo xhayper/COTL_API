@@ -34,7 +34,7 @@ public static partial class CustomItemManager
 
         customItemObject.name = customItem.InternalObjectName;
         customItemObject.transform.localScale = customItem.LocalScale;
-        Plugin.Logger.LogWarning($"Custom item, returning custom GameObject!");
+        Plugin.Instance.Logger.LogWarning($"Custom item, returning custom GameObject!");
         return customItemObject;
     }
 
@@ -47,7 +47,7 @@ public static partial class CustomItemManager
             ref Action<PickUp> result, ref PickUp __result)
         {
             if (!CustomItems.ContainsKey(type)) return true;
-            Plugin.Logger.LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
+            Plugin.Instance.Logger.LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
 
             var gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
             var transform = gameObject != null ? gameObject.transform : null;
@@ -115,7 +115,7 @@ public static partial class CustomItemManager
 
             _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.ItemPickUpToImitate), null,
                 instantiateInWorldSpace: false) as GameObject;
-            Plugin.Logger.LogWarning($"_myObject is NULL? {_myObject == null}");
+            Plugin.Instance.Logger.LogWarning($"_myObject is NULL? {_myObject == null}");
             _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Sprite;
             _myObject.name = item.InternalObjectName;
             _myObject.transform.localScale = item.LocalScale;

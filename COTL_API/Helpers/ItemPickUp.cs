@@ -15,7 +15,7 @@ public static class ItemPickUp
     /// <returns>The specified item as a game object.</returns>
     public static GameObject GetItemPickUpObject(InventoryItem.ITEM_TYPE type)
     {
-        Plugin.Logger.LogWarning($"ImitatePickUpObject: {type}");
+        Plugin.Instance.Logger.LogWarning($"ImitatePickUpObject: {type}");
         var itemText = "";
         switch (type)
         {
@@ -366,7 +366,7 @@ public static class ItemPickUp
                 break;
         }
 
-        Plugin.Logger.LogWarning($"ImitateItemPickUpText: {itemText}");
+        Plugin.Instance.Logger.LogWarning($"ImitateItemPickUpText: {itemText}");
 
         if (!itemText.EndsWith(".prefab", StringComparison.InvariantCultureIgnoreCase))
             return Resources.Load("Prefabs/Resources/" + itemText) as GameObject;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using COTL_API.Saves;
+using MonoMod.Utils;
 
 namespace COTL_API.CustomObjectives;
 
@@ -15,8 +16,18 @@ public static partial class CustomObjectiveManager
 
     static CustomObjectiveManager()
     {
-        ModdedSaveManager.OnLoadComplete += CustomQuestData.LoadData;
-        ModdedSaveManager.OnSaveComplete += CustomQuestData.SaveData;
+        Plugin.Instance.APIData.OnLoadComplete += delegate
+        {
+            Dictionary<int, CustomObjective> tempObjectives = new();
+
+            foreach (var objective in Plugin.Instance.APIData.Data.QuestData)
+                if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
+                    tempObjectives.Add(objective.Key, objective.Value);
+                else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
+                    tempObjectives.Add(objective.Key, objective.Value);
+
+            PluginQuestTracker.AddRange(tempObjectives);
+        };
     }
 
     private static string DefaultQuestText => "I didn't set a custom quest text for this objective!";
@@ -242,6 +253,7 @@ public static partial class CustomObjectiveManager
     {
         CustomObjective customObjective = new(id, text, objectiveData);
         PluginQuestTracker.Add(id, customObjective);
+        Plugin.Instance.APIData.Data.QuestData.Add(id, customObjective);
         Quests.QuestsAll.Add(objectiveData);
         return customObjective;
     }
