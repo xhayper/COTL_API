@@ -18,12 +18,6 @@ public static class UIHelpers
         UIPatches.PauseMenuQueue.Add(typeof(T));
     }
 
-    // Private as this is non-functional. I have to change how I patch the start menu.
-    private static void AddToStartMenu<T>() where T : UIMenuBase
-    {
-        UIPatches.StartMenuQueue.Add(typeof(T));
-    }
-
     /// <summary>
     /// Creates a GameObject in the game's UI layer.
     /// </summary>

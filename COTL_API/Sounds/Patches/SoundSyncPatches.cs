@@ -4,7 +4,7 @@ using HarmonyLib;
 namespace COTL_API.Sounds.Patches;
 
 [HarmonyPatch]
-internal class SoundSyncPatches
+public static class SoundSyncPatches
 {
     [HarmonyPatch(typeof(AudioSettings), nameof(AudioSettings.OnMasterVolumeChanged))]
     [HarmonyPostfix]

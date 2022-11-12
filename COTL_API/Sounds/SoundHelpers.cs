@@ -6,6 +6,14 @@ using FMOD;
 
 namespace COTL_API.Sounds;
 
+public enum VolumeCategory
+{
+    Master,
+    Music,
+    SFX,
+    VO
+}
+
 public static class SoundHelpers
 {
     /// <summary>
@@ -48,33 +56,32 @@ public static class SoundHelpers
         return new Sound(); // Return empty sound in the case of an error
     }
 
-    internal static RESULT PlaySound(Sound sound, Volume volume = Volume.Master)
+    internal static RESULT PlaySound(Sound sound, VolumeCategory volumeCategory = VolumeCategory.Master)
     {
         var system = RuntimeManager.CoreSystem;
         var result = system.playSound(sound, new ChannelGroup(), false, out var channel);
-        channel.SyncVolume(volume);
+        channel.SyncVolume(volumeCategory);
         return result;
     }
 
-    internal static RESULT SyncVolume(this Channel channel, Volume volume = Volume.Master)
+    internal static RESULT SyncVolume(this Channel channel, VolumeCategory volumeCategory = VolumeCategory.Master)
     {
         float x;
-        switch (volume)
+        switch (volumeCategory)
         {
-            case Volume.Master:
-                x = MasterVolume;
-                break;
-            case Volume.Music:
+            case VolumeCategory.Music:
                 x = MusicVolume;
                 break;
-            case Volume.SFX:
+            case VolumeCategory.SFX:
                 x = SfxVolume;
                 break;
-            case Volume.VO:
+            case VolumeCategory.VO:
                 x = VoVolume;
                 break;
+            case VolumeCategory.Master:
             default:
-                goto case Volume.Master;
+                x = MasterVolume;
+                break;
         }
 
         return channel.setVolume(x);
@@ -107,12 +114,4 @@ public static class SoundHelpers
 
         return files.First();
     }
-}
-
-public enum Volume
-{
-    Master,
-    Music,
-    SFX,
-    VO,
 }
