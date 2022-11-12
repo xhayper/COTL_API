@@ -34,7 +34,7 @@ public class Plugin : BaseUnityPlugin
     private readonly Harmony _harmony = new(PLUGIN_GUID);
     
     internal readonly ModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
-    internal readonly ModdedSaveData<Dictionary<int, CustomObjective>> APIQuestData = new(PLUGIN_GUID);
+    internal readonly ModdedSaveData<APISlotData> APIQuestData = new($"{PLUGIN_GUID}_slot");
 
     internal string PluginPath { get; private set; }
 
@@ -89,7 +89,7 @@ public class Plugin : BaseUnityPlugin
             Logger.LogWarning($"Re-added any custom quests from the players existing objectives.");
             Dictionary<int, CustomObjective> tempObjectives = new();
 
-            foreach (var objective in APIQuestData.Data)
+            foreach (var objective in APIQuestData.Data.QuestData)
                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
                     tempObjectives.Add(objective.Key, objective.Value);
                 else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
@@ -146,9 +146,6 @@ public class Plugin : BaseUnityPlugin
         var atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
 
         CustomSkinManager.AddCustomSkin("Test", customTex, atlasText);
-
-        var test = CustomObjectiveManager.BedRest("Test");
-        test.InitialQuestText = "This is my custom quest text for this objective.";
 
         Logger.LogDebug("Debug mode enabled");
     }

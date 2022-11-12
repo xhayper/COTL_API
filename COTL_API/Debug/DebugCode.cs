@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using COTL_API.CustomObjectives;
 using COTL_API.CustomTarotCard;
 using System.Linq;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class DebugCode
         Inventory.AddItem(Plugin.Instance.DebugItem2, 1, true);
         Inventory.AddItem(Plugin.Instance.DebugItem3, 1, true);
         Inventory.AddItem(Plugin.Instance.DebugItem4, 1, true);
+
+        var test = CustomObjectiveManager.BedRest("Test");
+        test.InitialQuestText = "This is my custom quest text for this objective.";
     }
 
     [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show))]
