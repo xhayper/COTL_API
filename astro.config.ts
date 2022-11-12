@@ -1,6 +1,5 @@
-import htmlBeautifier from 'astro-html-beautifier';
-import vercel from "@astrojs/vercel/serverless";
-import minifyHtml from "astro-html-minifier";
+import catppuccinMocha from "./themes/catppuccin/mocha.json";
+import vercel from "@astrojs/vercel/static";
 import { defineConfig } from "astro/config";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
@@ -10,7 +9,6 @@ import image from "@astrojs/image";
 
 // https://astro.build/config
 export default defineConfig({
-    output: "server",
     adapter: vercel(),
     integrations: [
         preact({
@@ -39,9 +37,7 @@ export default defineConfig({
                 "https://cotl-api.vercel.app/ui"
             ]
         }),
-        robotsTxt(),
-        minifyHtml(),
-        htmlBeautifier()
+        robotsTxt()
     ],
     vite: {
         build: {
@@ -51,7 +47,7 @@ export default defineConfig({
     markdown: {
         extendDefaultPlugins: true,
         shikiConfig: {
-            theme: "one-dark-pro"
+            theme: catppuccinMocha as any
         },
         remarkPlugins: [
             [
