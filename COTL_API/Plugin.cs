@@ -33,7 +33,11 @@ public class Plugin : BaseUnityPlugin
 
     private readonly Harmony _harmony = new(PLUGIN_GUID);
 
-    internal readonly ModdedSaveData<ApiData> APIData = new(PLUGIN_GUID);
+    internal readonly ModdedSaveData<ApiData> APIData = new(PLUGIN_GUID)
+    {
+        LoadOrder = ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE
+    };
+
     public readonly ModdedSaveData<ApiSlotData> APISlotData = new($"{PLUGIN_GUID}_slot");
 
     internal string PluginPath { get; private set; }
@@ -57,8 +61,6 @@ public class Plugin : BaseUnityPlugin
         PluginPath = Path.GetDirectoryName(Info.Location);
         _debug = Config.Bind("", "debug", false, "");
 
-        APIData.LoadOnStart = true;
-        APISlotData.LoadAfterMainSave = true;
         ModdedSaveManager.RegisterModdedSave(APIData);
         ModdedSaveManager.RegisterModdedSave(APISlotData);
 
@@ -87,7 +89,8 @@ public class Plugin : BaseUnityPlugin
         Singleton<SaveAndLoad>.Instance._saveFileReadWriter.OnReadCompleted += delegate
         {
             Instance.Logger.LogWarning($"Loading Modded Save Data with LoadAfterMainSave=true.");
-            foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save => save.LoadAfterMainSave))
+            foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save =>
+                         save.LoadOrder == ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START))
             {
                 saveData.Load(SaveAndLoad.SAVE_SLOT);
             }
