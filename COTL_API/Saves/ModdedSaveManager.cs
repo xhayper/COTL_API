@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using HarmonyLib;
 
@@ -12,7 +13,7 @@ public static partial class ModdedSaveManager
     {
         if (saveData.LoadOnStart && saveData.LoadAfterMainSave)
         {
-            throw new System.Exception("Modded save data cannot be loaded on start and loaded after main save!");
+            throw new InvalidOperationException("Modded save data cannot be loaded on start and loaded after main save!");
         }
         ModdedSaveDataList.Add(saveData.GUID, saveData);
         if (saveData.LoadOnStart) saveData.Load();

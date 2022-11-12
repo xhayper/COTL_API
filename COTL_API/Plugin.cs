@@ -33,8 +33,8 @@ public class Plugin : BaseUnityPlugin
 
     private readonly Harmony _harmony = new(PLUGIN_GUID);
 
-    internal readonly ModdedSaveData<APIData> APIData = new(PLUGIN_GUID);
-    public readonly ModdedSaveData<APISlotData> APISlotData = new($"{PLUGIN_GUID}_slot");
+    internal readonly ModdedSaveData<ApiData> APIData = new(PLUGIN_GUID);
+    public readonly ModdedSaveData<ApiSlotData> APISlotData = new($"{PLUGIN_GUID}_slot");
 
     internal string PluginPath { get; private set; }
 
