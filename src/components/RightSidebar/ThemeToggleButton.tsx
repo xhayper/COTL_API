@@ -1,5 +1,5 @@
-import type { FunctionalComponent } from "preact";
 import { useState, useEffect } from "preact/hooks";
+import type { FunctionalComponent } from "preact";
 import "./ThemeToggleButton.scss";
 
 const themes = ["light", "dark"];
@@ -25,10 +25,10 @@ const ThemeToggle: FunctionalComponent = () => {
         if (typeof localStorage !== undefined && localStorage.getItem("theme")) {
             return localStorage.getItem("theme");
         }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            return "dark";
+        if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+            return "light";
         }
-        return "light";
+        return "dark";
     });
 
     useEffect(() => {
