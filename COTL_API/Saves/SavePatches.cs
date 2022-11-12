@@ -44,4 +44,15 @@ public static partial class ModdedSaveManager
             saveData.DeleteSaveSlot(saveSlot);
         }
     }
+
+    [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.Awake))]
+    [HarmonyPostfix]
+    private static void PlayerFarming_Awake()
+    {
+        Plugin.Instance.Logger.LogWarning($"Loading Modded Save Data with LoadAfterMainSave=true.");
+        foreach (var saveData in _moddedSaveData.Values.Where(save => save.LoadAfterMainSave))
+        {
+            saveData.Load(SaveAndLoad.SAVE_SLOT);
+        }
+    }
 }

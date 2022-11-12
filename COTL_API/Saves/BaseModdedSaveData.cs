@@ -16,6 +16,7 @@ public abstract class BaseModdedSaveData
     public System.Action<MMReadWriteError> OnSaveError { get; set; }
     public System.Action OnLoadComplete { get; set; }
     public System.Action<int> OnSaveSlotDeleted { get; set; }
+    public abstract bool LoadAfterMainSave { get; set; }
 
     public abstract void CreateDefault();
     public abstract void Save(bool encrypt = true, bool backup = true);
