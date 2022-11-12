@@ -78,5 +78,5 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
     }
 
     public override string MakeSaveSlot(int? slot = null) =>
-        slot != null ? $"ModdedSave_{GUID}_{slot}" : $"ModdedSave_{GUID}";
+        slot != null ? $"{GUID}_{slot}" : GUID;
 }
