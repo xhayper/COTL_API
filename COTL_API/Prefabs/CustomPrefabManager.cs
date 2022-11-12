@@ -45,7 +45,7 @@ public static class CustomPrefabManager
         };
     }
 
-    private static string pathOverride;
+    private static string? pathOverride;
 
     [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters),
         typeof(bool))]
@@ -77,7 +77,7 @@ public static class CustomPrefabManager
                 "Assets/Prefabs/Placement Objects/Placement Object Security Turret Lvl2.prefab");
         obj.WaitForCompletion();
 
-        Plugin.Instance.Logger.LogInfo(obj.Result);
+        if (Plugin.Instance != null) Plugin.Instance.Logger.LogInfo(obj.Result);
         var po = obj.Result.GetComponentInChildren<PlacementObject>();
         po.ToBuildAsset = structure.PrefabPath;
         po.StructureType = structure.StructureType;

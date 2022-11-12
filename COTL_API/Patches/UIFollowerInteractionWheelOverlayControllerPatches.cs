@@ -21,14 +21,14 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
                 item.CommandItem.SubCommands is { Count: > 0 })
 
             {
-                if (Plugin.Instance.Debug)
+                if (Plugin.Instance != null && Plugin.Instance.Debug)
                     Plugin.Instance.Logger.LogDebug(
                         $"Custom command with sub commands, not letting normal method run.");
                 __state = true;
                 return false;
             }
 
-            if (Plugin.Instance.Debug)
+            if (Plugin.Instance != null && Plugin.Instance.Debug)
                 Plugin.Instance.Logger.LogDebug(
                     $"Not a custom command or doesnt have sub-commands, letting normal method run.");
             __state = false;
@@ -46,7 +46,7 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
             ref bool __state)
         {
             if (!__state) return;
-            if (Plugin.Instance.Debug)
+            if (Plugin.Instance != null && Plugin.Instance.Debug)
                 Plugin.Instance.Logger.LogDebug($"Custom command original method skipped, this is from the postfix.");
             if (item.CommandItem.SubCommands is { Count: > 0 })
             {
@@ -61,7 +61,7 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
 
                 // without this the commands title and descriptions dont update if the user selects a greyed out item, instead
                 // it will now just close the menu instead of raising an exception
-                if (Plugin.Instance.Debug)
+                if (Plugin.Instance != null && Plugin.Instance.Debug)
                     Plugin.Instance.Logger.LogDebug(
                         $"User pressed select on a greyed out sub command, closing menu and aborting choice.");
                 __instance.OnCancelButtonInput();

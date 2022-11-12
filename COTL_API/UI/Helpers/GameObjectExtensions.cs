@@ -114,7 +114,7 @@ public static class GameObjectExtensions
     /// <param name="obj">The GameObject that can be interacted with using the mouse.</param>
     /// <param name="dragRect">The RectTransform of the GameObject you wanna drag.</param>
     /// <returns>The GameObject with all changes applied.</returns>
-    public static GameObject MakeDraggable(this GameObject obj, in RectTransform dragRect)
+    public static GameObject MakeDraggable(this GameObject obj, in RectTransform? dragRect)
     {
         var script = obj.AddComponent<UIBehaviourHelpers.DraggableUIObject>();
         script.dragRectTransform = dragRect;
@@ -176,7 +176,8 @@ public static class GameObjectExtensions
         var textMesh = obj.GetComponent<TextMeshProUGUI>();
         if (textMesh == null)
         {
-            Plugin.Instance.Logger.LogWarning("EditText: TextMeshProUGUI component not found.");
+            if (Plugin.Instance != null)
+                Plugin.Instance.Logger.LogWarning("EditText: TextMeshProUGUI component not found.");
             return obj;
         }
 
@@ -185,7 +186,7 @@ public static class GameObjectExtensions
     }
 
 
-    private static string GetPathToImage(string filename)
+    private static string? GetPathToImage(string filename)
     {
         return Path.IsPathRooted(filename)
             ? filename
@@ -204,7 +205,7 @@ public static class GameObjectExtensions
         var path = GetPathToImage(imagePath);
         if (path == null)
         {
-            Plugin.Instance.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"File {imagePath} not found.");
             return obj;
         }
 
@@ -262,7 +263,7 @@ public static class GameObjectExtensions
 
         if (img == null)
         {
-            Plugin.Instance.Logger.LogError("EditImage: Image component not found.");
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError("EditImage: Image component not found.");
             return obj;
         }
 
@@ -281,7 +282,7 @@ public static class GameObjectExtensions
         var path = GetPathToImage(imagePath);
         if (path == null)
         {
-            Plugin.Instance.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"File {imagePath ?? "(null)"} not found.");
             return obj;
         }
 
@@ -290,7 +291,7 @@ public static class GameObjectExtensions
         var img = obj.GetComponent<Image>();
         if (img == null)
         {
-            Plugin.Instance.Logger.LogError("EditImage: Image component not found.");
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError("EditImage: Image component not found.");
             return obj;
         }
 
@@ -310,7 +311,7 @@ public static class GameObjectExtensions
         var img = obj.GetComponent<Image>();
         if (img == null)
         {
-            Plugin.Instance.Logger.LogError("ChangeOpacity: Image component not found.");
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError("ChangeOpacity: Image component not found.");
             return obj;
         }
 

@@ -348,7 +348,9 @@ public partial class CustomTarotCardManager
     {
         if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
 
+#pragma warning disable CS8601
         __result = CustomTarotCardList[card.CardType].GetItemToDrop(card);
+#pragma warning restore CS8601
 
         return false;
     }

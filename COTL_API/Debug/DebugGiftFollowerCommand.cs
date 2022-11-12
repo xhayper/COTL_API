@@ -12,6 +12,8 @@ public class DebugGiftFollowerCommand : CustomFollowerCommand.CustomFollowerComm
     public override void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
     {
+        if (Plugin.Instance == null) return;
+
         interaction.StartCoroutine(interaction.FrameDelayCallback(delegate
         {
             interaction.eventListener.PlayFollowerVO(interaction.positiveAcknowledgeVO);

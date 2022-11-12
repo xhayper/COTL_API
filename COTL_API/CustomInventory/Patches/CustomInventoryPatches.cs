@@ -231,7 +231,8 @@ public static partial class CustomItemManager
         if (!CustomItemList.ContainsKey(Type)) return true;
         __result = (follower, type, callback) =>
         {
-            if (!CustomItemList.ContainsKey(type)) InventoryItem.GiveToFollowerCallbacks(type)(follower, type, callback);
+            if (!CustomItemList.ContainsKey(type))
+                InventoryItem.GiveToFollowerCallbacks(type)(follower, type, callback);
             else CustomItemList[type].OnGiftTo(follower, callback);
         };
         return false;
@@ -256,7 +257,8 @@ public static partial class CustomItemManager
     private static void CookingData_GetAllFoods(ref InventoryItem.ITEM_TYPE[] __result)
     {
         var copy = __result;
-        __result = __result.Concat(CustomItemList.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key))
+        __result = __result
+            .Concat(CustomItemList.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key))
             .ToArray();
     }
 
@@ -279,10 +281,11 @@ public static partial class CustomItemManager
             }
         }
 
-        internal static List<InventoryItem.ITEM_TYPE> AppendCustomCurrencies(
-            ICollection<InventoryItem.ITEM_TYPE> currencyFilter)
+        internal static List<InventoryItem.ITEM_TYPE>? AppendCustomCurrencies(
+            ICollection<InventoryItem.ITEM_TYPE>? currencyFilter)
         {
-            return currencyFilter.Concat(CustomItemList.Where(i => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency)
+            return currencyFilter?.Concat(CustomItemList
+                .Where(i => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency)
                 .Select(i => i.Key)).ToList();
         }
     }

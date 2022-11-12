@@ -11,9 +11,9 @@ public class DebugTask : CustomTask
     public override bool BlockReactTasks => true;
     public override bool BlockTaskChanges => true;
 
-    private Structure _structure;
+    private Structure? _structure;
 
-    private Follower _follower;
+    private Follower? _follower;
 
     public override FollowerLocation Location => GetStructure().Brain.Data.Location;
 
@@ -27,7 +27,7 @@ public class DebugTask : CustomTask
 
     public override void TaskTick(float deltaGameTime)
     {
-        if (State != FollowerTaskState.Doing) return;
+        if (_follower == null || State != FollowerTaskState.Doing) return;
 
         _progress += deltaGameTime;
         if (_progress >= 50)

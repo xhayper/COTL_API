@@ -15,7 +15,7 @@ public static partial class CustomRitualManager
     {
         foreach (var customRitual in CustomRitualList.Keys)
         {
-            Plugin.Instance.Logger.LogInfo("Custom Ritual: " + customRitual);
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogInfo("Custom Ritual: " + customRitual);
             __instance.ConfigureItem(__instance._ritualItemTemplate.Instantiate(__instance._ritualsContent),
                 customRitual);
         }
@@ -101,7 +101,7 @@ public static partial class CustomRitualManager
 
         var ritual =
             (CustomRitual)__instance.gameObject.AddComponent(CustomRitualList[RitualType].GetType());
-        ritual.upgradeType = CustomRitualList[RitualType].upgradeType;
+        ritual.UpgradeType = CustomRitualList[RitualType].UpgradeType;
         ritual.ModPrefix = CustomRitualList[RitualType].ModPrefix;
         __instance.CurrentRitual = ritual;
         __instance.CurrentRitual.Play();

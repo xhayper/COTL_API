@@ -50,7 +50,7 @@ public static class SoundHelpers
 
         if (result == RESULT.OK) return sound;
 
-        Plugin.Instance.Logger.LogError($"Error making sound from file {fileName}!");
+        if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"Error making sound from file {fileName}!");
         result.IfErrorPrintWith($"MakeSound() -- fileName: {fileName}");
 
         return new Sound(); // Return empty sound in the case of an error
@@ -90,24 +90,25 @@ public static class SoundHelpers
     {
         if (result != RESULT.OK)
         {
-            Plugin.Instance.Logger.LogError($"Sound Error: {result} caught at {where}");
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"Sound Error: {result} caught at {where}");
         }
     }
 
 
     // Find file
-    internal static string GetPath(string fileName)
+    internal static string? GetPath(string fileName)
     {
         var files = Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories);
 
         switch (files.Length)
         {
             case 0:
-                Plugin.Instance.Logger.LogError($"Error: Couldn't find \"{fileName}\"");
+                if (Plugin.Instance != null) Plugin.Instance.Logger.LogError($"Error: Couldn't find \"{fileName}\"");
                 return null;
             case > 1:
-                Plugin.Instance.Logger.LogWarning(
-                    $"More than one file named \"{fileName}\" found. This may lead to weird behavior.");
+                if (Plugin.Instance != null)
+                    Plugin.Instance.Logger.LogWarning(
+                        $"More than one file named \"{fileName}\" found. This may lead to weird behavior.");
                 break;
         }
 

@@ -19,6 +19,7 @@ public static partial class CustomObjectiveManager
     private static void interaction_FollowerInteraction_GetConversationEntry(ObjectivesData objective,
         ref List<ConversationEntry> __result)
     {
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (objective == null)
         {
             return;
@@ -26,12 +27,13 @@ public static partial class CustomObjectiveManager
 
         if (CustomObjectiveList.TryGetValue(objective.ID, out var customObjective))
         {
-            Plugin.Instance.Logger.LogWarning($"Matching quest found for {objective.ID}!");
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogWarning($"Matching quest found for {objective.ID}!");
             __result[0].TermToSpeak = customObjective.InitialQuestText;
         }
         else
         {
-            Plugin.Instance.Logger.LogWarning($"No matching quest found for {objective.ID}!");
+            if (Plugin.Instance != null)
+                Plugin.Instance.Logger.LogWarning($"No matching quest found for {objective.ID}!");
         }
     }
 
@@ -46,8 +48,9 @@ public static partial class CustomObjectiveManager
         foreach (var quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
                      a.QuestIndex >= Quests.QuestsAll.Count))
         {
-            Plugin.Instance.Logger.LogWarning(
-                "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
+            if (Plugin.Instance != null)
+                Plugin.Instance.Logger.LogWarning(
+                    "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
             quest.QuestIndex = Quests.QuestsAll.Count - 1;
         }
     }
@@ -83,7 +86,7 @@ public static partial class CustomObjectiveManager
         for (var index = 0; index < instructionList.Count; index++)
         {
             var instruction = instructionList[index];
-            if (instruction.opcode == OpCodes.Ldc_I4_S && (sbyte) instruction.operand == 0x19)
+            if (instruction.opcode == OpCodes.Ldc_I4_S && (sbyte)instruction.operand == 0x19)
                 instructionList[index] = new CodeInstruction(OpCodes.Call,
                     typeof(CustomObjectiveManager).GetMethod(nameof(GetAdjustedCount)));
         }

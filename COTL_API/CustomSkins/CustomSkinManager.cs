@@ -264,7 +264,10 @@ public static class CustomSkinManager
                 skin.SetAttachment(slot, ovrName, customAttachment);
             }
             else
-                Plugin.Instance.Logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
+            {
+                if (Plugin.Instance != null)
+                    Plugin.Instance.Logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
+            }
         }
 
         CustomSkinList.Add(name, skin);
@@ -274,6 +277,7 @@ public static class CustomSkinManager
     [HarmonyPostfix]
     public static void SkinPatch(ref Skin __result, SkeletonData __instance, string skinName)
     {
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (__result != null) return;
         if (!CustomSkinList.ContainsKey(skinName)) return;
 

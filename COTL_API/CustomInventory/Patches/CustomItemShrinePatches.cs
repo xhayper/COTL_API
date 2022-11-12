@@ -97,8 +97,9 @@ public static partial class CustomItemManager
                     default:
                     {
                         listToAdd = __instance.Offerings;
-                        if (Plugin.Instance.Debug)
-                            Plugin.Instance.Logger.LogDebug($"Something went horribly wrong here... we should never hit this.");
+                        if (Plugin.Instance != null && Plugin.Instance.Debug)
+                            Plugin.Instance.Logger.LogDebug(
+                                $"Something went horribly wrong here... we should never hit this.");
                         break;
                     }
                 }

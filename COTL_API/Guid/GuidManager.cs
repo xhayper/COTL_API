@@ -17,9 +17,9 @@ public static class GuidManager
 
     private const string MaxDataKey = "maximumStoredValueForEnum";
 
-    public static Type GetEnumType(int number)
+    public static Type? GetEnumType(int number)
     {
-        ReverseMapper.TryGetValue(number, out Type res);
+        ReverseMapper.TryGetValue(number, out var res);
         return res;
     }
 
@@ -30,7 +30,7 @@ public static class GuidManager
         var startKey = typeof(T).Name + "_";
         // It cannot do pointer-hack stuff when using query
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-        foreach (var item in Plugin.Instance.APIData.Data.EnumData)
+        foreach (var item in Plugin.Instance!.APIData.Data!.EnumData)
         {
             if (!item.Key.StartsWith(startKey)) continue;
 
@@ -49,7 +49,7 @@ public static class GuidManager
                 $"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");
 
         var saveKey = $"{typeof(T).Name}_{guid}_{value}";
-        var enumValue = Plugin.Instance.APIData.Data.EnumData.GetValueAsInt(saveKey);
+        var enumValue = Plugin.Instance!.APIData.Data!.EnumData.GetValueAsInt(saveKey);
 
         if (enumValue == default)
         {

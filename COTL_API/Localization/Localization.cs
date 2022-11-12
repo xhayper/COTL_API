@@ -44,12 +44,13 @@ public static class Localization
                 LocalizationMap[name].Add(key, value);
             }
 
-            Plugin.Instance.Logger.LogInfo($"Loaded localization: {name}");
+            if (Plugin.Instance != null) Plugin.Instance.Logger.LogInfo($"Loaded localization: {name}");
         }
         else
         {
-            Plugin.Instance.Logger.LogError(
-                $"Localization file not found! Please make sure that the path \"{path}\" contains the localization file.");
+            if (Plugin.Instance != null)
+                Plugin.Instance.Logger.LogError(
+                    $"Localization file not found! Please make sure that the path \"{path}\" contains the localization file.");
         }
     }
 

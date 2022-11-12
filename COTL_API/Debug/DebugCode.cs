@@ -15,7 +15,7 @@ public class DebugCode
     [HarmonyPrefix]
     public static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
     {
-        if (!Plugin.Instance.Debug) return;
+        if (Plugin.Instance == null || !Plugin.Instance.Debug) return;
 
         Inventory.AddItem(Plugin.Instance.DebugItem, 1, true);
         Inventory.AddItem(Plugin.Instance.DebugItem2, 1, true);
@@ -31,7 +31,7 @@ public class DebugCode
     public static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance,
         TarotCards.TarotCard card1, TarotCards.TarotCard card2, bool instant)
     {
-        if (!Plugin.Instance.Debug) return true;
+        if (Plugin.Instance == null || !Plugin.Instance.Debug) return true;
 
         DataManager.Instance.PlayerRunTrinkets.Remove(card1);
         DataManager.Instance.PlayerRunTrinkets.Remove(card2);
