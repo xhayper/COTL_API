@@ -6,7 +6,7 @@ namespace COTL_API.CustomMission;
 
 public static partial class CustomMissionManager
 {
-    private static Dictionary<InventoryItem.ITEM_TYPE, CustomMission> CustomMissions { get; } = new();
+    private static Dictionary<InventoryItem.ITEM_TYPE, CustomMission> CustomMissionList { get; } = new();
 
     public static InventoryItem.ITEM_TYPE Add(CustomMission mission)
     {
@@ -16,8 +16,8 @@ public static partial class CustomMissionManager
         mission.InnerType = innerType;
         mission.ModPrefix = guid;
 
-        CustomMissions.Add(innerType, mission);
-        Plugin.Logger.LogWarning($"Added: {innerType} {mission.InternalName} {mission.ModPrefix}");
+        CustomMissionList.Add(innerType, mission);
+        Plugin.Instance.Logger.LogWarning($"Added: {innerType} {mission.InternalName} {mission.ModPrefix}");
         return innerType;
     }
 }

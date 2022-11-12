@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using HarmonyLib;
+using UnityEngine.ProBuilder;
 using src.UI.Menus;
 using UnityEngine;
-using UnityEngine.ProBuilder;
+using HarmonyLib;
 
 namespace COTL_API.CustomMission;
 
@@ -11,39 +11,41 @@ public static partial class CustomMissionManager
 {
     public class MissionInstance
     {
-        public int instance { get; }
-        public MissionButton button { get; }
-        private InventoryItem.ITEM_TYPE type { get; }
-        public CustomMission mission { get; }
+        public int Instance { get; }
+        public MissionButton Button { get; }
+        private InventoryItem.ITEM_TYPE Type { get; }
+        public CustomMission Mission { get; }
+
         public MissionInstance(int instance, MissionButton button, InventoryItem.ITEM_TYPE type, CustomMission mission)
         {
-            this.instance = instance;
-            this.button = button;
-            this.type = type;
-            this.mission = mission;
+            Instance = instance;
+            Button = button;
+            Type = type;
+            Mission = mission;
         }
     }
 
-    private static MissionButton newMissionButton;
-    private static readonly List<MissionInstance> missionInstances = new();
+    private static MissionButton _newMissionButton;
+    private static readonly List<MissionInstance> MissionInstanceList = new();
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(MissionInfoCard), nameof(MissionInfoCard.Configure))]
     public static void MissionInfoCard_Configure(ref MissionInfoCard __instance, ref FollowerInfo config)
     {
-        missionInstances.RemoveAll(a => a.button == null);
+        MissionInstanceList.RemoveAll(a => a.Button == null);
 
-        foreach (var customMission in CustomMissions)
+        foreach (var customMission in CustomMissionList)
         {
             var instance = __instance;
-            var existing = missionInstances.FindAll(a => a.instance == instance.GetInstanceID() && a.mission == customMission.Value);
+            var existing = MissionInstanceList.FindAll(a =>
+                a.Instance == instance.GetInstanceID() && a.Mission == customMission.Value);
             if (existing.Count > 0)
             {
                 foreach (var mi in existing)
                 {
-                    newMissionButton = mi.button;
-                    mi.button.Configure(config);
-                    mi.button.Start();
+                    _newMissionButton = mi.Button;
+                    mi.Button.Configure(config);
+                    mi.Button.Start();
                 }
 
                 continue;
@@ -51,16 +53,16 @@ public static partial class CustomMissionManager
 
             var mission = __instance._missionButtons.RandomElement();
 
-            newMissionButton = Object.Instantiate(mission, mission.transform.parent);
-            __instance._missionButtons.Add(newMissionButton);
+            _newMissionButton = Object.Instantiate(mission, mission.transform.parent);
+            __instance._missionButtons.Add(_newMissionButton);
 
-            newMissionButton.name = "MISSION_BUTTON_" + customMission.Value.InternalName;
-            newMissionButton._type = customMission.Value.InnerType;
+            _newMissionButton.name = "MISSION_BUTTON_" + customMission.Value.InternalName;
+            _newMissionButton._type = customMission.Value.InnerType;
 
-            newMissionButton.Configure(config);
-            newMissionButton.Start();
+            _newMissionButton.Configure(config);
+            _newMissionButton.Start();
             var card = __instance;
-            newMissionButton.OnMissionSelected += delegate(InventoryItem.ITEM_TYPE itemType)
+            _newMissionButton.OnMissionSelected += delegate(InventoryItem.ITEM_TYPE itemType)
             {
                 var onMissionSelected = card.OnMissionSelected;
                 if (onMissionSelected == null)
@@ -70,7 +72,8 @@ public static partial class CustomMissionManager
 
                 onMissionSelected(itemType);
             };
-            missionInstances.Add(new MissionInstance(__instance.GetInstanceID(), newMissionButton, customMission.Value.InnerType, customMission.Value));
+            MissionInstanceList.Add(new MissionInstance(__instance.GetInstanceID(), _newMissionButton,
+                customMission.Value.InnerType, customMission.Value));
         }
     }
 
@@ -79,46 +82,49 @@ public static partial class CustomMissionManager
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.LocalizedName), typeof(InventoryItem.ITEM_TYPE))]
     public static void PrefixPatchesOne(ref InventoryItem.ITEM_TYPE Type)
     {
-        if (CustomMissions.ContainsKey(Type))
+        if (CustomMissionList.ContainsKey(Type))
         {
-            Type = CustomMissions[Type].RewardType;
+            Type = CustomMissionList[Type].RewardType;
         }
     }
-    
+
     [HarmonyPrefix]
     [HarmonyPatch(typeof(MissionaryManager), nameof(MissionaryManager.GetDurationDeterministic))]
     public static void MissionaryManager_GetDurationDeterministic(ref InventoryItem.ITEM_TYPE type)
     {
-        if (CustomMissions.ContainsKey(type))
+        if (CustomMissionList.ContainsKey(type))
         {
-            type = CustomMissions[type].RewardType;
+            type = CustomMissionList[type].RewardType;
         }
-        
     }
-    
+
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Inventory), nameof(Inventory.GetItemQuantity), typeof(InventoryItem.ITEM_TYPE))]
     public static void Inventory_GetItemQuantity(ref InventoryItem.ITEM_TYPE itemType)
     {
-        if (CustomMissions.ContainsKey(itemType))
+        if (CustomMissionList.ContainsKey(itemType))
         {
-            itemType = CustomMissions[itemType].RewardType;
+            itemType = CustomMissionList[itemType].RewardType;
         }
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(MissionaryManager), nameof(MissionaryManager.GetChance))]
-    public static bool MissionaryManager_GetChance(ref float __result, InventoryItem.ITEM_TYPE type, FollowerInfo followerInfo, StructureBrain.TYPES missionaryType)
+    public static bool MissionaryManager_GetChance(ref float __result, InventoryItem.ITEM_TYPE type,
+        FollowerInfo followerInfo, StructureBrain.TYPES missionaryType)
     {
-        if (!CustomMissions.ContainsKey(type)) return true;
+        if (!CustomMissionList.ContainsKey(type)) return true;
 
-       
 
-        var baseChanceMultiplier = MissionaryManager.GetBaseChanceMultiplier(CustomMissions[type].RewardType, followerInfo);
-        var random = new System.Random((int) (followerInfo.ID + CustomMissions[type].RewardType));
+        var baseChanceMultiplier =
+            MissionaryManager.GetBaseChanceMultiplier(CustomMissionList[type].RewardType, followerInfo);
+        var random = new System.Random((int)(followerInfo.ID + CustomMissionList[type].RewardType));
 
-        __result = Mathf.Clamp((CustomMissions[type].BaseChance + random.Next(-MissionaryManager.RandomSeedSpread, MissionaryManager.RandomSeedSpread)) / 100f * baseChanceMultiplier, 0f, 0.95f);
-      
+        __result = Mathf.Clamp(
+            (CustomMissionList[type].BaseChance +
+             random.Next(-MissionaryManager.RandomSeedSpread, MissionaryManager.RandomSeedSpread)) / 100f *
+            baseChanceMultiplier, 0f, 0.95f);
+
         return false;
     }
 
@@ -126,18 +132,19 @@ public static partial class CustomMissionManager
     [HarmonyPatch(typeof(MissionaryManager), nameof(MissionaryManager.GetRewardRange))]
     public static bool MissionaryManager_GetRewardRange(ref IntRange __result, InventoryItem.ITEM_TYPE type)
     {
-        if (!CustomMissions.ContainsKey(type)) return true;
+        if (!CustomMissionList.ContainsKey(type)) return true;
 
-        __result = CustomMissions[type].RewardRange;
+        __result = CustomMissionList[type].RewardRange;
         return false;
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(MissionaryManager), nameof(MissionaryManager.GetReward))]
-    public static bool GetReward(ref InventoryItem.ITEM_TYPE type, ref float chance, ref int followerID, ref InventoryItem[] __result)
+    public static bool GetReward(ref InventoryItem.ITEM_TYPE type, ref float chance, ref int followerID,
+        ref InventoryItem[] __result)
     {
-        if (!CustomMissions.ContainsKey(type)) return true;
-        
+        if (!CustomMissionList.ContainsKey(type)) return true;
+
         var num = Random.Range(0f, 1f);
         foreach (var objective in DataManager.Instance.CompletedObjectives)
         {
@@ -148,7 +155,8 @@ public static partial class CustomMissionManager
 
         if (chance > num)
         {
-            __result = new[] {new InventoryItem(CustomMissions[type].RewardType, CustomMissions[type].RewardRange.Random())};
+            __result = new[]
+                { new InventoryItem(CustomMissionList[type].RewardType, CustomMissionList[type].RewardRange.Random()) };
         }
 
         return false;
