@@ -54,7 +54,6 @@ public class Plugin : BaseUnityPlugin
         Instance = this;
         Logger = base.Logger;
 
-        _apiDataLoadOnSaveLoad.LoadOnStart = false;
         ModdedSaveManager.RegisterModdedSave(_apiDataLoadOnSaveLoad);
         
         BindEvent();
