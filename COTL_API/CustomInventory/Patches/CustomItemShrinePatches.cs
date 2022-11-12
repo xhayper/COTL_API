@@ -2,7 +2,6 @@
 using System.Linq;
 using HarmonyLib;
 
-//if it asks, choose "Does not introduce namespace"
 namespace COTL_API.CustomInventory;
 
 [HarmonyPatch]
@@ -16,7 +15,7 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static void InventoryItemDisplay_GetItemImages(ref InventoryItemDisplay __instance)
     {
-        foreach (var customItem in CustomItems.Select(type =>
+        foreach (var customItem in CustomItemList.Select(type =>
                      new InventoryItemDisplay.MyDictionaryEntry
                      {
                          key = type.Key,
@@ -43,7 +42,7 @@ public static partial class CustomItemManager
     [HarmonyPatch(typeof(Interaction_OfferingShrine), nameof(Interaction_OfferingShrine.OnInteract))]
     public static bool OnInteract(ref Interaction_OfferingShrine __instance, ref StateMachine state)
     {
-        if (!CustomItems.ContainsKey(
+        if (!CustomItemList.ContainsKey(
                 (InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type)) return true;
 
         Helpers.OnInteractHelper.Interaction_OnInteract(__instance, state);
@@ -78,7 +77,7 @@ public static partial class CustomItemManager
         [HarmonyPrefix]
         private static void Prefix(ref Structures_OfferingShrine __instance)
         {
-            foreach (var item in CustomItems.Where(item =>
+            foreach (var item in CustomItemList.Where(item =>
                          item.Value.AddItemToOfferingShrine))
             {
                 List<InventoryItem.ITEM_TYPE> listToAdd;

@@ -18,7 +18,7 @@ public static class IconPatcher
     {
         if (spriteAsset == null) return true;
 
-        foreach (var item in CustomItemManager.CustomItems.Values)
+        foreach (var item in CustomItemManager.CustomItemList.Values)
         {
             var name = $"icon_ITEM_{item.ModPrefix}.{item.InternalName}";
             if (hashCode != HashCode.GetValueHashCode(name)) continue;
@@ -30,7 +30,7 @@ public static class IconPatcher
             return false;
         }
 
-        foreach (var item in CustomFollowerCommandManager.CustomFollowerCommands
+        foreach (var item in CustomFollowerCommandManager.CustomFollowerCommandList
                      .Values)
         {
             var name = $"icon_FCOMMAND_{item.ModPrefix}.{item.InternalName}";

@@ -6,7 +6,7 @@ namespace COTL_API.CustomRituals;
 
 public static partial class CustomRitualManager
 {
-    public static Dictionary<UpgradeSystem.Type, CustomRitual> CustomRituals { get; } = new();
+    public static Dictionary<UpgradeSystem.Type, CustomRitual> CustomRitualList { get; } = new();
 
     public static UpgradeSystem.Type Add(CustomRitual ritual)
     {
@@ -16,7 +16,7 @@ public static partial class CustomRitualManager
         ritual.ModPrefix = guid;
         ritual.upgradeType = upgradeType;
 
-        CustomRituals.Add(upgradeType, ritual);
+        CustomRitualList.Add(upgradeType, ritual);
         return upgradeType;
     }
 }

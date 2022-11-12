@@ -19,7 +19,7 @@ public abstract class CustomRitual : Ritual
     public override UpgradeSystem.Type RitualType => upgradeType;
     public virtual string GetLocalizedName => $"Custom_Ritual_{InternalName}";
     public virtual string GetLocalizedDescription => $"Custom_Ritual_{InternalName}_Description";
-    public virtual float FaithChange { get; } = 5;
-    public virtual FollowerTrait.TraitType RitualTrait { get; } = FollowerTrait.TraitType.None;
+    public virtual float FaithChange => 5;
+    public virtual FollowerTrait.TraitType RitualTrait => FollowerTrait.TraitType.None;
     public virtual float Cooldown => 120f;
 }
