@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using COTL_API.Guid;
+using COTL_API.Helpers;
 
 namespace COTL_API.CustomMission;
 
@@ -17,8 +18,7 @@ public static partial class CustomMissionManager
         mission.ModPrefix = guid;
 
         CustomMissionList.Add(innerType, mission);
-        if (Plugin.Instance != null)
-            Plugin.Instance.Logger.LogWarning($"Added: {innerType} {mission.InternalName} {mission.ModPrefix}");
+        LogHelper.LogWarning($"Added: {innerType} {mission.InternalName} {mission.ModPrefix}");
         return innerType;
     }
 }

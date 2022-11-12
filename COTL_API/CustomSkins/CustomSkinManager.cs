@@ -1,6 +1,7 @@
 ﻿using LeTai.Asset.TranslucentImage;
 using Spine.Unity.AttachmentTools;
 using System.Collections.Generic;
+using COTL_API.Helpers;
 using Spine.Unity;
 using System.Linq;
 using UnityEngine;
@@ -265,8 +266,7 @@ public static class CustomSkinManager
             }
             else
             {
-                if (Plugin.Instance != null)
-                    Plugin.Instance.Logger.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
+                LogHelper.LogWarning(ovr + " is not a MeshAttachment. Skipping.");
             }
         }
 

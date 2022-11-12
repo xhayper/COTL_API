@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using COTL_API.Helpers;
 using System.Linq;
 using HarmonyLib;
 using BepInEx;
@@ -82,7 +83,7 @@ public static class TypeManager
 
         if (int.TryParse(typeName, out _))
         {
-            if (Plugin.Instance != null) Plugin.Instance.Logger.LogInfo("This appears to be a custom type");
+            LogHelper .LogInfo("This appears to be a custom type");
         }
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using COTL_API.Helpers;
 using COTL_API.Guid;
 using System.Linq;
 using UnityEngine;
@@ -44,7 +45,7 @@ public static partial class CustomItemManager
         var chance = customInventoryItem.DungeonChestSpawnChance +
                      customInventoryItem.DungeonChestSpawnChance * DataManager.Instance.GetLuckMultiplier();
         if (Plugin.Instance != null && Plugin.Instance.Debug)
-            Plugin.Instance.Logger.LogDebug(
+            LogHelper.LogDebug(
                 $"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");
         return roll <= chance;
     }

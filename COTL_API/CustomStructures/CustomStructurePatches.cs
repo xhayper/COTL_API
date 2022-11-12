@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Lamb.UI.BuildMenu;
+using COTL_API.Helpers;
 using System.Linq;
 using UnityEngine;
 using HarmonyLib;
@@ -236,8 +237,7 @@ public partial class CustomStructureManager
         if (!CustomStructureList.ContainsKey(__instance.Type)) return;
         if (CustomStructureList[__instance.Type].Interaction == null) return;
 
-        if (Plugin.Instance != null)
-            Plugin.Instance.Logger.LogDebug("adding structure interaction " +
+        LogHelper.LogDebug("adding structure interaction " +
                                             CustomStructureList[__instance.Type].Interaction);
         var parent = __instance.GetComponentInParent<Transform>();
         parent.gameObject.AddComponent(CustomStructureList[__instance.Type].Interaction);
