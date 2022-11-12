@@ -53,8 +53,8 @@ export default defineConfig({
                 ],
                 start_url: "/introduction",
                 orientation: "landscape",
-                theme_color: "#1F2937",
-                background_color: "#FF1438",
+                theme_color: "#FF1438",
+                background_color: "#1F2937",
                 categories: ["documentation", "code", "api", "library"]
             }
         })
