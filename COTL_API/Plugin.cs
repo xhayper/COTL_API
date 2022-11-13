@@ -38,7 +38,7 @@ public class Plugin : BaseUnityPlugin
         LoadOrder = ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE
     };
 
-    public readonly ModdedSaveData<ApiSlotData> APISlotData = new($"{PLUGIN_GUID}_slot");
+    internal readonly ModdedSaveData<ApiSlotData> APISlotData = new($"{PLUGIN_GUID}_slot");
 
     internal string PluginPath { get; private set; } = "";
 

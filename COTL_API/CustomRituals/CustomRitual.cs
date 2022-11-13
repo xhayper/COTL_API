@@ -7,6 +7,7 @@ namespace COTL_API.CustomRituals;
 public abstract class CustomRitual : Ritual
 {
     public abstract string InternalName { get; }
+
     internal string ModPrefix = "";
     public UpgradeSystem.Type UpgradeType { get; set; }
 

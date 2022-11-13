@@ -1,6 +1,7 @@
 <Project>
     <PropertyGroup>
         <AssemblyVersion>0.1.7</AssemblyVersion>
+        <InformationalVersion>0.1.7</InformationalVersion>
         <ReleaseVersion>0.1.7</ReleaseVersion>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>

@@ -8,8 +8,10 @@ namespace COTL_API.CustomTarotCard;
 public abstract class CustomTarotCard
 {
     public abstract string InternalName { get; }
+
     internal string ModPrefix = "";
     internal TarotCards.Card CardType;
+
     public virtual TarotCards.CardCategory Category { get; }
     public virtual Sprite? CardSprite { get; internal set; }
 
@@ -62,15 +64,15 @@ public abstract class CustomTarotCard
         return LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Lore");
     }
 
-    public virtual string Skin { get; } = "";
+    public abstract string Skin { get; }
 
-    public virtual int TarotCardWeight { get; } = 150;
+    public virtual int TarotCardWeight => 150;
 
-    public virtual int MaxTarotCardLevel { get; } = 0;
+    public virtual int MaxTarotCardLevel => 0;
 
     public virtual string AnimationSuffix => $"Card {ModPrefix}.{InternalName} Animation Suffix not set";
 
-    public virtual bool IsCursedRelated { get; } = false;
+    public virtual bool IsCursedRelated => false;
 
     public virtual float GetSpiritHeartCount(TarotCards.TarotCard card)
     {
