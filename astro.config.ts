@@ -21,6 +21,12 @@ export default defineConfig({
             serviceEntryPoint: "@astrojs/image/sharp"
         }),
         sitemap({
+            i18n: {
+                defaultLocale: "en",
+                locales: {
+                    en: "en-US"
+                }
+            },
             customPages: [
                 "https://cotl-api.vercel.app/",
                 "https://cotl-api.vercel.app/follower-commands",
@@ -75,7 +81,7 @@ export default defineConfig({
             [
                 remarkGithub,
                 {
-                    repository: "https://github.com/xhayper/COTL_API.git"
+                    repository: "xhayper/COTL_API"
                 }
             ]
         ]
