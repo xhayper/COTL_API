@@ -46,6 +46,7 @@ export default function Search() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
+                    <title>search icon</title>
                 </svg>
 
                 <span>Search</span>
