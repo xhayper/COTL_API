@@ -5,8 +5,8 @@ namespace COTL_API.CustomTasks;
 public abstract class CustomTask : FollowerTask
 {
     public abstract string InternalName { get; }
-    internal string ModPrefix = "";
 
+    internal string ModPrefix = "";
     internal FollowerTaskType TaskType;
     public override FollowerTaskType Type => TaskType;
 

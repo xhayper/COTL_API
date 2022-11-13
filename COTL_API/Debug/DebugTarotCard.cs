@@ -31,7 +31,7 @@ public class DebugTarotCard : CustomTarotCard.CustomTarotCard
     public override void ApplyInstantEffects(TarotCards.TarotCard card)
     {
         PlayerFarming.Instance.GetComponent<HealthPlayer>().BlueHearts += 50f;
-        Vector3 position2 = PlayerFarming.Instance.CameraBone.transform.position;
+        var position2 = PlayerFarming.Instance.CameraBone.transform.position;
         BiomeConstants.Instance.EmitHeartPickUpVFX(position2, 0f, "blue", "burst_big");
         AudioManager.Instance.PlayOneShot("event:/player/collect_blue_heart", position2);
     }

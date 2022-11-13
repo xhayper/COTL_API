@@ -11,6 +11,7 @@ namespace COTL_API.CustomStructures;
 public abstract class CustomStructure
 {
     public abstract string InternalName { get; }
+
     internal StructureBrain.TYPES StructureType;
     internal string ModPrefix = "";
 
@@ -26,6 +27,10 @@ public abstract class CustomStructure
 
     public virtual bool ReservedForTask => false;
 
+    public virtual StructureBrain.Categories Categories => StructureBrain.Categories.CULT;
+
+    public virtual TypeAndPlacementObjects.Tier Tier => TypeAndPlacementObjects.Tier.Zero;
+
     internal TypeAndPlacementObject GetTypeAndPlacementObject()
     {
         TypeAndPlacementObject tpo = new()
@@ -38,10 +43,6 @@ public abstract class CustomStructure
         };
         return tpo;
     }
-
-    public virtual StructureBrain.Categories Categories => StructureBrain.Categories.CULT;
-
-    public virtual TypeAndPlacementObjects.Tier Tier => TypeAndPlacementObjects.Tier.Zero;
 
     internal StructuresData StructuresData => new()
     {
