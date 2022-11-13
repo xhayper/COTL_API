@@ -17,7 +17,9 @@ const imageAlt = frontmatter.image?.alt ?? OPEN_GRAPH.image.alt;
 const sidebar: { text: string; link: string }[] = SIDEBAR === undefined ? [] : Object.values(SIDEBAR).flat(1);
 
 const jsonld = JSON.stringify({
+    "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    name: "Documentation",
     itemListElement: sidebar.map((item, index) => ({
         "@type": "ListItem",
         name: item.text,
