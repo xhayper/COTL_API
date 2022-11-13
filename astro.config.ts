@@ -48,7 +48,7 @@ export default defineConfig({
                 description: "Documentation for Cult of the Lamb API",
                 icons: [
                     {
-                        src: "/icon.svg",
+                        src: "/favicon.svg",
                         sizes: "any"
                     }
                 ],
