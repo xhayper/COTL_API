@@ -21,6 +21,7 @@ export default defineConfig({
             serviceEntryPoint: "@astrojs/image/sharp"
         }),
         sitemap({
+            filter: (page) => page !== "https://cotl-api.vercel.app/404",
             i18n: {
                 defaultLocale: "en",
                 locales: {
@@ -46,7 +47,15 @@ export default defineConfig({
                 "https://cotl-api.vercel.app/ui"
             ]
         }),
-        robotsTxt(),
+        robotsTxt({
+            policy: [
+                {
+                    userAgent: "*",
+                    allow: "/",
+                    disallow: "/404"
+                }
+            ]
+        }),
         AstroPWA({
             manifest: {
                 name: "Cult of the Lamb API Documentation",
