@@ -3153,6 +3153,7 @@ __metadata:
     react-dom: "npm:@preact/compat@latest"
     remark-github: ^11.2.4
     sass: ^1.56.1
+    schema-dts: ^1.1.0
     sharp: ^0.31.2
     source-map-support: ^0.5.21
     vite-plugin-pwa: ^0.13.3
@@ -7417,6 +7418,15 @@ __metadata:
   version: 1.2.4
   resolution: "sax@npm:1.2.4"
   checksum: d3df7d32b897a2c2f28e941f732c71ba90e27c24f62ee918bd4d9a8cfb3553f2f81e5493c7f0be94a11c1911b643a9108f231dd6f60df3fa9586b5d2e3e9e1fe
+  languageName: node
+  linkType: hard
+
+"schema-dts@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "schema-dts@npm:1.1.0"
+  peerDependencies:
+    typescript: ">=4.1.0"
+  checksum: 546af6d8707790d666f64665b755a683166675c11195406e78e2ac875e7b6f1f550b4306449c8b00a5ef0384a487a7837eac7b8b3f00c2ca2c8f231d931507d4
   languageName: node
   linkType: hard
 
