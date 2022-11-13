@@ -7,10 +7,11 @@ export const SITE = {
 export const OPEN_GRAPH = {
     image: {
         src: "https://cotl-api.vercel.app/banner.png",
-        alt: "Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)",
+        secure_url: "https://cotl-api.vercel.app/banner.png",
+        type: "image/png",
         width: 3840,
         height: 2160,
-        mimeType: "image/png"
+        alt: "Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)",
     }
 };
 
