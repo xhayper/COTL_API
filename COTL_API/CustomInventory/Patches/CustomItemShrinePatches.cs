@@ -46,7 +46,7 @@ public static partial class CustomItemManager
         if (!CustomItemList.ContainsKey(
                 (InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type)) return true;
 
-        Helpers.OnInteractHelper.Interaction_OnInteract(__instance, state);
+        OnInteractHelper.Interaction_OnInteract(__instance, state);
         if (__instance.StructureInfo.Inventory.Count <= 0) return false;
 
         var type = (InventoryItem.ITEM_TYPE)__instance.StructureInfo.Inventory[0].type;

@@ -72,7 +72,7 @@ public class SoundLoader : MonoBehaviour
     /// Play a cached Sound once as a sound effect.
     /// </summary>
     /// <param name="name">The string key for the Sound you wanna play..</param>
-    public void PlaySFX(string name)
+    public void PlaySfx(string name)
     {
         if (!_soundList.ContainsKey(name))
         {
@@ -122,10 +122,10 @@ public class SoundLoader : MonoBehaviour
     /// </summary>
     /// <param name="fileName">The audio file's name.</param>
     /// <param name="name">The string key with which you can access this cached Sound later.</param>
-    public void CreateAndPlaySFX(string fileName, string? name = null)
+    public void CreateAndPlaySfx(string fileName, string? name = null)
     {
         var soundName = CreateSound(fileName, name);
-        PlaySFX(soundName);
+        PlaySfx(soundName);
     }
 
 
