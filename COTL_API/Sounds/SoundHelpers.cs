@@ -9,8 +9,8 @@ namespace COTL_API.Sounds;
 
 public enum VolumeCategory
 {
-    Master,
-    Music,
+    MASTER,
+    MUSIC,
     SFX,
     VO
 }
@@ -57,7 +57,7 @@ public static class SoundHelpers
         return new Sound(); // Return empty sound in the case of an error
     }
 
-    internal static RESULT PlaySound(Sound sound, VolumeCategory volumeCategory = VolumeCategory.Master)
+    internal static RESULT PlaySound(Sound sound, VolumeCategory volumeCategory = VolumeCategory.MASTER)
     {
         var system = RuntimeManager.CoreSystem;
         var result = system.playSound(sound, new ChannelGroup(), false, out var channel);
@@ -65,12 +65,12 @@ public static class SoundHelpers
         return result;
     }
 
-    internal static RESULT SyncVolume(this Channel channel, VolumeCategory volumeCategory = VolumeCategory.Master)
+    internal static RESULT SyncVolume(this Channel channel, VolumeCategory volumeCategory = VolumeCategory.MASTER)
     {
         float x;
         switch (volumeCategory)
         {
-            case VolumeCategory.Music:
+            case VolumeCategory.MUSIC:
                 x = MusicVolume;
                 break;
             case VolumeCategory.SFX:
