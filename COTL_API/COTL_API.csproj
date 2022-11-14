@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AssemblyName>COTL_API</AssemblyName>
-        <PackageVersion>0.1.7</PackageVersion>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props" />
