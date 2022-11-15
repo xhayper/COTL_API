@@ -4,6 +4,7 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <IsPackable>false</IsPackable>
         <LangVersion>latest</LangVersion>
+        <ImplicitUsings>true</ImplicitUsings>
         <DebugType>portable</DebugType>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
