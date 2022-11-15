@@ -1,6 +1,5 @@
 ---
-import { SITE, OPEN_GRAPH, TWITTER, SIDEBAR, type Frontmatter } from "../config";
-import type { BreadcrumbList } from "schema-dts";
+import { SITE, OPEN_GRAPH, TWITTER, type Frontmatter } from "../config";
 import { SEO } from "astro-seo";
 
 export interface Props {
@@ -13,20 +12,6 @@ const formattedContentTitle = frontmatter.title ? `${frontmatter.title} 🚀 ${S
 const imageSrc = frontmatter.image?.src ?? OPEN_GRAPH.image.src;
 const canonicalImageSrc = new URL(imageSrc, Astro.site);
 const imageAlt = frontmatter.image?.alt ?? OPEN_GRAPH.image.alt;
-
-const sidebar: { text: string; link: string }[] = SIDEBAR === undefined ? [] : Object.values(SIDEBAR).flat(1);
-
-const jsonld = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    name: "Documentation",
-    itemListElement: sidebar.map((item, index) => ({
-        "@type": "ListItem",
-        name: item.text,
-        position: index + 1,
-        item: new URL(item.link, Astro.site).toString()
-    }))
-} as BreadcrumbList);
 ---
 
 <SEO
@@ -80,5 +65,3 @@ const jsonld = JSON.stringify({
         ]
     }}
 />
-
-<script type="application/ld+json" set:html={jsonld}></script>
