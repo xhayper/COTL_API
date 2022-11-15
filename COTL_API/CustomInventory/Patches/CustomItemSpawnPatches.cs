@@ -4,7 +4,6 @@ using MMRoomGeneration;
 using COTL_API.Helpers;
 using UnityEngine;
 using HarmonyLib;
-using System;
 
 namespace COTL_API.CustomInventory;
 

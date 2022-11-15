@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Random = UnityEngine.Random;
 using COTL_API.CustomObjectives;
 using COTL_API.CustomTarotCard;
-using System.Linq;
 using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;

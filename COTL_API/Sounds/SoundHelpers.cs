@@ -1,6 +1,4 @@
 ﻿using COTL_API.Helpers;
-using System.Linq;
-using System.IO;
 using FMODUnity;
 using BepInEx;
 using FMOD;

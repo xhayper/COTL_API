@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using Lamb.UI.PauseMenu;
 using Lamb.UI.MainMenu;
 using UnityEngine;
 using HarmonyLib;
-using System;
 using TMPro;
 
 namespace COTL_API.UI.Helpers;

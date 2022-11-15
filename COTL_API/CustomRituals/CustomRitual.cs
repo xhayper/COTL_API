@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using COTL_API.Helpers;
+﻿using COTL_API.Helpers;
 using UnityEngine;
 
 namespace COTL_API.CustomRituals;

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace COTL_API.Helpers;
+﻿namespace COTL_API.Helpers;
 
 public static class Extensions
 {

@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 using System.Text;
 using I2.Loc;

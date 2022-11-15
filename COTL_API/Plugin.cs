@@ -1,5 +1,4 @@
 using COTL_API.CustomFollowerCommand;
-using System.Collections.Generic;
 using COTL_API.CustomStructures;
 using COTL_API.CustomObjectives;
 using BepInEx.Configuration;
@@ -11,9 +10,7 @@ using BepInEx.Logging;
 using COTL_API.Saves;
 using COTL_API.Debug;
 using MonoMod.Utils;
-using System.Linq;
 using HarmonyLib;
-using System.IO;
 using BepInEx;
 
 namespace COTL_API;

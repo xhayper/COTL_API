@@ -2,7 +2,6 @@
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement;
 using UnityEngine.AddressableAssets;
-using System.Collections.Generic;
 using COTL_API.CustomStructures;
 using COTL_API.Helpers;
 using UnityEngine;

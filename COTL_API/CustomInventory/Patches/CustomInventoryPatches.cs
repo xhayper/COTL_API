@@ -1,8 +1,6 @@
 ﻿using Lamb.UI.FollowerInteractionWheel;
-using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Reflection;
-using System.Linq;
 using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
@@ -226,7 +224,7 @@ public static partial class CustomItemManager
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.GiveToFollowerCallbacks))]
     [HarmonyPrefix]
     private static bool InventoryItem_GiveToFollowerCallbacks(InventoryItem.ITEM_TYPE Type,
-        ref System.Action<Follower, InventoryItem.ITEM_TYPE, System.Action> __result)
+        ref Action<Follower, InventoryItem.ITEM_TYPE, Action> __result)
     {
         if (!CustomItemList.ContainsKey(Type)) return true;
         __result = (follower, type, callback) =>

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using COTL_API.Helpers;
+﻿using COTL_API.Helpers;
 using Lamb.UI.Rituals;
 using src.Extensions;
 using UnityEngine;

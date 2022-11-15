@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using Lamb.UI.BuildMenu;
+﻿using Lamb.UI.BuildMenu;
 using COTL_API.Helpers;
 using COTL_API.Prefabs;
 using UnityEngine;
 using I2.Loc;
-using System;
 
 namespace COTL_API.CustomStructures;
 

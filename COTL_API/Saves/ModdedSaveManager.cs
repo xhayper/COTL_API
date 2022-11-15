@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using HarmonyLib;
 
 namespace COTL_API.Saves;
