@@ -20,7 +20,7 @@ public class DebugTask : CustomTask
     private Structure GetStructure()
     {
         if (_structure != null) return _structure;
-        return _structure = TaskUtils.GetAvailableStructureOfType<DebugStructure>();
+        return _structure = TaskUtils.GetAvailableStructureOfType<DebugStructure>()!;
     }
 
     private float _progress;

@@ -1,9 +1,7 @@
-using System.Collections.Generic;
+using Random = UnityEngine.Random;
 using System.Reflection;
 using COTL_API.Helpers;
 using COTL_API.Guid;
-using System.Linq;
-using UnityEngine;
 
 namespace COTL_API.CustomInventory;
 

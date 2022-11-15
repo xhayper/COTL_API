@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace COTL_API.Helpers;
+﻿namespace COTL_API.Helpers;
 
 public static class HashCode
 {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using COTL_API.Helpers;
-using System.Linq;
+﻿using COTL_API.Helpers;
 using HarmonyLib;
 
 namespace COTL_API.CustomInventory;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace COTL_API.Saves;
+﻿namespace COTL_API.Saves;
 
 public enum ModdedSaveLoadOrder
 {

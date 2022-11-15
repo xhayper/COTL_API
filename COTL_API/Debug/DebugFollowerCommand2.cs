@@ -1,5 +1,4 @@
 ﻿using COTL_API.CustomFollowerCommand;
-using System.Collections.Generic;
 
 namespace COTL_API.Debug;
 

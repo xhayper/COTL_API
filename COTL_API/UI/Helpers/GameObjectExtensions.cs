@@ -1,8 +1,6 @@
 ﻿using Image = UnityEngine.UI.Image;
 using COTL_API.Helpers;
-using System.Linq;
 using UnityEngine;
-using System.IO;
 using BepInEx;
 using TMPro;
 

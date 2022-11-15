@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using Random = UnityEngine.Random;
 using HarmonyLib;
 
 namespace COTL_API.CustomInventory;

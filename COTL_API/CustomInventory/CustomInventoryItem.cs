@@ -137,7 +137,7 @@ public abstract class CustomInventoryItem
     //for comparison, the game default is 128f (which is then modified based on the follower using the refinery)
     public virtual float CustomRefineryDuration { get; set; } = 0f;
 
-    public virtual void OnGiftTo(Follower follower, System.Action onFinish)
+    public virtual void OnGiftTo(Follower follower, Action onFinish)
     {
         onFinish();
     }

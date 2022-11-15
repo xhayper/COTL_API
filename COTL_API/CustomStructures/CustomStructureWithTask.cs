@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace COTL_API.CustomStructures;
+﻿namespace COTL_API.CustomStructures;
 
 public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
 {

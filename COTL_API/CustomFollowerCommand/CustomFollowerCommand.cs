@@ -1,5 +1,4 @@
 ﻿using Lamb.UI.FollowerInteractionWheel;
-using System.Collections.Generic;
 using COTL_API.Helpers;
 using UnityEngine;
 using I2.Loc;

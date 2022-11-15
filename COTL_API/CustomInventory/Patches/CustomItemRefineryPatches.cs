@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Object = UnityEngine.Object;
 using Lamb.UI.RefineryMenu;
 using src.UI.InfoCards;
-using System.Linq;
-using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
 

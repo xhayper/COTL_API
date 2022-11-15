@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using COTL_API.CustomObjectives;
+﻿using COTL_API.CustomObjectives;
 
 namespace COTL_API.Saves;
 

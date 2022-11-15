@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-
 namespace COTL_API.Helpers;
 
 internal static class PluginPaths

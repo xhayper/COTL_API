@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using FMODUnity;
-using System;
 using FMOD;
 
 namespace COTL_API.Sounds;
