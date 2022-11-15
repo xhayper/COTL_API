@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
     <title>Cult of the Lamb API Documentation</title>
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#3F3F3F" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
     />
+    
     <link rel="icon" type="image/svg+xml" href="/_media/favicon.svg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="//fonts.googleapis.com/" crossorigin="" />
+    <link rel="preconnect" href="//fonts.gstatic.com/" crossorigin="" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com/" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com/" />
+
+    <link rel="preconnect" href="//cdn.jsdelivr.net/" crossorigin="" />
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net/" />
     <link
       rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/docsify@4.12.2/lib/themes/dark.css"
-    />
-    <link
-      rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/docsify-toc@1.1.0/dist/toc.css"
+      href="//cdn.jsdelivr.net/npm/docsify@4.13.0/lib/themes/dark.css"
     />
 
     <!-- SEO -->
-    <meta name="robots" content="index, follow">
-    <meta
-      property="og:title"
-      content="Cult of the Lamb API Documentation"
-    />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Cult of the Lamb API Documentation" />
     <meta property="og:type" content="article" />
-    <meta
-      property="og:image"
-      content="https://cotl-api-git-docs-docsify-xhayper.vercel.app/_media/banner.png"
-    />
     <meta
       property="og:url"
       content="https://cotl-api-git-docs-docsify-xhayper.vercel.app/"
@@ -41,7 +42,10 @@
       property="og:site_name"
       content="Cult of the Lamb API Documentation"
     />
-    <meta property="og:image:url" content="https://cotl-api-git-docs-docsify-xhayper.vercel.app/_media/banner.png" />
+    <meta
+      property="og:image"
+      content="https://cotl-api-git-docs-docsify-xhayper.vercel.app/_media/banner.png"
+    />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="3840" />
     <meta property="og:image:height" content="2160" />
@@ -49,24 +53,27 @@
       property="og:image:alt"
       content="Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)"
     />
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@hayper1919" />
     <meta name="twitter:creator" content="@hayper1919" />
-    <meta content="Cult of the Lamb API Documentation" name="twitter:title" />
+    <meta name="twitter:title" content="Cult of the Lamb API Documentation" />
     <meta
-      content="Documentation for Cult of the Lamb API"
       name="twitter:description"
+      content="Documentation for Cult of the Lamb API"
     />
-    <meta content="https://cotl-api-git-docs-docsify-xhayper.vercel.app/_media/banner.png" name="twitter:image" />
     <meta
-      content="Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)"
-      name="twitter:image:alt"
+      name="twitter:image"
+      content="https://cotl-api-git-docs-docsify-xhayper.vercel.app/_media/banner.png"
     />
-    <meta content="#3F3F3F" name="theme-color" />
+    <meta
+      name="twitter:image:alt"
+      content="Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)"
+    />
   </head>
   <body>
     <div id="app">Loading...</div>
-    <script src="//cdn.jsdelivr.net/npm/vue@3.2.41/dist/vue.global.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script>
     <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github@1.0.3"></script>
     <script>
       window.$docsify = {
@@ -85,23 +92,14 @@
             "Edit on Github"
           ),
         ],
-
-        // Plugin Config
-        timeUpdater: {
-          formatUpdated: "{DD}/{MM}/{YYYY} {HH}:{mm}:{ss}",
-        },
       };
     </script>
     <!-- Docsify v4 -->
-    <script src="//cdn.jsdelivr.net/npm/docsify@4.12.2"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify@4.12.2/lib/plugins/search.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify@4.12.2/lib/plugins/emoji.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4.13.0"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4.13.0/lib/plugins/search.min.js"></script>
     <!-- Docsify Plugins (2) -->
-    <script src="//cdn.jsdelivr.net/npm/@rakutentech/docsify-code-inline@1.0.5/dist/index.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/docsify-pagination@2.10.1/dist/docsify-pagination.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@2.1.1/dist/docsify-copy-code.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-updated@1.0.5/src/time-updater.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-toc@1.1.0/dist/toc.js"></script>
     <!-- Prism additonal languages -->
     <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js"></script>
   </body>

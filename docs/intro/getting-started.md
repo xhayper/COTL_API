@@ -1,6 +1,4 @@
-# Getting Started
-
-## Creating the Project
+# Creating the Project
 
 The first step to creating any mod is to create a project for it. It is recommended to use the [Template Mod](https://github.com/IngoHHacks/CotLTemplateMod) the first time you start making mods with the API.  
 After downloading the template mod or otherwise creating the project, you should fill in the plugin info in your main class (`Plugin.cs` in the template mod). The plugin info should usually look something like this:

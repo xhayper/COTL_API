@@ -1,5 +1,3 @@
-# Objectives
-
 ## Creating/Adding Objectives
 
 Creating custom objectives is a little bit different to the other custom implementions. There are no classes to override for one!
