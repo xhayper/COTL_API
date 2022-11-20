@@ -1,4 +1,4 @@
-﻿using Random = UnityEngine.Random;
+using Random = UnityEngine.Random;
 using COTL_API.CustomObjectives;
 using COTL_API.CustomTarotCard;
 using UnityEngine;
@@ -10,6 +10,7 @@ namespace COTL_API.Debug;
 [HarmonyPatch]
 public class DebugCode
 {
+
     [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
     [HarmonyPrefix]
     public static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
