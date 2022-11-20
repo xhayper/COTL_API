@@ -34,7 +34,7 @@ internal class Slider : SettingsElement
         Value = value;
         Min = min;
         Max = max;
-        Increment = Increment;
+        Increment = increment;
         DisplayFormat = displayFormat;
         OnValueChanged = onValueChanged;
     }
