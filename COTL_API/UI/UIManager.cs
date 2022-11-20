@@ -1,13 +1,16 @@
-﻿using COTL_API.CustomSkins;
+﻿using COTL_API.CustomSettings;
+using COTL_API.CustomSkins;
 using Object = UnityEngine.Object;
 using Lamb.UI.SettingsMenu;
 using HarmonyLib;
 using Lamb.UI;
 using Lamb.UI.Settings;
+using Sirenix.Utilities;
 using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace COTL_API.UI;
@@ -73,19 +76,32 @@ public class UIManager
             {
                 Object.Destroy(child.gameObject);
             }
-            SettingsUtils.AddHeader(scrollContent, "Mod Settings");
-            SettingsUtils.AddHorizontalSelector(scrollContent, "Lamb Skin", new string[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), 0,
-                i =>
+            string currentCategory = null;
+            foreach (SettingsElement element in CustomSettingsManager.SettingsElements.OrderBy(x => x.Category).ThenBy(x => x.Text))
+            {
+                if (element.Category != currentCategory)
                 {
-                    if (i == 0)
+                    currentCategory = element.Category;
+                    SettingsUtils.AddHeader(scrollContent, currentCategory);
+                }
+                if (element is Dropdown dropdown)
+                {
+                    SettingsUtils.AddHorizontalSelector(scrollContent, dropdown.Text, dropdown.Options, -1,
+                        dropdown.OnValueChanged, dropdown.Value);
+                }
+                else if (element is Slider slider)
+                {
+                    UnityAction<float> onValueChanged = delegate (float i)
                     {
-                        CustomSkinManager.ResetPlayerSkin();
-                    }
-                    else
-                    {
-                        CustomSkinManager.SetPlayerSkinOverride(CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
-                    }
-                }, CustomSkinManager.OverrideSkinName);
+                        slider.OnValueChanged(i);
+                    };
+                    SettingsUtils.AddSlider(scrollContent, slider.Text, slider.Value, slider.Min, slider.Max, slider.Increment, slider.DisplayFormat, onValueChanged);
+                }
+                else if (element is Toggle toggle)
+                {
+                    SettingsUtils.AddToggle(scrollContent, toggle.Text, toggle.Value, toggle.OnValueChanged);
+                }
+            }
 
             return false;
         }

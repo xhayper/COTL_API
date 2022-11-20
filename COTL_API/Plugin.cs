@@ -11,6 +11,7 @@ using System.Linq;
 using HarmonyLib;
 using System.IO;
 using BepInEx;
+using COTL_API.CustomSettings;
 using Spine;
 using System;
 
@@ -92,7 +93,20 @@ public class Plugin : BaseUnityPlugin
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", s2));
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", s3));
 
-        CustomObjective test = CustomObjectiveManager.BedRest("Test");
+        CustomSettingsManager.AddSavedDropdown("API", PLUGIN_GUID, "Lamb Skin", "Default",
+            new string[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
+            {
+                if (i == 0)
+                {
+                    CustomSkinManager.ResetPlayerSkin();
+                }
+                else
+                {
+                    CustomSkinManager.SetPlayerSkinOverride(
+                        CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
+                }
+            });
+         CustomObjective test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
         Logger.LogDebug("Debug mode enabled");
