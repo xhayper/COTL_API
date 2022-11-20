@@ -53,11 +53,12 @@ public class UIManager
         Action onHide = originalGraphicsSettings.OnHide;
         Delegate[] onShowDelegates = onShow.GetInvocationList();
         Delegate[] onHideDelegates = onHide.GetInvocationList();
-        
-        copy.OnShow += (Action)onShowDelegates[1];
-        copy.OnHide += (Action)onHideDelegates[1];
-        originalGraphicsSettings.OnShow -= (Action)onShowDelegates[1];
-        originalGraphicsSettings.OnHide -= (Action)onHideDelegates[1];
+        Action showDelegate = (Action)onHideDelegates[1];
+        Action hideDelegate = (Action)onShowDelegates[1];
+        copy.OnShow += showDelegate;
+        copy.OnHide += hideDelegate;
+        originalGraphicsSettings.OnShow -= showDelegate;
+        originalGraphicsSettings.OnHide -= hideDelegate;
         
         __instance.transform.GetComponentInChildren<SettingsTabNavigatorBase>()._tabs = __instance.transform.GetComponentInChildren<SettingsTabNavigatorBase>()._tabs.Append(tab).ToArray();
         MMButton button = newSettings.GetComponentInChildren<MMButton>();
