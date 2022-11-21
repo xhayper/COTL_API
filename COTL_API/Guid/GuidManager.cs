@@ -45,17 +45,17 @@ public static class GuidManager
                 $"Cannot manage values of type {typeof(T).Name} in GuidManager.GetEnumValue");
 
         var saveKey = $"{typeof(T).Name}_{guid}_{value}";
-        var enumValue = Plugin.Instance!.APIData.Data!.EnumData.GetValueAsInt(saveKey);
+        var enumValue = Plugin.EnumData!.GetValueAsInt(saveKey);
 
         if (enumValue == default)
         {
-            enumValue = Plugin.Instance.APIData.Data.EnumData.GetValueAsInt(MaxDataKey);
+            enumValue = Plugin.EnumData!.GetValueAsInt(MaxDataKey);
             if (enumValue < StartIndex)
                 enumValue = StartIndex;
 
-            Plugin.Instance.APIData.Data.EnumData.SetValue<long>(MaxDataKey, enumValue + 1);
-            Plugin.Instance.APIData.Data.EnumData.SetValue<long>(saveKey, enumValue);
-            Plugin.Instance.APIData.Save();
+            Plugin.EnumData.SetValue<long>(MaxDataKey, enumValue + 1);
+            Plugin.EnumData.SetValue<long>(saveKey, enumValue);
+            Plugin.Instance!.APIData.Save();
         }
 
         ReverseMapper[enumValue] = typeof(T);

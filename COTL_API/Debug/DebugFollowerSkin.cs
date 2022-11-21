@@ -1,6 +1,5 @@
 ﻿using COTL_API.CustomSkins;
 using COTL_API.Helpers;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace COTL_API.Debug;
@@ -18,8 +17,10 @@ public class DebugFollowerSkin : CustomFollowerSkin
     };
     
     public override List<WorshipperData.SlotsAndColours> Colors { get; } = new() {
-        new() {
-            SlotAndColours = new() {
+        new WorshipperData.SlotsAndColours
+        {
+            SlotAndColours = new List<WorshipperData.SlotAndColor>
+            {
                 new("ARM_LEFT_SKIN", new Color(1, 0, 0)),
                 new("ARM_RIGHT_SKIN", new Color(1, 0, 0)),
                 new("LEG_LEFT_SKIN", new Color(1, 0, 0)),
@@ -31,8 +32,10 @@ public class DebugFollowerSkin : CustomFollowerSkin
                 new("HEAD_SKIN_TOP", new Color(1, 0.5f, 0)),
             }
         },
-        new() {
-            SlotAndColours = new() {
+        new WorshipperData.SlotsAndColours
+        {
+            SlotAndColours = new List<WorshipperData.SlotAndColor>
+            {
                 new("ARM_LEFT_SKIN", new Color(0, 1, 0)),
                 new("ARM_RIGHT_SKIN", new Color(0, 1, 0)),
                 new("LEG_LEFT_SKIN", new Color(0, 1, 0)),
@@ -44,8 +47,10 @@ public class DebugFollowerSkin : CustomFollowerSkin
                 new("HEAD_SKIN_TOP", new Color(0, 1, 0.5f)),
             }
         },
-        new() {
-            SlotAndColours = new() {
+        new WorshipperData.SlotsAndColours
+        {
+            SlotAndColours = new List<WorshipperData.SlotAndColor>
+            {
                 new("ARM_LEFT_SKIN", new Color(0, 0, 1)),
                 new("ARM_RIGHT_SKIN", new Color(0, 0, 1)),
                 new("LEG_LEFT_SKIN", new Color(0, 0, 1)),

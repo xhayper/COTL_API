@@ -1,18 +1,18 @@
 using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomStructures;
 using COTL_API.CustomObjectives;
+using COTL_API.CustomSettings;
 using BepInEx.Configuration;
 using COTL_API.CustomSkins;
 using COTL_API.CustomTasks;
 using System.Reflection;
+using COTL_API.Helpers;
 using BepInEx.Logging;
 using COTL_API.Saves;
 using COTL_API.Debug;
 using MonoMod.Utils;
 using HarmonyLib;
 using BepInEx;
-using COTL_API.CustomSettings;
-using COTL_API.Helpers;
 using Spine;
 
 namespace COTL_API;
@@ -54,6 +54,9 @@ public class Plugin : BaseUnityPlugin
 
     internal static event Action OnStart = delegate { };
     internal static bool Started { get; private set; }
+
+    internal static ObjectDictionary? SettingsData => Instance != null ? Instance.APIData.Data?.SettingsData : null;
+    internal static ObjectDictionary? EnumData => Instance != null ? Instance.APIData.Data?.SettingsData : null;
 
     private void Awake()
     {
@@ -165,21 +168,21 @@ public class Plugin : BaseUnityPlugin
 
         CustomTaskManager.Add(new DebugTask());
         
+        var test = CustomObjectiveManager.BedRest("Test");
+        test.InitialQuestText = "This is my custom quest text for this objective.";
+        
         CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
         CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
-        
-        Func<Skin> s1 = () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
-        Func<Skin> s2 = () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
-        Func<Skin> s3 = () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake");
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", s1));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", s2));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", s3));
-        var customTex =
-            TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
-        var atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
+
+        Skin S1() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
+        Skin S2() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
+        Skin S3() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake");
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", S1));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S2));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
 
         CustomSettingsManager.AddSavedDropdown("API", PLUGIN_GUID, "Lamb Skin", "Default",
-            new string[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
+            new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
             {
                 if (i == 0)
                 {
@@ -191,8 +194,6 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
                 }
             });
-         CustomObjective test = CustomObjectiveManager.BedRest("Test");
-        test.InitialQuestText = "This is my custom quest text for this objective.";
 
         Logger.LogDebug("Debug mode enabled");
     }
