@@ -9,7 +9,8 @@ public abstract class CustomFollowerSkin : CustomSkin
     public virtual bool Unlocked { get; } = true;
     public virtual bool Invariant { get; } = false;
 
-    public virtual List<WorshipperData.SlotsAndColours> Colors { get; } = new() {
+    public virtual List<WorshipperData.SlotsAndColours> Colors { get; } = new()
+    {
         new WorshipperData.SlotsAndColours
         {
             SlotAndColours = new List<WorshipperData.SlotAndColor>

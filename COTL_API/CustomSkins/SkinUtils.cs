@@ -8,16 +8,17 @@ namespace COTL_API.CustomSkins;
 internal class SkinUtils
 {
     public static bool SkinsLoaded;
-    
+
     public static event Action OnFindSkin = () =>
     {
         SkinToLoad?.Invoke();
         SkinsLoaded = true;
     };
-    
+
     public static Action? SkinToLoad = () => { };
 
-    public static void ApplyOverride(Skin skin, Attachment a, int slot, string ovrName, AtlasRegion atlasRegion, float scaleX, float scaleY, float translationX, float translationY)
+    public static void ApplyOverride(Skin skin, Attachment a, int slot, string ovrName, AtlasRegion atlasRegion,
+        float scaleX, float scaleY, float translationX, float translationY)
     {
         switch (a)
         {
@@ -27,7 +28,7 @@ internal class SkinUtils
                 float maxX = int.MinValue;
                 float minY = int.MaxValue;
                 float maxY = int.MinValue;
-                
+
                 for (var j = 0; j < meshAttachment.Vertices.Length; j++)
                 {
                     switch (j % 3)
@@ -42,16 +43,16 @@ internal class SkinUtils
                             break;
                     }
                 }
-                
+
                 var diffX = maxX - minX;
                 var diffY = maxY - minY;
 
                 minX += translationX;
                 minY += translationY;
-                
+
                 var centerX = minX + (diffX / 2.0f);
                 var centerY = minY + (diffY / 2.0f);
-                
+
                 minX = centerX - ((diffX / 2.0f) * scaleX);
                 maxX = centerX + ((diffX / 2.0f) * scaleX);
                 minY = centerY - ((diffY / 2.0f) * scaleY);
@@ -79,18 +80,19 @@ internal class SkinUtils
             case RegionAttachment regionAttachment:
                 regionAttachment.Name = "Custom" + ovrName;
                 atlasRegion.name = "Custom" + atlasRegion.name;
-            
+
                 regionAttachment.SetRegion(atlasRegion);
-            
+
                 regionAttachment.X += translationX;
                 regionAttachment.Y += translationY;
                 regionAttachment.ScaleX = scaleX;
                 regionAttachment.ScaleY = scaleY;
-            
+
                 skin.SetAttachment(slot, ovrName, regionAttachment);
                 break;
             default:
-                Plugin.Instance!.Logger.LogWarning($"Attachment {a.Name} is not a MeshAttachment or RegionAttachment, skipping...");
+                Plugin.Instance!.Logger.LogWarning(
+                    $"Attachment {a.Name} is not a MeshAttachment or RegionAttachment, skipping...");
                 break;
         }
     }
@@ -99,18 +101,9 @@ internal class SkinUtils
         List<Tuple<int, string, float, float, float, float>> overrides, Material material, AtlasAssetBase atlas)
     {
         var name = to.name;
-        from.Attachments.ToList().ForEach(att =>
-        {
-            to.SetAttachment(att.SlotIndex, att.Name, att.Attachment.Copy());
-        });
-        from.Bones.ToList().ForEach(bone =>
-        {
-            to.Bones.Add(bone);
-        });
-        from.Constraints.ToList().ForEach(con =>
-        {
-            to.Constraints.Add(con);
-        });
+        from.Attachments.ToList().ForEach(att => { to.SetAttachment(att.SlotIndex, att.Name, att.Attachment.Copy()); });
+        from.Bones.ToList().ForEach(bone => { to.Bones.Add(bone); });
+        from.Constraints.ToList().ForEach(con => { to.Constraints.Add(con); });
 
         foreach (var (slot, ovrName, translationX, translationY, scaleX, scaleY) in overrides)
         {
@@ -122,12 +115,12 @@ internal class SkinUtils
 
         Material runtimeMaterial;
         Texture2D runtimeTexture;
-        
+
         var skin2 = to.GetRepackedSkin(name, material, out runtimeMaterial, out runtimeTexture);
         CustomSkinManager.CachedTextures.Clear();
         AtlasUtilities.ClearCache();
         RepackMeshAttachments(skin2, overrides);
-        
+
         foreach (var slot in from ovr in overrides let ovrName = ovr.Item2 select ovr.Item1)
         {
         }
@@ -151,7 +144,10 @@ internal class SkinUtils
                 float h = atlasRegion.height;
                 mesh.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
                 mesh.UVs = new[]
-                    { (x + w) / pw, 1-((y + h) / ph), (x + w) / pw, 1-(y / ph), x / pw, 1-(y / ph), x / pw, 1-((y + h) / ph) };
+                {
+                    (x + w) / pw, 1 - ((y + h) / ph), (x + w) / pw, 1 - (y / ph), x / pw, 1 - (y / ph), x / pw,
+                    1 - ((y + h) / ph)
+                };
                 mesh.WorldVerticesLength = 8;
             }
 
@@ -159,11 +155,14 @@ internal class SkinUtils
         }
     }
 
-    public static List<Tuple<int, string, float, float, float, float>> CreateSkinAtlas(string name, Texture2D sheet, string atlasText, Func<AtlasRegion, Tuple<int, string>?> regionOverrideFunction, out Material skinMaterial, out SpineAtlasAsset atlasAsset)
+    public static List<Tuple<int, string, float, float, float, float>> CreateSkinAtlas(string name, Texture2D sheet,
+        string atlasText, Func<AtlasRegion, Tuple<int, string>?> regionOverrideFunction, out Material skinMaterial,
+        out SpineAtlasAsset atlasAsset)
     {
         sheet.name = atlasText.Replace("\r", "").Split('\n')[1].Trim();
 
-        Material mat = new(Shader.Find("Spine/Skeleton")) {
+        Material mat = new(Shader.Find("Spine/Skeleton"))
+        {
             mainTexture = sheet
         };
         skinMaterial = mat;
@@ -173,14 +172,14 @@ internal class SkinUtils
         atlasAsset = atlas;
 
         List<Tuple<int, string>> overrideRegions = new();
-        
+
         foreach (var region in atlas.GetAtlas().regions)
         {
             var ovr = regionOverrideFunction.Invoke(region);
             if (ovr != null) overrideRegions.Add(ovr);
             else Plugin.Instance!.Logger.LogError($"Failed to parse region with name: {region.name}");
         }
-        
+
         List<Tuple<int, string, float, float, float, float>> overrides = new();
         List<AtlasRegion> list = atlas.GetAtlas().regions;
         for (var index = 0; index < list.Count; index++)
@@ -211,7 +210,9 @@ internal class SkinUtils
 
                 atlasRegion.name = nameSplit[0];
             }
-            overrides.Add(Tuple.Create(overrideRegions[index].Item1, overrideRegions[index].Item2, scale[0], scale[1], scale[2], scale[3]));
+
+            overrides.Add(Tuple.Create(overrideRegions[index].Item1, overrideRegions[index].Item2, scale[0], scale[1],
+                scale[2], scale[3]));
         }
 
         return overrides;
@@ -220,6 +221,6 @@ internal class SkinUtils
     internal static void InvokeOnFindSkin()
     {
         OnFindSkin.Invoke();
-        OnFindSkin = delegate {  };
+        OnFindSkin = delegate { };
     }
 }

@@ -7,16 +7,20 @@ namespace COTL_API.Debug;
 public class DebugFollowerSkin : CustomFollowerSkin
 {
     public override string Name => "Debug Skin";
-    public override Texture2D Texture => TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("debug_sheet.png"));
 
-    public override List<SkinOverride> Overrides => new() {
+    public override Texture2D Texture =>
+        TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("debug_sheet.png"));
+
+    public override List<SkinOverride> Overrides => new()
+    {
         new SkinOverride("HEAD_SKIN_TOP_BACK", new Rect(0, 127, 111, 127)),
         new SkinOverride("HEAD_SKIN_BTM_BACK", new Rect(0, 0, 111, 127)),
         new SkinOverride("HEAD_SKIN_TOP", new Rect(111, 127, 149, 127)),
         new SkinOverride("HEAD_SKIN_BTM", new Rect(111, 0, 149, 127))
     };
-    
-    public override List<WorshipperData.SlotsAndColours> Colors { get; } = new() {
+
+    public override List<WorshipperData.SlotsAndColours> Colors { get; } = new()
+    {
         new WorshipperData.SlotsAndColours
         {
             SlotAndColours = new List<WorshipperData.SlotAndColor>
@@ -63,6 +67,4 @@ public class DebugFollowerSkin : CustomFollowerSkin
             }
         }
     };
-    
-    
 }

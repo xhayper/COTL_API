@@ -24,7 +24,8 @@ public partial class CustomSkinManager
     internal static Dictionary<string, Texture2D> CachedTextures = new();
 
     [HarmonyPatch(typeof(Graphics), "CopyTexture",
-        new[] {
+        new[]
+        {
             typeof(Texture), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int),
             typeof(Texture), typeof(int), typeof(int), typeof(int), typeof(int)
         })]
@@ -34,7 +35,7 @@ public partial class CustomSkinManager
     {
         if (src is not Texture2D s2d) return true;
         if (src.graphicsFormat == dst.graphicsFormat) return false;
-        
+
         Texture2D orig;
         if (CachedTextures.TryGetValue(src.name, out var cached))
         {
@@ -63,7 +64,6 @@ public partial class CustomSkinManager
         dst2d.SetPixels32(croppedPix);
 
         return false;
-
     }
 
     private static Texture2D DuplicateTexture(Texture source, GraphicsFormat format)
@@ -106,7 +106,7 @@ public partial class CustomSkinManager
         var image = __instance.gameObject.GetComponentsInChildren(typeof(TranslucentImage))[0].gameObject;
         UnityEngine.Object.Destroy(image);
     }
-    
+
     [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.SetSkin), typeof(bool))]
     [HarmonyPrefix]
     public static bool PlayerFarming_SetSkin(ref Skin __result, PlayerFarming __instance, bool BlackAndWhite)
@@ -114,25 +114,35 @@ public partial class CustomSkinManager
         SkinUtils.InvokeOnFindSkin();
         if (PlayerSkinOverride == null) return true;
         __instance.PlayerSkin = new Skin("Player Skin");
-        var skin = PlayerSkinOverride[0] ?? __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerFleece + (BlackAndWhite ? "_BW" : ""));
+        var skin = PlayerSkinOverride[0] ??
+                   __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerFleece +
+                                                           (BlackAndWhite ? "_BW" : ""));
         __instance.PlayerSkin.AddSkin(skin);
         var text = WeaponData.Skins.Normal.ToString();
         if (DataManager.Instance.CurrentWeapon != EquipmentType.None)
         {
             text = EquipmentManager.GetWeaponData(DataManager.Instance.CurrentWeapon).Skin.ToString();
         }
+
         var skin2 = __instance.Spine.Skeleton.Data.FindSkin("Weapons/" + text);
         __instance.PlayerSkin.AddSkin(skin2);
-        if (__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts + __instance.health.SpiritHearts <= 1f && DataManager.Instance.PLAYER_TOTAL_HEALTH != 2f)
+        if (__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
+            __instance.health.SpiritHearts <= 1f && DataManager.Instance.PLAYER_TOTAL_HEALTH != 2f)
         {
-            var skin3 = PlayerSkinOverride[2] ?? PlayerSkinOverride[1] ?? PlayerSkinOverride[0] ?? __instance.Spine.Skeleton.Data.FindSkin("Hurt2");
+            var skin3 = PlayerSkinOverride[2] ?? PlayerSkinOverride[1] ??
+                PlayerSkinOverride[0] ?? __instance.Spine.Skeleton.Data.FindSkin("Hurt2");
             __instance.PlayerSkin.AddSkin(skin3);
         }
-        else if ((__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts + __instance.health.SpiritHearts <= 2f && DataManager.Instance.PLAYER_TOTAL_HEALTH != 2f) || (__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts + __instance.health.SpiritHearts <= 1f && DataManager.Instance.PLAYER_TOTAL_HEALTH == 2f))
+        else if ((__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
+                     __instance.health.SpiritHearts <= 2f && DataManager.Instance.PLAYER_TOTAL_HEALTH != 2f) ||
+                 (__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
+                     __instance.health.SpiritHearts <= 1f && DataManager.Instance.PLAYER_TOTAL_HEALTH == 2f))
         {
-            var skin4 = PlayerSkinOverride[1] ?? PlayerSkinOverride[2] ?? PlayerSkinOverride[0] ??  __instance.Spine.Skeleton.Data.FindSkin("Hurt1");
+            var skin4 = PlayerSkinOverride[1] ?? PlayerSkinOverride[2] ??
+                PlayerSkinOverride[0] ?? __instance.Spine.Skeleton.Data.FindSkin("Hurt1");
             __instance.PlayerSkin.AddSkin(skin4);
         }
+
         __instance.Spine.Skeleton.SetSkin(__instance.PlayerSkin);
         __instance.Spine.Skeleton.SetSlotsToSetupPose();
         __result = __instance.PlayerSkin;

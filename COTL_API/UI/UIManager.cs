@@ -64,7 +64,7 @@ public class UIManager
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => stnb.TransitionTo(tab));
     }
-    
+
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.OnShowStarted))]
     [HarmonyPrefix]
     public static void UISettingsMenuController_OnShowStarted(GraphicsSettings __instance)
@@ -80,7 +80,7 @@ public class UIManager
     public static bool GraphicsSettings_Start(GraphicsSettings __instance)
     {
         if (__instance.name != "Mod Settings Content") return true;
-        
+
         Transform scrollContent = __instance._scrollRect.content;
         foreach (Transform child in scrollContent)
         {
@@ -121,6 +121,5 @@ public class UIManager
         }
 
         return false;
-
     }
 }
