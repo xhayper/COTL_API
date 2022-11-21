@@ -8,10 +8,10 @@ namespace COTL_API.UI;
 
 internal static class SettingsUtils
 {
-    internal static GameObject? SliderTemplate;
-    internal static GameObject? ToggleTemplate;
-    internal static GameObject? HorizontalSelectorTemplate;
-    internal static GameObject? HeaderTemplate;
+    internal static GameObject? SliderTemplate { get; set; }
+    internal static GameObject? ToggleTemplate { get; set; }
+    internal static GameObject? HorizontalSelectorTemplate { get; set; }
+    internal static GameObject? HeaderTemplate { get; set; }
 
     public static void AddHeader(Transform parent, string? text)
     {

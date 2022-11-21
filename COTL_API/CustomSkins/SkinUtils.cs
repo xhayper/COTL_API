@@ -5,9 +5,9 @@ using Spine;
 
 namespace COTL_API.CustomSkins;
 
-internal class SkinUtils
+internal static class SkinUtils
 {
-    public static bool SkinsLoaded;
+    public static bool SkinsLoaded { get; internal set;  }
 
     public static event Action OnFindSkin = () =>
     {
@@ -15,7 +15,7 @@ internal class SkinUtils
         SkinsLoaded = true;
     };
 
-    public static Action? SkinToLoad = () => { };
+    public static Action? SkinToLoad { get; set; } = () => { };
 
     public static void ApplyOverride(Skin skin, Attachment a, int slot, string ovrName, AtlasRegion atlasRegion,
         float scaleX, float scaleY, float translationX, float translationY)
@@ -113,17 +113,10 @@ internal class SkinUtils
             ApplyOverride(to, a, slot, ovrName, atlasRegion, scaleX, scaleY, translationX, translationY);
         }
 
-        Material runtimeMaterial;
-        Texture2D runtimeTexture;
-
-        var skin2 = to.GetRepackedSkin(name, material, out runtimeMaterial, out runtimeTexture);
+        var skin2 = to.GetRepackedSkin(name, material, out var runtimeMaterial, out var runtimeTexture);
         CustomSkinManager.CachedTextures.Clear();
         AtlasUtilities.ClearCache();
         RepackMeshAttachments(skin2, overrides);
-
-        foreach (var slot in from ovr in overrides let ovrName = ovr.Item2 select ovr.Item1)
-        {
-        }
 
         return skin2;
     }
