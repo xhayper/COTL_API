@@ -24,18 +24,18 @@ public static class CustomSettingsManager
     {
         if (Plugin.SettingsData == null) return;
 
-        var fullGuid = "Settings_" + guid + "_" + text;
+        var fullGuid = $"{guid}.{text}";
         onValueChanged ??= delegate { };
-        if (!Plugin.Instance!.APIData.Data!.SettingsData.ContainsKey(fullGuid))
+        if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
-        var slider = new Slider(category, text, (float)Plugin.SettingsData[fullGuid], min, max,
+        var slider = new Slider(category, text, Plugin.SettingsData.GetValueAsFloat(fullGuid), min, max,
             increment, displayFormat,
             delegate(float newValue)
             {
                 if (Plugin.Instance != null)
                 {
-                    Plugin.SettingsData[fullGuid] = newValue;
-                    Plugin.Instance.APIData.Save();
+                    Plugin.SettingsData.SetValue(fullGuid, newValue);
+                    Plugin.Instance.ModdedSettings.Save();
                 }
 
                 onValueChanged(newValue);
@@ -55,17 +55,18 @@ public static class CustomSettingsManager
     {
         if (Plugin.SettingsData == null) return;
 
-        var fullGuid = "Settings_" + guid + "_" + text;
+        var fullGuid = $"{guid}.{text}";
         onValueChanged ??= delegate { };
+
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
-        var dropdown = new Dropdown(category, text, (string)Plugin.SettingsData[fullGuid], options,
+        var dropdown = new Dropdown(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options,
             delegate(int newValue)
             {
                 if (Plugin.Instance != null)
                 {
-                    Plugin.SettingsData[fullGuid] = options[newValue] ?? string.Empty;
-                    Plugin.Instance.APIData.Save();
+                    Plugin.SettingsData.SetValue(fullGuid, options[newValue]);
+                    Plugin.Instance.ModdedSettings.Save();
                 }
                 
                 onValueChanged(newValue);
@@ -84,17 +85,17 @@ public static class CustomSettingsManager
     {
         if (Plugin.SettingsData == null) return;
 
-        var fullGuid = "Settings_" + guid + "_" + text;
+        var fullGuid = $"Settings.{guid}.{text}";
         onValueChanged ??= delegate { };
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
-        var toggle = new Toggle(category, text, (bool)Plugin.SettingsData[fullGuid],
+        var toggle = new Toggle(category, text, Plugin.SettingsData.GetValueAsBoolean(fullGuid),
             delegate(bool newValue)
             {
                 if (Plugin.Instance != null)
                 {
-                    Plugin.SettingsData[fullGuid] = newValue;
-                    Plugin.Instance.APIData.Save();
+                    Plugin.SettingsData.SetValue(fullGuid, newValue);
+                    Plugin.Instance.ModdedSettings.Save();
                 }
 
                 onValueChanged(newValue);

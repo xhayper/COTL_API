@@ -49,7 +49,7 @@ public static class GuidManager
 
         if (enumValue == default)
         {
-            enumValue = Plugin.EnumData!.GetValueAsInt(MaxDataKey);
+            enumValue = Plugin.EnumData.GetValueAsInt(MaxDataKey);
             if (enumValue < StartIndex)
                 enumValue = StartIndex;
 
