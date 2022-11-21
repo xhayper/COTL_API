@@ -1,4 +1,5 @@
-﻿using Lamb.UI;
+﻿using COTL_API.Helpers;
+using Lamb.UI;
 
 namespace COTL_API.UI;
 
@@ -12,11 +13,11 @@ internal class Slider : ISettingsElement
 {
     internal string? Category { get; set; }
 
-    string? ISettingsElement.Category => this.Category;
+    string? ISettingsElement.Category => Category;
 
     internal string Text { get; set; }
 
-    string ISettingsElement.Text => this.Text;
+    string ISettingsElement.Text => Text;
 
     internal float Value { get; set; }
     internal float Min { get; set; }
@@ -43,11 +44,11 @@ internal class Dropdown : ISettingsElement
 {
     internal string? Category { get; set; }
 
-    string? ISettingsElement.Category => this.Category;
+    string? ISettingsElement.Category => Category;
 
     internal string Text { get; set; }
 
-    string ISettingsElement.Text => this.Text;
+    string ISettingsElement.Text => Text;
 
     internal string? Value { get; set; }
     internal string?[] Options { get; set; }
@@ -55,6 +56,8 @@ internal class Dropdown : ISettingsElement
     
     internal Dropdown(string? category, string text, string? value, string?[] options, Action<int>? onValueChanged)
     {
+        LogHelper.LogInfo(value);
+        
         Category = category;
         Text = text;
         Value = value;
@@ -67,11 +70,11 @@ internal class Toggle : ISettingsElement
 {
     internal string? Category { get; set; }
 
-    string? ISettingsElement.Category => this.Category;
+    string? ISettingsElement.Category => Category;
 
     internal string Text { get; set; }
 
-    string ISettingsElement.Text => this.Text;
+    string ISettingsElement.Text => Text;
 
     internal bool Value { get; set; }
     internal Action<bool>? OnValueChanged { get; set; }
