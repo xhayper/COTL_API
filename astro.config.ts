@@ -4,7 +4,6 @@ import { defineConfig } from "astro/config";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
-import AstroPWA from "@vite-pwa/astro";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
 
@@ -21,7 +20,6 @@ export default defineConfig({
             serviceEntryPoint: "@astrojs/image/sharp"
         }),
         sitemap({
-            filter: (page) => page !== "https://cotl-api.vercel.app/404",
             i18n: {
                 defaultLocale: "en",
                 locales: {
@@ -51,29 +49,9 @@ export default defineConfig({
             policy: [
                 {
                     userAgent: "*",
-                    allow: "/",
-                    disallow: "/404"
+                    allow: "/"
                 }
             ]
-        }),
-        AstroPWA({
-            manifest: {
-                name: "Cult of the Lamb API Documentation",
-                short_name: "COTL API Docs",
-                description: "Documentation for Cult of the Lamb API",
-                icons: [
-                    {
-                        src: "/favicon.svg",
-                        sizes: "any"
-                    }
-                ],
-                start_url: "/introduction",
-                orientation: "landscape",
-                display: "browser",
-                theme_color: "#FF1438",
-                background_color: "#1F2937",
-                categories: ["documentation", "code", "api", "library"]
-            }
         })
     ],
     vite: {
