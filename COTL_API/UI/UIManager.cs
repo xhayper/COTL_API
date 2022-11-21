@@ -64,7 +64,7 @@ public class UIManager
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => stnb.TransitionTo(tab));
     }
-
+    
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.OnShowStarted))]
     [HarmonyPrefix]
     public static void UISettingsMenuController_OnShowStarted(GraphicsSettings __instance)
@@ -80,7 +80,7 @@ public class UIManager
     public static bool GraphicsSettings_Start(GraphicsSettings __instance)
     {
         if (__instance.name != "Mod Settings Content") return true;
-
+        
         Transform scrollContent = __instance._scrollRect.content;
         foreach (Transform child in scrollContent)
         {
@@ -100,13 +100,23 @@ public class UIManager
             switch (element)
             {
                 case Dropdown dropdown:
+                {
+
+                    void OnValueChanged(int i)
+                    {
+                        dropdown.Value = dropdown.Options[i];
+                        dropdown.OnValueChanged?.Invoke(i);
+                    }
+
                     SettingsUtils.AddHorizontalSelector(scrollContent, dropdown.Text, dropdown.Options, -1,
-                        dropdown.OnValueChanged, dropdown.Value);
+                        OnValueChanged, dropdown.Value);
                     break;
+                }
                 case Slider slider:
                 {
                     void OnValueChanged(float i)
                     {
+                        slider.Value = i;
                         slider.OnValueChanged?.Invoke(i);
                     }
 
@@ -115,11 +125,20 @@ public class UIManager
                     break;
                 }
                 case Toggle toggle:
-                    SettingsUtils.AddToggle(scrollContent, toggle.Text, toggle.Value, toggle.OnValueChanged);
+                {
+                    void OnValueChanged(bool i)
+                    {
+                        toggle.Value = i;
+                        toggle.OnValueChanged?.Invoke(i);
+                    }
+
+                    SettingsUtils.AddToggle(scrollContent, toggle.Text, toggle.Value, OnValueChanged);
                     break;
+                }
             }
         }
 
         return false;
+
     }
 }
