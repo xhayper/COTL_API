@@ -21,7 +21,7 @@ public partial class CustomSkinManager
         __result = CustomFollowerSkins[skinName];
     }
 
-    internal static Dictionary<string, Texture2D> CachedTextures = new();
+    internal static readonly Dictionary<string, Texture2D> CachedTextures = new();
 
     [HarmonyPatch(typeof(Graphics), "CopyTexture",
         new[]

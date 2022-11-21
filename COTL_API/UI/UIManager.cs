@@ -11,7 +11,7 @@ using TMPro;
 namespace COTL_API.UI;
 
 [HarmonyPatch]
-public class UIManager
+public static class UIManager
 {
     [HarmonyPatch(typeof(UISettingsMenuController), nameof(UISettingsMenuController.OnShowStarted))]
     [HarmonyPostfix]
