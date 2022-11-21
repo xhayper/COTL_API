@@ -23,7 +23,7 @@ internal static class SettingsUtils
 
         var header = Object.Instantiate(HeaderTemplate, parent);
         header.name = text;
-        TextMeshProUGUI headerText = header.GetComponentInChildren<TextMeshProUGUI>();
+        var headerText = header.GetComponentInChildren<TextMeshProUGUI>();
         headerText.text = text;
     }
 
@@ -83,7 +83,7 @@ internal static class SettingsUtils
         var selector = horizontalSelector.GetComponentInChildren<MMHorizontalSelector>();
         selector._localizeContent = false;
         selector.UpdateContent(options);
-        var indexOverride = (options.IndexOf(indexStringOverride) == -1 ? 0 : options.IndexOf(indexStringOverride));
+        var indexOverride = Math.Max(0, options.IndexOf(indexStringOverride));
         selector.ContentIndex = indexStringOverride != null ? indexOverride : index;
         if (onChange != null) selector.OnSelectionChanged += onChange;
     }

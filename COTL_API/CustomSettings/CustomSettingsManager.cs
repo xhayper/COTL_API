@@ -67,7 +67,7 @@ public static class CustomSettingsManager
                     Plugin.SettingsData[fullGuid] = options[newValue] ?? string.Empty;
                     Plugin.Instance.APIData.Save();
                 }
-
+                
                 onValueChanged(newValue);
             });
         Dropdowns.Add(dropdown);
