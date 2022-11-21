@@ -6,9 +6,11 @@ import MainLayout from "../layouts/MainLayout.astro";
     frontmatter={{ title: "", description: "Cult of the Lamb API", layout: "../layouts/MainLayout.astro" }}
     headings={[]}
 >
-    <script>
-        // Redirect your homepage to the first page of documentation.
-        // If you have a landing page, remove this script and add it here!
-        window.location.replace("/introduction");
+    <script is:inline>
+        setTimeout(() => {
+            // Redirect your homepage to the first page of documentation.
+            // If you have a landing page, remove this script and add it here!
+            window.location.replace("/introduction");
+        }, 500);
     </script>
 </MainLayout>
