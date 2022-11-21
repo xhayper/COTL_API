@@ -1,12 +1,10 @@
-﻿using Spine.Unity;
-using UnityEngine;
-using Spine;
+﻿using Spine;
 
 namespace COTL_API.CustomSkins;
 
 public abstract class CustomPlayerSkin : CustomSkin
 {
-    private Skin _cachedSkin;
+    private Skin? _cachedSkin;
     
     public virtual void Apply()
     {
@@ -17,8 +15,6 @@ public abstract class CustomPlayerSkin : CustomSkin
                 var from = PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Lamb");
                 Skin to = new(Name);
 
-                Material mat;
-                SpineAtlasAsset atlas;
                 var overrides = SkinUtils.CreateSkinAtlas(Name, Texture, GenerateAtlasText(), delegate(AtlasRegion region)
                 {
                     var simpleName = region.name;
@@ -30,15 +26,14 @@ public abstract class CustomPlayerSkin : CustomSkin
                         simpleName = split[0];
                     }
 
-                    if (from.Attachments.Any(x => x.Name == simpleName))
+                    if (from.Attachments.All(x => x.Name != simpleName)) return null;
                     {
                         var att = from.Attachments.First(x => x.Name == simpleName);
                         region.name = att.SlotIndex + ":" + att.Name + add;
                         return Tuple.Create(att.SlotIndex, att.Name);
                     }
 
-                    return null;
-                }, out mat, out atlas);
+                }, out var mat, out var atlas);
                 var overrideSkin = SkinUtils.ApplyAllOverrides(from, to, overrides, mat, atlas);
                 _cachedSkin = overrideSkin;
             }

@@ -95,7 +95,7 @@ internal class SkinUtils
         }
     }
 
-    public static Skin ApplyAllOverrides(Skin from, Skin to,
+    public static Skin? ApplyAllOverrides(Skin from, Skin to,
         List<Tuple<int, string, float, float, float, float>> overrides, Material material, AtlasAssetBase atlas)
     {
         var name = to.name;

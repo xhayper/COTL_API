@@ -12,7 +12,7 @@ public partial class CustomSkinManager
 {
     [HarmonyPatch(typeof(SkeletonData), nameof(SkeletonData.FindSkin), new[] { typeof(string) })]
     [HarmonyPostfix]
-    public static void SkinPatch(ref Skin __result, SkeletonData __instance, string skinName)
+    public static void SkinPatch(ref Skin? __result, SkeletonData __instance, string skinName)
     {
         if (__result != null) return;
         if (!CustomFollowerSkins.ContainsKey(skinName)) return;

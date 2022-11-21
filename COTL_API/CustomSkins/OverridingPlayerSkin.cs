@@ -5,10 +5,10 @@ namespace COTL_API.CustomSkins;
 
 internal class OverridingPlayerSkin : CustomPlayerSkin
 {
-    internal Func<Skin> overrideSkin;
-    private Skin _cachedSkin;
+    internal Func<Skin?> overrideSkin;
+    private Skin? _cachedSkin;
     
-    public OverridingPlayerSkin(string name, Func<Skin> overrideSkin)
+    public OverridingPlayerSkin(string name, Func<Skin?> overrideSkin)
     { 
         this.overrideSkin = overrideSkin;
         Name = name;
