@@ -6,7 +6,6 @@ using Spine;
 namespace COTL_API.CustomSkins;
 
 [HarmonyPatch]
-
 public static partial class CustomSkinManager
 {
     internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = new();
@@ -14,12 +13,12 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, bool> AlwaysUnlockedSkins = new();
     internal static readonly Dictionary<string, Texture2D> SkinTextures = new();
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
-    
+
     internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = new();
 
-    internal static readonly string OverrideSkinName = "Default";
-    
-    internal static List<Skin?>? PlayerSkinOverride;
+    internal static string OverrideSkinName { get; set; } = "Default";
+
+    internal static List<Skin?>? PlayerSkinOverride { get; set; }
 
     internal static readonly List<Tuple<int, string>> SkinSlots = new()
     {
@@ -161,7 +160,8 @@ public static partial class CustomSkinManager
         Tuple.Create(85, "Face/EYE_FIRE7")
     };
 
-    internal static readonly Dictionary<string, Tuple<int, string>> SimplifiedSkinNames = new() {
+    internal static readonly Dictionary<string, Tuple<int, string>> SimplifiedSkinNames = new()
+    {
         { "LEFT_ARM_SKIN", Tuple.Create(38, "ARM_LEFT_SKIN") },
         { "LEFT_SLEEVE", Tuple.Create(39, "Body/SleeveLeft") },
         { "WEAPON_HAND_SKIN", Tuple.Create(49, "WEAPON_HAND_SKIN") },
@@ -299,15 +299,18 @@ public static partial class CustomSkinManager
         { "LEFT_EYE_FIRE_6", Tuple.Create(85, "Face/EYE_FIRE6") },
         { "LEFT_EYE_FIRE_7", Tuple.Create(85, "Face/EYE_FIRE7") }
     };
-    
+
     public static void AddFollowerSkin(CustomFollowerSkin followerSkin)
     {
         var atlasText = followerSkin.GenerateAtlasText();
-        AddFollowerSkin(followerSkin.Name, followerSkin.Texture, atlasText, followerSkin.Colors, followerSkin.Hidden, followerSkin.Unlocked, followerSkin.TwitchPremium,
+        AddFollowerSkin(followerSkin.Name, followerSkin.Texture, atlasText, followerSkin.Colors, followerSkin.Hidden,
+            followerSkin.Unlocked, followerSkin.TwitchPremium,
             followerSkin.Invariant);
     }
 
-    public static void AddFollowerSkin(string name, Texture2D sheet, string atlasText, List<WorshipperData.SlotsAndColours> colors, bool hidden = false, bool unlocked = true, bool twitchPremium = false, bool invariant = false)
+    public static void AddFollowerSkin(string name, Texture2D sheet, string atlasText,
+        List<WorshipperData.SlotsAndColours> colors, bool hidden = false, bool unlocked = true,
+        bool twitchPremium = false, bool invariant = false)
     {
         Material mat;
         SpineAtlasAsset atlas;
@@ -319,7 +322,7 @@ public static partial class CustomSkinManager
         CreateNewFollowerType(name, colors, hidden, twitchPremium, invariant);
         CreateSkin(name, overrides, unlocked);
     }
-    
+
     public static void AddPlayerSkin(CustomPlayerSkin playerSkin)
     {
         CustomPlayerSkins.Add(playerSkin.Name, playerSkin);
@@ -335,7 +338,7 @@ public static partial class CustomSkinManager
             add = "#" + split[1];
             simpleName = split[0];
         }
-            
+
         if (SimplifiedSkinNames.TryGetValue(simpleName, out var simplified))
         {
             region.name = simplified.Item1 + ":" + simplified.Item2 + add;
@@ -343,20 +346,24 @@ public static partial class CustomSkinManager
         }
 
         if (!simpleName.Contains(":")) return null;
-        
-        try {
+
+        try
+        {
             var rName = simpleName.Split(':')[1];
             var regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0]);
             region.name = regionIndex + ":" + rName + "#" + add;
             return Tuple.Create(regionIndex, rName);
-        } catch (Exception e) {
+        }
+        catch (Exception)
+        {
             // ignored
         }
-        
+
         return null;
     }
 
-    internal static void CreateNewFollowerType(string name, List<WorshipperData.SlotsAndColours> colors, bool hidden = false, bool twitchPremium = false, bool invariant = false)
+    internal static void CreateNewFollowerType(string name, List<WorshipperData.SlotsAndColours> colors,
+        bool hidden = false, bool twitchPremium = false, bool invariant = false)
     {
         WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData
         {
@@ -376,7 +383,8 @@ public static partial class CustomSkinManager
         });
     }
 
-    internal static void CreateSkin(string name, List<Tuple<int, string, float, float, float, float>> overrides, bool unlocked)
+    internal static void CreateSkin(string name, List<Tuple<int, string, float, float, float, float>> overrides,
+        bool unlocked)
     {
         void Action()
         {
@@ -388,21 +396,26 @@ public static partial class CustomSkinManager
             AlwaysUnlockedSkins.Add(name, unlocked);
         }
 
-        if (Plugin.Started) {
+        if (Plugin.Started)
+        {
             Action();
-        } else {
+        }
+        else
+        {
             Plugin.OnStart += Action;
         }
     }
 
     public static void SetPlayerSkinOverride(Skin? normalSkin, Skin? hurtSkin = null, Skin? hurtSkin2 = null)
     {
-        List<Skin?> skins = new() {
+        List<Skin?> skins = new()
+        {
             normalSkin,
             hurtSkin,
             hurtSkin2
         };
-        if (PlayerSkinOverride != null) Plugin.Instance!.Logger.LogDebug("PlayerSkinOverride already exists. Overwriting.");
+        if (PlayerSkinOverride != null)
+            Plugin.Instance!.Logger.LogDebug("PlayerSkinOverride already exists. Overwriting.");
         PlayerSkinOverride = skins;
     }
 
