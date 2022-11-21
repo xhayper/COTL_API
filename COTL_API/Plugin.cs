@@ -56,7 +56,8 @@ public class Plugin : BaseUnityPlugin
     internal static bool Started { get; private set; }
 
     internal static ObjectDictionary? SettingsData => Instance != null ? Instance.APIData.Data?.SettingsData : null;
-    internal static ObjectDictionary? EnumData => Instance != null ? Instance.APIData.Data?.SettingsData : null;
+    internal static Dictionary<int, CustomObjective>? QuestData => Instance != null ? Instance.APISlotData.Data?.QuestData : null;
+    internal static ObjectDictionary? EnumData => Instance != null ? Instance.APIData.Data?.EnumData : null;
 
     private void Awake()
     {
@@ -103,9 +104,9 @@ public class Plugin : BaseUnityPlugin
             Logger.LogWarning($"Re-adding any custom quests from the players existing objectives.");
             Dictionary<int, CustomObjective> tempObjectives = new();
 
-            if (APISlotData.Data?.QuestData == null) return;
+            if (QuestData == null) return;
 
-            foreach (var objective in APISlotData.Data.QuestData)
+            foreach (var objective in QuestData!)
                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
                     tempObjectives.Add(objective.Key, objective.Value);
                 else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
@@ -116,7 +117,7 @@ public class Plugin : BaseUnityPlugin
             Logger.LogWarning($"Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
             foreach (var quest in CustomObjectiveManager.CustomObjectiveList)
             {
-                APISlotData.Data.QuestData.TryAdd(quest.Key, quest.Value);
+                QuestData.TryAdd(quest.Key, quest.Value);
             }
         };
     }

@@ -26,7 +26,7 @@ public static class GuidManager
         var startKey = typeof(T).Name + "_";
         // It cannot do pointer-hack stuff when using query
         // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-        foreach (var item in Plugin.Instance!.APIData.Data!.EnumData)
+        foreach (var item in Plugin.EnumData!)
         {
             if (!item.Key.StartsWith(startKey)) continue;
 
