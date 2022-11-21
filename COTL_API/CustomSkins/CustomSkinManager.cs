@@ -19,7 +19,7 @@ public partial class CustomSkinManager
 
     internal static string OverrideSkinName = "Default";
     
-    internal static List<Skin> PlayerSkinOverride = null;
+    internal static List<Skin?>? PlayerSkinOverride = null;
 
     internal static readonly List<Tuple<int, string>> SkinSlots = new()
     {
@@ -302,7 +302,7 @@ public partial class CustomSkinManager
     
     public static void AddFollowerSkin(CustomFollowerSkin followerSkin)
     {
-        string atlasText = followerSkin.GenerateAtlasText();
+        var atlasText = followerSkin.GenerateAtlasText();
         AddFollowerSkin(followerSkin.Name, followerSkin.Texture, atlasText, followerSkin.Colors, followerSkin.Hidden, followerSkin.Unlocked, followerSkin.TwitchPremium,
             followerSkin.Invariant);
     }
@@ -311,7 +311,7 @@ public partial class CustomSkinManager
     {
         Material mat;
         SpineAtlasAsset atlas;
-        List<Tuple<int, string, float, float, float, float>> overrides = SkinUtils.CreateSkinAtlas(name, sheet, atlasText, RegionOverrideFunction, out mat, out atlas);
+        var overrides = SkinUtils.CreateSkinAtlas(name, sheet, atlasText, RegionOverrideFunction, out mat, out atlas);
         SkinTextures.Add(name, sheet);
         SkinMaterials.Add(name, mat);
         CustomAtlases.Add(name, atlas);
@@ -325,40 +325,40 @@ public partial class CustomSkinManager
         CustomPlayerSkins.Add(playerSkin.Name, playerSkin);
     }
 
-    private static Tuple<int, string> RegionOverrideFunction(AtlasRegion region)
+    private static Tuple<int, string>? RegionOverrideFunction(AtlasRegion region)
     {
-        string simpleName = region.name;
-        string add = "";
+        var simpleName = region.name;
+        var add = "";
         if (simpleName.Contains("#"))
         {
-            string[] split = simpleName.Split('#');
+            var split = simpleName.Split('#');
             add = "#" + split[1];
             simpleName = split[0];
         }
             
-        if (SimplifiedSkinNames.TryGetValue(simpleName, out Tuple<int, string> simplified))
+        if (SimplifiedSkinNames.TryGetValue(simpleName, out var simplified))
         {
             region.name = simplified.Item1 + ":" + simplified.Item2 + add;
             return simplified;
         }
 
-        if (simpleName.Contains(":"))
-        {
-            try {
-                string rName = simpleName.Split(':')[1];
-                int regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0]);
-                region.name = regionIndex + ":" + rName + "#" + add;
-                return Tuple.Create(regionIndex, rName);
-            } catch (Exception e) {
-                // ignored
-            }
+        if (!simpleName.Contains(":")) return null;
+        
+        try {
+            var rName = simpleName.Split(':')[1];
+            var regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0]);
+            region.name = regionIndex + ":" + rName + "#" + add;
+            return Tuple.Create(regionIndex, rName);
+        } catch (Exception e) {
+            // ignored
         }
+        
         return null;
     }
 
     internal static void CreateNewFollowerType(string name, List<WorshipperData.SlotsAndColours> colors, bool hidden = false, bool twitchPremium = false, bool invariant = false)
     {
-        WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData()
+        WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData
         {
             Title = name,
             Skin = new List<WorshipperData.CharacterSkin>
@@ -378,26 +378,26 @@ public partial class CustomSkinManager
 
     internal static void CreateSkin(string name, List<Tuple<int, string, float, float, float, float>> overrides, bool unlocked)
     {
-        Action a = delegate
+        void Action()
         {
             Skin skin = new(name);
-            Skin dog = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog");
-            Skin skin2 = SkinUtils.ApplyAllOverrides(dog, skin, overrides, SkinMaterials[name], CustomAtlases[name]);
+            var dog = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog");
+            var skin2 = SkinUtils.ApplyAllOverrides(dog, skin, overrides, SkinMaterials[name], CustomAtlases[name]);
 
             CustomFollowerSkins.Add(name, skin2);
             AlwaysUnlockedSkins.Add(name, unlocked);
-        };
-        if (Plugin.Started) {
-            a();
-        } else {
-            Plugin.OnStart += a;
         }
-            
+
+        if (Plugin.Started) {
+            Action();
+        } else {
+            Plugin.OnStart += Action;
+        }
     }
 
-    public static void SetPlayerSkinOverride(Skin normalSkin, Skin hurtSkin = null, Skin hurtSkin2 = null)
+    public static void SetPlayerSkinOverride(Skin normalSkin, Skin? hurtSkin = null, Skin? hurtSkin2 = null)
     {
-        List<Skin> skins = new() {
+        List<Skin?> skins = new() {
             normalSkin,
             hurtSkin,
             hurtSkin2

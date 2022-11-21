@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using UnityEngine;
 
 namespace COTL_API.CustomSkins;
@@ -31,7 +29,7 @@ public abstract class CustomSkin
             Translate = new Vector2(translateX, translateY);
         }
         
-        public SkinOverride(string name, Rect rect, Tuple<float, float> scale, Tuple<float, float> translate)
+        public SkinOverride(string name, Rect rect, Tuple<float, float>? scale, Tuple<float, float>? translate)
         {
             Name = name;
             Rect = rect;

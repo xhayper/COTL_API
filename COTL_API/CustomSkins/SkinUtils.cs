@@ -1,56 +1,56 @@
-﻿using Spine;
+﻿using Spine.Unity.AttachmentTools;
 using Spine.Unity;
-using Spine.Unity.AttachmentTools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using Spine;
 
 namespace COTL_API.CustomSkins;
 
 internal class SkinUtils
 {
-    public static bool SkinsLoaded = false;
+    public static bool SkinsLoaded;
     
     public static event Action OnFindSkin = () =>
     {
-        SkinToLoad.Invoke();
+        SkinToLoad?.Invoke();
         SkinsLoaded = true;
     };
     
-    public static Action SkinToLoad = () => { };
+    public static Action? SkinToLoad = () => { };
 
     public static void ApplyOverride(Skin skin, Attachment a, int slot, string ovrName, AtlasRegion atlasRegion, float scaleX, float scaleY, float translationX, float translationY)
     {
-        if (a is MeshAttachment meshAttachment)
+        switch (a)
         {
+            case MeshAttachment meshAttachment:
+            {
                 float minX = int.MaxValue;
                 float maxX = int.MinValue;
                 float minY = int.MaxValue;
                 float maxY = int.MinValue;
                 
-                for (int j = 0; j < meshAttachment.Vertices.Length; j++)
+                for (var j = 0; j < meshAttachment.Vertices.Length; j++)
                 {
-                    if (j % 3 == 0)
+                    switch (j % 3)
                     {
-                        minY = Math.Min(minY, meshAttachment.Vertices[j]);
-                        maxY = Math.Max(maxY, meshAttachment.Vertices[j]);
-                    }
-                    else if (j % 3 == 1)
-                    {
-                        minX = Math.Min(minX, meshAttachment.Vertices[j]);
-                        maxX = Math.Max(maxX, meshAttachment.Vertices[j]);
+                        case 0:
+                            minY = Math.Min(minY, meshAttachment.Vertices[j]);
+                            maxY = Math.Max(maxY, meshAttachment.Vertices[j]);
+                            break;
+                        case 1:
+                            minX = Math.Min(minX, meshAttachment.Vertices[j]);
+                            maxX = Math.Max(maxX, meshAttachment.Vertices[j]);
+                            break;
                     }
                 }
                 
-                float diffX = maxX - minX;
-                float diffY = maxY - minY;
+                var diffX = maxX - minX;
+                var diffY = maxY - minY;
 
                 minX += translationX;
                 minY += translationY;
                 
-                float centerX = minX + (diffX / 2.0f);
-                float centerY = minY + (diffY / 2.0f);
+                var centerX = minX + (diffX / 2.0f);
+                var centerY = minY + (diffY / 2.0f);
                 
                 minX = centerX - ((diffX / 2.0f) * scaleX);
                 maxX = centerX + ((diffX / 2.0f) * scaleX);
@@ -74,31 +74,31 @@ internal class SkinUtils
                 meshAttachment.WorldVerticesLength = 8;
 
                 skin.SetAttachment(slot, ovrName, meshAttachment);
-        }
-        else if (a is RegionAttachment regionAttachment)
-        {
-            regionAttachment.Name = "Custom" + ovrName;
-            atlasRegion.name = "Custom" + atlasRegion.name;
+                break;
+            }
+            case RegionAttachment regionAttachment:
+                regionAttachment.Name = "Custom" + ovrName;
+                atlasRegion.name = "Custom" + atlasRegion.name;
             
-            regionAttachment.SetRegion(atlasRegion);
+                regionAttachment.SetRegion(atlasRegion);
             
-            regionAttachment.X += translationX;
-            regionAttachment.Y += translationY;
-            regionAttachment.ScaleX = scaleX;
-            regionAttachment.ScaleY = scaleY;
+                regionAttachment.X += translationX;
+                regionAttachment.Y += translationY;
+                regionAttachment.ScaleX = scaleX;
+                regionAttachment.ScaleY = scaleY;
             
-            skin.SetAttachment(slot, ovrName, regionAttachment);
-        }
-        else
-        {
-            Plugin.Instance!.Logger.LogWarning($"Attachment {a.Name} is not a MeshAttachment or RegionAttachment, skipping...");
+                skin.SetAttachment(slot, ovrName, regionAttachment);
+                break;
+            default:
+                Plugin.Instance!.Logger.LogWarning($"Attachment {a.Name} is not a MeshAttachment or RegionAttachment, skipping...");
+                break;
         }
     }
 
     public static Skin ApplyAllOverrides(Skin from, Skin to,
         List<Tuple<int, string, float, float, float, float>> overrides, Material material, AtlasAssetBase atlas)
     {
-        string name = to.name;
+        var name = to.name;
         from.Attachments.ToList().ForEach(att =>
         {
             to.SetAttachment(att.SlotIndex, att.Name, att.Attachment.Copy());
@@ -112,33 +112,24 @@ internal class SkinUtils
             to.Constraints.Add(con);
         });
 
-        foreach (Tuple<int, string, float, float, float, float> ovr in overrides)
+        foreach (var (slot, ovrName, translationX, translationY, scaleX, scaleY) in overrides)
         {
-            string ovrName = ovr.Item2;
-            int slot = ovr.Item1;
-            float translationX = ovr.Item3;
-            float translationY = ovr.Item4;
-            float scaleX = ovr.Item5;
-            float scaleY = ovr.Item6;
-            AtlasRegion atlasRegion = atlas.GetAtlas().FindRegion(slot + ":" + ovrName);
-            Attachment a = from.GetAttachment(slot, ovrName).Copy();
+            var atlasRegion = atlas.GetAtlas().FindRegion(slot + ":" + ovrName);
+            var a = from.GetAttachment(slot, ovrName).Copy();
 
-            SkinUtils.ApplyOverride(to, a, slot, ovrName, atlasRegion, scaleX, scaleY, translationX, translationY);
+            ApplyOverride(to, a, slot, ovrName, atlasRegion, scaleX, scaleY, translationX, translationY);
         }
-        
-        
+
         Material runtimeMaterial;
         Texture2D runtimeTexture;
         
         var skin2 = to.GetRepackedSkin(name, material, out runtimeMaterial, out runtimeTexture);
-        CustomSkinManager._cachedTextures.Clear();
+        CustomSkinManager.CachedTextures.Clear();
         AtlasUtilities.ClearCache();
         RepackMeshAttachments(skin2, overrides);
         
-        foreach (Tuple<int, string, float, float, float, float> ovr in overrides)
+        foreach (var slot in from ovr in overrides let ovrName = ovr.Item2 select ovr.Item1)
         {
-            string ovrName = ovr.Item2;
-            int slot = ovr.Item1;
         }
 
         return skin2;
@@ -146,34 +137,29 @@ internal class SkinUtils
 
     private static void RepackMeshAttachments(Skin skin, List<Tuple<int, string, float, float, float, float>> overrides)
     {
-        foreach (Tuple<int, string, float, float, float, float> ovr in overrides)
+        foreach (var (slot, ovrName, _, _, _, _) in overrides)
         {
-            string ovrName = ovr.Item2;
-            int slot = ovr.Item1;
-            Attachment a = skin.GetAttachment(slot, ovrName).Copy();
-            if (a is MeshAttachment mesh)
+            var a = skin.GetAttachment(slot, ovrName).Copy();
+            if (a is not MeshAttachment mesh) continue;
+            if (mesh.RendererObject is AtlasRegion atlasRegion)
             {
-                AtlasRegion atlasRegion = mesh.RendererObject as AtlasRegion;
-                if (atlasRegion != null)
-                {
-                    float pw = atlasRegion.page.width;
-                    float ph = atlasRegion.page.height;
-                    float x = atlasRegion.x;
-                    float y = atlasRegion.y;
-                    float w = atlasRegion.width;
-                    float h = atlasRegion.height;
-                    mesh.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
-                    mesh.UVs = new[]
-                        { (x + w) / pw, 1-((y + h) / ph), (x + w) / pw, 1-(y / ph), x / pw, 1-(y / ph), x / pw, 1-((y + h) / ph) };
-                    mesh.WorldVerticesLength = 8;
-                }
-
-                skin.SetAttachment(slot, ovrName, mesh);
+                float pw = atlasRegion.page.width;
+                float ph = atlasRegion.page.height;
+                float x = atlasRegion.x;
+                float y = atlasRegion.y;
+                float w = atlasRegion.width;
+                float h = atlasRegion.height;
+                mesh.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
+                mesh.UVs = new[]
+                    { (x + w) / pw, 1-((y + h) / ph), (x + w) / pw, 1-(y / ph), x / pw, 1-(y / ph), x / pw, 1-((y + h) / ph) };
+                mesh.WorldVerticesLength = 8;
             }
+
+            skin.SetAttachment(slot, ovrName, mesh);
         }
     }
 
-    public static List<Tuple<int, string, float, float, float, float>> CreateSkinAtlas(string name, Texture2D sheet, string atlasText, Func<AtlasRegion, Tuple<int, string>> regionOverrideFunction, out Material skinMaterial, out SpineAtlasAsset atlasAsset)
+    public static List<Tuple<int, string, float, float, float, float>> CreateSkinAtlas(string name, Texture2D sheet, string atlasText, Func<AtlasRegion, Tuple<int, string>?> regionOverrideFunction, out Material skinMaterial, out SpineAtlasAsset atlasAsset)
     {
         sheet.name = atlasText.Replace("\r", "").Split('\n')[1].Trim();
 
@@ -183,44 +169,44 @@ internal class SkinUtils
         skinMaterial = mat;
 
         Material[] materials = { mat };
-        SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
+        var atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
         atlasAsset = atlas;
 
         List<Tuple<int, string>> overrideRegions = new();
         
-        foreach (AtlasRegion region in atlas.GetAtlas().regions)
+        foreach (var region in atlas.GetAtlas().regions)
         {
-            Tuple<int, string> ovr = regionOverrideFunction.Invoke(region);
+            var ovr = regionOverrideFunction.Invoke(region);
             if (ovr != null) overrideRegions.Add(ovr);
             else Plugin.Instance!.Logger.LogError($"Failed to parse region with name: {region.name}");
         }
         
         List<Tuple<int, string, float, float, float, float>> overrides = new();
         List<AtlasRegion> list = atlas.GetAtlas().regions;
-        for (int index = 0; index < list.Count; index++)
+        for (var index = 0; index < list.Count; index++)
         {
-            float[] scale = new[] { 0f, 0f, 1f, 1f };
-            AtlasRegion atlasRegion = list[index];
-            string[] nameSplit = atlasRegion.name.Split('#');
+            var scale = new[] { 0f, 0f, 1f, 1f };
+            var atlasRegion = list[index];
+            var nameSplit = atlasRegion.name.Split('#');
             if (nameSplit.Length == 2)
             {
-                string scales = nameSplit[1];
-                string[] scaleSplit = scales.Split(',');
-                if (scaleSplit.Length == 2)
+                var scales = nameSplit[1];
+                var scaleSplit = scales.Split(',');
+                switch (scaleSplit.Length)
                 {
-                    scale[2] = float.Parse(scaleSplit[0]);
-                    scale[3] = float.Parse(scaleSplit[1]);
-                }
-                else if (scaleSplit.Length == 4)
-                {
-                    scale[0] = float.Parse(scaleSplit[2]);
-                    scale[1] = float.Parse(scaleSplit[3]);
-                    scale[2] = float.Parse(scaleSplit[0]);
-                    scale[3] = float.Parse(scaleSplit[1]);
-                }
-                else
-                {
-                    Plugin.Instance!.Logger.LogWarning($"Invalid scale length: {scale.Length}");
+                    case 2:
+                        scale[2] = float.Parse(scaleSplit[0]);
+                        scale[3] = float.Parse(scaleSplit[1]);
+                        break;
+                    case 4:
+                        scale[0] = float.Parse(scaleSplit[2]);
+                        scale[1] = float.Parse(scaleSplit[3]);
+                        scale[2] = float.Parse(scaleSplit[0]);
+                        scale[3] = float.Parse(scaleSplit[1]);
+                        break;
+                    default:
+                        Plugin.Instance!.Logger.LogWarning($"Invalid scale length: {scale.Length}");
+                        break;
                 }
 
                 atlasRegion.name = nameSplit[0];

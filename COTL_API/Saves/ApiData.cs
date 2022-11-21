@@ -11,4 +11,5 @@ internal class ApiData
     public string OwO => _randomEasteregg[UnityEngine.Random.Range(0, _randomEasteregg.Length)];
 
     public ObjectDictionary EnumData { get; } = new();
+    public ObjectDictionary SettingsData { get; } = new();
 }
