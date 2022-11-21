@@ -1,23 +1,14 @@
 ---
-import "preact/debug";
-
-import HeadCommon from "../components/HeadCommon.astro";
-import HeadSEO from "../components/HeadSEO.astro";
-import * as CONFIG from "../config";
+import MainLayout from "../layouts/MainLayout.astro";
 ---
 
-<!DOCTYPE html>
-<html dir={"ltr"} lang={CONFIG.SITE.defaultLanguage ?? "en-US"} class="initial">
-    <head>
-        <!-- This is needed because of SEO not liking the redirect -->
-        <!-- and some OG parser don't follow redirect causing the OG to be blank, so this is the fix, it's in-efficient -->
-        <!-- but works -->
-        <HeadCommon />
-        <HeadSEO frontmatter={{} as any} canonicalUrl={new URL(Astro.url.pathname, Astro.site)} />
-        <script is:inline>
-            // Redirect your homepage to the first page of documentation.
-            // If you have a landing page, remove this script and add it here!
-            window.location.replace("/introduction");
-        </script>
-    </head>
-</html>
+<MainLayout
+    frontmatter={{ title: "", description: "Cult of the Lamb API", layout: "../layouts/MainLayout.astro" }}
+    headings={[]}
+>
+    <script>
+        // Redirect your homepage to the first page of documentation.
+        // If you have a landing page, remove this script and add it here!
+        window.location.replace("/introduction");
+    </script>
+</MainLayout>

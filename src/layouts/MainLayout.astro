@@ -5,13 +5,11 @@ import "source-map-support/register";
 import RightSidebar from "../components/RightSidebar/RightSidebar.astro";
 import PageContent from "../components/PageContent/PageContent.astro";
 import LeftSidebar from "../components/LeftSidebar/LeftSidebar.astro";
-import ReloadPrompt from "../components/ReloadPrompt.astro";
 import HeadCommon from "../components/HeadCommon.astro";
 import Header from "../components/Header/Header.astro";
 import Footer from "../components/Footer/Footer.astro";
 import HeadSEO from "../components/HeadSEO.astro";
 import type { MarkdownHeading } from "astro";
-import { pwaInfo } from "virtual:pwa-info";
 import * as CONFIG from "../config";
 
 type Props = {
@@ -117,9 +115,6 @@ const githubEditUrl = `${CONFIG.GITHUB_EDIT_URL}/${currentFile}`;
                 top: 2rem;
             }
         </style>
-
-        <script src="/src/pwa.ts"></script>
-        {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
     </head>
 
     <body>
@@ -138,6 +133,5 @@ const githubEditUrl = `${CONFIG.GITHUB_EDIT_URL}/${currentFile}`;
             </aside>
         </main>
         <Footer path={currentFile} />
-        <ReloadPrompt />
     </body>
 </html>
