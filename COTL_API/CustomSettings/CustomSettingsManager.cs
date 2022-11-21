@@ -9,7 +9,7 @@ public static class CustomSettingsManager
     internal static List<Dropdown> Dropdowns { get; set; } = new();
     internal static List<Toggle> Toggles { get; set; } = new();
     
-    internal static IEnumerable<SettingsElement> SettingsElements => new List<SettingsElement>().Concat(Sliders).Concat(Dropdowns).Concat(Toggles).ToList();
+    internal static IEnumerable<ISettingsElement> SettingsElements => new List<ISettingsElement>().Concat(Sliders).Concat(Dropdowns).Concat(Toggles).ToList();
     
     public static void AddSlider(string? category, string text, float value, float min, float max, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
     {

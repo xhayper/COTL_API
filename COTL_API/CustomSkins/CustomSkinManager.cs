@@ -7,19 +7,19 @@ namespace COTL_API.CustomSkins;
 
 [HarmonyPatch]
 
-public partial class CustomSkinManager
+public static partial class CustomSkinManager
 {
     internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = new();
-    internal static readonly Dictionary<string, Skin> CustomFollowerSkins = new();
+    internal static readonly Dictionary<string, Skin?> CustomFollowerSkins = new();
     internal static readonly Dictionary<string, bool> AlwaysUnlockedSkins = new();
     internal static readonly Dictionary<string, Texture2D> SkinTextures = new();
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
     
     internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = new();
 
-    internal static string OverrideSkinName = "Default";
+    internal static readonly string OverrideSkinName = "Default";
     
-    internal static List<Skin?>? PlayerSkinOverride = null;
+    internal static List<Skin?>? PlayerSkinOverride;
 
     internal static readonly List<Tuple<int, string>> SkinSlots = new()
     {
@@ -395,7 +395,7 @@ public partial class CustomSkinManager
         }
     }
 
-    public static void SetPlayerSkinOverride(Skin normalSkin, Skin? hurtSkin = null, Skin? hurtSkin2 = null)
+    public static void SetPlayerSkinOverride(Skin? normalSkin, Skin? hurtSkin = null, Skin? hurtSkin2 = null)
     {
         List<Skin?> skins = new() {
             normalSkin,

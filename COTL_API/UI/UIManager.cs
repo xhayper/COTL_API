@@ -17,24 +17,23 @@ public class UIManager
     [HarmonyPostfix]
     public static void UISettingsMenuController_OnShowStarted(UISettingsMenuController __instance)
     {
-        if (SettingsUtils._sliderTemplate == null)
+        if (SettingsUtils.SliderTemplate == null)
         {
-            SettingsUtils._sliderTemplate = __instance._gameSettings.GetComponentInChildren<ScrollRect>().content
+            SettingsUtils.SliderTemplate = __instance._gameSettings.GetComponentInChildren<ScrollRect>().content
                 .GetChild(1).gameObject;
-            SettingsUtils._toggleTemplate = __instance._gameSettings.GetComponentInChildren<ScrollRect>().content
+            SettingsUtils.ToggleTemplate = __instance._gameSettings.GetComponentInChildren<ScrollRect>().content
                 .GetChild(2).gameObject;
-            SettingsUtils._horizontalSelectorTemplate = __instance._gameSettings.GetComponentInChildren<ScrollRect>()
+            SettingsUtils.HorizontalSelectorTemplate = __instance._gameSettings.GetComponentInChildren<ScrollRect>()
                 .content.GetChild(3).gameObject;
-            SettingsUtils._headerTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>().content
+            SettingsUtils.HeaderTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>().content
                 .GetChild(0).gameObject;
         }
 
         var originalGraphicsSettings = __instance._graphicsSettings;
         var stnb = __instance.transform.GetComponentInChildren<SettingsTabNavigatorBase>();
         var hlg = stnb.GetComponentInChildren<HorizontalLayoutGroup>();
-        Transform transform;
-        var graphicsSettingsTab = (transform = hlg.transform).GetChild(2);
-        var newSettings = Object.Instantiate(graphicsSettingsTab, transform);
+        var graphicsSettingsTab = hlg.transform.GetChild(2);
+        var newSettings = Object.Instantiate(graphicsSettingsTab, hlg.transform);
         newSettings.SetSiblingIndex(hlg.transform.childCount - 2);
         newSettings.name = "Mod Settings Button";
         var text = newSettings.GetComponentInChildren<TMP_Text>();
@@ -64,6 +63,16 @@ public class UIManager
         var button = newSettings.GetComponentInChildren<MMButton>();
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => stnb.TransitionTo(tab));
+    }
+    
+    [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.OnShowStarted))]
+    [HarmonyPrefix]
+    public static void UISettingsMenuController_OnShowStarted(GraphicsSettings __instance)
+    {
+        if (__instance.name == "Mod Settings Content")
+        {
+            __instance._targetFpsSelectable.HorizontalSelector._canvasGroup = __instance._canvasGroup;
+        }
     }
 
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.Start))]
@@ -98,7 +107,7 @@ public class UIManager
                 {
                     void OnValueChanged(float i)
                     {
-                        slider.OnValueChanged(i);
+                        slider.OnValueChanged?.Invoke(i);
                     }
 
                     SettingsUtils.AddSlider(scrollContent, slider.Text, slider.Value, slider.Min, slider.Max,
@@ -113,16 +122,5 @@ public class UIManager
 
         return false;
 
-    }
-
-
-    [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.OnShowStarted))]
-    [HarmonyPrefix]
-    public static void UISettingsMenuController_OnShowStarted(GraphicsSettings __instance)
-    {
-        if (__instance.name == "Mod Settings Content")
-        {
-            __instance._targetFpsSelectable.HorizontalSelector._canvasGroup = __instance._canvasGroup;
-        }
     }
 }

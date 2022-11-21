@@ -2,21 +2,21 @@
 
 namespace COTL_API.UI;
 
-internal interface SettingsElement
+internal interface ISettingsElement
 {
     internal string? Category { get; }
     internal string Text { get; }
 }
 
-internal class Slider : SettingsElement
+internal class Slider : ISettingsElement
 {
     internal string? Category { get; set; }
 
-    string? SettingsElement.Category => this.Category;
+    string? ISettingsElement.Category => this.Category;
 
     internal string Text { get; set; }
 
-    string SettingsElement.Text => this.Text;
+    string ISettingsElement.Text => this.Text;
 
     internal float Value { get; set; }
     internal float Min { get; set; }
@@ -39,15 +39,15 @@ internal class Slider : SettingsElement
     }
 }
 
-internal class Dropdown : SettingsElement
+internal class Dropdown : ISettingsElement
 {
     internal string? Category { get; set; }
 
-    string? SettingsElement.Category => this.Category;
+    string? ISettingsElement.Category => this.Category;
 
     internal string Text { get; set; }
 
-    string SettingsElement.Text => this.Text;
+    string ISettingsElement.Text => this.Text;
 
     internal string? Value { get; set; }
     internal string?[] Options { get; set; }
@@ -63,15 +63,15 @@ internal class Dropdown : SettingsElement
     }
 }
 
-internal class Toggle : SettingsElement
+internal class Toggle : ISettingsElement
 {
     internal string? Category { get; set; }
 
-    string? SettingsElement.Category => this.Category;
+    string? ISettingsElement.Category => this.Category;
 
     internal string Text { get; set; }
 
-    string SettingsElement.Text => this.Text;
+    string ISettingsElement.Text => this.Text;
 
     internal bool Value { get; set; }
     internal Action<bool>? OnValueChanged { get; set; }

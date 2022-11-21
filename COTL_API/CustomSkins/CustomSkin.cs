@@ -53,7 +53,7 @@ public abstract class CustomSkin
         sb.AppendLine("format: RGBA8888");
         sb.AppendLine("filter: Linear,Linear");
         sb.AppendLine("repeat: none");
-        foreach (SkinOverride skinOverride in Overrides)
+        foreach (var skinOverride in Overrides)
         {
             sb.AppendLine($"{skinOverride.Name}#{skinOverride.Scale.x},{skinOverride.Scale.y},{skinOverride.Translate.x},{skinOverride.Translate.y}");
             sb.AppendLine("  rotate: false");
