@@ -51,8 +51,8 @@ public static class UIManager
         var onHide = originalGraphicsSettings.OnHide;
         Delegate[] onShowDelegates = onShow.GetInvocationList();
         Delegate[] onHideDelegates = onHide.GetInvocationList();
-        var showDelegate = (Action)onHideDelegates[1];
-        var hideDelegate = (Action)onShowDelegates[1];
+        var showDelegate = (Action)onShowDelegates[1];
+        var hideDelegate = (Action)onHideDelegates[1];
         copy.OnShow += showDelegate;
         copy.OnHide += hideDelegate;
         originalGraphicsSettings.OnShow -= showDelegate;
