@@ -1,5 +1,5 @@
 import catppuccinMocha from "./themes/catppuccin/mocha.json";
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel/static";
 import { defineConfig } from "astro/config";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
@@ -11,15 +11,13 @@ import image from "@astrojs/image";
 // https://astro.build/config
 export default defineConfig({
     site: "https://cotl-api.vercel.app",
-    output: "server",
+    output: "static",
     adapter: vercel(),
     integrations: [
         preact({
             compat: true
         }),
-        image({
-            serviceEntryPoint: "@astrojs/image/sharp"
-        }),
+        image(),
         sitemap({
             i18n: {
                 defaultLocale: "en",
@@ -54,7 +52,7 @@ export default defineConfig({
                 }
             ]
         }),
-        // compress()
+        compress()
     ],
     vite: {
         build: {
