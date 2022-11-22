@@ -26,7 +26,7 @@ public static class CustomSettingsManager
     {
         if (Plugin.SettingsData == null) return null;
 
-        var fullGuid = $"{guid}.{text}";
+        var fullGuid = $"{guid}.{category}.{text}";
         onValueChanged ??= delegate { };
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
@@ -60,7 +60,7 @@ public static class CustomSettingsManager
     {
         if (Plugin.SettingsData == null) return null;
 
-        var fullGuid = $"{guid}.{text}";
+        var fullGuid = $"{guid}.{category}.{text}";
         onValueChanged ??= delegate { };
 
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
@@ -93,7 +93,7 @@ public static class CustomSettingsManager
     {
         if (Plugin.SettingsData == null) return null;
 
-        var fullGuid = $"Settings.{guid}.{text}";
+        var fullGuid = $"Settings.{guid}.{category}.{text}";
         onValueChanged ??= delegate { };
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
