@@ -13,6 +13,7 @@ using COTL_API.Debug;
 using MonoMod.Utils;
 using HarmonyLib;
 using BepInEx;
+using COTL_API.UI;
 using Spine;
 
 namespace COTL_API;
@@ -77,6 +78,35 @@ public class Plugin : BaseUnityPlugin
         ModdedSaveManager.RegisterModdedSave(APISlotData);
 
         BeginLoadAfterMainSave();
+        
+        Skin S1() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
+        Skin S2() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
+        Skin S3() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake");
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", S1));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S2));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
+        
+        var dd = CustomSettingsManager.AddSavedDropdown("API", PLUGIN_GUID, "Lamb Skin", "Default",
+            new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
+            {
+                if (i == 0)
+                {
+                    CustomSkinManager.ResetPlayerSkin();
+                }
+                else
+                {
+                    CustomSkinManager.SetPlayerSkinOverride(
+                        CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
+                }
+            });
+        
+        UIManager.OnSettingsLoaded += () =>
+        {
+            if (dd != null)
+            {
+                dd.Options = new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray();
+            }
+        };
 
         if (Debug)
             AddDebugContent();
@@ -181,27 +211,6 @@ public class Plugin : BaseUnityPlugin
         
         CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
         CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
-
-        Skin S1() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
-        Skin S2() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
-        Skin S3() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake");
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", S1));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S2));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
-
-        CustomSettingsManager.AddSavedDropdown("API", PLUGIN_GUID, "Lamb Skin", "Default",
-            new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
-            {
-                if (i == 0)
-                {
-                    CustomSkinManager.ResetPlayerSkin();
-                }
-                else
-                {
-                    CustomSkinManager.SetPlayerSkinOverride(
-                        CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
-                }
-            });
 
         Logger.LogDebug("Debug mode enabled");
     }

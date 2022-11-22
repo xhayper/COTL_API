@@ -8,12 +8,17 @@ using HarmonyLib;
 using Lamb.UI;
 using src.UINavigator;
 using TMPro;
+using Dropdown = COTL_API.CustomSettings.Elements.Dropdown;
+using Slider = COTL_API.CustomSettings.Elements.Slider;
+using Toggle = COTL_API.CustomSettings.Elements.Toggle;
 
 namespace COTL_API.UI;
 
 [HarmonyPatch]
 public static class UIManager
 {
+    public static Action OnSettingsLoaded = delegate { };
+    
     [HarmonyPatch(typeof(UISettingsMenuController), nameof(UISettingsMenuController.OnShowStarted))]
     [HarmonyPostfix]
     public static void UISettingsMenuController_OnShowStarted(UISettingsMenuController __instance)
@@ -92,6 +97,9 @@ public static class UIManager
         {
             Object.Destroy(child.gameObject);
         }
+        
+        OnSettingsLoaded.Invoke();
+        OnSettingsLoaded = delegate { };
 
         string? currentCategory = null;
         foreach (var element in CustomSettingsManager.SettingsElements.OrderBy(x => x.Category)
