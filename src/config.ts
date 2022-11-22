@@ -11,7 +11,7 @@ export const OPEN_GRAPH = {
         type: "image/png",
         width: 3840,
         height: 2160,
-        alt: "Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)",
+        alt: "Cult of the Lamb (English/Chinese/Korean/Japanese Ver.)"
     }
 };
 
