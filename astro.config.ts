@@ -4,6 +4,7 @@ import { defineConfig } from "astro/config";
 import robotsTxt from "astro-robots-txt";
 import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
+import compress from "astro-compress";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
 
@@ -52,7 +53,8 @@ export default defineConfig({
                     allow: "/"
                 }
             ]
-        })
+        }),
+        compress()
     ],
     vite: {
         build: {
