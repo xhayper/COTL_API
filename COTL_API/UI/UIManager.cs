@@ -152,29 +152,4 @@ public static class UIManager
         return false;
 
     }
-
-    [HarmonyPatch(typeof(UIMenuBase), nameof(UIMenuBase.ActivateNavigation))]
-    [HarmonyPrefix]
-    public static bool UIMenuBase_ActivateNavigation(UIMenuBase __instance)
-    {
-        Selectable selectable = ((__instance._cachedSelectable != null) ? __instance._cachedSelectable : __instance._defaultSelectable);
-        if (selectable == null || !selectable.interactable || !selectable.gameObject.activeInHierarchy)
-        {
-            for (int i = 0; i < __instance._defaultSelectableFallbacks.Length; i++)
-            {
-                if (__instance._defaultSelectableFallbacks[i].gameObject.activeSelf && __instance._defaultSelectableFallbacks[i].interactable && __instance._defaultSelectableFallbacks[i].gameObject.activeInHierarchy)
-                {
-                    selectable = __instance._defaultSelectableFallbacks[i];
-                    break;
-                }
-            }
-        }
-        if (!(selectable == null))
-        {
-            MonoSingleton<UINavigatorNew>.Instance.NavigateToNew(selectable as IMMSelectable);
-            __instance._cachedSelectable = null;
-        }
-
-        return false;
-    }
 }
