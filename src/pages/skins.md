@@ -1,5 +1,5 @@
 ---
-title: Task
+title: Skins
 description: Placeholder
 layout: ../layouts/MainLayout.astro
 ---
