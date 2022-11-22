@@ -1,5 +1,5 @@
 ---
-title: Mission
+title: Missions
 description: Placeholder
 layout: ../layouts/MainLayout.astro
 ---
