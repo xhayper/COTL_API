@@ -2,8 +2,8 @@
 import SkipToContent from "./SkipToContent.astro";
 import SidebarToggle from "./SidebarToggle";
 import * as CONFIG from "../../config";
-import DocSearch from "./DocSearch";
 import Logo from "./Logo.astro";
+import Search from "./Search";
 ---
 
 <header>
@@ -20,7 +20,8 @@ import Logo from "./Logo.astro";
         </div>
         <div style="flex-grow: 1;"></div>
         <div class="search-item">
-            <DocSearch client:idle />
+            <!-- TODO: i don't know why this work  -->
+            <Search client:only="preact" />
         </div>
     </nav>
 </header>
