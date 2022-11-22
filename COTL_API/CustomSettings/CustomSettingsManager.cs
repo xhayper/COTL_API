@@ -1,4 +1,4 @@
-﻿using COTL_API.UI;
+﻿using COTL_API.CustomSettings.Elements;
 using Lamb.UI;
 
 namespace COTL_API.CustomSettings;
@@ -12,17 +12,19 @@ public static class CustomSettingsManager
     internal static IEnumerable<ISettingsElement> SettingsElements =>
         Sliders.Cast<ISettingsElement>().Concat(Dropdowns).Concat(Toggles);
 
-    public static void AddSlider(string? category, string text, float value, float min, float max, int increment,
+    public static Slider AddSlider(string? category, string text, float value, float min, float max, int increment,
         MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
-        Sliders.Add(new Slider(category, text, value, min, max, increment, displayFormat, onValueChanged));
+        var slider = new Slider(category, text, value, min, max, increment, displayFormat, onValueChanged);
+        Sliders.Add(slider);
+        return slider;
     }
 
-    public static void AddSavedSlider(string? category, string guid, string text, float value, float min, float max,
+    public static Slider? AddSavedSlider(string? category, string guid, string text, float value, float min, float max,
         int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
     {
-        if (Plugin.SettingsData == null) return;
+        if (Plugin.SettingsData == null) return null;
 
         var fullGuid = $"{guid}.{text}";
         onValueChanged ??= delegate { };
@@ -41,19 +43,22 @@ public static class CustomSettingsManager
                 onValueChanged(newValue);
             });
         Sliders.Add(slider);
+        return slider;
     }
 
-    public static void AddDropdown(string? category, string text, string? value, string?[] options,
+    public static Dropdown AddDropdown(string? category, string text, string? value, string?[] options,
         Action<int>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
-        Dropdowns.Add(new Dropdown(category, text, value, options, onValueChanged));
+        var dropdown = new Dropdown(category, text, value, options, onValueChanged);
+        Dropdowns.Add(dropdown);
+        return dropdown;
     }
 
-    public static void AddSavedDropdown(string? category, string guid, string text, string value, string?[] options,
+    public static Dropdown? AddSavedDropdown(string? category, string guid, string text, string value, string?[] options,
         Action<int>? onValueChanged = null)
     {
-        if (Plugin.SettingsData == null) return;
+        if (Plugin.SettingsData == null) return null;
 
         var fullGuid = $"{guid}.{text}";
         onValueChanged ??= delegate { };
@@ -72,18 +77,21 @@ public static class CustomSettingsManager
                 onValueChanged(newValue);
             });
         Dropdowns.Add(dropdown);
+        return dropdown;
     }
 
-    public static void AddToggle(string? category, string text, bool value, Action<bool>? onValueChanged = null)
+    public static Toggle AddToggle(string? category, string text, bool value, Action<bool>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
-        Toggles.Add(new Toggle(category, text, value, onValueChanged));
+        var toggle = new Toggle(category, text, value, onValueChanged);
+        Toggles.Add(toggle);
+        return toggle;
     }
 
-    public static void AddSavedToggle(string? category, string guid, string text, bool value,
+    public static Toggle? AddSavedToggle(string? category, string guid, string text, bool value,
         Action<bool>? onValueChanged = null)
     {
-        if (Plugin.SettingsData == null) return;
+        if (Plugin.SettingsData == null) return null;
 
         var fullGuid = $"Settings.{guid}.{text}";
         onValueChanged ??= delegate { };
@@ -101,5 +109,6 @@ public static class CustomSettingsManager
                 onValueChanged(newValue);
             });
         Toggles.Add(toggle);
+        return toggle;
     }
 }
