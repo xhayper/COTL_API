@@ -1,5 +1,5 @@
 ---
-title: Tarot Card
+title: Tasks
 description: Placeholder
 layout: ../layouts/MainLayout.astro
 ---

@@ -55,13 +55,14 @@ export const SIDEBAR: Sidebar = {
         { text: "Localization", link: "localization" },
         { text: "Mission", link: "mission" },
         { text: "Objectives", link: "objectives" },
-        { text: "Ritual", link: "ritual" },
+        { text: "Rituals", link: "rituals" },
         { text: "Save Data", link: "save-data" },
-        { text: "Skin", link: "skin" },
+		{ text: "Settings", link: "settings" },
+        { text: "Skins", link: "skins" },
         { text: "Sound", link: "sound" },
         { text: "Structures", link: "structures" },
-        { text: "Tarot Card", link: "tarot-card" },
-        { text: "Task", link: "task" },
+        { text: "Tarot Cards", link: "tarot-cards" },
+        { text: "Tasks", link: "tasks" },
         { text: "UI", link: "ui" }
     ]
 };

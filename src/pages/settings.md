@@ -1,5 +1,5 @@
 ---
-title: Skin
+title: Settings
 description: Placeholder
 layout: ../layouts/MainLayout.astro
 ---
