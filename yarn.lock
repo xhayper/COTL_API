@@ -102,7 +102,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@algolia/client-search@npm:4.14.2":
+"@algolia/client-search@npm:4.14.2, @algolia/client-search@npm:^4.14.2":
   version: 4.14.2
   resolution: "@algolia/client-search@npm:4.14.2"
   dependencies:
@@ -619,7 +619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docsearch/css@npm:3.3.0":
+"@docsearch/css@npm:3.3.0, @docsearch/css@npm:^3.3.0":
   version: 3.3.0
   resolution: "@docsearch/css@npm:3.3.0"
   checksum: 1cbf381fe0b454f933e736d04fe8a2d9f86c375022ef738b44d67a0b4c187b0d8fcb945a1ba5a404059e50e3968d9fe769de22779d071f6189f07c161239892c
@@ -1909,10 +1909,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cotl_api_docs@workspace:."
   dependencies:
+    "@algolia/client-search": ^4.14.2
     "@astrojs/image": ^0.11.6
     "@astrojs/preact": ^1.2.0
     "@astrojs/sitemap": ^1.0.0
     "@astrojs/vercel": ^2.3.4
+    "@docsearch/css": ^3.3.0
     "@docsearch/react": ^3.3.0
     "@types/node": ^18.11.9
     astro: ^1.6.10
