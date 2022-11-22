@@ -1,16 +1,16 @@
-﻿using Object = UnityEngine.Object;
+using Dropdown = COTL_API.CustomSettings.Elements.Dropdown;
+using Slider = COTL_API.CustomSettings.Elements.Slider;
+using Toggle = COTL_API.CustomSettings.Elements.Toggle;
+using Object = UnityEngine.Object;
 using COTL_API.CustomSettings;
 using Lamb.UI.SettingsMenu;
 using Lamb.UI.Settings;
+using src.UINavigator;
 using UnityEngine.UI;
 using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
-using src.UINavigator;
 using TMPro;
-using Dropdown = COTL_API.CustomSettings.Elements.Dropdown;
-using Slider = COTL_API.CustomSettings.Elements.Slider;
-using Toggle = COTL_API.CustomSettings.Elements.Toggle;
 
 namespace COTL_API.UI;
 
