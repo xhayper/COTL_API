@@ -320,3 +320,15 @@ private void Awake()
     CustomSkinManager.AddPlayerSkin(new ExamplePlayerSkin());
 }
 ```
+
+## Final Steps
+
+For the skin texture to load, you need to put it in the appropriate location. For the example, this would be `/Assets/example_sheet.png` relative to the root folder containing the .dll  
+Directory structure:
+
+```
+📂plugins
+ ┣📂Assets
+ ┃ ┗🖼️example_sheet.png
+ ┗📜mod_name.dll
+```
