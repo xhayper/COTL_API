@@ -40,7 +40,7 @@ public class Slider : ISettingsElement
     }
 }
 
-public class Dropdown : ISettingsElement
+public class HorizontalSelector : ISettingsElement
 {
     public string? Category { get; set; }
 
@@ -54,7 +54,7 @@ public class Dropdown : ISettingsElement
     public string?[] Options { get; set; }
     public Action<int>? OnValueChanged { get; set; }
     
-    public Dropdown(string? category, string text, string? value, string?[] options, Action<int>? onValueChanged)
+    public HorizontalSelector(string? category, string text, string? value, string?[] options, Action<int>? onValueChanged)
     {
         LogHelper.LogInfo(value);
         

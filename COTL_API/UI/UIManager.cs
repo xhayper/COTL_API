@@ -1,5 +1,6 @@
 ﻿using Object = UnityEngine.Object;
 using COTL_API.CustomSettings;
+using COTL_API.CustomSettings.Elements;
 using Lamb.UI.SettingsMenu;
 using Lamb.UI.Settings;
 using UnityEngine.UI;
@@ -8,7 +9,6 @@ using HarmonyLib;
 using Lamb.UI;
 using src.UINavigator;
 using TMPro;
-using Dropdown = COTL_API.CustomSettings.Elements.Dropdown;
 using Slider = COTL_API.CustomSettings.Elements.Slider;
 using Toggle = COTL_API.CustomSettings.Elements.Toggle;
 
@@ -113,7 +113,7 @@ public static class UIManager
 
             switch (element)
             {
-                case Dropdown dropdown:
+                case HorizontalSelector dropdown:
                 {
 
                     void OnValueChanged(int i)
