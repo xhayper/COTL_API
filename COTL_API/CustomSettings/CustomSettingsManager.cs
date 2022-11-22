@@ -6,11 +6,11 @@ namespace COTL_API.CustomSettings;
 public static class CustomSettingsManager
 {
     internal static List<Slider> Sliders { get; set; } = new();
-    internal static List<Dropdown> Dropdowns { get; set; } = new();
+    internal static List<HorizontalSelector> HorizontalSelectors { get; set; } = new();
     internal static List<Toggle> Toggles { get; set; } = new();
 
     internal static IEnumerable<ISettingsElement> SettingsElements =>
-        Sliders.Cast<ISettingsElement>().Concat(Dropdowns).Concat(Toggles);
+        Sliders.Cast<ISettingsElement>().Concat(HorizontalSelectors).Concat(Toggles);
 
     public static Slider AddSlider(string? category, string text, float value, float min, float max, int increment,
         MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
@@ -46,16 +46,16 @@ public static class CustomSettingsManager
         return slider;
     }
 
-    public static Dropdown AddDropdown(string? category, string text, string? value, string?[] options,
+    public static HorizontalSelector AddHorizontalSelector(string? category, string text, string? value, string?[] options,
         Action<int>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
-        var dropdown = new Dropdown(category, text, value, options, onValueChanged);
-        Dropdowns.Add(dropdown);
-        return dropdown;
+        var horizontalSelector = new HorizontalSelector(category, text, value, options, onValueChanged);
+        HorizontalSelectors.Add(horizontalSelector);
+        return horizontalSelector;
     }
 
-    public static Dropdown? AddSavedDropdown(string? category, string guid, string text, string value, string?[] options,
+    public static HorizontalSelector? AddHorizontalSelector(string? category, string guid, string text, string value, string?[] options,
         Action<int>? onValueChanged = null)
     {
         if (Plugin.SettingsData == null) return null;
@@ -65,7 +65,7 @@ public static class CustomSettingsManager
 
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
-        var dropdown = new Dropdown(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options,
+        var horizontalSelector = new HorizontalSelector(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options,
             delegate(int newValue)
             {
                 if (Plugin.Instance != null)
@@ -76,8 +76,8 @@ public static class CustomSettingsManager
                 
                 onValueChanged(newValue);
             });
-        Dropdowns.Add(dropdown);
-        return dropdown;
+        HorizontalSelectors.Add(horizontalSelector);
+        return horizontalSelector;
     }
 
     public static Toggle AddToggle(string? category, string text, bool value, Action<bool>? onValueChanged = null)

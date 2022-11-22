@@ -86,7 +86,7 @@ public class Plugin : BaseUnityPlugin
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S2));
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
         
-        var dd = CustomSettingsManager.AddSavedDropdown("API", PLUGIN_GUID, "Lamb Skin", "Default",
+        var dd = CustomSettingsManager.AddHorizontalSelector("API", PLUGIN_GUID, "Lamb Skin", "Default",
             new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
             {
                 if (i == 0)
