@@ -17,7 +17,7 @@ namespace COTL_API.UI;
 [HarmonyPatch]
 public static class UIManager
 {
-    public static Action OnSettingsLoaded = delegate { };
+    public static Action OnSettingsLoaded { get; set; } = delegate { };
     
     [HarmonyPatch(typeof(UISettingsMenuController), nameof(UISettingsMenuController.OnShowStarted))]
     [HarmonyPostfix]
