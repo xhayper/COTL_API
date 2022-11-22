@@ -1,8 +1,8 @@
 ---
 import SkipToContent from "./SkipToContent.astro";
 import SidebarToggle from "./SidebarToggle";
+import DocSearch from "./DocSearch.astro";
 import * as CONFIG from "../../config";
-import DocSearch from "./DocSearch";
 import Logo from "./Logo.astro";
 ---
 
@@ -20,7 +20,7 @@ import Logo from "./Logo.astro";
         </div>
         <div style="flex-grow: 1;"></div>
         <div class="search-item">
-            <DocSearch client:idle />
+            <DocSearch />
         </div>
     </nav>
 </header>
