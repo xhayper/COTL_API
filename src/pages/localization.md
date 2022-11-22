@@ -5,14 +5,14 @@ layout: ../layouts/MainLayout.astro
 ---
 
 ## Creating Localizations
-You first need to create a localization file. A localization file is formatted as a list of `"term","localization"` entries.  
+You first need to create a localization file. A localization file is formatted as a list of `"term", "localization"` entries. (Space is required!)  
 *Excerpt from the English localization:*
 ```
-"TarotCards/EnemyBlast/Description","Knocks back enemies within your range while also damaging them."
-"TarotCards/EnemyBlast/Lore","A curse against those unworthy of your presence."
-"TarotCards/EnemyBlast/Name","Divine Blast"
-"TarotCards/Fireball/Description","Shoot a piercing bolt of fire."
-"TarotCards/Fireball/Lore","Send forth the flames of the Underworld."
+"TarotCards/EnemyBlast/Description", "Knocks back enemies within your range while also damaging them."
+"TarotCards/EnemyBlast/Lore", "A curse against those unworthy of your presence."
+"TarotCards/EnemyBlast/Name", "Divine Blast"
+"TarotCards/Fireball/Description", "Shoot a piercing bolt of fire."
+"TarotCards/Fireball/Lore", "Send forth the flames of the Underworld."
 ```
 
 You can use the [Template Spreadsheet](https://docs.google.com/spreadsheets/d/1yhkYddwJ_pYPAP58uXIcC_JadWqYzjUc0NIf0Hb6ocU/edit?usp=sharing) to get started.
