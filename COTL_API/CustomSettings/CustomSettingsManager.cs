@@ -55,7 +55,7 @@ public static class CustomSettingsManager
         return horizontalSelector;
     }
 
-    public static HorizontalSelector? AddHorizontalSelector(string? category, string guid, string text, string value, string?[] options,
+    public static HorizontalSelector? AddSavedHorizontalSelector(string? category, string guid, string text, string value, string?[] options,
         Action<int>? onValueChanged = null)
     {
         if (Plugin.SettingsData == null) return null;
