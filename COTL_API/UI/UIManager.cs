@@ -1,23 +1,23 @@
-﻿using Object = UnityEngine.Object;
+﻿using HorizontalSelector = COTL_API.CustomSettings.Elements.HorizontalSelector;
+using Slider = COTL_API.CustomSettings.Elements.Slider;
+using Toggle = COTL_API.CustomSettings.Elements.Toggle;
+using Object = UnityEngine.Object;
 using COTL_API.CustomSettings;
-using COTL_API.CustomSettings.Elements;
 using Lamb.UI.SettingsMenu;
 using Lamb.UI.Settings;
+using src.UINavigator;
 using UnityEngine.UI;
 using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
-using src.UINavigator;
 using TMPro;
-using Slider = COTL_API.CustomSettings.Elements.Slider;
-using Toggle = COTL_API.CustomSettings.Elements.Toggle;
 
 namespace COTL_API.UI;
 
 [HarmonyPatch]
 public static class UIManager
 {
-    public static Action OnSettingsLoaded = delegate { };
+    public static Action OnSettingsLoaded { get; set; } = delegate { };
     
     [HarmonyPatch(typeof(UISettingsMenuController), nameof(UISettingsMenuController.OnShowStarted))]
     [HarmonyPostfix]

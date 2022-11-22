@@ -11,9 +11,9 @@ using BepInEx.Logging;
 using COTL_API.Saves;
 using COTL_API.Debug;
 using MonoMod.Utils;
+using COTL_API.UI;
 using HarmonyLib;
 using BepInEx;
-using COTL_API.UI;
 using Spine;
 
 namespace COTL_API;
