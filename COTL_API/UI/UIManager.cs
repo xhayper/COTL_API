@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
+using src.UINavigator;
 using TMPro;
 
 namespace COTL_API.UI;
@@ -46,15 +47,18 @@ public static class UIManager
         var copy = newGraphicsSettings.GetComponentInChildren<GraphicsSettings>();
         var tab = newSettings.GetComponent<SettingsTab>();
         tab._menu = copy;
-        copy._defaultSelectable = graphicsSettingsTab.GetComponentInChildren<Selectable>();
+        copy._defaultSelectable = copy._scrollRect.content.GetComponentInChildren<Selectable>();
+        copy._defaultSelectableFallbacks = Array.Empty<Selectable>();
         var onShow = originalGraphicsSettings.OnShow;
         var onHide = originalGraphicsSettings.OnHide;
         Delegate[] onShowDelegates = onShow.GetInvocationList();
         Delegate[] onHideDelegates = onHide.GetInvocationList();
         var showDelegate = (Action)onShowDelegates[1];
-        var hideDelegate = (Action)onHideDelegates[1];
+        var hideDelegateAll = (Action)onHideDelegates[1];
+        var hideDelegate = (Action)onHideDelegates[2];
         copy.OnShow += showDelegate;
         copy.OnHide += hideDelegate;
+        copy.OnHide += hideDelegateAll;
         originalGraphicsSettings.OnShow -= showDelegate;
         originalGraphicsSettings.OnHide -= hideDelegate;
 
@@ -72,9 +76,11 @@ public static class UIManager
         if (__instance.name == "Mod Settings Content")
         {
             __instance._targetFpsSelectable.HorizontalSelector._canvasGroup = __instance._canvasGroup;
+            __instance._defaultSelectable = __instance._scrollRect.content.GetComponentInChildren<Selectable>();
+            MonoSingleton<UINavigatorNew>.Instance.NavigateToNew(__instance._defaultSelectable as IMMSelectable);
         }
     }
-
+    
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.Start))]
     [HarmonyPrefix]
     public static bool GraphicsSettings_Start(GraphicsSettings __instance)
@@ -137,8 +143,38 @@ public static class UIManager
                 }
             }
         }
+        
+        if (!CustomSettingsManager.SettingsElements.Any())
+        {
+            SettingsUtils.AddHeader(scrollContent, "(No mods have settings)");
+        }
 
         return false;
 
+    }
+
+    [HarmonyPatch(typeof(UIMenuBase), nameof(UIMenuBase.ActivateNavigation))]
+    [HarmonyPrefix]
+    public static bool UIMenuBase_ActivateNavigation(UIMenuBase __instance)
+    {
+        Selectable selectable = ((__instance._cachedSelectable != null) ? __instance._cachedSelectable : __instance._defaultSelectable);
+        if (selectable == null || !selectable.interactable || !selectable.gameObject.activeInHierarchy)
+        {
+            for (int i = 0; i < __instance._defaultSelectableFallbacks.Length; i++)
+            {
+                if (__instance._defaultSelectableFallbacks[i].gameObject.activeSelf && __instance._defaultSelectableFallbacks[i].interactable && __instance._defaultSelectableFallbacks[i].gameObject.activeInHierarchy)
+                {
+                    selectable = __instance._defaultSelectableFallbacks[i];
+                    break;
+                }
+            }
+        }
+        if (!(selectable == null))
+        {
+            MonoSingleton<UINavigatorNew>.Instance.NavigateToNew(selectable as IMMSelectable);
+            __instance._cachedSelectable = null;
+        }
+
+        return false;
     }
 }
