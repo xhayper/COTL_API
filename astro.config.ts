@@ -54,7 +54,7 @@ export default defineConfig({
                 }
             ]
         }),
-        compress()
+        // compress()
     ],
     vite: {
         build: {
