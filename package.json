@@ -25,6 +25,7 @@
         "astro-html-minifier": "^0.2.0",
         "astro-robots-txt": "^0.3.10",
         "astro-seo": "^0.6.0",
+        "html-escaper": "^3.0.3",
         "preact": "^10.11.3",
         "prettier": "^2.7.1",
         "prettier-plugin-astro": "^0.7.0",
