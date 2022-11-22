@@ -9,6 +9,7 @@ using src.UINavigator;
 using UnityEngine.UI;
 using UnityEngine;
 using HarmonyLib;
+using I2.Loc;
 using Lamb.UI;
 using TMPro;
 
@@ -43,6 +44,7 @@ public static class UIManager
         newSettings.SetSiblingIndex(hlg.transform.childCount - 2);
         newSettings.name = "Mod Settings Button";
         var text = newSettings.GetComponentInChildren<TMP_Text>();
+        Object.Destroy(newSettings.GetComponentInChildren<Localize>());
         text.text = "Mods";
         var content = __instance.GetComponentInChildren<GameSettings>().transform.parent.gameObject;
         var graphicsSettings = content.transform.GetChild(1);
