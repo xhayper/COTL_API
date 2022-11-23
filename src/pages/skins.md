@@ -18,7 +18,7 @@ using UnityEngine;
 ```
 
 ```csharp
-internal class ExampleFollowerSkin : <CustomFollowerSkin>
+internal class ExampleFollowerSkin : CustomFollowerSkin
 {
     public override string Name => "Example Skin";
 
