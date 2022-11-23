@@ -55,7 +55,7 @@ If you want a setting that can have different options at runtime, you can add a 
 Example:
 ```csharp
 var selector = CustomSettingsManager.AddSavedHorizontalSelector(...)
-UIManager.OnSettingsLoaded += () =>
+UIManager.OnSettingsLoaded += delegate () =>
 {
     selector!.Options = ...
 };
