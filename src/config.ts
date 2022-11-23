@@ -36,7 +36,6 @@ export const GITHUB_EDIT_URL = `https://github.com/xhayper/COTL_API/tree/docs/`;
 
 export const COMMUNITY_INVITE_URL = `https://discord.gg/jZ2DytX3TX`;
 
-// See "Algolia" section of the README for more information.
 export const ALGOLIA = {
     indexName: "XXXXXXXXXX",
     appId: "XXXXXXXXXX",
