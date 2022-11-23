@@ -9,8 +9,8 @@ using src.UINavigator;
 using UnityEngine.UI;
 using UnityEngine;
 using HarmonyLib;
-using I2.Loc;
 using Lamb.UI;
+using I2.Loc;
 using TMPro;
 
 namespace COTL_API.UI;
