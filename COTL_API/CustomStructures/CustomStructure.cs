@@ -25,7 +25,7 @@ public abstract class CustomStructure : StructureBrain
 
     public new virtual bool ReservedForTask => false;
 
-    public virtual Categories Categories => Categories.CULT;
+    public new virtual Categories Categories => Categories.CULT;
 
     public virtual TypeAndPlacementObjects.Tier Tier => TypeAndPlacementObjects.Tier.Zero;
 
