@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <AssemblyVersion>0.1.9</AssemblyVersion>
+        <AssemblyVersion>0.1.10</AssemblyVersion>
         <TargetFramework>netstandard2.0</TargetFramework>
         <IsPackable>false</IsPackable>
         <LangVersion>latest</LangVersion>

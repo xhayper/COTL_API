@@ -25,7 +25,7 @@ public class Plugin : BaseUnityPlugin
 {
     public const string PLUGIN_GUID = "io.github.xhayper.COTL_API";
     public const string PLUGIN_NAME = "COTL_API";
-    public const string PLUGIN_VERSION = "0.1.7";
+    public const string PLUGIN_VERSION = "0.1.10";
 
     internal static Plugin? Instance { get; private set; }
 
