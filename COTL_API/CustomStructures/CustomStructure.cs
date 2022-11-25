@@ -6,7 +6,7 @@ using I2.Loc;
 
 namespace COTL_API.CustomStructures;
 
-public abstract class CustomStructure
+public abstract class CustomStructure : StructureBrain
 {
     public abstract string InternalName { get; }
 
