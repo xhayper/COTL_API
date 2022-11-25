@@ -23,7 +23,7 @@ public abstract class CustomStructure : StructureBrain
 
     public virtual Type? Interaction => null;
 
-    public virtual bool ReservedForTask => false;
+    public new virtual bool ReservedForTask => false;
 
     public virtual Categories Categories => Categories.CULT;
 
