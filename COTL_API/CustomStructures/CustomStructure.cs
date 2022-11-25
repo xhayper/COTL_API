@@ -10,7 +10,7 @@ public abstract class CustomStructure : StructureBrain
 {
     public abstract string InternalName { get; }
 
-    internal StructureBrain.TYPES StructureType;
+    internal TYPES StructureType;
     internal string ModPrefix = "";
 
     public virtual Sprite Sprite { get; } =
@@ -25,7 +25,7 @@ public abstract class CustomStructure : StructureBrain
 
     public virtual bool ReservedForTask => false;
 
-    public virtual StructureBrain.Categories Categories => StructureBrain.Categories.CULT;
+    public virtual Categories Categories => Categories.CULT;
 
     public virtual TypeAndPlacementObjects.Tier Tier => TypeAndPlacementObjects.Tier.Zero;
 
