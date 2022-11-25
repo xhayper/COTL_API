@@ -21,11 +21,7 @@ public abstract class CustomStructure : StructureBrain
     public virtual string PrefabPath => CustomPrefabManager.GetOrCreateBuildingPrefab(this);
     public virtual int BuildDurationMinutes => 30;
 
-    public virtual Type? Interaction => null;
-
-    public new virtual bool ReservedForTask => false;
-
-    public new virtual Categories Categories => Categories.CULT;
+    public virtual Categories StructureCategories => Categories.CULT;
 
     public virtual TypeAndPlacementObjects.Tier Tier => TypeAndPlacementObjects.Tier.Zero;
 
@@ -34,10 +30,10 @@ public abstract class CustomStructure : StructureBrain
         TypeAndPlacementObject tpo = new()
         {
             IconImage = Sprite,
-            Category = Categories,
+            Category = StructureCategories,
             PlacementObject = CustomPrefabManager.CreatePlacementObjectFor(this),
             Type = StructureType,
-            Tier = Tier,
+            Tier = Tier
         };
         return tpo;
     }
