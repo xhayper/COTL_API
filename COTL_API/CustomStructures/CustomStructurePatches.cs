@@ -48,8 +48,8 @@ public partial class CustomStructureManager
         FollowerCategory.Category category)
     {
         __result.AddRange(from structure in CustomStructureList.Values
-            where structure.Category == category
-            select structure.StructureType);
+                          where structure.Category == category
+                          select structure.StructureType);
     }
 
     [HarmonyPatch(typeof(StructuresData), "GetUnlocked")]

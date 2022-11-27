@@ -32,7 +32,7 @@ public static class CustomSettingsManager
             Plugin.SettingsData.Add(fullGuid, value);
         var slider = new Slider(category, text, Plugin.SettingsData.GetValueAsFloat(fullGuid), min, max,
             increment, displayFormat,
-            delegate(float newValue)
+            delegate (float newValue)
             {
                 if (Plugin.Instance != null)
                 {
@@ -66,14 +66,14 @@ public static class CustomSettingsManager
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
         var horizontalSelector = new HorizontalSelector(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options,
-            delegate(int newValue)
+            delegate (int newValue)
             {
                 if (Plugin.Instance != null)
                 {
                     Plugin.SettingsData.SetValue(fullGuid, options[newValue]);
                     Plugin.Instance.APIData.Save();
                 }
-                
+
                 onValueChanged(newValue);
             });
         HorizontalSelectors.Add(horizontalSelector);
@@ -98,7 +98,7 @@ public static class CustomSettingsManager
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
         var toggle = new Toggle(category, text, Plugin.SettingsData.GetValueAsBoolean(fullGuid),
-            delegate(bool newValue)
+            delegate (bool newValue)
             {
                 if (Plugin.Instance != null)
                 {

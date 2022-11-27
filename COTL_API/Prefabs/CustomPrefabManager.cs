@@ -34,7 +34,7 @@ public static class CustomPrefabManager
         }
 
         var sprite = PrefabStrings[name].Sprite;
-        handle.Completed += delegate(AsyncOperationHandle<GameObject> obj)
+        handle.Completed += delegate (AsyncOperationHandle<GameObject> obj)
         {
             var spriteRenderer = obj.Result.GetComponentInChildren<SpriteRenderer>();
             var structure = obj.Result.GetComponentInChildren<Structure>();

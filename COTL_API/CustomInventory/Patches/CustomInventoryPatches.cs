@@ -53,9 +53,9 @@ public static partial class CustomItemManager
     private static void FollowerCommandGroups_GiftCommands(ref List<CommandItem> __result)
     {
         __result.AddRange(from item in CustomItemList.Values
-            where item.CanBeGivenToFollower
-            where 0 < Inventory.GetItemQuantity(item.ItemType)
-            select new FollowerCommandItems.GiftCommandItem(item.ItemType) { Command = item.GiftCommand });
+                          where item.CanBeGivenToFollower
+                          where 0 < Inventory.GetItemQuantity(item.ItemType)
+                          select new FollowerCommandItems.GiftCommandItem(item.ItemType) { Command = item.GiftCommand });
     }
 
     [HarmonyPatch(typeof(FollowerCommandItems.GiftCommandItem), nameof(FollowerCommandItems.GiftCommandItem.GetTitle))]

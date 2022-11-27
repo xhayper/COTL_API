@@ -80,7 +80,7 @@ public static class TypeManager
 
         if (int.TryParse(typeName, out _))
         {
-            LogHelper .LogInfo("This appears to be a custom type");
+            LogHelper.LogInfo("This appears to be a custom type");
         }
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");

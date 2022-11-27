@@ -7,7 +7,7 @@ namespace COTL_API.CustomSkins;
 
 internal static class SkinUtils
 {
-    public static bool SkinsLoaded { get; internal set;  }
+    public static bool SkinsLoaded { get; internal set; }
 
     public static event Action OnFindSkin = () =>
     {
@@ -23,60 +23,60 @@ internal static class SkinUtils
         switch (a)
         {
             case MeshAttachment meshAttachment:
-            {
-                float minX = int.MaxValue;
-                float maxX = int.MinValue;
-                float minY = int.MaxValue;
-                float maxY = int.MinValue;
-
-                for (var j = 0; j < meshAttachment.Vertices.Length; j++)
                 {
-                    switch (j % 3)
+                    float minX = int.MaxValue;
+                    float maxX = int.MinValue;
+                    float minY = int.MaxValue;
+                    float maxY = int.MinValue;
+
+                    for (var j = 0; j < meshAttachment.Vertices.Length; j++)
                     {
-                        case 0:
-                            minY = Math.Min(minY, meshAttachment.Vertices[j]);
-                            maxY = Math.Max(maxY, meshAttachment.Vertices[j]);
-                            break;
-                        case 1:
-                            minX = Math.Min(minX, meshAttachment.Vertices[j]);
-                            maxX = Math.Max(maxX, meshAttachment.Vertices[j]);
-                            break;
+                        switch (j % 3)
+                        {
+                            case 0:
+                                minY = Math.Min(minY, meshAttachment.Vertices[j]);
+                                maxY = Math.Max(maxY, meshAttachment.Vertices[j]);
+                                break;
+                            case 1:
+                                minX = Math.Min(minX, meshAttachment.Vertices[j]);
+                                maxX = Math.Max(maxX, meshAttachment.Vertices[j]);
+                                break;
+                        }
                     }
+
+                    var diffX = maxX - minX;
+                    var diffY = maxY - minY;
+
+                    minX += translationX;
+                    minY += translationY;
+
+                    var centerX = minX + (diffX / 2.0f);
+                    var centerY = minY + (diffY / 2.0f);
+
+                    minX = centerX - ((diffX / 2.0f) * scaleX);
+                    maxX = centerX + ((diffX / 2.0f) * scaleX);
+                    minY = centerY - ((diffY / 2.0f) * scaleY);
+                    maxY = centerY + ((diffY / 2.0f) * scaleY);
+
+                    meshAttachment.Name = "Custom" + ovrName;
+                    meshAttachment.SetRegion(atlasRegion);
+                    atlasRegion.name = "Custom" + atlasRegion.name;
+                    meshAttachment.HullLength = 4;
+                    meshAttachment.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
+                    float pw = atlasRegion.page.width;
+                    float ph = atlasRegion.page.height;
+                    float x = atlasRegion.x;
+                    float y = atlasRegion.y;
+                    float w = atlasRegion.width;
+                    float h = atlasRegion.height;
+                    meshAttachment.UVs = new[]
+                        { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
+                    meshAttachment.Vertices = new[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
+                    meshAttachment.WorldVerticesLength = 8;
+
+                    skin.SetAttachment(slot, ovrName, meshAttachment);
+                    break;
                 }
-
-                var diffX = maxX - minX;
-                var diffY = maxY - minY;
-
-                minX += translationX;
-                minY += translationY;
-
-                var centerX = minX + (diffX / 2.0f);
-                var centerY = minY + (diffY / 2.0f);
-
-                minX = centerX - ((diffX / 2.0f) * scaleX);
-                maxX = centerX + ((diffX / 2.0f) * scaleX);
-                minY = centerY - ((diffY / 2.0f) * scaleY);
-                maxY = centerY + ((diffY / 2.0f) * scaleY);
-
-                meshAttachment.Name = "Custom" + ovrName;
-                meshAttachment.SetRegion(atlasRegion);
-                atlasRegion.name = "Custom" + atlasRegion.name;
-                meshAttachment.HullLength = 4;
-                meshAttachment.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
-                float pw = atlasRegion.page.width;
-                float ph = atlasRegion.page.height;
-                float x = atlasRegion.x;
-                float y = atlasRegion.y;
-                float w = atlasRegion.width;
-                float h = atlasRegion.height;
-                meshAttachment.UVs = new[]
-                    { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
-                meshAttachment.Vertices = new[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
-                meshAttachment.WorldVerticesLength = 8;
-
-                skin.SetAttachment(slot, ovrName, meshAttachment);
-                break;
-            }
             case RegionAttachment regionAttachment:
                 regionAttachment.Name = "Custom" + ovrName;
                 atlasRegion.name = "Custom" + atlasRegion.name;

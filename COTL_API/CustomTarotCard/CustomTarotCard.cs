@@ -18,8 +18,8 @@ public abstract class CustomTarotCard
     {
         var upgradeIndex =
             (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
-                where playerRunTrinket.CardType == CardType
-                select playerRunTrinket.UpgradeIndex).FirstOrDefault();
+             where playerRunTrinket.CardType == CardType
+             select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedName(upgradeIndex);
     }
@@ -43,8 +43,8 @@ public abstract class CustomTarotCard
     {
         var upgradeIndex =
             (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
-                where playerRunTrinket.CardType == CardType
-                select playerRunTrinket.UpgradeIndex).FirstOrDefault();
+             where playerRunTrinket.CardType == CardType
+             select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedDescription(upgradeIndex);
     }

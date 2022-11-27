@@ -84,23 +84,23 @@ public static partial class CustomItemManager
                 switch (item.Value.Rarity)
                 {
                     case ItemRarity.COMMON:
-                    {
-                        listToAdd = __instance.Offerings;
-                        break;
-                    }
+                        {
+                            listToAdd = __instance.Offerings;
+                            break;
+                        }
                     case ItemRarity.RARE:
-                    {
-                        listToAdd = __instance.RareOfferings;
-                        break;
-                    }
+                        {
+                            listToAdd = __instance.RareOfferings;
+                            break;
+                        }
                     default:
-                    {
-                        listToAdd = __instance.Offerings;
-                        if (Plugin.Instance != null && Plugin.Instance.Debug)
-                            LogHelper.LogDebug(
-                                $"Something went horribly wrong here... we should never hit this.");
-                        break;
-                    }
+                        {
+                            listToAdd = __instance.Offerings;
+                            if (Plugin.Instance != null && Plugin.Instance.Debug)
+                                LogHelper.LogDebug(
+                                    $"Something went horribly wrong here... we should never hit this.");
+                            break;
+                        }
                 }
 
                 if (listToAdd != null && !listToAdd.Contains(item.Key))

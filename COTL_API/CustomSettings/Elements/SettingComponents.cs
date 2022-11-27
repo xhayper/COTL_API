@@ -24,9 +24,9 @@ public class Slider : ISettingsElement
     public float Max { get; set; }
     public int Increment { get; set; }
     public MMSlider.ValueDisplayFormat DisplayFormat { get; set; }
-    
+
     public Action<float>? OnValueChanged { get; set; }
-    
+
     public Slider(string? category, string text, float value, float min, float max, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged)
     {
         Category = category;
@@ -53,11 +53,11 @@ public class HorizontalSelector : ISettingsElement
     public string? Value { get; set; }
     public string?[] Options { get; set; }
     public Action<int>? OnValueChanged { get; set; }
-    
+
     public HorizontalSelector(string? category, string text, string? value, string?[] options, Action<int>? onValueChanged)
     {
         LogHelper.LogInfo(value);
-        
+
         Category = category;
         Text = text;
         Value = value;
@@ -78,7 +78,7 @@ public class Toggle : ISettingsElement
 
     public bool Value { get; set; }
     public Action<bool>? OnValueChanged { get; set; }
-    
+
     public Toggle(string? category, string text, bool value, Action<bool>? onValueChanged)
     {
         Category = category;
