@@ -16,7 +16,7 @@ public abstract class CustomPlayerSkin : CustomSkin
                 Skin to = new(Name);
 
                 var overrides = SkinUtils.CreateSkinAtlas(Name, Texture, GenerateAtlasText(),
-                    delegate(AtlasRegion region)
+                    delegate (AtlasRegion region)
                     {
                         var simpleName = region.name;
                         var add = "";

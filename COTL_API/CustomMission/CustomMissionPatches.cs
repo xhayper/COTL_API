@@ -66,7 +66,7 @@ public static partial class CustomMissionManager
             _newMissionButton.Configure(config);
             _newMissionButton.Start();
             var card = __instance;
-            _newMissionButton.OnMissionSelected += delegate(InventoryItem.ITEM_TYPE itemType)
+            _newMissionButton.OnMissionSelected += delegate (InventoryItem.ITEM_TYPE itemType)
             {
                 var onMissionSelected = card.OnMissionSelected;
                 if (onMissionSelected == null)

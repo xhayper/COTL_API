@@ -19,7 +19,7 @@ namespace COTL_API.UI;
 public static class UIManager
 {
     public static Action OnSettingsLoaded { get; set; } = delegate { };
-    
+
     [HarmonyPatch(typeof(UISettingsMenuController), nameof(UISettingsMenuController.OnShowStarted))]
     [HarmonyPostfix]
     public static void UISettingsMenuController_OnShowStarted(UISettingsMenuController __instance)
@@ -75,7 +75,7 @@ public static class UIManager
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => stnb.TransitionTo(tab));
     }
-    
+
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.OnShowStarted))]
     [HarmonyPrefix]
     public static void UISettingsMenuController_OnShowStarted(GraphicsSettings __instance)
@@ -87,19 +87,19 @@ public static class UIManager
             MonoSingleton<UINavigatorNew>.Instance.NavigateToNew(__instance._defaultSelectable as IMMSelectable);
         }
     }
-    
+
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.Start))]
     [HarmonyPrefix]
     public static bool GraphicsSettings_Start(GraphicsSettings __instance)
     {
         if (__instance.name != "Mod Settings Content") return true;
-        
+
         Transform scrollContent = __instance._scrollRect.content;
         foreach (Transform child in scrollContent)
         {
             Object.Destroy(child.gameObject);
         }
-        
+
         OnSettingsLoaded.Invoke();
         OnSettingsLoaded = delegate { };
 
@@ -116,44 +116,44 @@ public static class UIManager
             switch (element)
             {
                 case HorizontalSelector dropdown:
-                {
-
-                    void OnValueChanged(int i)
                     {
-                        dropdown.Value = dropdown.Options[i];
-                        dropdown.OnValueChanged?.Invoke(i);
-                    }
 
-                    SettingsUtils.AddHorizontalSelector(scrollContent, dropdown.Text, dropdown.Options, -1,
-                        OnValueChanged, dropdown.Value);
-                    break;
-                }
+                        void OnValueChanged(int i)
+                        {
+                            dropdown.Value = dropdown.Options[i];
+                            dropdown.OnValueChanged?.Invoke(i);
+                        }
+
+                        SettingsUtils.AddHorizontalSelector(scrollContent, dropdown.Text, dropdown.Options, -1,
+                            OnValueChanged, dropdown.Value);
+                        break;
+                    }
                 case Slider slider:
-                {
-                    void OnValueChanged(float i)
                     {
-                        slider.Value = i;
-                        slider.OnValueChanged?.Invoke(i);
-                    }
+                        void OnValueChanged(float i)
+                        {
+                            slider.Value = i;
+                            slider.OnValueChanged?.Invoke(i);
+                        }
 
-                    SettingsUtils.AddSlider(scrollContent, slider.Text, slider.Value, slider.Min, slider.Max,
-                        slider.Increment, slider.DisplayFormat, OnValueChanged);
-                    break;
-                }
+                        SettingsUtils.AddSlider(scrollContent, slider.Text, slider.Value, slider.Min, slider.Max,
+                            slider.Increment, slider.DisplayFormat, OnValueChanged);
+                        break;
+                    }
                 case Toggle toggle:
-                {
-                    void OnValueChanged(bool i)
                     {
-                        toggle.Value = i;
-                        toggle.OnValueChanged?.Invoke(i);
-                    }
+                        void OnValueChanged(bool i)
+                        {
+                            toggle.Value = i;
+                            toggle.OnValueChanged?.Invoke(i);
+                        }
 
-                    SettingsUtils.AddToggle(scrollContent, toggle.Text, toggle.Value, OnValueChanged);
-                    break;
-                }
+                        SettingsUtils.AddToggle(scrollContent, toggle.Text, toggle.Value, OnValueChanged);
+                        break;
+                    }
             }
         }
-        
+
         if (!CustomSettingsManager.SettingsElements.Any())
         {
             SettingsUtils.AddHeader(scrollContent, "(No mods have settings)");

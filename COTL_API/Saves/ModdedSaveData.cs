@@ -16,7 +16,7 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
     {
         GUID = guid;
 
-        _dataReadWriter.OnReadCompleted += delegate(T saveData)
+        _dataReadWriter.OnReadCompleted += delegate (T saveData)
         {
             Data = saveData;
             IsLoaded = true;
@@ -32,7 +32,7 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
         };
 
         _dataReadWriter.OnWriteCompleted += delegate { OnSaveCompleted?.Invoke(); };
-        _dataReadWriter.OnWriteError += delegate(MMReadWriteError error) { OnSaveError?.Invoke(error); };
+        _dataReadWriter.OnWriteError += delegate (MMReadWriteError error) { OnSaveError?.Invoke(error); };
     }
 
     public override void CreateDefault()

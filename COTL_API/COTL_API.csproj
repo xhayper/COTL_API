@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <GUID>io.github.xhayper.COTL_API</GUID>
+        <Guid>io.github.xhayper.COTL_API</Guid>
         <Product>COTL_API</Product>
     </PropertyGroup>
 
