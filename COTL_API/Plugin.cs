@@ -44,7 +44,7 @@ public class Plugin : BaseUnityPlugin
     internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
     internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
-    
+
     private ConfigEntry<bool>? _debug { get; set; }
     public bool Debug => _debug?.Value ?? false;
 
@@ -64,19 +64,19 @@ public class Plugin : BaseUnityPlugin
 
         PluginPath = Path.GetDirectoryName(Info.Location) ?? string.Empty;
         _debug = Config.Bind("", "debug", false, "");
-        
+
         ModdedSaveManager.RegisterModdedSave(APIData);
         ModdedSaveManager.RegisterModdedSave(APISlotData);
 
         BeginLoadAfterMainSave();
-        
+
         Skin S1() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
         Skin S2() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
         Skin S3() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake");
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", S1));
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S2));
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
-        
+
         var dd = CustomSettingsManager.AddSavedHorizontalSelector("API", MyPluginInfo.PLUGIN_GUID, "Lamb Skin", "Default",
             new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
             {
@@ -90,7 +90,10 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
                 }
             });
-        
+
+        CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
+        CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
+
         UIManager.OnSettingsLoaded += () =>
         {
             if (dd != null)
@@ -105,7 +108,7 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo($"COTL_API loaded");
     }
 
-    
+
     private void OnEnable()
     {
         _harmony.PatchAll(Assembly.GetExecutingAssembly());
@@ -184,7 +187,7 @@ public class Plugin : BaseUnityPlugin
         CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
         CustomFollowerCommandManager.Add(new DebugFollowerCommandClass3());
         DebugGiftFollowerCommand = CustomFollowerCommandManager.Add(new DebugGiftFollowerCommand());
-        
+
         DebugItem = CustomInventory.CustomItemManager.Add(new DebugItemClass());
         DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
         DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
@@ -196,7 +199,7 @@ public class Plugin : BaseUnityPlugin
         CustomTarotCard.CustomTarotCardManager.Add(new DebugTarotCard());
 
         CustomTaskManager.Add(new DebugTask());
-        
+
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
