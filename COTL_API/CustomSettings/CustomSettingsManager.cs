@@ -66,7 +66,7 @@ public static class CustomSettingsManager
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
         var horizontalSelector = new HorizontalSelector(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options, null);
-        horizontalSelector.OnValueChanged = delegate(int newValue)
+        horizontalSelector.OnValueChanged = delegate (int newValue)
         {
             if (Plugin.Instance != null)
             {
