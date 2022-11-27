@@ -18,27 +18,23 @@ using Spine;
 
 namespace COTL_API;
 
-[BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
+[BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 // [BepInProcess("Cult Of The Lamb.exe")] // To be decided
 [HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
-    public const string PLUGIN_GUID = "io.github.xhayper.COTL_API";
-    public const string PLUGIN_NAME = "COTL_API";
-    public const string PLUGIN_VERSION = "0.1.10";
-
     internal static Plugin? Instance { get; private set; }
 
-    internal new ManualLogSource Logger { get; private set; } = new(PLUGIN_NAME);
+    internal new ManualLogSource Logger { get; private set; } = new(MyPluginInfo.PLUGIN_NAME);
 
-    private readonly Harmony _harmony = new(PLUGIN_GUID);
+    private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
-    internal readonly ModdedSaveData<ApiData> APIData = new(PLUGIN_GUID)
+    internal readonly ModdedSaveData<ApiData> APIData = new(MyPluginInfo.PLUGIN_GUID)
     {
         LoadOrder = ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE
     };
 
-    internal readonly ModdedSaveData<ApiSlotData> APISlotData = new($"{PLUGIN_GUID}_slot");
+    internal readonly ModdedSaveData<ApiSlotData> APISlotData = new($"{MyPluginInfo.PLUGIN_GUID}_slot");
 
     internal string PluginPath { get; private set; } = "";
 
@@ -48,6 +44,7 @@ public class Plugin : BaseUnityPlugin
     internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
     internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
+    
     private ConfigEntry<bool>? _debug { get; set; }
     public bool Debug => _debug?.Value ?? false;
 
@@ -80,7 +77,7 @@ public class Plugin : BaseUnityPlugin
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S2));
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
         
-        var dd = CustomSettingsManager.AddSavedHorizontalSelector("API", PLUGIN_GUID, "Lamb Skin", "Default",
+        var dd = CustomSettingsManager.AddSavedHorizontalSelector("API", MyPluginInfo.PLUGIN_GUID, "Lamb Skin", "Default",
             new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
             {
                 if (i == 0)
@@ -202,9 +199,6 @@ public class Plugin : BaseUnityPlugin
         
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
-        
-        CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
-        CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
 
         Logger.LogDebug("Debug mode enabled");
     }
