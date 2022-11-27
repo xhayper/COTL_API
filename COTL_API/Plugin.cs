@@ -48,8 +48,6 @@ public class Plugin : BaseUnityPlugin
     private ConfigEntry<bool>? _debug { get; set; }
     public bool Debug => _debug?.Value ?? false;
 
-    private bool _questCleanDone; //flag to prevent multiple calls to clean up quests
-
     internal static event Action OnStart = delegate { };
     internal static bool Started { get; private set; }
 
@@ -63,12 +61,13 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
 
         PluginPath = Path.GetDirectoryName(Info.Location) ?? string.Empty;
-        _debug = Config.Bind("", "debug", false, "");
+        _debug = Config.Bind("Misc", "debug", false, "Should debug mode be enabled?");
 
         ModdedSaveManager.RegisterModdedSave(APIData);
         ModdedSaveManager.RegisterModdedSave(APISlotData);
 
         BeginLoadAfterMainSave();
+        ActivateQuestHistoryPatch();
 
         Skin S1() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
         Skin S2() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
@@ -159,20 +158,21 @@ public class Plugin : BaseUnityPlugin
     /// The index stored inside the QuestHistoryData is based on the static Quests.QuestAll list count, which gets changed when we add/remove quests.
     /// This fix stops Index out of bound errors when accepting a new quest, and keeps the users history intact.
     /// </summary>
-    private void Update()
+    private void ActivateQuestHistoryPatch()
     {
-        if (_questCleanDone) return;
-        if (DataManager.Instance == null) return;
-        foreach (var quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
-                     a.QuestIndex >= Quests.QuestsAll.Count))
+        SaveAndLoad.OnLoadComplete += delegate ()
         {
-            if (Debug)
-                Logger.LogDebug(
-                    "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
-            quest.QuestIndex = Quests.QuestsAll.Count - 1;
-        }
+            if (DataManager.Instance == null) return;
 
-        _questCleanDone = true;
+            foreach (var quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
+             a.QuestIndex >= Quests.QuestsAll.Count))
+            {
+                if (Debug)
+                    Logger.LogDebug(
+                        "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
+                quest.QuestIndex = Quests.QuestsAll.Count - 1;
+            }
+        };
     }
 
     private void Start()
