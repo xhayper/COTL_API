@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <AssemblyName>COTL_API</AssemblyName>
+        <GUID>io.github.xhayper.COTL_API</GUID>
+        <Product>COTL_API</Product>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props" />
