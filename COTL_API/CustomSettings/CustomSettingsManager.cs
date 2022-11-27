@@ -65,17 +65,17 @@ public static class CustomSettingsManager
 
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
-        var horizontalSelector = new HorizontalSelector(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options,
-            delegate (int newValue)
+        var horizontalSelector = new HorizontalSelector(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options, null);
+        horizontalSelector.OnValueChanged = delegate(int newValue)
+        {
+            if (Plugin.Instance != null)
             {
-                if (Plugin.Instance != null)
-                {
-                    Plugin.SettingsData.SetValue(fullGuid, options[newValue]);
-                    Plugin.Instance.APIData.Save();
-                }
+                Plugin.SettingsData.SetValue(fullGuid, horizontalSelector.Options[newValue]);
+                Plugin.Instance.APIData.Save();
+            }
 
-                onValueChanged(newValue);
-            });
+            onValueChanged(newValue);
+        };
         HorizontalSelectors.Add(horizontalSelector);
         return horizontalSelector;
     }
