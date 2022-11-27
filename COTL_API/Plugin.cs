@@ -124,7 +124,7 @@ public class Plugin : BaseUnityPlugin
     {
         Singleton<SaveAndLoad>.Instance._saveFileReadWriter.OnReadCompleted += delegate
         {
-            Logger.LogWarning($"Loading Modded Save Data with LoadAfterMainSave=true.");
+            Logger.LogWarning($"Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
             foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save =>
                          save.LoadOrder == ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START))
             {
