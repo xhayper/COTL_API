@@ -36,6 +36,11 @@ public class Plugin : BaseUnityPlugin
 
     internal readonly ModdedSaveData<ApiSlotData> APISlotData = new($"{MyPluginInfo.PLUGIN_GUID}_slot");
 
+    internal readonly ModdedSaveData<ObjectDictionary> ModdedSettingsData = new("modded_settings")
+    {
+        LoadOrder = ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE
+    };
+
     internal string PluginPath { get; private set; } = "";
 
     internal InventoryItem.ITEM_TYPE DebugItem { get; private set; }
@@ -51,7 +56,7 @@ public class Plugin : BaseUnityPlugin
     internal static event Action OnStart = delegate { };
     internal static bool Started { get; private set; }
 
-    internal static ObjectDictionary? SettingsData => Instance != null ? Instance.APIData.Data?.SettingsData : null;
+    internal static ObjectDictionary? SettingsData => Instance != null ? Instance.ModdedSettingsData.Data : null;
     internal static Dictionary<int, CustomObjective>? QuestData => Instance != null ? Instance.APISlotData.Data?.QuestData : null;
     internal static ObjectDictionary? EnumData => Instance != null ? Instance.APIData.Data?.EnumData : null;
 
