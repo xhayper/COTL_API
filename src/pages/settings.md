@@ -9,9 +9,10 @@ layout: ../layouts/MainLayout.astro
 There are three diffent type of settings: Sliders, HorizontalSelectors, and Toggles.  
 **Sliders** have a range of numbers.  
 **HorizontalSelectors** have an array of strings.  
-**Toggles** have a boolean.  
+**Toggles** have a boolean.
 
-To create a setting, you use the respective method in `CustomSettingsManager`:  
+To create a setting, you use the respective method in `CustomSettingsManager`:
+
 ```csharp
 AddSlider(string? category, string text, float value, float min, float max,
     int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
@@ -21,16 +22,17 @@ AddSavedSlider(string? category, string guid, string text, float value, float mi
 
 AddHorizontalSelector(string? category, string text, string? value, string?[] options,
     Action<int>? onValueChanged = null)
-    
+
 AddSavedHorizontalSelector(string? category, string guid, string text, string value, string?[] options,
     Action<int>? onValueChanged = null)
-    
+
 AddToggle(string? category, string text, bool value, Action<bool>? onValueChanged = null)
 
 AddSavedToggle(string? category, string guid, string text, bool value,
         Action<bool>? onValueChanged = null)
 ```
-'Saved' settings are automatically saved in the save file (`cotl_api_settings.json`).
+
+'Saved' settings are automatically saved in the save file (`io.github.xhayper.COTL_API.json`).
 
 **Universal Parameters:**  
 `category` determines the header under which the settings appears.  
@@ -53,6 +55,7 @@ AddSavedToggle(string? category, string guid, string text, bool value,
 
 If you want a setting that can have different options at runtime, you can add a delegate to `UIManager.OnSettingsLoaded` that updates the setting.  
 Example:
+
 ```csharp
 var selector = CustomSettingsManager.AddSavedHorizontalSelector(...)
 UIManager.OnSettingsLoaded += delegate () =>
