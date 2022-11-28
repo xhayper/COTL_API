@@ -50,8 +50,8 @@ internal class ExampleFollowerSkin : CustomFollowerSkin
 ## Skin Sheets
 The skin sheet must be a single image with rectangle boundaries for each 'attachment' to override.  
 Example sheets:<br>
- ![Example Follower Sheet](/follower_skin_example.png)<br>
- ![Example Player Sheet](/player_skin_example.png)
+ ![Example Follower Sheet](/img/follower_skin_example.png)<br>
+ ![Example Player Sheet](/img/player_skin_example.png)
 
 #### Follower Skin Overrides
 The following overrides are supported for follower skins:
