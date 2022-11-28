@@ -801,9 +801,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nikolarhristov/pipeline@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@nikolarhristov/pipeline@npm:0.0.2"
+"@nikolarhristov/pipeline@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@nikolarhristov/pipeline@npm:0.0.7"
   dependencies:
     critters: 0.0.16
     csso: 5.0.5
@@ -812,8 +812,8 @@ __metadata:
     html-minifier-terser: 7.1.0
     sharp: 0.31.2
     svgo: 3.0.2
-    terser: 5.15.1
-  checksum: aa8cb3d62234cd6625911dfb9e48c1fd19406d7b3beac95c078e7b8a17234a14d5f9972d011f673d49f40be3489373b77811eae9c7877fd48eea4eb7a720cadf
+    terser: 5.16.0
+  checksum: b427c5b26314d239e8adc9b654d0443170cee48b1780faa2a6f33b4c5a056254ad3379866410ffd7d8e95a070121474646160c859e4b1e86b32f23a53c8b6a44
   languageName: node
   linkType: hard
 
@@ -1357,12 +1357,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro-compress@npm:1.1.9":
-  version: 1.1.9
-  resolution: "astro-compress@npm:1.1.9"
+"astro-compress@npm:1.1.12":
+  version: 1.1.12
+  resolution: "astro-compress@npm:1.1.12"
   dependencies:
-    "@nikolarhristov/pipeline": 0.0.2
-  checksum: 53dadf1d0e863ce1d4f8a1e625413a538203e70d5e3171823b108c06a0d95897557dffee06b009f2254c44563665e6bceb3ecf0d838c1cd0f100acd69ea45b1e
+    "@nikolarhristov/pipeline": 0.0.7
+  checksum: fd499a15cbf269663cc3f6a1405440c4642e741b707ed06f6ac5bfbac65ae6b406b068bbda66f30dbd95f8bf49df1ed703f9c5f42b2658a34839719e6c0593b9
   languageName: node
   linkType: hard
 
@@ -1403,9 +1403,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^1.6.10":
-  version: 1.6.10
-  resolution: "astro@npm:1.6.10"
+"astro@npm:^1.6.11":
+  version: 1.6.11
+  resolution: "astro@npm:1.6.11"
   dependencies:
     "@astrojs/compiler": ^0.29.15
     "@astrojs/language-server": ^0.28.3
@@ -1470,7 +1470,7 @@ __metadata:
     zod: ^3.17.3
   bin:
     astro: astro.js
-  checksum: 644458cea3e394a15e0a5ea2ffc183ec593d7971bbd4f80fdb213f19c70f15585fd3d75fbffb4dec7781eaa912a4902bb469423d076e3709167ea95d335e1626
+  checksum: b46b72d51bf05efbb1e71f3fa0575e73393907d55b3098f0e8a865acc230b89557bdacd2f9641169b62cb6b222dc89958025ff50b9cc9957df7bc1fd21007bfa
   languageName: node
   linkType: hard
 
@@ -2006,8 +2006,8 @@ __metadata:
     "@docsearch/css": ^3.3.0
     "@docsearch/react": ^3.3.0
     "@types/node": ^18.11.9
-    astro: ^1.6.10
-    astro-compress: 1.1.9
+    astro: ^1.6.11
+    astro-compress: 1.1.12
     astro-html-beautifier: ^1.0.4
     astro-html-minifier: ^0.2.0
     astro-robots-txt: ^0.3.10
@@ -2016,7 +2016,7 @@ __metadata:
     html-escaper: ^3.0.3
     html-minifier-terser: ^7.1.0
     preact: ^10.11.3
-    prettier: ^2.7.1
+    prettier: ^2.8.0
     prettier-plugin-astro: ^0.7.0
     react: "npm:@preact/compat@latest"
     react-dom: "npm:@preact/compat@latest"
@@ -2025,7 +2025,7 @@ __metadata:
     sharp: ^0.31.2
     source-map-support: ^0.5.21
     svgo: ^3.0.2
-    terser: ^5.15.1
+    terser: ^5.16.0
   languageName: unknown
   linkType: soft
 
@@ -5498,6 +5498,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "prettier@npm:2.8.0"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 72004ce0cc9bb097daf3e3833f62495768724392c1d5b178dd47372337616e9e50ecbb0804f236596223f7b5eb1bbe69cefc8957dca21112c5777e77ef73a564
+  languageName: node
+  linkType: hard
+
 "pretty-bytes@npm:^5.3.0":
   version: 5.6.0
   resolution: "pretty-bytes@npm:5.6.0"
@@ -6480,7 +6489,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser@npm:5.15.1, terser@npm:^5.15.1":
+"terser@npm:5.16.0, terser@npm:^5.16.0":
+  version: 5.16.0
+  resolution: "terser@npm:5.16.0"
+  dependencies:
+    "@jridgewell/source-map": ^0.3.2
+    acorn: ^8.5.0
+    commander: ^2.20.0
+    source-map-support: ~0.5.20
+  bin:
+    terser: bin/terser
+  checksum: d035672bd28bd40ff80d83bea6bc6c85bddf41c18060e49c8b36a3aa45a0a6b4a59c6a56bdf52f9d3350587684d664f8ca26656c6084abeb951b85edf34e47ae
+  languageName: node
+  linkType: hard
+
+"terser@npm:^5.15.1":
   version: 5.15.1
   resolution: "terser@npm:5.15.1"
   dependencies:
