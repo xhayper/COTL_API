@@ -14,6 +14,7 @@ using MonoMod.Utils;
 using COTL_API.UI;
 using HarmonyLib;
 using BepInEx;
+using I2.Loc;
 using Spine;
 
 namespace COTL_API;
@@ -29,17 +30,17 @@ public class Plugin : BaseUnityPlugin
 
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
+    public readonly ModdedSaveData<ObjectDictionary> ModdedSettingsData = new("modded_settings")
+    {
+        LoadOrder = ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE
+    };
+
     internal readonly ModdedSaveData<ApiData> APIData = new(MyPluginInfo.PLUGIN_GUID)
     {
         LoadOrder = ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE
     };
 
     internal readonly ModdedSaveData<ApiSlotData> APISlotData = new($"{MyPluginInfo.PLUGIN_GUID}_slot");
-
-    internal readonly ModdedSaveData<ObjectDictionary> ModdedSettingsData = new("modded_settings")
-    {
-        LoadOrder = ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE
-    };
 
     internal string PluginPath { get; private set; } = "";
 
@@ -72,7 +73,7 @@ public class Plugin : BaseUnityPlugin
         ModdedSaveManager.RegisterModdedSave(APISlotData);
 
         BeginLoadAfterMainSave();
-        ActivateQuestHistoryPatch();
+        RunSavePatch();
 
         Skin S1() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
         Skin S2() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
@@ -109,62 +110,73 @@ public class Plugin : BaseUnityPlugin
         if (Debug)
             AddDebugContent();
 
-        Logger.LogInfo($"COTL_API loaded");
+        Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded");
     }
-
 
     private void OnEnable()
     {
         _harmony.PatchAll(Assembly.GetExecutingAssembly());
-        Logger.LogInfo($"{Harmony.GetAllPatchedMethods().Count()} harmony patches applied");
+        Logger.LogInfo($"{Harmony.GetAllPatchedMethods().Count()} harmony patches applied!");
     }
 
     private void OnDisable()
     {
         _harmony.UnpatchSelf();
-        Logger.LogInfo("COTL API unloaded");
+        Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} unloaded!");
     }
 
     private void BeginLoadAfterMainSave()
     {
-        Singleton<SaveAndLoad>.Instance._saveFileReadWriter.OnReadCompleted += delegate
-        {
-            Logger.LogWarning($"Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
-            foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save =>
-                         save.LoadOrder == ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START))
-            {
-                saveData.Load(SaveAndLoad.SAVE_SLOT);
-            }
+        SaveAndLoad.OnLoadComplete += delegate
+         {
+             Logger.LogWarning($"Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
+             foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save =>
+                          save.LoadOrder == ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START))
+             {
+                 saveData.Load(SaveAndLoad.SAVE_SLOT);
+             }
 
-            Logger.LogWarning($"Re-adding any custom quests from the players existing objectives.");
-            Dictionary<int, CustomObjective> tempObjectives = new();
+             Logger.LogWarning($"Re-adding any custom quests from the players existing objectives.");
+             Dictionary<int, CustomObjective> tempObjectives = new();
 
-            if (QuestData == null) return;
+             if (QuestData == null) return;
 
-            foreach (var objective in QuestData!)
-                if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
-                    tempObjectives.Add(objective.Key, objective.Value);
-                else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
-                    tempObjectives.Add(objective.Key, objective.Value);
+             foreach (var objective in QuestData!)
+                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
+                     tempObjectives.Add(objective.Key, objective.Value);
+                 else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
+                     tempObjectives.Add(objective.Key, objective.Value);
 
-            CustomObjectiveManager.CustomObjectiveList.AddRange(tempObjectives);
+             CustomObjectiveManager.CustomObjectiveList.AddRange(tempObjectives);
 
-            Logger.LogWarning($"Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
-            foreach (var quest in CustomObjectiveManager.CustomObjectiveList)
-            {
-                QuestData.TryAdd(quest.Key, quest.Value);
-            }
-        };
+             Logger.LogWarning($"Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
+             foreach (var quest in CustomObjectiveManager.CustomObjectiveList)
+             {
+                 QuestData.TryAdd(quest.Key, quest.Value);
+             }
+         };
     }
 
-
-    /// <summary>
-    /// Cleans the users QuestHistory indexes to prevent issues when they remove/disable mods that add custom quests.
-    /// The index stored inside the QuestHistoryData is based on the static Quests.QuestAll list count, which gets changed when we add/remove quests.
-    /// This fix stops Index out of bound errors when accepting a new quest, and keeps the users history intact.
-    /// </summary>
-    private void ActivateQuestHistoryPatch()
+    private void RunSavePatch()
     {
+        // This will reset the language to "English" if it can't find specified language.
+        SettingsManager.Instance._readWriter.OnReadCompleted += delegate (SettingsData data)
+        {
+            if (LocalizationManager.HasLanguage(SettingsManager.Settings.Game.Language)) return;
+
+            SettingsManager.Settings.Game.Language = "English";
+            LocalizationManager.CurrentLanguage = "English";
+
+            if (TwitchAuthentication.IsAuthenticated)
+                TwitchRequest.SendEBSData();
+
+            LocalizationManager.LocalizeAll(true);
+        };
+
+
+        // Cleans the users QuestHistory indexes to prevent issues when they remove/disable mods that add custom quests.
+        // The index stored inside the QuestHistoryData is based on the static Quests.QuestAll list count, which gets changed when we add/remove quests.
+        // This fix stops Index out of bound errors when accepting a new quest, and keeps the users history intact.
         SaveAndLoad.OnLoadComplete += delegate ()
         {
             if (DataManager.Instance == null) return;
@@ -208,6 +220,6 @@ public class Plugin : BaseUnityPlugin
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
-        Logger.LogDebug("Debug mode enabled");
+        Logger.LogDebug("Debug mode enabled!");
     }
 }
