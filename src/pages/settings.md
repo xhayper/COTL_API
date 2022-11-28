@@ -30,9 +30,16 @@ AddToggle(string? category, string text, bool value, Action<bool>? onValueChange
 
 AddSavedToggle(string? category, string guid, string text, bool value,
         Action<bool>? onValueChanged = null)
+        
+AddBepInExConfig(string modName, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
+
+AddBepInExConfig(string modName, ConfigEntry<float> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
+
+AddBepInExConfig(string modName, ConfigEntry<bool> entry, Action<bool>? onValueChanged = null)
 ```
 
-'Saved' settings are automatically saved in the save file (`modded_settings.json`).
+'Saved' settings are automatically saved in the save file (`modded_settings.json`).<br>
+'BepInEx" settings are automatically bined to ConfigEntry, when you update it in-game, the BepInEx config file also update.
 
 **Universal Parameters:**  
 `category` determines the header under which the settings appears.  
