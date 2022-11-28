@@ -113,7 +113,7 @@ public class Plugin : BaseUnityPlugin
         if (Debug)
             AddDebugContent();
 
-        Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded");
+        Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
     }
 
     private void OnEnable()
