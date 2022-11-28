@@ -1,13 +1,14 @@
 ﻿using COTL_API.CustomSettings.Elements;
+using BepInEx.Configuration;
 using Lamb.UI;
 
 namespace COTL_API.CustomSettings;
 
 public static class CustomSettingsManager
 {
-    internal static List<Slider> Sliders { get; set; } = new();
-    internal static List<HorizontalSelector> HorizontalSelectors { get; set; } = new();
-    internal static List<Toggle> Toggles { get; set; } = new();
+    internal static List<Slider> Sliders { get; } = new();
+    internal static List<HorizontalSelector> HorizontalSelectors { get; } = new();
+    internal static List<Toggle> Toggles { get; } = new();
 
     internal static IEnumerable<ISettingsElement> SettingsElements =>
         Sliders.Cast<ISettingsElement>().Concat(HorizontalSelectors).Concat(Toggles);
@@ -77,6 +78,9 @@ public static class CustomSettingsManager
             onValueChanged(newValue);
         };
         HorizontalSelectors.Add(horizontalSelector);
+
+
+
         return horizontalSelector;
     }
 
@@ -110,5 +114,31 @@ public static class CustomSettingsManager
             });
         Toggles.Add(toggle);
         return toggle;
+    }
+
+    public static ISettingsElement? AddBepInExConfig<T>(string modName, ConfigEntry<T> entry, Action<T>? onValueChanged = null)
+    {
+        if (typeof(T) == typeof(bool))
+        {
+            onValueChanged ??= delegate { };
+
+            var toggle = new Toggle($"{modName}'s {entry.Definition.Section}", entry.Definition.Key, (bool)Convert.ChangeType(entry.Value, typeof(bool)),
+                delegate (bool newValue)
+                {
+                    T val = (T)Convert.ChangeType(newValue, typeof(T));
+                    entry.Value = val;
+                    onValueChanged?.Invoke(val);
+                });
+
+            entry.SettingChanged += delegate (object sender, EventArgs e)
+            {
+                toggle.Value = (bool)Convert.ChangeType(entry.Value, typeof(bool));
+            };
+
+            Toggles.Add(toggle);
+            return toggle;
+        }
+
+        return null;
     }
 }

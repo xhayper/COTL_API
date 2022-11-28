@@ -3,7 +3,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement;
 using UnityEngine.AddressableAssets;
 using COTL_API.CustomStructures;
-using COTL_API.Helpers;
 using UnityEngine;
 using HarmonyLib;
 
@@ -77,7 +76,6 @@ public static class CustomPrefabManager
                 "Assets/Prefabs/Placement Objects/Placement Object Security Turret Lvl2.prefab");
         obj.WaitForCompletion();
 
-        LogHelper.LogInfo(obj.Result);
         var po = obj.Result.GetComponentInChildren<PlacementObject>();
         po.ToBuildAsset = structure.PrefabPath;
         po.StructureType = structure.StructureType;

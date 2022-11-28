@@ -48,6 +48,7 @@ internal static class SettingsUtils
         sliderSlider.maxValue = maxValue;
         sliderSlider._increment = increment;
         sliderSlider._valueDisplayFormat = format;
+        sliderSlider.UpdateVisuals();
         if (onChange != null) sliderSlider.onValueChanged.AddListener(onChange);
     }
 
@@ -65,6 +66,7 @@ internal static class SettingsUtils
         toggleText.text = text;
         var toggleToggle = toggle.GetComponentInChildren<MMToggle>();
         toggleToggle.Value = value;
+        toggleToggle.UpdateState(true);
         if (onChange != null) toggleToggle.OnValueChanged += onChange;
     }
 
