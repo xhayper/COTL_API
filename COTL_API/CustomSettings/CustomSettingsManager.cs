@@ -37,7 +37,7 @@ public static class CustomSettingsManager
                 if (Plugin.Instance != null)
                 {
                     Plugin.SettingsData.SetValue(fullGuid, newValue);
-                    Plugin.Instance.APIData.Save();
+                    Plugin.Instance.ModdedSettingsData.Save();
                 }
 
                 onValueChanged(newValue);
@@ -71,7 +71,7 @@ public static class CustomSettingsManager
             if (Plugin.Instance != null)
             {
                 Plugin.SettingsData.SetValue(fullGuid, horizontalSelector.Options[newValue]);
-                Plugin.Instance.APIData.Save();
+                Plugin.Instance.ModdedSettingsData.Save();
             }
 
             onValueChanged(newValue);
@@ -103,7 +103,7 @@ public static class CustomSettingsManager
                 if (Plugin.Instance != null)
                 {
                     Plugin.SettingsData.SetValue(fullGuid, newValue);
-                    Plugin.Instance.APIData.Save();
+                    Plugin.Instance.ModdedSettingsData.Save();
                 }
 
                 onValueChanged(newValue);
