@@ -32,7 +32,7 @@ AddSavedToggle(string? category, string guid, string text, bool value,
         Action<bool>? onValueChanged = null)
 ```
 
-'Saved' settings are automatically saved in the save file (`io.github.xhayper.COTL_API.json`).
+'Saved' settings are automatically saved in the save file (`modded_settings.json`).
 
 **Universal Parameters:**  
 `category` determines the header under which the settings appears.  
