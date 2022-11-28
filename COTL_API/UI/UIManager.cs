@@ -153,11 +153,8 @@ public static class UIManager
         }
 
         if (!CustomSettingsManager.SettingsElements.Any())
-        {
             SettingsUtils.AddHeader(scrollContent, "(No mods have settings)");
-        }
 
         return false;
-
     }
 }
