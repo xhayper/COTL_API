@@ -121,7 +121,6 @@ public static class CustomSettingsManager
     public static HorizontalSelector? AddBepInExConfig(string modName, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
     {
         if (!(entry.Description.AcceptableValues is AcceptableValueList<string>)) return null;
-
         onValueChanged ??= delegate { };
 
         var acceptedValue = ((AcceptableValueList<string>)entry.Description.AcceptableValues);
@@ -145,7 +144,6 @@ public static class CustomSettingsManager
     public static Slider? AddBepInExConfig(string modName, ConfigEntry<float> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
     {
         if (!(entry.Description.AcceptableValues is AcceptableValueRange<float>)) return null;
-
         onValueChanged ??= delegate { };
 
         var acceptedValue = ((AcceptableValueRange<float>)entry.Description.AcceptableValues);
@@ -154,7 +152,7 @@ public static class CustomSettingsManager
             delegate (float newValue)
             {
                 entry.Value = newValue;
-                onValueChanged?.Invoke(newValue);
+                onValueChanged(newValue);
             });
 
         entry.SettingChanged += delegate (object sender, EventArgs e)
@@ -174,7 +172,7 @@ public static class CustomSettingsManager
             delegate (bool newValue)
             {
                 entry.BoxedValue = newValue;
-                onValueChanged?.Invoke(newValue);
+                onValueChanged(newValue);
             });
 
         entry.SettingChanged += delegate (object sender, EventArgs e)
