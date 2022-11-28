@@ -69,6 +69,7 @@ public class Plugin : BaseUnityPlugin
         PluginPath = Path.GetDirectoryName(Info.Location) ?? string.Empty;
         _debug = Config.Bind("Misc", "debug", false, "Should debug mode be enabled?");
 
+        ModdedSaveManager.RegisterModdedSave(ModdedSettingsData);
         ModdedSaveManager.RegisterModdedSave(APIData);
         ModdedSaveManager.RegisterModdedSave(APISlotData);
 
@@ -95,6 +96,8 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
                 }
             });
+
+        CustomSettingsManager.AddBepInExConfig("API", _debug);
 
         CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
         CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());

@@ -1,5 +1,4 @@
-﻿using COTL_API.Helpers;
-using Lamb.UI;
+﻿using Lamb.UI;
 
 namespace COTL_API.CustomSettings.Elements;
 
@@ -56,8 +55,6 @@ public class HorizontalSelector : ISettingsElement
 
     public HorizontalSelector(string? category, string text, string? value, string?[] options, Action<int>? onValueChanged)
     {
-        LogHelper.LogInfo(value);
-
         Category = category;
         Text = text;
         Value = value;
