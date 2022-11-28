@@ -1,6 +1,6 @@
 ﻿using HorizontalSelector = COTL_API.CustomSettings.Elements.HorizontalSelector;
 using Slider = COTL_API.CustomSettings.Elements.Slider;
-using Toggle = COTL_API.CustomSettings.Elements.Toggle;
+using Slider = COTL_API.CustomSettings.Elements.Slider;
 using Object = UnityEngine.Object;
 using COTL_API.CustomSettings;
 using Lamb.UI.SettingsMenu;
@@ -138,7 +138,7 @@ public static class UIManager
                             slider.Increment, slider.DisplayFormat, OnValueChanged);
                         break;
                     }
-                case Toggle toggle:
+                case Slider toggle:
                     {
                         void OnValueChanged(bool i)
                         {

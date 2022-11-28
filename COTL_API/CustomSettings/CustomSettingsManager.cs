@@ -116,29 +116,73 @@ public static class CustomSettingsManager
         return toggle;
     }
 
-    public static ISettingsElement? AddBepInExConfig<T>(string modName, ConfigEntry<T> entry, Action<T>? onValueChanged = null)
+    //--- BEPINEX CONFIG BINDING ---//
+
+    public static HorizontalSelector? AddBepInExConfig(string modName, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
     {
-        if (typeof(T) == typeof(bool))
-        {
-            onValueChanged ??= delegate { };
+        if (!(entry.Description.AcceptableValues is AcceptableValueList<string>)) return null;
 
-            var toggle = new Toggle($"{modName}'s {entry.Definition.Section}", entry.Definition.Key, (bool)Convert.ChangeType(entry.Value, typeof(bool)),
-                delegate (bool newValue)
-                {
-                    T val = (T)Convert.ChangeType(newValue, typeof(T));
-                    entry.Value = val;
-                    onValueChanged?.Invoke(val);
-                });
+        onValueChanged ??= delegate { };
 
-            entry.SettingChanged += delegate (object sender, EventArgs e)
+        var acceptedValue = ((AcceptableValueList<string>)entry.Description.AcceptableValues);
+
+        var selector = new HorizontalSelector($"{modName}'s {entry.Definition.Section}", entry.Definition.Key, entry.Value, acceptedValue.AcceptableValues,
+            delegate (int newValue)
             {
-                toggle.Value = (bool)Convert.ChangeType(entry.Value, typeof(bool));
-            };
+                entry.Value = acceptedValue.AcceptableValues[newValue];
+                onValueChanged(newValue);
+            });
 
-            Toggles.Add(toggle);
-            return toggle;
-        }
+        entry.SettingChanged += delegate (object sender, EventArgs e)
+        {
+            selector.Value = entry.Value;
+        };
 
-        return null;
+        HorizontalSelectors.Add(selector);
+        return selector;
+    }
+
+    public static Slider? AddBepInExConfig(string modName, ConfigEntry<float> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
+    {
+        if (!(entry.Description.AcceptableValues is AcceptableValueRange<float>)) return null;
+
+        onValueChanged ??= delegate { };
+
+        var acceptedValue = ((AcceptableValueRange<float>)entry.Description.AcceptableValues);
+
+        var slider = new Slider($"{modName}'s {entry.Definition.Section}", entry.Definition.Key, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment, displayFormat,
+            delegate (float newValue)
+            {
+                entry.Value = newValue;
+                onValueChanged?.Invoke(newValue);
+            });
+
+        entry.SettingChanged += delegate (object sender, EventArgs e)
+        {
+            slider.Value = entry.Value;
+        };
+
+        Sliders.Add(slider);
+        return slider;
+    }
+
+    public static Toggle AddBepInExConfig(string modName, ConfigEntry<bool> entry, Action<bool>? onValueChanged = null)
+    {
+        onValueChanged ??= delegate { };
+
+        var toggle = new Toggle($"{modName}'s {entry.Definition.Section}", entry.Definition.Key, entry.Value,
+            delegate (bool newValue)
+            {
+                entry.BoxedValue = newValue;
+                onValueChanged?.Invoke(newValue);
+            });
+
+        entry.SettingChanged += delegate (object sender, EventArgs e)
+        {
+            toggle.Value = entry.Value;
+        };
+
+        Toggles.Add(toggle);
+        return toggle;
     }
 }
