@@ -58,8 +58,8 @@ public static class UIManager
         copy._defaultSelectableFallbacks = Array.Empty<Selectable>();
         var onShow = originalGraphicsSettings.OnShow;
         var onHide = originalGraphicsSettings.OnHide;
-        Delegate[] onShowDelegates = onShow.GetInvocationList();
-        Delegate[] onHideDelegates = onHide.GetInvocationList();
+        var onShowDelegates = onShow.GetInvocationList();
+        var onHideDelegates = onHide.GetInvocationList();
         var showDelegate = (Action)onShowDelegates[1];
         var hideDelegateAll = (Action)onHideDelegates[1];
         var hideDelegate = (Action)onHideDelegates[2];
@@ -80,12 +80,12 @@ public static class UIManager
     [HarmonyPrefix]
     public static void UISettingsMenuController_OnShowStarted(GraphicsSettings __instance)
     {
-        if (__instance.name == "Mod Settings Content")
-        {
-            __instance._targetFpsSelectable.HorizontalSelector._canvasGroup = __instance._canvasGroup;
-            __instance._defaultSelectable = __instance._scrollRect.content.GetComponentInChildren<Selectable>();
-            MonoSingleton<UINavigatorNew>.Instance.NavigateToNew(__instance._defaultSelectable as IMMSelectable);
-        }
+        if (__instance.name != "Mod Settings Content") return;
+
+        __instance._targetFpsSelectable.HorizontalSelector._canvasGroup = __instance._canvasGroup;
+        __instance._defaultSelectable = __instance._scrollRect.content.GetComponentInChildren<Selectable>();
+        MonoSingleton<UINavigatorNew>.Instance.NavigateToNew(__instance._defaultSelectable as IMMSelectable);
+
     }
 
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.Start))]
@@ -96,9 +96,7 @@ public static class UIManager
 
         Transform scrollContent = __instance._scrollRect.content;
         foreach (Transform child in scrollContent)
-        {
             Object.Destroy(child.gameObject);
-        }
 
         OnSettingsLoaded.Invoke();
         OnSettingsLoaded = delegate { };

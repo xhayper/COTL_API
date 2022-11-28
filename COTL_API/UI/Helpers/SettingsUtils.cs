@@ -1,5 +1,6 @@
 ﻿using Object = UnityEngine.Object;
 using UnityEngine.Events;
+using COTL_API.Helpers;
 using UnityEngine;
 using Lamb.UI;
 using TMPro;
@@ -17,7 +18,7 @@ internal static class SettingsUtils
     {
         if (HeaderTemplate == null)
         {
-            Plugin.Instance!.Logger.LogError("Unable to find header template!");
+            LogHelper.LogError("Unable to find header template!");
             return;
         }
 
@@ -33,7 +34,7 @@ internal static class SettingsUtils
     {
         if (SliderTemplate == null)
         {
-            Plugin.Instance!.Logger.LogError("Unable to find slider template!");
+            LogHelper.LogError("Unable to find slider template!");
             return;
         }
 
@@ -54,7 +55,7 @@ internal static class SettingsUtils
     {
         if (ToggleTemplate == null)
         {
-            Plugin.Instance!.Logger.LogError("Unable to find toggle template!");
+            LogHelper.LogError("Unable to find toggle template!");
             return;
         }
 
@@ -72,7 +73,7 @@ internal static class SettingsUtils
     {
         if (HorizontalSelectorTemplate == null)
         {
-            Plugin.Instance!.Logger.LogError("Unable to find horizontal selector template!");
+            LogHelper.LogError("Unable to find horizontal selector template!");
             return;
         }
 

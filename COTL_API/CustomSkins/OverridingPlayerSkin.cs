@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using COTL_API.Helpers;
+using UnityEngine;
 using Spine;
 
 namespace COTL_API.CustomSkins;
@@ -24,7 +25,7 @@ internal class OverridingPlayerSkin : CustomPlayerSkin
             }
 
             if (CustomSkinManager.PlayerSkinOverride != null)
-                Plugin.Instance!.Logger.LogInfo("PlayerSkinOverride already exists. Overwriting.");
+                LogHelper.LogInfo("PlayerSkinOverride already exists. Overwriting.");
             CustomSkinManager.SetPlayerSkinOverride(_cachedSkin);
         }
 

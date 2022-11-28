@@ -1,3 +1,4 @@
+using COTL_API.Helpers;
 using Spine.Unity;
 using UnityEngine;
 using HarmonyLib;
@@ -415,7 +416,7 @@ public static partial class CustomSkinManager
             hurtSkin2
         };
         if (PlayerSkinOverride != null)
-            Plugin.Instance!.Logger.LogDebug("PlayerSkinOverride already exists. Overwriting.");
+            LogHelper.LogDebug("PlayerSkinOverride already exists. Overwriting.");
         PlayerSkinOverride = skins;
     }
 

@@ -1,4 +1,5 @@
 ﻿using Spine.Unity.AttachmentTools;
+using COTL_API.Helpers;
 using Spine.Unity;
 using UnityEngine;
 using Spine;
@@ -91,7 +92,7 @@ internal static class SkinUtils
                 skin.SetAttachment(slot, ovrName, regionAttachment);
                 break;
             default:
-                Plugin.Instance!.Logger.LogWarning(
+                LogHelper.LogWarning(
                     $"Attachment {a.Name} is not a MeshAttachment or RegionAttachment, skipping...");
                 break;
         }
@@ -170,7 +171,7 @@ internal static class SkinUtils
         {
             var ovr = regionOverrideFunction.Invoke(region);
             if (ovr != null) overrideRegions.Add(ovr);
-            else Plugin.Instance!.Logger.LogError($"Failed to parse region with name: {region.name}");
+            else LogHelper.LogError($"Failed to parse region with name: {region.name}");
         }
 
         List<Tuple<int, string, float, float, float, float>> overrides = new();
@@ -197,7 +198,7 @@ internal static class SkinUtils
                         scale[3] = float.Parse(scaleSplit[1]);
                         break;
                     default:
-                        Plugin.Instance!.Logger.LogWarning($"Invalid scale length: {scale.Length}");
+                        LogHelper.LogWarning($"Invalid scale length: {scale.Length}");
                         break;
                 }
 
