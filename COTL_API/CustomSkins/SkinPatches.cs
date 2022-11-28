@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Experimental.Rendering;
 using LeTai.Asset.TranslucentImage;
+using COTL_API.Helpers;
 using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
@@ -39,12 +40,12 @@ public partial class CustomSkinManager
         Texture2D orig;
         if (CachedTextures.TryGetValue(src.name, out var cached))
         {
-            Plugin.Instance!.Logger.LogDebug($"Using cached texture {src.name} ({cached.width}x{cached.height})");
+            LogHelper.LogDebug($"Using cached texture {src.name} ({cached.width}x{cached.height})");
             orig = cached;
         }
         else
         {
-            Plugin.Instance!.Logger.LogDebug(
+            LogHelper.LogDebug(
                 $"Copying texture {src.name} ({src.width}x{src.height}) to {dst.name} ({src.width}x{src.height} with different formats: {src.graphicsFormat} to {dst.graphicsFormat}");
             orig = DuplicateTexture(s2d, dst.graphicsFormat);
             CachedTextures[src.name] = orig;
