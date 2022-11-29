@@ -100,12 +100,17 @@ public class Plugin : BaseUnityPlugin
 
         CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug, delegate (bool isActivated)
         {
-            if (!isActivated || DebugContentAdded) return;
-            AddDebugContent();
+            if (!isActivated)
+            {
+                if (dd?.Value != "Debug Skin") return;
+                CustomSkinManager.ResetPlayerSkin();
+            }
+            else
+            {
+                if (DebugContentAdded) return;
+                AddDebugContent();
+            }
         });
-
-        CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
-        CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
 
         if (Debug)
             AddDebugContent();
@@ -207,6 +212,9 @@ public class Plugin : BaseUnityPlugin
     private void AddDebugContent()
     {
         if (DebugContentAdded) return;
+
+        CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
+        CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
 
         CustomFollowerCommandManager.Add(new DebugFollowerCommand());
         CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
