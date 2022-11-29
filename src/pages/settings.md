@@ -31,11 +31,11 @@ AddToggle(string? category, string text, bool value, Action<bool>? onValueChange
 AddSavedToggle(string? category, string guid, string text, bool value,
         Action<bool>? onValueChanged = null)
         
-AddBepInExConfig(string modName, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
+AddBepInExConfig(string? category, string text, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
 
-AddBepInExConfig(string modName, ConfigEntry<float> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
+AddBepInExConfig(string? category, string text, ConfigEntry<float> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
 
-AddBepInExConfig(string modName, ConfigEntry<bool> entry, Action<bool>? onValueChanged = null)
+AddBepInExConfig(string? category, string text, ConfigEntry<bool> entry, Action<bool>? onValueChanged = null)
 ```
 
 'Saved' settings are automatically saved in the save file (`modded_settings.json`).<br>
