@@ -61,6 +61,8 @@ public class Plugin : BaseUnityPlugin
     internal static Dictionary<int, CustomObjective>? QuestData => Instance != null ? Instance.APISlotData.Data?.QuestData : null;
     internal static ObjectDictionary? EnumData => Instance != null ? Instance.APIData.Data?.EnumData : null;
 
+    internal static bool DebugContentAdded = false;
+
     private void Awake()
     {
         Instance = this;
@@ -96,7 +98,11 @@ public class Plugin : BaseUnityPlugin
                 }
             });
 
-        CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug);
+        CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug, delegate (bool isActivated)
+        {
+            if (!isActivated || DebugContentAdded) return;
+            AddDebugContent();
+        });
 
         CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
         CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
@@ -200,6 +206,8 @@ public class Plugin : BaseUnityPlugin
 
     private void AddDebugContent()
     {
+        if (DebugContentAdded) return;
+
         CustomFollowerCommandManager.Add(new DebugFollowerCommand());
         CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
         CustomFollowerCommandManager.Add(new DebugFollowerCommandClass3());
@@ -221,5 +229,7 @@ public class Plugin : BaseUnityPlugin
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
         Logger.LogDebug("Debug mode enabled!");
+
+        DebugContentAdded = true;
     }
 }
