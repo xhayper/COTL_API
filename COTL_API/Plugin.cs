@@ -107,6 +107,9 @@ public class Plugin : BaseUnityPlugin
         CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
         CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
 
+        if (Debug)
+            AddDebugContent();
+
         UIManager.OnSettingsLoaded += () =>
         {
             if (dd != null)
@@ -114,9 +117,6 @@ public class Plugin : BaseUnityPlugin
                 dd.Options = new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray();
             }
         };
-
-        if (Debug)
-            AddDebugContent();
 
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
     }
