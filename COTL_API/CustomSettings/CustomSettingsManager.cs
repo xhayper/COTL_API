@@ -118,14 +118,14 @@ public static class CustomSettingsManager
 
     //--- BEPINEX CONFIG BINDING ---//
 
-    public static HorizontalSelector? AddBepInExConfig(string modName, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
+    public static HorizontalSelector? AddBepInExConfig(string? category, string text, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
     {
         if (!(entry.Description.AcceptableValues is AcceptableValueList<string>)) return null;
         onValueChanged ??= delegate { };
 
         var acceptedValue = ((AcceptableValueList<string>)entry.Description.AcceptableValues);
 
-        var selector = new HorizontalSelector($"{modName}'s {entry.Definition.Section}", entry.Definition.Key, entry.Value, acceptedValue.AcceptableValues,
+        var selector = new HorizontalSelector(category, text, entry.Value, acceptedValue.AcceptableValues,
             delegate (int newValue)
             {
                 entry.Value = acceptedValue.AcceptableValues[newValue];
@@ -141,14 +141,14 @@ public static class CustomSettingsManager
         return selector;
     }
 
-    public static Slider? AddBepInExConfig(string modName, ConfigEntry<float> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
+    public static Slider? AddBepInExConfig(string? category, string text, ConfigEntry<float> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
     {
         if (!(entry.Description.AcceptableValues is AcceptableValueRange<float>)) return null;
         onValueChanged ??= delegate { };
 
         var acceptedValue = ((AcceptableValueRange<float>)entry.Description.AcceptableValues);
 
-        var slider = new Slider($"{modName}'s {entry.Definition.Section}", entry.Definition.Key, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment, displayFormat,
+        var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment, displayFormat,
             delegate (float newValue)
             {
                 entry.Value = newValue;
@@ -164,11 +164,11 @@ public static class CustomSettingsManager
         return slider;
     }
 
-    public static Toggle AddBepInExConfig(string modName, ConfigEntry<bool> entry, Action<bool>? onValueChanged = null)
+    public static Toggle AddBepInExConfig(string? category, string text, ConfigEntry<bool> entry, Action<bool>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
 
-        var toggle = new Toggle($"{modName}'s {entry.Definition.Section}", entry.Definition.Key, entry.Value,
+        var toggle = new Toggle(category, text, entry.Value,
             delegate (bool newValue)
             {
                 entry.BoxedValue = newValue;

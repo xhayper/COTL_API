@@ -67,13 +67,12 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
 
         PluginPath = Path.GetDirectoryName(Info.Location) ?? string.Empty;
-        _debug = Config.Bind("Misc", "debug", false, "Should debug mode be enabled?");
+        _debug = Config.Bind("misc", "debug", false, "Should debug mode be enabled?");
 
         ModdedSaveManager.RegisterModdedSave(ModdedSettingsData);
         ModdedSaveManager.RegisterModdedSave(APIData);
         ModdedSaveManager.RegisterModdedSave(APISlotData);
 
-        BeginLoadAfterMainSave();
         RunSavePatch();
 
         Skin S1() => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
@@ -97,7 +96,7 @@ public class Plugin : BaseUnityPlugin
                 }
             });
 
-        CustomSettingsManager.AddBepInExConfig("API", _debug);
+        CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug);
 
         CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
         CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
@@ -128,8 +127,9 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} unloaded!");
     }
 
-    private void BeginLoadAfterMainSave()
+    private void RunSavePatch()
     {
+        // LOAD_AFTER_START handler
         SaveAndLoad.OnLoadComplete += delegate
          {
              Logger.LogWarning($"Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
@@ -158,10 +158,7 @@ public class Plugin : BaseUnityPlugin
                  QuestData.TryAdd(quest.Key, quest.Value);
              }
          };
-    }
 
-    private void RunSavePatch()
-    {
         // This will reset the language to "English" if it can't find specified language.
         SettingsManager.Instance._readWriter.OnReadCompleted += delegate (SettingsData data)
         {
