@@ -30,10 +30,12 @@ AddToggle(string? category, string text, bool value, Action<bool>? onValueChange
 
 AddSavedToggle(string? category, string guid, string text, bool value,
         Action<bool>? onValueChanged = null)
-        
+
 AddBepInExConfig(string? category, string text, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
 
 AddBepInExConfig(string? category, string text, ConfigEntry<float> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
+
+AddBepInExConfig(string? category, string text, ConfigEntry<int> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<int>? onValueChanged = null)
 
 AddBepInExConfig(string? category, string text, ConfigEntry<bool> entry, Action<bool>? onValueChanged = null)
 ```
