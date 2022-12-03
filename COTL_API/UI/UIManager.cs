@@ -102,8 +102,7 @@ public static class UIManager
         OnSettingsLoaded = delegate { };
 
         string? currentCategory = null;
-        foreach (var element in CustomSettingsManager.SettingsElements.OrderBy(x => x.Category)
-                     .ThenBy(x => x.Text))
+        foreach (var element in CustomSettingsManager.SettingsElements.OrderBy(x => x.Category))
         {
             if (element.Category != currentCategory)
             {

@@ -164,6 +164,31 @@ public static class CustomSettingsManager
         return slider;
     }
 
+    public static Slider? AddBepInExConfig(string? category, string text, ConfigEntry<int> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<int>? onValueChanged = null)
+    {
+        if (!(entry.Description.AcceptableValues is AcceptableValueRange<int>)) return null;
+        onValueChanged ??= delegate { };
+
+        var acceptedValue = ((AcceptableValueRange<int>)entry.Description.AcceptableValues);
+
+        var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment, displayFormat,
+            delegate (float newValue)
+            {
+                int newVal = (int)Math.Floor(newValue);
+
+                entry.Value = newVal;
+                onValueChanged(newVal);
+            });
+
+        entry.SettingChanged += delegate (object sender, EventArgs e)
+        {
+            slider.Value = entry.Value;
+        };
+
+        Sliders.Add(slider);
+        return slider;
+    }
+
     public static Toggle AddBepInExConfig(string? category, string text, ConfigEntry<bool> entry, Action<bool>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
