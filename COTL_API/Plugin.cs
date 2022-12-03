@@ -61,7 +61,7 @@ public class Plugin : BaseUnityPlugin
     internal static Dictionary<int, CustomObjective>? QuestData => Instance != null ? Instance.APISlotData.Data?.QuestData : null;
     internal static ObjectDictionary? EnumData => Instance != null ? Instance.APIData.Data?.EnumData : null;
 
-    internal static bool DebugContentAdded = false;
+    internal bool DebugContentAdded = false;
 
     private void Awake()
     {
