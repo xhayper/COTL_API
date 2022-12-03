@@ -1,4 +1,5 @@
 ﻿using COTL_API.CustomSettings.Elements;
+using System.Collections.ObjectModel;
 using BepInEx.Configuration;
 using Lamb.UI;
 
@@ -6,19 +7,18 @@ namespace COTL_API.CustomSettings;
 
 public static class CustomSettingsManager
 {
-    internal static List<Slider> Sliders { get; } = new();
-    internal static List<HorizontalSelector> HorizontalSelectors { get; } = new();
-    internal static List<Toggle> Toggles { get; } = new();
+    internal static List<ISettingsElement> SettingsElements { get; } = new();
 
-    internal static IEnumerable<ISettingsElement> SettingsElements =>
-        Sliders.Cast<ISettingsElement>().Concat(HorizontalSelectors).Concat(Toggles);
+    internal static ReadOnlyCollection<Slider> Sliders => SettingsElements.OfType<Slider>().ToList().AsReadOnly();
+    internal static ReadOnlyCollection<HorizontalSelector> HorizontalSelectors => SettingsElements.OfType<HorizontalSelector>().ToList().AsReadOnly();
+    internal static ReadOnlyCollection<Toggle> Toggles => SettingsElements.OfType<Toggle>().ToList().AsReadOnly();
 
     public static Slider AddSlider(string? category, string text, float value, float min, float max, int increment,
         MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
         var slider = new Slider(category, text, value, min, max, increment, displayFormat, onValueChanged);
-        Sliders.Add(slider);
+        SettingsElements.Add(slider);
         return slider;
     }
 
@@ -43,7 +43,7 @@ public static class CustomSettingsManager
 
                 onValueChanged(newValue);
             });
-        Sliders.Add(slider);
+        SettingsElements.Add(slider);
         return slider;
     }
 
@@ -52,7 +52,7 @@ public static class CustomSettingsManager
     {
         onValueChanged ??= delegate { };
         var horizontalSelector = new HorizontalSelector(category, text, value, options, onValueChanged);
-        HorizontalSelectors.Add(horizontalSelector);
+        SettingsElements.Add(horizontalSelector);
         return horizontalSelector;
     }
 
@@ -77,9 +77,7 @@ public static class CustomSettingsManager
 
             onValueChanged(newValue);
         };
-        HorizontalSelectors.Add(horizontalSelector);
-
-
+        SettingsElements.Add(horizontalSelector);
 
         return horizontalSelector;
     }
@@ -88,7 +86,7 @@ public static class CustomSettingsManager
     {
         onValueChanged ??= delegate { };
         var toggle = new Toggle(category, text, value, onValueChanged);
-        Toggles.Add(toggle);
+        SettingsElements.Add(toggle);
         return toggle;
     }
 
@@ -112,7 +110,7 @@ public static class CustomSettingsManager
 
                 onValueChanged(newValue);
             });
-        Toggles.Add(toggle);
+        SettingsElements.Add(toggle);
         return toggle;
     }
 
@@ -137,7 +135,7 @@ public static class CustomSettingsManager
             selector.Value = entry.Value;
         };
 
-        HorizontalSelectors.Add(selector);
+        SettingsElements.Add(selector);
         return selector;
     }
 
@@ -160,7 +158,7 @@ public static class CustomSettingsManager
             slider.Value = entry.Value;
         };
 
-        Sliders.Add(slider);
+        SettingsElements.Add(slider);
         return slider;
     }
 
@@ -185,7 +183,7 @@ public static class CustomSettingsManager
             slider.Value = entry.Value;
         };
 
-        Sliders.Add(slider);
+        SettingsElements.Add(slider);
         return slider;
     }
 
@@ -205,7 +203,7 @@ public static class CustomSettingsManager
             toggle.Value = entry.Value;
         };
 
-        Toggles.Add(toggle);
+        SettingsElements.Add(toggle);
         return toggle;
     }
 }
