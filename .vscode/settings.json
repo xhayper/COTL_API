@@ -1,11 +1,15 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "prettier.enable": true,
   "files.exclude": {
-    ".yarn": false,
-    "yarn.lock": false
+      ".vercel": false,
+      ".yarn": false,
+      "yarn.lock": false
   },
   "search.exclude": {
-    ".yarn": true,
-    "yarn.lock": true
+      ".vercel": true,
+      ".yarn": true,
+      "yarn.lock": true
   }
 }
