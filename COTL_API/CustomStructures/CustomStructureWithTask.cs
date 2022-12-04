@@ -3,7 +3,6 @@ namespace COTL_API.CustomStructures;
 public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
 {
     //hewwo?
-    
     public override string InternalName => "Custom_Task_Structure";
     public abstract FollowerTask StructureTask { get; }
 
