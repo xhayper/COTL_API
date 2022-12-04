@@ -1,7 +1,10 @@
-﻿namespace COTL_API.CustomStructures;
+namespace COTL_API.CustomStructures;
 
 public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
 {
+    //hewwo?
+    //uwu
+    //e
     public override string InternalName => "Custom_Task_Structure";
     public abstract FollowerTask StructureTask { get; }
 
@@ -15,7 +18,7 @@ public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
         return null;
     }
 
-    public void GetAvailableTasks(ScheduledActivity activity, SortedList<float, FollowerTask> sortedTasks)
+    public virtual void GetAvailableTasks(ScheduledActivity activity, SortedList<float, FollowerTask> sortedTasks)
     {
         if (activity != ScheduledActivity.Work || ReservedForTask)
             return;
