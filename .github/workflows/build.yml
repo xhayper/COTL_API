@@ -6,7 +6,12 @@ on:
             - "*"
             - "!docs*"
     pull_request:
-        types: [opened, synchronize, reopened]
+        types:
+            - opened
+            - synchronize
+        branches:
+            - "*"
+            - "!docs*"
 
 jobs:
     build:
