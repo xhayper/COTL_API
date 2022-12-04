@@ -36,10 +36,7 @@ jobs:
                       }
                       const {owner, repo} = context.repo;
                       const run_id = ${{github.event.workflow_run.id}};
-                      const pull_requests = ${{ toJSON(github.event.workflow_run.pull_requests) }};
-                      if (!pull_requests.length) {
-                        return core.error("This workflow doesn't match any pull requests!");
-                      }
+                      const pr_number = ${{github.event.number}};
                       const artifacts = await github.paginate(
                         github.rest.actions.listWorkflowRunArtifacts, {owner, repo, run_id});
                       if (!artifacts.length) {
@@ -50,7 +47,4 @@ jobs:
                         body += `\n* [${art.name}.zip](https://nightly.link/${owner}/${repo}/actions/artifacts/${art.id}.zip)`;
                       }
                       core.info("Review thread message body:", body);
-                      for (const pr of pull_requests) {
-                        await upsertComment(owner, repo, pr.number,
-                          "nightly-link", body);
-                      }
+                      await upsertComment(owner, repo, pr_number, "nightly-link", body);
