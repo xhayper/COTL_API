@@ -19,15 +19,15 @@ jobs:
                 os: [macos-latest, ubuntu-latest, windows-latest]
         runs-on: ${{ matrix.os }}
         steps:
-          - uses: actions/checkout@v3
-          - uses: actions/setup-node@v3
-            with:
-            node-version: '19'
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+              node-version: "19"
 
-          - name: Install Dependencies
-            run: yarn install --immutable
+            - name: Install Dependencies
+              run: yarn install --immutable
 
-          - name: Build
-            run: |
-              yarn run check
-              yarn run build
+            - name: Build
+              run: |
+                  yarn run check
+                  yarn run build
