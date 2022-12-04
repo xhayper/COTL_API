@@ -10,7 +10,7 @@ jobs:
         if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/github-script@v5
+            - uses: actions/github-script@v6
               with:
                   # This snippet is public-domain, taken from
                   # https://github.com/oprypin/nightly.link/blob/master/.github/workflows/pr-comment.yml
@@ -18,10 +18,8 @@ jobs:
                       async function upsertComment(owner, repo, issue_number, purpose, body) {
                         const {data: comments} = await github.rest.issues.listComments(
                           {owner, repo, issue_number});
-
                         const marker = `<!-- bot: ${purpose} -->`;
                         body = marker + "\n" + body;
-
                         const existing = comments.filter((c) => c.body.includes(marker));
                         if (existing.length > 0) {
                           const last = existing[existing.length - 1];
@@ -36,15 +34,12 @@ jobs:
                           await github.rest.issues.createComment({issue_number, body, owner, repo});
                         }
                       }
-
                       const {owner, repo} = context.repo;
                       const run_id = ${{github.event.workflow_run.id}};
-
                       const pull_requests = ${{ toJSON(github.event.workflow_run.pull_requests) }};
                       if (!pull_requests.length) {
                         return core.error("This workflow doesn't match any pull requests!");
                       }
-
                       const artifacts = await github.paginate(
                         github.rest.actions.listWorkflowRunArtifacts, {owner, repo, run_id});
                       if (!artifacts.length) {
@@ -54,9 +49,7 @@ jobs:
                       for (const art of artifacts) {
                         body += `\n* [${art.name}.zip](https://nightly.link/${owner}/${repo}/actions/artifacts/${art.id}.zip)`;
                       }
-
                       core.info("Review thread message body:", body);
-
                       for (const pr of pull_requests) {
                         await upsertComment(owner, repo, pr.number,
                           "nightly-link", body);
