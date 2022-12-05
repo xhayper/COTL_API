@@ -55,12 +55,16 @@ export default defineConfig({
                 }
             ]
         }),
-        compress({
-            path: "./.vercel"
-        }),
-        rome({
-            path: "./.vercel"
-        })
+        import.meta.env.PROD
+            ? compress({
+                  path: "./.vercel"
+              })
+            : undefined,
+        import.meta.env.DEV
+            ? rome({
+                  path: "./.vercel"
+              })
+            : undefined
     ],
     vite: {
         build: {
