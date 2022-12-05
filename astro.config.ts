@@ -7,7 +7,7 @@ import sitemap from "@astrojs/sitemap";
 import compress from "astro-compress";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
-import rome from "astro-rome";
+// import rome from "astro-rome";
 
 // https://astro.build/config
 export default defineConfig({
@@ -55,16 +55,12 @@ export default defineConfig({
                 }
             ]
         }),
-        import.meta.env.PROD
-            ? compress({
-                  path: "./.vercel"
-              })
-            : undefined,
-        import.meta.env.DEV
-            ? rome({
-                  path: "./.vercel"
-              })
-            : undefined
+        compress({
+            path: "./.vercel"
+        })//, // Use rome when on dev build
+        //rome({
+        //    path: "./.vercel"
+        //})
     ],
     vite: {
         build: {
