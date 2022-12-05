@@ -1,5 +1,4 @@
 #!/bin/bash
-# test
 
 allowedChanges=("astro.config.ts" "package.json" "yarn.lock" "src/" "public/" ".yarnrc.yml" ".yarn/" "tsconfig.json" "ignore-step.sh")
 
