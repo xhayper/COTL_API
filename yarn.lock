@@ -189,9 +189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/image@npm:^0.11.6":
-  version: 0.11.6
-  resolution: "@astrojs/image@npm:0.11.6"
+"@astrojs/image@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "@astrojs/image@npm:0.12.0"
   dependencies:
     "@altano/tiny-async-pool": ^1.0.2
     http-cache-semantics: ^4.1.0
@@ -206,7 +206,7 @@ __metadata:
   peerDependenciesMeta:
     sharp:
       optional: true
-  checksum: 1fdcd109076ad6d396732f3edd571998b72864e9b1883a08b003400c69df5f2115cc3539052a983e94bb00acf0f480ad29988452548c2704976275252c42f275
+  checksum: e571cbb8a22dcc512d8b604356ef1e215f237189f24679e221ec081e0d0af54ef46f67db51f3c78aedb5befe146f9e54f3c9003792e808d805b6adebb7ea7b08
   languageName: node
   linkType: hard
 
@@ -801,9 +801,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nikolarhristov/pipeline@npm:0.0.10":
-  version: 0.0.10
-  resolution: "@nikolarhristov/pipeline@npm:0.0.10"
+"@nikolarhristov/pipeline@npm:0.0.12":
+  version: 0.0.12
+  resolution: "@nikolarhristov/pipeline@npm:0.0.12"
   dependencies:
     "@types/csso": 5.0.0
     "@types/html-minifier-terser": 7.0.0
@@ -815,8 +815,8 @@ __metadata:
     html-minifier-terser: 7.1.0
     sharp: 0.31.2
     svgo: 3.0.2
-    terser: 5.16.0
-  checksum: 75918c611b48f43a77b2a34837407af1dc61bb43d9dc89b7e58e7437182453181a5bc558bd18ca1d69f669d4c22a15f7bcb798ef213a8cb0ef985147e2e7d967
+    terser: 5.16.1
+  checksum: 4086e6cdfe28a4f908d9292f2fe9ef5ac81b38f16bec5e6b43fee2f28e513d0cd605d8ff7c110bf0a1c97c28aa85e691c06dc433a3b9349cccdc4c0de78ac8ee
   languageName: node
   linkType: hard
 
@@ -1486,12 +1486,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro-compress@npm:1.1.15":
-  version: 1.1.15
-  resolution: "astro-compress@npm:1.1.15"
+"astro-compress@npm:1.1.17":
+  version: 1.1.17
+  resolution: "astro-compress@npm:1.1.17"
   dependencies:
-    "@nikolarhristov/pipeline": 0.0.10
-  checksum: f3a3e7f05fba899416fffa3b11bfe9b65860bf453cab3528599dae4132be5d8191732f5c0bf5a255e42d3424f47ede2d1733d2cf0d8319b4b89f1bb6f26b80fe
+    "@nikolarhristov/pipeline": 0.0.12
+  checksum: 10cd65ecf15ff6136344cb8f21b3d241a1b760bf90dfeb4fd0020640582567cf62a4d049cbbfac36932df4c75c47d74d7c68e686971e70a4517a2327df02756d
   languageName: node
   linkType: hard
 
@@ -2142,7 +2142,7 @@ __metadata:
   resolution: "cotl_api_docs@workspace:."
   dependencies:
     "@algolia/client-search": ^4.14.2
-    "@astrojs/image": ^0.11.6
+    "@astrojs/image": ^0.12.0
     "@astrojs/preact": ^1.2.0
     "@astrojs/sitemap": ^1.0.0
     "@astrojs/vercel": ^2.3.4
@@ -2150,7 +2150,7 @@ __metadata:
     "@docsearch/react": ^3.3.0
     "@types/node": ^18.11.10
     astro: ^1.6.12
-    astro-compress: 1.1.15
+    astro-compress: 1.1.17
     astro-html-beautifier: ^1.0.4
     astro-html-minifier: ^0.2.0
     astro-robots-txt: ^0.3.10
@@ -2169,7 +2169,7 @@ __metadata:
     sharp: ^0.31.2
     source-map-support: ^0.5.21
     svgo: ^3.0.2
-    terser: ^5.16.0
+    terser: ^5.16.1
     typescript: ^4.9.3
   languageName: unknown
   linkType: soft
@@ -6671,21 +6671,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"terser@npm:5.16.0":
-  version: 5.16.0
-  resolution: "terser@npm:5.16.0"
-  dependencies:
-    "@jridgewell/source-map": ^0.3.2
-    acorn: ^8.5.0
-    commander: ^2.20.0
-    source-map-support: ~0.5.20
-  bin:
-    terser: bin/terser
-  checksum: d035672bd28bd40ff80d83bea6bc6c85bddf41c18060e49c8b36a3aa45a0a6b4a59c6a56bdf52f9d3350587684d664f8ca26656c6084abeb951b85edf34e47ae
-  languageName: node
-  linkType: hard
-
-"terser@npm:^5.15.1, terser@npm:^5.16.0":
+"terser@npm:5.16.1, terser@npm:^5.15.1, terser@npm:^5.16.1":
   version: 5.16.1
   resolution: "terser@npm:5.16.1"
   dependencies:
