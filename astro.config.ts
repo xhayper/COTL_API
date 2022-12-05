@@ -55,8 +55,12 @@ export default defineConfig({
                 }
             ]
         }),
-        compress(),
-        rome()
+        compress({
+            path: "./.vercel"
+        }),
+        rome({
+            path: "./.vercel"
+        })
     ],
     vite: {
         build: {
