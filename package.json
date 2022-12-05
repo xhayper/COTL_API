@@ -25,6 +25,7 @@
         "astro-html-beautifier": "^1.0.4",
         "astro-html-minifier": "^0.2.0",
         "astro-robots-txt": "^0.3.10",
+        "astro-rome": "^0.0.7",
         "astro-seo": "^0.6.0",
         "csso": "^5.0.5",
         "html-escaper": "^3.0.3",

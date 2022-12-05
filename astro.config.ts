@@ -7,6 +7,7 @@ import sitemap from "@astrojs/sitemap";
 import compress from "astro-compress";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
+import rome from "astro-rome";
 
 // https://astro.build/config
 export default defineConfig({
@@ -54,7 +55,8 @@ export default defineConfig({
                 }
             ]
         }),
-        compress()
+        compress(),
+        rome()
     ],
     vite: {
         build: {
