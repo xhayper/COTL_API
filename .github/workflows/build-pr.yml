@@ -54,6 +54,7 @@ jobs:
                       for (const art of artifacts) {
                         body += `\n* [${art.name}.zip](https://nightly.link/${owner}/${repo}/actions/artifacts/${art.id}.zip)`;
                       }
-                      core.info("Review thread message body:", body);
+                      core.info("Review thread message body:");
+                      core.info(body);
                       await upsertComment(owner, repo, ${{ env.PR_NUM }},
                         "nightly-link", body);
