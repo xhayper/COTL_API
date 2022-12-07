@@ -9,14 +9,14 @@ internal unsafe class ChannelWrap
 {
     // Channel through which all the sound is played.
     private Channel channel;
-    private readonly SoundWrapper soundHandle;
+    private readonly SoundHandle soundHandle;
     private Sound GetSound() => *soundHandle.sound;
     public string ID { get; }
 
     // Volume control while still in sync with Master
     public float VolumeMultiplier = 1f;
 
-    public ChannelWrap(string id, in SoundWrapper sound, bool loop = false)
+    public ChannelWrap(string id, in SoundHandle sound, bool loop = false)
     {
         channel = new Channel();
         ID = id;

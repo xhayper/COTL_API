@@ -9,11 +9,11 @@ using Unity.Audio;
 
 namespace COTL_API.Sounds;
 
-internal unsafe class SoundWrapper : SafeHandleZeroOrMinusOneIsInvalid
+internal unsafe class SoundHandle : SafeHandleZeroOrMinusOneIsInvalid
 {
     internal Sound* sound;
 
-    public SoundWrapper(Sound *sound)
+    public SoundHandle(Sound *sound)
         : base(true)
     {
         this.sound = sound;
