@@ -1,4 +1,4 @@
-﻿using COTL_API.Helpers;
+using COTL_API.Helpers;
 using FMODUnity;
 using BepInEx;
 using FMOD;
@@ -13,7 +13,7 @@ public enum VolumeCategory
     VO
 }
 
-public static class SoundHelpers
+public static class AudioUtils
 {
     /// <summary>
     /// The game's Master Volume.
@@ -35,54 +35,24 @@ public static class SoundHelpers
     /// </summary>
     public static float VoVolume => SettingsManager.Settings.Audio.VOVolume * MasterVolume;
 
-    // Sound helpers -- all personal and not meant for users, so they're internal
-    internal static Sound MakeSound(string fileName, bool loop = false)
-    {
-        var path = GetPath(fileName);
-        if (path == null) return new Sound();
-
-        var system = RuntimeManager.CoreSystem;
-
-        var mode = loop ? MODE.LOOP_NORMAL : MODE.LOOP_OFF;
-
-        var result = system.createSound(path, mode, out var sound);
-
-        if (result == RESULT.OK) return sound;
-
-        LogHelper.LogError($"Error making sound from file {fileName}!");
-        result.IfErrorPrintWith($"MakeSound() -- fileName: {fileName}");
-
-        return new Sound(); // Return empty sound in the case of an error
-    }
-
-    internal static RESULT PlaySound(Sound sound, VolumeCategory volumeCategory = VolumeCategory.MASTER)
-    {
-        var system = RuntimeManager.CoreSystem;
-        var result = system.playSound(sound, new ChannelGroup(), false, out var channel);
-        channel.SyncVolume(volumeCategory);
-        return result;
-    }
-
     internal static RESULT SyncVolume(this Channel channel, VolumeCategory volumeCategory = VolumeCategory.MASTER)
     {
-        float x;
-        switch (volumeCategory)
+        return channel.setVolume(GetVolume(volumeCategory));
+    }
+
+    internal static float GetVolume(VolumeCategory x)
+    {
+        switch (x)
         {
             case VolumeCategory.MUSIC:
-                x = MusicVolume;
-                break;
+                return MusicVolume;
             case VolumeCategory.SFX:
-                x = SfxVolume;
-                break;
+                return SfxVolume;
             case VolumeCategory.VO:
-                x = VoVolume;
-                break;
+                return VoVolume;
             default:
-                x = MasterVolume;
-                break;
+                return MasterVolume;
         }
-
-        return channel.setVolume(x);
     }
 
     internal static void IfErrorPrintWith(this RESULT result, string where)
@@ -93,8 +63,6 @@ public static class SoundHelpers
         }
     }
 
-
-    // Find file
     internal static string? GetPath(string fileName)
     {
         var files = Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories);
