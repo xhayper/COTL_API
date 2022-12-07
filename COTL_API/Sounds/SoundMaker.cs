@@ -4,9 +4,9 @@ using FMODUnity;
 
 namespace COTL_API.Sounds;
 
-internal unsafe class SoundMaker
+internal static class SoundMaker
 {
-    internal static Sound* MakeSound(string fileName, bool loop = false)
+    internal static Sound MakeSound(string fileName, bool loop = false)
     {
         string? path = AudioUtils.GetPath(fileName);
         if (path == null) return default;
@@ -15,7 +15,10 @@ internal unsafe class SoundMaker
         var mode = loop ? MODE.LOOP_NORMAL : MODE.LOOP_OFF;
 
         var result = system.createSound(path, mode, out var sound);
-        if (result == RESULT.OK) return &sound;
+        if (result == RESULT.OK)
+        {
+            return sound;
+        }
 
         LogHelper.LogError($"Error making sound from file {fileName}!");
         result.IfErrorPrintWith($"MakeSound() -- fileName: {fileName}");
@@ -26,7 +29,8 @@ internal unsafe class SoundMaker
     internal static RESULT PlayOneShot(SoundHandle soundHandle, VolumeCategory volume = VolumeCategory.SFX)
     {
         var system = RuntimeManager.CoreSystem;
-        var result = system.playSound(*soundHandle.sound, new ChannelGroup(), false, out var channel);
+        soundHandle.ChangeLoopMode(MODE.LOOP_OFF);
+        var result = system.playSound(soundHandle.GetSound(), new ChannelGroup(), false, out var channel);
         channel.SyncVolume(volume);
         return result;
     }

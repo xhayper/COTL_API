@@ -4,12 +4,11 @@ using FMOD;
 
 namespace COTL_API.Sounds;
 
-internal unsafe class ChannelWrap
+internal class ChannelWrap
 {
     // Channel through which all the sound is played.
     private Channel channel;
     private readonly SoundHandle soundHandle;
-    private Sound GetSound() => *soundHandle.sound;
     public string ID { get; }
 
     // Volume control while still in sync with Master
@@ -25,7 +24,7 @@ internal unsafe class ChannelWrap
     public RESULT Play()
     {
         var system = RuntimeManager.CoreSystem;
-        var result = system.playSound(GetSound(), new ChannelGroup(), false, out channel);
+        var result = system.playSound(soundHandle.GetSound(), new ChannelGroup(), false, out channel);
 
         if (result == RESULT.OK) return result;
 
