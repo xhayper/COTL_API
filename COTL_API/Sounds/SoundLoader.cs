@@ -7,7 +7,7 @@ namespace COTL_API.Sounds;
 public class SoundLoader : MonoBehaviour
 {
     // Sound cache
-    private Dictionary<string, SoundHandle> SoundCache = new();
+    private Dictionary<string, SoundHandle> _soundCache = new();
 
     // The new sound cache.
     private List<ChannelWrap> _channelList = new();
@@ -31,7 +31,7 @@ public class SoundLoader : MonoBehaviour
     {
         SoundHandle sound = new SoundHandle(SoundMaker.MakeSound(fileName));
         name ??= fileName;
-        SoundCache.Add(name, sound);
+        _soundCache.Add(name, sound);
         return name; // Return name of sound in the 'Sounds' dictionary!
     }
 
@@ -44,12 +44,12 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The string key for the Sound you wanna play..</param>
     public unsafe void PlaySfx(string name)
     {
-        if (!SoundCache.ContainsKey(name))
+        if (!_soundCache.ContainsKey(name))
         {
             LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
 
-        var soundHandle = SoundCache[name];
+        var soundHandle = _soundCache[name];
         soundHandle.sound->setMode(MODE.LOOP_OFF);
 
         SoundMaker.PlayOneShot(soundHandle, VolumeCategory.SFX);
@@ -61,12 +61,12 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The string key of the cached Sound.</param>
     public unsafe void PlayMusic(string name)
     {
-        if (!SoundCache.ContainsKey(name))
+        if (!_soundCache.ContainsKey(name))
         {
             LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
 
-        var soundHandle = SoundCache[name];
+        var soundHandle = _soundCache[name];
         soundHandle.sound->setMode(MODE.LOOP_NORMAL); // Music should loop
 
         var sh = new ChannelWrap(name, in soundHandle);
@@ -120,7 +120,7 @@ public class SoundLoader : MonoBehaviour
     /// </summary>
     public void ClearSounds()
     {
-        SoundCache.Clear();
+        _soundCache.Clear();
     }
 
 
