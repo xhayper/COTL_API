@@ -9,11 +9,11 @@ using Unity.Audio;
 
 namespace COTL_API.Sounds;
 
-internal unsafe class SoundHandle : SafeHandleZeroOrMinusOneIsInvalid
+internal unsafe class SoundWrapper : SafeHandleZeroOrMinusOneIsInvalid
 {
     internal Sound* sound;
 
-    public SoundHandle(Sound *sound)
+    public SoundWrapper(Sound *sound)
         : base(true)
     {
         this.sound = sound;
@@ -23,9 +23,7 @@ internal unsafe class SoundHandle : SafeHandleZeroOrMinusOneIsInvalid
     [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
     protected override bool ReleaseHandle()
     {
-        FileLog.Log($"SoundHandle -- Handle invalid: {this.IsClosed}");
         sound->release();
-        FileLog.Log($"SoundHandle -- Handle invalid: {this.IsClosed}");
         return true;
     }
 }
