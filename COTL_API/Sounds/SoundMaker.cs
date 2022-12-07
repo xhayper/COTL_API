@@ -26,7 +26,7 @@ internal unsafe class SoundMaker
         return default; // Return empty sound in the case of an error
     }
 
-    internal static RESULT PlayOneShot(SoundHandle soundHandle, VolumeCategory volume = VolumeCategory.SFX)
+    internal static RESULT PlayOneShot(SoundWrapper soundHandle, VolumeCategory volume = VolumeCategory.SFX)
     {
         var system = RuntimeManager.CoreSystem;
         var result = system.playSound(*soundHandle.sound, new ChannelGroup(), false, out var channel);
@@ -36,7 +36,7 @@ internal unsafe class SoundMaker
 
     internal static RESULT PlayOneShot(string path, VolumeCategory volume = VolumeCategory.SFX)
     {
-        var soundHandle = new SoundHandle(MakeSound(path));
+        var soundHandle = new SoundWrapper(MakeSound(path));
         return PlayOneShot(soundHandle, volume);
     }
 }
