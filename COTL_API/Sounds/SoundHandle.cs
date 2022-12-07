@@ -18,7 +18,9 @@ internal unsafe class SoundHandle : SafeHandleZeroOrMinusOneIsInvalid
     [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
     protected override bool ReleaseHandle()
     {
+        HarmonyLib.FileLog.Log($"About to release handle. Handle is valid: {!this.IsInvalid}");
         sound->release();
+        HarmonyLib.FileLog.Log($"Have released handle. Handle is valid: {!this.IsInvalid}");
         return true;
     }
 }

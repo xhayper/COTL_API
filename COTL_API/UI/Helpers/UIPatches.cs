@@ -22,9 +22,11 @@ internal static class UIPatches
 
             // FontAsset reference.
             var getTextAsset = menu.Find("Left")
-                .transform.Find("Transform").transform.Find("MenuContainer")
+                .transform.Find("Transform")
+                .transform.Find("MenuContainer")
                 .transform.Find("Settings")
-                .transform.Find("Text").GetComponent<TextMeshProUGUI>();
+                .transform.Find("Text")
+                .GetComponent<TextMeshProUGUI>();
             FontHelpers._pauseMenu = getTextAsset.font;
 
             // API container.
@@ -33,8 +35,12 @@ internal static class UIPatches
             container.layer = UIHelpers.UILayer;
             container.transform.position = Vector3.zero;
             container.transform.localScale = Vector3.one;
-
             UIMenuBase.Parent = container.transform;
+
+            // Please maybe don't remove this? c':
+            // It got removed last time. I do not know ~why~.
+            // This is kinda, uh. Necessary. For literally everything to work. So uhm. Yeah.
+            PauseMenuQueue.ForEach(x => container.AddComponent(x));
         }
     }
 
@@ -49,9 +55,12 @@ internal static class UIPatches
 
             // FontAsset reference.
             var getTextAsset = menu.transform.Find("MainMenuContainer")
-                .transform.Find("Left").transform.Find("Transform")
-                .transform.Find("MenusContainer").transform.Find("MainMenu")
-                .transform.Find("Settings").transform.Find("Text (TMP)")
+                .transform.Find("Left")
+                .transform.Find("Transform")
+                .transform.Find("MenusContainer")
+                .transform.Find("MainMenu")
+                .transform.Find("Settings")
+                .transform.Find("Text (TMP)")
                 .GetComponent<TextMeshProUGUI>();
             FontHelpers._startMenu = getTextAsset.font;
         }
