@@ -4,23 +4,24 @@ using System.Runtime.ConstrainedExecution;
 
 namespace COTL_API.Sounds;
 
-internal unsafe class SoundHandle : SafeHandleZeroOrMinusOneIsInvalid
+internal class SoundHandle : SafeHandleZeroOrMinusOneIsInvalid
 {
-    internal Sound* sound;
-
-    public SoundHandle(Sound *sound)
+    private Sound? sound;
+    public SoundHandle(Sound sound)
         : base(true)
     {
+        SetHandle(sound.handle);
         this.sound = sound;
-        SetHandle(sound->handle);
+        HarmonyLib.FileLog.Log($"Is handle valid: {!IsInvalid}");
     }
+    public Sound GetSound() => sound ?? default;
+    public void ChangeLoopMode(MODE mode) => sound?.setMode(mode); 
 
     [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
     protected override bool ReleaseHandle()
     {
-        HarmonyLib.FileLog.Log($"About to release handle. Handle is valid: {!this.IsInvalid}");
-        sound->release();
-        HarmonyLib.FileLog.Log($"Have released handle. Handle is valid: {!this.IsInvalid}");
+        sound?.release();
+        HarmonyLib.FileLog.Log("Released.");
         return true;
     }
 }

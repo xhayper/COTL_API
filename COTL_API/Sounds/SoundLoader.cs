@@ -27,7 +27,7 @@ public class SoundLoader : MonoBehaviour
     /// <param name="fileName">The name of your audio file.</param>
     /// <param name="name">A string key you can access the Sound with.</param>
     /// <returns>The Sound's string key.</returns>
-    public unsafe string CreateSound(string fileName, string? name = null)
+    public string CreateSound(string fileName, string? name = null)
     {
         SoundHandle sound = new SoundHandle(SoundMaker.MakeSound(fileName));
         name ??= fileName;
@@ -42,7 +42,7 @@ public class SoundLoader : MonoBehaviour
     /// Play a cached Sound once as a sound effect.
     /// </summary>
     /// <param name="name">The string key for the Sound you wanna play..</param>
-    public unsafe void PlaySfx(string name)
+    public void PlaySfx(string name)
     {
         if (!_soundCache.ContainsKey(name))
         {
@@ -50,8 +50,6 @@ public class SoundLoader : MonoBehaviour
         }
 
         var soundHandle = _soundCache[name];
-        soundHandle.sound->setMode(MODE.LOOP_OFF);
-
         SoundMaker.PlayOneShot(soundHandle, VolumeCategory.SFX);
     }
 
@@ -59,7 +57,7 @@ public class SoundLoader : MonoBehaviour
     /// Play a cached Sound in a loop.
     /// </summary>
     /// <param name="name">The string key of the cached Sound.</param>
-    public unsafe void PlayMusic(string name)
+    public void PlayMusic(string name)
     {
         if (!_soundCache.ContainsKey(name))
         {
@@ -67,7 +65,7 @@ public class SoundLoader : MonoBehaviour
         }
 
         var soundHandle = _soundCache[name];
-        soundHandle.sound->setMode(MODE.LOOP_NORMAL); // Music should loop
+        soundHandle.ChangeLoopMode(MODE.LOOP_NORMAL); // Music should loop
 
         var sh = new ChannelWrap(name, in soundHandle);
         var result = sh.Play();
