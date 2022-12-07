@@ -1,11 +1,6 @@
 using FMOD;
-using HarmonyLib;
 using Microsoft.Win32.SafeHandles;
-using System;
-using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
-using System.Text;
-using Unity.Audio;
 
 namespace COTL_API.Sounds;
 
