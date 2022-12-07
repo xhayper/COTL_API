@@ -7,7 +7,7 @@ namespace COTL_API.Sounds;
 public class SoundLoader : MonoBehaviour
 {
     // Sound cache
-    private Dictionary<string, SoundWrapper> SoundCache = new();
+    private Dictionary<string, SoundHandle> SoundCache = new();
 
     // The new sound cache.
     private List<ChannelWrap> _channelList = new();
@@ -29,7 +29,7 @@ public class SoundLoader : MonoBehaviour
     /// <returns>The Sound's string key.</returns>
     public unsafe string CreateSound(string fileName, string? name = null)
     {
-        SoundWrapper sound = new SoundWrapper(SoundMaker.MakeSound(fileName));
+        SoundHandle sound = new SoundHandle(SoundMaker.MakeSound(fileName));
         name ??= fileName;
         SoundCache.Add(name, sound);
         return name; // Return name of sound in the 'Sounds' dictionary!
