@@ -47,7 +47,6 @@ internal static class SettingsUtils
         sliderSlider.maxValue = maxValue;
         sliderSlider._increment = increment;
         sliderSlider._valueDisplayFormat = format;
-        sliderSlider.UpdateVisuals();
         if (onChange != null) sliderSlider.onValueChanged.AddListener(onChange);
         sliderSlider.value = value;
     }
