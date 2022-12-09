@@ -116,6 +116,8 @@ public static class CustomSettingsManager
 
     //--- BEPINEX CONFIG BINDING ---//
 
+    // TODO: Improve BepInEx number config
+
     public static HorizontalSelector? AddBepInExConfig(string? category, string text, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
     {
         if (!(entry.Description.AcceptableValues is AcceptableValueList<string>)) return null;
