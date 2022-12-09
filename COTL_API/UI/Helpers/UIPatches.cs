@@ -39,6 +39,7 @@ internal static class UIPatches
 
             // Hi!! Please don't remove this line!
             // It's important! c':
+            // ok
             PauseMenuQueue.ForEach(x => container.AddComponent(x));
         }
     }
