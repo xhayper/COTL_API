@@ -4,6 +4,7 @@
         "jsx": "react-jsx",
         "jsxImportSource": "preact",
         "sourceMap": false,
+        // Set this to true when in dev mode
         "skipLibCheck": true,
         "paths": {
             "react": ["./node_modules/preact/compat/"],
