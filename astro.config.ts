@@ -56,10 +56,10 @@ export default defineConfig({
             ]
         }),
         compress({
-            path: "./.vercel"
+            path: "./.vercel/output"
         })//, // Use rome when on dev build
         //rome({
-        //    path: "./.vercel"
+        //    path: "./.vercel/output"
         //})
     ],
     vite: {
