@@ -4,10 +4,10 @@ using System.Runtime.ConstrainedExecution;
 
 namespace COTL_API.Sounds;
 
-internal class SoundHandle : SafeHandleZeroOrMinusOneIsInvalid
+internal class SoundWrapper : SafeHandleZeroOrMinusOneIsInvalid
 {
     private Sound? sound;
-    public SoundHandle(Sound sound)
+    public SoundWrapper(Sound sound)
         : base(true)
     {
         SetHandle(sound.handle);

@@ -4,27 +4,27 @@ using FMOD;
 
 namespace COTL_API.Sounds;
 
-internal class ChannelWrap
+internal class ChannelWrapper
 {
     // Channel through which all the sound is played.
     private Channel channel;
-    private readonly SoundHandle soundHandle;
+    private readonly SoundWrapper soundWrapper;
     public string ID { get; }
 
     // Volume control while still in sync with Master
     public float VolumeMultiplier = 1f;
 
-    public ChannelWrap(string id, in SoundHandle sound, bool loop = false)
+    public ChannelWrapper(string id, in SoundWrapper sound, bool loop = false)
     {
         channel = new Channel();
         ID = id;
-        soundHandle = sound;
+        soundWrapper = sound;
     }
 
     public RESULT Play()
     {
         var system = RuntimeManager.CoreSystem;
-        var result = system.playSound(soundHandle.GetSound(), new ChannelGroup(), false, out channel);
+        var result = system.playSound(soundWrapper.GetSound(), new ChannelGroup(), false, out channel);
 
         if (result == RESULT.OK) return result;
 
