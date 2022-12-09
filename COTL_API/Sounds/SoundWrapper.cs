@@ -12,7 +12,6 @@ internal class SoundWrapper : SafeHandleZeroOrMinusOneIsInvalid
     {
         SetHandle(sound.handle);
         this.sound = sound;
-        HarmonyLib.FileLog.Log($"Is handle valid: {!IsInvalid}");
     }
     public Sound GetSound() => sound ?? default;
     public void ChangeLoopMode(MODE mode) => sound?.setMode(mode); 
@@ -21,7 +20,6 @@ internal class SoundWrapper : SafeHandleZeroOrMinusOneIsInvalid
     protected override bool ReleaseHandle()
     {
         sound?.release();
-        HarmonyLib.FileLog.Log("Released.");
         return true;
     }
 }
