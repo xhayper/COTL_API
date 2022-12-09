@@ -37,9 +37,8 @@ internal static class UIPatches
             container.transform.localScale = Vector3.one;
             UIMenuBase.Parent = container.transform;
 
-            // Please maybe don't remove this? c':
-            // It got removed last time. I do not know ~why~.
-            // This is kinda, uh. Necessary. For literally everything to work. So uhm. Yeah.
+            // Hi!! Please don't remove this line!
+            // It's important! c':
             PauseMenuQueue.ForEach(x => container.AddComponent(x));
         }
     }

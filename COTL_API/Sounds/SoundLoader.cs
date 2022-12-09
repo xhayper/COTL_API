@@ -7,10 +7,10 @@ namespace COTL_API.Sounds;
 public class SoundLoader : MonoBehaviour
 {
     // Sound cache
-    private Dictionary<string, SoundHandle> _soundCache = new();
+    private Dictionary<string, SoundWrapper> _soundCache = new();
 
     // The new sound cache.
-    private List<ChannelWrap> _channelList = new();
+    private List<ChannelWrapper> _channelList = new();
 
     // All existent SoundLoader instances, for management purposes.
     internal static readonly List<SoundLoader> InstanceList = new();
@@ -29,7 +29,7 @@ public class SoundLoader : MonoBehaviour
     /// <returns>The Sound's string key.</returns>
     public string CreateSound(string fileName, string? name = null)
     {
-        SoundHandle sound = new SoundHandle(SoundMaker.MakeSound(fileName));
+        SoundWrapper sound = new SoundWrapper(SoundUtils.MakeSound(fileName));
         name ??= fileName;
         _soundCache.Add(name, sound);
         return name; // Return name of sound in the 'Sounds' dictionary!
@@ -50,7 +50,7 @@ public class SoundLoader : MonoBehaviour
         }
 
         var soundHandle = _soundCache[name];
-        SoundMaker.PlayOneShot(soundHandle, VolumeCategory.SFX);
+        SoundUtils.PlayOneShot(soundHandle, VolumeCategory.SFX);
     }
 
     /// <summary>
@@ -67,9 +67,9 @@ public class SoundLoader : MonoBehaviour
         var soundHandle = _soundCache[name];
         soundHandle.ChangeLoopMode(MODE.LOOP_NORMAL); // Music should loop
 
-        var sh = new ChannelWrap(name, in soundHandle);
+        var sh = new ChannelWrapper(name, in soundHandle);
         var result = sh.Play();
-        sh.SetVolume(AudioUtils.MusicVolume);
+        sh.SetVolume(SoundUtils.MusicVolume);
         if (result != RESULT.OK) return; // Return before adding to the Handlers list.
         _channelList.Add(sh);
     }
@@ -97,7 +97,7 @@ public class SoundLoader : MonoBehaviour
     }
 
 
-    // == MANGEMENT ==
+    // == MANAGEMENT ==
 
     /// <summary>
     /// Stop all music being played by this SoundLoader instance.
@@ -110,7 +110,7 @@ public class SoundLoader : MonoBehaviour
 
     internal void SyncAllVolume()
     {
-        _channelList.ForEach(x => x.SetVolume(AudioUtils.MusicVolume));
+        _channelList.ForEach(x => x.SetVolume(SoundUtils.MusicVolume));
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public class SoundLoader : MonoBehaviour
 
 
     // == CHANNEL INSTANCE ==
-    private ChannelWrap? GetHandlerByID(string id)
+    private ChannelWrapper? GetHandlerByID(string id)
     {
         return _channelList.FirstOrDefault(x => x.ID == id);
     }
@@ -131,7 +131,7 @@ public class SoundLoader : MonoBehaviour
     internal void SyncVolume(string id)
     {
         var sl = GetHandlerByID(id);
-        sl?.SetVolume(AudioUtils.MusicVolume);
+        sl?.SetVolume(SoundUtils.MusicVolume);
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public class SoundLoader : MonoBehaviour
     {
         var sl = GetHandlerByID(id);
         sl?.SetMultiplier(mul);
-        sl?.SetVolume(AudioUtils.MusicVolume);
+        sl?.SetVolume(SoundUtils.MusicVolume);
     }
 
     // == PLAYBACK CONTROLS ==

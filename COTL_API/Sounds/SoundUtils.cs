@@ -13,7 +13,7 @@ public enum VolumeCategory
     VO
 }
 
-public static class AudioUtils
+public static class SoundUtils
 {
     /// <summary>
     /// The game's Master Volume.
@@ -79,5 +79,40 @@ public static class AudioUtils
         }
 
         return files.First();
+    }
+
+    internal static Sound MakeSound(string fileName, bool loop = false)
+    {
+        string? path = SoundUtils.GetPath(fileName);
+        if (path == null) return default;
+
+        var system = RuntimeManager.CoreSystem;
+        var mode = loop ? MODE.LOOP_NORMAL : MODE.LOOP_OFF;
+
+        var result = system.createSound(path, mode, out var sound);
+        if (result == RESULT.OK)
+        {
+            return sound;
+        }
+
+        LogHelper.LogError($"Error making sound from file {fileName}!");
+        result.IfErrorPrintWith($"MakeSound() -- fileName: {fileName}");
+
+        return default;
+    }
+
+    internal static RESULT PlayOneShot(SoundWrapper soundHandle, VolumeCategory volume = VolumeCategory.SFX)
+    {
+        var system = RuntimeManager.CoreSystem;
+        soundHandle.ChangeLoopMode(MODE.LOOP_OFF);
+        var result = system.playSound(soundHandle.GetSound(), new ChannelGroup(), false, out var channel);
+        channel.SyncVolume(volume);
+        return result;
+    }
+
+    internal static RESULT PlayOneShot(string path, VolumeCategory volume = VolumeCategory.SFX)
+    {
+        var soundHandle = new SoundWrapper(MakeSound(path));
+        return PlayOneShot(soundHandle, volume);
     }
 }
