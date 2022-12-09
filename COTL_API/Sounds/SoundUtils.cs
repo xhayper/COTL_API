@@ -57,10 +57,9 @@ public static class SoundUtils
 
     internal static void IfErrorPrintWith(this RESULT result, string where)
     {
-        if (result != RESULT.OK)
-        {
-            LogHelper.LogError($"Sound Error: {result} caught at {where}");
-        }
+        if (result == RESULT.OK) return;
+
+        LogHelper.LogError($"Sound Error: {result} caught at {where}");
     }
 
     internal static string? GetPath(string fileName)
@@ -68,6 +67,7 @@ public static class SoundUtils
         var path = Path.IsPathRooted(fileName) ? fileName : Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories).FirstOrDefault();
 
         if (path == null) LogHelper.LogError($"Error: Couldn't find \"{fileName}\"");
+
         return path;
     }
 
