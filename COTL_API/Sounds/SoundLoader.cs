@@ -1,4 +1,4 @@
-﻿using COTL_API.Helpers;
+using COTL_API.Helpers;
 using UnityEngine;
 using FMOD;
 
@@ -6,13 +6,11 @@ namespace COTL_API.Sounds;
 
 public class SoundLoader : MonoBehaviour
 {
-    /// <summary>
-    /// All Sounds loaded in this SoundLoader instance, accessible through their respective string keys.
-    /// </summary>
-    private Dictionary<string, Sound> _soundList = new();
+    // Sound cache
+    private Dictionary<string, SoundWrapper> _soundCache = new();
 
-    // SoundHandlers -- For looping audio that requires volume-syncing.
-    private List<SoundHandler> _handlerList = new();
+    // The new sound cache.
+    private List<ChannelWrapper> _channelList = new();
 
     // All existent SoundLoader instances, for management purposes.
     internal static readonly List<SoundLoader> InstanceList = new();
@@ -23,7 +21,6 @@ public class SoundLoader : MonoBehaviour
         StopAll();
     }
 
-
     /// <summary>
     /// Create a new Sound, which will be cached inside of SoundLoader and accessible with a string key (which will either be the file name or a name string passed as the second optional parameter).
     /// </summary>
@@ -32,35 +29,10 @@ public class SoundLoader : MonoBehaviour
     /// <returns>The Sound's string key.</returns>
     public string CreateSound(string fileName, string? name = null)
     {
-        var sound = SoundHelpers.MakeSound(fileName);
+        SoundWrapper sound = new SoundWrapper(SoundUtils.MakeSound(fileName));
         name ??= fileName;
-        _soundList.Add(name, sound);
+        _soundCache.Add(name, sound);
         return name; // Return name of sound in the 'Sounds' dictionary!
-    }
-
-    /// <summary>
-    /// Get a Sound cached in this SoundLoader instance by its string key.
-    /// </summary>
-    /// <param name="name">The Sound's string key.</param>
-    /// <returns>The Sound that matches that string key, or an empty Sound if none is found.</returns>
-    public Sound GetSound(string name)
-    {
-        if (_soundList.ContainsKey(name)) return _soundList[name];
-        LogHelper.LogError($"Couldn't get sound {name}: Sound doesn't exist!");
-        return new Sound(); // Return empty Sound
-    }
-
-    /// <summary>
-    /// Add a Sound to this SoundLoader instance's cache.
-    /// </summary>
-    /// <param name="sound"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public string AddExistingSound(Sound sound, string name)
-    {
-        if (_soundList.ContainsValue(sound)) return _soundList.First(x => x.Value.Equals(sound)).Key;
-        _soundList.Add(name, sound);
-        return name;
     }
 
 
@@ -72,15 +44,13 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The string key for the Sound you wanna play..</param>
     public void PlaySfx(string name)
     {
-        if (!_soundList.ContainsKey(name))
+        if (!_soundCache.ContainsKey(name))
         {
             LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
 
-        var sound = _soundList[name];
-        sound.setMode(MODE.LOOP_OFF);
-
-        SoundHelpers.PlaySound(sound, VolumeCategory.SFX);
+        var soundHandle = _soundCache[name];
+        SoundUtils.PlayOneShot(soundHandle, VolumeCategory.SFX);
     }
 
     /// <summary>
@@ -89,19 +59,19 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The string key of the cached Sound.</param>
     public void PlayMusic(string name)
     {
-        if (!_soundList.ContainsKey(name))
+        if (!_soundCache.ContainsKey(name))
         {
             LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
         }
 
-        var sound = _soundList[name];
-        sound.setMode(MODE.LOOP_NORMAL); // Music should loop
+        var soundHandle = _soundCache[name];
+        soundHandle.ChangeLoopMode(MODE.LOOP_NORMAL); // Music should loop
 
-        var sh = new SoundHandler(sound, name);
+        var sh = new ChannelWrapper(name, in soundHandle);
         var result = sh.Play();
-        sh.SetVolume(SoundHelpers.MusicVolume);
+        sh.SetVolume(SoundUtils.MusicVolume);
         if (result != RESULT.OK) return; // Return before adding to the Handlers list.
-        _handlerList.Add(sh);
+        _channelList.Add(sh);
     }
 
     /// <summary>
@@ -127,20 +97,20 @@ public class SoundLoader : MonoBehaviour
     }
 
 
-    // == MANGEMENT ==
+    // == MANAGEMENT ==
 
     /// <summary>
     /// Stop all music being played by this SoundLoader instance.
     /// </summary>
     public void StopAll()
     {
-        _handlerList.ForEach(x => x.Stop());
-        _handlerList = new List<SoundHandler>(); // Empty list.
+        _channelList.ForEach(x => x.Stop());
+        _channelList.Clear();
     }
 
     internal void SyncAllVolume()
     {
-        _handlerList.ForEach(x => x.SetVolume(SoundHelpers.MusicVolume));
+        _channelList.ForEach(x => x.SetVolume(SoundUtils.MusicVolume));
     }
 
     /// <summary>
@@ -148,21 +118,20 @@ public class SoundLoader : MonoBehaviour
     /// </summary>
     public void ClearSounds()
     {
-        // Clear all Sounds from the dictionary
-        _soundList = new Dictionary<string, Sound>();
+        _soundCache.Clear();
     }
 
 
     // == CHANNEL INSTANCE ==
-    private SoundHandler? GetHandlerByID(string id)
+    private ChannelWrapper? GetHandlerByID(string id)
     {
-        return _handlerList.FirstOrDefault(x => x.ID == id);
+        return _channelList.FirstOrDefault(x => x.ID == id);
     }
 
     internal void SyncVolume(string id)
     {
         var sl = GetHandlerByID(id);
-        sl?.SetVolume(SoundHelpers.MusicVolume);
+        sl?.SetVolume(SoundUtils.MusicVolume);
     }
 
     /// <summary>
@@ -175,7 +144,7 @@ public class SoundLoader : MonoBehaviour
     {
         var sl = GetHandlerByID(id);
         sl?.SetMultiplier(mul);
-        sl?.SetVolume(SoundHelpers.MusicVolume);
+        sl?.SetVolume(SoundUtils.MusicVolume);
     }
 
     // == PLAYBACK CONTROLS ==
@@ -189,7 +158,7 @@ public class SoundLoader : MonoBehaviour
     {
         var sh = GetHandlerByID(name);
         sh?.Stop();
-        if (sh != null) _handlerList.Remove(sh);
+        if (sh != null) _channelList.Remove(sh);
     }
 
     /// <summary>
