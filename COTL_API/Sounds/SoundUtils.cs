@@ -65,35 +65,22 @@ public static class SoundUtils
 
     internal static string? GetPath(string fileName)
     {
-        var files = Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories);
+        var path = Path.IsPathRooted(fileName) ? fileName : Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories).FirstOrDefault();
 
-        switch (files.Length)
-        {
-            case 0:
-                LogHelper.LogError($"Error: Couldn't find \"{fileName}\"");
-                return null;
-            case > 1:
-                LogHelper.LogWarning(
-                        $"More than one file named \"{fileName}\" found. This may lead to weird behavior.");
-                break;
-        }
-
-        return files.First();
+        if (path == null) LogHelper.LogError($"Error: Couldn't find \"{fileName}\"");
+        return path;
     }
 
     internal static Sound MakeSound(string fileName, bool loop = false)
     {
-        string? path = SoundUtils.GetPath(fileName);
+        var path = GetPath(fileName);
         if (path == null) return default;
 
         var system = RuntimeManager.CoreSystem;
         var mode = loop ? MODE.LOOP_NORMAL : MODE.LOOP_OFF;
 
         var result = system.createSound(path, mode, out var sound);
-        if (result == RESULT.OK)
-        {
-            return sound;
-        }
+        if (result == RESULT.OK) return sound;
 
         LogHelper.LogError($"Error making sound from file {fileName}!");
         result.IfErrorPrintWith($"MakeSound() -- fileName: {fileName}");
