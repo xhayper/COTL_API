@@ -58,24 +58,18 @@ internal static class SkinUtils
                     maxX = centerX + ((diffX / 2.0f) * scaleX);
                     minY = centerY - ((diffY / 2.0f) * scaleY);
                     maxY = centerY + ((diffY / 2.0f) * scaleY);
+                    
+                    RegionAttachment regionAttachment = new RegionAttachment("Custom" + ovrName);
+                    regionAttachment.SetRegion(atlasRegion);
 
-                    meshAttachment.Name = "Custom" + ovrName;
-                    meshAttachment.SetRegion(atlasRegion);
-                    atlasRegion.name = "Custom" + atlasRegion.name;
-                    meshAttachment.HullLength = 4;
-                    meshAttachment.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
-                    float pw = atlasRegion.page.width;
-                    float ph = atlasRegion.page.height;
-                    float x = atlasRegion.x;
-                    float y = atlasRegion.y;
-                    float w = atlasRegion.width;
-                    float h = atlasRegion.height;
-                    meshAttachment.UVs = new[]
-                        { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
-                    meshAttachment.Vertices = new[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
-                    meshAttachment.WorldVerticesLength = 8;
-
-                    skin.SetAttachment(slot, ovrName, meshAttachment);
+                    regionAttachment.X = minY + diffY / 2.0f;
+                    regionAttachment.Y = minX + diffX / 2.0f;
+                    regionAttachment.rotation = -90;
+                    regionAttachment.ScaleX = 1;
+                    regionAttachment.ScaleY = 1;
+                    regionAttachment.Width = diffX;
+                    regionAttachment.Height = diffY;
+                    skin.SetAttachment(slot, ovrName, regionAttachment);
                     break;
                 }
             case RegionAttachment regionAttachment:
@@ -88,6 +82,7 @@ internal static class SkinUtils
                 regionAttachment.Y += translationY;
                 regionAttachment.ScaleX = scaleX;
                 regionAttachment.ScaleY = scaleY;
+                regionAttachment.rotation = -90;
 
                 skin.SetAttachment(slot, ovrName, regionAttachment);
                 break;
@@ -117,40 +112,12 @@ internal static class SkinUtils
         var skin2 = to.GetRepackedSkin(name, material, out var runtimeMaterial, out var runtimeTexture);
         CustomSkinManager.CachedTextures.Clear();
         AtlasUtilities.ClearCache();
-        RepackMeshAttachments(skin2, overrides);
 
         return skin2;
     }
-
-    private static void RepackMeshAttachments(Skin skin, List<Tuple<int, string, float, float, float, float>> overrides)
-    {
-        foreach (var (slot, ovrName, _, _, _, _) in overrides)
-        {
-            var a = skin.GetAttachment(slot, ovrName).Copy();
-            if (a is not MeshAttachment mesh) continue;
-            if (mesh.RendererObject is AtlasRegion atlasRegion)
-            {
-                float pw = atlasRegion.page.width;
-                float ph = atlasRegion.page.height;
-                float x = atlasRegion.x;
-                float y = atlasRegion.y;
-                float w = atlasRegion.width;
-                float h = atlasRegion.height;
-                mesh.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
-                mesh.UVs = new[]
-                {
-                    (x + w) / pw, 1 - ((y + h) / ph), (x + w) / pw, 1 - (y / ph), x / pw, 1 - (y / ph), x / pw,
-                    1 - ((y + h) / ph)
-                };
-                mesh.WorldVerticesLength = 8;
-            }
-
-            skin.SetAttachment(slot, ovrName, mesh);
-        }
-    }
-
+    
     public static List<Tuple<int, string, float, float, float, float>> CreateSkinAtlas(string name, Texture2D sheet,
-        string atlasText, Func<AtlasRegion, Tuple<int, string>?> regionOverrideFunction, out Material skinMaterial,
+        string atlasText, Func<AtlasRegion, List<Tuple<int, string>>?> regionOverrideFunction, out Material skinMaterial,
         out SpineAtlasAsset atlasAsset)
     {
         sheet.name = atlasText.Replace("\r", "").Split('\n')[1].Trim();
@@ -169,9 +136,12 @@ internal static class SkinUtils
 
         foreach (var region in atlas.GetAtlas().regions)
         {
-            var ovr = regionOverrideFunction.Invoke(region);
-            if (ovr != null) overrideRegions.Add(ovr);
-            else LogHelper.LogError($"Failed to parse region with name: {region.name}");
+            var ovrs = regionOverrideFunction.Invoke(region);
+            foreach (var ovr in ovrs)
+            {
+                if (ovr != null) overrideRegions.Add(ovr);
+                else LogHelper.LogError($"Failed to parse region with name: {region.name}");
+            }
         }
 
         List<Tuple<int, string, float, float, float, float>> overrides = new();

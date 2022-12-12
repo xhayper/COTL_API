@@ -329,7 +329,7 @@ public static partial class CustomSkinManager
         CustomPlayerSkins.Add(playerSkin.Name, playerSkin);
     }
 
-    private static Tuple<int, string>? RegionOverrideFunction(AtlasRegion region)
+    private static List<Tuple<int, string>>? RegionOverrideFunction(AtlasRegion region)
     {
         var simpleName = region.name;
         var add = "";
@@ -343,7 +343,7 @@ public static partial class CustomSkinManager
         if (SimplifiedSkinNames.TryGetValue(simpleName, out var simplified))
         {
             region.name = simplified.Item1 + ":" + simplified.Item2 + add;
-            return simplified;
+            return new List<Tuple<int, string>>() {simplified};
         }
 
         if (!simpleName.Contains(":")) return null;
@@ -353,7 +353,7 @@ public static partial class CustomSkinManager
             var rName = simpleName.Split(':')[1];
             var regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0]);
             region.name = regionIndex + ":" + rName + "#" + add;
-            return Tuple.Create(regionIndex, rName);
+            return new List<Tuple<int, string>>() {Tuple.Create(regionIndex, rName)};
         }
         catch (Exception)
         {
