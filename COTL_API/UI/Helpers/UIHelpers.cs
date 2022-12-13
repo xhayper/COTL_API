@@ -25,7 +25,7 @@ public static class UIHelpers
     /// <returns>The GameObject created.</returns>
     public static GameObject CreateUIObject(string name)
     {
-        var obj = new GameObject(name)
+        GameObject obj = new(name)
         {
             layer = UILayer,
             transform =
@@ -45,7 +45,7 @@ public static class UIHelpers
     /// <returns>The GameObject created.</returns>
     public static GameObject CreateUIObject(string name, Transform parent)
     {
-        var obj = new GameObject(name)
+        GameObject obj = new(name)
         {
             layer = UILayer
         };

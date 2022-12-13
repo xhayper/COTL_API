@@ -83,7 +83,7 @@ public static partial class CustomObjectiveManager
         {
             var instruction = instructionList[index];
             if (instruction.opcode == OpCodes.Ldc_I4_S && (sbyte)instruction.operand == 0x19)
-                instructionList[index] = new CodeInstruction(OpCodes.Call,
+                instructionList[index] = new(OpCodes.Call,
                     typeof(CustomObjectiveManager).GetMethod(nameof(GetAdjustedCount)));
         }
 

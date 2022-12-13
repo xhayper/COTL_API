@@ -31,7 +31,7 @@ public abstract class CustomPlayerSkin : CustomSkin
                         if (from.Attachments.All(x => x.Name != simpleName)) return new();
 
                         var atts = from.Attachments.Where(x => x.Name == simpleName);
-                        var tuples = new List<Tuple<int, string>>();
+                        List<Tuple<int, string>> tuples = new();
                         foreach (var att in atts)
                         {
                             region.name = att.SlotIndex + ":" + att.Name + add;
