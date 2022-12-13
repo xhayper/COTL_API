@@ -71,7 +71,7 @@ public class DebugTask : CustomTask
     {
         var structureByID = GetStructure().Brain;
         var pos = structureByID.Data.Position;
-        return new Vector3(pos.x, pos.y, pos.z);
+        return new(pos.x, pos.y, pos.z);
     }
 
     public override void OnStart()

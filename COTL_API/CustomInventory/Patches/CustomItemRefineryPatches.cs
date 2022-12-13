@@ -16,7 +16,7 @@ public static partial class CustomItemManager
     {
         if (!CustomItemList.ContainsKey(Item)) return;
 
-        __result = new List<StructuresData.ItemCost>
+        __result = new()
         {
             new(CustomItemList[Item].RefineryInput, CustomItemList[Item].RefineryInputQty)
         };

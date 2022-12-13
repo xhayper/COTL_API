@@ -174,7 +174,7 @@ public static class CustomSettingsManager
         var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment, displayFormat,
             delegate (float newValue)
             {
-                int newVal = (int)Math.Floor(newValue);
+                var newVal = (int)Math.Floor(newValue);
 
                 entry.Value = newVal;
                 onValueChanged(newVal);

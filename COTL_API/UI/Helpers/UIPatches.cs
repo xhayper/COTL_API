@@ -30,7 +30,7 @@ internal static class UIPatches
             FontHelpers._pauseMenu = getTextAsset.font;
 
             // API container.
-            var container = new GameObject("COTL_API_MenuContainer");
+            GameObject container = new("COTL_API_MenuContainer");
             container.transform.SetParent(menu);
             container.layer = UIHelpers.UILayer;
             container.transform.position = Vector3.zero;
