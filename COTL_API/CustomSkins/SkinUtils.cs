@@ -117,7 +117,7 @@ internal static class SkinUtils
     }
 
     public static List<Tuple<int, string, float, float, float, float>> CreateSkinAtlas(string name, Texture2D sheet,
-        string atlasText, Func<AtlasRegion, List<Tuple<int, string>>?> regionOverrideFunction, out Material skinMaterial,
+        string atlasText, Func<AtlasRegion, List<Tuple<int, string>>> regionOverrideFunction, out Material skinMaterial,
         out SpineAtlasAsset atlasAsset)
     {
         sheet.name = atlasText.Replace("\r", "").Split('\n')[1].Trim();
@@ -136,16 +136,10 @@ internal static class SkinUtils
 
         foreach (var region in atlas.GetAtlas().regions)
         {
-            var ovrs = regionOverrideFunction?.Invoke(region);
-            if (ovrs == null)
-            {
-                LogHelper.LogError($"Failed to parse region with name: {region.name}");
-                continue;
-            }
+            var ovrs = regionOverrideFunction(region);
             foreach (var ovr in ovrs)
             {
-                if (ovr != null) overrideRegions.Add(ovr);
-                else LogHelper.LogError($"Failed to parse region with name: {region.name}");
+                overrideRegions.Add(ovr);
             }
         }
 

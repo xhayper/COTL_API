@@ -28,7 +28,7 @@ public abstract class CustomPlayerSkin : CustomSkin
                             simpleName = split[0];
                         }
 
-                        if (from.Attachments.All(x => x.Name != simpleName)) return null;
+                        if (from.Attachments.All(x => x.Name != simpleName)) return new List<Tuple<int, string>>();
 
                         var atts = from.Attachments.Where(x => x.Name == simpleName);
                         var tuples = new List<Tuple<int, string>>();

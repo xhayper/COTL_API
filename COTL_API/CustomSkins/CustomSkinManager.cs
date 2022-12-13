@@ -329,7 +329,7 @@ public static partial class CustomSkinManager
         CustomPlayerSkins.Add(playerSkin.Name, playerSkin);
     }
 
-    private static List<Tuple<int, string>>? RegionOverrideFunction(AtlasRegion region)
+    private static List<Tuple<int, string>> RegionOverrideFunction(AtlasRegion region)
     {
         var simpleName = region.name;
         var add = "";
@@ -346,7 +346,7 @@ public static partial class CustomSkinManager
             return new List<Tuple<int, string>>() { simplified };
         }
 
-        if (!simpleName.Contains(":")) return null;
+        if (!simpleName.Contains(":")) return new List<Tuple<int, string>>();
 
         try
         {
@@ -360,7 +360,7 @@ public static partial class CustomSkinManager
             // ignored
         }
 
-        return null;
+        return new List<Tuple<int, string>>();
     }
 
     internal static void CreateNewFollowerType(string name, List<WorshipperData.SlotsAndColours> colors,
