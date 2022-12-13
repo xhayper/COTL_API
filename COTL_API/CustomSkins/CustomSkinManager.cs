@@ -343,24 +343,24 @@ public static partial class CustomSkinManager
         if (SimplifiedSkinNames.TryGetValue(simpleName, out var simplified))
         {
             region.name = simplified.Item1 + ":" + simplified.Item2 + add;
-            return new List<Tuple<int, string>>() { simplified };
+            return new() { simplified };
         }
 
-        if (!simpleName.Contains(":")) return new List<Tuple<int, string>>();
+        if (!simpleName.Contains(":")) return new();
 
         try
         {
             var rName = simpleName.Split(':')[1];
             var regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0]);
             region.name = regionIndex + ":" + rName + "#" + add;
-            return new List<Tuple<int, string>>() { Tuple.Create(regionIndex, rName) };
+            return new() { Tuple.Create(regionIndex, rName) };
         }
         catch (Exception)
         {
             // ignored
         }
 
-        return new List<Tuple<int, string>>();
+        return new();
     }
 
     internal static void CreateNewFollowerType(string name, List<WorshipperData.SlotsAndColours> colors,
@@ -369,7 +369,7 @@ public static partial class CustomSkinManager
         WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData
         {
             Title = name,
-            Skin = new List<WorshipperData.CharacterSkin>
+            Skin = new()
             {
                 new()
                 {
