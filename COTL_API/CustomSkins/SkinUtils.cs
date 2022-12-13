@@ -58,7 +58,7 @@ internal static class SkinUtils
                     maxX = centerX + ((diffX / 2.0f) * scaleX);
                     minY = centerY - ((diffY / 2.0f) * scaleY);
                     maxY = centerY + ((diffY / 2.0f) * scaleY);
-                    
+
                     RegionAttachment regionAttachment = new RegionAttachment("Custom" + ovrName);
                     regionAttachment.SetRegion(atlasRegion);
 
@@ -115,7 +115,7 @@ internal static class SkinUtils
 
         return skin2;
     }
-    
+
     public static List<Tuple<int, string, float, float, float, float>> CreateSkinAtlas(string name, Texture2D sheet,
         string atlasText, Func<AtlasRegion, List<Tuple<int, string>>?> regionOverrideFunction, out Material skinMaterial,
         out SpineAtlasAsset atlasAsset)
@@ -136,7 +136,12 @@ internal static class SkinUtils
 
         foreach (var region in atlas.GetAtlas().regions)
         {
-            var ovrs = regionOverrideFunction.Invoke(region);
+            var ovrs = regionOverrideFunction?.Invoke(region);
+            if (ovrs == null)
+            {
+                LogHelper.LogError($"Failed to parse region with name: {region.name}");
+                continue;
+            }
             foreach (var ovr in ovrs)
             {
                 if (ovr != null) overrideRegions.Add(ovr);
