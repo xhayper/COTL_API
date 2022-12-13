@@ -55,9 +55,7 @@ internal static class SkinUtils
                     var centerY = minY + (diffY / 2.0f);
 
                     minX = centerX - ((diffX / 2.0f) * scaleX);
-                    maxX = centerX + ((diffX / 2.0f) * scaleX);
                     minY = centerY - ((diffY / 2.0f) * scaleY);
-                    maxY = centerY + ((diffY / 2.0f) * scaleY);
 
                     RegionAttachment regionAttachment = new RegionAttachment("Custom" + ovrName);
                     regionAttachment.SetRegion(atlasRegion);
