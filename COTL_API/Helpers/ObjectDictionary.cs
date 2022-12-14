@@ -45,7 +45,7 @@ public class ObjectDictionary : Dictionary<string, object>
 
     public float GetValueAsFloat(string key)
     {
-        return GetValue<float>(key);
+        return Convert.ToSingle(GetValue<object>(key));
     }
 
     public bool GetValueAsBoolean(string key)
