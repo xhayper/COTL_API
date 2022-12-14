@@ -1,0 +1,42 @@
+name: build
+
+on:
+    push:
+        branches:
+            - "*"
+            - "!docs*"
+    pull_request:
+        types:
+            - opened
+            - synchronize
+        branches:
+            - "*"
+            - "!docs*"
+
+jobs:
+    build:
+        strategy:
+            fail-fast: false
+            matrix:
+                os: [macos-latest, ubuntu-latest, windows-latest]
+        runs-on: ${{ matrix.os }}
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: "7"
+            - name: Restore
+              run: |
+                  dotnet restore
+            - name: Build
+              run: |
+                  dotnet build -c Release
+            - name: Package
+              run: |
+                  dotnet tool install -g tcli
+                  tcli build
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  path: "build/*.*"
+                  name: ${{ matrix.os }}

@@ -43,13 +43,12 @@ internal static class SettingsUtils
         var sliderText = slider.GetComponentInChildren<TextMeshProUGUI>();
         sliderText.text = text;
         var sliderSlider = slider.GetComponentInChildren<MMSlider>();
-        sliderSlider.value = value;
         sliderSlider.minValue = minValue;
         sliderSlider.maxValue = maxValue;
         sliderSlider._increment = increment;
         sliderSlider._valueDisplayFormat = format;
-        sliderSlider.UpdateVisuals();
         if (onChange != null) sliderSlider.onValueChanged.AddListener(onChange);
+        sliderSlider.value = value;
     }
 
     public static void AddToggle(Transform parent, string text, bool value, Action<bool>? onChange = null)
