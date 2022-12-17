@@ -189,10 +189,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/compiler@npm:^0.30.0":
-  version: 0.30.1
-  resolution: "@astrojs/compiler@npm:0.30.1"
-  checksum: a2b5ec18dc3dd60954c865cd605f6d874ef23fba5c9aaf03565700ceb61e3ccdd851e0ab83c59503666760c58985d7309a6e2e2dea37c22553ab25a8cc2df956
+"@astrojs/compiler@npm:^0.31.0":
+  version: 0.31.1
+  resolution: "@astrojs/compiler@npm:0.31.1"
+  checksum: d1ed3aeeffd2b2f8332a5f27df2111aaddaf3a32a6fae211e5beb1d70014d3bc0948db4ee676fb5e661b532706fec6677e3455b87c2f0a2ff28c4ca4d995fc34
   languageName: node
   linkType: hard
 
@@ -338,15 +338,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/vercel@npm:^2.3.5":
-  version: 2.3.5
-  resolution: "@astrojs/vercel@npm:2.3.5"
+"@astrojs/vercel@npm:^2.3.6":
+  version: 2.3.6
+  resolution: "@astrojs/vercel@npm:2.3.6"
   dependencies:
     "@astrojs/webapi": ^1.1.1
     "@vercel/nft": ^0.22.1
     fast-glob: ^3.2.11
     set-cookie-parser: ^2.5.1
-  checksum: c571c4ee428c2190f2782931b17f491e91781002aa70338e89488f01ed6aabb36295e01cafe5c3a4afd594136ba8e01088b4992f71a54fb4336f33ee8ba2486a
+  checksum: 1f46ac29e10b20d93e8bc1c11f42ee3c92f209cee6cb10c23211662a9aa2c8b73d6193e6dbffc22bf21daf2873a86caf85127d8ba4f82e52dbb38108757a6f05
   languageName: node
   linkType: hard
 
@@ -748,7 +748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10":
+"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.13":
   version: 1.4.14
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.14"
   checksum: 61100637b6d173d3ba786a5dff019e1a74b1f394f323c1fee337ff390239f053b87266c7a948777f4b1ee68c01a8ad0ab61e5ff4abb5a012a0b091bec391ab97
@@ -802,9 +802,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nikolarhristov/pipeline@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@nikolarhristov/pipeline@npm:0.1.0"
+"@nikolarhristov/pipeline@npm:0.1.7":
+  version: 0.1.7
+  resolution: "@nikolarhristov/pipeline@npm:0.1.7"
   dependencies:
     "@types/csso": 5.0.0
     "@types/html-minifier-terser": 7.0.0
@@ -817,7 +817,7 @@ __metadata:
     sharp: 0.31.2
     svgo: 3.0.2
     terser: 5.16.1
-  checksum: c397f85e6e78e5cb014e711637dbeb2d3681820b2563b69daa8614fcd37eb9f352c7bf83dfbac311d4f2a48ecbc7b31f15840dbbc04b420d26aab0519338d5c6
+  checksum: 3636b81a180967bf10ce422853950e0613b91eea4bdc68ac9edfe77dd137a727aec12a9feb4355759214272530f3ae5ebca2affdd44171e34383a35dce589498
   languageName: node
   linkType: hard
 
@@ -938,16 +938,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rometools/backend-jsonrpc@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@rometools/backend-jsonrpc@npm:10.0.1"
+"@rometools/backend-jsonrpc@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/backend-jsonrpc@npm:11.0.0"
   dependencies:
-    "@rometools/cli-darwin-arm64": 10.0.1
-    "@rometools/cli-darwin-x64": 10.0.1
-    "@rometools/cli-linux-arm64": 10.0.1
-    "@rometools/cli-linux-x64": 10.0.1
-    "@rometools/cli-win32-arm64": 10.0.1
-    "@rometools/cli-win32-x64": 10.0.1
+    "@rometools/cli-darwin-arm64": 11.0.0
+    "@rometools/cli-darwin-x64": 11.0.0
+    "@rometools/cli-linux-arm64": 11.0.0
+    "@rometools/cli-linux-x64": 11.0.0
+    "@rometools/cli-win32-arm64": 11.0.0
+    "@rometools/cli-win32-x64": 11.0.0
   dependenciesMeta:
     "@rometools/cli-darwin-arm64":
       optional: true
@@ -961,74 +961,74 @@ __metadata:
       optional: true
     "@rometools/cli-win32-x64":
       optional: true
-  checksum: eee2ae95bd88e1acca70e8ed89c86d5b6ae7f7538e4cfaa43d0840ee6fd579a4ef40530a87b3645ecefa04c33f76800fbb1f6ab82c0486ffccd2a74f62e2c093
+  checksum: ab2430bb6b6c6c70c28184d22ba396b4ac4153e8c9330435bf831b41f739cf9fdd40d0f261fa7c0542da320422a10345ee362d946ce18baaa88882e8e44530d6
   languageName: node
   linkType: hard
 
-"@rometools/cli-darwin-arm64@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@rometools/cli-darwin-arm64@npm:10.0.1"
+"@rometools/cli-darwin-arm64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-darwin-arm64@npm:11.0.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rometools/cli-darwin-x64@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@rometools/cli-darwin-x64@npm:10.0.1"
+"@rometools/cli-darwin-x64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-darwin-x64@npm:11.0.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@rometools/cli-linux-arm64@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@rometools/cli-linux-arm64@npm:10.0.1"
+"@rometools/cli-linux-arm64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-linux-arm64@npm:11.0.0"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rometools/cli-linux-x64@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@rometools/cli-linux-x64@npm:10.0.1"
+"@rometools/cli-linux-x64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-linux-x64@npm:11.0.0"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@rometools/cli-win32-arm64@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@rometools/cli-win32-arm64@npm:10.0.1"
+"@rometools/cli-win32-arm64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-win32-arm64@npm:11.0.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rometools/cli-win32-x64@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@rometools/cli-win32-x64@npm:10.0.1"
+"@rometools/cli-win32-x64@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/cli-win32-x64@npm:11.0.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@rometools/js-api@npm:0.1.3":
-  version: 0.1.3
-  resolution: "@rometools/js-api@npm:0.1.3"
+"@rometools/js-api@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@rometools/js-api@npm:0.2.0"
   peerDependencies:
-    "@rometools/backend-jsonrpc": ^10.0.0
+    "@rometools/wasm-bundler": ^10.0.0
     "@rometools/wasm-nodejs": ^10.0.0
-    rome: ^10.0.0
+    "@rometools/wasm-web": ^10.0.0
   peerDependenciesMeta:
-    "@rometools/backend-jsonrpc":
+    "@rometools/wasm-bundler":
       optional: true
     "@rometools/wasm-nodejs":
       optional: true
-    rome:
-      optional: false
-  checksum: 1a39d3d052897210990a0bf1e84ce3cf303fa1850bf92bc00cc6cdb64e79da7ca0621ad958e2f3116b8f1f9d81d8e4438b08ece567038039d6dfd7b0edc49dc2
+    "@rometools/wasm-web":
+      optional: true
+  checksum: 5694cfcbea4793d8adbb66e5ee960e31f0ba0bc56618380180b053d8bd1d4381676b7b9e2358edf0c0b171800f00d9a08ca8722023d9fb767333f418f32fb181
   languageName: node
   linkType: hard
 
-"@rometools/wasm-nodejs@npm:10.0.1":
-  version: 10.0.1
-  resolution: "@rometools/wasm-nodejs@npm:10.0.1"
-  checksum: 816a46c57673ef221da98a0952de4db5a629bf60bcbe098c5fb3d5e5f5cba3aa44c2cfa21292bcb3e57b238b1cb9ba6b9b9810fc1b39825baefef1b8654601fd
+"@rometools/wasm-nodejs@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@rometools/wasm-nodejs@npm:11.0.0"
+  checksum: 23aea8d35f42ec8be5d5aee2ba2c051fe2a02531c7c5d3d4591da4fe40d12bc684a7761b1d3ee5755cb0df4719fecdc1fd869b133fe627b67eb5dda248a0a609
   languageName: node
   linkType: hard
 
@@ -1201,10 +1201,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.11.12":
-  version: 18.11.12
-  resolution: "@types/node@npm:18.11.12"
-  checksum: 6c67f0998a9ad8ef0f357fcc0d72841c579576c746cfbac67c9d0229e1cd219d3b96297c2caaeaa4084ba7e9ad112b412e64af4066e522faa0be4ef9ad0a613a
+"@types/node@npm:*, @types/node@npm:^18.11.16":
+  version: 18.11.16
+  resolution: "@types/node@npm:18.11.16"
+  checksum: 23603ecc1cc5afdd2311671565e1bd1a8905e18ed7f05857089eebe524824a3347dd0c3de9c1c291839f7cf21bcf5633903cdf7905efa0fdc7464cc7606fc9fa
   languageName: node
   linkType: hard
 
@@ -1262,8 +1262,8 @@ __metadata:
   linkType: hard
 
 "@vercel/nft@npm:^0.22.1":
-  version: 0.22.5
-  resolution: "@vercel/nft@npm:0.22.5"
+  version: 0.22.6
+  resolution: "@vercel/nft@npm:0.22.6"
   dependencies:
     "@mapbox/node-pre-gyp": ^1.0.5
     "@rollup/pluginutils": ^4.0.0
@@ -1278,7 +1278,7 @@ __metadata:
     resolve-from: ^5.0.0
   bin:
     nft: out/cli.js
-  checksum: 9bc965a6b096c55ed14bfc761668fe3900db83cf379bf1e9741d31510579950dff12d8223867b3fd0c3af1bb96a1b4519c4b0f93d1c26949d2e216a4272f59b4
+  checksum: 03ab38477ca7006b3d5568a716128a5abb13a425205ea5cb23eed86967334a6c7fc9d36c58154e1ccd4e349e3ec0d725aa7496ef4159bf232ad706d842d85c29
   languageName: node
   linkType: hard
 
@@ -1497,12 +1497,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro-compress@npm:1.1.18":
-  version: 1.1.18
-  resolution: "astro-compress@npm:1.1.18"
+"astro-compress@npm:1.1.22":
+  version: 1.1.22
+  resolution: "astro-compress@npm:1.1.22"
   dependencies:
-    "@nikolarhristov/pipeline": 0.1.0
-  checksum: c399dd883dd6b5b15c65a61dec41c9aab26b584dd4b430532517b7de986942865f4c9a54bd8d0127fd845a0c743e7d50885b610082dfde618918752f27b63f93
+    "@nikolarhristov/pipeline": 0.1.7
+  checksum: b9b05a86d77ec66d2755e592eb2dfb7343e208cf31eaab474839523d1e3d2acb892d3dca6d085ec973fee5349931b639a4bbefd00a85116dee07cfc948e41759
   languageName: node
   linkType: hard
 
@@ -1536,18 +1536,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro-rome@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "astro-rome@npm:0.1.0"
+"astro-rome@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "astro-rome@npm:0.1.3"
   dependencies:
-    "@nikolarhristov/pipeline": 0.1.0
-    "@rometools/backend-jsonrpc": 10.0.1
-    "@rometools/js-api": 0.1.3
-    "@rometools/wasm-nodejs": 10.0.1
+    "@nikolarhristov/pipeline": 0.1.7
+    "@rometools/backend-jsonrpc": 11.0.0
+    "@rometools/js-api": 0.2.0
+    "@rometools/wasm-nodejs": 11.0.0
     deepmerge-ts: 4.2.2
     fast-glob: 3.2.12
-    rome: 10.0.1
-  checksum: 788647bb4dc43b13fcea272d926f70e48c946448e01f5a527a274ab8819ab04ddc8b1f4e60548fb30844e4b5126d5581e0654004765701b64f58c4d9bf2612e8
+    rome: 11.0.0
+  checksum: a4f2d80ea5ee1c70255d246a4136916ebc59073bdf26bf238b8803b95a6462cac6f500bc6241572babaf581ce1772d35ecd7fef18097827b59f6f792a3277f35
   languageName: node
   linkType: hard
 
@@ -1558,11 +1558,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astro@npm:^1.6.14":
-  version: 1.6.14
-  resolution: "astro@npm:1.6.14"
+"astro@npm:^1.7.1":
+  version: 1.7.1
+  resolution: "astro@npm:1.7.1"
   dependencies:
-    "@astrojs/compiler": ^0.30.0
+    "@astrojs/compiler": ^0.31.0
     "@astrojs/language-server": ^0.28.3
     "@astrojs/markdown-remark": ^1.1.3
     "@astrojs/telemetry": ^1.0.1
@@ -1584,8 +1584,9 @@ __metadata:
     cookie: ^0.5.0
     debug: ^4.3.4
     deepmerge-ts: ^4.2.2
+    devalue: ^4.2.0
     diff: ^5.1.0
-    es-module-lexer: ^0.10.5
+    es-module-lexer: ^1.1.0
     execa: ^6.1.0
     fast-glob: ^3.2.11
     github-slugger: ^1.4.0
@@ -1594,7 +1595,7 @@ __metadata:
     html-escaper: ^3.0.3
     import-meta-resolve: ^2.1.0
     kleur: ^4.1.4
-    magic-string: ^0.25.9
+    magic-string: ^0.27.0
     mime: ^3.0.0
     ora: ^6.1.0
     path-browserify: ^1.0.1
@@ -1624,7 +1625,7 @@ __metadata:
     zod: ^3.17.3
   bin:
     astro: astro.js
-  checksum: fd759a059bcf80ee346604cab92e965dfb2d8474b3f2fa617516a9a30de6dbb25eceec0095f126acb5e27560f9186b643efa7968d7d30fc642392ba67e59fab4
+  checksum: 287f14cf1bc9e396b5dbb4a05a5a585ed7aa805089fa18e595c7f26e1c342e965ff341c9b8c403b7581db9e92392c44c98074ac0442770ba5133119782f656e7
   languageName: node
   linkType: hard
 
@@ -1850,9 +1851,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001400":
-  version: 1.0.30001436
-  resolution: "caniuse-lite@npm:1.0.30001436"
-  checksum: 7928ac7d93741a81b3005ca4623b133e7d790828be70b26ee55e4860facc59bc344f4092e20034981070a4714f70814c8be4929be4b22728031784f267f69099
+  version: 1.0.30001439
+  resolution: "caniuse-lite@npm:1.0.30001439"
+  checksum: 3912dd536c9735713ca85e47721988bbcefb881ddb4886b0b9923fa984247fd22cba032cf268e57d158af0e8a2ae2eae042ae01942a1d6d7849fa9fa5d62fb82
   languageName: node
   linkType: hard
 
@@ -2156,16 +2157,16 @@ __metadata:
     "@astrojs/image": ^0.12.1
     "@astrojs/preact": ^1.2.0
     "@astrojs/sitemap": ^1.0.0
-    "@astrojs/vercel": ^2.3.5
+    "@astrojs/vercel": ^2.3.6
     "@docsearch/css": ^3.3.0
     "@docsearch/react": ^3.3.0
-    "@types/node": ^18.11.12
-    astro: ^1.6.14
-    astro-compress: 1.1.18
+    "@types/node": ^18.11.16
+    astro: ^1.7.1
+    astro-compress: 1.1.22
     astro-html-beautifier: ^1.0.4
     astro-html-minifier: ^0.2.0
     astro-robots-txt: ^0.3.10
-    astro-rome: ^0.1.0
+    astro-rome: ^0.1.3
     astro-seo: ^0.6.0
     csso: ^5.0.5
     html-escaper: ^3.0.3
@@ -2176,7 +2177,7 @@ __metadata:
     react: "npm:@preact/compat@latest"
     react-dom: "npm:@preact/compat@latest"
     remark-github: ^11.2.4
-    sass: ^1.56.2
+    sass: ^1.57.0
     sharp: ^0.31.2
     source-map-support: ^0.5.21
     svgo: ^3.0.2
@@ -2237,12 +2238,12 @@ __metadata:
   linkType: hard
 
 "css-tree@npm:^2.2.1":
-  version: 2.3.0
-  resolution: "css-tree@npm:2.3.0"
+  version: 2.3.1
+  resolution: "css-tree@npm:2.3.1"
   dependencies:
     mdn-data: 2.0.30
     source-map-js: ^1.0.1
-  checksum: 94f225ca2ee00bf12c2a32043e93dbdd1395c7d2172694bf556bf70429059fa4e7bcacd8771f6cbccf797d81476c374d3449ce7ff72beca0c257d5646b2b7feb
+  checksum: 493cc24b5c22b05ee5314b8a0d72d8a5869491c1458017ae5ed75aeb6c3596637dbe1b11dac2548974624adec9f7a1f3a6cf40593dc1f9185eb0e8279543fbc0
   languageName: node
   linkType: hard
 
@@ -2388,6 +2389,13 @@ __metadata:
   version: 2.1.0
   resolution: "detect-node@npm:2.1.0"
   checksum: 832184ec458353e41533ac9c622f16c19f7c02d8b10c303dfd3a756f56be93e903616c0bb2d4226183c9351c15fc0b3dba41a17a2308262afabcfa3776e6ae6e
+  languageName: node
+  linkType: hard
+
+"devalue@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "devalue@npm:4.2.0"
+  checksum: 29f29f72255b6330030773e02def96aa118dc410f5f2d2d389d674068bd2a698668421a0d2176d7c98e7941cbe5d535a251002d589ecc222f6e2b16783351b3d
   languageName: node
   linkType: hard
 
@@ -2598,10 +2606,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-module-lexer@npm:^0.10.5":
-  version: 0.10.5
-  resolution: "es-module-lexer@npm:0.10.5"
-  checksum: d2f9debd9d913323322095934653e0558bb8220177645eb76d316b4afd911e8d83ffee0b748b0faa9f3ce1560db3eee4a0ac68d6c2f750c11f4250adce84cf02
+"es-module-lexer@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "es-module-lexer@npm:1.1.0"
+  checksum: 3e9f5019b69c6b2f04eb8478c4fdb4ed72cb8b4c97511b5dd39c1f498386ed8f5083c32067c15efcfabc7e8460cb65ed4627dd32405475715a898009922f41fa
   languageName: node
   linkType: hard
 
@@ -3390,8 +3398,8 @@ __metadata:
   linkType: hard
 
 "hast-util-raw@npm:^7.2.0":
-  version: 7.2.2
-  resolution: "hast-util-raw@npm:7.2.2"
+  version: 7.2.3
+  resolution: "hast-util-raw@npm:7.2.3"
   dependencies:
     "@types/hast": ^2.0.0
     "@types/parse5": ^6.0.0
@@ -3404,7 +3412,7 @@ __metadata:
     vfile: ^5.0.0
     web-namespaces: ^2.0.0
     zwitch: ^2.0.0
-  checksum: e0bf5ba2256d7d2c28faf78a9041eb51383f6d8fe38d533494f4666715a8b02c3a2f9e306cbb31985afae2fffc7be54230530e77b6d4412c9be38b0d2b9673df
+  checksum: 21857eea3ffb8fd92d2d9be7793b56d0b2c40db03c4cfa14828855ae41d7c584917aa83efb7157220b2e41e25e95f81f24679ac342c35145e5f1c1d39015f81f
   languageName: node
   linkType: hard
 
@@ -3879,11 +3887,11 @@ __metadata:
   linkType: hard
 
 "json5@npm:^2.1.3, json5@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "json5@npm:2.2.1"
+  version: 2.2.2
+  resolution: "json5@npm:2.2.2"
   bin:
     json5: lib/cli.js
-  checksum: 74b8a23b102a6f2bf2d224797ae553a75488b5adbaee9c9b6e5ab8b510a2fc6e38f876d4c77dea672d4014a44b2399e15f2051ac2b37b87f74c0c7602003543b
+  checksum: 9a878d66b72157b073cf0017f3e5d93ec209fa5943abcb38d37a54b208917c166bd473c26a24695e67a016ce65759aeb89946592991f8f9174fb96c8e2492683
   languageName: node
   linkType: hard
 
@@ -4027,6 +4035,15 @@ __metadata:
   dependencies:
     sourcemap-codec: ^1.4.8
   checksum: 9a0e55a15c7303fc360f9572a71cffba1f61451bc92c5602b1206c9d17f492403bf96f946dfce7483e66822d6b74607262e24392e87b0ac27b786e69a40e9b1a
+  languageName: node
+  linkType: hard
+
+"magic-string@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "magic-string@npm:0.27.0"
+  dependencies:
+    "@jridgewell/sourcemap-codec": ^1.4.13
+  checksum: 273faaa50baadb7a2df6e442eac34ad611304fc08fe16e24fe2e472fd944bfcb73ffb50d2dc972dc04e92784222002af46868cb9698b1be181c81830fd95a13e
   languageName: node
   linkType: hard
 
@@ -4238,8 +4255,8 @@ __metadata:
   linkType: hard
 
 "mdast-util-to-markdown@npm:^1.0.0, mdast-util-to-markdown@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "mdast-util-to-markdown@npm:1.3.0"
+  version: 1.4.0
+  resolution: "mdast-util-to-markdown@npm:1.4.0"
   dependencies:
     "@types/mdast": ^3.0.0
     "@types/unist": ^2.0.0
@@ -4248,7 +4265,7 @@ __metadata:
     micromark-util-decode-string: ^1.0.0
     unist-util-visit: ^4.0.0
     zwitch: ^2.0.0
-  checksum: 0ea4fc11b7a49b15d400d50044429c45222cb9bc583553288c7c54704d051f25049233817129ba56a6f581f1e20916e5c540870a80987318747a95b44a36ba3e
+  checksum: 68fb241ab63a4120e5b20ea2aa03342758235f3a833b3e248d52b6a6b2e4693ad04297b9d0cd558899e340b1bf74a4e3f503a8b6037c4d407d744ac6bce75a42
   languageName: node
   linkType: hard
 
@@ -4985,9 +5002,9 @@ __metadata:
   linkType: hard
 
 "node-releases@npm:^2.0.6":
-  version: 2.0.6
-  resolution: "node-releases@npm:2.0.6"
-  checksum: e86a926dc9fbb3b41b4c4a89d998afdf140e20a4e8dbe6c0a807f7b2948b42ea97d7fd3ad4868041487b6e9ee98409829c6e4d84a734a4215dff060a7fbeb4bf
+  version: 2.0.8
+  resolution: "node-releases@npm:2.0.8"
+  checksum: b1ab02c0d5d8e081bf9537232777a7a787dc8fef07f70feabe70a344599b220fe16462f746ac30f3eed5a58549445ad69368964d12a1f8b3b764f6caab7ba34a
   languageName: node
   linkType: hard
 
@@ -5376,13 +5393,13 @@ __metadata:
   linkType: hard
 
 "postcss@npm:^8.3.7, postcss@npm:^8.4.14, postcss@npm:^8.4.18":
-  version: 8.4.19
-  resolution: "postcss@npm:8.4.19"
+  version: 8.4.20
+  resolution: "postcss@npm:8.4.20"
   dependencies:
     nanoid: ^3.3.4
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
-  checksum: 62782723a385f92b7525f66d29614624de7c5643855423db3a5efd9287e677650300192749adddbbb6734cea9b1d5f5fd4f6ea00ca3f9a95dbbb88f835f5ca64
+  checksum: 1a5609ea1c1b204f9c2974a0019ae9eef2d99bf645c2c9aac675166c4cb1005be7b5e2ba196160bc771f5d9ac896ed883f236f888c891e835e59d28fff6651aa
   languageName: node
   linkType: hard
 
@@ -5871,16 +5888,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rome@npm:10.0.1":
-  version: 10.0.1
-  resolution: "rome@npm:10.0.1"
+"rome@npm:11.0.0":
+  version: 11.0.0
+  resolution: "rome@npm:11.0.0"
   dependencies:
-    "@rometools/cli-darwin-arm64": 10.0.1
-    "@rometools/cli-darwin-x64": 10.0.1
-    "@rometools/cli-linux-arm64": 10.0.1
-    "@rometools/cli-linux-x64": 10.0.1
-    "@rometools/cli-win32-arm64": 10.0.1
-    "@rometools/cli-win32-x64": 10.0.1
+    "@rometools/cli-darwin-arm64": 11.0.0
+    "@rometools/cli-darwin-x64": 11.0.0
+    "@rometools/cli-linux-arm64": 11.0.0
+    "@rometools/cli-linux-x64": 11.0.0
+    "@rometools/cli-win32-arm64": 11.0.0
+    "@rometools/cli-win32-x64": 11.0.0
   dependenciesMeta:
     "@rometools/cli-darwin-arm64":
       optional: true
@@ -5896,7 +5913,7 @@ __metadata:
       optional: true
   bin:
     rome: bin/rome
-  checksum: 330dddb82b86c9f57601f8c8182553fd9bdcae886c2a392bed3cd7a1e879e64a7371d270db6e1aee81137f3ee7d2c902ab447fb6e16f7436ecb5d34a81cf194f
+  checksum: 3c92a47c78a66c62f94b6a3a72ead92a20c23326d2d73785ce88c03897b60b8114c285a636acc24bd11039381ded48f8c58c6cc5c4cc46ce7eed092c90d9a054
   languageName: node
   linkType: hard
 
@@ -5948,16 +5965,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.56.2":
-  version: 1.56.2
-  resolution: "sass@npm:1.56.2"
+"sass@npm:^1.57.0":
+  version: 1.57.0
+  resolution: "sass@npm:1.57.0"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 7b1f524d04bc42df3bac6dc5201ff7475635b7df9a1390430ed5bd58b6a73ea1ae58b83ccea8da293cb77b85b4c848faf5f2779ca4b91b9303948c251d0ddca4
+  checksum: fb6358b9541dc7a5bc23dbbae85223e99fbadc1f4ae911e7c32c6e22fd7b617e20a0e8cd1213f23c97c621b067bfb0b9ca45e65d6ce4ca5fea5949f41bd428ed
   languageName: node
   linkType: hard
 
@@ -6875,14 +6892,14 @@ __metadata:
   linkType: hard
 
 "vitefu@npm:^0.2.1":
-  version: 0.2.2
-  resolution: "vitefu@npm:0.2.2"
+  version: 0.2.3
+  resolution: "vitefu@npm:0.2.3"
   peerDependencies:
-    vite: ^3.0.0
+    vite: ^3.0.0 || ^4.0.0
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 8f2e928f57de3af183373e513b7564cc80a2b9f2a37302323e095b4c97b9f93a7e3d64d5d6e0f479c8437d302ed2d0be04571cfac6d3f1e7182eb61368963818
+  checksum: d4b3b76cf4a6c8efd28df2a0c4c3a6ff8879397861ff812ec46cbd824b8dbf83b4aa8c0436505c404883df6c13ca67c2497f8140a4070fa8feeeaaf727b8654a
   languageName: node
   linkType: hard
 
@@ -6928,9 +6945,9 @@ __metadata:
   linkType: hard
 
 "vscode-languageserver-textdocument@npm:^1.0.1, vscode-languageserver-textdocument@npm:^1.0.4, vscode-languageserver-textdocument@npm:^1.0.7":
-  version: 1.0.7
-  resolution: "vscode-languageserver-textdocument@npm:1.0.7"
-  checksum: 6018a8b2c87aeb6441419431909e9161e9659d214814193b029ca2b30d8b097d23538e4930942ef78f1440f52c57a93f7597144736b79ba1abd9f1a53c2ffbc0
+  version: 1.0.8
+  resolution: "vscode-languageserver-textdocument@npm:1.0.8"
+  checksum: d6b685456ceca2736793d7fc1924d78a8483997c96c6ec4900d90e64115730da6c0c03e3fbc2c5d031a4592f2acd9cca2ca58a651b696c4f40b8690a48538c06
   languageName: node
   linkType: hard
 
@@ -6981,9 +6998,9 @@ __metadata:
   linkType: hard
 
 "vscode-uri@npm:^3.0.3, vscode-uri@npm:^3.0.6":
-  version: 3.0.6
-  resolution: "vscode-uri@npm:3.0.6"
-  checksum: 8b6a36553d089309c09f7aa2ca8dae321a1cb7ff5dcab35f0914d5155d3110722bdb6de67dcb727df15fecd83221d11bb4ab1274a9116b9ccc05b86cefe60dfc
+  version: 3.0.7
+  resolution: "vscode-uri@npm:3.0.7"
+  checksum: c899a0334f9f6ba53021328e083f6307978c09b94407d7e5fe86fcd8fcb8f1da0cb344123a335e55769055007a46d51aff83f9ee1dfc0296ee54b78f34ef0e4f
   languageName: node
   linkType: hard
 
@@ -7127,9 +7144,9 @@ __metadata:
   linkType: hard
 
 "zod@npm:^3.17.3, zod@npm:^3.19.1":
-  version: 3.19.1
-  resolution: "zod@npm:3.19.1"
-  checksum: 56e420ea5845912324a8fc61833714a2aec84954e418b52660d76502183c6e62fef9447cbfa64349640c5ce190cf2c24267e006bb80f066183e2f3fa9fe11864
+  version: 3.20.2
+  resolution: "zod@npm:3.20.2"
+  checksum: 04172f7e9350372684ccd298d4716908edc9113751295b6c4e1b3ea84e2af8997e504b33ba36f4741417bb2a5dc90bfd40501f6b0e7389df10e42a63d6d8366c
   languageName: node
   linkType: hard
 
