@@ -13,21 +13,23 @@ on:
 
 jobs:
     build:
-        strategy:
-            fail-fast: false
-            matrix:
-                os: [macos-latest, ubuntu-latest, windows-latest]
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
             - uses: actions/setup-node@v3
               with:
-                node-version: "19"
+                  node-version: "19"
+
+            - name: Install pnpm
+              run: |
+                  npm i -g pnpm
+                  SHELL=bash pnpm setup
+                  source /home/runner/.bashrc
 
             - name: Install Dependencies
-              run: yarn install --immutable
+              run: pnpm install
 
             - name: Build
               run: |
-                  yarn run check
-                  yarn run build
+                  pnpm run check
+                  pnpm run build
