@@ -26,7 +26,7 @@ specifiers:
   react-dom: npm:@preact/compat@latest
   remark-github: ^11.2.4
   sass: ^1.57.1
-  sharp: ^0.31.2
+  sharp: ^0.31.3
   source-map-support: ^0.5.21
   svgo: ^3.0.2
   terser: ^5.16.1
@@ -34,7 +34,7 @@ specifiers:
 
 devDependencies:
   '@algolia/client-search': 4.14.3
-  '@astrojs/image': 0.12.1_sharp@0.31.2
+  '@astrojs/image': 0.12.1_sharp@0.31.3
   '@astrojs/preact': 1.2.0_preact@10.11.3
   '@astrojs/sitemap': 1.0.0
   '@astrojs/vercel': 2.3.6
@@ -58,7 +58,7 @@ devDependencies:
   react-dom: /@preact/compat/17.1.2_preact@10.11.3
   remark-github: 11.2.4
   sass: 1.57.1
-  sharp: 0.31.2
+  sharp: 0.31.3
   source-map-support: 0.5.21
   svgo: 3.0.2
   terser: 5.16.1
@@ -197,7 +197,7 @@ packages:
     resolution: {integrity: sha512-HgjKVwFZ3LwKnGv8gI0J6MhIniUyKwSmGwo7pTDTn14iwfqovfgzVPeJ0+KFpuKBbB4z1lsFNbD/c1WXZyKz6A==}
     dev: true
 
-  /@astrojs/image/0.12.1_sharp@0.31.2:
+  /@astrojs/image/0.12.1_sharp@0.31.3:
     resolution: {integrity: sha512-7pBUPCw7/FPwfEntx+mGjhdwpaWXNHwRVcTK71rpf+c2yb8iIesRS9r26U7lGozTzXUROh1y1ftA82ziuqYF6Q==}
     peerDependencies:
       sharp: '>=0.31.0'
@@ -211,7 +211,7 @@ packages:
       kleur: 4.1.5
       magic-string: 0.25.9
       mime: 3.0.0
-      sharp: 0.31.2
+      sharp: 0.31.3
       slash: 4.0.0
       web-streams-polyfill: 3.2.1
     dev: true
@@ -4221,6 +4221,21 @@ packages:
 
   /sharp/0.31.2:
     resolution: {integrity: sha512-DUdNVEXgS5A97cTagSLIIp8dUZ/lZtk78iNVZgHdHbx1qnQR7JAHY0BnXnwwH39Iw+VKhO08CTYhIg0p98vQ5Q==}
+    engines: {node: '>=14.15.0'}
+    requiresBuild: true
+    dependencies:
+      color: 4.2.3
+      detect-libc: 2.0.1
+      node-addon-api: 5.0.0
+      prebuild-install: 7.1.1
+      semver: 7.3.8
+      simple-get: 4.0.1
+      tar-fs: 2.1.1
+      tunnel-agent: 0.6.0
+    dev: true
+
+  /sharp/0.31.3:
+    resolution: {integrity: sha512-XcR4+FCLBFKw1bdB+GEhnUNXNXvnt0tDo4WsBsraKymuo/IAuPuCBVAL2wIkUw2r/dwFW5Q5+g66Kwl2dgDFVg==}
     engines: {node: '>=14.15.0'}
     requiresBuild: true
     dependencies:

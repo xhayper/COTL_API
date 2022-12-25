@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "astro dev",
         "start": "astro dev",
-        "check": "npx tsc --noEmit && astro check",
+        "check": "tsc --noEmit && astro check",
         "build": "astro build",
         "preview": "astro preview",
         "astro": "astro"
@@ -37,11 +37,11 @@
         "react-dom": "npm:@preact/compat@latest",
         "remark-github": "^11.2.4",
         "sass": "^1.57.1",
-        "sharp": "^0.31.2",
+        "sharp": "^0.31.3",
         "source-map-support": "^0.5.21",
         "svgo": "^3.0.2",
         "terser": "^5.16.1",
         "typescript": "^4.9.4"
     },
-    "packageManager": "pnpm@7.18.2"
+    "packageManager": "pnpm@7.19.0"
 }
