@@ -19,6 +19,7 @@
         "@astrojs/vercel": "^2.3.6",
         "@docsearch/css": "^3.3.0",
         "@docsearch/react": "^3.3.0",
+        "@types/html-escaper": "^3.0.0",
         "@types/node": "^18.11.17",
         "astro": "^1.7.2",
         "astro-compress": "1.1.24",
