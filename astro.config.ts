@@ -2,7 +2,6 @@ import catppuccinMocha from "./themes/catppuccin/mocha.json";
 import vercel from "@astrojs/vercel/static";
 import { defineConfig } from "astro/config";
 import robotsTxt from "astro-robots-txt";
-import remarkGithub from "remark-github";
 import sitemap from "@astrojs/sitemap";
 import compress from "astro-compress";
 import preact from "@astrojs/preact";
@@ -68,17 +67,8 @@ export default defineConfig({
         }
     },
     markdown: {
-        extendDefaultPlugins: true,
         shikiConfig: {
             theme: catppuccinMocha as any
-        },
-        remarkPlugins: [
-            [
-                remarkGithub,
-                {
-                    repository: "xhayper/COTL_API"
-                }
-            ]
-        ]
+        }
     }
 });
