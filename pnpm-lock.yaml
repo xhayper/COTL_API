@@ -25,7 +25,6 @@ specifiers:
   prettier-plugin-astro: ^0.7.2
   react: npm:@preact/compat@latest
   react-dom: npm:@preact/compat@latest
-  remark-github: ^11.2.4
   sass: ^1.57.1
   sharp: ^0.31.3
   source-map-support: ^0.5.21
@@ -58,7 +57,6 @@ devDependencies:
   prettier-plugin-astro: 0.7.2
   react: /@preact/compat/17.1.2_preact@10.11.3
   react-dom: /@preact/compat/17.1.2_preact@10.11.3
-  remark-github: 11.2.4
   sass: 1.57.1
   sharp: 0.31.3
   source-map-support: 0.5.21
@@ -3624,16 +3622,6 @@ packages:
       unified: 10.1.2
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /remark-github/11.2.4:
-    resolution: {integrity: sha512-GJjWFpwqdrHHhPWqMbb8+lqFLiHQ9pCzUmXmRrhMFXGpYov5n2ljsZzuWgXlfzArfQYkiKIZczA2I8IHYMHqCA==}
-    dependencies:
-      '@types/mdast': 3.0.10
-      mdast-util-find-and-replace: 2.2.1
-      mdast-util-to-string: 3.1.0
-      unified: 10.1.2
-      unist-util-visit: 4.1.1
     dev: true
 
   /remark-parse/10.0.1:

@@ -24,12 +24,11 @@ const imageAlt = image?.alt ?? OPEN_GRAPH.image.alt;
             title: formattedContentTitle,
             type: "article",
             image: canonicalImageSrc.toString(),
-            url: canonicalUrl.toString(),
-            locale: ogLocale ?? SITE.defaultLanguage
+            url: canonicalUrl.toString()
         },
         optional: {
             description: description ?? SITE.description,
-            locale: SITE.defaultLanguage,
+            locale: ogLocale ?? SITE.defaultLanguage,
             siteName: SITE.title
         },
         image: {
@@ -42,7 +41,7 @@ const imageAlt = image?.alt ?? OPEN_GRAPH.image.alt;
         }
     }}
     twitter={{
-        card: TWITTER.card ?? "",
+        card: (TWITTER.card ?? "") as any,
         site: TWITTER.site ?? "",
         creator: TWITTER.creator ?? ""
     }}
