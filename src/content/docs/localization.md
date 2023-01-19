@@ -1,7 +1,6 @@
 ---
 title: Localization
 description: Documentation on how to add localizations using the Cult of the Lamb API
-layout: ../layouts/MainLayout.astro
 ---
 
 ## Creating Localizations

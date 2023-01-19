@@ -1,7 +1,6 @@
 ---
 title: Objectives
 description: Documentation on how to add a custom objective using Cult of the Lamb API
-layout: ../layouts/MainLayout.astro
 ---
 
 ## Creating/Adding Objectives
