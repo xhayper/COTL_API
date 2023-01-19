@@ -1,7 +1,6 @@
 ---
 title: Settings
 description: Documentation on how to add custom settings using the Cult of the Lamb API
-layout: ../layouts/MainLayout.astro
 ---
 
 ## Creating Settings

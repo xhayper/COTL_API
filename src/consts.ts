@@ -1,8 +1,8 @@
 export const SITE = {
     title: "Cult of the Lamb API Documentation",
     description: "Documentation for Cult of the Lamb API",
-    defaultLanguage: "en-US"
-};
+    defaultLanguage: "en-us"
+} as const;
 
 export const OPEN_GRAPH = {
     image: {
@@ -19,17 +19,6 @@ export const TWITTER = {
     card: "summary_large_image",
     site: "@hayper1919",
     creator: "@hayper1919"
-};
-
-// This is the type of the frontmatter you put in the docs markdown files.
-export type Frontmatter = {
-    title: string;
-    description: string;
-    layout: string;
-    image?: { src: string; alt: string };
-    dir?: "ltr" | "rtl";
-    ogLocale?: string;
-    lang?: string;
 };
 
 export const GITHUB_EDIT_URL = `https://github.com/xhayper/COTL_API/tree/docs/`;

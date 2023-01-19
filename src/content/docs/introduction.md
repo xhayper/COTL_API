@@ -1,7 +1,6 @@
 ---
 title: Introduction
 description: Introduction to Cult of the Lamb API
-layout: ../layouts/MainLayout.astro
 ---
 
 **Welcome to the Cult of the Lamb API documentation!**

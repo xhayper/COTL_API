@@ -1,7 +1,6 @@
 ---
 title: Skins
 description: Documentation on how to add a custom skin using the Cult of the Lamb API
-layout: ../layouts/MainLayout.astro
 ---
 
 ## Creating Skins

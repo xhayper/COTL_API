@@ -1,22 +1,21 @@
 ---
-import { SITE, OPEN_GRAPH, TWITTER, type Frontmatter } from "../config";
+import { SITE, OPEN_GRAPH, TWITTER } from "../consts";
+import type { CollectionEntry } from 'astro:content';
 import { SEO } from "astro-seo";
 
-export interface Props {
-    frontmatter: Frontmatter;
-    canonicalUrl: URL;
-}
-const { frontmatter, canonicalUrl } = Astro.props as Props;
+type Props = { canonicalUrl: URL } & CollectionEntry<'docs'>['data'];
 
-const formattedContentTitle = frontmatter.title ? `${frontmatter.title} 🚀 ${SITE.title}` : SITE.title;
-const imageSrc = frontmatter.image?.src ?? OPEN_GRAPH.image.src;
+const { ogLocale, image, title, description, canonicalUrl } = Astro.props;
+
+const formattedContentTitle = `${title} 🚀 ${SITE.title}`;
+const imageSrc = image?.src ?? OPEN_GRAPH.image.src;
 const canonicalImageSrc = new URL(imageSrc, Astro.site);
-const imageAlt = frontmatter.image?.alt ?? OPEN_GRAPH.image.alt;
+const imageAlt = image?.alt ?? OPEN_GRAPH.image.alt;
 ---
 
 <SEO
     title={formattedContentTitle}
-    description={frontmatter.description ? frontmatter.description : SITE.description}
+    description={description ?? SITE.description}
     canonical={canonicalUrl.toString()}
     noindex={false}
     nofollow={false}
@@ -25,19 +24,20 @@ const imageAlt = frontmatter.image?.alt ?? OPEN_GRAPH.image.alt;
             title: formattedContentTitle,
             type: "article",
             image: canonicalImageSrc.toString(),
-            url: canonicalUrl.toString()
+            url: canonicalUrl.toString(),
+            locale: ogLocale ?? SITE.defaultLanguage
         },
         optional: {
-            description: frontmatter.description ? frontmatter.description : SITE.description,
+            description: description ?? SITE.description,
             locale: SITE.defaultLanguage,
             siteName: SITE.title
         },
         image: {
             url: canonicalImageSrc.toString(),
-            secureUrl: frontmatter.image ? "" : OPEN_GRAPH.image.secure_url ?? "",
-            type: frontmatter.image ? "" : OPEN_GRAPH.image.type ?? "",
-            width: frontmatter.image ? 0 : OPEN_GRAPH.image.width ?? 0,
-            height: frontmatter.image ? 0 : OPEN_GRAPH.image.height ?? 0,
+            secureUrl: image ? "" : OPEN_GRAPH.image.secure_url ?? "",
+            type: image ? "" : OPEN_GRAPH.image.type ?? "",
+            width: image ? 0 : OPEN_GRAPH.image.width ?? 0,
+            height: image ? 0 : OPEN_GRAPH.image.height ?? 0,
             alt: imageAlt
         }
     }}
@@ -51,7 +51,7 @@ const imageAlt = frontmatter.image?.alt ?? OPEN_GRAPH.image.alt;
             { name: "twitter:title", content: formattedContentTitle },
             {
                 name: "twitter:description",
-                content: frontmatter.description ? frontmatter.description : SITE.description
+                content: description ?? SITE.description
             },
             {
                 name: "twitter:image",
