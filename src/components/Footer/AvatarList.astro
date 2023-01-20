@@ -23,7 +23,7 @@ async function getCommits(url: string, page: number = 1) {
     try {
         const token = import.meta.env.GITHUB_TOKEN;
         if (!token)
-            throw new Error('Cannot find "GITHUB_TOKEN" used for escaping rate-limiting.');
+            console.warn('[warn] /src/components/AvatarList.astro\n    Cannot find "GITHUB_TOKEN" used for escaping rate-limiting.');
 
         const auth = token ? `Basic ${Buffer.from(token, "binary").toString("base64")}` : "";
 
@@ -82,8 +82,8 @@ const additionalContributors = unique.length - recentContributors.length; // lis
                         <Image
                             alt={`Contributor ${item.login}`}
                             title={`Contributor ${item.login}`}
-                            width={"64"}
-                            height={"64"}
+                            width={64}
+                            height={64}
                             quality={100}
                             format={"png"}
                             src={`https://avatars.githubusercontent.com/u/${item.id}`}
