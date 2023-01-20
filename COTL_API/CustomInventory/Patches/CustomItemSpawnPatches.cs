@@ -91,7 +91,6 @@ public static partial class CustomItemManager
                 _myObject.transform.localScale = item.Value.LocalScale;
             };
 
-            // FIXME: This is not working. The object is not being added to the ObjectPool because it need to be AsyncOperationHandle.
             ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName, asyncOperationHandle);
         }
     }
