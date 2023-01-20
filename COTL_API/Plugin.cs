@@ -87,7 +87,7 @@ public class Plugin : BaseUnityPlugin
         var dd = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Lamb Skin", "Default",
             new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
             {
-                if (i == 0)
+                if (0 >= i)
                 {
                     CustomSkinManager.ResetPlayerSkin();
                 }
