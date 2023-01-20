@@ -5,8 +5,9 @@ description: Documentation on how to add custom settings using the Cult of the L
 
 ## Creating Settings
 
-There are three diffent type of settings: Sliders, HorizontalSelectors, and Toggles.  
+There are three diffent type of settings: Sliders, Dropdowns, HorizontalSelectors, and Toggles.  
 **Sliders** have a range of numbers.  
+**Dropdowns** have an array of strings.
 **HorizontalSelectors** have an array of strings.  
 **Toggles** have a boolean.
 
@@ -19,13 +20,25 @@ AddSlider(string? category, string text, float value, float min, float max,
 AddSavedSlider(string? category, string guid, string text, float value, float min, float max,
     int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
 
+AddDropdown(string? category, string text, string? value, string?[] options,
+    Action<int>? onValueChanged = null)
+
+AddSavedDropdown(string? category, string guid, string text, string value, string?[] options,
+    Action<int>? onValueChanged = null)
+
 AddHorizontalSelector(string? category, string text, string? value, string?[] options,
     Action<int>? onValueChanged = null)
 
 AddSavedHorizontalSelector(string? category, string guid, string text, string value, string?[] options,
     Action<int>? onValueChanged = null)
 
-AddToggle(string? category, string text, bool value, Action<bool>? onValueChanged = null)
+AddHorizontalSelector(string? category, string text, string? value, string?[] options,
+    Action<int>? onValueChanged = null)
+
+AddSavedHorizontalSelector(string? category, string guid, string text, string value, string?[] options,
+    Action<int>? onValueChanged = null)
+
+AddToggle(string? category, string text, bool value, Action<bool>? onValueChaginged = null)
 
 AddSavedToggle(string? category, string guid, string text, bool value,
         Action<bool>? onValueChanged = null)
@@ -56,8 +69,12 @@ AddBepInExConfig(string? category, string text, ConfigEntry<bool> entry, Action<
 `increment` is the increment at which the slider changes when dragged.  
 `displayFormat` determines how the text is displayed. It can be either `Percentage` or `RawValue`.
 
+**Dropdown Parameters:**  
+`options` is the list of options to choose from.
+
 **Horizontal Selector Parameters:**  
 `options` is the list of options to choose from.
+
 
 ## Dynamic settings
 
