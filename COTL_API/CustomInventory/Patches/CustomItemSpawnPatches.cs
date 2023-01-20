@@ -4,6 +4,9 @@ using MMRoomGeneration;
 using COTL_API.Helpers;
 using UnityEngine;
 using HarmonyLib;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets;
+using MMTools;
 
 namespace COTL_API.CustomInventory;
 
@@ -72,10 +75,23 @@ public static partial class CustomItemManager
 
             if (ObjectPool.instance.loadedAddressables.TryGetValue(item.Value.InternalObjectName, out _))
                 return;
+            AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(item.Value.InternalObjectName);
+            asyncOperationHandle.Completed += obj =>
+            {
+                var _myObject = obj.Result;
+                if (_myObject != null)
+                {
+                    _myObject.SetActive(true);
+                }
+                _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.Value.ItemPickUpToImitate), null,
+                instantiateInWorldSpace: false) as GameObject;
+                LogHelper.LogWarning($"_myObject is NULL? {_myObject == null}");
+                _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Value.Sprite;
+                _myObject.name = item.Value.InternalObjectName;
+                _myObject.transform.localScale = item.Value.LocalScale;
+            };
 
-            // FIXME: This is not working. The object is not being added to the ObjectPool because it need to be AsyncOperationHandle.
-            // ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName,
-            //     GetObject.GetCustomObject(item.Value));
+            ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName, asyncOperationHandle);
         }
     }
 
