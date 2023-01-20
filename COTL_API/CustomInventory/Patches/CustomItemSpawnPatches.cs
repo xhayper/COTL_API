@@ -73,8 +73,9 @@ public static partial class CustomItemManager
             if (ObjectPool.instance.loadedAddressables.TryGetValue(item.Value.InternalObjectName, out _))
                 return;
 
-            ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName,
-                GetObject.GetCustomObject(item.Value));
+            // FIXME: This is not working. The object is not being added to the ObjectPool because it need to be AsyncOperationHandle.
+            // ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName,
+            //     GetObject.GetCustomObject(item.Value));
         }
     }
 
