@@ -13,7 +13,7 @@
       },
     "devDependencies": {
         "@algolia/client-search": "^4.14.3",
-        "@astrojs/image": "^1.0.0-beta.2",
+        "@astrojs/image": "^0.12.2-beta.0",
         "@astrojs/preact": "^2.0.0-beta.0",
         "@astrojs/sitemap": "^1.0.0",
         "@astrojs/vercel": "^3.0.0-beta.1",
@@ -21,7 +21,7 @@
         "@docsearch/react": "^3.3.2",
         "@types/html-escaper": "^3.0.0",
         "@types/node": "^18.11.18",
-        "astro": "^2.0.0-beta.2",
+        "astro": "^2.0.0-beta.3",
         "astro-compress": "1.1.27",
         "astro-html-beautifier": "^1.0.4",
         "astro-html-minifier": "^0.4.0",

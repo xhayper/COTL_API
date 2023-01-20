@@ -19,8 +19,6 @@ type Props = CollectionEntry<'docs'>['data'] & {
 
 const { headings, ...data } = Astro.props;
 
-console.log(data, headings)
-
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const currentPage = Astro.url.pathname;
 const currentFile = `src/content/docs${currentPage.replace(/\/$/, '')}.md`;
