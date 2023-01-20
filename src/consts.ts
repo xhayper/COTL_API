@@ -21,7 +21,7 @@ export const TWITTER = {
     creator: "@hayper1919"
 };
 
-export const GITHUB_EDIT_URL = `https://github.com/xhayper/COTL_API/tree/docs/`;
+export const GITHUB_EDIT_URL = `https://github.com/xhayper/COTL_API/tree/docs`;
 
 export const COMMUNITY_INVITE_URL = `https://discord.gg/jZ2DytX3TX`;
 
