@@ -7,7 +7,7 @@ description: Documentation on how to add custom settings using the Cult of the L
 
 There are three diffent type of settings: Sliders, Dropdowns, HorizontalSelectors, and Toggles.  
 **Sliders** have a range of numbers.  
-**Dropdowns** have an array of strings.
+**Dropdowns** have an array of strings. 
 **HorizontalSelectors** have an array of strings.  
 **Toggles** have a boolean.
 
