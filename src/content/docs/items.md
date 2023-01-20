@@ -11,8 +11,8 @@ Example:
 ```csharp
 using COTL_API.CustomInventory;
 using COTL_API.Helpers;
-using System.IO;
 using UnityEngine;
+using System.IO;
 ```
 
 ```csharp

@@ -3,10 +3,8 @@ import vercel from "@astrojs/vercel/static";
 import { defineConfig } from "astro/config";
 import robotsTxt from "astro-robots-txt";
 import sitemap from "@astrojs/sitemap";
-import compress from "astro-compress";
 import preact from "@astrojs/preact";
 import image from "@astrojs/image";
-// import rome from "astro-rome";
 
 // https://astro.build/config
 export default defineConfig({
@@ -53,13 +51,7 @@ export default defineConfig({
                     allow: "/"
                 }
             ]
-        }),
-        compress({
-            path: "./.vercel/output"
-        })//, // Use rome when on dev build
-        //rome({
-        //    path: "./.vercel/output"
-        //})
+        })
     ],
     vite: {
         build: {

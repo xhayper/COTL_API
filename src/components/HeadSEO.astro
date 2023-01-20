@@ -1,9 +1,9 @@
 ---
 import { SITE, OPEN_GRAPH, TWITTER } from "../consts";
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 import { SEO } from "astro-seo";
 
-type Props = { canonicalUrl: URL } & CollectionEntry<'docs'>['data'];
+type Props = { canonicalUrl: URL } & CollectionEntry<"docs">["data"];
 
 const { ogLocale, image, title, description, canonicalUrl } = Astro.props;
 
