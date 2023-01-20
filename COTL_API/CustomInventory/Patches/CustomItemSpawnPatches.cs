@@ -1,12 +1,11 @@
 using Object = UnityEngine.Object;
 using MMBiomeGeneration;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets;
 using MMRoomGeneration;
 using COTL_API.Helpers;
 using UnityEngine;
 using HarmonyLib;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.AddressableAssets;
-using MMTools;
 
 namespace COTL_API.CustomInventory;
 
@@ -75,6 +74,7 @@ public static partial class CustomItemManager
 
             if (ObjectPool.instance.loadedAddressables.TryGetValue(item.Value.InternalObjectName, out _))
                 return;
+
             AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(item.Value.InternalObjectName);
             asyncOperationHandle.Completed += obj =>
             {
