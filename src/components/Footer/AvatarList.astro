@@ -23,7 +23,9 @@ async function getCommits(url: string, page: number = 1) {
     try {
         const token = import.meta.env.GITHUB_TOKEN;
         if (!token)
-            console.warn('[warn] /src/components/AvatarList.astro\n    Cannot find "GITHUB_TOKEN" used for escaping rate-limiting.');
+            console.warn(
+                '[warn] /src/components/AvatarList.astro\n    Cannot find "GITHUB_TOKEN" used for escaping rate-limiting.'
+            );
 
         const auth = token ? `Basic ${Buffer.from(token, "binary").toString("base64")}` : "";
 
