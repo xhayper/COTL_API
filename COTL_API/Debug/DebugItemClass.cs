@@ -1,3 +1,5 @@
+//NOSONAR
+
 namespace COTL_API.Debug;
 
 public class DebugItemClass : CustomInventory.CustomInventoryItem

@@ -1,4 +1,6 @@
-﻿namespace COTL_API.Debug;
+﻿//NOSONAR
+
+namespace COTL_API.Debug;
 
 public class DebugFollowerCommand : CustomFollowerCommand.CustomFollowerCommand
 {

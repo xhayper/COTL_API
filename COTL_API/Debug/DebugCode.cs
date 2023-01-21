@@ -1,3 +1,5 @@
+//NOSONAR
+
 using Random = UnityEngine.Random;
 using COTL_API.CustomObjectives;
 using COTL_API.CustomTarotCard;
