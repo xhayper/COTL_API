@@ -1,6 +1,4 @@
-﻿//NOSONAR
-
-using COTL_API.Helpers;
+﻿using COTL_API.Helpers;
 
 namespace COTL_API.Debug;
 

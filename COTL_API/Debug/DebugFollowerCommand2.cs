@@ -1,6 +1,4 @@
-﻿//NOSONAR
-
-using COTL_API.CustomFollowerCommand;
+﻿using COTL_API.CustomFollowerCommand;
 
 namespace COTL_API.Debug;
 

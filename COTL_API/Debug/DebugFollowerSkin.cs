@@ -1,6 +1,4 @@
-﻿//NOSONAR
-
-using COTL_API.CustomSkins;
+﻿using COTL_API.CustomSkins;
 using COTL_API.Helpers;
 using UnityEngine;
 

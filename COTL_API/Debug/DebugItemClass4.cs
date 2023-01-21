@@ -1,5 +1,3 @@
-//NOSONAR
-
 using COTL_API.CustomInventory;
 using UnityEngine;
 
