@@ -170,7 +170,7 @@ internal static class SkinUtils
                         scale[3] = float.Parse(scaleSplit[1]);
                         break;
                     default:
-                        LogHelper.LogWarning($"Invalid scale length for skin \"{name}\", Expected 3 or 4, got {scale.Length}");
+                        LogHelper.LogWarning($"Invalid scale length, Expected 3 or 4, got {scale.Length}.");
                         break;
                 }
 
