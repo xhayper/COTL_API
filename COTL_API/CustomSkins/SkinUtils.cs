@@ -91,7 +91,7 @@ internal static class SkinUtils
         }
     }
 
-    public static Skin? ApplyAllOverrides(Skin from, Skin to,
+    public static Skin ApplyAllOverrides(Skin from, Skin to,
         List<Tuple<int, string, float, float, float, float>> overrides, Material material, AtlasAssetBase atlas)
     {
         var name = to.name;
@@ -102,7 +102,12 @@ internal static class SkinUtils
         foreach (var (slot, ovrName, translationX, translationY, scaleX, scaleY) in overrides)
         {
             var atlasRegion = atlas.GetAtlas().FindRegion(slot + ":" + ovrName);
-            var a = from.GetAttachment(slot, ovrName).Copy();
+            var a = from.GetAttachment(slot, ovrName);
+
+            if (a is null)
+                continue;
+
+            a = a.Copy();
 
             ApplyOverride(to, a, slot, ovrName, atlasRegion, scaleX, scaleY, translationX, translationY);
         }
@@ -165,7 +170,7 @@ internal static class SkinUtils
                         scale[3] = float.Parse(scaleSplit[1]);
                         break;
                     default:
-                        LogHelper.LogWarning($"Invalid scale length: {scale.Length}");
+                        LogHelper.LogWarning($"Invalid scale length for skin \"{name}\", Expected 3 or 4, got {scale.Length}");
                         break;
                 }
 
