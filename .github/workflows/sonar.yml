@@ -43,6 +43,5 @@ jobs:
               shell: powershell
               run: |
                   .\.sonar\scanner\dotnet-sonarscanner begin /k:"xhayper_COTL_API" /o:"xhayper" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-                  dotnet clean
-                  dotnet build
+                  dotnet build --nologo
                   .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
