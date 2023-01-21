@@ -1,4 +1,6 @@
-﻿using COTL_API.CustomStructures;
+﻿//NOSONAR
+
+using COTL_API.CustomStructures;
 using Lamb.UI.BuildMenu;
 using COTL_API.Helpers;
 using UnityEngine;

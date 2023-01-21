@@ -1,4 +1,6 @@
-﻿using COTL_API.CustomTasks;
+﻿//NOSONAR
+
+using COTL_API.CustomTasks;
 using COTL_API.Helpers;
 using UnityEngine;
 
