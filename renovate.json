@@ -5,5 +5,8 @@
     ],
     "ignoreDeps": [
         "UnityEngine.Modules"
+    ],
+    "ignorePaths": [
+        "**/.github/workflows/sonar.yml"
     ]
 }
