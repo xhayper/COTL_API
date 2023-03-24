@@ -37,11 +37,11 @@ public static partial class CustomSkinManager
         Tuple.Create(61, "BowlFront"),
         Tuple.Create(67, "ARM_RIGHT_SKIN"),
         Tuple.Create(68, "Body/SleeveRight"),
-        Tuple.Create(76, "HEAD_SKIN_BTM"),
-        Tuple.Create(76, "HEAD_SKIN_BTM_BACK"),
-        Tuple.Create(78, "HEAD_SKIN_TOP"),
-        Tuple.Create(78, "HEAD_SKIN_TOP_BACK"),
+        Tuple.Create(78, "HEAD_SKIN_BTM"),
+        Tuple.Create(78, "HEAD_SKIN_BTM_BACK"),
         Tuple.Create(79, "MARKINGS"),
+        Tuple.Create(80, "HEAD_SKIN_TOP"),
+        Tuple.Create(80, "HEAD_SKIN_TOP_BACK"),
         Tuple.Create(81, "Angry_Colouring"),
         Tuple.Create(81, "Embarrassed_Colouring"),
         Tuple.Create(81, "Possessed_Colouring"),
@@ -177,11 +177,11 @@ public static partial class CustomSkinManager
         { "BowlFront", Tuple.Create(61, "BowlFront") },
         { "RIGHT_ARM_SKIN", Tuple.Create(67, "ARM_RIGHT_SKIN") },
         { "RIGHT_SLEEVE", Tuple.Create(68, "Body/SleeveRight") },
-        { "HEAD_SKIN_BTM", Tuple.Create(76, "HEAD_SKIN_BTM") },
-        { "HEAD_SKIN_BTM_BACK", Tuple.Create(76, "HEAD_SKIN_BTM_BACK") },
-        { "HEAD_SKIN_TOP", Tuple.Create(78, "HEAD_SKIN_TOP") },
-        { "HEAD_SKIN_TOP_BACK", Tuple.Create(78, "HEAD_SKIN_TOP_BACK") },
+        { "HEAD_SKIN_BTM", Tuple.Create(78, "HEAD_SKIN_BTM") },
+        { "HEAD_SKIN_BTM_BACK", Tuple.Create(78, "HEAD_SKIN_BTM_BACK") },
         { "MARKINGS", Tuple.Create(79, "MARKINGS") },
+        { "HEAD_SKIN_TOP", Tuple.Create(80, "HEAD_SKIN_TOP") },
+        { "HEAD_SKIN_TOP_BACK", Tuple.Create(80, "HEAD_SKIN_TOP_BACK") },
         { "Angry_Colouring", Tuple.Create(81, "Angry_Colouring") },
         { "Embarrassed_Colouring", Tuple.Create(81, "Embarrassed_Colouring") },
         { "Possessed_Colouring", Tuple.Create(81, "Possessed_Colouring") },
@@ -329,7 +329,7 @@ public static partial class CustomSkinManager
         CustomPlayerSkins.Add(playerSkin.Name, playerSkin);
     }
 
-    private static Tuple<int, string>? RegionOverrideFunction(AtlasRegion region)
+    private static List<Tuple<int, string>> RegionOverrideFunction(AtlasRegion region)
     {
         var simpleName = region.name;
         var add = "";
@@ -343,24 +343,24 @@ public static partial class CustomSkinManager
         if (SimplifiedSkinNames.TryGetValue(simpleName, out var simplified))
         {
             region.name = simplified.Item1 + ":" + simplified.Item2 + add;
-            return simplified;
+            return new() { simplified };
         }
 
-        if (!simpleName.Contains(":")) return null;
+        if (!simpleName.Contains(":")) return new();
 
         try
         {
             var rName = simpleName.Split(':')[1];
             var regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0]);
             region.name = regionIndex + ":" + rName + "#" + add;
-            return Tuple.Create(regionIndex, rName);
+            return new() { Tuple.Create(regionIndex, rName) };
         }
         catch (Exception)
         {
             // ignored
         }
 
-        return null;
+        return new();
     }
 
     internal static void CreateNewFollowerType(string name, List<WorshipperData.SlotsAndColours> colors,
@@ -369,7 +369,7 @@ public static partial class CustomSkinManager
         WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData
         {
             Title = name,
-            Skin = new List<WorshipperData.CharacterSkin>
+            Skin = new()
             {
                 new()
                 {

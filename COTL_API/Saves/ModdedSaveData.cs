@@ -37,7 +37,7 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
 
     public override void CreateDefault()
     {
-        Data = new T();
+        Data = new();
     }
 
     public override void Save(bool encrypt = true, bool backup = true)

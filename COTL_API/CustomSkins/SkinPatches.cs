@@ -114,7 +114,7 @@ public partial class CustomSkinManager
     {
         SkinUtils.InvokeOnFindSkin();
         if (PlayerSkinOverride == null) return true;
-        __instance.PlayerSkin = new Skin("Player Skin");
+        __instance.PlayerSkin = new("Player Skin");
         var skin = PlayerSkinOverride[0] ??
                    __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerFleece +
                                                            (BlackAndWhite ? "_BW" : ""));

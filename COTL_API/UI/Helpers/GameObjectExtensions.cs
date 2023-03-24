@@ -38,7 +38,7 @@ public static class GameObjectExtensions
         y ??= localRotation.y;
         z ??= localRotation.z;
 
-        obj.transform.localPosition = new Vector3((float)x, (float)y, (float)z);
+        obj.transform.localPosition = new((float)x, (float)y, (float)z);
         return obj;
     }
 
@@ -58,7 +58,7 @@ public static class GameObjectExtensions
         y ??= localScale.y;
         z ??= localScale.z;
 
-        localScale = new Vector3((float)x, (float)y, (float)z);
+        localScale = new((float)x, (float)y, (float)z);
         obj.transform.localScale = localScale;
         return obj;
     }

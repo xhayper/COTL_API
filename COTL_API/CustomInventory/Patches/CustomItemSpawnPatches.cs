@@ -1,3 +1,5 @@
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 using MMBiomeGeneration;
 using MMRoomGeneration;
@@ -73,8 +75,23 @@ public static partial class CustomItemManager
             if (ObjectPool.instance.loadedAddressables.TryGetValue(item.Value.InternalObjectName, out _))
                 return;
 
-            ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName,
-                GetObject.GetCustomObject(item.Value));
+            AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(item.Value.InternalObjectName);
+            asyncOperationHandle.Completed += obj =>
+            {
+                var _myObject = obj.Result;
+                if (_myObject != null)
+                {
+                    _myObject.SetActive(true);
+                }
+                _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.Value.ItemPickUpToImitate), null,
+                instantiateInWorldSpace: false) as GameObject;
+                LogHelper.LogWarning($"_myObject is NULL? {_myObject == null}");
+                _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Value.Sprite;
+                _myObject.name = item.Value.InternalObjectName;
+                _myObject.transform.localScale = item.Value.LocalScale;
+            };
+
+            ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName, asyncOperationHandle);
         }
     }
 

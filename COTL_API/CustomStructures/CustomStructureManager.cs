@@ -26,7 +26,7 @@ public static partial class CustomStructureManager
 
     public static StructureBrain.TYPES GetStructureByType<T>()
     {
-        return CustomStructureList.First(x => x.Value is T).Key;
+        return CustomStructureList.FirstOrDefault(x => x.Value.GetType() == typeof(T)).Key;
     }
 
     public static CustomStructure GetStructureByPrefabName(string name)
