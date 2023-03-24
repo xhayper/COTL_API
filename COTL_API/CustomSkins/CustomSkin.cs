@@ -25,16 +25,16 @@ public abstract class CustomSkin
         {
             Name = name;
             Rect = rect;
-            Scale = new Vector2(scaleX, scaleY);
-            Translate = new Vector2(translateX, translateY);
+            Scale = new(scaleX, scaleY);
+            Translate = new(translateX, translateY);
         }
 
         public SkinOverride(string name, Rect rect, Tuple<float, float>? scale, Tuple<float, float>? translate)
         {
             Name = name;
             Rect = rect;
-            Scale = scale != null ? new Vector2(scale.Item1, scale.Item2) : Vector2.one;
-            Translate = translate != null ? new Vector2(translate.Item1, translate.Item2) : Vector2.zero;
+            Scale = scale != null ? new(scale.Item1, scale.Item2) : Vector2.one;
+            Translate = translate != null ? new(translate.Item1, translate.Item2) : Vector2.zero;
         }
 
         public string Name { get; }

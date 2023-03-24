@@ -51,14 +51,14 @@ public class DebugCode
             CustomTarotCardManager.CustomTarotCardList.ContainsKey(c) ||
             DataManager.Instance.PlayerRunTrinkets.Any(t => t.CardType == c));
 
-        return new TarotCards.TarotCard(
+        return new(
             vanillaCardList.ElementAt(Random.Range(0,
                 vanillaCardList.Count)), 0);
     }
 
     internal static TarotCards.TarotCard GetRandModdedCard()
     {
-        return new TarotCards.TarotCard(
+        return new(
             CustomTarotCardManager.CustomTarotCardList.Keys.ElementAt(Random.Range(0,
                 CustomTarotCardManager.CustomTarotCardList.Count)), 0);
     }

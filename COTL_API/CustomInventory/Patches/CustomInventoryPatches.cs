@@ -274,7 +274,7 @@ public static partial class CustomItemManager
 
                 if (instruction.LoadsField(typeof(InventoryMenu).GetField("_currencyFilter",
                         BindingFlags.NonPublic | BindingFlags.Instance)))
-                    yield return new CodeInstruction(OpCodes.Call,
+                    yield return new(OpCodes.Call,
                         SymbolExtensions.GetMethodInfo(() => AppendCustomCurrencies(null)));
             }
         }

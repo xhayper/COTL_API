@@ -67,7 +67,7 @@ public class SoundLoader : MonoBehaviour
         var soundHandle = _soundCache[name];
         soundHandle.ChangeLoopMode(MODE.LOOP_NORMAL); // Music should loop
 
-        var sh = new ChannelWrapper(name, in soundHandle);
+        ChannelWrapper sh = new(name, in soundHandle);
         var result = sh.Play();
         sh.SetVolume(SoundUtils.MusicVolume);
         if (result != RESULT.OK) return; // Return before adding to the Handlers list.

@@ -16,7 +16,7 @@ internal class ChannelWrapper
 
     public ChannelWrapper(string id, in SoundWrapper sound, bool loop = false)
     {
-        channel = new Channel();
+        channel = new();
         ID = id;
         soundWrapper = sound;
     }

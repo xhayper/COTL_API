@@ -9,10 +9,11 @@ namespace COTL_API.UI;
 
 internal static class SettingsUtils
 {
-    internal static GameObject? SliderTemplate { get; set; }
-    internal static GameObject? ToggleTemplate { get; set; }
-    internal static GameObject? HorizontalSelectorTemplate { get; set; }
     internal static GameObject? HeaderTemplate { get; set; }
+    internal static GameObject? SliderTemplate { get; set; }
+    internal static GameObject? DropdownTemplate { get; set; }
+    internal static GameObject? HorizontalSelectorTemplate { get; set; }
+    internal static GameObject? ToggleTemplate { get; set; }
 
     public static void AddHeader(Transform parent, string? text)
     {
@@ -51,22 +52,25 @@ internal static class SettingsUtils
         sliderSlider.value = value;
     }
 
-    public static void AddToggle(Transform parent, string text, bool value, Action<bool>? onChange = null)
+    public static void AddDropdown(Transform parent, string text, string?[] options, int index = 0,
+        Action<int>? onChange = null, string? indexStringOverride = null)
     {
-        if (ToggleTemplate == null)
+        if (DropdownTemplate == null)
         {
-            LogHelper.LogError("Unable to find toggle template!");
+            LogHelper.LogError("Unable to find dropdown template!");
             return;
         }
 
-        var toggle = Object.Instantiate(ToggleTemplate, parent);
-        toggle.name = text;
-        var toggleText = toggle.GetComponentInChildren<TextMeshProUGUI>();
-        toggleText.text = text;
-        var toggleToggle = toggle.GetComponentInChildren<MMToggle>();
-        toggleToggle.Value = value;
-        toggleToggle.UpdateState(true);
-        if (onChange != null) toggleToggle.OnValueChanged += onChange;
+        var dropDown = Object.Instantiate(DropdownTemplate, parent);
+        dropDown.name = text;
+        var dropDownText = dropDown.GetComponentInChildren<TextMeshProUGUI>();
+        dropDownText.text = text;
+        var mmDropdown = dropDown.GetComponentInChildren<MMDropdown>();
+        mmDropdown._localizeContent = false;
+        mmDropdown.UpdateContent(options);
+        var indexOverride = Math.Max(0, options.IndexOf(indexStringOverride));
+        mmDropdown.ContentIndex = indexStringOverride != null ? indexOverride : index;
+        if (onChange != null) mmDropdown.OnValueChanged += onChange;
     }
 
     public static void AddHorizontalSelector(Transform parent, string text, string?[] options, int index = 0,
@@ -88,5 +92,23 @@ internal static class SettingsUtils
         var indexOverride = Math.Max(0, options.IndexOf(indexStringOverride));
         selector.ContentIndex = indexStringOverride != null ? indexOverride : index;
         if (onChange != null) selector.OnSelectionChanged += onChange;
+    }
+
+    public static void AddToggle(Transform parent, string text, bool value, Action<bool>? onChange = null)
+    {
+        if (ToggleTemplate == null)
+        {
+            LogHelper.LogError("Unable to find toggle template!");
+            return;
+        }
+
+        var toggle = Object.Instantiate(ToggleTemplate, parent);
+        toggle.name = text;
+        var toggleText = toggle.GetComponentInChildren<TextMeshProUGUI>();
+        toggleText.text = text;
+        var toggleToggle = toggle.GetComponentInChildren<MMToggle>();
+        toggleToggle.Value = value;
+        toggleToggle.UpdateState(true);
+        if (onChange != null) toggleToggle.OnValueChanged += onChange;
     }
 }

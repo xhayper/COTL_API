@@ -28,11 +28,16 @@ public abstract class CustomPlayerSkin : CustomSkin
                             simpleName = split[0];
                         }
 
-                        if (from.Attachments.All(x => x.Name != simpleName)) return null;
+                        if (from.Attachments.All(x => x.Name != simpleName)) return new();
 
-                        var att = from.Attachments.First(x => x.Name == simpleName);
-                        region.name = att.SlotIndex + ":" + att.Name + add;
-                        return Tuple.Create(att.SlotIndex, att.Name);
+                        var atts = from.Attachments.Where(x => x.Name == simpleName);
+                        List<Tuple<int, string>> tuples = new();
+                        foreach (var att in atts)
+                        {
+                            region.name = att.SlotIndex + ":" + att.Name + add;
+                            tuples.Add(Tuple.Create(att.SlotIndex, att.Name));
+                        }
+                        return tuples;
                     }, out var mat, out var atlas);
                 var overrideSkin = SkinUtils.ApplyAllOverrides(from, to, overrides, mat, atlas);
                 _cachedSkin = overrideSkin;

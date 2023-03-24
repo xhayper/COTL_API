@@ -39,6 +39,31 @@ public class Slider : ISettingsElement
     }
 }
 
+
+public class Dropdown : ISettingsElement
+{
+    public string? Category { get; set; }
+
+    string? ISettingsElement.Category => Category;
+
+    public string Text { get; set; }
+
+    string ISettingsElement.Text => Text;
+
+    public string? Value { get; set; }
+    public string?[] Options { get; set; }
+    public Action<int>? OnValueChanged { get; set; }
+
+    public Dropdown(string? category, string text, string? value, string?[] options, Action<int>? onValueChanged)
+    {
+        Category = category;
+        Text = text;
+        Value = value;
+        Options = options;
+        OnValueChanged = onValueChanged;
+    }
+}
+
 public class HorizontalSelector : ISettingsElement
 {
     public string? Category { get; set; }

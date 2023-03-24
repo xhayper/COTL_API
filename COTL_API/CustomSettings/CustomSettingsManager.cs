@@ -10,6 +10,7 @@ public static class CustomSettingsManager
     internal static List<ISettingsElement> SettingsElements { get; } = new();
 
     internal static ReadOnlyCollection<Slider> Sliders => SettingsElements.OfType<Slider>().ToList().AsReadOnly();
+    internal static ReadOnlyCollection<Dropdown> Dropdowns => SettingsElements.OfType<Dropdown>().ToList().AsReadOnly();
     internal static ReadOnlyCollection<HorizontalSelector> HorizontalSelectors => SettingsElements.OfType<HorizontalSelector>().ToList().AsReadOnly();
     internal static ReadOnlyCollection<Toggle> Toggles => SettingsElements.OfType<Toggle>().ToList().AsReadOnly();
 
@@ -45,6 +46,41 @@ public static class CustomSettingsManager
             });
         SettingsElements.Add(slider);
         return slider;
+    }
+
+    public static Dropdown AddDropdown(string? category, string text, string? value, string?[] options,
+    Action<int>? onValueChanged = null)
+    {
+        onValueChanged ??= delegate { };
+        var dropdown = new Dropdown(category, text, value, options, onValueChanged);
+        SettingsElements.Add(dropdown);
+        return dropdown;
+    }
+
+    public static Dropdown? AddSavedDropdown(string? category, string guid, string text, string value, string?[] options,
+        Action<int>? onValueChanged = null)
+    {
+        if (Plugin.SettingsData == null) return null;
+
+        var fullGuid = $"{guid}.{category}.{text}";
+        onValueChanged ??= delegate { };
+
+        if (!Plugin.SettingsData.ContainsKey(fullGuid))
+            Plugin.SettingsData.Add(fullGuid, value);
+        var dropdown = new Dropdown(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options, null);
+        dropdown.OnValueChanged = delegate (int newValue)
+        {
+            if (Plugin.Instance != null)
+            {
+                Plugin.SettingsData.SetValue(fullGuid, dropdown.Options[newValue]);
+                Plugin.Instance.ModdedSettingsData.Save();
+            }
+
+            onValueChanged(newValue);
+        };
+        SettingsElements.Add(dropdown);
+
+        return dropdown;
     }
 
     public static HorizontalSelector AddHorizontalSelector(string? category, string text, string? value, string?[] options,
@@ -174,7 +210,7 @@ public static class CustomSettingsManager
         var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment, displayFormat,
             delegate (float newValue)
             {
-                int newVal = (int)Math.Floor(newValue);
+                var newVal = (int)Math.Floor(newValue);
 
                 entry.Value = newVal;
                 onValueChanged(newVal);

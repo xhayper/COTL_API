@@ -99,7 +99,7 @@ public static class SoundUtils
 
     internal static RESULT PlayOneShot(string path, VolumeCategory volume = VolumeCategory.SFX)
     {
-        var soundHandle = new SoundWrapper(MakeSound(path));
+        SoundWrapper soundHandle = new(MakeSound(path));
         return PlayOneShot(soundHandle, volume);
     }
 }
