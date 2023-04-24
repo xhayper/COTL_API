@@ -32,9 +32,9 @@ public static partial class CustomRitualManager
         return true;
     }
 
-    [HarmonyPatch(typeof(DoctrineUpgradeSystem), nameof(DoctrineUpgradeSystem.GetIconForRitual))]
+    [HarmonyPatch(typeof(DoctrineUpgradeSystem), nameof(DoctrineUpgradeSystem.GetIcon))]
     [HarmonyPrefix]
-    public static bool DoctrineUpgradeSystem_GetIconForRitual(ref Sprite __result, UpgradeSystem.Type type)
+    public static bool DoctrineUpgradeSystem_GetIcon(ref Sprite __result, UpgradeSystem.Type type)
     {
         if (!CustomRitualList.ContainsKey(type)) return true;
 
