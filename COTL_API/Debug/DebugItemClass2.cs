@@ -1,8 +1,12 @@
+using COTL_API.CustomInventory;
+
 namespace COTL_API.Debug;
 
 public class DebugItemClass2 : CustomInventory.CustomInventoryItem
 {
     public override string InternalName => "DEBUG_ITEM_2";
+    
+    public override CustomInventoryItemType InventoryItemType => CustomInventoryItemType.FOOD;
 
     public override string LocalizedName()
     {
