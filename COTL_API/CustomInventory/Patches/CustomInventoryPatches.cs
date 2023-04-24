@@ -276,6 +276,16 @@ public static partial class CustomItemManager
                         BindingFlags.NonPublic | BindingFlags.Instance)))
                     yield return new(OpCodes.Call,
                         SymbolExtensions.GetMethodInfo(() => AppendCustomCurrencies(null)));
+                
+                if (instruction.LoadsField(typeof(InventoryMenu).GetField("_foodSorter",
+                        BindingFlags.NonPublic | BindingFlags.Instance)))
+                    yield return new(OpCodes.Call,
+                        SymbolExtensions.GetMethodInfo(() => AppendCustomFood(null)));
+                
+                if (instruction.LoadsField(typeof(InventoryMenu).GetField("_itemsSorter",
+                        BindingFlags.NonPublic | BindingFlags.Instance)))
+                    yield return new(OpCodes.Call,
+                        SymbolExtensions.GetMethodInfo(() => AppendCustomItem(null)));
             }
         }
 
@@ -283,7 +293,23 @@ public static partial class CustomItemManager
             ICollection<InventoryItem.ITEM_TYPE>? currencyFilter)
         {
             return currencyFilter?.Concat(CustomItemList
-                .Where(i => !currencyFilter.Contains(i.Key) && i.Value.IsCurrency)
+                .Where(i => !currencyFilter.Contains(i.Key) && i.Value.InventoryItemType == CustomInventoryItemType.CURRENCY)
+                .Select(i => i.Key)).ToList();
+        }
+        
+        internal static List<InventoryItem.ITEM_TYPE>? AppendCustomFood(
+            ICollection<InventoryItem.ITEM_TYPE>? foodSorter)
+        {
+            return foodSorter?.Concat(CustomItemList
+                .Where(i => !foodSorter.Contains(i.Key) && i.Value.InventoryItemType == CustomInventoryItemType.FOOD)
+                .Select(i => i.Key)).ToList();
+        }
+        
+        internal static List<InventoryItem.ITEM_TYPE>? AppendCustomItem(
+            ICollection<InventoryItem.ITEM_TYPE>? itemsSorter)
+        {
+            return itemsSorter?.Concat(CustomItemList
+                .Where(i => !itemsSorter.Contains(i.Key) && i.Value.InventoryItemType == CustomInventoryItemType.ITEM)
                 .Select(i => i.Key)).ToList();
         }
     }

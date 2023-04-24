@@ -1,8 +1,12 @@
+using COTL_API.CustomInventory;
+
 namespace COTL_API.Debug;
 
 public class DebugItemClass : CustomInventory.CustomInventoryItem
 {
     public override string InternalName => "DEBUG_ITEM";
+    
+    public override CustomInventoryItemType InventoryItemType => CustomInventoryItemType.CURRENCY;
 
     public override string LocalizedName()
     {
