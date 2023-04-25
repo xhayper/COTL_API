@@ -112,7 +112,6 @@ public partial class CustomSkinManager
     [HarmonyPrefix]
     public static bool PlayerFarming_SetSkin(ref Skin __result, PlayerFarming __instance, bool BlackAndWhite)
     {
-        LogHelper.LogDebug("PlayerFarming_SetSkin");
         SkinUtils.InvokeOnFindSkin();
         if (PlayerSkinOverride == null) return true;
         __instance.PlayerSkin = new("Player Skin");
