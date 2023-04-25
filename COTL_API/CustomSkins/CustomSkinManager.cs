@@ -16,6 +16,7 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
 
     internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = new();
+    internal static CustomPlayerSkin? CurrentPlayerSkin;
 
     internal static string OverrideSkinName { get; set; } = "Default";
 
@@ -406,6 +407,12 @@ public static partial class CustomSkinManager
             Plugin.OnStart += Action;
         }
     }
+    
+    public static void ApplyCurrentSkinOverride()
+    {
+        CustomPlayerSkins.TryGetValue(OverrideSkinName, out var skin);
+        skin?.Apply();
+    }
 
     public static void SetPlayerSkinOverride(Skin? normalSkin, Skin? hurtSkin = null, Skin? hurtSkin2 = null)
     {
@@ -424,6 +431,7 @@ public static partial class CustomSkinManager
     {
         skin.Apply();
         OverrideSkinName = skin.Name;
+        CurrentPlayerSkin = skin;
     }
 
     public static void ResetPlayerSkin()
