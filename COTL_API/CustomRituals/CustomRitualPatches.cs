@@ -1,8 +1,9 @@
-﻿using COTL_API.Helpers;
+using COTL_API.Helpers;
 using Lamb.UI.Rituals;
 using src.Extensions;
 using UnityEngine;
 using HarmonyLib;
+using Lamb.UI.Assets;
 
 namespace COTL_API.CustomRituals;
 
@@ -32,7 +33,7 @@ public static partial class CustomRitualManager
         return true;
     }
 
-    [HarmonyPatch(typeof(DoctrineUpgradeSystem), nameof(DoctrineUpgradeSystem.GetIconForRitual))]
+    [HarmonyPatch(typeof(RitualIconMapping), nameof(RitualIconMapping.GetImage), new[] { typeof(UpgradeSystem.Type) })]
     [HarmonyPrefix]
     public static bool DoctrineUpgradeSystem_GetIconForRitual(ref Sprite __result, UpgradeSystem.Type type)
     {
