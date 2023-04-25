@@ -229,7 +229,8 @@ public class Plugin : BaseUnityPlugin
         DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
         DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
         DebugItem4 = CustomInventory.CustomItemManager.Add(new DebugItemClass4());
-
+        
+        CustomStructureManager.Add(new DebugStructure());
         CustomStructureManager.Add(new DebugStructure2());
         CustomStructureManager.Add(new DebugStructure3());
 
