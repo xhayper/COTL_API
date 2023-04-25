@@ -1,4 +1,4 @@
-﻿using COTL_API.CustomFollowerCommand;
+using COTL_API.CustomFollowerCommand;
 
 namespace COTL_API.Debug;
 
@@ -22,7 +22,7 @@ public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCo
         FollowerCommands finalCommand = FollowerCommands.None)
     {
         interaction.follower.Brain.MakeDissenter();
-        interaction.Close(true);
+        interaction.Close(true, reshowMenu: false);
     }
 
     public DebugFollowerCommandClass2()
