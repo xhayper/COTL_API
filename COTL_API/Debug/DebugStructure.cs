@@ -11,7 +11,7 @@ public class DebugStructure : CustomStructure
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder_1.png"));
 
     public override string InternalName => "DEBUG_STRUCTURE";
-    public override FollowerCategory.Category Category => FollowerCategory.Category.Misc;
+    
     public override Vector2Int Bounds => new(1, 1);
 
     public override int BuildDurationMinutes => 15;

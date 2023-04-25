@@ -27,6 +27,6 @@ public class DebugFollowerCommand : CustomFollowerCommand.CustomFollowerCommand
             interaction.eventListener.PlayFollowerVO(interaction.generalAcknowledgeVO);
             interaction.follower.Brain.HardSwapToTask(new FollowerTask_InstantPoop());
         }));
-        interaction.Close();
+        interaction.Close(true);
     }
 }

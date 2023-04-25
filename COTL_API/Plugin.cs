@@ -97,6 +97,10 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
                 }
             });
+        
+        // TODO: TEMP WORKAROUND, PATCH ON SAVE SLOT SELECTED INSTEAD! (IDK WHAT METHOD IT IS)
+        if (dd?.Value != "Default")
+            CustomSkinManager.SetPlayerSkinOverride(CustomSkinManager.CustomPlayerSkins[dd?.Value ?? "Default"]);
 
         CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug, delegate (bool isActivated)
         {
@@ -225,7 +229,8 @@ public class Plugin : BaseUnityPlugin
         DebugItem2 = CustomInventory.CustomItemManager.Add(new DebugItemClass2());
         DebugItem3 = CustomInventory.CustomItemManager.Add(new DebugItemClass3());
         DebugItem4 = CustomInventory.CustomItemManager.Add(new DebugItemClass4());
-
+        
+        CustomStructureManager.Add(new DebugStructure());
         CustomStructureManager.Add(new DebugStructure2());
         CustomStructureManager.Add(new DebugStructure3());
 

@@ -7,7 +7,9 @@ namespace COTL_API.CustomInventory;
 public abstract class CustomInventoryItem
 {
     public abstract string InternalName { get; }
-
+    
+    public virtual CustomInventoryItemType InventoryItemType { get; } = CustomInventoryItemType.ITEM;
+    
     internal InventoryItem.ITEM_TYPE ItemType;
     internal string ModPrefix = "";
 
