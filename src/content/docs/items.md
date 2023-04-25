@@ -38,6 +38,7 @@ internal class ExampleItem : CustomInventoryItem
 | Sprite | Sprite | TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png")) |
 | InventoryItem.ITEM_CATEGORIES | ItemCategory | InventoryItem.ITEM_CATEGORIES.NONE |
 | InventoryItem.ITEM_TYPE | SeedType | InventoryItem.ITEM_TYPE.NONE; |
+| CustomInventoryItemType | InventoryItemType | CustomInventoryItemType.ITEM |
 | string | LocalizedName() | LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}") |
 | string | LocalizedLore() | LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Lore") |
 | string | LocalizedDescription() | LocalizationManager.GetTranslation($"Inventory/{ModPrefix}.{InternalName}/Description") |
