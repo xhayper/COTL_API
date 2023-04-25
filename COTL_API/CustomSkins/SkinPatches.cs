@@ -13,7 +13,7 @@ public partial class CustomSkinManager
 {
     [HarmonyPatch(typeof(SkeletonData), nameof(SkeletonData.FindSkin), new[] { typeof(string) })]
     [HarmonyPostfix]
-    public static void SkinPatch(ref Skin? __result, SkeletonData __instance, string skinName)
+    public static void SkeletonData_FindSkin(ref Skin? __result, SkeletonData __instance, string skinName)
     {
         if (__result != null) return;
         if (!CustomFollowerSkins.ContainsKey(skinName)) return;
@@ -24,7 +24,7 @@ public partial class CustomSkinManager
 
     internal static readonly Dictionary<string, Texture2D> CachedTextures = new();
 
-    [HarmonyPatch(typeof(Graphics), "CopyTexture",
+    [HarmonyPatch(typeof(Graphics), nameof(Graphics.CopyTexture),
         new[]
         {
             typeof(Texture), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int),
@@ -112,6 +112,7 @@ public partial class CustomSkinManager
     [HarmonyPrefix]
     public static bool PlayerFarming_SetSkin(ref Skin __result, PlayerFarming __instance, bool BlackAndWhite)
     {
+        LogHelper.LogDebug("PlayerFarming_SetSkin");
         SkinUtils.InvokeOnFindSkin();
         if (PlayerSkinOverride == null) return true;
         __instance.PlayerSkin = new("Player Skin");

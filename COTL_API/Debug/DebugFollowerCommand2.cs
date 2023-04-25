@@ -22,7 +22,7 @@ public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCo
         FollowerCommands finalCommand = FollowerCommands.None)
     {
         interaction.follower.Brain.MakeDissenter();
-        interaction.Close();
+        interaction.Close(true);
     }
 
     public DebugFollowerCommandClass2()
