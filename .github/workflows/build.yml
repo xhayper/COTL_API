@@ -30,7 +30,7 @@ jobs:
                   dotnet restore
             - name: Build
               run: |
-                  dotnet build -c Release
+                  dotnet build
             - name: Package
               run: |
                   dotnet tool install -g tcli
