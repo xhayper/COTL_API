@@ -46,6 +46,9 @@ public abstract class CustomFollowerCommand : CommandItem
         return true;
     }
 
-    public abstract void Execute(interaction_FollowerInteraction interaction,
-        FollowerCommands finalCommand = FollowerCommands.None);
+    public virtual void Execute(interaction_FollowerInteraction interaction,
+        FollowerCommands finalCommand = FollowerCommands.None)
+    {
+        interaction.Close(true, reshowMenu: false);
+    }
 }
