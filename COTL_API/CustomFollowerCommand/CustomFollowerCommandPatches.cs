@@ -119,8 +119,8 @@ public partial class CustomFollowerCommandManager
         if (!CustomFollowerCommandList.ContainsKey(command) &&
             !CustomFollowerCommandList.ContainsKey(preFinalCommand)) return true;
 
-        if (CustomFollowerCommandList.ContainsKey(preFinalCommand))
-            CustomFollowerCommandList[preFinalCommand].Execute(__instance, command);
+        if (CustomFollowerCommandList.TryGetValue(preFinalCommand, out var value))
+            value.Execute(__instance, command);
         else CustomFollowerCommandList[command].Execute(__instance);
 
         return false;
