@@ -99,8 +99,18 @@ public class Plugin : BaseUnityPlugin
             });
         
         // TODO: TEMP WORKAROUND, PATCH ON SAVE SLOT SELECTED INSTEAD! (IDK WHAT METHOD IT IS)
-        if (dd?.Value != "Default")
-            CustomSkinManager.SetPlayerSkinOverride(CustomSkinManager.CustomPlayerSkins[dd?.Value ?? "Default"]);
+        if (dd?.Value != null && dd.Value != "Default")
+        {
+            if (CustomSkinManager.CustomPlayerSkins.ContainsKey(dd.Value))
+            {
+                CustomSkinManager.SetPlayerSkinOverride(CustomSkinManager.CustomPlayerSkins[dd.Value]);
+            }
+            else
+            {
+                dd.Value = "Default";
+            }
+        }
+
 
         CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug, delegate (bool isActivated)
         {
