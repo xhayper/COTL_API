@@ -6,6 +6,7 @@ using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomInventory;
 using COTL_API.CustomObjectives;
 using COTL_API.CustomSettings;
+using COTL_API.CustomSettings.Elements;
 using COTL_API.CustomSkins;
 using COTL_API.CustomStructures;
 using COTL_API.CustomTarotCard;
@@ -13,9 +14,9 @@ using COTL_API.CustomTasks;
 using COTL_API.Debug;
 using COTL_API.Helpers;
 using COTL_API.Saves;
-using COTL_API.UI;
 using HarmonyLib;
 using I2.Loc;
+using Lamb.UI.MainMenu;
 using MonoMod.Utils;
 using Spine;
 
@@ -26,6 +27,7 @@ namespace COTL_API;
 [HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
+    internal static Dropdown? SkinSettings;
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
     internal readonly ModdedSaveData<ApiData> APIData = new(MyPluginInfo.PLUGIN_GUID)
@@ -98,7 +100,7 @@ public class Plugin : BaseUnityPlugin
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S2));
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
 
-        var dd = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Lamb Skin", "Default",
+        SkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Lamb Skin", "Default",
             new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
             {
                 if (0 >= i)
@@ -108,47 +110,22 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
             });
 
-        // TODO: TEMP WORKAROUND, PATCH ON SAVE SLOT SELECTED INSTEAD! (IDK WHAT METHOD IT IS)
-        if (dd?.Value != null && dd.Value != "Default")
-        {
-            if (CustomSkinManager.CustomPlayerSkins.TryGetValue(dd.Value, out var skin))
-                CustomSkinManager.SetPlayerSkinOverride(skin);
-            else
-                dd.Value = "Default";
-        }
-
-
         CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug, delegate(bool isActivated)
         {
             if (!isActivated)
             {
-                if (dd?.Value != "Debug Skin") return;
-                dd.Value = "Default";
+                if (SkinSettings?.Value != "Debug Skin") return;
+                SkinSettings.Value = "Default";
                 CustomSkinManager.ResetPlayerSkin();
             }
             else
             {
                 if (DebugContentAdded) return;
                 AddDebugContent();
-
-                if (dd != null)
-                    dd.Options = new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray();
             }
         });
 
-        if (Debug)
-        {
-            AddDebugContent();
-
-
-            if (dd != null)
-                dd.Options = new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray();
-        }
-
-        UIManager.OnSettingsLoaded += () =>
-        {
-            if (dd != null) dd.Options = new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray();
-        };
+        if (Debug) AddDebugContent();
 
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
     }
@@ -264,5 +241,17 @@ public class Plugin : BaseUnityPlugin
         Logger.LogDebug("Debug mode enabled!");
 
         DebugContentAdded = true;
+    }
+
+    [HarmonyPatch(typeof(LoadMenu), nameof(LoadMenu.OnTryLoadSaveSlot))]
+    [HarmonyPostfix]
+    private static void LoadMenu_OnTryLoadSaveSlot()
+    {
+        if (SkinSettings?.Value is null or "Default") return;
+
+        if (CustomSkinManager.CustomPlayerSkins.TryGetValue(SkinSettings.Value, out var skin))
+            CustomSkinManager.SetPlayerSkinOverride(skin);
+        else
+            SkinSettings.Value = "Default";
     }
 }
