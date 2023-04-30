@@ -1,18 +1,18 @@
-﻿using HorizontalSelector = COTL_API.CustomSettings.Elements.HorizontalSelector;
+﻿using COTL_API.CustomSettings;
+using COTL_API.CustomSettings.Elements;
+using HarmonyLib;
+using I2.Loc;
+using Lamb.UI;
+using Lamb.UI.Settings;
+using Lamb.UI.SettingsMenu;
+using src.UINavigator;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 using Dropdown = COTL_API.CustomSettings.Elements.Dropdown;
+using Object = UnityEngine.Object;
 using Slider = COTL_API.CustomSettings.Elements.Slider;
 using Toggle = COTL_API.CustomSettings.Elements.Toggle;
-using Object = UnityEngine.Object;
-using COTL_API.CustomSettings;
-using Lamb.UI.SettingsMenu;
-using Lamb.UI.Settings;
-using src.UINavigator;
-using UnityEngine.UI;
-using UnityEngine;
-using HarmonyLib;
-using Lamb.UI;
-using I2.Loc;
-using TMPro;
 
 namespace COTL_API.UI;
 
@@ -26,34 +26,24 @@ public static class UIManager
     public static void UISettingsMenuController_OnShowStarted(UISettingsMenuController __instance)
     {
         if (SettingsUtils.HeaderTemplate == null)
-        {
             SettingsUtils.HeaderTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>()
                 .content.GetChild(0).gameObject;
-        }
 
         if (SettingsUtils.SliderTemplate == null)
-        {
             SettingsUtils.SliderTemplate = __instance._gameSettings.GetComponentInChildren<ScrollRect>()
                 .content.GetChild(1).gameObject;
-        }
 
         if (SettingsUtils.DropdownTemplate == null)
-        {
             SettingsUtils.DropdownTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>()
                 .content.GetChild(2).gameObject;
-        }
 
         if (SettingsUtils.HorizontalSelectorTemplate == null)
-        {
             SettingsUtils.HorizontalSelectorTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>()
                 .content.GetChild(3).gameObject;
-        }
 
         if (SettingsUtils.ToggleTemplate == null)
-        {
             SettingsUtils.ToggleTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>()
                 .content.GetChild(4).gameObject;
-        }
 
         var originalGraphicsSettings = __instance._graphicsSettings;
         var stnb = __instance.transform.GetComponentInChildren<SettingsTabNavigatorBase>();
@@ -104,7 +94,6 @@ public static class UIManager
         __instance._targetFpsSelectable.HorizontalSelector._canvasGroup = __instance._canvasGroup;
         __instance._defaultSelectable = __instance._scrollRect.content.GetComponentInChildren<Selectable>();
         MonoSingleton<UINavigatorNew>.Instance.NavigateToNew(__instance._defaultSelectable as IMMSelectable);
-
     }
 
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.Start))]
@@ -132,53 +121,52 @@ public static class UIManager
             switch (element)
             {
                 case Slider slider:
+                {
+                    void OnValueChanged(float i)
                     {
-                        void OnValueChanged(float i)
-                        {
-                            slider.Value = i;
-                            slider.OnValueChanged?.Invoke(i);
-                        }
-
-                        SettingsUtils.AddSlider(scrollContent, slider.Text, slider.Value, slider.Min, slider.Max,
-                            slider.Increment, slider.DisplayFormat, OnValueChanged);
-                        break;
+                        slider.Value = i;
+                        slider.OnValueChanged?.Invoke(i);
                     }
+
+                    SettingsUtils.AddSlider(scrollContent, slider.Text, slider.Value, slider.Min, slider.Max,
+                        slider.Increment, slider.DisplayFormat, OnValueChanged);
+                    break;
+                }
                 case Dropdown dropdown:
+                {
+                    void OnValueChanged(int i)
                     {
-                        void OnValueChanged(int i)
-                        {
-                            dropdown.Value = dropdown.Options[i];
-                            dropdown.OnValueChanged?.Invoke(i);
-                        }
-
-                        SettingsUtils.AddDropdown(scrollContent, dropdown.Text, dropdown.Options, -1,
-                            OnValueChanged, dropdown.Value);
-                        break;
+                        dropdown.Value = dropdown.Options[i];
+                        dropdown.OnValueChanged?.Invoke(i);
                     }
+
+                    SettingsUtils.AddDropdown(scrollContent, dropdown.Text, dropdown.Options, -1,
+                        OnValueChanged, dropdown.Value);
+                    break;
+                }
                 case HorizontalSelector dropdown:
+                {
+                    void OnValueChanged(int i)
                     {
-
-                        void OnValueChanged(int i)
-                        {
-                            dropdown.Value = dropdown.Options[i];
-                            dropdown.OnValueChanged?.Invoke(i);
-                        }
-
-                        SettingsUtils.AddHorizontalSelector(scrollContent, dropdown.Text, dropdown.Options, -1,
-                            OnValueChanged, dropdown.Value);
-                        break;
+                        dropdown.Value = dropdown.Options[i];
+                        dropdown.OnValueChanged?.Invoke(i);
                     }
+
+                    SettingsUtils.AddHorizontalSelector(scrollContent, dropdown.Text, dropdown.Options, -1,
+                        OnValueChanged, dropdown.Value);
+                    break;
+                }
                 case Toggle toggle:
+                {
+                    void OnValueChanged(bool i)
                     {
-                        void OnValueChanged(bool i)
-                        {
-                            toggle.Value = i;
-                            toggle.OnValueChanged?.Invoke(i);
-                        }
-
-                        SettingsUtils.AddToggle(scrollContent, toggle.Text, toggle.Value, OnValueChanged);
-                        break;
+                        toggle.Value = i;
+                        toggle.OnValueChanged?.Invoke(i);
                     }
+
+                    SettingsUtils.AddToggle(scrollContent, toggle.Text, toggle.Value, OnValueChanged);
+                    break;
+                }
             }
         }
 

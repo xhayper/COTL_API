@@ -17,7 +17,7 @@ public abstract class CustomPlayerSkin : CustomSkin
                 Skin to = new(Name);
 
                 var overrides = SkinUtils.CreateSkinAtlas(Name, Texture, GenerateAtlasText(),
-                    delegate (AtlasRegion region)
+                    delegate(AtlasRegion region)
                     {
                         var simpleName = region.name;
                         var add = "";
@@ -28,7 +28,7 @@ public abstract class CustomPlayerSkin : CustomSkin
                             simpleName = split[0];
                         }
 
-                        if (from.Attachments.All(x => x.Name != simpleName)) return new();
+                        if (from.Attachments.All(x => x.Name != simpleName)) return new List<Tuple<int, string>>();
 
                         var atts = from.Attachments.Where(x => x.Name == simpleName);
                         List<Tuple<int, string>> tuples = new();
@@ -37,6 +37,7 @@ public abstract class CustomPlayerSkin : CustomSkin
                             region.name = att.SlotIndex + ":" + att.Name + add;
                             tuples.Add(Tuple.Create(att.SlotIndex, att.Name));
                         }
+
                         return tuples;
                     }, out var mat, out var atlas);
                 var overrideSkin = SkinUtils.ApplyAllOverrides(from, to, overrides, mat, atlas);
@@ -49,12 +50,8 @@ public abstract class CustomPlayerSkin : CustomSkin
         }
 
         if (!SkinUtils.SkinsLoaded)
-        {
             SkinUtils.SkinToLoad = Action;
-        }
         else
-        {
             Action();
-        }
     }
 }

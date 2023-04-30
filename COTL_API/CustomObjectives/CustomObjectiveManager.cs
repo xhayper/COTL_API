@@ -1,24 +1,24 @@
 namespace COTL_API.CustomObjectives;
 
 /// <summary>
-/// The custom objective manager class.
+///     The custom objective manager class.
 /// </summary>
 public static partial class CustomObjectiveManager
 {
     /// <summary>
-    /// The group id
+    ///     The group id
     /// </summary>
     private const string GroupId = "Objectives/GroupTitles/Quest";
 
     private static string DefaultQuestText => "I didn't set a custom quest text for this objective!";
 
     /// <summary>
-    /// Holds the list of instantiated custom objectives.
+    ///     Holds the list of instantiated custom objectives.
     /// </summary>
     internal static Dictionary<int, CustomObjective> CustomObjectiveList { get; } = new();
 
-    ///  <param name="followerName">The name of the follower.</param>
-    ///  <returns>The original instance of the objective if it exists, otherwise returns a new instance.</returns>
+    /// <param name="followerName">The name of the follower.</param>
+    /// <returns>The original instance of the objective if it exists, otherwise returns a new instance.</returns>
     public static CustomObjective BedRest(string followerName)
     {
         Objectives_BedRest q = new(GroupId, followerName);
@@ -203,7 +203,7 @@ public static partial class CustomObjectiveManager
     }
 
     /// <summary>
-    /// ShootDummy
+    ///     ShootDummy
     /// </summary>
     /// <returns>Returns a CustomObjective object.</returns>
     public static CustomObjective ShootDummy()
