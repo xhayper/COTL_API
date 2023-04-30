@@ -137,7 +137,13 @@ public class Plugin : BaseUnityPlugin
         });
 
         if (Debug)
+        {
             AddDebugContent();
+
+
+            if (dd != null)
+                dd.Options = new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray();
+        }
 
         UIManager.OnSettingsLoaded += () =>
         {
