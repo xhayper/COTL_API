@@ -4,14 +4,7 @@ namespace COTL_API.Debug;
 
 public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCommand
 {
-    public DebugFollowerCommandClass2()
-    {
-        SubCommands = FollowerCommandGroups.AreYouSureCommands();
-    }
-
     public override string InternalName => "DEBUG_FOLLOWER_COMMAND_2";
-
-    public override List<FollowerCommandCategory> Categories => new() { FollowerCommandCategory.MAKE_DEMAND_COMMAND };
 
     public override string GetTitle(Follower follower)
     {
@@ -23,10 +16,17 @@ public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCo
         return "Make this follower turns into a dissenter instantly";
     }
 
+    public override List<FollowerCommandCategory> Categories => new() { FollowerCommandCategory.MAKE_DEMAND_COMMAND };
+
     public override void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
     {
         interaction.follower.Brain.MakeDissenter();
         interaction.Close(true, reshowMenu: false);
+    }
+
+    public DebugFollowerCommandClass2()
+    {
+        SubCommands = FollowerCommandGroups.AreYouSureCommands();
     }
 }

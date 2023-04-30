@@ -1,15 +1,16 @@
+using Random = UnityEngine.Random;
 using COTL_API.CustomObjectives;
 using COTL_API.CustomTarotCard;
+using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
-using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace COTL_API.Debug;
 
 [HarmonyPatch]
 public class DebugCode
 {
+
     [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
     [HarmonyPrefix]
     public static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
@@ -50,14 +51,14 @@ public class DebugCode
             CustomTarotCardManager.CustomTarotCardList.ContainsKey(c) ||
             DataManager.Instance.PlayerRunTrinkets.Any(t => t.CardType == c));
 
-        return new TarotCards.TarotCard(
+        return new(
             vanillaCardList.ElementAt(Random.Range(0,
                 vanillaCardList.Count)), 0);
     }
 
     internal static TarotCards.TarotCard GetRandModdedCard()
     {
-        return new TarotCards.TarotCard(
+        return new(
             CustomTarotCardManager.CustomTarotCardList.Keys.ElementAt(Random.Range(0,
                 CustomTarotCardManager.CustomTarotCardList.Count)), 0);
     }

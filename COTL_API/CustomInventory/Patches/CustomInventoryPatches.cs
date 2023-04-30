@@ -1,10 +1,9 @@
-﻿using System.Reflection;
+﻿using Lamb.UI.FollowerInteractionWheel;
 using System.Reflection.Emit;
+using System.Reflection;
+using UnityEngine;
 using HarmonyLib;
 using Lamb.UI;
-using Lamb.UI.Assets;
-using Lamb.UI.FollowerInteractionWheel;
-using UnityEngine;
 
 namespace COTL_API.CustomInventory;
 
@@ -44,7 +43,9 @@ public static partial class CustomItemManager
 
         if (Inventory.items.Where(item => CustomItemList.ContainsKey((InventoryItem.ITEM_TYPE)item.type)).Any(item =>
                 CustomItemList[(InventoryItem.ITEM_TYPE)item.type].CanBeGivenToFollower))
+        {
             __result = true;
+        }
     }
 
     [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.GiftCommands))]
@@ -52,9 +53,9 @@ public static partial class CustomItemManager
     private static void FollowerCommandGroups_GiftCommands(ref List<CommandItem> __result)
     {
         __result.AddRange(from item in CustomItemList.Values
-            where item.CanBeGivenToFollower
-            where 0 < Inventory.GetItemQuantity(item.ItemType)
-            select new FollowerCommandItems.GiftCommandItem(item.ItemType) { Command = item.GiftCommand });
+                          where item.CanBeGivenToFollower
+                          where 0 < Inventory.GetItemQuantity(item.ItemType)
+                          select new FollowerCommandItems.GiftCommandItem(item.ItemType) { Command = item.GiftCommand });
     }
 
     [HarmonyPatch(typeof(FollowerCommandItems.GiftCommandItem), nameof(FollowerCommandItems.GiftCommandItem.GetTitle))]
@@ -76,7 +77,7 @@ public static partial class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryIconMapping), nameof(InventoryIconMapping.GetImage),
+    [HarmonyPatch(typeof(Lamb.UI.Assets.InventoryIconMapping), nameof(Lamb.UI.Assets.InventoryIconMapping.GetImage),
         typeof(InventoryItem.ITEM_TYPE))]
     [HarmonyPrefix]
     private static bool InventoryIconMapping_GetImage(InventoryItem.ITEM_TYPE type, ref Sprite __result)
@@ -273,17 +274,17 @@ public static partial class CustomItemManager
 
                 if (instruction.LoadsField(typeof(InventoryMenu).GetField("_currencyFilter",
                         BindingFlags.NonPublic | BindingFlags.Instance)))
-                    yield return new CodeInstruction(OpCodes.Call,
+                    yield return new(OpCodes.Call,
                         SymbolExtensions.GetMethodInfo(() => AppendCustomCurrencies(null)));
-
+                
                 if (instruction.LoadsField(typeof(InventoryMenu).GetField("_foodSorter",
                         BindingFlags.NonPublic | BindingFlags.Instance)))
-                    yield return new CodeInstruction(OpCodes.Call,
+                    yield return new(OpCodes.Call,
                         SymbolExtensions.GetMethodInfo(() => AppendCustomFood(null)));
-
+                
                 if (instruction.LoadsField(typeof(InventoryMenu).GetField("_itemsSorter",
                         BindingFlags.NonPublic | BindingFlags.Instance)))
-                    yield return new CodeInstruction(OpCodes.Call,
+                    yield return new(OpCodes.Call,
                         SymbolExtensions.GetMethodInfo(() => AppendCustomItem(null)));
             }
         }
@@ -292,11 +293,10 @@ public static partial class CustomItemManager
             ICollection<InventoryItem.ITEM_TYPE>? currencyFilter)
         {
             return currencyFilter?.Concat(CustomItemList
-                .Where(i => !currencyFilter.Contains(i.Key) &&
-                            i.Value.InventoryItemType == CustomInventoryItemType.CURRENCY)
+                .Where(i => !currencyFilter.Contains(i.Key) && i.Value.InventoryItemType == CustomInventoryItemType.CURRENCY)
                 .Select(i => i.Key)).ToList();
         }
-
+        
         internal static List<InventoryItem.ITEM_TYPE>? AppendCustomFood(
             ICollection<InventoryItem.ITEM_TYPE>? foodSorter)
         {
@@ -304,7 +304,7 @@ public static partial class CustomItemManager
                 .Where(i => !foodSorter.Contains(i.Key) && i.Value.InventoryItemType == CustomInventoryItemType.FOOD)
                 .Select(i => i.Key)).ToList();
         }
-
+        
         internal static List<InventoryItem.ITEM_TYPE>? AppendCustomItem(
             ICollection<InventoryItem.ITEM_TYPE>? itemsSorter)
         {

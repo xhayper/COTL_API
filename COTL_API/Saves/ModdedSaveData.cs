@@ -2,13 +2,21 @@ namespace COTL_API.Saves;
 
 public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
 {
+    public override int SAVE_SLOT { get; protected set; } = 5;
+    public override ModdedSaveLoadOrder LoadOrder { get; set; } = ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START;
+
+    public sealed override string GUID { get; protected set; }
+    public override bool IsLoaded { get; protected set; }
+
+    public T? Data { get; private set; }
+
     private readonly COTLDataReadWriter<T> _dataReadWriter = new();
 
     public ModdedSaveData(string guid)
     {
         GUID = guid;
 
-        _dataReadWriter.OnReadCompleted += delegate(T saveData)
+        _dataReadWriter.OnReadCompleted += delegate (T saveData)
         {
             Data = saveData;
             IsLoaded = true;
@@ -24,20 +32,12 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
         };
 
         _dataReadWriter.OnWriteCompleted += delegate { OnSaveCompleted?.Invoke(); };
-        _dataReadWriter.OnWriteError += delegate(MMReadWriteError error) { OnSaveError?.Invoke(error); };
+        _dataReadWriter.OnWriteError += delegate (MMReadWriteError error) { OnSaveError?.Invoke(error); };
     }
-
-    public override int SAVE_SLOT { get; protected set; } = 5;
-    public override ModdedSaveLoadOrder LoadOrder { get; set; } = ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START;
-
-    public sealed override string GUID { get; protected set; }
-    public override bool IsLoaded { get; protected set; }
-
-    public T? Data { get; private set; }
 
     public override void CreateDefault()
     {
-        Data = new T();
+        Data = new();
     }
 
     public override void Save(bool encrypt = true, bool backup = true)
@@ -65,10 +65,7 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
             : SAVE_SLOT));
     }
 
-    public override bool SaveExist(int? saveSlot = null)
-    {
-        return _dataReadWriter.FileExists(MakeSaveSlot(saveSlot));
-    }
+    public override bool SaveExist(int? saveSlot = null) => _dataReadWriter.FileExists(MakeSaveSlot(saveSlot));
 
     public override void DeleteSaveSlot(int? saveSlot = null)
     {
@@ -87,8 +84,6 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
         IsLoaded = true;
     }
 
-    public override string MakeSaveSlot(int? slot = null)
-    {
-        return slot != null ? $"{GUID}_{slot}.json" : $"{GUID}.json";
-    }
+    public override string MakeSaveSlot(int? slot = null) =>
+        slot != null ? $"{GUID}_{slot}.json" : $"{GUID}.json";
 }

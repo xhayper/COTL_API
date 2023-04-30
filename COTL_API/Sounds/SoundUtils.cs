@@ -1,7 +1,7 @@
-using BepInEx;
 using COTL_API.Helpers;
-using FMOD;
 using FMODUnity;
+using BepInEx;
+using FMOD;
 
 namespace COTL_API.Sounds;
 
@@ -16,22 +16,22 @@ public enum VolumeCategory
 public static class SoundUtils
 {
     /// <summary>
-    ///     The game's Master Volume.
+    /// The game's Master Volume.
     /// </summary>
     public static float MasterVolume => SettingsManager.Settings.Audio.MasterVolume;
 
     /// <summary>
-    ///     The game's Music Volume.
+    /// The game's Music Volume.
     /// </summary>
     public static float MusicVolume => SettingsManager.Settings.Audio.MusicVolume * MasterVolume;
 
     /// <summary>
-    ///     The game's SFX Volume.
+    /// The game's SFX Volume.
     /// </summary>
     public static float SfxVolume => SettingsManager.Settings.Audio.SFXVolume * MasterVolume;
 
     /// <summary>
-    ///     The game's VO Volume.
+    /// The game's VO Volume.
     /// </summary>
     public static float VoVolume => SettingsManager.Settings.Audio.VOVolume * MasterVolume;
 
@@ -64,9 +64,7 @@ public static class SoundUtils
 
     internal static string? GetPath(string fileName)
     {
-        var path = Path.IsPathRooted(fileName)
-            ? fileName
-            : Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories).FirstOrDefault();
+        var path = Path.IsPathRooted(fileName) ? fileName : Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories).FirstOrDefault();
 
         if (path == null) LogHelper.LogError($"Error: Couldn't find \"{fileName}\"");
 

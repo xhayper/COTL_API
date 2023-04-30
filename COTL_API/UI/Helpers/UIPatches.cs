@@ -1,8 +1,8 @@
-using HarmonyLib;
-using Lamb.UI.MainMenu;
 using Lamb.UI.PauseMenu;
-using TMPro;
+using Lamb.UI.MainMenu;
 using UnityEngine;
+using HarmonyLib;
+using TMPro;
 
 namespace COTL_API.UI.Helpers;
 

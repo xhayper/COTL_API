@@ -1,5 +1,5 @@
-﻿using HarmonyLib;
-using Lamb.UI.FollowerInteractionWheel;
+﻿using Lamb.UI.FollowerInteractionWheel;
+using HarmonyLib;
 
 namespace COTL_API.CustomFollowerCommand;
 

@@ -4,12 +4,11 @@ namespace COTL_API.CustomTasks;
 
 public abstract class CustomTask : FollowerTask
 {
+    public abstract string InternalName { get; }
+
     internal string ModPrefix = "";
     internal FollowerTaskType TaskType;
-    public abstract string InternalName { get; }
     public override FollowerTaskType Type => TaskType;
-
-    public override FollowerLocation Location => FollowerLocation.Base;
 
     public override int GetSubTaskCode()
     {
@@ -24,4 +23,6 @@ public abstract class CustomTask : FollowerTask
     {
         return follower == null ? _brain.LastPosition : follower.transform.position;
     }
+
+    public override FollowerLocation Location => FollowerLocation.Base;
 }

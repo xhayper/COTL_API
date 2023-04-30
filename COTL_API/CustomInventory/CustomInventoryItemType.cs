@@ -4,5 +4,5 @@ public enum CustomInventoryItemType
 {
     ITEM,
     CURRENCY,
-    FOOD
+    FOOD,
 }

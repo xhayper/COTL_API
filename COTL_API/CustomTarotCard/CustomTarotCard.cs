@@ -1,35 +1,25 @@
+using UnityEngine;
 using System.Text;
 using I2.Loc;
-using UnityEngine;
 
 namespace COTL_API.CustomTarotCard;
 
 public abstract class CustomTarotCard
 {
-    internal TarotCards.Card CardType;
+    public abstract string InternalName { get; }
 
     internal string ModPrefix = "";
-    public abstract string InternalName { get; }
+    internal TarotCards.Card CardType;
 
     public virtual TarotCards.CardCategory Category { get; }
     public virtual Sprite? CardSprite { get; internal set; }
-
-    public abstract string Skin { get; }
-
-    public virtual int TarotCardWeight => 150;
-
-    public virtual int MaxTarotCardLevel => 0;
-
-    public virtual string AnimationSuffix => $"Card {ModPrefix}.{InternalName} Animation Suffix not set";
-
-    public virtual bool IsCursedRelated => false;
 
     public virtual string LocalisedName()
     {
         var upgradeIndex =
             (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
-                where playerRunTrinket.CardType == CardType
-                select playerRunTrinket.UpgradeIndex).FirstOrDefault();
+             where playerRunTrinket.CardType == CardType
+             select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedName(upgradeIndex);
     }
@@ -53,8 +43,8 @@ public abstract class CustomTarotCard
     {
         var upgradeIndex =
             (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
-                where playerRunTrinket.CardType == CardType
-                select playerRunTrinket.UpgradeIndex).FirstOrDefault();
+             where playerRunTrinket.CardType == CardType
+             select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedDescription(upgradeIndex);
     }
@@ -72,6 +62,16 @@ public abstract class CustomTarotCard
     {
         return LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Lore");
     }
+
+    public abstract string Skin { get; }
+
+    public virtual int TarotCardWeight => 150;
+
+    public virtual int MaxTarotCardLevel => 0;
+
+    public virtual string AnimationSuffix => $"Card {ModPrefix}.{InternalName} Animation Suffix not set";
+
+    public virtual bool IsCursedRelated => false;
 
     public virtual float GetSpiritHeartCount(TarotCards.TarotCard card)
     {
