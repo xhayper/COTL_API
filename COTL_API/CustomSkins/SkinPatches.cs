@@ -1,17 +1,20 @@
-﻿using UnityEngine.Experimental.Rendering;
-using LeTai.Asset.TranslucentImage;
-using COTL_API.Helpers;
-using UnityEngine;
+﻿using COTL_API.Helpers;
 using HarmonyLib;
 using Lamb.UI;
+using LeTai.Asset.TranslucentImage;
 using Spine;
+using UnityEngine;
+using UnityEngine.Experimental.Rendering;
+using Object = UnityEngine.Object;
 
 namespace COTL_API.CustomSkins;
 
 [HarmonyPatch]
 public partial class CustomSkinManager
 {
-    [HarmonyPatch(typeof(SkeletonData), nameof(SkeletonData.FindSkin), new[] { typeof(string) })]
+    internal static readonly Dictionary<string, Texture2D> CachedTextures = new();
+
+    [HarmonyPatch(typeof(SkeletonData), nameof(SkeletonData.FindSkin), typeof(string))]
     [HarmonyPostfix]
     public static void SkeletonData_FindSkin(ref Skin? __result, SkeletonData __instance, string skinName)
     {
@@ -22,14 +25,9 @@ public partial class CustomSkinManager
         __result = CustomFollowerSkins[skinName];
     }
 
-    internal static readonly Dictionary<string, Texture2D> CachedTextures = new();
-
-    [HarmonyPatch(typeof(Graphics), nameof(Graphics.CopyTexture),
-        new[]
-        {
-            typeof(Texture), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int), typeof(int),
-            typeof(Texture), typeof(int), typeof(int), typeof(int), typeof(int)
-        })]
+    [HarmonyPatch(typeof(Graphics), nameof(Graphics.CopyTexture), typeof(Texture), typeof(int), typeof(int),
+        typeof(int), typeof(int), typeof(int), typeof(int), typeof(Texture), typeof(int), typeof(int), typeof(int),
+        typeof(int))]
     [HarmonyPrefix]
     public static bool Graphics_CopyTexture(ref Texture src, int srcElement, int srcMip, int srcX, int srcY,
         int srcWidth, int srcHeight, ref Texture dst, int dstElement, int dstMip, int dstX, int dstY)
@@ -55,12 +53,8 @@ public partial class CustomSkinManager
         var fullPix = orig.GetPixels32();
         var croppedPix = new Color32[srcWidth * srcHeight];
         for (var i = 0; i < srcHeight; i++)
-        {
-            for (var j = 0; j < srcWidth; j++)
-            {
-                croppedPix[(i * srcWidth) + j] = fullPix[((i + srcY) * orig.width) + j + srcX];
-            }
-        }
+        for (var j = 0; j < srcWidth; j++)
+            croppedPix[i * srcWidth + j] = fullPix[(i + srcY) * orig.width + j + srcX];
 
         dst2d.SetPixels32(croppedPix);
 
@@ -105,7 +99,7 @@ public partial class CustomSkinManager
         UIFollowerIndoctrinationMenuController __instance)
     {
         var image = __instance.gameObject.GetComponentsInChildren(typeof(TranslucentImage))[0].gameObject;
-        UnityEngine.Object.Destroy(image);
+        Object.Destroy(image);
     }
 
     [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.SetSkin), typeof(bool))]
@@ -114,16 +108,14 @@ public partial class CustomSkinManager
     {
         SkinUtils.InvokeOnFindSkin();
         if (PlayerSkinOverride == null) return true;
-        __instance.PlayerSkin = new("Player Skin");
+        __instance.PlayerSkin = new Skin("Player Skin");
         var skin = PlayerSkinOverride[0] ??
                    __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerFleece +
                                                            (BlackAndWhite ? "_BW" : ""));
         __instance.PlayerSkin.AddSkin(skin);
         var text = WeaponData.Skins.Normal.ToString();
         if (DataManager.Instance.CurrentWeapon != EquipmentType.None)
-        {
             text = EquipmentManager.GetWeaponData(DataManager.Instance.CurrentWeapon).Skin.ToString();
-        }
 
         var skin2 = __instance.Spine.Skeleton.Data.FindSkin("Weapons/" + text);
         __instance.PlayerSkin.AddSkin(skin2);

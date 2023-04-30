@@ -1,4 +1,5 @@
 ﻿using COTL_API.CustomObjectives;
+using Random = UnityEngine.Random;
 
 namespace COTL_API.Saves;
 
@@ -10,7 +11,7 @@ public class ApiSlotData
         "Another day another unstable API! Hello!", "Proud bug maker!"
     };
 
-    public string OwO => _randomEasteregg[UnityEngine.Random.Range(0, _randomEasteregg.Length)];
+    public string OwO => _randomEasteregg[Random.Range(0, _randomEasteregg.Length)];
 
     public Dictionary<int, CustomObjective> QuestData { get; set; } = new();
 }

@@ -1,7 +1,7 @@
-﻿using Lamb.UI.BuildMenu;
-using COTL_API.Helpers;
-using UnityEngine;
+﻿using COTL_API.Helpers;
 using HarmonyLib;
+using Lamb.UI.BuildMenu;
+using UnityEngine;
 
 namespace COTL_API.CustomStructures;
 
@@ -48,8 +48,8 @@ public partial class CustomStructureManager
         FollowerCategory.Category category)
     {
         __result.AddRange(from structure in CustomStructureList.Values
-                          where structure.Category == category
-                          select structure.StructureType);
+            where structure.Category == category
+            select structure.StructureType);
     }
 
     [HarmonyPatch(typeof(StructuresData), "GetUnlocked")]
@@ -91,7 +91,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetLocalizedNameStatic", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "GetLocalizedNameStatic", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_GetLocalizedNameStatic(StructureBrain.TYPES Type, ref string __result)
     {
@@ -100,7 +100,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "LocalizedName", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "LocalizedName", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_LocalizedName(StructureBrain.TYPES Type, ref string __result)
     {
@@ -109,7 +109,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "LocalizedDescription", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "LocalizedDescription", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_LocalizedDescription(StructureBrain.TYPES Type, ref string __result)
     {
@@ -118,7 +118,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "LocalizedPros", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "LocalizedPros", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_LocalizedPros(StructureBrain.TYPES Type, ref string __result)
     {
@@ -127,7 +127,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "LocalizedCons", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "LocalizedCons", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_LocalizedCons(StructureBrain.TYPES Type, ref string __result)
     {
@@ -145,7 +145,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetLocalizedName", new Type[] { typeof(bool), typeof(bool), typeof(bool) })]
+    [HarmonyPatch(typeof(StructuresData), "GetLocalizedName", typeof(bool), typeof(bool), typeof(bool))]
     [HarmonyPrefix]
     public static bool StructuresData_GetLocalizedName(StructuresData __instance, bool plural, bool withArticle,
         bool definite, ref string __result)
@@ -173,7 +173,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetResearchCost", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "GetResearchCost", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_GetResearchCost(StructureBrain.TYPES Type, ref int __result)
     {
@@ -182,7 +182,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "RequiresTempleToBuild", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "RequiresTempleToBuild", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_RequiresTempleToBuild(StructureBrain.TYPES type, ref bool __result)
     {
@@ -191,7 +191,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetBuildOnlyOne", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "GetBuildOnlyOne", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_GetBuildOnlyOne(StructureBrain.TYPES Type, ref bool __result)
     {
@@ -200,7 +200,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetBuildSfx", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "GetBuildSfx", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_GetBuildSfx(StructureBrain.TYPES Type, ref string __result)
     {
@@ -209,7 +209,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "HiddenUntilUnlocked", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "HiddenUntilUnlocked", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_HiddenUntilUnlocked(StructureBrain.TYPES structure, ref bool __result)
     {
@@ -218,7 +218,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "CanBeFlipped", new Type[] { typeof(StructureBrain.TYPES) })]
+    [HarmonyPatch(typeof(StructuresData), "CanBeFlipped", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     public static bool StructuresData_CanBeFlipped(StructureBrain.TYPES type, ref bool __result)
     {
@@ -235,7 +235,7 @@ public partial class CustomStructureManager
         if (CustomStructureList[__instance.Type].Interaction == null) return;
 
         LogHelper.LogDebug("adding structure interaction " +
-                                            CustomStructureList[__instance.Type].Interaction);
+                           CustomStructureList[__instance.Type].Interaction);
         var parent = __instance.GetComponentInParent<Transform>();
         parent.gameObject.AddComponent(CustomStructureList[__instance.Type].Interaction);
     }

@@ -1,10 +1,10 @@
 ﻿using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomInventory;
-using UnityEngine.TextCore;
 using COTL_API.Helpers;
 using COTL_API.Icons;
 using HarmonyLib;
 using TMPro;
+using UnityEngine.TextCore;
 
 namespace COTL_API.Patches;
 

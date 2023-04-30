@@ -1,16 +1,17 @@
-﻿using UnityEngine.ResourceManagement.ResourceProviders;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement;
-using UnityEngine.AddressableAssets;
-using COTL_API.CustomStructures;
-using UnityEngine;
+﻿using COTL_API.CustomStructures;
 using HarmonyLib;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 
 namespace COTL_API.Prefabs;
 
 [HarmonyPatch]
 public static class CustomPrefabManager
 {
+    private static string? pathOverride;
     private static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
 
     public static string GetOrCreateBuildingPrefab(CustomStructure structure)
@@ -28,12 +29,10 @@ public static class CustomPrefabManager
     private static void CreateBuildingPrefabOverride(string name, ref AsyncOperationHandle<GameObject> handle)
     {
         if (!PrefabStrings.ContainsKey(name))
-        {
             GetOrCreateBuildingPrefab(CustomStructureManager.GetStructureByPrefabName(name));
-        }
 
         var sprite = PrefabStrings[name].Sprite;
-        handle.Completed += delegate (AsyncOperationHandle<GameObject> obj)
+        handle.Completed += delegate(AsyncOperationHandle<GameObject> obj)
         {
             var spriteRenderer = obj.Result.GetComponentInChildren<SpriteRenderer>();
             var structure = obj.Result.GetComponentInChildren<Structure>();
@@ -43,8 +42,6 @@ public static class CustomPrefabManager
             obj.Result.name = name + " (Custom Structure)";
         };
     }
-
-    private static string? pathOverride;
 
     [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters),
         typeof(bool))]

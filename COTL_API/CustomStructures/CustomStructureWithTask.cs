@@ -5,7 +5,7 @@ public abstract class CustomStructureWithTask : CustomStructure, ITaskProvider
     //hewwo?
     //uwu
     //rawr~
-    
+
     public override string InternalName => "Custom_Task_Structure";
     public abstract FollowerTask StructureTask { get; }
 
