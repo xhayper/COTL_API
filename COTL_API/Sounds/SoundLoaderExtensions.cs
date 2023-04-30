@@ -5,7 +5,7 @@ namespace COTL_API.Sounds;
 public static class SoundLoaderExtensions
 {
     /// <summary>
-    /// Add the SoundLoader component to a GameObject, making it able to play sound in the scene. 
+    ///     Add the SoundLoader component to a GameObject, making it able to play sound in the scene.
     /// </summary>
     /// <param name="obj">The GameObject you wish to attach the SoundLoader to.</param>
     /// <returns>The SoundLoader component attached to the GameObject.</returns>

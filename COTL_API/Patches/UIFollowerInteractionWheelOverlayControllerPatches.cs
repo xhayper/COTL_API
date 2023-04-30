@@ -1,6 +1,6 @@
-﻿using Lamb.UI.FollowerInteractionWheel;
-using COTL_API.Helpers;
+﻿using COTL_API.Helpers;
 using HarmonyLib;
+using Lamb.UI.FollowerInteractionWheel;
 
 namespace COTL_API.Patches;
 
@@ -22,14 +22,14 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
 
             {
                 LogHelper.LogDebug(
-                    $"Custom command with sub commands, not letting normal method run.");
+                    "Custom command with sub commands, not letting normal method run.");
                 __state = true;
                 return false;
             }
 
             if (Plugin.Instance != null && Plugin.Instance.Debug)
                 LogHelper.LogDebug(
-                    $"Not a custom command or doesnt have sub-commands, letting normal method run.");
+                    "Not a custom command or doesnt have sub-commands, letting normal method run.");
             __state = false;
             return true;
         }
@@ -46,7 +46,7 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
         {
             if (!__state) return;
             if (Plugin.Instance != null && Plugin.Instance.Debug)
-                LogHelper.LogDebug($"Custom command original method skipped, this is from the postfix.");
+                LogHelper.LogDebug("Custom command original method skipped, this is from the postfix.");
             if (item.CommandItem.SubCommands is { Count: > 0 })
             {
                 if (item.CommandItem.IsAvailable(____follower))
@@ -62,7 +62,7 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
                 // it will now just close the menu instead of raising an exception
                 if (Plugin.Instance != null && Plugin.Instance.Debug)
                     LogHelper.LogDebug(
-                        $"User pressed select on a greyed out sub command, closing menu and aborting choice.");
+                        "User pressed select on a greyed out sub command, closing menu and aborting choice.");
                 __instance.OnCancelButtonInput();
                 return;
             }

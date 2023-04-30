@@ -1,8 +1,8 @@
-﻿using Spine.Unity.AttachmentTools;
-using COTL_API.Helpers;
-using Spine.Unity;
-using UnityEngine;
+﻿using COTL_API.Helpers;
 using Spine;
+using Spine.Unity;
+using Spine.Unity.AttachmentTools;
+using UnityEngine;
 
 namespace COTL_API.CustomSkins;
 
@@ -10,13 +10,13 @@ internal static class SkinUtils
 {
     public static bool SkinsLoaded { get; internal set; }
 
+    public static Action? SkinToLoad { get; set; } = () => { };
+
     public static event Action OnFindSkin = () =>
     {
         SkinToLoad?.Invoke();
         SkinsLoaded = true;
     };
-
-    public static Action? SkinToLoad { get; set; } = () => { };
 
     public static void ApplyOverride(Skin skin, Attachment a, int slot, string ovrName, AtlasRegion atlasRegion,
         float scaleX, float scaleY, float translationX, float translationY)
@@ -24,52 +24,50 @@ internal static class SkinUtils
         switch (a)
         {
             case MeshAttachment meshAttachment:
-                {
-                    float minX = int.MaxValue;
-                    float maxX = int.MinValue;
-                    float minY = int.MaxValue;
-                    float maxY = int.MinValue;
+            {
+                float minX = int.MaxValue;
+                float maxX = int.MinValue;
+                float minY = int.MaxValue;
+                float maxY = int.MinValue;
 
-                    for (var j = 0; j < meshAttachment.Vertices.Length; j++)
+                for (var j = 0; j < meshAttachment.Vertices.Length; j++)
+                    switch (j % 3)
                     {
-                        switch (j % 3)
-                        {
-                            case 0:
-                                minY = Math.Min(minY, meshAttachment.Vertices[j]);
-                                maxY = Math.Max(maxY, meshAttachment.Vertices[j]);
-                                break;
-                            case 1:
-                                minX = Math.Min(minX, meshAttachment.Vertices[j]);
-                                maxX = Math.Max(maxX, meshAttachment.Vertices[j]);
-                                break;
-                        }
+                        case 0:
+                            minY = Math.Min(minY, meshAttachment.Vertices[j]);
+                            maxY = Math.Max(maxY, meshAttachment.Vertices[j]);
+                            break;
+                        case 1:
+                            minX = Math.Min(minX, meshAttachment.Vertices[j]);
+                            maxX = Math.Max(maxX, meshAttachment.Vertices[j]);
+                            break;
                     }
 
-                    var diffX = maxX - minX;
-                    var diffY = maxY - minY;
+                var diffX = maxX - minX;
+                var diffY = maxY - minY;
 
-                    minX += translationX;
-                    minY += translationY;
+                minX += translationX;
+                minY += translationY;
 
-                    var centerX = minX + (diffX / 2.0f);
-                    var centerY = minY + (diffY / 2.0f);
+                var centerX = minX + diffX / 2.0f;
+                var centerY = minY + diffY / 2.0f;
 
-                    minX = centerX - ((diffX / 2.0f) * scaleX);
-                    minY = centerY - ((diffY / 2.0f) * scaleY);
+                minX = centerX - diffX / 2.0f * scaleX;
+                minY = centerY - diffY / 2.0f * scaleY;
 
-                    RegionAttachment regionAttachment = new RegionAttachment("Custom" + ovrName);
-                    regionAttachment.SetRegion(atlasRegion);
+                var regionAttachment = new RegionAttachment("Custom" + ovrName);
+                regionAttachment.SetRegion(atlasRegion);
 
-                    regionAttachment.X = minY + diffY / 2.0f;
-                    regionAttachment.Y = minX + diffX / 2.0f;
-                    regionAttachment.rotation = -90;
-                    regionAttachment.ScaleX = 1;
-                    regionAttachment.ScaleY = 1;
-                    regionAttachment.Width = diffX;
-                    regionAttachment.Height = diffY;
-                    skin.SetAttachment(slot, ovrName, regionAttachment);
-                    break;
-                }
+                regionAttachment.X = minY + diffY / 2.0f;
+                regionAttachment.Y = minX + diffX / 2.0f;
+                regionAttachment.rotation = -90;
+                regionAttachment.ScaleX = 1;
+                regionAttachment.ScaleY = 1;
+                regionAttachment.Width = diffX;
+                regionAttachment.Height = diffY;
+                skin.SetAttachment(slot, ovrName, regionAttachment);
+                break;
+            }
             case RegionAttachment regionAttachment:
                 regionAttachment.Name = "Custom" + ovrName;
                 atlasRegion.name = "Custom" + atlasRegion.name;
@@ -140,10 +138,7 @@ internal static class SkinUtils
         foreach (var region in atlas.GetAtlas().regions)
         {
             var ovrs = regionOverrideFunction(region);
-            foreach (var ovr in ovrs)
-            {
-                overrideRegions.Add(ovr);
-            }
+            foreach (var ovr in ovrs) overrideRegions.Add(ovr);
         }
 
         List<Tuple<int, string, float, float, float, float>> overrides = new();

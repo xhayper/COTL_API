@@ -1,12 +1,21 @@
-using Random = UnityEngine.Random;
 using System.Reflection;
-using COTL_API.Helpers;
 using COTL_API.Guid;
+using COTL_API.Helpers;
+using Random = UnityEngine.Random;
 
 namespace COTL_API.CustomInventory;
 
 public static partial class CustomItemManager
 {
+    /// <summary>
+    ///     Used to define an items rarity for the purpose of adding them to offering shrines.
+    /// </summary>
+    public enum ItemRarity
+    {
+        COMMON,
+        RARE
+    }
+
     public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItemList { get; } = new();
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
@@ -24,16 +33,7 @@ public static partial class CustomItemManager
     }
 
     /// <summary>
-    /// Used to define an items rarity for the purpose of adding them to offering shrines.
-    /// </summary>
-    public enum ItemRarity
-    {
-        COMMON,
-        RARE
-    }
-
-    /// <summary>
-    /// A method to return whether to drop loot or not based on the custom items chances to drop.
+    ///     A method to return whether to drop loot or not based on the custom items chances to drop.
     /// </summary>
     /// <param name="customInventoryItem">The </param>
     /// <returns>Returns true/false based on the roll.</returns>
@@ -49,7 +49,7 @@ public static partial class CustomItemManager
     }
 
     /// <summary>
-    /// Used to retrieve the custom item from the custom item dictionary based on it's internal object name.
+    ///     Used to retrieve the custom item from the custom item dictionary based on it's internal object name.
     /// </summary>
     /// <param name="name">Name of the items internal object to search for.</param>
     /// <returns>If found, returns the CustomInventoryItem object.</returns>

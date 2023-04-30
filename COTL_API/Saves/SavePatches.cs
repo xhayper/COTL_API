@@ -10,19 +10,14 @@ public static partial class ModdedSaveManager
     {
         foreach (var saveData in ModdedSaveDataList.Values.Where(save =>
                      save.LoadOrder != ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE))
-        {
             saveData.Load(saveSlot);
-        }
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Save))]
     [HarmonyPostfix]
     private static void SaveAndLoad_Save()
     {
-        foreach (var saveData in ModdedSaveDataList.Values)
-        {
-            saveData.Save();
-        }
+        foreach (var saveData in ModdedSaveDataList.Values) saveData.Save();
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.ResetSave))]
@@ -31,9 +26,7 @@ public static partial class ModdedSaveManager
     {
         foreach (var saveData in ModdedSaveDataList.Values.Where(save =>
                      save.LoadOrder != ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE))
-        {
             saveData.ResetSave(saveSlot, newGame);
-        }
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.DeleteSaveSlot))]
@@ -42,8 +35,6 @@ public static partial class ModdedSaveManager
     {
         foreach (var saveData in ModdedSaveDataList.Values.Where(save =>
                      save.LoadOrder != ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE))
-        {
             saveData.DeleteSaveSlot(saveSlot);
-        }
     }
 }
