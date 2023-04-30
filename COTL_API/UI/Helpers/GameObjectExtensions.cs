@@ -1,8 +1,8 @@
-﻿using Image = UnityEngine.UI.Image;
+﻿using BepInEx;
 using COTL_API.Helpers;
-using UnityEngine;
-using BepInEx;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace COTL_API.UI.Helpers;
 
@@ -11,7 +11,7 @@ public static class GameObjectExtensions
     // Extension methods for GameObjects.
 
     /// <summary>
-    /// Attach a GameObject to a parent Transform.
+    ///     Attach a GameObject to a parent Transform.
     /// </summary>
     /// <param name="obj">The GameObject to be attached.</param>
     /// <param name="parent">The parent Transform.</param>
@@ -23,7 +23,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Change the local position of a GameObject.
+    ///     Change the local position of a GameObject.
     /// </summary>
     /// <param name="obj">The GameObject you want to change the local position of.</param>
     /// <param name="x">The GameObject's local position in the X axis.</param>
@@ -38,12 +38,12 @@ public static class GameObjectExtensions
         y ??= localRotation.y;
         z ??= localRotation.z;
 
-        obj.transform.localPosition = new((float)x, (float)y, (float)z);
+        obj.transform.localPosition = new Vector3((float)x, (float)y, (float)z);
         return obj;
     }
 
     /// <summary>
-    /// Change the local scale of a GameObject.
+    ///     Change the local scale of a GameObject.
     /// </summary>
     /// <param name="obj">The GameObject you want to change the local scale of.</param>
     /// <param name="x">The GameObject's local scale in the X axis.</param>
@@ -58,13 +58,13 @@ public static class GameObjectExtensions
         y ??= localScale.y;
         z ??= localScale.z;
 
-        localScale = new((float)x, (float)y, (float)z);
+        localScale = new Vector3((float)x, (float)y, (float)z);
         obj.transform.localScale = localScale;
         return obj;
     }
 
     /// <summary>
-    /// Change the local rotation of a GameObject.
+    ///     Change the local rotation of a GameObject.
     /// </summary>
     /// <param name="obj">The GameObject you want to change the rotation of.</param>
     /// <param name="x">The GameObject's local rotation in the X axis.</param>
@@ -84,7 +84,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Create a new GameObject and attach it to a parent GameObject.
+    ///     Create a new GameObject and attach it to a parent GameObject.
     /// </summary>
     /// <param name="obj">The parent GameObject you wish to attach the child to.</param>
     /// <param name="name">The child GameObject's name.</param>
@@ -96,7 +96,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Make a GameObject draggable when clicked.
+    ///     Make a GameObject draggable when clicked.
     /// </summary>
     /// <param name="obj">The GameObject you want to make draggable.</param>
     /// <returns>The GameObject with all changes applied.</returns>
@@ -107,7 +107,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Make a GameObject draggable when another GameObject is clicked.
+    ///     Make a GameObject draggable when another GameObject is clicked.
     /// </summary>
     /// <param name="obj">The GameObject that can be interacted with using the mouse.</param>
     /// <param name="dragRect">The RectTransform of the GameObject you wanna drag.</param>
@@ -120,7 +120,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Make a GameObject draggable when another GameObject is clicked.
+    ///     Make a GameObject draggable when another GameObject is clicked.
     /// </summary>
     /// <param name="obj">The GameObject that can be interacted with using the mouse.</param>
     /// <param name="dragObj">The GameObject you wanna drag.</param>
@@ -134,7 +134,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Make a GameObject function like a clickable UI button by adding the UIButton component to it.
+    ///     Make a GameObject function like a clickable UI button by adding the UIButton component to it.
     /// </summary>
     /// <param name="obj">The GameObject you wish to add the UIButton component to.</param>
     /// <returns>The UIButton component added to the GameObject.</returns>
@@ -145,7 +145,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Add the TextMeshProUGUI component to a GameObject, making it display text in the game's UI's font.
+    ///     Add the TextMeshProUGUI component to a GameObject, making it display text in the game's UI's font.
     /// </summary>
     /// <param name="obj">The GameObject you wish to attach the text to.</param>
     /// <param name="message">The text to be displayed.</param>
@@ -164,7 +164,8 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Edits the text contents of the TextMeshProUGUI component attached to a GameObject. If the GameObject does not have a TextMeshProUGUI component attached, this method does nothing.
+    ///     Edits the text contents of the TextMeshProUGUI component attached to a GameObject. If the GameObject does not have
+    ///     a TextMeshProUGUI component attached, this method does nothing.
     /// </summary>
     /// <param name="obj">The GameObject that holds the TextMeshProUGUI component.</param>
     /// <param name="message">The text to be displayed.</param>
@@ -191,7 +192,7 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Display an image by attaching an Image component to a GameObject.
+    ///     Display an image by attaching an Image component to a GameObject.
     /// </summary>
     /// <param name="obj">The GameObject you wish to attach the Image component to.</param>
     /// <param name="imagePath">The path for the image you wish to add.</param>
@@ -226,7 +227,7 @@ public static class GameObjectExtensions
     // I can change it if necessary (or make a variation of this method that takes a float).
 
     /// <summary>
-    /// Display an image by attaching an Image component to a GameObject.
+    ///     Display an image by attaching an Image component to a GameObject.
     /// </summary>
     /// <param name="obj">The GameObject you wish to attach the Image component to.</param>
     /// <param name="sprite">The sprite to be displayed.</param>
@@ -249,7 +250,8 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Edit the Image component attached to this GameObject to change what it displays. If no Image component is found, this method does nothing.
+    ///     Edit the Image component attached to this GameObject to change what it displays. If no Image component is found,
+    ///     this method does nothing.
     /// </summary>
     /// <param name="obj">The GameObject that holds the Image component.</param>
     /// <param name="sprite">The sprite you wish to attach to the Image component.</param>
@@ -269,7 +271,8 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Edit the Image component attached to this GameObject to change what it displays. If no Image component is found, this method does nothing.
+    ///     Edit the Image component attached to this GameObject to change what it displays. If no Image component is found,
+    ///     this method does nothing.
     /// </summary>
     /// <param name="obj">The GameObject that holds the Image component.</param>
     /// <param name="imagePath">The path to the image you wish to attach to the Image component.</param>
@@ -298,7 +301,8 @@ public static class GameObjectExtensions
     }
 
     /// <summary>
-    /// Change the opacity of the image displayed by the Image component attached to this GameObject. If no Image component is attached, this method does nothing.
+    ///     Change the opacity of the image displayed by the Image component attached to this GameObject. If no Image component
+    ///     is attached, this method does nothing.
     /// </summary>
     /// <param name="obj">The GameObject that holds the Image component.</param>
     /// <param name="opacity">The new opacity for the Image component's contents (from 0 to 100).</param>
