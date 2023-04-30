@@ -1,15 +1,16 @@
-using COTL_API.Helpers;
-using HarmonyLib;
-using MMBiomeGeneration;
-using MMRoomGeneration;
-using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
+using MMBiomeGeneration;
+using MMRoomGeneration;
+using COTL_API.Helpers;
+using UnityEngine;
+using HarmonyLib;
 
 namespace COTL_API.CustomInventory;
 
 /// <summary>
-///     This class is used for patches required for the custom items to spawn.
+/// This class is used for patches required for the custom items to spawn.
 /// </summary>
 [HarmonyPatch]
 public static partial class CustomItemManager
@@ -74,13 +75,16 @@ public static partial class CustomItemManager
             if (ObjectPool.instance.loadedAddressables.TryGetValue(item.Value.InternalObjectName, out _))
                 return;
 
-            var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(item.Value.InternalObjectName);
+            AsyncOperationHandle<GameObject> asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(item.Value.InternalObjectName);
             asyncOperationHandle.Completed += obj =>
             {
                 var _myObject = obj.Result;
-                if (_myObject != null) _myObject.SetActive(true);
+                if (_myObject != null)
+                {
+                    _myObject.SetActive(true);
+                }
                 _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.Value.ItemPickUpToImitate), null,
-                    instantiateInWorldSpace: false) as GameObject;
+                instantiateInWorldSpace: false) as GameObject;
                 LogHelper.LogWarning($"_myObject is NULL? {_myObject == null}");
                 _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Value.Sprite;
                 _myObject.name = item.Value.InternalObjectName;

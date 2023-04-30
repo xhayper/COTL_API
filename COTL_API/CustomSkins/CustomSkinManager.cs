@@ -1,8 +1,8 @@
 using COTL_API.Helpers;
-using HarmonyLib;
-using Spine;
 using Spine.Unity;
 using UnityEngine;
+using HarmonyLib;
+using Spine;
 
 namespace COTL_API.CustomSkins;
 
@@ -16,6 +16,10 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
 
     internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = new();
+
+    internal static string OverrideSkinName { get; set; } = "Default";
+
+    internal static List<Skin?>? PlayerSkinOverride { get; set; }
 
     internal static readonly List<Tuple<int, string>> SkinSlots = new()
     {
@@ -297,10 +301,6 @@ public static partial class CustomSkinManager
         { "LEFT_EYE_FIRE_7", Tuple.Create(85, "Face/EYE_FIRE7") }
     };
 
-    internal static string OverrideSkinName { get; set; } = "Default";
-
-    internal static List<Skin?>? PlayerSkinOverride { get; set; }
-
     public static void AddFollowerSkin(CustomFollowerSkin followerSkin)
     {
         var atlasText = followerSkin.GenerateAtlasText();
@@ -343,24 +343,24 @@ public static partial class CustomSkinManager
         if (SimplifiedSkinNames.TryGetValue(simpleName, out var simplified))
         {
             region.name = simplified.Item1 + ":" + simplified.Item2 + add;
-            return new List<Tuple<int, string>> { simplified };
+            return new() { simplified };
         }
 
-        if (!simpleName.Contains(":")) return new List<Tuple<int, string>>();
+        if (!simpleName.Contains(":")) return new();
 
         try
         {
             var rName = simpleName.Split(':')[1];
             var regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0]);
             region.name = regionIndex + ":" + rName + "#" + add;
-            return new List<Tuple<int, string>> { Tuple.Create(regionIndex, rName) };
+            return new() { Tuple.Create(regionIndex, rName) };
         }
         catch (Exception)
         {
             // ignored
         }
 
-        return new List<Tuple<int, string>>();
+        return new();
     }
 
     internal static void CreateNewFollowerType(string name, List<WorshipperData.SlotsAndColours> colors,
@@ -369,9 +369,9 @@ public static partial class CustomSkinManager
         WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData
         {
             Title = name,
-            Skin = new List<WorshipperData.CharacterSkin>
+            Skin = new()
             {
-                new WorshipperData.CharacterSkin
+                new()
                 {
                     Skin = name
                 }
@@ -380,7 +380,7 @@ public static partial class CustomSkinManager
             TwitchPremium = twitchPremium,
             _hidden = hidden,
             _dropLocation = WorshipperData.DropLocation.Other,
-            _invariant = invariant
+            _invariant = invariant,
         });
     }
 
@@ -398,9 +398,13 @@ public static partial class CustomSkinManager
         }
 
         if (Plugin.Started)
+        {
             Action();
+        }
         else
+        {
             Plugin.OnStart += Action;
+        }
     }
 
     public static void SetPlayerSkinOverride(Skin? normalSkin, Skin? hurtSkin = null, Skin? hurtSkin2 = null)

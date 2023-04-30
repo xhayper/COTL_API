@@ -1,19 +1,19 @@
 using COTL_API.Helpers;
-using FMOD;
 using UnityEngine;
+using FMOD;
 
 namespace COTL_API.Sounds;
 
 public class SoundLoader : MonoBehaviour
 {
-    // All existent SoundLoader instances, for management purposes.
-    internal static readonly List<SoundLoader> InstanceList = new();
+    // Sound cache
+    private readonly Dictionary<string, SoundWrapper> _soundCache = new();
 
     // The new sound cache.
     private readonly List<ChannelWrapper> _channelList = new();
 
-    // Sound cache
-    private readonly Dictionary<string, SoundWrapper> _soundCache = new();
+    // All existent SoundLoader instances, for management purposes.
+    internal static readonly List<SoundLoader> InstanceList = new();
 
     private void OnDestroy()
     {
@@ -22,15 +22,14 @@ public class SoundLoader : MonoBehaviour
     }
 
     /// <summary>
-    ///     Create a new Sound, which will be cached inside of SoundLoader and accessible with a string key (which will either
-    ///     be the file name or a name string passed as the second optional parameter).
+    /// Create a new Sound, which will be cached inside of SoundLoader and accessible with a string key (which will either be the file name or a name string passed as the second optional parameter).
     /// </summary>
     /// <param name="fileName">The name of your audio file.</param>
     /// <param name="name">A string key you can access the Sound with.</param>
     /// <returns>The Sound's string key.</returns>
     public string CreateSound(string fileName, string? name = null)
     {
-        var sound = new SoundWrapper(SoundUtils.MakeSound(fileName));
+        SoundWrapper sound = new SoundWrapper(SoundUtils.MakeSound(fileName));
         name ??= fileName;
         _soundCache.Add(name, sound);
         return name; // Return name of sound in the 'Sounds' dictionary!
@@ -40,24 +39,30 @@ public class SoundLoader : MonoBehaviour
     // == PLAYING AUDIO ==
 
     /// <summary>
-    ///     Play a cached Sound once as a sound effect.
+    /// Play a cached Sound once as a sound effect.
     /// </summary>
     /// <param name="name">The string key for the Sound you wanna play..</param>
     public void PlaySfx(string name)
     {
-        if (!_soundCache.ContainsKey(name)) LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
+        if (!_soundCache.ContainsKey(name))
+        {
+            LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
+        }
 
         var soundHandle = _soundCache[name];
-        SoundUtils.PlayOneShot(soundHandle);
+        SoundUtils.PlayOneShot(soundHandle, VolumeCategory.SFX);
     }
 
     /// <summary>
-    ///     Play a cached Sound in a loop.
+    /// Play a cached Sound in a loop.
     /// </summary>
     /// <param name="name">The string key of the cached Sound.</param>
     public void PlayMusic(string name)
     {
-        if (!_soundCache.ContainsKey(name)) LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
+        if (!_soundCache.ContainsKey(name))
+        {
+            LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
+        }
 
         var soundHandle = _soundCache[name];
         soundHandle.ChangeLoopMode(MODE.LOOP_NORMAL); // Music should loop
@@ -70,7 +75,7 @@ public class SoundLoader : MonoBehaviour
     }
 
     /// <summary>
-    ///     Create a Sound from an audio file and play it in a loop.
+    /// Create a Sound from an audio file and play it in a loop.
     /// </summary>
     /// <param name="fileName">The audio file's name.</param>
     /// <param name="name">The string key with which you can access this cached Sound later.</param>
@@ -81,7 +86,7 @@ public class SoundLoader : MonoBehaviour
     }
 
     /// <summary>
-    ///     Create a Sound from an audio file and play it once as a sound effect.
+    /// Create a Sound from an audio file and play it once as a sound effect.
     /// </summary>
     /// <param name="fileName">The audio file's name.</param>
     /// <param name="name">The string key with which you can access this cached Sound later.</param>
@@ -95,7 +100,7 @@ public class SoundLoader : MonoBehaviour
     // == MANAGEMENT ==
 
     /// <summary>
-    ///     Stop all music being played by this SoundLoader instance.
+    /// Stop all music being played by this SoundLoader instance.
     /// </summary>
     public void StopAll()
     {
@@ -109,7 +114,7 @@ public class SoundLoader : MonoBehaviour
     }
 
     /// <summary>
-    ///     Clear this SoundLoader instance's Sound cache.
+    /// Clear this SoundLoader instance's Sound cache.
     /// </summary>
     public void ClearSounds()
     {
@@ -130,8 +135,8 @@ public class SoundLoader : MonoBehaviour
     }
 
     /// <summary>
-    ///     Change the volume of a Channel independently of the game's audio settings.
-    ///     The ID of a channel is the same as the string key of the Sound it's currently playing.
+    /// Change the volume of a Channel independently of the game's audio settings.
+    /// The ID of a channel is the same as the string key of the Sound it's currently playing.
     /// </summary>
     /// <param name="id">The ID of the Channel you wish to change the volume of.</param>
     /// <param name="mul">The volume multiplier.</param>
@@ -145,8 +150,8 @@ public class SoundLoader : MonoBehaviour
     // == PLAYBACK CONTROLS ==
 
     /// <summary>
-    ///     Stops all sound in a Channel by ID.
-    ///     The ID of a channel is the same as the string key of the Sound it's currently playing.
+    /// Stops all sound in a Channel by ID.
+    /// The ID of a channel is the same as the string key of the Sound it's currently playing.
     /// </summary>
     /// <param name="name">The ID of the channel.</param>
     public void Stop(string name)
@@ -157,8 +162,8 @@ public class SoundLoader : MonoBehaviour
     }
 
     /// <summary>
-    ///     Pause all sound in a Channel by ID.
-    ///     The ID of a channel is the same as the string key of the Sound it's currently playing.
+    /// Pause all sound in a Channel by ID.
+    /// The ID of a channel is the same as the string key of the Sound it's currently playing.
     /// </summary>
     /// <param name="name">The ID of the channel.</param>
     /// <param name="pause"><c>true</c> to pause, <c>false</c> to unpause.</param>
@@ -169,7 +174,7 @@ public class SoundLoader : MonoBehaviour
     }
 
     /// <summary>
-    ///     Checks if a Sound is being played in any channel.
+    /// Checks if a Sound is being played in any channel.
     /// </summary>
     /// <param name="name">The string key of the Sound.</param>
     /// <returns><c>true</c> if any channel is playing the sound; <c>false</c> if not.</returns>
@@ -180,8 +185,8 @@ public class SoundLoader : MonoBehaviour
     }
 
     /// <summary>
-    ///     Checks if a Channel is paused.
-    ///     The ID of a channel is the same as the string key of the Sound it is (or was) currently playing.
+    /// Checks if a Channel is paused.
+    /// The ID of a channel is the same as the string key of the Sound it is (or was) currently playing.
     /// </summary>
     /// <param name="name">The string key of the Sound.</param>
     /// <returns><c>true</c> if the Channel is paused, <c>false</c> if not.</returns>

@@ -1,4 +1,5 @@
 ﻿using COTL_API.CustomStructures;
+using Lamb.UI.BuildMenu;
 using COTL_API.Helpers;
 using UnityEngine;
 
@@ -10,14 +11,14 @@ public class DebugStructure : CustomStructure
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder_1.png"));
 
     public override string InternalName => "DEBUG_STRUCTURE";
-
+    
     public override Vector2Int Bounds => new(1, 1);
 
     public override int BuildDurationMinutes => 15;
 
     public override List<StructuresData.ItemCost> Cost => new()
     {
-        new StructuresData.ItemCost(Plugin.Instance!.DebugItem, 1)
+        new(Plugin.Instance!.DebugItem, 1)
     };
 
     public override string GetLocalizedName()

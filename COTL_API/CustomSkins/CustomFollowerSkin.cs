@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace COTL_API.CustomSkins;
+﻿namespace COTL_API.CustomSkins;
 
 public abstract class CustomFollowerSkin : CustomSkin
 {
@@ -13,17 +11,17 @@ public abstract class CustomFollowerSkin : CustomSkin
     {
         new WorshipperData.SlotsAndColours
         {
-            SlotAndColours = new List<WorshipperData.SlotAndColor>
+            SlotAndColours = new()
             {
-                new WorshipperData.SlotAndColor("ARM_LEFT_SKIN", new Color(1, 0, 1)),
-                new WorshipperData.SlotAndColor("ARM_RIGHT_SKIN", new Color(0, 0, 0)),
-                new WorshipperData.SlotAndColor("LEG_LEFT_SKIN", new Color(1, 0, 1)),
-                new WorshipperData.SlotAndColor("LEG_RIGHT_SKIN", new Color(0, 0, 0)),
-                new WorshipperData.SlotAndColor("BODY_SKIN", new Color(1, 0, 1)),
-                new WorshipperData.SlotAndColor("BODY_SKIN_BOWED", new Color(1, 0, 1)),
-                new WorshipperData.SlotAndColor("BODY_SKIN_UP", new Color(1, 0, 1)),
-                new WorshipperData.SlotAndColor("HEAD_SKIN_BTM", new Color(1, 0, 1)),
-                new WorshipperData.SlotAndColor("HEAD_SKIN_TOP", new Color(0, 0, 0))
+                new("ARM_LEFT_SKIN", new(1, 0, 1)),
+                new("ARM_RIGHT_SKIN", new(0, 0, 0)),
+                new("LEG_LEFT_SKIN", new(1, 0, 1)),
+                new("LEG_RIGHT_SKIN", new(0, 0, 0)),
+                new("BODY_SKIN", new(1, 0, 1)),
+                new("BODY_SKIN_BOWED", new(1, 0, 1)),
+                new("BODY_SKIN_UP", new(1, 0, 1)),
+                new("HEAD_SKIN_BTM", new(1, 0, 1)),
+                new("HEAD_SKIN_TOP", new(0, 0, 0)),
             }
         }
     };

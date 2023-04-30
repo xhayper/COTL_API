@@ -1,14 +1,14 @@
-﻿using COTL_API.Helpers;
-using I2.Loc;
-using Lamb.UI.FollowerInteractionWheel;
+﻿using Lamb.UI.FollowerInteractionWheel;
+using COTL_API.Helpers;
 using UnityEngine;
+using I2.Loc;
 
 namespace COTL_API.CustomFollowerCommand;
 
 public abstract class CustomFollowerCommand : CommandItem
 {
-    internal string ModPrefix = "";
     public abstract string InternalName { get; }
+    internal string ModPrefix = "";
 
     public virtual List<FollowerCommandCategory> Categories { get; } =
         new() { FollowerCommandCategory.DEFAULT_COMMAND };

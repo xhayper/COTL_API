@@ -1,9 +1,9 @@
-﻿using COTL_API.Helpers;
+﻿using Object = UnityEngine.Object;
+using UnityEngine.Events;
+using COTL_API.Helpers;
+using UnityEngine;
 using Lamb.UI;
 using TMPro;
-using UnityEngine;
-using UnityEngine.Events;
-using Object = UnityEngine.Object;
 
 namespace COTL_API.UI;
 

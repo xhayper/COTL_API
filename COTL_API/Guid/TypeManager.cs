@@ -1,9 +1,9 @@
+using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using BepInEx;
 using COTL_API.Helpers;
 using HarmonyLib;
+using BepInEx;
 
 namespace COTL_API.Guid;
 
@@ -12,8 +12,6 @@ namespace COTL_API.Guid;
 public static class TypeManager
 {
     private static readonly Dictionary<string, Type> TypeCache = new();
-
-    private static readonly Dictionary<string, string> ModIds = new();
 
     internal static void Add(string key, Type value)
     {
@@ -30,6 +28,8 @@ public static class TypeManager
 
         Add(key, value);
     }
+
+    private static readonly Dictionary<string, string> ModIds = new();
 
     private static string GetModIdFromAssembly(Assembly assembly)
     {
@@ -60,7 +60,7 @@ public static class TypeManager
             .FirstOrDefault(newVal => !string.IsNullOrEmpty(newVal))!;
     }
 
-    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), typeof(string), typeof(string))]
+    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]
     [MethodImpl(MethodImplOptions.NoInlining)]
     [HarmonyReversePatch]
     public static Type OriginalGetType(string nameSpace, string typeName)
@@ -68,7 +68,7 @@ public static class TypeManager
         throw new NotImplementedException();
     }
 
-    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), typeof(string), typeof(string))]
+    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]
     [HarmonyPrefix]
     private static bool GetCustomType(string nameSpace, string typeName, ref Type __result)
     {
@@ -78,7 +78,10 @@ public static class TypeManager
             return false;
         }
 
-        if (int.TryParse(typeName, out _)) LogHelper.LogInfo("This appears to be a custom type");
+        if (int.TryParse(typeName, out _))
+        {
+            LogHelper.LogInfo("This appears to be a custom type");
+        }
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");
         TypeCache.Add(typeName, __result);

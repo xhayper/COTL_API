@@ -1,27 +1,25 @@
-using FMOD;
-using FMODUnity;
 using UnityEngine;
+using FMODUnity;
+using FMOD;
 
 namespace COTL_API.Sounds;
 
 internal class ChannelWrapper
 {
-    private readonly SoundWrapper soundWrapper;
-
     // Channel through which all the sound is played.
     private Channel channel;
+    private readonly SoundWrapper soundWrapper;
+    public string ID { get; }
 
     // Volume control while still in sync with Master
     public float VolumeMultiplier = 1f;
 
     public ChannelWrapper(string id, in SoundWrapper sound, bool loop = false)
     {
-        channel = new Channel();
+        channel = new();
         ID = id;
         soundWrapper = sound;
     }
-
-    public string ID { get; }
 
     public RESULT Play()
     {

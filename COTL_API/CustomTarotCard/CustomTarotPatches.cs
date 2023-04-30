@@ -52,7 +52,7 @@ public partial class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedName), typeof(TarotCards.Card))]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedName), new[] { typeof(TarotCards.Card) })]
     [HarmonyPrefix]
     private static bool TarotCards_LocalisedName(TarotCards.Card type, ref string __result)
     {
@@ -63,7 +63,7 @@ public partial class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedName), typeof(TarotCards.Card), typeof(int))]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedName), new[] { typeof(TarotCards.Card), typeof(int) })]
     [HarmonyPrefix]
     private static bool TarotCards_LocalisedName(TarotCards.Card Card, int upgradeIndex, ref string __result)
     {

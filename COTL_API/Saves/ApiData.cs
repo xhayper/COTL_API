@@ -1,5 +1,3 @@
-using Random = UnityEngine.Random;
-
 namespace COTL_API.Saves;
 
 internal class ApiData
@@ -10,7 +8,7 @@ internal class ApiData
         "Another day another unstable API! Hello!", "Proud bug maker!"
     };
 
-    public string OwO => _randomEasterEgg[Random.Range(0, _randomEasterEgg.Length)];
+    public string OwO => _randomEasterEgg[UnityEngine.Random.Range(0, _randomEasterEgg.Length)];
 
     public ObjectDictionary EnumData { get; set; } = new();
 }

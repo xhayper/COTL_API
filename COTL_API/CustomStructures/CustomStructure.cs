@@ -1,17 +1,17 @@
-﻿using COTL_API.Helpers;
+﻿using Lamb.UI.BuildMenu;
+using COTL_API.Helpers;
 using COTL_API.Prefabs;
-using I2.Loc;
-using Lamb.UI.BuildMenu;
 using UnityEngine;
+using I2.Loc;
 
 namespace COTL_API.CustomStructures;
 
 public abstract class CustomStructure : StructureBrain
 {
-    internal string ModPrefix = "";
+    public abstract string InternalName { get; }
 
     internal TYPES StructureType;
-    public abstract string InternalName { get; }
+    internal string ModPrefix = "";
 
     public virtual Sprite Sprite { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
@@ -27,6 +27,19 @@ public abstract class CustomStructure : StructureBrain
 
     public virtual TypeAndPlacementObjects.Tier Tier => TypeAndPlacementObjects.Tier.Zero;
 
+    internal TypeAndPlacementObject GetTypeAndPlacementObject()
+    {
+        TypeAndPlacementObject tpo = new()
+        {
+            IconImage = Sprite,
+            Category = StructureCategories,
+            PlacementObject = CustomPrefabManager.CreatePlacementObjectFor(this),
+            Type = StructureType,
+            Tier = Tier,
+        };
+        return tpo;
+    }
+
     internal StructuresData StructuresData => new()
     {
         PrefabPath = PrefabPath,
@@ -38,19 +51,6 @@ public abstract class CustomStructure : StructureBrain
     public virtual Vector2Int Bounds => new(1, 1);
 
     public virtual List<StructuresData.ItemCost> Cost => new();
-
-    internal TypeAndPlacementObject GetTypeAndPlacementObject()
-    {
-        TypeAndPlacementObject tpo = new()
-        {
-            IconImage = Sprite,
-            Category = StructureCategories,
-            PlacementObject = CustomPrefabManager.CreatePlacementObjectFor(this),
-            Type = StructureType,
-            Tier = Tier
-        };
-        return tpo;
-    }
 
     internal string GetLocalizedNameStatic()
     {
