@@ -643,8 +643,7 @@ public static partial class CustomSkinManager
     public static void AddPlayerSkin(CustomPlayerSkin playerSkin)
     {
         CustomPlayerSkins.Add(playerSkin.Name, playerSkin);
-
-
+        
         if (Plugin.SkinSettings != null)
             Plugin.SkinSettings.Options =
                 new[] { "Default" }.Concat(CustomPlayerSkins.Keys).ToArray();
