@@ -5,8 +5,6 @@ namespace COTL_API.CustomRelics;
 
 public abstract class CustomRelicData : RelicData
 {
-    internal RelicType RelicType;
-
     internal string ModPrefix = "";
     public abstract string InternalName { get; }
 
