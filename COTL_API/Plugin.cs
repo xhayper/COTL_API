@@ -50,13 +50,6 @@ public class Plugin : BaseUnityPlugin
 
     internal string PluginPath { get; private set; } = "";
 
-    internal InventoryItem.ITEM_TYPE DebugItem { get; private set; }
-    internal InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
-    internal InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
-    internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
-
-    internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
-
     private ConfigEntry<bool>? _debug { get; set; }
     public bool Debug => _debug?.Value ?? false;
     internal static bool Started { get; private set; }
@@ -67,6 +60,15 @@ public class Plugin : BaseUnityPlugin
         Instance != null ? Instance.APISlotData.Data?.QuestData : null;
 
     internal static ObjectDictionary? EnumData => Instance != null ? Instance.APIData.Data?.EnumData : null;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    internal InventoryItem.ITEM_TYPE DebugItem { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
+
+    internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Awake()
     {
