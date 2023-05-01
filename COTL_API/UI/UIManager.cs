@@ -31,7 +31,7 @@ public static class UIManager
 
         if (SettingsUtils.SliderTemplate == null)
             SettingsUtils.SliderTemplate = __instance._gameSettings.GetComponentInChildren<ScrollRect>()
-                .content.GetChild(1).gameObject;
+                .content.GetChild(2).gameObject;
 
         if (SettingsUtils.DropdownTemplate == null)
             SettingsUtils.DropdownTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>()
