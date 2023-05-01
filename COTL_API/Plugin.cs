@@ -16,6 +16,7 @@ using COTL_API.Helpers;
 using COTL_API.Saves;
 using HarmonyLib;
 using I2.Loc;
+using Lamb.UI;
 using Lamb.UI.MainMenu;
 using MonoMod.Utils;
 using Spine;
@@ -237,6 +238,19 @@ public class Plugin : BaseUnityPlugin
 
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
+
+        CustomSettingsManager.AddDropdown("Debug", "Dropdown", "Option 1",
+            new[] { "Option 1", "Option 2", "Option 3" }, i => { Logger.LogDebug($"Dropdown selected {i}"); });
+
+        CustomSettingsManager.AddHorizontalSelector("Debug", "Horizontal Selector", "Option 1",
+            new[] { "Option 1", "Option 2", "Option 3" },
+            i => { Logger.LogDebug($"Horizontal Selector selected {i}"); });
+
+        CustomSettingsManager.AddSlider("Debug", "Slider", 0, -100, 100, 1, MMSlider.ValueDisplayFormat.RawValue,
+            i => { Logger.LogDebug($"Slider value: {i}"); });
+
+        CustomSettingsManager.AddToggle("Debug", "Toggle", true,
+            i => { Logger.LogDebug($"Toggled: {i}"); });
 
         Logger.LogDebug("Debug mode enabled!");
 
