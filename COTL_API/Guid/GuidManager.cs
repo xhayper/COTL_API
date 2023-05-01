@@ -2,16 +2,16 @@ namespace COTL_API.Guid;
 
 public static class GuidManager
 {
+    private const int StartIndex = 5000;
+
+    private const string MaxDataKey = "maximumStoredValueForEnum";
+
+    private static readonly Dictionary<int, Type> ReverseMapper = new();
+
     public static string GetFullyQualifiedName(string guid, string value)
     {
         return $"{guid}_{value}";
     }
-
-    private static readonly Dictionary<int, Type> ReverseMapper = new();
-
-    private const int StartIndex = 5000;
-
-    private const string MaxDataKey = "maximumStoredValueForEnum";
 
     public static Type? GetEnumType(int number)
     {

@@ -1,8 +1,8 @@
-﻿using Object = UnityEngine.Object;
+﻿using HarmonyLib;
+using Lamb.UI;
 using Lamb.UI.RefineryMenu;
 using src.UI.InfoCards;
-using HarmonyLib;
-using Lamb.UI;
+using Object = UnityEngine.Object;
 
 namespace COTL_API.CustomInventory;
 
@@ -16,7 +16,7 @@ public static partial class CustomItemManager
     {
         if (!CustomItemList.ContainsKey(Item)) return;
 
-        __result = new()
+        __result = new List<StructuresData.ItemCost>
         {
             new(CustomItemList[Item].RefineryInput, CustomItemList[Item].RefineryInputQty)
         };

@@ -20,6 +20,6 @@ public class DebugGiftFollowerCommand : CustomFollowerCommand.CustomFollowerComm
             interaction.follower.Brain.HardSwapToTask(new FollowerTask_InstantPoop());
             Inventory.ChangeItemQuantity(Plugin.Instance.DebugItem, -1);
         }));
-        interaction.Close();
+        interaction.Close(true, reshowMenu: false);
     }
 }

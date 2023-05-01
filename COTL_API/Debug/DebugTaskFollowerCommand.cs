@@ -33,6 +33,6 @@ public class DebugTaskFollowerCommand : CustomFollowerCommand.CustomFollowerComm
 
             interaction.follower.Brain.HardSwapToTask(new DebugTask());
         }));
-        interaction.Close();
+        interaction.Close(true, reshowMenu: false);
     }
 }

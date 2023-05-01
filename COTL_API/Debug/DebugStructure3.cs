@@ -1,6 +1,6 @@
 ﻿using COTL_API.CustomStructures;
-using Lamb.UI.BuildMenu;
 using COTL_API.Helpers;
+using Lamb.UI.BuildMenu;
 using UnityEngine;
 
 namespace COTL_API.Debug;
@@ -18,7 +18,7 @@ public class DebugStructure3 : CustomStructure
 
     public override List<StructuresData.ItemCost> Cost => new()
     {
-        new(Plugin.Instance!.DebugItem3, 3)
+        new StructuresData.ItemCost(Plugin.Instance!.DebugItem3, 3)
     };
 
     public override string GetLocalizedName()

@@ -1,9 +1,9 @@
-﻿using UnityEngine.ProBuilder;
-using COTL_API.Helpers;
-using Lamb.UI.Settings;
+﻿using COTL_API.Helpers;
 using HarmonyLib;
-using Lamb.UI;
 using I2.Loc;
+using Lamb.UI;
+using Lamb.UI.Settings;
+using UnityEngine.ProBuilder;
 
 namespace COTL_API.Localization;
 
@@ -26,7 +26,6 @@ public static class Localization
                 var key = "";
                 var value = "";
                 for (var i = 0; i < line.Length; i++)
-                {
                     if (line[i] == '"')
                     {
                         isInsideQuotes = !isInsideQuotes;
@@ -37,7 +36,6 @@ public static class Localization
                         value = line.Substring(i + 3, line.Length - i - 4);
                         break;
                     }
-                }
 
                 LocalizationMap[name].Add(key, value);
             }
@@ -47,7 +45,7 @@ public static class Localization
         else
         {
             LogHelper.LogError(
-                    $"Localization file not found! Please make sure that the path \"{path}\" contains the localization file.");
+                $"Localization file not found! Please make sure that the path \"{path}\" contains the localization file.");
         }
     }
 
@@ -79,10 +77,7 @@ public static class Localization
             SettingsManager.Settings.Game.Language = text;
             LocalizationManager.CurrentLanguage = text;
             __instance._cachedLanguage = text;
-            if (TwitchAuthentication.IsAuthenticated)
-            {
-                TwitchRequest.SendEBSData();
-            }
+            if (TwitchAuthentication.IsAuthenticated) TwitchRequest.SendEBSData();
 
             UnityEngine.Debug.Log("GameSettings - Change Language to " + text);
             LocalizationManager.LocalizeAll(true);
@@ -109,9 +104,6 @@ public static class Localization
     [HarmonyPrefix]
     public static void MMHorizontalSelector_UpdateContent(MMHorizontalSelector __instance, string[] newContent)
     {
-        if (__instance._contentIndex >= newContent.Length)
-        {
-            __instance._contentIndex = 0;
-        }
+        if (__instance._contentIndex >= newContent.Length) __instance._contentIndex = 0;
     }
 }

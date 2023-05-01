@@ -9,7 +9,6 @@ public static partial class ModdedSaveManager
 
     public static void RegisterModdedSave(BaseModdedSaveData saveData)
     {
-
         ModdedSaveDataList.Add(saveData.GUID, saveData);
         if (saveData.LoadOrder == ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE) saveData.Load();
     }
