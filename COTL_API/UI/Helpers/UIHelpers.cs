@@ -5,12 +5,12 @@ namespace COTL_API.UI.Helpers;
 public static class UIHelpers
 {
     /// <summary>
-    /// The game's UI layer.
+    ///     The game's UI layer.
     /// </summary>
     public static LayerMask UILayer => LayerMask.NameToLayer("UI");
 
     /// <summary>
-    /// Add your UI menu to the game's pause menu.
+    ///     Add your UI menu to the game's pause menu.
     /// </summary>
     /// <typeparam name="T">A class that inherits from UIMenuBase.</typeparam>
     public static void AddToPauseMenu<T>() where T : UIMenuBase
@@ -19,7 +19,7 @@ public static class UIHelpers
     }
 
     /// <summary>
-    /// Creates a GameObject in the game's UI layer.
+    ///     Creates a GameObject in the game's UI layer.
     /// </summary>
     /// <param name="name">The name given to your GameObject.</param>
     /// <returns>The GameObject created.</returns>
@@ -38,7 +38,7 @@ public static class UIHelpers
     }
 
     /// <summary>
-    /// Creates a GameObject in the game's UI layer.
+    ///     Creates a GameObject in the game's UI layer.
     /// </summary>
     /// <param name="name">The name given to your GameObject.</param>
     /// <param name="parent">The parent Transform this GameObject should be attached to.</param>

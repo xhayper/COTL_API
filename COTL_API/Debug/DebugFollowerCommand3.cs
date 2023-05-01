@@ -22,6 +22,6 @@ public class DebugFollowerCommandClass3 : CustomFollowerCommand.CustomFollowerCo
     public override void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
     {
-        interaction.Close();
+        interaction.Close(true, reshowMenu: false);
     }
 }

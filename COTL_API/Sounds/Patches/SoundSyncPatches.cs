@@ -1,5 +1,5 @@
-﻿using Lamb.UI.SettingsMenu;
-using HarmonyLib;
+﻿using HarmonyLib;
+using Lamb.UI.SettingsMenu;
 
 namespace COTL_API.Sounds.Patches;
 

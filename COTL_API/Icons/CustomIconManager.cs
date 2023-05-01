@@ -1,6 +1,7 @@
-﻿using UnityEngine.TextCore;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
+using UnityEngine.TextCore;
+using ShaderUtilities = TMPro.ShaderUtilities;
 
 namespace COTL_API.Icons;
 
@@ -28,14 +29,14 @@ internal static class CustomIconManager
         spriteAsset.hashCode = TMP_TextUtilities.GetSimpleHashCode(spriteAsset.name);
         spriteAsset.spriteSheet = texture;
 
-        spriteAsset.spriteGlyphTable = new();
-        spriteAsset.spriteCharacterTable = new();
+        spriteAsset.spriteGlyphTable = new List<TMP_SpriteGlyph>();
+        spriteAsset.spriteCharacterTable = new List<TMP_SpriteCharacter>();
 
         TMP_SpriteGlyph spriteGlyph = new()
         {
             index = 0,
             metrics = iconMetrics,
-            glyphRect = new(sprite.rect),
+            glyphRect = new GlyphRect(sprite.rect),
             scale = 1.25f,
             sprite = sprite
         };
@@ -52,7 +53,7 @@ internal static class CustomIconManager
 
         var shader = Shader.Find("TextMeshPro/Sprite");
         Material material = new(shader);
-        material.SetTexture(TMPro.ShaderUtilities.ID_MainTex, spriteAsset.spriteSheet);
+        material.SetTexture(ShaderUtilities.ID_MainTex, spriteAsset.spriteSheet);
 
         spriteAsset.material = material;
 

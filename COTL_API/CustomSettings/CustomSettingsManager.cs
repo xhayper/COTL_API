@@ -1,6 +1,6 @@
-﻿using COTL_API.CustomSettings.Elements;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using BepInEx.Configuration;
+using COTL_API.CustomSettings.Elements;
 using Lamb.UI;
 
 namespace COTL_API.CustomSettings;
@@ -11,7 +11,10 @@ public static class CustomSettingsManager
 
     internal static ReadOnlyCollection<Slider> Sliders => SettingsElements.OfType<Slider>().ToList().AsReadOnly();
     internal static ReadOnlyCollection<Dropdown> Dropdowns => SettingsElements.OfType<Dropdown>().ToList().AsReadOnly();
-    internal static ReadOnlyCollection<HorizontalSelector> HorizontalSelectors => SettingsElements.OfType<HorizontalSelector>().ToList().AsReadOnly();
+
+    internal static ReadOnlyCollection<HorizontalSelector> HorizontalSelectors =>
+        SettingsElements.OfType<HorizontalSelector>().ToList().AsReadOnly();
+
     internal static ReadOnlyCollection<Toggle> Toggles => SettingsElements.OfType<Toggle>().ToList().AsReadOnly();
 
     public static Slider AddSlider(string? category, string text, float value, float min, float max, int increment,
@@ -34,7 +37,7 @@ public static class CustomSettingsManager
             Plugin.SettingsData.Add(fullGuid, value);
         var slider = new Slider(category, text, Plugin.SettingsData.GetValueAsFloat(fullGuid), min, max,
             increment, displayFormat,
-            delegate (float newValue)
+            delegate(float newValue)
             {
                 if (Plugin.Instance != null)
                 {
@@ -49,7 +52,7 @@ public static class CustomSettingsManager
     }
 
     public static Dropdown AddDropdown(string? category, string text, string? value, string?[] options,
-    Action<int>? onValueChanged = null)
+        Action<int>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
         var dropdown = new Dropdown(category, text, value, options, onValueChanged);
@@ -57,7 +60,8 @@ public static class CustomSettingsManager
         return dropdown;
     }
 
-    public static Dropdown? AddSavedDropdown(string? category, string guid, string text, string value, string?[] options,
+    public static Dropdown? AddSavedDropdown(string? category, string guid, string text, string value,
+        string?[] options,
         Action<int>? onValueChanged = null)
     {
         if (Plugin.SettingsData == null) return null;
@@ -68,7 +72,7 @@ public static class CustomSettingsManager
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
         var dropdown = new Dropdown(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options, null);
-        dropdown.OnValueChanged = delegate (int newValue)
+        dropdown.OnValueChanged = delegate(int newValue)
         {
             if (Plugin.Instance != null)
             {
@@ -83,7 +87,8 @@ public static class CustomSettingsManager
         return dropdown;
     }
 
-    public static HorizontalSelector AddHorizontalSelector(string? category, string text, string? value, string?[] options,
+    public static HorizontalSelector AddHorizontalSelector(string? category, string text, string? value,
+        string?[] options,
         Action<int>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
@@ -92,7 +97,8 @@ public static class CustomSettingsManager
         return horizontalSelector;
     }
 
-    public static HorizontalSelector? AddSavedHorizontalSelector(string? category, string guid, string text, string value, string?[] options,
+    public static HorizontalSelector? AddSavedHorizontalSelector(string? category, string guid, string text,
+        string value, string?[] options,
         Action<int>? onValueChanged = null)
     {
         if (Plugin.SettingsData == null) return null;
@@ -102,8 +108,9 @@ public static class CustomSettingsManager
 
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
-        var horizontalSelector = new HorizontalSelector(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options, null);
-        horizontalSelector.OnValueChanged = delegate (int newValue)
+        var horizontalSelector = new HorizontalSelector(category, text, Plugin.SettingsData.GetValueAsString(fullGuid),
+            options, null);
+        horizontalSelector.OnValueChanged = delegate(int newValue)
         {
             if (Plugin.Instance != null)
             {
@@ -136,7 +143,7 @@ public static class CustomSettingsManager
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
         var toggle = new Toggle(category, text, Plugin.SettingsData.GetValueAsBoolean(fullGuid),
-            delegate (bool newValue)
+            delegate(bool newValue)
             {
                 if (Plugin.Instance != null)
                 {
@@ -154,61 +161,60 @@ public static class CustomSettingsManager
 
     // TODO: Improve BepInEx number config
 
-    public static HorizontalSelector? AddBepInExConfig(string? category, string text, ConfigEntry<string> entry, Action<int>? onValueChanged = null)
+    public static HorizontalSelector? AddBepInExConfig(string? category, string text, ConfigEntry<string> entry,
+        Action<int>? onValueChanged = null)
     {
         if (!(entry.Description.AcceptableValues is AcceptableValueList<string>)) return null;
         onValueChanged ??= delegate { };
 
-        var acceptedValue = ((AcceptableValueList<string>)entry.Description.AcceptableValues);
+        var acceptedValue = (AcceptableValueList<string>)entry.Description.AcceptableValues;
 
         var selector = new HorizontalSelector(category, text, entry.Value, acceptedValue.AcceptableValues,
-            delegate (int newValue)
+            delegate(int newValue)
             {
                 entry.Value = acceptedValue.AcceptableValues[newValue];
                 onValueChanged(newValue);
             });
 
-        entry.SettingChanged += delegate (object sender, EventArgs e)
-        {
-            selector.Value = entry.Value;
-        };
+        entry.SettingChanged += delegate { selector.Value = entry.Value; };
 
         SettingsElements.Add(selector);
         return selector;
     }
 
-    public static Slider? AddBepInExConfig(string? category, string text, ConfigEntry<float> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
+    public static Slider? AddBepInExConfig(string? category, string text, ConfigEntry<float> entry, int increment,
+        MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
     {
         if (!(entry.Description.AcceptableValues is AcceptableValueRange<float>)) return null;
         onValueChanged ??= delegate { };
 
-        var acceptedValue = ((AcceptableValueRange<float>)entry.Description.AcceptableValues);
+        var acceptedValue = (AcceptableValueRange<float>)entry.Description.AcceptableValues;
 
-        var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment, displayFormat,
-            delegate (float newValue)
+        var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment,
+            displayFormat,
+            delegate(float newValue)
             {
                 entry.Value = newValue;
                 onValueChanged(newValue);
             });
 
-        entry.SettingChanged += delegate (object sender, EventArgs e)
-        {
-            slider.Value = entry.Value;
-        };
+        entry.SettingChanged += delegate { slider.Value = entry.Value; };
 
         SettingsElements.Add(slider);
         return slider;
     }
 
-    public static Slider? AddBepInExConfig(string? category, string text, ConfigEntry<int> entry, int increment, MMSlider.ValueDisplayFormat displayFormat, Action<int>? onValueChanged = null)
+    public static Slider? AddBepInExConfig(string? category, string text, ConfigEntry<int> entry, int increment,
+        MMSlider.ValueDisplayFormat displayFormat, Action<int>? onValueChanged = null)
     {
         if (!(entry.Description.AcceptableValues is AcceptableValueRange<int>)) return null;
         onValueChanged ??= delegate { };
 
-        var acceptedValue = ((AcceptableValueRange<int>)entry.Description.AcceptableValues);
+        var acceptedValue = (AcceptableValueRange<int>)entry.Description.AcceptableValues;
 
-        var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment, displayFormat,
-            delegate (float newValue)
+        var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment,
+            displayFormat,
+            delegate(float newValue)
             {
                 var newVal = (int)Math.Floor(newValue);
 
@@ -216,30 +222,25 @@ public static class CustomSettingsManager
                 onValueChanged(newVal);
             });
 
-        entry.SettingChanged += delegate (object sender, EventArgs e)
-        {
-            slider.Value = entry.Value;
-        };
+        entry.SettingChanged += delegate { slider.Value = entry.Value; };
 
         SettingsElements.Add(slider);
         return slider;
     }
 
-    public static Toggle AddBepInExConfig(string? category, string text, ConfigEntry<bool> entry, Action<bool>? onValueChanged = null)
+    public static Toggle AddBepInExConfig(string? category, string text, ConfigEntry<bool> entry,
+        Action<bool>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
 
         var toggle = new Toggle(category, text, entry.Value,
-            delegate (bool newValue)
+            delegate(bool newValue)
             {
                 entry.BoxedValue = newValue;
                 onValueChanged(newValue);
             });
 
-        entry.SettingChanged += delegate (object sender, EventArgs e)
-        {
-            toggle.Value = entry.Value;
-        };
+        entry.SettingChanged += delegate { toggle.Value = entry.Value; };
 
         SettingsElements.Add(toggle);
         return toggle;
