@@ -642,7 +642,10 @@ public static partial class CustomSkinManager
 
     public static void AddPlayerSkin(CustomPlayerSkin playerSkin)
     {
-        CustomPlayerSkins.Add(playerSkin.Name, playerSkin);
+        if (!CustomPlayerSkins.TryAdd(playerSkin.Name, playerSkin))
+        {
+            LogHelper.LogWarning($"Duplicate skin name: {playerSkin.Name}");
+        }
         
         if (Plugin.SkinSettings != null)
             Plugin.SkinSettings.Options =
@@ -713,8 +716,15 @@ public static partial class CustomSkinManager
             var dog = WorshipperData.Instance.SkeletonData.Skeleton.Data.FindSkin("Dog");
             var skin2 = SkinUtils.ApplyAllOverrides(dog, skin, overrides, SkinMaterials[name], CustomAtlases[name]);
 
-            CustomFollowerSkins.Add(name, skin2);
-            AlwaysUnlockedSkins.Add(name, unlocked);
+           if (!CustomFollowerSkins.TryAdd(name, skin2))
+            {
+                LogHelper.LogWarning("Failed to add skin " + name + " to CustomFollowerSkins");
+            }
+           
+            if (!AlwaysUnlockedSkins.TryAdd(name, unlocked))
+            {
+                LogHelper.LogWarning("Failed to add skin " + name + " to AlwaysUnlockedSkins");
+            }
         }
 
         if (Plugin.Started)
