@@ -16,6 +16,7 @@ using COTL_API.Helpers;
 using COTL_API.Saves;
 using HarmonyLib;
 using I2.Loc;
+using Lamb.UI;
 using Lamb.UI.MainMenu;
 using MonoMod.Utils;
 using Spine;
@@ -49,13 +50,6 @@ public class Plugin : BaseUnityPlugin
 
     internal string PluginPath { get; private set; } = "";
 
-    internal InventoryItem.ITEM_TYPE DebugItem { get; private set; }
-    internal InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
-    internal InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
-    internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
-
-    internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
-
     private ConfigEntry<bool>? _debug { get; set; }
     public bool Debug => _debug?.Value ?? false;
     internal static bool Started { get; private set; }
@@ -66,6 +60,15 @@ public class Plugin : BaseUnityPlugin
         Instance != null ? Instance.APISlotData.Data?.QuestData : null;
 
     internal static ObjectDictionary? EnumData => Instance != null ? Instance.APIData.Data?.EnumData : null;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    internal InventoryItem.ITEM_TYPE DebugItem { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
+    internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
+
+    internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Awake()
     {
@@ -237,6 +240,19 @@ public class Plugin : BaseUnityPlugin
 
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
+
+        CustomSettingsManager.AddDropdown("Debug", "Dropdown", "Option 1",
+            new[] { "Option 1", "Option 2", "Option 3" }, i => { Logger.LogDebug($"Dropdown selected {i}"); });
+
+        CustomSettingsManager.AddHorizontalSelector("Debug", "Horizontal Selector", "Option 1",
+            new[] { "Option 1", "Option 2", "Option 3" },
+            i => { Logger.LogDebug($"Horizontal Selector selected {i}"); });
+
+        CustomSettingsManager.AddSlider("Debug", "Slider", 0, -100, 100, 1, MMSlider.ValueDisplayFormat.RawValue,
+            i => { Logger.LogDebug($"Slider value: {i}"); });
+
+        CustomSettingsManager.AddToggle("Debug", "Toggle", true,
+            i => { Logger.LogDebug($"Toggled: {i}"); });
 
         Logger.LogDebug("Debug mode enabled!");
 
