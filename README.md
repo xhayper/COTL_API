@@ -1,7 +1,7 @@
 # COTL_API
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=xhayper_COTL_API&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=xhayper_COTL_API)
-[![Wiki](https://img.shields.io/static/v1?label=wiki&message=read&style=flat&color=informational)](https://cotl-api.vercel.app/)
+[![Wiki](https://img.shields.io/static/v1?label=wiki&message=read&style=flat&color=informational)](https://cotl-api.vercel.app/introduction)
 [![Github](https://img.shields.io/static/v1?label=&message=github&style=flat&color=black&logo=github)](https://github.com/xhayper/COTL_API)
 [![Thunderstore](https://img.shields.io/static/v1?label=&message=thunderstore&style=flat&color=informational)](https://cult-of-the-lamb.thunderstore.io/package/xhayper/COTL_API/)
 
