@@ -142,7 +142,7 @@ public class Plugin : BaseUnityPlugin
     private void OnEnable()
     {
         _harmony.PatchAll(Assembly.GetExecutingAssembly());
-        Logger.LogInfo($"{Harmony.GetAllPatchedMethods().Count()} harmony patches applied!");
+        Logger.LogInfo($"{_harmony.GetPatchedMethods().Count()} harmony patches applied!");
     }
 
     private void OnDisable()
