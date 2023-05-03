@@ -15,10 +15,10 @@ public static partial class CustomRelicManager
         var relicType = GuidManager.GetEnumValue<RelicType>(guid, relicData.InternalName);
 
         relicData.ModPrefix = guid;
+        relicData.RelicType = relicType;
+        relicData.Init();
 
         CustomRelicDataList.Add(relicType, relicData);
-        if (!EquipmentManager.relicData.Contains(relicData))
-            EquipmentManager.relicData.AddToArray(relicData);
 
         return relicType;
     }

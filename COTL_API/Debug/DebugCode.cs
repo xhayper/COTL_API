@@ -21,6 +21,11 @@ public class DebugCode
         Inventory.AddItem(Plugin.Instance.DebugItem3, 1, true);
         Inventory.AddItem(Plugin.Instance.DebugItem4, 1, true);
 
+        if (PlayerFarming.Instance.playerRelic.CurrentRelic == null || PlayerFarming.Instance.playerRelic.CurrentRelic.RelicType != Plugin.Instance.DebugRelic)
+        {
+            PlayerFarming.Instance.playerRelic.EquipRelic(EquipmentManager.GetRelicData(Plugin.Instance.DebugRelic));
+        }
+        
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
     }
