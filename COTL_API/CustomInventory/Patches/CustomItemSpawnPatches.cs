@@ -77,14 +77,14 @@ public static partial class CustomItemManager
                 Addressables.LoadAssetAsync<GameObject>(item.Value.InternalObjectName);
             asyncOperationHandle.Completed += obj =>
             {
-                var _myObject = obj.Result;
-                if (_myObject != null) _myObject.SetActive(true);
-                _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.Value.ItemPickUpToImitate), null,
+                var myObject = obj.Result;
+                if (myObject != null) myObject.SetActive(true);
+                myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.Value.ItemPickUpToImitate), null,
                     instantiateInWorldSpace: false) as GameObject;
-                LogWarning($"_myObject is NULL? {_myObject == null}");
-                _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Value.Sprite;
-                _myObject.name = item.Value.InternalObjectName;
-                _myObject.transform.localScale = item.Value.LocalScale;
+                LogWarning($"myObject is NULL? {myObject == null}");
+                myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Value.Sprite;
+                myObject.name = item.Value.InternalObjectName;
+                myObject.transform.localScale = item.Value.LocalScale;
             };
 
             ObjectPool.instance.loadedAddressables.Add(item.Value.InternalObjectName, asyncOperationHandle);

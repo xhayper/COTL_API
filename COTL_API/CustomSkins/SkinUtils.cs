@@ -134,11 +134,7 @@ internal static class SkinUtils
 
         List<Tuple<int, string>> overrideRegions = new();
 
-        foreach (var region in atlas.GetAtlas().regions)
-        {
-            var ovrs = regionOverrideFunction(region);
-            foreach (var ovr in ovrs) overrideRegions.Add(ovr);
-        }
+        foreach (var ovrs in atlas.GetAtlas().regions.Select(regionOverrideFunction)) overrideRegions.AddRange(ovrs);
 
         List<Tuple<int, string, float, float, float, float>> overrides = new();
         List<AtlasRegion> list = atlas.GetAtlas().regions;
