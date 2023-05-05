@@ -27,11 +27,17 @@ public abstract class CustomPlayerSkin : CustomSkin
                             add = "#" + split[1];
                             simpleName = split[0];
                         }
-
-                        if (from.Attachments.All(x => x.Name != simpleName)) return new List<Tuple<int, string>>();
-
+                        
+                        if (CustomSkinManager.PlayerSkinDict.TryGetValue(simpleName, out var simplified))
+                        {
+                            region.name = simplified.Item1 + ":" + simplified.Item2 + add;
+                            return new List<Tuple<int, string>> {simplified};
+                        }
+                        
                         var atts = from.Attachments.Where(x => x.Name == simpleName);
                         List<Tuple<int, string>> tuples = new();
+                        if (from.Attachments.All(x => x.Name != simpleName)) return new List<Tuple<int, string>>();
+
                         foreach (var att in atts)
                         {
                             region.name = att.SlotIndex + ":" + att.Name + add;
