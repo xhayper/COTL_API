@@ -55,7 +55,7 @@ internal static class Debugging
             foreach (var relic in relics)
                 LogInfo($"{relic.Key}: {relic.Value.InternalName}");
 
-        var prefabs = PrefabsPatches.PrefabStrings;
+        var prefabs = CustomPrefabManager.PrefabStrings;
         LogInfo($"Prefabs: {prefabs.Count}");
         if (printNames)
             foreach (var prefab in prefabs)
