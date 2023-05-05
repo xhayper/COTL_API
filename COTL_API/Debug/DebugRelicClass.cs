@@ -4,30 +4,21 @@ namespace COTL_API.Debug;
 
 public class DebugRelicClass : CustomRelicData
 {
-    public override string InternalName => "DEBUG_RELIC";
+    public override string InternalName => "DEBUG_RELIC";   
 
+    public override string GetTitleLocalisation() => "DEBUG_RELIC";
+
+    public override string GetDescriptionLocalisation() => RelicSubType switch
+    {
+        RelicSubType.Blessed => "Gain 10 gold.",
+        RelicSubType.Dammed => "Gain 5 poop.",
+        _ => "Gain 5 gold."
+    };
+
+    public override string GetLoreLocalization() => "Only those who bear the power of the Debug shall be able to use this relic.";
+   
     public override bool CanBeBlessed => true;
     public override bool CanBeDamned => true;
-
-    public override string GetTitleLocalisation()
-    {
-        return "DEBUG_RELIC";
-    }
-
-    public override string GetDescriptionLocalisation()
-    {
-        return RelicSubType switch
-        {
-            RelicSubType.Blessed => "Gain 10 gold.",
-            RelicSubType.Dammed => "Gain 5 poop.",
-            _ => "Gain 5 gold."
-        };
-    }
-
-    public override string GetLoreLocalization()
-    {
-        return "Only those who bear the power of the Debug shall be able to use this relic.";
-    }
 
     public override void Init()
     {
@@ -36,17 +27,17 @@ public class DebugRelicClass : CustomRelicData
         WorldSprite = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
         DamageRequiredToCharge = 5.0f;
     }
-
+    
     public override void OnUse(bool forceConsumableAnimation = false)
     {
         Inventory.AddItem(InventoryItem.ITEM_TYPE.BLACK_GOLD, 5);
     }
-
+    
     public override void OnUseDamned(bool forceConsumableAnimation = false)
     {
         Inventory.AddItem(InventoryItem.ITEM_TYPE.POOP, 5);
     }
-
+    
     public override void OnUseBlessed(bool forceConsumableAnimation = false)
     {
         Inventory.AddItem(InventoryItem.ITEM_TYPE.BLACK_GOLD, 10);
