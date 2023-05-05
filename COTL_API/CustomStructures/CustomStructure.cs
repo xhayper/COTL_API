@@ -17,7 +17,7 @@ public abstract class CustomStructure : StructureBrain
 
     public virtual FollowerCategory.Category Category => FollowerCategory.Category.Misc;
 
-    public virtual string PrefabPath => PrefabsPatches.GetOrCreateBuildingPrefab(this);
+    public virtual string PrefabPath => CustomPrefabManager.GetOrCreateBuildingPrefab(this);
     public virtual int BuildDurationMinutes => 30;
 
     public virtual Type? Interaction => null;
@@ -44,7 +44,7 @@ public abstract class CustomStructure : StructureBrain
         {
             IconImage = Sprite,
             Category = StructureCategories,
-            PlacementObject = PrefabsPatches.CreatePlacementObjectFor(this),
+            PlacementObject = CustomPrefabManager.CreatePlacementObjectFor(this),
             Type = StructureType,
             Tier = Tier
         };

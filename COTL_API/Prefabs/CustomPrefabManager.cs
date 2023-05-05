@@ -9,7 +9,7 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 namespace COTL_API.Prefabs;
 
 [HarmonyPatch]
-public static class PrefabsPatches
+public static class CustomPrefabManager
 {
     private static string? _pathOverride;
     internal static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
