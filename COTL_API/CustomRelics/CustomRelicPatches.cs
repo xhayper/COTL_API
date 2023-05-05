@@ -7,7 +7,8 @@ namespace COTL_API.CustomRelics;
 [HarmonyPatch]
 public partial class CustomRelicManager
 {
-    [HarmonyPatch(typeof(LocalizationManager), nameof(LocalizationManager.GetTranslation), typeof(string), typeof(bool), typeof(int),  typeof(bool), typeof(bool), typeof(GameObject), typeof(string),  typeof(bool))]
+    [HarmonyPatch(typeof(LocalizationManager), nameof(LocalizationManager.GetTranslation), typeof(string), typeof(bool),
+        typeof(int), typeof(bool), typeof(bool), typeof(GameObject), typeof(string), typeof(bool))]
     [HarmonyPrefix]
     private static bool LocalizationManager_GetTranslation(string Term, ref string __result)
     {
@@ -24,6 +25,7 @@ public partial class CustomRelicManager
 
             return false;
         }
+
         return true;
     }
 
@@ -48,7 +50,7 @@ public partial class CustomRelicManager
 
         return false;
     }
-    
+
     [HarmonyPatch(typeof(PlayerRelic), nameof(PlayerRelic.UseRelic), typeof(RelicType), typeof(bool))]
     [HarmonyPostfix]
     private static void PlayerRelic_UseRelic(RelicType relicType, bool forceConsumableAnimation)
@@ -56,19 +58,13 @@ public partial class CustomRelicManager
         if (!CustomRelicDataList.ContainsKey(relicType)) return;
 
         if (CustomRelicDataList[relicType].RelicSubType == RelicSubType.Blessed)
-        {
             CustomRelicDataList[relicType].OnUseBlessed(forceConsumableAnimation);
-        }
         else if (CustomRelicDataList[relicType].RelicSubType == RelicSubType.Dammed)
-        {
             CustomRelicDataList[relicType].OnUseDamned(forceConsumableAnimation);
-        }
         else
-        {
             CustomRelicDataList[relicType].OnUse(forceConsumableAnimation);
-        }
     }
-    
+
     [HarmonyPatch(typeof(EquipmentManager), nameof(EquipmentManager.RelicData), MethodType.Getter)]
     [HarmonyPostfix]
     private static void EquipmentManager_RelicData(ref RelicData[] __result)
@@ -78,7 +74,7 @@ public partial class CustomRelicManager
             __result = __result.Append(relic.Value).ToArray();
             if (relic.Value.CanBeBlessed)
                 __result = __result.Append(relic.Value.ToBlessed()).ToArray();
-            
+
             if (relic.Value.CanBeDamned)
                 __result = __result.Append(relic.Value.ToDamned()).ToArray();
         }

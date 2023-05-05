@@ -234,7 +234,7 @@ public partial class CustomStructureManager
         if (CustomStructureList[__instance.Type].Interaction == null) return;
 
         LogDebug("adding structure interaction " +
-                           CustomStructureList[__instance.Type].Interaction);
+                 CustomStructureList[__instance.Type].Interaction);
         var parent = __instance.GetComponentInParent<Transform>();
         parent.gameObject.AddComponent(CustomStructureList[__instance.Type].Interaction);
     }
