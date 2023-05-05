@@ -4,8 +4,6 @@ public class DebugTarotCard : CustomTarotCard.CustomTarotCard
 {
     public override string InternalName => "DEBUG_TAROT_CARD";
 
-    public override string Skin => "Trinkets/TheLovers2";
-
     public override string LocalisedName(int upgradeIndex)
     {
         return "COTL_API'S DEBUG TAROT CARD";
