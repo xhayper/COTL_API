@@ -71,7 +71,6 @@ public partial class CustomRelicManager
             case RelicSubType.Dammed:
                 CustomRelicDataList[relicType].OnUseDamned(forceConsumableAnimation);
                 break;
-            case RelicSubType.Any:
             default:
                 CustomRelicDataList[relicType].OnUse(forceConsumableAnimation);
                 break;
@@ -82,14 +81,14 @@ public partial class CustomRelicManager
     [HarmonyPostfix]
     private static void EquipmentManager_RelicData(ref RelicData[] __result)
     {
-        foreach (var relic in CustomRelicDataList)
+        foreach (var relic in CustomRelicDataList.Select(relic => relic.Value))
         {
-            __result = __result.Append(relic.Value).ToArray();
-            if (relic.Value.CanBeBlessed)
-                __result = __result.Append(relic.Value.ToBlessed()).ToArray();
+            __result = __result.Append(relic).ToArray();
+            if (relic.CanBeBlessed)
+                __result = __result.Append(relic.ToBlessed()).ToArray();
 
-            if (relic.Value.CanBeDamned)
-                __result = __result.Append(relic.Value.ToDamned()).ToArray();
+            if (relic.CanBeDamned)
+                __result = __result.Append(relic.ToDamned()).ToArray();
         }
     }
 }
