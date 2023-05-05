@@ -13,7 +13,6 @@ using COTL_API.CustomStructures;
 using COTL_API.CustomTarotCard;
 using COTL_API.CustomTasks;
 using COTL_API.Debug;
-using COTL_API.Helpers;
 using COTL_API.Saves;
 using HarmonyLib;
 using I2.Loc;
@@ -22,7 +21,6 @@ using Lamb.UI.MainMenu;
 using MonoMod.Utils;
 using Spine;
 using UnityEngine;
-using Logger = UnityEngine.Logger;
 
 namespace COTL_API;
 

@@ -1,12 +1,11 @@
 ﻿using System.Reflection;
 using COTL_API.Guid;
-using COTL_API.Helpers;
 
 namespace COTL_API.CustomMission;
 
 public static partial class CustomMissionManager
 {
-    private static Dictionary<InventoryItem.ITEM_TYPE, CustomMission> CustomMissionList { get; } = new();
+    internal static Dictionary<InventoryItem.ITEM_TYPE, CustomMission> CustomMissionList { get; } = new();
 
     public static InventoryItem.ITEM_TYPE Add(CustomMission mission)
     {
@@ -17,7 +16,7 @@ public static partial class CustomMissionManager
         mission.ModPrefix = guid;
 
         CustomMissionList.Add(innerType, mission);
-        LogHelper.LogWarning($"Added: {innerType} {mission.InternalName} {mission.ModPrefix}");
+        LogWarning($"Added: {innerType} {mission.InternalName} {mission.ModPrefix}");
         return innerType;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomInventory;
-using COTL_API.Helpers;
 using COTL_API.Icons;
 using HarmonyLib;
 using TMPro;

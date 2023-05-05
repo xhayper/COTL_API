@@ -1,5 +1,4 @@
 ﻿using BepInEx;
-using COTL_API.Helpers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -175,7 +174,7 @@ public static class GameObjectExtensions
         var textMesh = obj.GetComponent<TextMeshProUGUI>();
         if (textMesh == null)
         {
-            LogHelper.LogWarning("EditText: TextMeshProUGUI component not found.");
+            LogWarning("EditText: TextMeshProUGUI component not found.");
             return obj;
         }
 
@@ -203,7 +202,7 @@ public static class GameObjectExtensions
         var path = GetPathToImage(imagePath);
         if (path == null)
         {
-            LogHelper.LogError($"File {imagePath} not found.");
+            LogError($"File {imagePath} not found.");
             return obj;
         }
 
@@ -262,7 +261,7 @@ public static class GameObjectExtensions
 
         if (img == null)
         {
-            LogHelper.LogError("EditImage: Image component not found.");
+            LogError("EditImage: Image component not found.");
             return obj;
         }
 
@@ -282,7 +281,7 @@ public static class GameObjectExtensions
         var path = GetPathToImage(imagePath);
         if (path == null)
         {
-            LogHelper.LogError($"File {imagePath ?? "(null)"} not found.");
+            LogError($"File {imagePath ?? "(null)"} not found.");
             return obj;
         }
 
@@ -291,7 +290,7 @@ public static class GameObjectExtensions
         var img = obj.GetComponent<Image>();
         if (img == null)
         {
-            LogHelper.LogError("EditImage: Image component not found.");
+            LogError("EditImage: Image component not found.");
             return obj;
         }
 
@@ -312,7 +311,7 @@ public static class GameObjectExtensions
         var img = obj.GetComponent<Image>();
         if (img == null)
         {
-            LogHelper.LogError("ChangeOpacity: Image component not found.");
+            LogError("ChangeOpacity: Image component not found.");
             return obj;
         }
 

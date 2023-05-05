@@ -1,5 +1,12 @@
+using COTL_API.CustomFollowerCommand;
+using COTL_API.CustomInventory;
+using COTL_API.CustomMission;
 using COTL_API.CustomObjectives;
+using COTL_API.CustomRelics;
+using COTL_API.CustomStructures;
 using COTL_API.CustomTarotCard;
+using COTL_API.CustomTasks;
+using COTL_API.Prefabs;
 using HarmonyLib;
 using Lamb.UI;
 using UnityEngine;

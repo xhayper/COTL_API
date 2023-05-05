@@ -1,5 +1,4 @@
-﻿using COTL_API.Helpers;
-using Lamb.UI;
+﻿using Lamb.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,7 +18,7 @@ internal static class SettingsUtils
     {
         if (HeaderTemplate == null)
         {
-            LogHelper.LogError("Unable to find header template!");
+            LogError("Unable to find header template!");
             return;
         }
 
@@ -35,7 +34,7 @@ internal static class SettingsUtils
     {
         if (SliderTemplate == null)
         {
-            LogHelper.LogError("Unable to find slider template!");
+            LogError("Unable to find slider template!");
             return;
         }
 
@@ -57,7 +56,7 @@ internal static class SettingsUtils
     {
         if (DropdownTemplate == null)
         {
-            LogHelper.LogError("Unable to find dropdown template!");
+            LogError("Unable to find dropdown template!");
             return;
         }
 
@@ -78,7 +77,7 @@ internal static class SettingsUtils
     {
         if (HorizontalSelectorTemplate == null)
         {
-            LogHelper.LogError("Unable to find horizontal selector template!");
+            LogError("Unable to find horizontal selector template!");
             return;
         }
 
@@ -98,7 +97,7 @@ internal static class SettingsUtils
     {
         if (ToggleTemplate == null)
         {
-            LogHelper.LogError("Unable to find toggle template!");
+            LogError("Unable to find toggle template!");
             return;
         }
 

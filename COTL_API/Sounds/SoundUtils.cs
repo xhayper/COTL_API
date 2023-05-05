@@ -1,5 +1,4 @@
 using BepInEx;
-using COTL_API.Helpers;
 using FMOD;
 using FMODUnity;
 
@@ -59,7 +58,7 @@ public static class SoundUtils
     {
         if (result == RESULT.OK) return;
 
-        LogHelper.LogError($"Sound Error: {result} caught at {where}");
+        LogError($"Sound Error: {result} caught at {where}");
     }
 
     internal static string? GetPath(string fileName)
@@ -68,7 +67,7 @@ public static class SoundUtils
             ? fileName
             : Directory.GetFiles(Paths.PluginPath, fileName, SearchOption.AllDirectories).FirstOrDefault();
 
-        if (path == null) LogHelper.LogError($"Error: Couldn't find \"{fileName}\"");
+        if (path == null) LogError($"Error: Couldn't find \"{fileName}\"");
 
         return path;
     }
@@ -84,7 +83,7 @@ public static class SoundUtils
         var result = system.createSound(path, mode, out var sound);
         if (result == RESULT.OK) return sound;
 
-        LogHelper.LogError($"Error making sound from file {fileName}!");
+        LogError($"Error making sound from file {fileName}!");
         result.IfErrorPrintWith($"MakeSound() -- fileName: {fileName}");
 
         return default;

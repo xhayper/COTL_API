@@ -1,4 +1,3 @@
-using COTL_API.Helpers;
 using HarmonyLib;
 using Lamb.UI.Assets;
 using Lamb.UI.Rituals;
@@ -16,7 +15,7 @@ public static partial class CustomRitualManager
     {
         foreach (var customRitual in CustomRitualList.Keys)
         {
-            LogHelper.LogInfo("Custom Ritual: " + customRitual);
+            LogInfo("Custom Ritual: " + customRitual);
             __instance.ConfigureItem(__instance._ritualItemTemplate.Instantiate(__instance._ritualsContent),
                 customRitual);
         }
