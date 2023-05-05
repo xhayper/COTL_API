@@ -9,9 +9,9 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 namespace COTL_API.Prefabs;
 
 [HarmonyPatch]
-public static class CustomPrefabManager
+public static class PrefabsPatches
 {
-    private static string? pathOverride;
+    private static string? _pathOverride;
     internal static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
 
     public static string GetOrCreateBuildingPrefab(CustomStructure structure)
@@ -52,7 +52,7 @@ public static class CustomPrefabManager
 
         // Run the original code with a generic structure
         if (!path.Contains("CustomBuildingPrefab_")) return;
-        pathOverride = path;
+        _pathOverride = path;
         key = "Assets/Prefabs/Structures/Buildings/Decoration Wreath Stick.prefab";
     }
 
@@ -60,10 +60,10 @@ public static class CustomPrefabManager
     [HarmonyPostfix]
     private static void ResourceManager_ProvideInstance(ref AsyncOperationHandle<GameObject> __result)
     {
-        if (pathOverride == null) return;
+        if (_pathOverride == null) return;
 
-        CreateBuildingPrefabOverride(pathOverride, ref __result);
-        pathOverride = null;
+        CreateBuildingPrefabOverride(_pathOverride, ref __result);
+        _pathOverride = null;
     }
 
     public static GameObject CreatePlacementObjectFor(CustomStructure structure)

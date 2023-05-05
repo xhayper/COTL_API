@@ -469,9 +469,9 @@ public static partial class CustomSkinManager
         List<WorshipperData.SlotsAndColours> colors, bool hidden = false, bool unlocked = true,
         bool twitchPremium = false, bool invariant = false)
     {
-        Material mat;
-        SpineAtlasAsset atlas;
-        var overrides = SkinUtils.CreateSkinAtlas(name, sheet, atlasText, RegionOverrideFunction, out mat, out atlas);
+        var overrides =
+            SkinUtils.CreateSkinAtlas(name, sheet, atlasText, RegionOverrideFunction, out var mat, out var atlas);
+
         SkinTextures.Add(name, sheet);
         SkinMaterials.Add(name, mat);
         CustomAtlases.Add(name, atlas);
@@ -571,8 +571,10 @@ public static partial class CustomSkinManager
             hurtSkin,
             hurtSkin2
         };
+
         if (PlayerSkinOverride != null)
             LogDebug("PlayerSkinOverride already exists. Overwriting.");
+
         PlayerSkinOverride = skins;
     }
 

@@ -11,7 +11,7 @@ internal static class CustomIconManager
 
     internal static TMP_SpriteAsset GetIcon(Sprite icon, string name, GlyphMetrics iconMetrics)
     {
-        if (Icons.ContainsKey(icon)) return Icons[icon];
+        if (Icons.TryGetValue(icon, out var iconCache)) return iconCache;
 
         icon.name = name;
 
