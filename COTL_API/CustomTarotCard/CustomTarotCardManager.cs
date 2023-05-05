@@ -1,8 +1,5 @@
 using System.Reflection;
 using COTL_API.Guid;
-using COTL_API.Skins;
-using HarmonyLib;
-using Lamb.UI;
 
 namespace COTL_API.CustomTarotCard;
 
