@@ -116,6 +116,7 @@ public partial class CustomTarotCardManager
         if (CustomTarotCardList[Type].Skin == "Custom")
         {
             __result = CustomSkinManager.GetOrCreateTarotSkin(CustomTarotCardList[Type].InternalName, CustomTarotCardList[Type].CustomSprite!);
+            return false;
         }
         __result = CustomTarotCardList[Type].Skin;
         
