@@ -71,9 +71,9 @@ public static class TypeManager
     [HarmonyPrefix]
     private static bool GetCustomType(string nameSpace, string typeName, ref Type __result)
     {
-        if (TypeCache.ContainsKey(typeName))
+        if (TypeCache.TryGetValue(typeName, out var value))
         {
-            __result = TypeCache[typeName];
+            __result = value;
             return false;
         }
 

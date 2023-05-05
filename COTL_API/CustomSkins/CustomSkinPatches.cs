@@ -56,12 +56,8 @@ public partial class CustomSkinManager
         var fullPix = orig.GetPixels32();
         var croppedPix = new Color32[srcWidth * srcHeight];
         for (var i = 0; i < srcHeight; i++)
-        {
-            for (var j = 0; j < srcWidth; j++)
-            {
-                croppedPix[i * srcWidth + j] = fullPix[(i + srcY) * orig.width + j + srcX];
-            }
-        }
+        for (var j = 0; j < srcWidth; j++)
+            croppedPix[i * srcWidth + j] = fullPix[(i + srcY) * orig.width + j + srcX];
 
         dst2d.SetPixels32(croppedPix);
 
@@ -114,7 +110,9 @@ public partial class CustomSkinManager
     private static bool PlayerFarming_SetSkin(ref Skin __result, PlayerFarming __instance, bool BlackAndWhite)
     {
         SkinUtils.InvokeOnFindSkin();
+
         if (PlayerSkinOverride == null) return true;
+
         __instance.PlayerSkin = new Skin("Player Skin");
         var skin = PlayerSkinOverride[0] ??
                    __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerFleece +

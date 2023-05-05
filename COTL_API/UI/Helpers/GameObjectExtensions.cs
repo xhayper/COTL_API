@@ -281,7 +281,7 @@ public static class GameObjectExtensions
         var path = GetPathToImage(imagePath);
         if (path == null)
         {
-            LogError($"File {imagePath ?? "(null)"} not found.");
+            LogError($"File {imagePath} not found.");
             return obj;
         }
 

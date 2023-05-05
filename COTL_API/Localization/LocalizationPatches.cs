@@ -7,7 +7,7 @@ using UnityEngine.ProBuilder;
 namespace COTL_API.Localization;
 
 [HarmonyPatch]
-public static class Localization
+public static class LocalizationPatches
 {
     public static Dictionary<string, Dictionary<string, string>> LocalizationMap { get; } = new();
     public static List<string> LanguageList { get; } = new();
