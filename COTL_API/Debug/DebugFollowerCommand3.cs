@@ -3,7 +3,7 @@ namespace COTL_API.Debug;
 public class DebugFollowerCommandClass3 : CustomFollowerCommand.CustomFollowerCommand
 {
     public override string InternalName => "DEBUG_FOLLOWER_COMMAND_3";
-    
+
     public override string GetTitle(Follower follower)
     {
         return "Nothing";
@@ -19,8 +19,9 @@ public class DebugFollowerCommandClass3 : CustomFollowerCommand.CustomFollowerCo
         return false;
     }
 
-    public override void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand)
+    public override void Execute(interaction_FollowerInteraction interaction,
+        FollowerCommands finalCommand = FollowerCommands.None)
     {
-        interaction.Close();
+        interaction.Close(true, reshowMenu: false);
     }
 }
