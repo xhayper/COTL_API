@@ -1,5 +1,12 @@
+using COTL_API.CustomFollowerCommand;
+using COTL_API.CustomInventory;
+using COTL_API.CustomMission;
 using COTL_API.CustomObjectives;
+using COTL_API.CustomRelics;
+using COTL_API.CustomStructures;
 using COTL_API.CustomTarotCard;
+using COTL_API.CustomTasks;
+using COTL_API.Prefabs;
 using HarmonyLib;
 using Lamb.UI;
 using UnityEngine;
@@ -21,10 +28,11 @@ public class DebugCode
         Inventory.AddItem(Plugin.Instance.DebugItem3, 1, true);
         Inventory.AddItem(Plugin.Instance.DebugItem4, 1, true);
 
-        if (PlayerFarming.Instance.playerRelic.CurrentRelic == null ||
-            PlayerFarming.Instance.playerRelic.CurrentRelic.RelicType != Plugin.Instance.DebugRelic)
+        if (PlayerFarming.Instance.playerRelic.CurrentRelic == null || PlayerFarming.Instance.playerRelic.CurrentRelic.RelicType != Plugin.Instance.DebugRelic)
+        {
             PlayerFarming.Instance.playerRelic.EquipRelic(EquipmentManager.GetRelicData(Plugin.Instance.DebugRelic));
-
+        }
+        
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
     }
