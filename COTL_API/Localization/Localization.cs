@@ -1,5 +1,4 @@
-﻿using COTL_API.Helpers;
-using HarmonyLib;
+﻿using HarmonyLib;
 using I2.Loc;
 using Lamb.UI;
 using Lamb.UI.Settings;
@@ -40,11 +39,11 @@ public static class Localization
                 LocalizationMap[name].Add(key, value);
             }
 
-            LogHelper.LogInfo($"Loaded localization: {name}");
+            LogInfo($"Loaded localization: {name}");
         }
         else
         {
-            LogHelper.LogError(
+            LogError(
                 $"Localization file not found! Please make sure that the path \"{path}\" contains the localization file.");
         }
     }

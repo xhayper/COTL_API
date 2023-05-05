@@ -1,5 +1,4 @@
 ﻿using System.Reflection.Emit;
-using COTL_API.Helpers;
 using HarmonyLib;
 using MMTools;
 
@@ -22,12 +21,12 @@ public static partial class CustomObjectiveManager
 
         if (CustomObjectiveList.TryGetValue(objective.ID, out var customObjective))
         {
-            LogHelper.LogWarning($"Matching quest found for {objective.ID}!");
+            LogWarning($"Matching quest found for {objective.ID}!");
             __result[0].TermToSpeak = customObjective.InitialQuestText;
         }
         else
         {
-            LogHelper.LogWarning($"No matching quest found for {objective.ID}!");
+            LogWarning($"No matching quest found for {objective.ID}!");
         }
     }
 
@@ -43,7 +42,7 @@ public static partial class CustomObjectiveManager
         foreach (var quest in DataManager.Instance.CompletedQuestsHistorys.Where(a =>
                      a.QuestIndex >= Quests.QuestsAll.Count))
         {
-            LogHelper.LogWarning(
+            LogWarning(
                 "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
             quest.QuestIndex = Quests.QuestsAll.Count - 1;
         }

@@ -1,5 +1,4 @@
-﻿using COTL_API.Helpers;
-using Spine;
+﻿using Spine;
 
 namespace COTL_API.CustomSkins;
 
@@ -51,7 +50,7 @@ public abstract class CustomPlayerSkin : CustomSkin
             }
 
             if (CustomSkinManager.PlayerSkinOverride != null)
-                LogHelper.LogInfo("PlayerSkinOverride already exists. Overwriting.");
+                LogInfo("PlayerSkinOverride already exists. Overwriting.");
             CustomSkinManager.SetPlayerSkinOverride(_cachedSkin);
         }
 

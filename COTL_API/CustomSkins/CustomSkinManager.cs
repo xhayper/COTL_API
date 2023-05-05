@@ -1,4 +1,3 @@
-using COTL_API.Helpers;
 using HarmonyLib;
 using Spine;
 using Spine.Unity;
@@ -573,7 +572,7 @@ public static partial class CustomSkinManager
             hurtSkin2
         };
         if (PlayerSkinOverride != null)
-            LogHelper.LogDebug("PlayerSkinOverride already exists. Overwriting.");
+            LogDebug("PlayerSkinOverride already exists. Overwriting.");
         PlayerSkinOverride = skins;
     }
 

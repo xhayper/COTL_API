@@ -12,7 +12,7 @@ namespace COTL_API.Prefabs;
 public static class CustomPrefabManager
 {
     private static string? pathOverride;
-    private static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
+    internal static Dictionary<string, CustomStructure> PrefabStrings { get; } = new();
 
     public static string GetOrCreateBuildingPrefab(CustomStructure structure)
     {

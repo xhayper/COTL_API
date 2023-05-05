@@ -1,15 +1,19 @@
 ﻿using COTL_API.CustomRelics;
-using COTL_API.Helpers;
 
 namespace COTL_API.Debug;
 
 public class DebugRelicClass : CustomRelicData
 {
-    public override string InternalName { get; }
+    public override string InternalName => "DEBUG_RELIC";   
 
     public override string GetTitleLocalisation() => "DEBUG_RELIC";
 
-    public override string GetDescriptionLocalisation() => RelicSubType == RelicSubType.Blessed ? "Gain 10 gold." : RelicSubType == RelicSubType.Dammed ? "Gain 5 poop." : "Gain 5 gold.";
+    public override string GetDescriptionLocalisation() => RelicSubType switch
+    {
+        RelicSubType.Blessed => "Gain 10 gold.",
+        RelicSubType.Dammed => "Gain 5 poop.",
+        _ => "Gain 5 gold."
+    };
 
     public override string GetLoreLocalization() => "Only those who bear the power of the Debug shall be able to use this relic.";
    

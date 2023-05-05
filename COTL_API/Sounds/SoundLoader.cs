@@ -1,4 +1,3 @@
-using COTL_API.Helpers;
 using FMOD;
 using UnityEngine;
 
@@ -45,7 +44,7 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The string key for the Sound you wanna play..</param>
     public void PlaySfx(string name)
     {
-        if (!_soundCache.ContainsKey(name)) LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
+        if (!_soundCache.ContainsKey(name)) LogError($"Error playing sound {name}: Sound doesn't exist!");
 
         var soundHandle = _soundCache[name];
         SoundUtils.PlayOneShot(soundHandle);
@@ -57,7 +56,7 @@ public class SoundLoader : MonoBehaviour
     /// <param name="name">The string key of the cached Sound.</param>
     public void PlayMusic(string name)
     {
-        if (!_soundCache.ContainsKey(name)) LogHelper.LogError($"Error playing sound {name}: Sound doesn't exist!");
+        if (!_soundCache.ContainsKey(name)) LogError($"Error playing sound {name}: Sound doesn't exist!");
 
         var soundHandle = _soundCache[name];
         soundHandle.ChangeLoopMode(MODE.LOOP_NORMAL); // Music should loop
