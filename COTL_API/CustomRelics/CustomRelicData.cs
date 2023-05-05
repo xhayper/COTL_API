@@ -15,8 +15,8 @@ public abstract class CustomRelicData : RelicData
 
     public virtual string GetLoreLocalization() => LocalizationManager.GetTermTranslation($"Relics/{ModPrefix}.{InternalName}/Lore");
 
-    public virtual bool CanBeBlessed => true;
-    public virtual bool CanBeDamned => true;
+    public virtual bool CanBeBlessed => false;
+    public virtual bool CanBeDamned => false;
     
     public CustomRelicData()
     {
