@@ -106,7 +106,9 @@ public partial class CustomSkinManager
     private static bool PlayerFarming_SetSkin(ref Skin __result, PlayerFarming __instance, bool BlackAndWhite)
     {
         SkinUtils.InvokeOnFindSkin();
+
         if (PlayerSkinOverride == null) return true;
+
         __instance.PlayerSkin = new Skin("Player Skin");
         var skin = PlayerSkinOverride[0] ??
                    __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerFleece +

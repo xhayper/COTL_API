@@ -14,19 +14,25 @@ public partial class CustomRelicManager
     {
         var split = Term.Split('/');
         if (split[0] != "Relics") return true;
-        if (Enum.TryParse<RelicType>(split[1], out var relicType))
-        {
-            if (!CustomRelicDataList.ContainsKey(relicType)) return true;
 
-            if (split.Length == 2) __result = CustomRelicDataList[relicType].GetTitleLocalisation();
-            else if (split[2] == "Description") __result = CustomRelicDataList[relicType].GetDescriptionLocalisation();
-            else if (split[2] == "Lore") __result = CustomRelicDataList[relicType].GetLoreLocalization();
-            else return true;
+        if (!Enum.TryParse<RelicType>(split[1], out var relicType)) return true;
+        if (!CustomRelicDataList.ContainsKey(relicType)) return true;
 
-            return false;
-        }
+        if (split.Length == 2) __result = CustomRelicDataList[relicType].GetTitleLocalisation();
+        else
+            switch (split[2])
+            {
+                case "Description":
+                    __result = CustomRelicDataList[relicType].GetDescriptionLocalisation();
+                    break;
+                case "Lore":
+                    __result = CustomRelicDataList[relicType].GetLoreLocalization();
+                    break;
+                default:
+                    return true;
+            }
 
-        return true;
+        return false;
     }
 
     [HarmonyPatch(typeof(RelicData), nameof(RelicData.GetChargeCategory), typeof(RelicType))]
@@ -57,12 +63,19 @@ public partial class CustomRelicManager
     {
         if (!CustomRelicDataList.ContainsKey(relicType)) return;
 
-        if (CustomRelicDataList[relicType].RelicSubType == RelicSubType.Blessed)
-            CustomRelicDataList[relicType].OnUseBlessed(forceConsumableAnimation);
-        else if (CustomRelicDataList[relicType].RelicSubType == RelicSubType.Dammed)
-            CustomRelicDataList[relicType].OnUseDamned(forceConsumableAnimation);
-        else
-            CustomRelicDataList[relicType].OnUse(forceConsumableAnimation);
+        switch (CustomRelicDataList[relicType].RelicSubType)
+        {
+            case RelicSubType.Blessed:
+                CustomRelicDataList[relicType].OnUseBlessed(forceConsumableAnimation);
+                break;
+            case RelicSubType.Dammed:
+                CustomRelicDataList[relicType].OnUseDamned(forceConsumableAnimation);
+                break;
+            case RelicSubType.Any:
+            default:
+                CustomRelicDataList[relicType].OnUse(forceConsumableAnimation);
+                break;
+        }
     }
 
     [HarmonyPatch(typeof(EquipmentManager), nameof(EquipmentManager.RelicData), MethodType.Getter)]

@@ -171,7 +171,7 @@ public class Plugin : BaseUnityPlugin
 
             if (QuestData == null) return;
 
-            foreach (var objective in QuestData!)
+            foreach (var objective in QuestData)
                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
                     tempObjectives.Add(objective.Key, objective.Value);
                 else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
