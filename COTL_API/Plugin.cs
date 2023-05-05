@@ -69,7 +69,7 @@ public class Plugin : BaseUnityPlugin
     internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
     internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
-    
+
     internal RelicType DebugRelic { get; private set; }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
