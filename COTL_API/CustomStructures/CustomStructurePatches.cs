@@ -93,7 +93,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "GetLocalizedNameStatic", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_GetLocalizedNameStatic(StructureBrain.TYPES Type, ref string __result)
+    private static bool StructuresData_GetLocalizedNameStatic(StructureBrain.TYPES Type, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(Type)) return true;
         __result = CustomStructureList[Type].GetLocalizedNameStatic();
@@ -102,7 +102,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "LocalizedName", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_LocalizedName(StructureBrain.TYPES Type, ref string __result)
+    private static bool StructuresData_LocalizedName(StructureBrain.TYPES Type, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(Type)) return true;
         __result = CustomStructureList[Type].LocalizedName();
@@ -111,7 +111,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "LocalizedDescription", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_LocalizedDescription(StructureBrain.TYPES Type, ref string __result)
+    private static bool StructuresData_LocalizedDescription(StructureBrain.TYPES Type, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(Type)) return true;
         __result = CustomStructureList[Type].LocalizedDescription();
@@ -120,7 +120,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "LocalizedPros", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_LocalizedPros(StructureBrain.TYPES Type, ref string __result)
+    private static bool StructuresData_LocalizedPros(StructureBrain.TYPES Type, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(Type)) return true;
         __result = CustomStructureList[Type].LocalizedPros();
@@ -129,7 +129,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "LocalizedCons", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_LocalizedCons(StructureBrain.TYPES Type, ref string __result)
+    private static bool StructuresData_LocalizedCons(StructureBrain.TYPES Type, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(Type)) return true;
         __result = CustomStructureList[Type].LocalizedCons();
@@ -138,7 +138,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "GetLocalizedName", new Type[] { })]
     [HarmonyPrefix]
-    public static bool StructuresData_GetLocalizedName(StructuresData __instance, ref string __result)
+    private static bool StructuresData_GetLocalizedName(StructuresData __instance, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(__instance.Type)) return true;
         __result = CustomStructureList[__instance.Type].GetLocalizedName();
@@ -147,7 +147,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "GetLocalizedName", typeof(bool), typeof(bool), typeof(bool))]
     [HarmonyPrefix]
-    public static bool StructuresData_GetLocalizedName(StructuresData __instance, bool plural, bool withArticle,
+    private static bool StructuresData_GetLocalizedName(StructuresData __instance, bool plural, bool withArticle,
         bool definite, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(__instance.Type)) return true;
@@ -157,7 +157,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "GetLocalizedDescription", new Type[] { })]
     [HarmonyPrefix]
-    public static bool StructuresData_GetLocalizedDescription(StructuresData __instance, ref string __result)
+    private static bool StructuresData_GetLocalizedDescription(StructuresData __instance, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(__instance.Type)) return true;
         __result = CustomStructureList[__instance.Type].GetLocalizedDescription();
@@ -166,7 +166,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "GetLocalizedLore", new Type[] { })]
     [HarmonyPrefix]
-    public static bool StructuresData_GetLocalizedLore(StructuresData __instance, ref string __result)
+    private static bool StructuresData_GetLocalizedLore(StructuresData __instance, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(__instance.Type)) return true;
         __result = CustomStructureList[__instance.Type].GetLocalizedLore();
@@ -175,7 +175,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "GetResearchCost", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_GetResearchCost(StructureBrain.TYPES Type, ref int __result)
+    private static bool StructuresData_GetResearchCost(StructureBrain.TYPES Type, ref int __result)
     {
         if (!CustomStructureList.ContainsKey(Type)) return true;
         __result = CustomStructureList[Type].GetResearchCost();
@@ -184,7 +184,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "RequiresTempleToBuild", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_RequiresTempleToBuild(StructureBrain.TYPES type, ref bool __result)
+    private static bool StructuresData_RequiresTempleToBuild(StructureBrain.TYPES type, ref bool __result)
     {
         if (!CustomStructureList.ContainsKey(type)) return true;
         __result = CustomStructureList[type].RequiresTempleToBuild();
@@ -193,7 +193,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "GetBuildOnlyOne", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_GetBuildOnlyOne(StructureBrain.TYPES Type, ref bool __result)
+    private static bool StructuresData_GetBuildOnlyOne(StructureBrain.TYPES Type, ref bool __result)
     {
         if (!CustomStructureList.ContainsKey(Type)) return true;
         __result = CustomStructureList[Type].GetBuildOnlyOne();
@@ -202,7 +202,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "GetBuildSfx", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_GetBuildSfx(StructureBrain.TYPES Type, ref string __result)
+    private static bool StructuresData_GetBuildSfx(StructureBrain.TYPES Type, ref string __result)
     {
         if (!CustomStructureList.ContainsKey(Type)) return true;
         __result = CustomStructureList[Type].GetBuildSfx();
@@ -211,7 +211,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "HiddenUntilUnlocked", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_HiddenUntilUnlocked(StructureBrain.TYPES structure, ref bool __result)
+    private static bool StructuresData_HiddenUntilUnlocked(StructureBrain.TYPES structure, ref bool __result)
     {
         if (!CustomStructureList.ContainsKey(structure)) return true;
         __result = CustomStructureList[structure].HiddenUntilUnlocked();
@@ -220,7 +220,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(StructuresData), "CanBeFlipped", typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
-    public static bool StructuresData_CanBeFlipped(StructureBrain.TYPES type, ref bool __result)
+    private static bool StructuresData_CanBeFlipped(StructureBrain.TYPES type, ref bool __result)
     {
         if (!CustomStructureList.ContainsKey(type)) return true;
         __result = CustomStructureList[type].CanBeFlipped();
@@ -229,7 +229,7 @@ public partial class CustomStructureManager
 
     [HarmonyPatch(typeof(Structure), nameof(Structure.Start))]
     [HarmonyPostfix]
-    public static void Structure_Start(Structure __instance)
+    private static void Structure_Start(Structure __instance)
     {
         if (!CustomStructureList.ContainsKey(__instance.Type)) return;
         if (CustomStructureList[__instance.Type].Interaction == null) return;

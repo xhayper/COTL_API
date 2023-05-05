@@ -13,7 +13,7 @@ public static class IconPatcher
 {
     [HarmonyPatch(typeof(TMP_SpriteAsset), nameof(TMP_SpriteAsset.SearchForSpriteByHashCode))]
     [HarmonyPrefix]
-    public static bool TMP_SpriteAsset_SearchForSpriteByHashCode(TMP_SpriteAsset spriteAsset, int hashCode,
+    private static bool TMP_SpriteAsset_SearchForSpriteByHashCode(TMP_SpriteAsset spriteAsset, int hashCode,
         bool includeFallbacks, ref int spriteIndex, ref TMP_SpriteAsset __result)
     {
         if (spriteAsset == null) return true;

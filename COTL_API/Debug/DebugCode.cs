@@ -12,7 +12,7 @@ public class DebugCode
 {
     [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
     [HarmonyPrefix]
-    public static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
+    private static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
     {
         if (Plugin.Instance == null || !Plugin.Instance.Debug) return;
 
@@ -32,7 +32,7 @@ public class DebugCode
 
     [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show))]
     [HarmonyPrefix]
-    public static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance,
+    private static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance,
         TarotCards.TarotCard card1, TarotCards.TarotCard card2, bool instant)
     {
         if (Plugin.Instance == null || !Plugin.Instance.Debug) return true;
