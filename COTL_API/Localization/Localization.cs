@@ -69,7 +69,7 @@ public static class Localization
 
     [HarmonyPatch(typeof(GameSettings), nameof(GameSettings.OnLanguageChanged))]
     [HarmonyPrefix]
-    public static bool GameSettings_OnLanguageChanged(GameSettings __instance, int index)
+    private static bool GameSettings_OnLanguageChanged(GameSettings __instance, int index)
     {
         if (index >= LanguageUtilities.AllLanguages.Length)
         {
@@ -90,7 +90,7 @@ public static class Localization
 
     [HarmonyPatch(typeof(GameSettings), nameof(GameSettings.GetLanguageIndex))]
     [HarmonyPrefix]
-    public static bool GameSettings_GetLanguageIndex(GameSettings __instance, ref int __result)
+    private static bool GameSettings_GetLanguageIndex(GameSettings __instance, ref int __result)
     {
         __instance._languageSelector._prefilledContent =
             __instance._languageSelector._prefilledContent.AddRange(LocalizationMap.Keys.ToArray());
@@ -102,7 +102,7 @@ public static class Localization
 
     [HarmonyPatch(typeof(MMHorizontalSelector), nameof(MMHorizontalSelector.UpdateContent))]
     [HarmonyPrefix]
-    public static void MMHorizontalSelector_UpdateContent(MMHorizontalSelector __instance, string[] newContent)
+    private static void MMHorizontalSelector_UpdateContent(MMHorizontalSelector __instance, string[] newContent)
     {
         if (__instance._contentIndex >= newContent.Length) __instance._contentIndex = 0;
     }

@@ -46,7 +46,7 @@ public static class CustomPrefabManager
     [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters),
         typeof(bool))]
     [HarmonyPrefix]
-    public static void Addressables_InstantiateAsync(ref object key)
+    private static void Addressables_InstantiateAsync(ref object key)
     {
         if (key is not string path) return;
 
@@ -58,7 +58,7 @@ public static class CustomPrefabManager
 
     [HarmonyPatch(typeof(ResourceManager), "ProvideInstance")]
     [HarmonyPostfix]
-    public static void ResourceManager_ProvideInstance(ref AsyncOperationHandle<GameObject> __result)
+    private static void ResourceManager_ProvideInstance(ref AsyncOperationHandle<GameObject> __result)
     {
         if (pathOverride == null) return;
 
