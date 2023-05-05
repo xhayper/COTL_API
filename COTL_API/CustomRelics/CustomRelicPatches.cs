@@ -1,67 +1,86 @@
 ﻿using HarmonyLib;
+using I2.Loc;
+using UnityEngine;
 
 namespace COTL_API.CustomRelics;
-
-/*
- TODO: Add support for `EquipmentManager -> GetRandomRelicData`
- TODO: Add support for `PlayerRelic -> UseRelic`
- */
 
 [HarmonyPatch]
 public partial class CustomRelicManager
 {
-    [HarmonyPatch(typeof(RelicData), nameof(RelicData.GetTitleLocalisation), typeof(RelicType))]
+    [HarmonyPatch(typeof(LocalizationManager), nameof(LocalizationManager.GetTranslation), typeof(string), typeof(bool), typeof(int),  typeof(bool), typeof(bool), typeof(GameObject), typeof(string),  typeof(bool))]
     [HarmonyPrefix]
-    private static bool RelicData_GetTitleLocalisation(RelicType type, ref string __result)
+    private static bool LocalizationManager_GetTranslation(string Term, ref string __result)
     {
-        if (!CustomRelicDataList.ContainsKey(type)) return true;
+        var split = Term.Split('/');
+        if (split[0] != "Relics") return true;
+        if (Enum.TryParse<RelicType>(split[1], out var relicType))
+        {
+            if (!CustomRelicDataList.ContainsKey(relicType)) return true;
 
-        __result = CustomRelicDataList[type].GetTitleLocalisation();
+            if (split.Length == 2) __result = CustomRelicDataList[relicType].GetTitleLocalisation();
+            else if (split[2] == "Description") __result = CustomRelicDataList[relicType].GetDescriptionLocalisation();
+            else if (split[2] == "Lore") __result = CustomRelicDataList[relicType].GetLoreLocalization();
+            else return true;
 
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicData), nameof(RelicData.GetDescriptionLocalisation), typeof(RelicType))]
-    [HarmonyPrefix]
-    private static bool RelicData_GetDescriptionLocalisation(RelicType type, ref string __result)
-    {
-        if (!CustomRelicDataList.ContainsKey(type)) return true;
-
-        __result = CustomRelicDataList[type].GetDescriptionLocalisation();
-
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicData), nameof(RelicData.GetLoreLocalization), typeof(RelicType))]
-    [HarmonyPrefix]
-    private static bool RelicData_GetLoreLocalization(RelicType type, ref string __result)
-    {
-        if (!CustomRelicDataList.ContainsKey(type)) return true;
-
-        __result = CustomRelicDataList[type].GetLoreLocalization();
-
-        return false;
+            return false;
+        }
+        return true;
     }
 
     [HarmonyPatch(typeof(RelicData), nameof(RelicData.GetChargeCategory), typeof(RelicType))]
     [HarmonyPrefix]
-    private static bool RelicData_GetChargeCategory(RelicType type, ref RelicChargeCategory __result)
+    private static bool RelicData_GetChargeCategory(RelicType relicType, ref RelicChargeCategory __result)
     {
-        if (!CustomRelicDataList.ContainsKey(type)) return true;
+        if (!CustomRelicDataList.ContainsKey(relicType)) return true;
 
-        __result = CustomRelicDataList[type].GetChargeCategory();
+        __result = CustomRelicDataList[relicType].GetChargeCategory();
 
         return false;
     }
 
     [HarmonyPatch(typeof(RelicData), nameof(RelicData.GetChargeCategory), typeof(RelicData))]
     [HarmonyPrefix]
-    private static bool RelicData_GetChargeCategory(RelicData data, ref RelicChargeCategory __result)
+    private static bool RelicData_GetChargeCategory(RelicData relicData, ref RelicChargeCategory __result)
     {
-        if (!CustomRelicDataList.ContainsKey(data.RelicType)) return true;
+        if (!CustomRelicDataList.ContainsKey(relicData.RelicType)) return true;
 
-        __result = CustomRelicDataList[data.RelicType].GetChargeCategory();
+        __result = CustomRelicDataList[relicData.RelicType].GetChargeCategory();
 
         return false;
+    }
+    
+    [HarmonyPatch(typeof(PlayerRelic), nameof(PlayerRelic.UseRelic), typeof(RelicType), typeof(bool))]
+    [HarmonyPostfix]
+    private static void PlayerRelic_UseRelic(RelicType relicType, bool forceConsumableAnimation)
+    {
+        if (!CustomRelicDataList.ContainsKey(relicType)) return;
+
+        if (CustomRelicDataList[relicType].RelicSubType == RelicSubType.Blessed)
+        {
+            CustomRelicDataList[relicType].OnUseBlessed(forceConsumableAnimation);
+        }
+        else if (CustomRelicDataList[relicType].RelicSubType == RelicSubType.Dammed)
+        {
+            CustomRelicDataList[relicType].OnUseDamned(forceConsumableAnimation);
+        }
+        else
+        {
+            CustomRelicDataList[relicType].OnUse(forceConsumableAnimation);
+        }
+    }
+    
+    [HarmonyPatch(typeof(EquipmentManager), nameof(EquipmentManager.RelicData), MethodType.Getter)]
+    [HarmonyPostfix]
+    private static void EquipmentManager_RelicData(ref RelicData[] __result)
+    {
+        foreach (var relic in CustomRelicDataList)
+        {
+            __result = __result.Append(relic.Value).ToArray();
+            if (relic.Value.CanBeBlessed)
+                __result = __result.Append(relic.Value.ToBlessed()).ToArray();
+            
+            if (relic.Value.CanBeDamned)
+                __result = __result.Append(relic.Value.ToDamned()).ToArray();
+        }
     }
 }
