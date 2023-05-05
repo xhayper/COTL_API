@@ -5,6 +5,7 @@ using BepInEx.Logging;
 using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomInventory;
 using COTL_API.CustomObjectives;
+using COTL_API.CustomRelics;
 using COTL_API.CustomSettings;
 using COTL_API.CustomSettings.Elements;
 using COTL_API.CustomSkins;
@@ -20,6 +21,8 @@ using Lamb.UI;
 using Lamb.UI.MainMenu;
 using MonoMod.Utils;
 using Spine;
+using UnityEngine;
+using Logger = UnityEngine.Logger;
 
 namespace COTL_API;
 
@@ -68,6 +71,8 @@ public class Plugin : BaseUnityPlugin
     internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
     internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
+    
+    internal RelicType DebugRelic { get; private set; }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Awake()
@@ -253,6 +258,8 @@ public class Plugin : BaseUnityPlugin
 
         CustomSettingsManager.AddToggle("Debug", "Toggle", true,
             i => { Logger.LogDebug($"Toggled: {i}"); });
+
+        DebugRelic = CustomRelicManager.Add(ScriptableObject.CreateInstance<DebugRelicClass>());
 
         Logger.LogDebug("Debug mode enabled!");
 
