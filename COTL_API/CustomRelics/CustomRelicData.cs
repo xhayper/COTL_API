@@ -1,22 +1,11 @@
 ﻿using I2.Loc;
-using UnityEngine;
 
 namespace COTL_API.CustomRelics;
 
 public abstract class CustomRelicData : RelicData
 {
     internal string ModPrefix = "";
-    public abstract string InternalName { get; }
 
-    public virtual string GetTitleLocalisation() => LocalizationManager.GetTermTranslation($"Relics/{ModPrefix}.{InternalName}");
-
-    public virtual string GetDescriptionLocalisation() => LocalizationManager.GetTermTranslation($"Relics/{ModPrefix}.{InternalName}/Description");
-
-    public virtual string GetLoreLocalization() => LocalizationManager.GetTermTranslation($"Relics/{ModPrefix}.{InternalName}/Lore");
-
-    public virtual bool CanBeBlessed => false;
-    public virtual bool CanBeDamned => false;
-    
     public CustomRelicData()
     {
         UISprite = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
@@ -25,8 +14,30 @@ public abstract class CustomRelicData : RelicData
         InteractionType = RelicInteractionType.Charging;
     }
 
-    public virtual void Init() { }
-    
+    public abstract string InternalName { get; }
+
+    public virtual bool CanBeBlessed => false;
+    public virtual bool CanBeDamned => false;
+
+    public virtual string GetTitleLocalisation()
+    {
+        return LocalizationManager.GetTermTranslation($"Relics/{ModPrefix}.{InternalName}");
+    }
+
+    public virtual string GetDescriptionLocalisation()
+    {
+        return LocalizationManager.GetTermTranslation($"Relics/{ModPrefix}.{InternalName}/Description");
+    }
+
+    public virtual string GetLoreLocalization()
+    {
+        return LocalizationManager.GetTermTranslation($"Relics/{ModPrefix}.{InternalName}/Lore");
+    }
+
+    public virtual void Init()
+    {
+    }
+
     public virtual RelicChargeCategory GetChargeCategory()
     {
         if (DamageRequiredToCharge < 50.0)
@@ -35,8 +46,16 @@ public abstract class CustomRelicData : RelicData
     }
 
     public abstract void OnUse(bool forceConsumableAnimation = false);
-    public virtual void OnUseBlessed(bool forceConsumableAnimation = false) => OnUse(forceConsumableAnimation);
-    public virtual void OnUseDamned(bool forceConsumableAnimation = false) => OnUse(forceConsumableAnimation);
+
+    public virtual void OnUseBlessed(bool forceConsumableAnimation = false)
+    {
+        OnUse(forceConsumableAnimation);
+    }
+
+    public virtual void OnUseDamned(bool forceConsumableAnimation = false)
+    {
+        OnUse(forceConsumableAnimation);
+    }
 
     public CustomRelicData ToBlessed()
     {
@@ -44,12 +63,11 @@ public abstract class CustomRelicData : RelicData
         clone.RelicSubType = RelicSubType.Blessed;
         return clone;
     }
-    
+
     public CustomRelicData ToDamned()
     {
         var clone = (CustomRelicData)MemberwiseClone();
         clone.RelicSubType = RelicSubType.Dammed;
         return clone;
     }
-
 }
