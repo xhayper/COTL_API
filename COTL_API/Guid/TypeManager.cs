@@ -1,17 +1,18 @@
-using System.Runtime.CompilerServices;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using HarmonyLib;
+using System.Runtime.CompilerServices;
 using BepInEx;
-using System;
+using HarmonyLib;
 
 namespace COTL_API.Guid;
 
+// TODO: Refactor this system
 [HarmonyPatch]
 public static class TypeManager
 {
     private static readonly Dictionary<string, Type> TypeCache = new();
+
+    private static readonly Dictionary<string, string> ModIds = new();
 
     internal static void Add(string key, Type value)
     {
@@ -29,49 +30,44 @@ public static class TypeManager
         Add(key, value);
     }
 
-    private static readonly Dictionary<string, string> ModIds = new();
-
     private static string GetModIdFromAssembly(Assembly assembly)
     {
         if (ModIds.ContainsKey(assembly.FullName))
             return ModIds[assembly.FullName];
 
-        foreach (Type t in assembly.GetTypes())
+        foreach (var t in assembly.GetTypes())
         {
-            BepInPlugin plugin = t.GetCustomAttribute<BepInPlugin>();
+            var plugin = t.GetCustomAttribute<BepInPlugin>();
             if (plugin == null) continue;
 
             ModIds.Add(assembly.FullName, plugin.GUID);
             return plugin.GUID;
         }
 
-        ModIds.Add(assembly.FullName, default);
-        return default;
+        ModIds.Add(assembly.FullName, default!);
+        return default!;
     }
 
     public static string GetModIdFromCallstack(Assembly callingAssembly)
     {
-        string cacheVal = GetModIdFromAssembly(callingAssembly);
+        var cacheVal = GetModIdFromAssembly(callingAssembly);
         if (!string.IsNullOrEmpty(cacheVal))
             return cacheVal;
 
         StackTrace trace = new();
-        foreach (StackFrame frame in trace.GetFrames())
-        {
-            string newVal = GetModIdFromAssembly(frame.GetMethod().DeclaringType.Assembly);
-            if (!string.IsNullOrEmpty(newVal))
-                return newVal;
-        }
-
-        return default;
+        return trace.GetFrames()?.Select(frame => GetModIdFromAssembly(frame.GetMethod().DeclaringType?.Assembly!))
+            .FirstOrDefault(newVal => !string.IsNullOrEmpty(newVal))!;
     }
 
-    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]
+    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), typeof(string), typeof(string))]
     [MethodImpl(MethodImplOptions.NoInlining)]
     [HarmonyReversePatch]
-    public static Type OriginalGetType(string nameSpace, string typeName) { throw new NotImplementedException(); }
+    public static Type OriginalGetType(string nameSpace, string typeName)
+    {
+        throw new NotImplementedException();
+    }
 
-    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), new[] { typeof(string), typeof(string) })]
+    [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), typeof(string), typeof(string))]
     [HarmonyPrefix]
     private static bool GetCustomType(string nameSpace, string typeName, ref Type __result)
     {
@@ -81,7 +77,7 @@ public static class TypeManager
             return false;
         }
 
-        if (int.TryParse(typeName, out _)) Plugin.Logger.LogInfo("This appears to be a custom type");
+        if (int.TryParse(typeName, out _)) LogInfo("This appears to be a custom type");
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");
         TypeCache.Add(typeName, __result);

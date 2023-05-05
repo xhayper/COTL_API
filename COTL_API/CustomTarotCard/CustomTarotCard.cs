@@ -1,63 +1,68 @@
-using COTL_API.Helpers;
+
 using UnityEngine;
+using System.Text;
 using I2.Loc;
 
 namespace COTL_API.CustomTarotCard;
 
-public class CustomTarotCard
+public abstract class CustomTarotCard
 {
-    public virtual string InternalName { get; }
-    public TarotCards.CardCategory Category;
-    public TarotCards.Card CardType;
-    public string ModPrefix;
+    internal TarotCards.Card CardType;
 
-    public virtual Sprite CardSprite { get; internal set; }
+    internal string ModPrefix = "";
+    public abstract string InternalName { get; }
+
+    public virtual TarotCards.CardCategory Category { get; }
+    public virtual Sprite? CardSprite { get; internal set; }
+
+    public abstract string Skin { get; }
+
+    public virtual int TarotCardWeight => 150;
+
+    public virtual int MaxTarotCardLevel => 0;
+
+    public virtual string AnimationSuffix => $"Card {ModPrefix}.{InternalName} Animation Suffix not set";
+
+    public virtual bool IsCursedRelated => false;
 
     public virtual string LocalisedName()
     {
-        int upgradeIndex = 0;
-        foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
-        {
-            if (playerRunTrinket.CardType != CardType) continue;
-
-            upgradeIndex = playerRunTrinket.UpgradeIndex;
-
-            break;
-        }
+        var upgradeIndex =
+            (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
+                where playerRunTrinket.CardType == CardType
+                select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedName(upgradeIndex);
     }
 
     public virtual string LocalisedName(int upgradeIndex)
     {
-        string text = "";
-        for (int i = 0; i < upgradeIndex; i++) text += "+";
+        StringBuilder text = new("");
+        for (var i = 0; i < upgradeIndex; i++) text.Append("+");
 
-        string text2 = upgradeIndex switch {
+        var text2 = upgradeIndex switch
+        {
             1 => "<color=green>",
             2 => "<color=purple>",
             _ => ""
         };
-        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name") + text +
-               "</color>";
+
+        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name{text}</color>");
     }
 
     public virtual string LocalisedDescription()
     {
-        int upgradeIndex = 0;
-        foreach (TarotCards.TarotCard playerRunTrinket in DataManager.Instance.PlayerRunTrinkets)
-        {
-            if (playerRunTrinket.CardType != CardType) continue;
-            upgradeIndex = playerRunTrinket.UpgradeIndex;
-            break;
-        }
+        var upgradeIndex =
+            (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
+                where playerRunTrinket.CardType == CardType
+                select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedDescription(upgradeIndex);
     }
 
     public virtual string LocalisedDescription(int upgradeIndex)
     {
-        string text = $"TarotCards/{ModPrefix}.{InternalName}/Description";
+        var text = $"TarotCards/{ModPrefix}.{InternalName}/Description";
 
         if (upgradeIndex > 0) text += upgradeIndex;
 
@@ -68,16 +73,6 @@ public class CustomTarotCard
     {
         return LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Lore");
     }
-
-    public virtual Sprite Skin { get; } = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
-
-    public virtual int TarotCardWeight { get; } = 150;
-
-    public virtual int MaxTarotCardLevel { get; } = 0;
-
-    public virtual string AnimationSuffix => $"Card {ModPrefix}.{InternalName} Animation Suffix not set";
-
-    public virtual bool IsCursedRelated { get; } = false;
 
     public virtual float GetSpiritHeartCount(TarotCards.TarotCard card)
     {
@@ -154,7 +149,7 @@ public class CustomTarotCard
         return 0;
     }
 
-    public virtual InventoryItem GetItemToDrop(TarotCards.TarotCard card)
+    public virtual InventoryItem? GetItemToDrop(TarotCards.TarotCard card)
     {
         return null;
     }
@@ -164,5 +159,7 @@ public class CustomTarotCard
         return 0f;
     }
 
-    public virtual void ApplyInstantEffects(TarotCards.TarotCard card) { }
+    public virtual void ApplyInstantEffects(TarotCards.TarotCard card)
+    {
+    }
 }

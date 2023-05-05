@@ -1,25 +1,42 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project>
     <PropertyGroup>
-        <AssemblyVersion>0.1.2</AssemblyVersion>
-        <ReleaseVersion>0.1.2</ReleaseVersion>
-        
         <TargetFramework>netstandard2.0</TargetFramework>
+        <Version>0.1.20</Version>
         <LangVersion>latest</LangVersion>
+        <DebugType>portable</DebugType>
+        <IsPackable>false</IsPackable>
+        <ImplicitUsings>true</ImplicitUsings>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <DebugType>full</DebugType>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-        <OutputPath Condition=" '$(SolutionDir)' != '' ">$(SolutionDir)bin\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
-        <OutputPath Condition=" '$(SolutionDir)' == '' ">$(ProjectDir)bin\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
+    <PropertyGroup>
+        <BepInExPluginGuid Condition="'$(BepInExPluginGuid )' == ''">$(Guid)</BepInExPluginGuid>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <!-- First one is "Forced Access" warning, second one is "Missing XML" comment -->
+        <NoWarn>$(NoWarn);Publicizer001;CS1591</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <OutputPath Condition=" '$(SolutionDir)' != '' ">$(SolutionDir)bin/$(Configuration)/$(MSBuildProjectName)/</OutputPath>
+        <OutputPath Condition=" '$(SolutionDir)' == '' ">$(ProjectDir)bin/$(Configuration)/$(MSBuildProjectName)/</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <DocumentationFile>$(ProjectDir)bin/$(Configuration)/$(MSBuildProjectName)/$(MSBuildProjectName).xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
-        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
-        <PackageReference Include="BepInEx.Core" Version="5.4.21"/>
-        <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile"/>
+        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+        <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+        <PackageReference Include="UnityEngine.Modules" Version="2019.4.40" IncludeAssets="compile" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
     </ItemGroup>
 </Project>

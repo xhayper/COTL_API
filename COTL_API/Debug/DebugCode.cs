@@ -1,49 +1,52 @@
-﻿using System.Collections.Generic;
+using COTL_API.CustomFollowerCommand;
+using COTL_API.CustomInventory;
+using COTL_API.CustomMission;
+using COTL_API.CustomObjectives;
+using COTL_API.CustomRelics;
+using COTL_API.CustomStructures;
 using COTL_API.CustomTarotCard;
-using COTL_API.Helpers;
-using COTL_API.Skins;
-using src.Extensions;
-using System.Linq;
-using UnityEngine;
+using COTL_API.CustomTasks;
+using COTL_API.Prefabs;
 using HarmonyLib;
-using System.IO;
 using Lamb.UI;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace COTL_API.Debug;
 
 [HarmonyPatch]
 public class DebugCode
 {
-    public static void CreateSkin()
-    {
-        Texture2D customTex =
-            TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("placeholder_sheet.png"));
-        string atlasText = File.ReadAllText(PluginPaths.ResolveAssetPath("basic_atlas.txt"));
-
-        SkinManager.AddCustomSkin("Test", customTex, atlasText);
-    }
-
     [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
     [HarmonyPrefix]
-    public static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
+    private static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
     {
-        if (!Plugin.Debug) return;
+        if (Plugin.Instance == null || !Plugin.Instance.Debug) return;
 
-        Inventory.AddItem(Plugin.DebugItem, 1, true);
-        Inventory.AddItem(Plugin.DebugItem2, 1, true);
-        Inventory.AddItem(Plugin.DebugItem3, 1, true);
+        Inventory.AddItem(Plugin.Instance.DebugItem, 1, true);
+        Inventory.AddItem(Plugin.Instance.DebugItem2, 1, true);
+        Inventory.AddItem(Plugin.Instance.DebugItem3, 1, true);
+        Inventory.AddItem(Plugin.Instance.DebugItem4, 1, true);
+
+        if (PlayerFarming.Instance.playerRelic.CurrentRelic == null || PlayerFarming.Instance.playerRelic.CurrentRelic.RelicType != Plugin.Instance.DebugRelic)
+        {
+            PlayerFarming.Instance.playerRelic.EquipRelic(EquipmentManager.GetRelicData(Plugin.Instance.DebugRelic));
+        }
+        
+        var test = CustomObjectiveManager.BedRest("Test");
+        test.InitialQuestText = "This is my custom quest text for this objective.";
     }
-    
+
     [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show))]
     [HarmonyPrefix]
-    public static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance,
+    private static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance,
         TarotCards.TarotCard card1, TarotCards.TarotCard card2, bool instant)
     {
-        if (!Plugin.Debug) return true;
+        if (Plugin.Instance == null || !Plugin.Instance.Debug) return true;
 
         DataManager.Instance.PlayerRunTrinkets.Remove(card1);
         DataManager.Instance.PlayerRunTrinkets.Remove(card2);
-        
+
         __instance._card1 = GetRandModdedCard();
         __instance._card2 = GetRandVanillaCard();
         __instance._uiCard1.Play(__instance._card1);
@@ -56,7 +59,8 @@ public class DebugCode
     {
         List<TarotCards.Card> vanillaCardList = new(DataManager.Instance.PlayerFoundTrinkets);
         vanillaCardList.RemoveAll(c =>
-            CustomTarotCardManager.CustomTarotCards.ContainsKey(c) || DataManager.Instance.PlayerRunTrinkets.Any((t) => t.CardType == c));
+            CustomTarotCardManager.CustomTarotCardList.ContainsKey(c) ||
+            DataManager.Instance.PlayerRunTrinkets.Any(t => t.CardType == c));
 
         return new TarotCards.TarotCard(
             vanillaCardList.ElementAt(Random.Range(0,
@@ -66,13 +70,13 @@ public class DebugCode
     internal static TarotCards.TarotCard GetRandModdedCard()
     {
         return new TarotCards.TarotCard(
-            CustomTarotCardManager.CustomTarotCards.Keys.ElementAt(Random.Range(0,
-                CustomTarotCardManager.CustomTarotCards.Count)), 0);
+            CustomTarotCardManager.CustomTarotCardList.Keys.ElementAt(Random.Range(0,
+                CustomTarotCardManager.CustomTarotCardList.Count)), 0);
     }
 
     internal static int getTarotMult(TarotCards.Card obj)
     {
-        int mult = 0;
+        var mult = 0;
         if (DataManager.Instance.dungeonRun < 5) return Mathf.Min(mult, TarotCards.GetMaxTarotCardLevel(obj));
 
         while (Random.Range(0f, 1f) < 0.275f * DataManager.Instance.GetLuckMultiplier()) mult++;

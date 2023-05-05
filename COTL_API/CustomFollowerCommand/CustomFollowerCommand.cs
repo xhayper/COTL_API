@@ -1,15 +1,13 @@
-﻿using Lamb.UI.FollowerInteractionWheel;
-using System.Collections.Generic;
-using COTL_API.Helpers;
+﻿using I2.Loc;
+using Lamb.UI.FollowerInteractionWheel;
 using UnityEngine;
-using I2.Loc;
 
 namespace COTL_API.CustomFollowerCommand;
 
-public class CustomFollowerCommand : CommandItem
+public abstract class CustomFollowerCommand : CommandItem
 {
-    public virtual string InternalName { get; }
-    public string ModPrefix;
+    internal string ModPrefix = "";
+    public abstract string InternalName { get; }
 
     public virtual List<FollowerCommandCategory> Categories { get; } =
         new() { FollowerCommandCategory.DEFAULT_COMMAND };
@@ -41,7 +39,7 @@ public class CustomFollowerCommand : CommandItem
     {
         return true;
     }
-    
+
     public override bool IsAvailable(Follower follower)
     {
         return true;
@@ -50,6 +48,6 @@ public class CustomFollowerCommand : CommandItem
     public virtual void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
     {
-        interaction.Close();
+        interaction.Close(true, reshowMenu: false);
     }
 }
