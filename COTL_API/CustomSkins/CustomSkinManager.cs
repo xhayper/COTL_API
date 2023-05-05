@@ -1,6 +1,7 @@
 using HarmonyLib;
 using Spine;
 using Spine.Unity;
+using Spine.Unity.AttachmentTools;
 using UnityEngine;
 
 namespace COTL_API.CustomSkins;
@@ -13,6 +14,10 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, bool> AlwaysUnlockedSkins = new();
     internal static readonly Dictionary<string, Texture2D> SkinTextures = new();
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
+    internal static readonly Dictionary<string, Skin> TarotSkins = new();
+    internal static readonly Dictionary<string, Sprite> TarotSprites = new();
+    
+    internal static int NumGenericAtlases = 0;
 
     internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = new();
 
@@ -477,7 +482,7 @@ public static partial class CustomSkinManager
         CustomAtlases.Add(name, atlas);
 
         CreateNewFollowerType(name, colors, hidden, twitchPremium, invariant);
-        CreateSkin(name, overrides, unlocked);
+        CreateFollowerSkin(name, overrides, unlocked);
     }
 
     public static void AddPlayerSkin(CustomPlayerSkin playerSkin)
@@ -544,7 +549,7 @@ public static partial class CustomSkinManager
         });
     }
 
-    internal static void CreateSkin(string name, List<Tuple<int, string, float, float, float, float>> overrides,
+    internal static void CreateFollowerSkin(string name, List<Tuple<int, string, float, float, float, float>> overrides,
         bool unlocked)
     {
         void Action()
@@ -561,6 +566,93 @@ public static partial class CustomSkinManager
             Action();
         else
             Plugin.OnStart += Action;
+    }
+    
+    internal static string GetOrCreateTarotSkin(string internalName, Sprite skin)
+    {
+        string name = $"CustomTarotSkin_{internalName}";
+        if (!TarotSprites.ContainsKey(name)) TarotSprites.Add(name, skin);
+        return name;
+    }
+    
+    internal static Skin CreateOrGetTarotSkinFromTemplate(SkeletonData template, string skinName)
+    {
+        if (TarotSkins.ContainsKey(skinName)) return TarotSkins[skinName];
+        return CreateTarotSkin(template.Skins.ToList()[1], skinName);
+    }
+
+    private static Skin CreateTarotSkin(Skin template, string skinName)
+    {
+        Sprite sprite = TarotSprites[skinName];
+        SpineAtlasAsset atlas = CreateSingleTextureAtlas(sprite);
+
+        Skin skin = new(skinName);
+
+        AtlasRegion atlasRegion = atlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT");
+        Skin.SkinEntry back = template.Attachments.ToList()[0];
+        skin.SetAttachment(back.SlotIndex, back.Name, back.Attachment);
+        Skin.SkinEntry front = template.Attachments.ToList()[1];
+        if (front.Attachment is MeshAttachment customAttachment)
+        {
+            float minX = int.MaxValue;
+            float maxX = int.MinValue;
+            float minY = int.MaxValue;
+            float maxY = int.MinValue;
+
+            for (int j = 0; j < customAttachment.Vertices.Length; j++)
+            {
+                if (j % 3 == 0)
+                {
+                    minY = Math.Min(minY, customAttachment.Vertices[j]);
+                    maxY = Math.Max(maxY, customAttachment.Vertices[j]);
+                }
+                else if (j % 3 == 1)
+                {
+                    minX = Math.Min(minX, customAttachment.Vertices[j]);
+                    maxX = Math.Max(maxX, customAttachment.Vertices[j]);
+                }
+            }
+            customAttachment.Name = "CustomTarotSkin_" + skinName;
+            customAttachment.SetRegion(atlasRegion);
+            atlasRegion.name = "CustomTarotSkin_" + atlasRegion.name;
+            customAttachment.HullLength = 4;
+            customAttachment.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
+            float pw = atlasRegion.page.width;
+            float ph = atlasRegion.page.height;
+            float x = atlasRegion.x;
+            float y = atlasRegion.y;
+            float w = atlasRegion.width;
+            float h = atlasRegion.height;
+            customAttachment.UVs = new[]
+                { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
+            customAttachment.Vertices = new[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
+            customAttachment.WorldVerticesLength = 8;
+
+            skin.SetAttachment(front.SlotIndex, front.Name, customAttachment);
+        }
+        TarotSkins.Add(skinName, skin);
+        return skin;
+    }
+
+    private static SpineAtlasAsset CreateSingleTextureAtlas(Sprite sprite)
+    {
+        int n = NumGenericAtlases;
+        int w = (int) sprite.bounds.size.x;
+        int h = (int) sprite.bounds.size.y;
+        string atlasText = $"\r\ngeneric_sheet_{n}\r\nsize: {w},{h}\r\nformat: RGBA8888\r\nfilter: Linear,Linear"
+            + "\r\nrepeat: none\r\nGENERIC_ATTACHMENT\r\nrotate: false\r\nxy: 0, 0\r\n"
+            + $"size: {w}, {h}\r\norig: {w}, {h}\r\noffset: 0, 0\r\nindex: -1";
+        Texture tex = sprite.texture;
+        tex.name = $"generic_sheet_{n}";
+
+        Material mat = new(Shader.Find("Spine/Skeleton")) {
+            mainTexture = tex
+        };
+
+        Material[] materials = { mat };
+        SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
+        NumGenericAtlases++;
+        return atlas;
     }
 
     public static void SetPlayerSkinOverride(Skin? normalSkin, Skin? hurtSkin = null, Skin? hurtSkin2 = null)

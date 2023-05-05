@@ -18,10 +18,14 @@ public partial class CustomSkinManager
     private static void SkeletonData_FindSkin(ref Skin? __result, SkeletonData __instance, string skinName)
     {
         if (__result != null) return;
-        if (!CustomFollowerSkins.ContainsKey(skinName)) return;
-
-        if (AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
-        __result = CustomFollowerSkins[skinName];
+        if (skinName.StartsWith("CustomTarotSkin_"))
+        {
+            __result = CreateOrGetTarotSkinFromTemplate(__instance, skinName);
+        }
+        if (CustomFollowerSkins.ContainsKey(skinName)) {
+            if (AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
+            __result = CustomFollowerSkins[skinName];
+        }
     }
 
     [HarmonyPatch(typeof(Graphics), nameof(Graphics.CopyTexture), typeof(Texture), typeof(int), typeof(int),
