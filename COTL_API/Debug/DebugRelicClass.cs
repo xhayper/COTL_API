@@ -12,6 +12,9 @@ public class DebugRelicClass : CustomRelicData
     public override string GetDescriptionLocalisation() => RelicSubType == RelicSubType.Blessed ? "Gain 10 gold." : RelicSubType == RelicSubType.Dammed ? "Gain 5 poop." : "Gain 5 gold.";
 
     public override string GetLoreLocalization() => "Only those who bear the power of the Debug shall be able to use this relic.";
+   
+    public override bool CanBeBlessed => true;
+    public override bool CanBeDamned => true;
 
     public override void Init()
     {
