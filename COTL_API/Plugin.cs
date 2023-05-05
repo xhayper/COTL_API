@@ -275,4 +275,20 @@ public class Plugin : BaseUnityPlugin
         else
             SkinSettings.Value = "Default";
     }
+
+    // Debug cheats
+    public void Update()
+    {
+        if (Debug)
+        {
+            // Kill all enemies
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+
+                List<Health> targets = new List<Health>(Health.team2);
+                GameObject gameObject = GameObject.FindWithTag("Player");
+                targets.DoIf(x => x != null, x => x.DealDamage(999999, gameObject, gameObject.transform.position));
+            }
+        }
+    }
 }

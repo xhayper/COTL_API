@@ -4,9 +4,9 @@
         <Product>COTL_API</Product>
     </PropertyGroup>
 
-    <Import Project="../COTL_API.Common.props"/>
+    <Import Project="../COTL_API.Common.props" />
 
     <ItemGroup>
-        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.2.3.297-r.0"/>
+        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.2.3.297-r.0" />
     </ItemGroup>
 </Project>
