@@ -588,10 +588,12 @@ public static partial class CustomSkinManager
 
         Skin skin = new(skinName);
 
-        AtlasRegion atlasRegion = atlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT");
+        AtlasRegion atlasRegion = atlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT").Clone();
         Skin.SkinEntry back = template.Attachments.ToList()[0];
+        back = new Skin.SkinEntry(back.SlotIndex, back.Name, back.Attachment.Copy());
         skin.SetAttachment(back.SlotIndex, back.Name, back.Attachment);
         Skin.SkinEntry front = template.Attachments.ToList()[1];
+        front = new Skin.SkinEntry(front.SlotIndex, front.Name, front.Attachment.Copy());
         if (front.Attachment is MeshAttachment customAttachment)
         {
             float minX = int.MaxValue;
