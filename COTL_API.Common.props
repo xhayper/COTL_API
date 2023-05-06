@@ -4,7 +4,7 @@
         <Version>0.1.20</Version>
         <LangVersion>latest</LangVersion>
         <DebugType>portable</DebugType>
-        <IsPackable>false</IsPackable>
+        <IsPackable>true</IsPackable>
         <ImplicitUsings>true</ImplicitUsings>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Nullable>enable</Nullable>
