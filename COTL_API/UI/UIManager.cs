@@ -23,7 +23,7 @@ public static class UIManager
 
     [HarmonyPatch(typeof(UISettingsMenuController), nameof(UISettingsMenuController.OnShowStarted))]
     [HarmonyPostfix]
-    public static void UISettingsMenuController_OnShowStarted(UISettingsMenuController __instance)
+    private static void UISettingsMenuController_OnShowStarted(UISettingsMenuController __instance)
     {
         if (SettingsUtils.HeaderTemplate == null)
             SettingsUtils.HeaderTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>()
@@ -87,7 +87,7 @@ public static class UIManager
 
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.OnShowStarted))]
     [HarmonyPrefix]
-    public static void UISettingsMenuController_OnShowStarted(GraphicsSettings __instance)
+    private static void UISettingsMenuController_OnShowStarted(GraphicsSettings __instance)
     {
         if (__instance.name != "Mod Settings Content") return;
 
@@ -98,7 +98,7 @@ public static class UIManager
 
     [HarmonyPatch(typeof(GraphicsSettings), nameof(GraphicsSettings.Start))]
     [HarmonyPrefix]
-    public static bool GraphicsSettings_Start(GraphicsSettings __instance)
+    private static bool GraphicsSettings_Start(GraphicsSettings __instance)
     {
         if (__instance.name != "Mod Settings Content") return true;
 

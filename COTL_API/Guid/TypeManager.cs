@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using BepInEx;
-using COTL_API.Helpers;
 using HarmonyLib;
 
 namespace COTL_API.Guid;
@@ -72,13 +71,13 @@ public static class TypeManager
     [HarmonyPrefix]
     private static bool GetCustomType(string nameSpace, string typeName, ref Type __result)
     {
-        if (TypeCache.ContainsKey(typeName))
+        if (TypeCache.TryGetValue(typeName, out var value))
         {
-            __result = TypeCache[typeName];
+            __result = value;
             return false;
         }
 
-        if (int.TryParse(typeName, out _)) LogHelper.LogInfo("This appears to be a custom type");
+        if (int.TryParse(typeName, out _)) LogInfo("This appears to be a custom type");
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");
         TypeCache.Add(typeName, __result);

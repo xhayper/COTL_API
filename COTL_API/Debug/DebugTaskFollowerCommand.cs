@@ -1,6 +1,4 @@
-﻿using COTL_API.Helpers;
-
-namespace COTL_API.Debug;
+﻿namespace COTL_API.Debug;
 
 public class DebugTaskFollowerCommand : CustomFollowerCommand.CustomFollowerCommand
 {

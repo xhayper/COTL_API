@@ -10,7 +10,8 @@ public static class TextureHelper
     public static Texture2D CreateTextureFromPath(string path, TextureFormat textureFormat = TextureFormat.RGBA32,
         bool mipmaps = false, bool linear = false)
     {
-        if (TextureCache.TryGetValue(path, out var fromPath)) return fromPath;
+        if (TextureCache.TryGetValue(path, out var textureCache)) return textureCache;
+
         Texture2D tex = new(1, 1, textureFormat, mipmaps, linear)
         {
             filterMode = FilterMode.Point
@@ -21,8 +22,9 @@ public static class TextureHelper
     }
 
     public static Sprite CreateSpriteFromPath(string path)
-    { 
-        if (SpriteCache.TryGetValue(path, out var fromPath)) return fromPath;
+    {
+        if (SpriteCache.TryGetValue(path, out var spriteCache)) return spriteCache;
+
         var tex = CreateTextureFromPath(path);
         var sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
         SpriteCache[path] = sprite;

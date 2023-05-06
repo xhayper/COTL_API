@@ -1,5 +1,4 @@
-﻿using COTL_API.Helpers;
-using Spine;
+﻿using Spine;
 using Spine.Unity;
 using Spine.Unity.AttachmentTools;
 using UnityEngine;
@@ -83,7 +82,7 @@ internal static class SkinUtils
                 skin.SetAttachment(slot, ovrName, regionAttachment);
                 break;
             default:
-                LogHelper.LogWarning(
+                LogWarning(
                     $"Attachment {a.Name} is not a MeshAttachment or RegionAttachment, skipping...");
                 break;
         }
@@ -135,11 +134,7 @@ internal static class SkinUtils
 
         List<Tuple<int, string>> overrideRegions = new();
 
-        foreach (var region in atlas.GetAtlas().regions)
-        {
-            var ovrs = regionOverrideFunction(region);
-            foreach (var ovr in ovrs) overrideRegions.Add(ovr);
-        }
+        foreach (var ovrs in atlas.GetAtlas().regions.Select(regionOverrideFunction)) overrideRegions.AddRange(ovrs);
 
         List<Tuple<int, string, float, float, float, float>> overrides = new();
         List<AtlasRegion> list = atlas.GetAtlas().regions;
@@ -165,7 +160,7 @@ internal static class SkinUtils
                         scale[3] = float.Parse(scaleSplit[1]);
                         break;
                     default:
-                        LogHelper.LogWarning($"Invalid scale length, Expected 3 or 4, got {scale.Length}.");
+                        LogWarning($"Invalid scale length, Expected 3 or 4, got {scale.Length}.");
                         break;
                 }
 

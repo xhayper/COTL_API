@@ -5,6 +5,7 @@ using BepInEx.Logging;
 using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomInventory;
 using COTL_API.CustomObjectives;
+using COTL_API.CustomRelics;
 using COTL_API.CustomSettings;
 using COTL_API.CustomSettings.Elements;
 using COTL_API.CustomSkins;
@@ -12,7 +13,6 @@ using COTL_API.CustomStructures;
 using COTL_API.CustomTarotCard;
 using COTL_API.CustomTasks;
 using COTL_API.Debug;
-using COTL_API.Helpers;
 using COTL_API.Saves;
 using HarmonyLib;
 using I2.Loc;
@@ -20,6 +20,7 @@ using Lamb.UI;
 using Lamb.UI.MainMenu;
 using MonoMod.Utils;
 using Spine;
+using UnityEngine;
 
 namespace COTL_API;
 
@@ -68,6 +69,8 @@ public class Plugin : BaseUnityPlugin
     internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
 
     internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
+
+    internal RelicType DebugRelic { get; private set; }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Awake()
@@ -142,7 +145,7 @@ public class Plugin : BaseUnityPlugin
     private void OnEnable()
     {
         _harmony.PatchAll(Assembly.GetExecutingAssembly());
-        Logger.LogInfo($"{Harmony.GetAllPatchedMethods().Count()} harmony patches applied!");
+        Logger.LogInfo($"{_harmony.GetPatchedMethods().Count()} harmony patches applied!");
     }
 
     private void OnDisable()
@@ -168,7 +171,7 @@ public class Plugin : BaseUnityPlugin
 
             if (QuestData == null) return;
 
-            foreach (var objective in QuestData!)
+            foreach (var objective in QuestData)
                 if (DataManager.instance.Objectives.Exists(a => a.ID == objective.Key))
                     tempObjectives.Add(objective.Key, objective.Value);
                 else if (Quests.QuestsAll.Exists(a => a.ID == objective.Key))
@@ -254,6 +257,8 @@ public class Plugin : BaseUnityPlugin
         CustomSettingsManager.AddToggle("Debug", "Toggle", true,
             i => { Logger.LogDebug($"Toggled: {i}"); });
 
+        DebugRelic = CustomRelicManager.Add(ScriptableObject.CreateInstance<DebugRelicClass>());
+
         Logger.LogDebug("Debug mode enabled!");
 
         DebugContentAdded = true;
@@ -269,5 +274,21 @@ public class Plugin : BaseUnityPlugin
             CustomSkinManager.SetPlayerSkinOverride(skin);
         else
             SkinSettings.Value = "Default";
+    }
+
+    // Debug cheats
+    public void Update()
+    {
+        if (Debug)
+        {
+            // Kill all enemies
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+
+                List<Health> targets = new List<Health>(Health.team2);
+                GameObject gameObject = GameObject.FindWithTag("Player");
+                targets.DoIf(x => x != null, x => x.DealDamage(999999, gameObject, gameObject.transform.position));
+            }
+        }
     }
 }
