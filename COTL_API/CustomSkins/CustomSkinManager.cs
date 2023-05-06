@@ -577,8 +577,7 @@ public static partial class CustomSkinManager
     
     internal static Skin CreateOrGetTarotSkinFromTemplate(SkeletonData template, string skinName)
     {
-        if (TarotSkins.ContainsKey(skinName)) return TarotSkins[skinName];
-        return CreateTarotSkin(template.Skins.ToList()[1], skinName);
+        return TarotSkins.TryGetValue(skinName, out var fromTemplate) ? fromTemplate : CreateTarotSkin(template.Skins.ToList()[1], skinName);
     }
 
     private static Skin CreateTarotSkin(Skin template, string skinName)
