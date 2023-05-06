@@ -1,5 +1,4 @@
-﻿using COTL_API.Helpers;
-using HarmonyLib;
+﻿using HarmonyLib;
 using I2.Loc;
 using Lamb.UI;
 using Lamb.UI.Settings;
@@ -8,7 +7,7 @@ using UnityEngine.ProBuilder;
 namespace COTL_API.Localization;
 
 [HarmonyPatch]
-public static class Localization
+public static class LocalizationPatches
 {
     public static Dictionary<string, Dictionary<string, string>> LocalizationMap { get; } = new();
     public static List<string> LanguageList { get; } = new();
@@ -40,11 +39,11 @@ public static class Localization
                 LocalizationMap[name].Add(key, value);
             }
 
-            LogHelper.LogInfo($"Loaded localization: {name}");
+            LogInfo($"Loaded localization: {name}");
         }
         else
         {
-            LogHelper.LogError(
+            LogError(
                 $"Localization file not found! Please make sure that the path \"{path}\" contains the localization file.");
         }
     }
@@ -69,7 +68,7 @@ public static class Localization
 
     [HarmonyPatch(typeof(GameSettings), nameof(GameSettings.OnLanguageChanged))]
     [HarmonyPrefix]
-    public static bool GameSettings_OnLanguageChanged(GameSettings __instance, int index)
+    private static bool GameSettings_OnLanguageChanged(GameSettings __instance, int index)
     {
         if (index >= LanguageUtilities.AllLanguages.Length)
         {
@@ -90,7 +89,7 @@ public static class Localization
 
     [HarmonyPatch(typeof(GameSettings), nameof(GameSettings.GetLanguageIndex))]
     [HarmonyPrefix]
-    public static bool GameSettings_GetLanguageIndex(GameSettings __instance, ref int __result)
+    private static bool GameSettings_GetLanguageIndex(GameSettings __instance, ref int __result)
     {
         __instance._languageSelector._prefilledContent =
             __instance._languageSelector._prefilledContent.AddRange(LocalizationMap.Keys.ToArray());
@@ -102,7 +101,7 @@ public static class Localization
 
     [HarmonyPatch(typeof(MMHorizontalSelector), nameof(MMHorizontalSelector.UpdateContent))]
     [HarmonyPrefix]
-    public static void MMHorizontalSelector_UpdateContent(MMHorizontalSelector __instance, string[] newContent)
+    private static void MMHorizontalSelector_UpdateContent(MMHorizontalSelector __instance, string[] newContent)
     {
         if (__instance._contentIndex >= newContent.Length) __instance._contentIndex = 0;
     }

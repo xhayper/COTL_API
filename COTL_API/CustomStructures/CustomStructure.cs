@@ -1,5 +1,4 @@
-﻿using COTL_API.Helpers;
-using COTL_API.Prefabs;
+﻿using COTL_API.Prefabs;
 using I2.Loc;
 using Lamb.UI.BuildMenu;
 using UnityEngine;

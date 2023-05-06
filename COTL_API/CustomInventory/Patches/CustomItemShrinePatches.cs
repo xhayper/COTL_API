@@ -1,5 +1,4 @@
-﻿using COTL_API.Helpers;
-using HarmonyLib;
+﻿using HarmonyLib;
 using Random = UnityEngine.Random;
 
 namespace COTL_API.CustomInventory;
@@ -100,7 +99,7 @@ public static partial class CustomItemManager
                     {
                         listToAdd = __instance.Offerings;
                         if (Plugin.Instance != null && Plugin.Instance.Debug)
-                            LogHelper.LogDebug(
+                            LogDebug(
                                 "Something went horribly wrong here... we should never hit this.");
                         break;
                     }

@@ -11,6 +11,6 @@ public static class OnInteractHelper
     public static void Interaction_OnInteract(Interaction instance, StateMachine state)
     {
         if (Plugin.Instance != null && Plugin.Instance.Debug)
-            LogHelper.LogWarning($"Interaction.OnInteract Test({instance}, {state})");
+            LogWarning($"Interaction.OnInteract Test({instance}, {state})");
     }
 }

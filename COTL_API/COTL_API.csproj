@@ -2,11 +2,16 @@
     <PropertyGroup>
         <Guid>io.github.xhayper.COTL_API</Guid>
         <Product>COTL_API</Product>
+        <Title>Cult of the Lamb Modding API</Title>
+        <Description>A modding API for Cult of the Lamb</Description>
+        <PackageProjectUrl>https://github.com/xhayper/COTL_API</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/xhayper/COTL_API</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props" />
 
     <ItemGroup>
-        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.2.2.286-r.0" />
+        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.2.3.297-r.0" />
     </ItemGroup>
 </Project>

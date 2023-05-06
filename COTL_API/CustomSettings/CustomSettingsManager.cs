@@ -164,10 +164,8 @@ public static class CustomSettingsManager
     public static HorizontalSelector? AddBepInExConfig(string? category, string text, ConfigEntry<string> entry,
         Action<int>? onValueChanged = null)
     {
-        if (!(entry.Description.AcceptableValues is AcceptableValueList<string>)) return null;
+        if (entry.Description.AcceptableValues is not AcceptableValueList<string> acceptedValue) return null;
         onValueChanged ??= delegate { };
-
-        var acceptedValue = (AcceptableValueList<string>)entry.Description.AcceptableValues;
 
         var selector = new HorizontalSelector(category, text, entry.Value, acceptedValue.AcceptableValues,
             delegate(int newValue)

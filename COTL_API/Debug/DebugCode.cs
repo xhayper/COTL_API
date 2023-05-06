@@ -12,7 +12,7 @@ public class DebugCode
 {
     [HarmonyPatch(typeof(InventoryMenu), nameof(InventoryMenu.OnShowStarted))]
     [HarmonyPrefix]
-    public static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
+    private static void InventoryMenu_OnShowStarted(InventoryMenu __instance)
     {
         if (Plugin.Instance == null || !Plugin.Instance.Debug) return;
 
@@ -21,13 +21,17 @@ public class DebugCode
         Inventory.AddItem(Plugin.Instance.DebugItem3, 1, true);
         Inventory.AddItem(Plugin.Instance.DebugItem4, 1, true);
 
+        if (PlayerFarming.Instance.playerRelic.CurrentRelic == null ||
+            PlayerFarming.Instance.playerRelic.CurrentRelic.RelicType != Plugin.Instance.DebugRelic)
+            PlayerFarming.Instance.playerRelic.EquipRelic(EquipmentManager.GetRelicData(Plugin.Instance.DebugRelic));
+
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
     }
 
     [HarmonyPatch(typeof(UITarotChoiceOverlayController), nameof(UITarotChoiceOverlayController.Show))]
     [HarmonyPrefix]
-    public static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance,
+    private static bool UITarotChoiceOverlayController_Show(UITarotChoiceOverlayController __instance,
         TarotCards.TarotCard card1, TarotCards.TarotCard card2, bool instant)
     {
         if (Plugin.Instance == null || !Plugin.Instance.Debug) return true;
