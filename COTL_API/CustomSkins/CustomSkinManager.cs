@@ -16,8 +16,8 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
     internal static readonly Dictionary<string, Skin> TarotSkins = new();
     internal static readonly Dictionary<string, Sprite> TarotSprites = new();
-    
-    internal static int NumGenericAtlases = 0;
+
+    internal static int NumGenericAtlases;
 
     internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = new();
 
@@ -567,31 +567,33 @@ public static partial class CustomSkinManager
         else
             Plugin.OnStart += Action;
     }
-    
+
     internal static string GetOrCreateTarotSkin(string internalName, Sprite skin)
     {
-        string name = $"CustomTarotSkin_{internalName}";
+        var name = $"CustomTarotSkin_{internalName}";
         if (!TarotSprites.ContainsKey(name)) TarotSprites.Add(name, skin);
         return name;
     }
-    
+
     internal static Skin CreateOrGetTarotSkinFromTemplate(SkeletonData template, string skinName)
     {
-        return TarotSkins.TryGetValue(skinName, out var fromTemplate) ? fromTemplate : CreateTarotSkin(template.Skins.ToList()[1], skinName);
+        return TarotSkins.TryGetValue(skinName, out var fromTemplate)
+            ? fromTemplate
+            : CreateTarotSkin(template.Skins.ToList()[1], skinName);
     }
 
     private static Skin CreateTarotSkin(Skin template, string skinName)
     {
-        Sprite sprite = TarotSprites[skinName];
-        SpineAtlasAsset atlas = CreateSingleTextureAtlas(sprite);
+        var sprite = TarotSprites[skinName];
+        var atlas = CreateSingleTextureAtlas(sprite);
 
         Skin skin = new(skinName);
 
-        AtlasRegion atlasRegion = atlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT").Clone();
-        Skin.SkinEntry back = template.Attachments.ToList()[0];
+        var atlasRegion = atlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT").Clone();
+        var back = template.Attachments.ToList()[0];
         back = new Skin.SkinEntry(back.SlotIndex, back.Name, back.Attachment.Copy());
         skin.SetAttachment(back.SlotIndex, back.Name, back.Attachment);
-        Skin.SkinEntry front = template.Attachments.ToList()[1];
+        var front = template.Attachments.ToList()[1];
         front = new Skin.SkinEntry(front.SlotIndex, front.Name, front.Attachment.Copy());
         if (front.Attachment is MeshAttachment customAttachment)
         {
@@ -600,8 +602,7 @@ public static partial class CustomSkinManager
             float minY = int.MaxValue;
             float maxY = int.MinValue;
 
-            for (int j = 0; j < customAttachment.Vertices.Length; j++)
-            {
+            for (var j = 0; j < customAttachment.Vertices.Length; j++)
                 if (j % 3 == 0)
                 {
                     minY = Math.Min(minY, customAttachment.Vertices[j]);
@@ -612,7 +613,7 @@ public static partial class CustomSkinManager
                     minX = Math.Min(minX, customAttachment.Vertices[j]);
                     maxX = Math.Max(maxX, customAttachment.Vertices[j]);
                 }
-            }
+
             customAttachment.Name = "CustomTarotSkin_" + skinName;
             customAttachment.SetRegion(atlasRegion);
             atlasRegion.name = "CustomTarotSkin_" + atlasRegion.name;
@@ -631,27 +632,29 @@ public static partial class CustomSkinManager
 
             skin.SetAttachment(front.SlotIndex, front.Name, customAttachment);
         }
+
         TarotSkins.Add(skinName, skin);
         return skin;
     }
 
     private static SpineAtlasAsset CreateSingleTextureAtlas(Sprite sprite)
     {
-        int n = NumGenericAtlases;
-        int w = (int) sprite.bounds.size.x;
-        int h = (int) sprite.bounds.size.y;
-        string atlasText = $"\r\ngeneric_sheet_{n}\r\nsize: {w},{h}\r\nformat: RGBA8888\r\nfilter: Linear,Linear"
-            + "\r\nrepeat: none\r\nGENERIC_ATTACHMENT\r\nrotate: false\r\nxy: 0, 0\r\n"
-            + $"size: {w}, {h}\r\norig: {w}, {h}\r\noffset: 0, 0\r\nindex: -1";
+        var n = NumGenericAtlases;
+        var w = (int)sprite.bounds.size.x;
+        var h = (int)sprite.bounds.size.y;
+        var atlasText = $"\r\ngeneric_sheet_{n}\r\nsize: {w},{h}\r\nformat: RGBA8888\r\nfilter: Linear,Linear"
+                        + "\r\nrepeat: none\r\nGENERIC_ATTACHMENT\r\nrotate: false\r\nxy: 0, 0\r\n"
+                        + $"size: {w}, {h}\r\norig: {w}, {h}\r\noffset: 0, 0\r\nindex: -1";
         Texture tex = sprite.texture;
         tex.name = $"generic_sheet_{n}";
 
-        Material mat = new(Shader.Find("Spine/Skeleton")) {
+        Material mat = new(Shader.Find("Spine/Skeleton"))
+        {
             mainTexture = tex
         };
 
         Material[] materials = { mat };
-        SpineAtlasAsset atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
+        var atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
         NumGenericAtlases++;
         return atlas;
     }

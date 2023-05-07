@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using COTL_API.Guid;
 using HarmonyLib;
-using Rewired.Utils;
 
 namespace COTL_API.CustomStructures;
 
@@ -32,13 +31,15 @@ public static partial class CustomStructureManager
     public static CustomStructure GetStructureByPrefabName(string name)
     {
         //changed to FirstOrDefault instead of First so that it returns Null if not found, avoiding System.InvalidOperationException exceptions
-        return CustomStructureList.FirstOrDefault(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name).Value;
+        return CustomStructureList
+            .FirstOrDefault(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name).Value;
     }
 
 
     public static bool CustomStructureExists(string name)
     {
-        var exists = CustomStructureList.ToList().Exists(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name);
+        var exists = CustomStructureList.ToList()
+            .Exists(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name);
         return exists;
     }
 }

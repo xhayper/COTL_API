@@ -50,8 +50,7 @@ internal static class SettingsUtils
         if (onChange != null) sliderSlider.onValueChanged.AddListener(onChange);
         sliderSlider.value = value;
     }
-    
-    
+
 
     public static void AddDropdown(Transform parent, string text, string?[] options, int index = 0,
         Action<int>? onChange = null, string? indexStringOverride = null)
@@ -73,7 +72,7 @@ internal static class SettingsUtils
         mmDropdown.ContentIndex = indexStringOverride != null ? indexOverride : index;
         if (onChange != null) mmDropdown.OnValueChanged += onChange;
     }
-    
+
     public static void AddDropdown(Transform parent, string text, KeyCode?[] options, int index = 0,
         Action<int>? onChange = null, string? indexStringOverride = null)
     {

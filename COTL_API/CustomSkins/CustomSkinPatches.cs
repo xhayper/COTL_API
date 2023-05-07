@@ -18,11 +18,9 @@ public partial class CustomSkinManager
     private static void SkeletonData_FindSkin(ref Skin? __result, SkeletonData __instance, string skinName)
     {
         if (__result != null) return;
-        if (skinName.StartsWith("CustomTarotSkin_"))
+        if (skinName.StartsWith("CustomTarotSkin_")) __result = CreateOrGetTarotSkinFromTemplate(__instance, skinName);
+        if (CustomFollowerSkins.ContainsKey(skinName))
         {
-            __result = CreateOrGetTarotSkinFromTemplate(__instance, skinName);
-        }
-        if (CustomFollowerSkins.ContainsKey(skinName)) {
             if (AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
             __result = CustomFollowerSkins[skinName];
         }
