@@ -115,11 +115,13 @@ public partial class CustomTarotCardManager
         if (!CustomTarotCardList.ContainsKey(Type)) return true;
         if (CustomTarotCardList[Type].Skin == "Custom")
         {
-            __result = CustomSkinManager.GetOrCreateTarotSkin(CustomTarotCardList[Type].InternalName, CustomTarotCardList[Type].CustomSprite!);
+            __result = CustomSkinManager.GetOrCreateTarotSkin(CustomTarotCardList[Type].InternalName,
+                CustomTarotCardList[Type].CustomSprite!);
             return false;
         }
+
         __result = CustomTarotCardList[Type].Skin;
-        
+
         return false;
     }
 
