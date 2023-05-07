@@ -1,4 +1,5 @@
-﻿using COTL_API.CustomStructures;
+﻿using COTL_API.CustomSettings;
+using COTL_API.CustomStructures;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -43,8 +44,8 @@ public static class CustomPrefabManager
         };
     }
 
-    [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters),
-        typeof(bool))]
+    [HarmonyWrapSafe]
+    [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters), typeof(bool))]
     [HarmonyPrefix]
     private static void Addressables_InstantiateAsync(ref object key)
     {
@@ -52,10 +53,19 @@ public static class CustomPrefabManager
 
         // Run the original code with a generic structure
         if (!path.Contains("CustomBuildingPrefab_")) return;
+        
+        var cs = CustomStructureManager.CustomStructureExists(path);
+        if (!cs)
+        {
+            LogWarning($"Structure attempting to be loaded no longer exists! This will be cleaned on load.");
+            return;
+        }
+
         _pathOverride = path;
         key = "Assets/Prefabs/Structures/Buildings/Decoration Wreath Stick.prefab";
     }
 
+    [HarmonyWrapSafe]
     [HarmonyPatch(typeof(ResourceManager), "ProvideInstance")]
     [HarmonyPostfix]
     private static void ResourceManager_ProvideInstance(ref AsyncOperationHandle<GameObject> __result)
