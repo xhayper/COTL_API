@@ -1,4 +1,5 @@
-﻿using COTL_API.CustomSettings;
+﻿using BepInEx.Configuration;
+using COTL_API.CustomSettings;
 using COTL_API.CustomSettings.Elements;
 using HarmonyLib;
 using I2.Loc;
