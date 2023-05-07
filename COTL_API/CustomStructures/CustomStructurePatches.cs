@@ -7,7 +7,7 @@ namespace COTL_API.CustomStructures;
 [HarmonyPatch]
 public partial class CustomStructureManager
 {
-    [HarmonyPatch(typeof(StructureBrain), "CreateBrain")]
+    [HarmonyPatch(typeof(StructureBrain), nameof(StructureBrain.CreateBrain))]
     [HarmonyPrefix]
     private static bool StructureBrain_CreateBrain(ref StructureBrain __result, StructuresData data)
     {
@@ -23,7 +23,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetInfoByType")]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetInfoByType))]
     [HarmonyPrefix]
     private static bool StructuresData_GetInfoByType(ref StructuresData __result, StructureBrain.TYPES Type,
         int variantIndex)
@@ -41,7 +41,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(FollowerCategory), "GetStructuresForCategory")]
+    [HarmonyPatch(typeof(FollowerCategory), nameof(FollowerCategory.GetStructuresForCategory))]
     [HarmonyPostfix]
     private static void FollowerCategory_GetStructuresForCategory(ref List<StructureBrain.TYPES> __result,
         FollowerCategory.Category category)
@@ -51,7 +51,7 @@ public partial class CustomStructureManager
             select structure.StructureType);
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetUnlocked")]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetUnlocked))]
     [HarmonyPrefix]
     private static void StructuresData_GetUnlocked(StructureBrain.TYPES Types)
     {
@@ -62,7 +62,7 @@ public partial class CustomStructureManager
             DataManager.Instance.RevealedStructures.Add(Types);
     }
 
-    [HarmonyPatch(typeof(TypeAndPlacementObjects), "GetByType")]
+    [HarmonyPatch(typeof(TypeAndPlacementObjects), nameof(TypeAndPlacementObjects.GetByType))]
     [HarmonyPrefix]
     private static bool TypeAndPlacementObjects_GetByType(ref TypeAndPlacementObject __result,
         StructureBrain.TYPES Type)
@@ -72,7 +72,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "BuildDurationGameMinutes")]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.BuildDurationGameMinutes))]
     [HarmonyPrefix]
     private static bool StructuresData_BuildDurationGameMinutes(ref int __result, StructureBrain.TYPES Type)
     {
@@ -81,7 +81,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetCost")]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetCost))]
     [HarmonyPrefix]
     private static bool StructuresData_GetCost(ref List<StructuresData.ItemCost> __result, StructureBrain.TYPES Type)
     {
@@ -90,7 +90,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetLocalizedNameStatic", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedNameStatic), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_GetLocalizedNameStatic(StructureBrain.TYPES Type, ref string __result)
     {
@@ -99,7 +99,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "LocalizedName", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.LocalizedName), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_LocalizedName(StructureBrain.TYPES Type, ref string __result)
     {
@@ -108,7 +108,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "LocalizedDescription", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.LocalizedDescription), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_LocalizedDescription(StructureBrain.TYPES Type, ref string __result)
     {
@@ -117,7 +117,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "LocalizedPros", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.LocalizedPros), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_LocalizedPros(StructureBrain.TYPES Type, ref string __result)
     {
@@ -126,7 +126,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "LocalizedCons", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.LocalizedCons), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_LocalizedCons(StructureBrain.TYPES Type, ref string __result)
     {
@@ -135,7 +135,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetLocalizedName", new Type[] { })]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedName), new Type[] { })]
     [HarmonyPrefix]
     private static bool StructuresData_GetLocalizedName(StructuresData __instance, ref string __result)
     {
@@ -144,7 +144,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetLocalizedName", typeof(bool), typeof(bool), typeof(bool))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedName), typeof(bool), typeof(bool), typeof(bool))]
     [HarmonyPrefix]
     private static bool StructuresData_GetLocalizedName(StructuresData __instance, bool plural, bool withArticle,
         bool definite, ref string __result)
@@ -154,7 +154,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetLocalizedDescription", new Type[] { })]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedDescription), new Type[] { })]
     [HarmonyPrefix]
     private static bool StructuresData_GetLocalizedDescription(StructuresData __instance, ref string __result)
     {
@@ -163,7 +163,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetLocalizedLore", new Type[] { })]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedLore), new Type[] { })]
     [HarmonyPrefix]
     private static bool StructuresData_GetLocalizedLore(StructuresData __instance, ref string __result)
     {
@@ -172,7 +172,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetResearchCost", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetResearchCost), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_GetResearchCost(StructureBrain.TYPES Type, ref int __result)
     {
@@ -181,7 +181,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "RequiresTempleToBuild", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.RequiresTempleToBuild), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_RequiresTempleToBuild(StructureBrain.TYPES type, ref bool __result)
     {
@@ -190,7 +190,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetBuildOnlyOne", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetBuildOnlyOne), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_GetBuildOnlyOne(StructureBrain.TYPES Type, ref bool __result)
     {
@@ -199,7 +199,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "GetBuildSfx", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetBuildSfx), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_GetBuildSfx(StructureBrain.TYPES Type, ref string __result)
     {
@@ -208,7 +208,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "HiddenUntilUnlocked", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.HiddenUntilUnlocked), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_HiddenUntilUnlocked(StructureBrain.TYPES structure, ref bool __result)
     {
@@ -217,7 +217,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), "CanBeFlipped", typeof(StructureBrain.TYPES))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.CanBeFlipped), typeof(StructureBrain.TYPES))]
     [HarmonyPrefix]
     private static bool StructuresData_CanBeFlipped(StructureBrain.TYPES type, ref bool __result)
     {
