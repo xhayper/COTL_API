@@ -18,6 +18,4 @@ public static class KeyCodes
     {
         return Enum.GetNames(typeof(KeyCode));
     }
-
-    
 }

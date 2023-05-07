@@ -1,8 +1,6 @@
-
-using COTL_API.CustomSkins;
-using UnityEngine;
 using System.Text;
 using I2.Loc;
+using UnityEngine;
 
 namespace COTL_API.CustomTarotCard;
 
@@ -14,8 +12,9 @@ public abstract class CustomTarotCard
     public abstract string InternalName { get; }
 
     public virtual TarotCards.CardCategory Category { get; }
-    
-    public virtual Sprite? CustomSprite { get; internal set; } = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
+
+    public virtual Sprite? CustomSprite { get; internal set; } =
+        TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
     public virtual string Skin => "Custom";
 
