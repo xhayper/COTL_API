@@ -10,12 +10,12 @@ using Object = UnityEngine.Object;
 namespace COTL_API.UI.Helpers;
 
 [HarmonyPatch]
-public static class Fixes
+public static class VanillaPatches
 {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(UnityEngine.Debug), nameof(UnityEngine.Debug.LogError), typeof(object))]
     [HarmonyPatch(typeof(UnityEngine.Debug), nameof(UnityEngine.Debug.LogError), typeof(object), typeof(Object))]
-    public static bool Debug_LogError(ref object message)
+    private static bool Debug_LogError(ref object message)
     {
         // Stops the game complaining about missing fonts for specific cultures
         if (message is not string msg) return true;
@@ -35,7 +35,7 @@ public static class Fixes
     [HarmonyFinalizer]
     [HarmonyPatch(typeof(StructureBrain), nameof(StructureBrain.ApplyConfigToData))]
     [HarmonyPatch(typeof(LocationManager), nameof(LocationManager.PlaceStructure))]
-    public static Exception? Finalizer()
+    private static Exception? Finalizer()
     {
         //stops game complaining about invalid data from known removed custom structures. Happens once per structure, and is resolved in GenerateRoom.OnDisable postfix
         return null;
