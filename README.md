@@ -9,13 +9,13 @@ A library to easily interact with [`Cult of the Lamb`](https://store.steampowere
 
 ## NOTE
 
-This project is still in alpha, and stuff can changed without any notice!
+This project is still in alpha, and stuff can change without any notice!
 
 ## Contribution
 
 ### How can you help?
 
-We are in need of people to help develop the API! you can help by joining
+We are in need of people to help develop the API! You can help by joining
 the [Cult of the Lamb Modding Discord Server](https://discord.gg/jZ2DytX3TX)!
 
 ## Credits
