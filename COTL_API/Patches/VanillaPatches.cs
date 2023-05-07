@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using BepInEx.Bootstrap;
 using COTL_API.CustomStructures;
 using HarmonyLib;
 using MMRoomGeneration;
@@ -9,12 +10,12 @@ using Object = UnityEngine.Object;
 namespace COTL_API.UI.Helpers;
 
 [HarmonyPatch]
-public static class Fixes
+public static class VanillaPatches
 {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(UnityEngine.Debug), nameof(UnityEngine.Debug.LogError), typeof(object))]
     [HarmonyPatch(typeof(UnityEngine.Debug), nameof(UnityEngine.Debug.LogError), typeof(object), typeof(Object))]
-    public static bool Debug_LogWarning(ref object message)
+    private static bool Debug_LogError(ref object message)
     {
         // Stops the game complaining about missing fonts for specific cultures
         if (message is not string msg) return true;
@@ -34,7 +35,7 @@ public static class Fixes
     [HarmonyFinalizer]
     [HarmonyPatch(typeof(StructureBrain), nameof(StructureBrain.ApplyConfigToData))]
     [HarmonyPatch(typeof(LocationManager), nameof(LocationManager.PlaceStructure))]
-    public static Exception? Finalizer()
+    private static Exception? Finalizer()
     {
         //stops game complaining about invalid data from known removed custom structures. Happens once per structure, and is resolved in GenerateRoom.OnDisable postfix
         return null;
@@ -87,8 +88,10 @@ public static class Fixes
         stopWatch.Start();
 
         // Get all fields of type List<StructuresData> in DataManager
-        var listOfStructuresDataFields = AccessTools.GetDeclaredFields(typeof(DataManager)).Where(a => a.FieldType == typeof(List<StructuresData>)).ToList();
-        bool dataFixed = false;
+        var listOfStructuresDataFields = AccessTools.GetDeclaredFields(typeof(DataManager))
+            .Where(a => a.FieldType == typeof(List<StructuresData>)).ToList();
+        var dataFixed = false;
+
         // Iterate through the fields, removing mating tents and custom structures that do not exist in the CustomStructureList
         foreach (var field in listOfStructuresDataFields)
         {
@@ -99,15 +102,15 @@ public static class Fixes
             // Check for custom structures that need to be removed
             f.ForEach(structure =>
             {
-                if (structure.PrefabPath != null && structure.PrefabPath.Contains("CustomBuildingPrefab"))
-                {
-                    LogInfo($"Found custom item in {field.Name}: {structure.PrefabPath}");
-                    if (CustomStructureManager.CustomStructureExists(structure.PrefabPath)) return;
+                if (structure.PrefabPath == null || !structure.PrefabPath.Contains("CustomBuildingPrefab")) return;
 
-                    // Item needs to be removed from BaseStructures
-                    LogWarning($"Found custom item in {field.Name} from a mod no longer installed!: {structure.PrefabPath}");
-                    itemsToRemove.Add(structure);
-                }
+                LogInfo($"Found custom item in {field.Name}: {structure.PrefabPath}");
+                if (CustomStructureManager.CustomStructureExists(structure.PrefabPath)) return;
+
+                // Item needs to be removed from BaseStructures
+                LogWarning(
+                    $"Found custom item in {field.Name} from a mod no longer installed!: {structure.PrefabPath}");
+                itemsToRemove.Add(structure);
             });
 
             // Remove custom structures
@@ -116,9 +119,8 @@ public static class Fixes
             // Remove mating tents
             var tentCount = 0;
             if (!MatingTentModExists())
-            {
-                tentCount = f.RemoveAll(a => a == null || (a is {PrefabPath: not null} && a.PrefabPath.Contains("Mating")));
-            }
+                tentCount = f.RemoveAll(a =>
+                    a == null || (a is { PrefabPath: not null } && a.PrefabPath.Contains("Mating")));
 
             // Update the field in DataManager with the modified list
             field.SetValue(DataManager.Instance, f);
@@ -127,28 +129,26 @@ public static class Fixes
             if (customCount > 0 || tentCount > 0)
             {
                 dataFixed = true;
-                LogInfo($"Removed {customCount} orphaned structure(s) and {tentCount} orphaned tent(s) from {field.Name}.");
+                LogInfo(
+                    $"Removed {customCount} orphaned structure(s) and {tentCount} orphaned tent(s) from {field.Name}.");
             }
         }
 
         // Save the changes and log the time taken for the process
         stopWatch.Stop();
-        if (dataFixed)
-        {
-            LogInfo($"Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
+
+        LogInfo(dataFixed
+            ? $"Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks."
             //  SaveAndLoad.Save();
-        }
-        else
-        {
-            LogInfo($"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
-        }
+            : $"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
     }
 
     // Method to check if the MatingTentMod is installed
     private static bool MatingTentModExists()
     {
         // Find the MatingTentMod plugin in the BepInEx plugin list
-        var matingTentMod = BepInEx.Bootstrap.Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains("MatingTentMod")).Value;
+        var matingTentMod = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains("MatingTentMod"))
+            .Value;
         return matingTentMod != null;
     }
 }

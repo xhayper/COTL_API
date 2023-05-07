@@ -17,7 +17,6 @@ using COTL_API.Saves;
 using HarmonyLib;
 using I2.Loc;
 using Lamb.UI;
-using Lamb.UI.MainMenu;
 using MonoMod.Utils;
 using Spine;
 using UnityEngine;
@@ -29,8 +28,6 @@ namespace COTL_API;
 [HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
-    internal static ConfigEntry<bool> UnityDebug { get; private set; } = null!;
-
     internal static Dropdown? SkinSettings;
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
@@ -47,6 +44,7 @@ public class Plugin : BaseUnityPlugin
     };
 
     internal bool DebugContentAdded;
+    internal static ConfigEntry<bool> UnityDebug { get; private set; } = null!;
     internal static Plugin? Instance { get; private set; }
 
     internal new ManualLogSource Logger { get; private set; } = new(MyPluginInfo.PLUGIN_NAME);
@@ -81,8 +79,10 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
 
         PluginPath = Path.GetDirectoryName(Info.Location) ?? string.Empty;
-        _debug = Config.Bind("Debug", "API Debug", false, "API debug mode. Will add debug content to your game for testing. Not recommended for normal play.");
-        UnityDebug = Config.Bind("Debug", "Unity Debug Logging", true, "Unity debug logging. Helpful to filter out unrelated entries during testing.");
+        _debug = Config.Bind("Debug", "API Debug", false,
+            "API debug mode. Will add debug content to your game for testing. Not recommended for normal play.");
+        UnityDebug = Config.Bind("Debug", "Unity Debug Logging", true,
+            "Unity debug logging. Helpful to filter out unrelated entries during testing.");
         UnityDebug.SettingChanged += (_, _) => { UnityEngine.Debug.unityLogger.logEnabled = UnityDebug.Value; };
 
         ModdedSaveManager.RegisterModdedSave(ModdedSettingsData);
@@ -111,7 +111,7 @@ public class Plugin : BaseUnityPlugin
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
 
         SkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Lamb Skin", "Default",
-            new[] {"Default"}.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
+            new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
             {
                 if (0 >= i)
                     CustomSkinManager.ResetPlayerSkin();
@@ -120,11 +120,9 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
             });
 
-        
         //the onValueChanged is not needed for BepInEx configs - it already has native support for it
         CustomSettingsManager.AddBepInExConfig("API", "Unity Debug Logging", UnityDebug);
-        
-        
+
         CustomSettingsManager.AddBepInExConfig("API", "Debug Mode", _debug, delegate(bool isActivated)
         {
             if (!isActivated)
@@ -142,7 +140,7 @@ public class Plugin : BaseUnityPlugin
 
         if (Debug) AddDebugContent();
 
-        Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
+        LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
     }
 
     private void Start()
@@ -151,16 +149,30 @@ public class Plugin : BaseUnityPlugin
         Started = true;
     }
 
+    // Debug cheats
+    public void Update()
+    {
+        if (!Debug) return;
+
+        // Kill all enemies
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            var targets = new List<Health>(Health.team2);
+            var entityObject = GameObject.FindWithTag("Player");
+            targets.DoIf(x => x != null, x => x.DealDamage(999999, entityObject, entityObject.transform.position));
+        }
+    }
+
     private void OnEnable()
     {
         _harmony.PatchAll(Assembly.GetExecutingAssembly());
-        Logger.LogInfo($"{_harmony.GetPatchedMethods().Count()} harmony patches applied!");
+        LogInfo($"{_harmony.GetPatchedMethods().Count()} harmony patches applied!");
     }
 
     private void OnDisable()
     {
         _harmony.UnpatchSelf();
-        Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} unloaded!");
+        LogInfo($"{MyPluginInfo.PLUGIN_NAME} unloaded!");
     }
 
     internal static event Action OnStart = delegate { };
@@ -170,12 +182,12 @@ public class Plugin : BaseUnityPlugin
         // LOAD_AFTER_START handler
         SaveAndLoad.OnLoadComplete += delegate
         {
-            Logger.LogWarning("Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
+            LogWarning("Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
             foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save =>
                          save.LoadOrder == ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START))
                 saveData.Load(SaveAndLoad.SAVE_SLOT);
 
-            Logger.LogWarning("Re-adding any custom quests from the players existing objectives.");
+            LogWarning("Re-adding any custom quests from the players existing objectives.");
             Dictionary<int, CustomObjective> tempObjectives = new();
 
             if (QuestData == null) return;
@@ -188,7 +200,7 @@ public class Plugin : BaseUnityPlugin
 
             CustomObjectiveManager.CustomObjectiveList.AddRange(tempObjectives);
 
-            Logger.LogWarning("Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
+            LogWarning("Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
             foreach (var quest in CustomObjectiveManager.CustomObjectiveList) QuestData.TryAdd(quest.Key, quest.Value);
         };
 
@@ -218,7 +230,7 @@ public class Plugin : BaseUnityPlugin
                          a.QuestIndex >= Quests.QuestsAll.Count))
             {
                 if (Debug)
-                    Logger.LogDebug(
+                    LogDebug(
                         "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
                 quest.QuestIndex = Quests.QuestsAll.Count - 1;
             }
@@ -254,49 +266,22 @@ public class Plugin : BaseUnityPlugin
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
         CustomSettingsManager.AddDropdown("Debug", "Dropdown", "Option 1",
-            new[] {"Option 1", "Option 2", "Option 3"}, i => { Logger.LogDebug($"Dropdown selected {i}"); });
+            new[] { "Option 1", "Option 2", "Option 3" }, i => { LogDebug($"Dropdown selected {i}"); });
 
         CustomSettingsManager.AddHorizontalSelector("Debug", "Horizontal Selector", "Option 1",
-            new[] {"Option 1", "Option 2", "Option 3"},
-            i => { Logger.LogDebug($"Horizontal Selector selected {i}"); });
+            new[] { "Option 1", "Option 2", "Option 3" },
+            i => { LogDebug($"Horizontal Selector selected {i}"); });
 
         CustomSettingsManager.AddSlider("Debug", "Slider", 0, -100, 100, 1, MMSlider.ValueDisplayFormat.RawValue,
-            i => { Logger.LogDebug($"Slider value: {i}"); });
+            i => { LogDebug($"Slider value: {i}"); });
 
         CustomSettingsManager.AddToggle("Debug", "Toggle", true,
-            i => { Logger.LogDebug($"Toggled: {i}"); });
+            i => { LogDebug($"Toggled: {i}"); });
 
         DebugRelic = CustomRelicManager.Add(ScriptableObject.CreateInstance<DebugRelicClass>());
 
-        Logger.LogDebug("Debug mode enabled!");
+        LogDebug("Debug mode enabled!");
 
         DebugContentAdded = true;
-    }
-
-    [HarmonyPatch(typeof(LoadMenu), nameof(LoadMenu.OnTryLoadSaveSlot))]
-    [HarmonyPostfix]
-    private static void LoadMenu_OnTryLoadSaveSlot()
-    {
-        if (SkinSettings?.Value is null or "Default") return;
-
-        if (CustomSkinManager.CustomPlayerSkins.TryGetValue(SkinSettings.Value, out var skin))
-            CustomSkinManager.SetPlayerSkinOverride(skin);
-        else
-            SkinSettings.Value = "Default";
-    }
-
-    // Debug cheats
-    public void Update()
-    {
-        if (Debug)
-        {
-            // Kill all enemies
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                List<Health> targets = new List<Health>(Health.team2);
-                GameObject gameObject = GameObject.FindWithTag("Player");
-                targets.DoIf(x => x != null, x => x.DealDamage(999999, gameObject, gameObject.transform.position));
-            }
-        }
     }
 }

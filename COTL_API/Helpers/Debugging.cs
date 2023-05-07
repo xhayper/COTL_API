@@ -11,7 +11,7 @@ namespace COTL_API.Helpers;
 
 internal static class Debugging
 {
-    public static void PrintAllContent(bool printNames = false)
+    public static void PrintStatistics(bool printNames = false)
     {
         var items = CustomItemManager.CustomItemList;
         LogInfo($"Items: {items.Count}");

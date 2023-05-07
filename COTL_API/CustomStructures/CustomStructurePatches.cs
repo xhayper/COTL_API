@@ -144,7 +144,8 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedName), typeof(bool), typeof(bool), typeof(bool))]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedName), typeof(bool), typeof(bool),
+        typeof(bool))]
     [HarmonyPrefix]
     private static bool StructuresData_GetLocalizedName(StructuresData __instance, bool plural, bool withArticle,
         bool definite, ref string __result)
