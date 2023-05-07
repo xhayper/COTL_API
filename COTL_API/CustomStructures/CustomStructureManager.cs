@@ -17,7 +17,6 @@ public static partial class CustomStructureManager
             GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, structure.InternalName);
         structure.StructureType = structureType;
         structure.ModPrefix = guid;
-
         CustomStructureList.Add(structureType, structure);
 
         if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
@@ -31,7 +30,12 @@ public static partial class CustomStructureManager
 
     public static CustomStructure GetStructureByPrefabName(string name)
     {
-        return CustomStructureList
-            .First(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name).Value;
+        return CustomStructureList.First(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name).Value;
+    }
+    
+    public static bool CustomStructureExists(string name)
+    {
+        var exists = CustomStructureList.ToList().Exists(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name);
+        return exists;
     }
 }
