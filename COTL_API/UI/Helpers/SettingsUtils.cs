@@ -50,6 +50,8 @@ internal static class SettingsUtils
         if (onChange != null) sliderSlider.onValueChanged.AddListener(onChange);
         sliderSlider.value = value;
     }
+    
+    
 
     public static void AddDropdown(Transform parent, string text, string?[] options, int index = 0,
         Action<int>? onChange = null, string? indexStringOverride = null)
@@ -69,6 +71,27 @@ internal static class SettingsUtils
         mmDropdown.UpdateContent(options);
         var indexOverride = Math.Max(0, options.IndexOf(indexStringOverride));
         mmDropdown.ContentIndex = indexStringOverride != null ? indexOverride : index;
+        if (onChange != null) mmDropdown.OnValueChanged += onChange;
+    }
+    
+    public static void AddDropdown(Transform parent, string text, KeyCode?[] options, int index = 0,
+        Action<int>? onChange = null, string? indexStringOverride = null)
+    {
+        if (DropdownTemplate == null)
+        {
+            LogError("Unable to find dropdown template!");
+            return;
+        }
+
+        var dropDown = Object.Instantiate(DropdownTemplate, parent);
+        dropDown.name = text;
+        var dropDownText = dropDown.GetComponentInChildren<TextMeshProUGUI>();
+        dropDownText.text = text;
+        var mmDropdown = dropDown.GetComponentInChildren<MMDropdown>();
+        mmDropdown._localizeContent = false;
+        mmDropdown.UpdateContent(Enum.GetValues(typeof(KeyCode)) as string[]);
+        // var indexOverride = Math.Max(0, options.IndexOf(indexStringOverride));
+        // mmDropdown.ContentIndex = indexStringOverride != null ? indexOverride : index;
         if (onChange != null) mmDropdown.OnValueChanged += onChange;
     }
 
