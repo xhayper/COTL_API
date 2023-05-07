@@ -1,5 +1,4 @@
-﻿using COTL_API.CustomSettings;
-using COTL_API.CustomStructures;
+﻿using COTL_API.CustomStructures;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -30,7 +29,19 @@ public static class CustomPrefabManager
     private static void CreateBuildingPrefabOverride(string name, ref AsyncOperationHandle<GameObject> handle)
     {
         if (!PrefabStrings.ContainsKey(name))
-            GetOrCreateBuildingPrefab(CustomStructureManager.GetStructureByPrefabName(name));
+        {
+            var structure = CustomStructureManager.GetStructureByPrefabName(name);
+            switch (structure)
+            {
+                case null:
+                    LogWarning($"Structure {name} not found in CustomStructureManager");
+                    return;
+                default:
+                    GetOrCreateBuildingPrefab(structure);
+                    break;
+            }
+        }
+
 
         var sprite = PrefabStrings[name].Sprite;
         handle.Completed += delegate(AsyncOperationHandle<GameObject> obj)
@@ -53,11 +64,16 @@ public static class CustomPrefabManager
 
         // Run the original code with a generic structure
         if (!path.Contains("CustomBuildingPrefab_")) return;
-        
+
         var cs = CustomStructureManager.CustomStructureExists(path);
         if (!cs)
         {
-            LogWarning($"Structure attempting to be loaded no longer exists! This will be cleaned on load.");
+            LogWarning($"Structure attempting to be loaded no longer exists. Path: {path}");
+            _pathOverride = null;
+            
+            //this is to stop invalid key exceptions from Unity (1 per custom structure in the save file)
+            key = "Assets/Prefabs/Structures/Other/Rubble.prefab";
+            
             return;
         }
 
