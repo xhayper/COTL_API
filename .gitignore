@@ -109,6 +109,8 @@ fabric.properties
 # that are supposed to be shared within teams.
 
 .idea/*
+global.json
+/global.json
 
 !.idea/codeStyles
 !.idea/runConfigurations
