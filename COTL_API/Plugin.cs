@@ -17,7 +17,6 @@ using COTL_API.Saves;
 using HarmonyLib;
 using I2.Loc;
 using Lamb.UI;
-using Lamb.UI.MainMenu;
 using MonoMod.Utils;
 using Spine;
 using UnityEngine;
@@ -121,10 +120,8 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
             });
 
-
         //the onValueChanged is not needed for BepInEx configs - it already has native support for it
         CustomSettingsManager.AddBepInExConfig("API", "Unity Debug Logging", UnityDebug);
-
 
         CustomSettingsManager.AddBepInExConfig("API", "Debug Mode", _debug, delegate(bool isActivated)
         {
@@ -143,7 +140,7 @@ public class Plugin : BaseUnityPlugin
 
         if (Debug) AddDebugContent();
 
-        Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
+        LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
     }
 
     private void Start()
@@ -169,13 +166,13 @@ public class Plugin : BaseUnityPlugin
     private void OnEnable()
     {
         _harmony.PatchAll(Assembly.GetExecutingAssembly());
-        Logger.LogInfo($"{_harmony.GetPatchedMethods().Count()} harmony patches applied!");
+        LogInfo($"{_harmony.GetPatchedMethods().Count()} harmony patches applied!");
     }
 
     private void OnDisable()
     {
         _harmony.UnpatchSelf();
-        Logger.LogInfo($"{MyPluginInfo.PLUGIN_NAME} unloaded!");
+        LogInfo($"{MyPluginInfo.PLUGIN_NAME} unloaded!");
     }
 
     internal static event Action OnStart = delegate { };
@@ -185,12 +182,12 @@ public class Plugin : BaseUnityPlugin
         // LOAD_AFTER_START handler
         SaveAndLoad.OnLoadComplete += delegate
         {
-            Logger.LogWarning("Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
+            LogWarning("Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
             foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save =>
                          save.LoadOrder == ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START))
                 saveData.Load(SaveAndLoad.SAVE_SLOT);
 
-            Logger.LogWarning("Re-adding any custom quests from the players existing objectives.");
+            LogWarning("Re-adding any custom quests from the players existing objectives.");
             Dictionary<int, CustomObjective> tempObjectives = new();
 
             if (QuestData == null) return;
@@ -203,7 +200,7 @@ public class Plugin : BaseUnityPlugin
 
             CustomObjectiveManager.CustomObjectiveList.AddRange(tempObjectives);
 
-            Logger.LogWarning("Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
+            LogWarning("Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
             foreach (var quest in CustomObjectiveManager.CustomObjectiveList) QuestData.TryAdd(quest.Key, quest.Value);
         };
 
@@ -233,7 +230,7 @@ public class Plugin : BaseUnityPlugin
                          a.QuestIndex >= Quests.QuestsAll.Count))
             {
                 if (Debug)
-                    Logger.LogDebug(
+                    LogDebug(
                         "Found quests in history with an index higher than total quests (user may have removed mods that add quests), resetting to maximum possible.");
                 quest.QuestIndex = Quests.QuestsAll.Count - 1;
             }
@@ -269,34 +266,22 @@ public class Plugin : BaseUnityPlugin
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
         CustomSettingsManager.AddDropdown("Debug", "Dropdown", "Option 1",
-            new[] { "Option 1", "Option 2", "Option 3" }, i => { Logger.LogDebug($"Dropdown selected {i}"); });
+            new[] { "Option 1", "Option 2", "Option 3" }, i => { LogDebug($"Dropdown selected {i}"); });
 
         CustomSettingsManager.AddHorizontalSelector("Debug", "Horizontal Selector", "Option 1",
             new[] { "Option 1", "Option 2", "Option 3" },
-            i => { Logger.LogDebug($"Horizontal Selector selected {i}"); });
+            i => { LogDebug($"Horizontal Selector selected {i}"); });
 
         CustomSettingsManager.AddSlider("Debug", "Slider", 0, -100, 100, 1, MMSlider.ValueDisplayFormat.RawValue,
-            i => { Logger.LogDebug($"Slider value: {i}"); });
+            i => { LogDebug($"Slider value: {i}"); });
 
         CustomSettingsManager.AddToggle("Debug", "Toggle", true,
-            i => { Logger.LogDebug($"Toggled: {i}"); });
+            i => { LogDebug($"Toggled: {i}"); });
 
         DebugRelic = CustomRelicManager.Add(ScriptableObject.CreateInstance<DebugRelicClass>());
 
-        Logger.LogDebug("Debug mode enabled!");
+        LogDebug("Debug mode enabled!");
 
         DebugContentAdded = true;
-    }
-
-    [HarmonyPatch(typeof(LoadMenu), nameof(LoadMenu.OnTryLoadSaveSlot))]
-    [HarmonyPostfix]
-    private static void LoadMenu_OnTryLoadSaveSlot()
-    {
-        if (SkinSettings?.Value is null or "Default") return;
-
-        if (CustomSkinManager.CustomPlayerSkins.TryGetValue(SkinSettings.Value, out var skin))
-            CustomSkinManager.SetPlayerSkinOverride(skin);
-        else
-            SkinSettings.Value = "Default";
     }
 }
