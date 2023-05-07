@@ -29,6 +29,8 @@ namespace COTL_API;
 [HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
+    internal static ConfigEntry<bool> UnityDebug { get; private set; } = null!;
+
     internal static Dropdown? SkinSettings;
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
@@ -79,7 +81,9 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
 
         PluginPath = Path.GetDirectoryName(Info.Location) ?? string.Empty;
-        _debug = Config.Bind("misc", "debug", false, "Should debug mode be enabled?");
+        _debug = Config.Bind("Debug", "API Debug", false, "API debug mode. Will add debug content to your game for testing. Not recommended for normal play.");
+        UnityDebug = Config.Bind("Debug", "Unity Debug Logging", true, "Unity debug logging. Helpful to filter out unrelated entries during testing.");
+        UnityDebug.SettingChanged += (_, _) => { UnityEngine.Debug.unityLogger.logEnabled = UnityDebug.Value; };
 
         ModdedSaveManager.RegisterModdedSave(ModdedSettingsData);
         ModdedSaveManager.RegisterModdedSave(APIData);
@@ -107,7 +111,7 @@ public class Plugin : BaseUnityPlugin
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
 
         SkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Lamb Skin", "Default",
-            new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
+            new[] {"Default"}.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
             {
                 if (0 >= i)
                     CustomSkinManager.ResetPlayerSkin();
@@ -116,7 +120,12 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
             });
 
-        CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug, delegate(bool isActivated)
+        
+        //the onValueChanged is not needed for BepInEx configs - it already has native support for it
+        CustomSettingsManager.AddBepInExConfig("API", "Unity Debug Logging", UnityDebug);
+        
+        
+        CustomSettingsManager.AddBepInExConfig("API", "Debug Mode", _debug, delegate(bool isActivated)
         {
             if (!isActivated)
             {
@@ -245,10 +254,10 @@ public class Plugin : BaseUnityPlugin
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
         CustomSettingsManager.AddDropdown("Debug", "Dropdown", "Option 1",
-            new[] { "Option 1", "Option 2", "Option 3" }, i => { Logger.LogDebug($"Dropdown selected {i}"); });
+            new[] {"Option 1", "Option 2", "Option 3"}, i => { Logger.LogDebug($"Dropdown selected {i}"); });
 
         CustomSettingsManager.AddHorizontalSelector("Debug", "Horizontal Selector", "Option 1",
-            new[] { "Option 1", "Option 2", "Option 3" },
+            new[] {"Option 1", "Option 2", "Option 3"},
             i => { Logger.LogDebug($"Horizontal Selector selected {i}"); });
 
         CustomSettingsManager.AddSlider("Debug", "Slider", 0, -100, 100, 1, MMSlider.ValueDisplayFormat.RawValue,
@@ -284,7 +293,6 @@ public class Plugin : BaseUnityPlugin
             // Kill all enemies
             if (Input.GetKeyDown(KeyCode.F1))
             {
-
                 List<Health> targets = new List<Health>(Health.team2);
                 GameObject gameObject = GameObject.FindWithTag("Player");
                 targets.DoIf(x => x != null, x => x.DealDamage(999999, gameObject, gameObject.transform.position));
