@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using COTL_API.Guid;
 using HarmonyLib;
+using Rewired.Utils;
 
 namespace COTL_API.CustomStructures;
 
@@ -17,7 +18,6 @@ public static partial class CustomStructureManager
             GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, structure.InternalName);
         structure.StructureType = structureType;
         structure.ModPrefix = guid;
-
         CustomStructureList.Add(structureType, structure);
 
         if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
@@ -31,7 +31,14 @@ public static partial class CustomStructureManager
 
     public static CustomStructure GetStructureByPrefabName(string name)
     {
-        return CustomStructureList
-            .First(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name).Value;
+        //changed to FirstOrDefault instead of First so that it returns Null if not found, avoiding System.InvalidOperationException exceptions
+        return CustomStructureList.FirstOrDefault(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name).Value;
+    }
+
+
+    public static bool CustomStructureExists(string name)
+    {
+        var exists = CustomStructureList.ToList().Exists(x => x.Value.PrefabPath == name || $"Assets/{x.Value.PrefabPath}.prefab" == name);
+        return exists;
     }
 }

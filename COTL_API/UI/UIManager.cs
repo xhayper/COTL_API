@@ -1,4 +1,5 @@
-﻿using COTL_API.CustomSettings;
+﻿using BepInEx.Configuration;
+using COTL_API.CustomSettings;
 using COTL_API.CustomSettings.Elements;
 using HarmonyLib;
 using I2.Loc;
@@ -142,6 +143,18 @@ public static class UIManager
 
                     SettingsUtils.AddDropdown(scrollContent, dropdown.Text, dropdown.Options, -1,
                         OnValueChanged, dropdown.Value);
+                    break;
+                }
+                case KeyboardShortcutDropdown dropdown:
+                {
+                    void OnValueChanged(int i)
+                    {
+                        dropdown.Value = dropdown.Options[i];
+                        dropdown.OnValueChanged?.Invoke(i);
+                    }
+
+                    SettingsUtils.AddDropdown(scrollContent, dropdown.Text, dropdown.Options, 0,
+                        OnValueChanged, dropdown.Value.ToString());
                     break;
                 }
                 case HorizontalSelector dropdown:

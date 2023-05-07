@@ -2,6 +2,7 @@
 using BepInEx.Configuration;
 using COTL_API.CustomSettings.Elements;
 using Lamb.UI;
+using UnityEngine;
 
 namespace COTL_API.CustomSettings;
 
@@ -161,6 +162,25 @@ public static class CustomSettingsManager
 
     // TODO: Improve BepInEx number config
 
+    
+    public static KeyboardShortcutDropdown AddBepInExConfig(string? category, string text, ConfigEntry<KeyboardShortcut> entry,
+        Action<KeyboardShortcut>? onValueChanged = null)
+    {
+        onValueChanged ??= delegate { };
+
+        var dropdown = new KeyboardShortcutDropdown(category, text, entry.Value.MainKey, (Enum.GetValues(typeof(KeyCode)) as KeyCode?[])!,
+            delegate(int newKeyCode)
+            {
+                entry.Value = new KeyboardShortcut((KeyCode) newKeyCode);
+                onValueChanged(entry.Value);
+            });
+
+        entry.SettingChanged += delegate { dropdown.Value = entry.Value.MainKey; };
+
+        SettingsElements.Add(dropdown);
+        return dropdown;
+    }
+    
     public static HorizontalSelector? AddBepInExConfig(string? category, string text, ConfigEntry<string> entry,
         Action<int>? onValueChanged = null)
     {

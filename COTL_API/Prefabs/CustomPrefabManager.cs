@@ -29,7 +29,19 @@ public static class CustomPrefabManager
     private static void CreateBuildingPrefabOverride(string name, ref AsyncOperationHandle<GameObject> handle)
     {
         if (!PrefabStrings.ContainsKey(name))
-            GetOrCreateBuildingPrefab(CustomStructureManager.GetStructureByPrefabName(name));
+        {
+            var structure = CustomStructureManager.GetStructureByPrefabName(name);
+            switch (structure)
+            {
+                case null:
+                    LogWarning($"Structure {name} not found in CustomStructureManager");
+                    return;
+                default:
+                    GetOrCreateBuildingPrefab(structure);
+                    break;
+            }
+        }
+
 
         var sprite = PrefabStrings[name].Sprite;
         handle.Completed += delegate(AsyncOperationHandle<GameObject> obj)
@@ -43,8 +55,8 @@ public static class CustomPrefabManager
         };
     }
 
-    [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters),
-        typeof(bool))]
+    [HarmonyWrapSafe]
+    [HarmonyPatch(typeof(AddressablesImpl), "InstantiateAsync", typeof(object), typeof(InstantiationParameters), typeof(bool))]
     [HarmonyPrefix]
     private static void Addressables_InstantiateAsync(ref object key)
     {
@@ -52,10 +64,24 @@ public static class CustomPrefabManager
 
         // Run the original code with a generic structure
         if (!path.Contains("CustomBuildingPrefab_")) return;
+
+        var cs = CustomStructureManager.CustomStructureExists(path);
+        if (!cs)
+        {
+            LogWarning($"Structure attempting to be loaded no longer exists. Path: {path}");
+            _pathOverride = null;
+            
+            //this is to stop invalid key exceptions from Unity (1 per custom structure in the save file)
+            key = "Assets/Prefabs/Structures/Other/Rubble.prefab";
+            
+            return;
+        }
+
         _pathOverride = path;
         key = "Assets/Prefabs/Structures/Buildings/Decoration Wreath Stick.prefab";
     }
 
+    [HarmonyWrapSafe]
     [HarmonyPatch(typeof(ResourceManager), "ProvideInstance")]
     [HarmonyPostfix]
     private static void ResourceManager_ProvideInstance(ref AsyncOperationHandle<GameObject> __result)
