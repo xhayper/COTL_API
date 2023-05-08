@@ -160,6 +160,16 @@ public abstract class CustomTarotCard
         return 0f;
     }
 
+    public virtual float GetChanceForRelicsMultiplier(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
+    public virtual float GetRelicChargeMultiplier(TarotCards.TarotCard card)
+    {
+        return 0f;
+    }
+
     public virtual void ApplyInstantEffects(TarotCards.TarotCard card)
     {
     }
