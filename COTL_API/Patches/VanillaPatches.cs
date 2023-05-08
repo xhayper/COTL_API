@@ -136,11 +136,13 @@ public static class VanillaPatches
 
         // Save the changes and log the time taken for the process
         stopWatch.Stop();
-
-        LogInfo(dataFixed
-            ? $"Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks."
-            //  SaveAndLoad.Save();
-            : $"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
+        if (dataFixed)
+        {
+            LogInfo("Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
+            SaveAndLoad.Save();
+            return;
+        }
+        LogInfo($"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
     }
 
     // Method to check if the MatingTentMod is installed
