@@ -149,7 +149,7 @@ public static class UIManager
                 {
                     void OnValueChanged(KeyboardShortcut i)
                     {
-                        dropdown.Value = dropdown.Options[(int) i.MainKey];
+                        dropdown.Value = dropdown.Options[(int)i.MainKey];
                         dropdown.OnValueChanged?.Invoke(i);
                     }
 

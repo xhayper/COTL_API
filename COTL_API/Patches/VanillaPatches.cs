@@ -7,6 +7,7 @@ using COTL_API.CustomStructures;
 using HarmonyLib;
 using MMRoomGeneration;
 using UnityEngine;
+using Debugger = DG.Tweening.Core.Debugger;
 using Object = UnityEngine.Object;
 
 namespace COTL_API.UI.Helpers;
@@ -15,10 +16,11 @@ namespace COTL_API.UI.Helpers;
 public static class VanillaPatches
 {
     //removes "Steam informs us the controller is a {0}" log spam
-  
+
     [HarmonyTranspiler]
     [HarmonyPatch(typeof(ControlUtilities), nameof(ControlUtilities.GetCurrentInputType))]
-    public static IEnumerable<CodeInstruction> ControlUtilities_GetCurrentInputType(IEnumerable<CodeInstruction> instructions,
+    public static IEnumerable<CodeInstruction> ControlUtilities_GetCurrentInputType(
+        IEnumerable<CodeInstruction> instructions,
         MethodBase originalMethod)
     {
         var codes = new List<CodeInstruction>(instructions);
@@ -26,32 +28,31 @@ public static class VanillaPatches
 
         for (var i = 0; i < codes.Count; i++)
         {
-            if (codes[i].opcode == OpCodes.Ldstr && codes[i].operand.ToString().Contains(targetMessage))
-            {
-                for (var j = i + 1; j < codes.Count; j++)
-                {
-                    if (codes[j].opcode == OpCodes.Call && codes[j].operand is MethodInfo {Name: "Log"})
-                    {
-                        codes.RemoveRange(i, j - i + 1);
-                        break;
-                    }
-                }
+            if (codes[i].opcode != OpCodes.Ldstr || !codes[i].operand.ToString().Contains(targetMessage)) continue;
 
+            for (var j = i + 1; j < codes.Count; j++)
+            {
+                if (codes[j].opcode != OpCodes.Call || codes[j].operand is not MethodInfo { Name: "Log" }) continue;
+
+                codes.RemoveRange(i, j - i + 1);
                 break;
             }
+
+            break;
         }
+
         return codes.AsEnumerable();
     }
 
-    
+
     //removes "tween is invalid" log spam
     [HarmonyPrefix]
-    [HarmonyPatch(typeof(DG.Tweening.Core.Debugger), nameof(DG.Tweening.Core.Debugger.LogInvalidTween))]
+    [HarmonyPatch(typeof(Debugger), nameof(Debugger.LogInvalidTween))]
     public static bool Debugger_LogInvalidTween()
     {
         return false;
     }
-    
+
     [HarmonyPrefix]
     [HarmonyPatch(typeof(UnityEngine.Debug), nameof(UnityEngine.Debug.LogError), typeof(object))]
     [HarmonyPatch(typeof(UnityEngine.Debug), nameof(UnityEngine.Debug.LogError), typeof(object), typeof(Object))]
@@ -178,17 +179,18 @@ public static class VanillaPatches
         stopWatch.Stop();
         if (dataFixed)
         {
-            LogInfo("Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
+            LogInfo(
+                "Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
             SaveAndLoad.Save();
             return;
         }
-        LogInfo($"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
+
+        LogInfo(
+            $"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
     }
 
-    // Method to check if the MatingTentMod is installed
     private static bool MatingTentModExists()
     {
-        // Find the MatingTentMod plugin in the BepInEx plugin list
         var matingTentMod = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains("MatingTentMod"))
             .Value;
         return matingTentMod != null;
