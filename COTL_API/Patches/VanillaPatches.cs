@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using System.Reflection;
+using System.Reflection.Emit;
 using BepInEx.Bootstrap;
 using COTL_API.CustomStructures;
 using HarmonyLib;
@@ -12,6 +14,44 @@ namespace COTL_API.UI.Helpers;
 [HarmonyPatch]
 public static class VanillaPatches
 {
+    //removes "Steam informs us the controller is a {0}" log spam
+  
+    [HarmonyTranspiler]
+    [HarmonyPatch(typeof(ControlUtilities), nameof(ControlUtilities.GetCurrentInputType))]
+    public static IEnumerable<CodeInstruction> ControlUtilities_GetCurrentInputType(IEnumerable<CodeInstruction> instructions,
+        MethodBase originalMethod)
+    {
+        var codes = new List<CodeInstruction>(instructions);
+        const string targetMessage = "Steam informs us the controller is a {0}";
+
+        for (var i = 0; i < codes.Count; i++)
+        {
+            if (codes[i].opcode == OpCodes.Ldstr && codes[i].operand.ToString().Contains(targetMessage))
+            {
+                for (var j = i + 1; j < codes.Count; j++)
+                {
+                    if (codes[j].opcode == OpCodes.Call && codes[j].operand is MethodInfo {Name: "Log"})
+                    {
+                        codes.RemoveRange(i, j - i + 1);
+                        break;
+                    }
+                }
+
+                break;
+            }
+        }
+        return codes.AsEnumerable();
+    }
+
+    
+    //removes "tween is invalid" log spam
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(DG.Tweening.Core.Debugger), nameof(DG.Tweening.Core.Debugger.LogInvalidTween))]
+    public static bool Debugger_LogInvalidTween()
+    {
+        return false;
+    }
+    
     [HarmonyPrefix]
     [HarmonyPatch(typeof(UnityEngine.Debug), nameof(UnityEngine.Debug.LogError), typeof(object))]
     [HarmonyPatch(typeof(UnityEngine.Debug), nameof(UnityEngine.Debug.LogError), typeof(object), typeof(Object))]
@@ -31,7 +71,7 @@ public static class VanillaPatches
     }
 
 
-    [HarmonyWrapSafe]
+    // [HarmonyWrapSafe]
     [HarmonyFinalizer]
     [HarmonyPatch(typeof(StructureBrain), nameof(StructureBrain.ApplyConfigToData))]
     [HarmonyPatch(typeof(LocationManager), nameof(LocationManager.PlaceStructure))]
@@ -136,11 +176,13 @@ public static class VanillaPatches
 
         // Save the changes and log the time taken for the process
         stopWatch.Stop();
-
-        LogInfo(dataFixed
-            ? $"Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks."
-            //  SaveAndLoad.Save();
-            : $"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
+        if (dataFixed)
+        {
+            LogInfo("Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
+            SaveAndLoad.Save();
+            return;
+        }
+        LogInfo($"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
     }
 
     // Method to check if the MatingTentMod is installed

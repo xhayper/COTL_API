@@ -1,4 +1,5 @@
-﻿using COTL_API.CustomSettings;
+﻿using BepInEx.Configuration;
+using COTL_API.CustomSettings;
 using COTL_API.CustomSettings.Elements;
 using HarmonyLib;
 using I2.Loc;
@@ -146,13 +147,13 @@ public static class UIManager
                 }
                 case KeyboardShortcutDropdown dropdown:
                 {
-                    void OnValueChanged(int i)
+                    void OnValueChanged(KeyboardShortcut i)
                     {
-                        dropdown.Value = dropdown.Options[i];
+                        dropdown.Value = dropdown.Options[(int) i.MainKey];
                         dropdown.OnValueChanged?.Invoke(i);
                     }
 
-                    SettingsUtils.AddDropdown(scrollContent, dropdown.Text, dropdown.Options, 0,
+                    SettingsUtils.AddKeyboardShortcutDropdown(scrollContent, dropdown.Text, dropdown.Options, 0,
                         OnValueChanged, dropdown.Value.ToString());
                     break;
                 }
