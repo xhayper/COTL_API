@@ -70,7 +70,7 @@ public static class CustomSettingsManager
         return dropdown;
     }
     
-    public static KeyboardShortcutDropdown? AddSavedDropdown(string? category, string guid, string text, string value,
+    public static KeyboardShortcutDropdown? AddSavedKeyboardShortcutDropdown(string? category, string guid, string text, string value,
         KeyCode?[] options,
         Action<KeyboardShortcut>? onValueChanged = null)
     {
