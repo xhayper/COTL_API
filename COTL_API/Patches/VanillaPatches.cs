@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using BepInEx.Bootstrap;
 using COTL_API.CustomStructures;
 using HarmonyLib;
+using I2.Loc;
 using MMRoomGeneration;
 using UnityEngine;
 using Debugger = DG.Tweening.Core.Debugger;
@@ -16,7 +17,6 @@ namespace COTL_API.UI.Helpers;
 public static class VanillaPatches
 {
     //removes "Steam informs us the controller is a {0}" log spam
-
     [HarmonyTranspiler]
     [HarmonyPatch(typeof(ControlUtilities), nameof(ControlUtilities.GetCurrentInputType))]
     public static IEnumerable<CodeInstruction> ControlUtilities_GetCurrentInputType(
@@ -32,7 +32,7 @@ public static class VanillaPatches
 
             for (var j = i + 1; j < codes.Count; j++)
             {
-                if (codes[j].opcode != OpCodes.Call || codes[j].operand is not MethodInfo { Name: "Log" }) continue;
+                if (codes[j].opcode != OpCodes.Call || codes[j].operand is not MethodInfo {Name: "Log"}) continue;
 
                 codes.RemoveRange(i, j - i + 1);
                 break;
@@ -61,7 +61,7 @@ public static class VanillaPatches
         // Stops the game complaining about missing fonts for specific cultures
         if (message is not string msg) return true;
 
-        var currentCulture = CultureInfo.CurrentCulture;
+        var currentCulture = LocalizationManager.CurrentCulture;
         var cultureName = currentCulture.Name;
 
         // Check if the user's culture is Chinese (Simplified), Chinese (Traditional), Japanese, or Korean
@@ -161,7 +161,7 @@ public static class VanillaPatches
             var tentCount = 0;
             if (!MatingTentModExists())
                 tentCount = f.RemoveAll(a =>
-                    a == null || (a is { PrefabPath: not null } && a.PrefabPath.Contains("Mating")));
+                    a == null || (a is {PrefabPath: not null} && a.PrefabPath.Contains("Mating")));
 
             // Update the field in DataManager with the modified list
             field.SetValue(DataManager.Instance, f);
@@ -180,7 +180,7 @@ public static class VanillaPatches
         if (dataFixed)
         {
             LogInfo(
-                "Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
+                $"Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
             SaveAndLoad.Save();
             return;
         }
