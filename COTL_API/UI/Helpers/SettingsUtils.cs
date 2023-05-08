@@ -1,4 +1,5 @@
-﻿using Lamb.UI;
+﻿using BepInEx.Configuration;
+using Lamb.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -50,7 +51,8 @@ internal static class SettingsUtils
         if (onChange != null) sliderSlider.onValueChanged.AddListener(onChange);
         sliderSlider.value = value;
     }
-
+    
+    
 
     public static void AddDropdown(Transform parent, string text, string?[] options, int index = 0,
         Action<int>? onChange = null, string? indexStringOverride = null)
@@ -72,9 +74,9 @@ internal static class SettingsUtils
         mmDropdown.ContentIndex = indexStringOverride != null ? indexOverride : index;
         if (onChange != null) mmDropdown.OnValueChanged += onChange;
     }
-
-    public static void AddDropdown(Transform parent, string text, KeyCode?[] options, int index = 0,
-        Action<int>? onChange = null, string? indexStringOverride = null)
+    
+    public static void AddKeyboardShortcutDropdown(Transform parent, string text, KeyCode?[] options, int index = 0,
+        Action<KeyboardShortcut>? onChange = null, string? indexStringOverride = null)
     {
         if (DropdownTemplate == null)
         {
@@ -89,10 +91,27 @@ internal static class SettingsUtils
         var mmDropdown = dropDown.GetComponentInChildren<MMDropdown>();
         mmDropdown._localizeContent = false;
         mmDropdown.UpdateContent(Enum.GetValues(typeof(KeyCode)) as string[]);
-        // var indexOverride = Math.Max(0, options.IndexOf(indexStringOverride));
-        // mmDropdown.ContentIndex = indexStringOverride != null ? indexOverride : index;
-        if (onChange != null) mmDropdown.OnValueChanged += onChange;
+    
+        // Find the index of the selected KeyCode in the _content array of MMDropdown
+        if (indexStringOverride != null)
+        {
+            index = Array.IndexOf(mmDropdown.Content, indexStringOverride);
+        }
+
+        mmDropdown.ContentIndex = index;
+
+        if (onChange != null)
+        {
+            // Wrapper function to convert int to KeyboardShortcut and call onChange action
+            mmDropdown.OnValueChanged += (selectedIndex) =>
+            {
+                var selectedKeyCode = (KeyCode)Enum.Parse(typeof(KeyCode), mmDropdown.Content[selectedIndex]);
+                var keyboardShortcut = new KeyboardShortcut(selectedKeyCode);
+                onChange(keyboardShortcut);
+            };
+        }
     }
+
 
     public static void AddHorizontalSelector(Transform parent, string text, string?[] options, int index = 0,
         Action<int>? onChange = null, string? indexStringOverride = null)

@@ -1,4 +1,5 @@
-﻿using Lamb.UI;
+﻿using BepInEx.Configuration;
+using Lamb.UI;
 using UnityEngine;
 
 namespace COTL_API.CustomSettings.Elements;
@@ -67,8 +68,13 @@ public class Dropdown : ISettingsElement
 
 public class KeyboardShortcutDropdown : ISettingsElement
 {
-    public KeyboardShortcutDropdown(string? category, string text, KeyCode? value, KeyCode?[] options,
-        Action<int>? onValueChanged)
+    public string? Category { get; set; }
+    public string Text { get; set; }
+    public KeyCode? Value { get; set; }
+    public KeyCode?[] Options { get; set; }
+    public Action<KeyboardShortcut>? OnValueChanged { get; set; }
+
+    public KeyboardShortcutDropdown(string? category, string text, KeyCode? value, KeyCode?[] options, Action<KeyboardShortcut>? onValueChanged)
     {
         Category = category;
         Text = text;
@@ -76,19 +82,8 @@ public class KeyboardShortcutDropdown : ISettingsElement
         Options = options;
         OnValueChanged = onValueChanged;
     }
-
-    public string? Category { get; set; }
-
-    public string Text { get; set; }
-
-    public KeyCode? Value { get; set; }
-    public KeyCode?[] Options { get; set; }
-    public Action<int>? OnValueChanged { get; set; }
-
-    string? ISettingsElement.Category => Category;
-
-    string ISettingsElement.Text => Text;
 }
+
 
 public class HorizontalSelector : ISettingsElement
 {
