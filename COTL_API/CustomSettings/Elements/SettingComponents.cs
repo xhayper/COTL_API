@@ -68,13 +68,8 @@ public class Dropdown : ISettingsElement
 
 public class KeyboardShortcutDropdown : ISettingsElement
 {
-    public string? Category { get; set; }
-    public string Text { get; set; }
-    public KeyCode? Value { get; set; }
-    public KeyCode?[] Options { get; set; }
-    public Action<KeyboardShortcut>? OnValueChanged { get; set; }
-
-    public KeyboardShortcutDropdown(string? category, string text, KeyCode? value, KeyCode?[] options, Action<KeyboardShortcut>? onValueChanged)
+    public KeyboardShortcutDropdown(string? category, string text, KeyCode? value, KeyCode?[] options,
+        Action<KeyboardShortcut>? onValueChanged)
     {
         Category = category;
         Text = text;
@@ -82,8 +77,13 @@ public class KeyboardShortcutDropdown : ISettingsElement
         Options = options;
         OnValueChanged = onValueChanged;
     }
-}
 
+    public KeyCode? Value { get; set; }
+    public KeyCode?[] Options { get; set; }
+    public Action<KeyboardShortcut>? OnValueChanged { get; set; }
+    public string? Category { get; set; }
+    public string Text { get; set; }
+}
 
 public class HorizontalSelector : ISettingsElement
 {

@@ -51,12 +51,14 @@ public static class CustomSettingsManager
         SettingsElements.Add(slider);
         return slider;
     }
-    
-    public static KeyboardShortcutDropdown AddKeyboardShortcutDropdown (string? category, string text, ConfigEntry<KeyboardShortcut> entry,
+
+    public static KeyboardShortcutDropdown AddKeyboardShortcutDropdown(string? category, string text,
+        ConfigEntry<KeyboardShortcut> entry,
         Action<KeyboardShortcut>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
-        var dropdown = new KeyboardShortcutDropdown(category, text, entry.Value.MainKey, (Enum.GetValues(typeof(KeyCode)) as KeyCode?[])!, onValueChanged);
+        var dropdown = new KeyboardShortcutDropdown(category, text, entry.Value.MainKey,
+            (Enum.GetValues(typeof(KeyCode)) as KeyCode?[])!, onValueChanged);
         SettingsElements.Add(dropdown);
         return dropdown;
     }
@@ -69,8 +71,9 @@ public static class CustomSettingsManager
         SettingsElements.Add(dropdown);
         return dropdown;
     }
-    
-    public static KeyboardShortcutDropdown? AddSavedKeyboardShortcutDropdown(string? category, string guid, string text, string value,
+
+    public static KeyboardShortcutDropdown? AddSavedKeyboardShortcutDropdown(string? category, string guid, string text,
+        string value,
         KeyCode?[] options,
         Action<KeyboardShortcut>? onValueChanged = null)
     {
@@ -103,7 +106,6 @@ public static class CustomSettingsManager
 
         return dropdown;
     }
-
 
 
     public static Dropdown? AddSavedDropdown(string? category, string guid, string text, string value,
@@ -207,13 +209,14 @@ public static class CustomSettingsManager
 
     // TODO: Improve BepInEx number config
 
-    
-    public static KeyboardShortcutDropdown AddBepInExConfig(string? category, string text, ConfigEntry<KeyboardShortcut> entry,
+    public static KeyboardShortcutDropdown AddBepInExConfig(string? category, string text,
+        ConfigEntry<KeyboardShortcut> entry,
         Action<KeyboardShortcut>? onValueChanged = null)
     {
         onValueChanged ??= delegate { };
 
-        var dropdown = new KeyboardShortcutDropdown(category, text, entry.Value.MainKey, (Enum.GetValues(typeof(KeyCode)) as KeyCode?[])!,
+        var dropdown = new KeyboardShortcutDropdown(category, text, entry.Value.MainKey,
+            (Enum.GetValues(typeof(KeyCode)) as KeyCode?[])!,
             delegate(KeyboardShortcut newKeyCode)
             {
                 entry.Value = newKeyCode;
@@ -225,7 +228,7 @@ public static class CustomSettingsManager
         SettingsElements.Add(dropdown);
         return dropdown;
     }
-    
+
     public static HorizontalSelector? AddBepInExConfig(string? category, string text, ConfigEntry<string> entry,
         Action<int>? onValueChanged = null)
     {
@@ -248,10 +251,8 @@ public static class CustomSettingsManager
     public static Slider? AddBepInExConfig(string? category, string text, ConfigEntry<float> entry, int increment,
         MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged = null)
     {
-        if (!(entry.Description.AcceptableValues is AcceptableValueRange<float>)) return null;
+        if (entry.Description.AcceptableValues is not AcceptableValueRange<float> acceptedValue) return null;
         onValueChanged ??= delegate { };
-
-        var acceptedValue = (AcceptableValueRange<float>)entry.Description.AcceptableValues;
 
         var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment,
             displayFormat,
@@ -270,10 +271,8 @@ public static class CustomSettingsManager
     public static Slider? AddBepInExConfig(string? category, string text, ConfigEntry<int> entry, int increment,
         MMSlider.ValueDisplayFormat displayFormat, Action<int>? onValueChanged = null)
     {
-        if (!(entry.Description.AcceptableValues is AcceptableValueRange<int>)) return null;
+        if (entry.Description.AcceptableValues is not AcceptableValueRange<int> acceptedValue) return null;
         onValueChanged ??= delegate { };
-
-        var acceptedValue = (AcceptableValueRange<int>)entry.Description.AcceptableValues;
 
         var slider = new Slider(category, text, entry.Value, acceptedValue.MinValue, acceptedValue.MaxValue, increment,
             displayFormat,
