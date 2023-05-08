@@ -1,4 +1,4 @@
-﻿using COTL_API.CustomSkins;
+using COTL_API.CustomSkins;
 using HarmonyLib;
 using Lamb.UI;
 
@@ -369,6 +369,28 @@ public partial class CustomTarotCardManager
         if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
 
         __result = CustomTarotCardList[card.CardType].GetChanceOfGainingBlueHeart(card);
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.GetChanceForRelicsMultiplier))]
+    [HarmonyPrefix]
+    private static bool TarotCards_GetChanceForRelicsMultiplier(TarotCards.TarotCard card, ref float __result)
+    {
+        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+
+        __result = CustomTarotCardList[card.CardType].GetChanceForRelicsMultiplier(card);
+
+        return false;
+    }
+
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.GetRelicChargeMultiplier))]
+    [HarmonyPrefix]
+    private static bool TarotCards_GetRelicChargeMultiplier(TarotCards.TarotCard card, ref float __result)
+    {
+        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+
+        __result = CustomTarotCardList[card.CardType].GetRelicChargeMultiplier(card);
 
         return false;
     }
