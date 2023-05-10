@@ -32,7 +32,8 @@ public static partial class CustomItemManager
     }
 
     /// <summary>
-    ///     A method to return whether to drop loot or not based on the custom items chances to drop. Defaults to the items DungeonChestSpawnChance unless a custom chance is provided.
+    ///     A method to return whether to drop loot or not based on the custom items chances to drop. Defaults to the items
+    ///     DungeonChestSpawnChance unless a custom chance is provided.
     /// </summary>
     /// <param name="customInventoryItem">The item to get chance for.</param>
     /// <param name="customChance">Override the items chance with a customerChance.</param>
@@ -40,8 +41,10 @@ public static partial class CustomItemManager
     public static bool DropLoot(CustomInventoryItem customInventoryItem, float customChance = 0f)
     {
         float roll = Random.Range(0, 101);
-        var chance = customChance > 0 ? customChance: customInventoryItem.DungeonChestSpawnChance +
-                     customInventoryItem.DungeonChestSpawnChance * DataManager.Instance.GetLuckMultiplier();
+        var chance = customChance > 0
+            ? customChance
+            : customInventoryItem.DungeonChestSpawnChance +
+              customInventoryItem.DungeonChestSpawnChance * DataManager.Instance.GetLuckMultiplier();
         if (Plugin.Instance != null && Plugin.Instance.Debug)
             LogDebug(
                 $"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");

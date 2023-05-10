@@ -142,8 +142,8 @@ public class Plugin : BaseUnityPlugin
         if (Debug) AddDebugContent();
 
         LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
-        
-        Hash.RunGameVersionLogging();
+
+        GameHash.LogGameInfo();
     }
 
     private void Start()
