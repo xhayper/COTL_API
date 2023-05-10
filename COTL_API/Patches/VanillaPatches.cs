@@ -9,7 +9,6 @@ using I2.Loc;
 using MMRoomGeneration;
 using UnityEngine;
 using Debugger = DG.Tweening.Core.Debugger;
-using Enumerable = Socket.Newtonsoft.Json.Utilities.LinqBridge.Enumerable;
 using Object = UnityEngine.Object;
 
 namespace COTL_API.UI.Helpers;
@@ -95,12 +94,12 @@ public static class VanillaPatches
         // Check if any modded vanilla structures exists
         if (!ModdedVanillaStructureExists())
         {
-            LogWarning("No modded vanilla structure mods found, checking for left over gameobjects.");
+            LogInfo("No modded vanilla structure mods found, checking for left over gameobjects.");
             RemoveModdedVanillaGameObjects();
         }
 
         // Log the removal of rogue custom structures and DataManager correction
-        LogWarning("Checking other custom structures and correcting DataManager (SaveData)");
+        LogInfo("Checking other custom structures and correcting DataManager (SaveData)");
 
         // Remove any rogue custom structures from DataManager
         RemoveRogueCustomStructuresFromDataManager();
@@ -162,7 +161,7 @@ public static class VanillaPatches
             {
                 if (structure.PrefabPath == null || !structure.PrefabPath.Contains("CustomBuildingPrefab")) return;
 
-                LogWarning($"Found custom item in {field.Name}: {structure.PrefabPath}");
+                LogInfo($"Found custom item in {field.Name}: {structure.PrefabPath}");
                 if (CustomStructureManager.CustomStructureExists(structure.PrefabPath)) return;
 
                 // Item needs to be removed from BaseStructures
@@ -187,7 +186,7 @@ public static class VanillaPatches
             if (customCount > 0 || vanillaCount > 0)
             {
                 dataFixed = true;
-                LogInfo(
+                LogWarning(
                     $"Removed {customCount} orphaned structure(s) and {vanillaCount} orphaned modded vanilla structure(s) from {field.Name}.");
             }
         }
