@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
 using System.Reflection.Emit;
 using BepInEx.Bootstrap;
@@ -19,6 +18,23 @@ public static class VanillaPatches
     private const string MatingTentMod = "MatingTentMod";
     private const string MiniMods = "InfernoDragon0.cotl.CotLChef";
 
+
+    //game object name as seen in Unity Explorer
+    private static readonly string[] ModdedVanillaStructures =
+    {
+        "Building Fishing Hut(Clone)",
+        "Building Fishing Hut",
+        "Mating Tent(Clone)",
+        "Mating Tent"
+    };
+
+    //last part of the prefab path as seen in Unity Explorer (navigate to StructureData for that particular object)
+    private static readonly string[] ModdedVanillaPrefabPaths =
+    {
+        "Building Fishing Hut",
+        "Building Mating Tent"
+    };
+
     //removes "Steam informs us the controller is a {0}" log spam
     [HarmonyTranspiler]
     [HarmonyPatch(typeof(ControlUtilities), nameof(ControlUtilities.GetCurrentInputType))]
@@ -35,7 +51,7 @@ public static class VanillaPatches
 
             for (var j = i + 1; j < codes.Count; j++)
             {
-                if (codes[j].opcode != OpCodes.Call || codes[j].operand is not MethodInfo {Name: "Log"}) continue;
+                if (codes[j].opcode != OpCodes.Call || codes[j].operand is not MethodInfo { Name: "Log" }) continue;
 
                 codes.RemoveRange(i, j - i + 1);
                 break;
@@ -105,22 +121,6 @@ public static class VanillaPatches
         RemoveRogueCustomStructuresFromDataManager();
     }
 
-
-    //game object name as seen in Unity Explorer
-    private static readonly string[] ModdedVanillaStructures = {
-        "Building Fishing Hut(Clone)",
-        "Building Fishing Hut",
-        "Mating Tent(Clone)",
-        "Mating Tent"
-    };
-
-    //last part of the prefab path as seen in Unity Explorer (navigate to StructureData for that particular object)
-    private static readonly string[] ModdedVanillaPrefabPaths =
-    {
-        "Building Fishing Hut",
-        "Building Mating Tent"
-    };
-
     // Method to remove modded vanilla GameObjects
     private static void RemoveModdedVanillaGameObjects()
     {
@@ -177,18 +177,18 @@ public static class VanillaPatches
             var vanillaCount = 0;
             if (!ModdedVanillaStructureExists())
                 vanillaCount = f.RemoveAll(a =>
-                    a == null || (a is {PrefabPath: not null} && ModdedVanillaPrefabPaths.Any(a.PrefabPath.Contains)));
+                    a == null || (a is { PrefabPath: not null } &&
+                                  ModdedVanillaPrefabPaths.Any(a.PrefabPath.Contains)));
 
             // Update the field in DataManager with the modified list
             field.SetValue(DataManager.Instance, f);
 
             // Log the number of removed custom structures and modded vanilla structures
-            if (customCount > 0 || vanillaCount > 0)
-            {
-                dataFixed = true;
-                LogWarning(
-                    $"Removed {customCount} orphaned structure(s) and {vanillaCount} orphaned modded vanilla structure(s) from {field.Name}.");
-            }
+            if (customCount <= 0 && vanillaCount <= 0) continue;
+
+            dataFixed = true;
+            LogWarning(
+                $"Removed {customCount} orphaned structure(s) and {vanillaCount} orphaned modded vanilla structure(s) from {field.Name}.");
         }
 
         // Save the changes and log the time taken for the process
@@ -207,7 +207,8 @@ public static class VanillaPatches
 
     private static bool ModdedVanillaStructureExists()
     {
-        var matingTentMod = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains(MatingTentMod)).Value;
+        var matingTentMod = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains(MatingTentMod))
+            .Value;
         var miniMods = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains(MiniMods)).Value;
         return matingTentMod != null || miniMods != null;
     }
