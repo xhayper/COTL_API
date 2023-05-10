@@ -9,6 +9,7 @@ using I2.Loc;
 using MMRoomGeneration;
 using UnityEngine;
 using Debugger = DG.Tweening.Core.Debugger;
+using Enumerable = Socket.Newtonsoft.Json.Utilities.LinqBridge.Enumerable;
 using Object = UnityEngine.Object;
 
 namespace COTL_API.UI.Helpers;
@@ -16,6 +17,9 @@ namespace COTL_API.UI.Helpers;
 [HarmonyPatch]
 public static class VanillaPatches
 {
+    private const string MatingTentMod = "MatingTentMod";
+    private const string MiniMods = "InfernoDragon0.cotl.CotLChef";
+
     //removes "Steam informs us the controller is a {0}" log spam
     [HarmonyTranspiler]
     [HarmonyPatch(typeof(ControlUtilities), nameof(ControlUtilities.GetCurrentInputType))]
@@ -88,37 +92,50 @@ public static class VanillaPatches
     [HarmonyPatch(typeof(GenerateRoom), nameof(GenerateRoom.OnDisable))]
     private static void GenerateRoom_OnDisable(ref GenerateRoom __instance)
     {
-        // Check if the MatingTentMod is installed
-        if (!MatingTentModExists())
+        // Check if any modded vanilla structures exists
+        if (!ModdedVanillaStructureExists())
         {
-            // Log the removal of mating tents
-            LogInfo("MatingTentMod not found, checking for and removing any rogue tents.");
-
-            // Remove any rogue mating tent GameObjects
-            RemoveMatingTentGameObjects();
+            LogWarning("No modded vanilla structure mods found, checking for left over gameobjects.");
+            RemoveModdedVanillaGameObjects();
         }
 
         // Log the removal of rogue custom structures and DataManager correction
-        LogInfo("Checking other custom structures and correcting DataManager (SaveData)");
+        LogWarning("Checking other custom structures and correcting DataManager (SaveData)");
 
         // Remove any rogue custom structures from DataManager
         RemoveRogueCustomStructuresFromDataManager();
     }
 
-    // Method to remove mating tent GameObjects
-    private static void RemoveMatingTentGameObjects()
+
+    //game object name as seen in Unity Explorer
+    private static readonly string[] ModdedVanillaStructures = {
+        "Building Fishing Hut(Clone)",
+        "Building Fishing Hut",
+        "Mating Tent(Clone)",
+        "Mating Tent"
+    };
+
+    //last part of the prefab path as seen in Unity Explorer (navigate to StructureData for that particular object)
+    private static readonly string[] ModdedVanillaPrefabPaths =
+    {
+        "Building Fishing Hut",
+        "Building Mating Tent"
+    };
+
+    // Method to remove modded vanilla GameObjects
+    private static void RemoveModdedVanillaGameObjects()
     {
         // Find all GameObjects containing "Mating" in their names
-        var tentObjects = Object.FindObjectsOfType<GameObject>()
-            .Where(obj => obj.name.Contains("Mating")).ToList();
+        var vanillaModdedObjects = Object.FindObjectsOfType<GameObject>()
+            .Where(obj => ModdedVanillaStructures.Any(obj.name.Contains)).ToList();
 
-        if (!tentObjects.Any()) return;
+        if (!vanillaModdedObjects.Any()) return;
 
-        // Destroy all found mating tent GameObjects
-        foreach (var tentObject in tentObjects)
+        // Destroy all found vanillaModdedObjects
+        foreach (var obj in vanillaModdedObjects)
         {
-            Object.DestroyImmediate(tentObject);
-            LogWarning("Destroyed mating tent game object.");
+            LogWarning($"Destroyed {obj.name}");
+            Object.DestroyImmediate(obj);
         }
     }
 
@@ -145,7 +162,7 @@ public static class VanillaPatches
             {
                 if (structure.PrefabPath == null || !structure.PrefabPath.Contains("CustomBuildingPrefab")) return;
 
-                LogInfo($"Found custom item in {field.Name}: {structure.PrefabPath}");
+                LogWarning($"Found custom item in {field.Name}: {structure.PrefabPath}");
                 if (CustomStructureManager.CustomStructureExists(structure.PrefabPath)) return;
 
                 // Item needs to be removed from BaseStructures
@@ -157,21 +174,21 @@ public static class VanillaPatches
             // Remove custom structures
             var customCount = f.RemoveAll(a => itemsToRemove.Contains(a));
 
-            // Remove mating tents
-            var tentCount = 0;
-            if (!MatingTentModExists())
-                tentCount = f.RemoveAll(a =>
-                    a == null || (a is {PrefabPath: not null} && a.PrefabPath.Contains("Mating")));
+            // Remove modded vanilla
+            var vanillaCount = 0;
+            if (!ModdedVanillaStructureExists())
+                vanillaCount = f.RemoveAll(a =>
+                    a == null || (a is {PrefabPath: not null} && ModdedVanillaPrefabPaths.Any(a.PrefabPath.Contains)));
 
             // Update the field in DataManager with the modified list
             field.SetValue(DataManager.Instance, f);
 
-            // Log the number of removed custom structures and mating tents
-            if (customCount > 0 || tentCount > 0)
+            // Log the number of removed custom structures and modded vanilla structures
+            if (customCount > 0 || vanillaCount > 0)
             {
                 dataFixed = true;
                 LogInfo(
-                    $"Removed {customCount} orphaned structure(s) and {tentCount} orphaned tent(s) from {field.Name}.");
+                    $"Removed {customCount} orphaned structure(s) and {vanillaCount} orphaned modded vanilla structure(s) from {field.Name}.");
             }
         }
 
@@ -189,10 +206,10 @@ public static class VanillaPatches
             $"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
     }
 
-    private static bool MatingTentModExists()
+    private static bool ModdedVanillaStructureExists()
     {
-        var matingTentMod = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains("MatingTentMod"))
-            .Value;
-        return matingTentMod != null;
+        var matingTentMod = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains(MatingTentMod)).Value;
+        var miniMods = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains(MiniMods)).Value;
+        return matingTentMod != null || miniMods != null;
     }
 }
