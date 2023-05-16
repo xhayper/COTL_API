@@ -49,8 +49,6 @@ public abstract class CustomPlayerSkin : CustomSkin
                 _cachedSkin = overrideSkin;
             }
 
-            if (CustomSkinManager.PlayerSkinOverride != null)
-                LogInfo("PlayerSkinOverride already exists. Overwriting.");
             CustomSkinManager.SetPlayerSkinOverride(_cachedSkin);
         }
 

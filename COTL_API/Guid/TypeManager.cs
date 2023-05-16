@@ -69,15 +69,13 @@ public static class TypeManager
 
     [HarmonyPatch(typeof(CustomType), nameof(CustomType.GetType), typeof(string), typeof(string))]
     [HarmonyPrefix]
-    private static bool GetCustomType(string nameSpace, string typeName, ref Type __result)
+    private static bool CustomType_GetType(string nameSpace, string typeName, ref Type __result)
     {
         if (TypeCache.TryGetValue(typeName, out var value))
         {
             __result = value;
             return false;
         }
-
-        if (int.TryParse(typeName, out _)) LogInfo("This appears to be a custom type");
 
         __result = AccessTools.TypeByName($"{nameSpace}.{typeName}");
         TypeCache.Add(typeName, __result);
