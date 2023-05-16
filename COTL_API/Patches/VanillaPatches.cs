@@ -110,12 +110,12 @@ public static class VanillaPatches
         // Check if any modded vanilla structures exists
         if (!ModdedVanillaStructureExists())
         {
-            LogInfo("No modded vanilla structure mods found, checking for left over gameobjects.");
+            LogDebug("No modded vanilla structure mods found, checking for left over gameobjects.");
             RemoveModdedVanillaGameObjects();
         }
 
         // Log the removal of rogue custom structures and DataManager correction
-        LogInfo("Checking other custom structures and correcting DataManager (SaveData)");
+        LogDebug("Checking other custom structures and correcting DataManager (SaveData)");
 
         // Remove any rogue custom structures from DataManager
         RemoveRogueCustomStructuresFromDataManager();
@@ -187,7 +187,7 @@ public static class VanillaPatches
             if (customCount <= 0 && vanillaCount <= 0) continue;
 
             dataFixed = true;
-            LogWarning(
+            LogDebug(
                 $"Removed {customCount} orphaned structure(s) and {vanillaCount} orphaned modded vanilla structure(s) from {field.Name}.");
         }
 
@@ -195,13 +195,13 @@ public static class VanillaPatches
         stopWatch.Stop();
         if (dataFixed)
         {
-            LogInfo(
+            LogDebug(
                 $"Finished correcting DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
             SaveAndLoad.Save();
             return;
         }
 
-        LogInfo(
+        LogDebug(
             $"No orphaned structure(s), so no changes made to DataManager (SaveData) in {stopWatch.ElapsedMilliseconds}ms & {stopWatch.ElapsedTicks} ticks.");
     }
 

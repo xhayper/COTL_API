@@ -39,7 +39,7 @@ public static class LocalizationPatches
                 LocalizationMap[name].Add(key, value);
             }
 
-            LogInfo($"Loaded localization: {name}");
+            LogDebug($"Loaded localization: {name}");
         }
         else
         {

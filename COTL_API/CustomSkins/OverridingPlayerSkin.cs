@@ -25,9 +25,6 @@ internal class OverridingPlayerSkin : CustomPlayerSkin
         {
             _cachedSkin ??= overrideSkin.Invoke();
 
-            if (CustomSkinManager.PlayerSkinOverride != null)
-                LogInfo("PlayerSkinOverride already exists. Overwriting.");
-
             CustomSkinManager.SetPlayerSkinOverride(_cachedSkin);
         }
 

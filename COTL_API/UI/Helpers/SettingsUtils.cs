@@ -74,7 +74,7 @@ internal static class SettingsUtils
         if (onChange != null) mmDropdown.OnValueChanged += onChange;
     }
 
-    public static void AddKeyboardShortcutDropdown(Transform parent, string text, KeyCode?[] options, int index = 0,
+    public static void AddKeyboardShortcutDropdown(Transform parent, string text, int index = 0,
         Action<KeyboardShortcut>? onChange = null, string? indexStringOverride = null)
     {
         if (DropdownTemplate == null)
@@ -89,7 +89,7 @@ internal static class SettingsUtils
         dropDownText.text = text;
         var mmDropdown = dropDown.GetComponentInChildren<MMDropdown>();
         mmDropdown._localizeContent = false;
-        mmDropdown.UpdateContent(Enum.GetValues(typeof(KeyCode)) as string[]);
+        mmDropdown.UpdateContent(Enum.GetNames(typeof(KeyCode)));
 
         // Find the index of the selected KeyCode in the _content array of MMDropdown
         if (indexStringOverride != null) index = Array.IndexOf(mmDropdown.Content, indexStringOverride);

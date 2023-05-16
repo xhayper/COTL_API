@@ -149,11 +149,11 @@ public static class UIManager
                 {
                     void OnValueChanged(KeyboardShortcut i)
                     {
-                        dropdown.Value = dropdown.Options[(int)i.MainKey];
+                        dropdown.Value = i.MainKey;
                         dropdown.OnValueChanged?.Invoke(i);
                     }
 
-                    SettingsUtils.AddKeyboardShortcutDropdown(scrollContent, dropdown.Text, dropdown.Options, 0,
+                    SettingsUtils.AddKeyboardShortcutDropdown(scrollContent, dropdown.Text, 0,
                         OnValueChanged, dropdown.Value.ToString());
                     break;
                 }

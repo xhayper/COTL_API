@@ -34,8 +34,10 @@ public static class CustomSettingsManager
 
         var fullGuid = $"{guid}.{category}.{text}";
         onValueChanged ??= delegate { };
+
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
+
         var slider = new Slider(category, text, Plugin.SettingsData.GetValueAsFloat(fullGuid), min, max,
             increment, displayFormat,
             delegate(float newValue)
@@ -52,17 +54,6 @@ public static class CustomSettingsManager
         return slider;
     }
 
-    public static KeyboardShortcutDropdown AddKeyboardShortcutDropdown(string? category, string text,
-        ConfigEntry<KeyboardShortcut> entry,
-        Action<KeyboardShortcut>? onValueChanged = null)
-    {
-        onValueChanged ??= delegate { };
-        var dropdown = new KeyboardShortcutDropdown(category, text, entry.Value.MainKey,
-            (Enum.GetValues(typeof(KeyCode)) as KeyCode?[])!, onValueChanged);
-        SettingsElements.Add(dropdown);
-        return dropdown;
-    }
-
     public static Dropdown AddDropdown(string? category, string text, string? value, string?[] options,
         Action<int>? onValueChanged = null)
     {
@@ -71,42 +62,6 @@ public static class CustomSettingsManager
         SettingsElements.Add(dropdown);
         return dropdown;
     }
-
-    public static KeyboardShortcutDropdown? AddSavedKeyboardShortcutDropdown(string? category, string guid, string text,
-        string value,
-        KeyCode?[] options,
-        Action<KeyboardShortcut>? onValueChanged = null)
-    {
-        if (Plugin.SettingsData == null) return null;
-
-        var fullGuid = $"{guid}.{category}.{text}";
-        onValueChanged ??= delegate { };
-
-        if (!Plugin.SettingsData.ContainsKey(fullGuid))
-            Plugin.SettingsData.Add(fullGuid, value);
-
-        // Convert the string value stored in Plugin.SettingsData to KeyCode
-        Enum.TryParse(Plugin.SettingsData.GetValueAsString(fullGuid), out KeyCode storedKeyCode);
-
-        var dropdown = new KeyboardShortcutDropdown(category, text, storedKeyCode, options, onValueChanged)
-        {
-            OnValueChanged = delegate(KeyboardShortcut newValue)
-            {
-                if (Plugin.Instance != null)
-                {
-                    Plugin.SettingsData.SetValue(fullGuid, newValue.ToString());
-                    Plugin.Instance.ModdedSettingsData.Save();
-                }
-
-                // Call the onValueChanged action with the newValue
-                onValueChanged(newValue);
-            }
-        };
-        SettingsElements.Add(dropdown);
-
-        return dropdown;
-    }
-
 
     public static Dropdown? AddSavedDropdown(string? category, string guid, string text, string value,
         string?[] options,
@@ -119,7 +74,9 @@ public static class CustomSettingsManager
 
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
+
         var dropdown = new Dropdown(category, text, Plugin.SettingsData.GetValueAsString(fullGuid), options, null);
+
         dropdown.OnValueChanged = delegate(int newValue)
         {
             if (Plugin.Instance != null)
@@ -156,8 +113,10 @@ public static class CustomSettingsManager
 
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
+
         var horizontalSelector = new HorizontalSelector(category, text, Plugin.SettingsData.GetValueAsString(fullGuid),
             options, null);
+
         horizontalSelector.OnValueChanged = delegate(int newValue)
         {
             if (Plugin.Instance != null)
@@ -171,6 +130,48 @@ public static class CustomSettingsManager
         SettingsElements.Add(horizontalSelector);
 
         return horizontalSelector;
+    }
+
+    public static KeyboardShortcutDropdown AddKeyboardShortcutDropdown(string? category, string text, KeyCode? value,
+        Action<KeyboardShortcut>? onValueChanged = null)
+    {
+        onValueChanged ??= delegate { };
+        var dropdown = new KeyboardShortcutDropdown(category, text, value,
+            onValueChanged);
+        SettingsElements.Add(dropdown);
+        return dropdown;
+    }
+
+    public static KeyboardShortcutDropdown? AddSavedKeyboardShortcutDropdown(string? category, string guid, string text,
+        KeyCode value,
+        Action<KeyboardShortcut>? onValueChanged = null)
+    {
+        if (Plugin.SettingsData == null) return null;
+
+        var fullGuid = $"{guid}.{category}.{text}";
+        onValueChanged ??= delegate { };
+
+        if (!Plugin.SettingsData.ContainsKey(fullGuid))
+            Plugin.SettingsData.Add(fullGuid, new KeyboardShortcut(value).ToString());
+
+        Enum.TryParse(Plugin.SettingsData.GetValueAsString(fullGuid), out KeyCode storedKeyCode);
+
+        var dropdown = new KeyboardShortcutDropdown(category, text, storedKeyCode, onValueChanged)
+        {
+            OnValueChanged = delegate(KeyboardShortcut newValue)
+            {
+                if (Plugin.Instance != null)
+                {
+                    Plugin.SettingsData.SetValue(fullGuid, newValue.ToString());
+                    Plugin.Instance.ModdedSettingsData.Save();
+                }
+
+                onValueChanged(newValue);
+            }
+        };
+        SettingsElements.Add(dropdown);
+
+        return dropdown;
     }
 
     public static Toggle AddToggle(string? category, string text, bool value, Action<bool>? onValueChanged = null)
@@ -188,8 +189,10 @@ public static class CustomSettingsManager
 
         var fullGuid = $"Settings.{guid}.{category}.{text}";
         onValueChanged ??= delegate { };
+
         if (!Plugin.SettingsData.ContainsKey(fullGuid))
             Plugin.SettingsData.Add(fullGuid, value);
+
         var toggle = new Toggle(category, text, Plugin.SettingsData.GetValueAsBoolean(fullGuid),
             delegate(bool newValue)
             {
@@ -208,26 +211,6 @@ public static class CustomSettingsManager
     //--- BEPINEX CONFIG BINDING ---//
 
     // TODO: Improve BepInEx number config
-
-    public static KeyboardShortcutDropdown AddBepInExConfig(string? category, string text,
-        ConfigEntry<KeyboardShortcut> entry,
-        Action<KeyboardShortcut>? onValueChanged = null)
-    {
-        onValueChanged ??= delegate { };
-
-        var dropdown = new KeyboardShortcutDropdown(category, text, entry.Value.MainKey,
-            (Enum.GetValues(typeof(KeyCode)) as KeyCode?[])!,
-            delegate(KeyboardShortcut newKeyCode)
-            {
-                entry.Value = newKeyCode;
-                onValueChanged(entry.Value);
-            });
-
-        entry.SettingChanged += delegate { dropdown.Value = entry.Value.MainKey; };
-
-        SettingsElements.Add(dropdown);
-        return dropdown;
-    }
 
     public static HorizontalSelector? AddBepInExConfig(string? category, string text, ConfigEntry<string> entry,
         Action<int>? onValueChanged = null)
@@ -306,5 +289,24 @@ public static class CustomSettingsManager
 
         SettingsElements.Add(toggle);
         return toggle;
+    }
+
+    public static KeyboardShortcutDropdown AddBepInExConfig(string? category, string text,
+        ConfigEntry<KeyboardShortcut> entry,
+        Action<KeyboardShortcut>? onValueChanged = null)
+    {
+        onValueChanged ??= delegate { };
+
+        var dropdown = new KeyboardShortcutDropdown(category, text, entry.Value.MainKey,
+            delegate(KeyboardShortcut newKeyCode)
+            {
+                entry.Value = newKeyCode;
+                onValueChanged(entry.Value);
+            });
+
+        entry.SettingChanged += delegate { dropdown.Value = entry.Value.MainKey; };
+
+        SettingsElements.Add(dropdown);
+        return dropdown;
     }
 }

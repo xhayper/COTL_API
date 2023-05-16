@@ -15,7 +15,6 @@ public static partial class CustomRitualManager
     {
         foreach (var customRitual in CustomRitualList.Keys)
         {
-            LogInfo("Custom Ritual: " + customRitual);
             __instance.ConfigureItem(__instance._ritualItemTemplate.Instantiate(__instance._ritualsContent),
                 customRitual);
         }

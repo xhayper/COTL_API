@@ -271,6 +271,9 @@ public class Plugin : BaseUnityPlugin
         CustomSettingsManager.AddDropdown("Debug", "Dropdown", "Option 1",
             new[] { "Option 1", "Option 2", "Option 3" }, i => { LogDebug($"Dropdown selected {i}"); });
 
+        CustomSettingsManager.AddKeyboardShortcutDropdown("Debug", "Keyboard Shortcut", KeyCode.None,
+            i => { LogDebug($"Keyboard Shortcut selected {i}"); });
+
         CustomSettingsManager.AddHorizontalSelector("Debug", "Horizontal Selector", "Option 1",
             new[] { "Option 1", "Option 2", "Option 3" },
             i => { LogDebug($"Horizontal Selector selected {i}"); });
