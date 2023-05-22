@@ -9,11 +9,6 @@ public class DebugRelicClass : CustomRelicData
     public override bool CanBeBlessed => true;
     public override bool CanBeDamned => true;
 
-    public override string GetTitleLocalisation()
-    {
-        return "DEBUG_RELIC";
-    }
-
     public override string GetDescriptionLocalisation()
     {
         return RelicSubType switch
@@ -22,11 +17,6 @@ public class DebugRelicClass : CustomRelicData
             RelicSubType.Dammed => "Gain 5 poop.",
             _ => "Gain 5 gold."
         };
-    }
-
-    public override string GetLoreLocalization()
-    {
-        return "Only those who bear the power of the Debug shall be able to use this relic.";
     }
 
     public override void Init()

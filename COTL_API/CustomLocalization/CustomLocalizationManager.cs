@@ -30,7 +30,7 @@ public partial class CustomLocalizationManager
                 var key = "";
                 var value = "";
                 for (var i = 0; i < line.Length; i++)
-                    if (line[i] == '"')
+                    if (line[i] == '"' && (0 >= i || line[i - 1] != '\\') && (1 >= i || line[i - 2] != '\\'))
                     {
                         isInsideQuotes = !isInsideQuotes;
                     }

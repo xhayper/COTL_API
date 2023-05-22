@@ -4,6 +4,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomInventory;
+using COTL_API.CustomLocalization;
 using COTL_API.CustomObjectives;
 using COTL_API.CustomRelics;
 using COTL_API.CustomSettings;
@@ -243,6 +244,9 @@ public class Plugin : BaseUnityPlugin
     private void AddDebugContent()
     {
         if (DebugContentAdded) return;
+
+        CustomLocalizationManager.LoadLocalization("English",
+            Path.Combine(PluginPath, "Assets", "English-Debug.language"));
 
         CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
         CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());

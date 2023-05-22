@@ -20,14 +20,4 @@ public class DebugItemClass4 : CustomInventoryItem
     public override bool AddItemToOfferingShrine => true;
 
     public override Vector3 LocalScale { get; } = new(0.6f, 0.6f, 0.6f);
-
-    public override string LocalizedName()
-    {
-        return "DEBUG_ITEM_4";
-    }
-
-    public override string LocalizedDescription()
-    {
-        return "COTL_API'S 4TH DEBUG ITEM";
-    }
 }

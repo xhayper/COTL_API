@@ -68,35 +68,35 @@ public abstract class CustomStructure : StructureBrain
 
     public virtual string LocalizedPros()
     {
-        return LocalizationManager.GetTranslation($"Structures/{StructureType}/Pros");
+        return LocalizationManager.GetTranslation($"Structures/{ModPrefix}.{InternalName}/Pros");
     }
 
     public virtual string LocalizedCons()
     {
-        return LocalizationManager.GetTranslation($"Structures/{StructureType}/Cons");
+        return LocalizationManager.GetTranslation($"Structures/{ModPrefix}.{InternalName}/Cons");
     }
 
     public virtual string GetLocalizedName()
     {
-        return LocalizationManager.GetTranslation($"Structures/{StructureType}");
+        return LocalizationManager.GetTranslation($"Structures/{ModPrefix}.{InternalName}");
     }
 
     public virtual string GetLocalizedName(bool plural, bool withArticle, bool definite)
     {
         var article = definite ? "/Definite" : "/Indefinite";
 
-        var text = $"Structures/{StructureType}{(plural ? "/Plural" : "")}{(!withArticle ? "" : article)}";
+        var text = $"Structures/{ModPrefix}.{InternalName}{(plural ? "/Plural" : "")}{(!withArticle ? "" : article)}";
         return LocalizationManager.GetTranslation(text);
     }
 
     public virtual string GetLocalizedDescription()
     {
-        return LocalizationManager.GetTranslation($"Structures/{StructureType}/Description");
+        return LocalizationManager.GetTranslation($"Structures/{ModPrefix}.{InternalName}/Description");
     }
 
     public virtual string GetLocalizedLore()
     {
-        return LocalizationManager.GetTranslation("Structures/" + StructureType + "/Lore");
+        return LocalizationManager.GetTranslation($"Structures/{ModPrefix}.{InternalName}/Lore");
     }
 
     public virtual int GetResearchCost()

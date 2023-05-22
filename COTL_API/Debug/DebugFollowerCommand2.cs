@@ -13,16 +13,6 @@ public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCo
 
     public override List<FollowerCommandCategory> Categories => new() { FollowerCommandCategory.MAKE_DEMAND_COMMAND };
 
-    public override string GetTitle(Follower follower)
-    {
-        return "Dissent";
-    }
-
-    public override string GetDescription(Follower follower)
-    {
-        return "Make this follower turns into a dissenter instantly";
-    }
-
     public override void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
     {
