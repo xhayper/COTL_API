@@ -1,4 +1,6 @@
-namespace COTL_API.CustomLocalization;
+using COTL_API.CustomLocalization;
+
+namespace COTL_API.Localization;
 
 [Obsolete("Use CustomLocalizationManager instead.")]
 public static class LocalizationPatches
