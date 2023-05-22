@@ -8,7 +8,6 @@ namespace COTL_API.CustomLocalization;
 [HarmonyPatch]
 public partial class CustomLocalizationManager
 {
-
     [HarmonyPatch(typeof(TermData), "GetTranslation")]
     [HarmonyPrefix]
     private static bool TermData_GetTranslation(ref string __result, TermData __instance)

@@ -14,7 +14,7 @@ public static class SettingsPatches
     {
         if (__instance._contentIndex >= newContent.Length) __instance._contentIndex = 0;
     }
-    
+
     [HarmonyPatch(typeof(LoadMenu), nameof(LoadMenu.OnTryLoadSaveSlot))]
     [HarmonyPostfix]
     private static void LoadMenu_OnTryLoadSaveSlot()

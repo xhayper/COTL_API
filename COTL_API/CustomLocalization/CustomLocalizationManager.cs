@@ -9,7 +9,7 @@ public partial class CustomLocalizationManager
     public static List<string> LanguageList { get; } = new();
 
     /// <summary>
-    /// Loads a localization file from a path.
+    ///     Loads a localization file from a path.
     /// </summary>
     /// <param name="name">The name of the language.</param>
     /// <param name="path">The path to the localization file.</param>

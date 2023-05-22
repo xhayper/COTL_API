@@ -14,10 +14,8 @@ public static partial class CustomRitualManager
     private static void UIRitualsMenuController_OnShowStarted(UIRitualsMenuController __instance)
     {
         foreach (var customRitual in CustomRitualList.Keys)
-        {
             __instance.ConfigureItem(__instance._ritualItemTemplate.Instantiate(__instance._ritualsContent),
                 customRitual);
-        }
     }
 
     [HarmonyPatch(typeof(RitualItem), nameof(RitualItem.Configure))]
