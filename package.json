@@ -31,5 +31,5 @@
         "sharp": "^0.32.1",
         "typescript": "^5.0.4"
     },
-    "packageManager": "pnpm@7.27.0"
+    "packageManager": "pnpm@8.5.1"
 }
