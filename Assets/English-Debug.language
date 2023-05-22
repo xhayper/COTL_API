@@ -40,4 +40,4 @@
 "TarotCards/io.github.xhayper.COTL_API.DEBUG_TAROT_CARD/Description2", "<sprite name=\"icon_BlueHeart\"> +25, 25x walk speed"
 "TarotCards/io.github.xhayper.COTL_API.DEBUG_TAROT_CARD/Lore", "<color=\"red\">GOD LIKE!</color>"
 "FollowerInteractions/io.github.xhayper.COTL_API.DEBUG_TASK_FOLLOWER_COMMAND", "Debug Task"
-"FollowerInteractions/io.github.xhayper.COTL_API.DEBUG_TASK_FOLLOWER_COMMAND/Description", "Do Debug Task at Debug Structureg"
+"FollowerInteractions/io.github.xhayper.COTL_API.DEBUG_TASK_FOLLOWER_COMMAND/Description", "Do Debug Task at Debug Structure"
