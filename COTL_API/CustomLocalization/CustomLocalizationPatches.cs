@@ -27,6 +27,19 @@ public partial class CustomLocalizationManager
         return false;
     }
 
+    [HarmonyPatch(typeof(LanguageSourceData), "TryGetTranslation")]
+    [HarmonyPrefix]
+    private static bool LocalizationManager_TryGetTranslation(string term, ref string Translation, ref bool __result)
+    {
+        var lang = SettingsManager.Settings.Game.Language;
+        if (!LocalizationMap.ContainsKey(lang)) return true;
+        if (!LocalizationMap[lang].ContainsKey(term)) return true;
+        Translation = LocalizationMap[lang][term];
+        __result = true;
+
+        return false;
+    }
+
     [HarmonyPatch(typeof(GameSettings), nameof(GameSettings.OnLanguageChanged))]
     [HarmonyPrefix]
     private static bool GameSettings_OnLanguageChanged(GameSettings __instance, int index)
