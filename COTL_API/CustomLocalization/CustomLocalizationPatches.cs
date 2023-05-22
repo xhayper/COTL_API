@@ -1,56 +1,17 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using I2.Loc;
-using Lamb.UI;
 using Lamb.UI.Settings;
 using UnityEngine.ProBuilder;
 
-namespace COTL_API.Localization;
+namespace COTL_API.CustomLocalization;
 
 [HarmonyPatch]
-public static class LocalizationPatches
+public partial class CustomLocalizationManager
 {
-    public static Dictionary<string, Dictionary<string, string>> LocalizationMap { get; } = new();
-    public static List<string> LanguageList { get; } = new();
 
-    public static void LoadLocalization(string name, string path)
-    {
-        LocalizationMap.Add(name, new Dictionary<string, string>());
-        LanguageList.Add(name);
-        if (File.Exists(path))
-        {
-            var lines = File.ReadAllLines(path);
-            var isInsideQuotes = false;
-            foreach (var line in lines)
-            {
-                var key = "";
-                var value = "";
-                for (var i = 0; i < line.Length; i++)
-                    if (line[i] == '"')
-                    {
-                        isInsideQuotes = !isInsideQuotes;
-                    }
-                    else if (line[i] == ',' && !isInsideQuotes)
-                    {
-                        key = line.Substring(1, i - 2);
-                        value = line.Substring(i + 3, line.Length - i - 4);
-                        break;
-                    }
-
-                LocalizationMap[name].Add(key, value);
-            }
-
-            LogDebug($"Loaded localization: {name}");
-        }
-        else
-        {
-            LogError(
-                $"Localization file not found! Please make sure that the path \"{path}\" contains the localization file.");
-        }
-    }
-
-    [HarmonyPrefix]
     [HarmonyPatch(typeof(TermData), "GetTranslation")]
-    internal static bool GetTranslation(ref string __result, TermData __instance)
+    [HarmonyPrefix]
+    private static bool TermData_GetTranslation(ref string __result, TermData __instance)
     {
         if (__instance.Term.StartsWith("\"\"") && __instance.Term.EndsWith("\"\""))
         {
@@ -63,6 +24,7 @@ public static class LocalizationPatches
         if (!LocalizationMap.ContainsKey(lang)) return true;
         if (!LocalizationMap[lang].ContainsKey(__instance.Term)) return true;
         __result = LocalizationMap[lang][__instance.Term];
+
         return false;
     }
 
@@ -97,12 +59,5 @@ public static class LocalizationPatches
         if (!LanguageList.Contains(SettingsManager.Settings.Game.Language)) return true;
         __result = LanguageUtilities.AllLanguages.Length + LanguageList.IndexOf(SettingsManager.Settings.Game.Language);
         return false;
-    }
-
-    [HarmonyPatch(typeof(MMHorizontalSelector), nameof(MMHorizontalSelector.UpdateContent))]
-    [HarmonyPrefix]
-    private static void MMHorizontalSelector_UpdateContent(MMHorizontalSelector __instance, string[] newContent)
-    {
-        if (__instance._contentIndex >= newContent.Length) __instance._contentIndex = 0;
     }
 }
