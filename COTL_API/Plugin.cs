@@ -183,15 +183,16 @@ public class Plugin : BaseUnityPlugin
 
     private void RunSavePatch()
     {
+        
         // LOAD_AFTER_START handler
         SaveAndLoad.OnLoadComplete += delegate
         {
-            LogWarning("Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
+            LogDebug("Loading Modded Save Data with LoadOrder=ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START.");
             foreach (var saveData in ModdedSaveManager.ModdedSaveDataList.Values.Where(save =>
                          save.LoadOrder == ModdedSaveLoadOrder.LOAD_AFTER_SAVE_START))
                 saveData.Load(SaveAndLoad.SAVE_SLOT);
 
-            LogWarning("Re-adding any custom quests from the players existing objectives.");
+            LogDebug("Re-adding any custom quests from the players existing objectives.");
             Dictionary<int, CustomObjective> tempObjectives = new();
 
             if (QuestData == null) return;
@@ -204,7 +205,7 @@ public class Plugin : BaseUnityPlugin
 
             CustomObjectiveManager.CustomObjectiveList.AddRange(tempObjectives);
 
-            LogWarning("Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
+            LogDebug("Added custom quests to Plugin.Instance.APIQuestData.Data.QuestData.");
             foreach (var quest in CustomObjectiveManager.CustomObjectiveList) QuestData.TryAdd(quest.Key, quest.Value);
         };
 
