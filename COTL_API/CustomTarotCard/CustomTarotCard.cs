@@ -48,7 +48,8 @@ public abstract class CustomTarotCard
             _ => ""
         };
 
-        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name{text}</color>");
+        return text2 + LocalizationManager.GetTranslation($"TarotCards/{ModPrefix}.{InternalName}/Name{text}") +
+               "</color>";
     }
 
     public virtual string LocalisedDescription()

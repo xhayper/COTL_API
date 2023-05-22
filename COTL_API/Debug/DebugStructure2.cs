@@ -20,19 +20,4 @@ public class DebugStructure2 : CustomStructure
     {
         new StructuresData.ItemCost(Plugin.Instance!.DebugItem2, 2)
     };
-
-    public override string GetLocalizedName()
-    {
-        return "DEBUG_STRUCTURE_2";
-    }
-
-    public override string GetLocalizedDescription()
-    {
-        return "COTL_API'S 2ND DEBUG STRUCTURE";
-    }
-
-    public override string GetLocalizedLore()
-    {
-        return "DEBUG STRUCTURE 2 LORE";
-    }
 }

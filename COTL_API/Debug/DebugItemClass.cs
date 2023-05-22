@@ -15,14 +15,4 @@ public class DebugItemClass : CustomInventoryItem
 
     public override bool CanBeGivenToFollower => true;
     public override FollowerCommands GiftCommand => Plugin.Instance!.DebugGiftFollowerCommand;
-
-    public override string LocalizedName()
-    {
-        return "DEBUG_ITEM";
-    }
-
-    public override string LocalizedDescription()
-    {
-        return "COTL_API'S DEBUG ITEM";
-    }
 }

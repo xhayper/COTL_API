@@ -4,16 +4,6 @@ public class DebugTaskFollowerCommand : CustomFollowerCommand.CustomFollowerComm
 {
     public override string InternalName => "DEBUG_TASK_FOLLOWER_COMMAND";
 
-    public override string GetTitle(Follower follower)
-    {
-        return "Debug Task";
-    }
-
-    public override string GetDescription(Follower follower)
-    {
-        return "Do Debug Task at Debug Structure";
-    }
-
     public override void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)
     {

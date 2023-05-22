@@ -4,21 +4,6 @@ public class DebugTarotCard : CustomTarotCard.CustomTarotCard
 {
     public override string InternalName => "DEBUG_TAROT_CARD";
 
-    public override string LocalisedName(int upgradeIndex)
-    {
-        return "COTL_API'S DEBUG TAROT CARD";
-    }
-
-    public override string LocalisedLore()
-    {
-        return "<color=\"red\">GOD LIKE!</color>";
-    }
-
-    public override string LocalisedDescription(int upgradeIndex)
-    {
-        return "<sprite name=\"icon_BlueHeart\"> +25, 25x walk speed";
-    }
-
     public override float GetMovementSpeedMultiplier(TarotCards.TarotCard card)
     {
         return 25;
