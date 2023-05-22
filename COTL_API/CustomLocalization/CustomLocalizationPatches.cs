@@ -29,7 +29,7 @@ public partial class CustomLocalizationManager
 
     [HarmonyPatch(typeof(LanguageSourceData), "TryGetTranslation")]
     [HarmonyPrefix]
-    private static bool LocalizationManager_TryGetTranslation(string term, ref string Translation, ref bool __result)
+    private static bool LanguageSourceData_TryGetTranslation(string term, ref string Translation, ref bool __result)
     {
         var lang = SettingsManager.Settings.Game.Language;
         if (!LocalizationMap.ContainsKey(lang)) return true;
