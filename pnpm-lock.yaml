@@ -5,32 +5,32 @@ devDependencies:
     specifier: ^4.17.0
     version: 4.17.0
   '@astrojs/image':
-    specifier: ^0.16.7
-    version: 0.16.7(astro@2.4.4)(sharp@0.32.1)
+    specifier: ^0.16.9
+    version: 0.16.9(astro@2.5.1)(sharp@0.32.1)
   '@astrojs/preact':
-    specifier: ^2.1.0
-    version: 2.1.0(preact@10.13.2)
+    specifier: ^2.2.0
+    version: 2.2.0(preact@10.15.0)
   '@astrojs/sitemap':
     specifier: ^1.3.1
     version: 1.3.1
   '@astrojs/vercel':
-    specifier: ^3.3.0
-    version: 3.3.0(@preact/compat@17.1.2)(astro@2.4.4)
+    specifier: ^3.4.0
+    version: 3.4.0(@preact/compat@17.1.2)(astro@2.5.1)
   '@docsearch/css':
-    specifier: ^3.3.4
-    version: 3.3.4
+    specifier: ^3.3.5
+    version: 3.3.5
   '@docsearch/react':
-    specifier: ^3.3.4
-    version: 3.3.4(@algolia/client-search@4.17.0)(@preact/compat@17.1.2)(@preact/compat@17.1.2)
+    specifier: ^3.3.5
+    version: 3.3.5(@algolia/client-search@4.17.0)(@preact/compat@17.1.2)(@preact/compat@17.1.2)
   '@types/html-escaper':
     specifier: ^3.0.0
     version: 3.0.0
   '@types/node':
-    specifier: ^20.1.2
-    version: 20.1.2
+    specifier: ^20.2.3
+    version: 20.2.3
   astro:
-    specifier: ^2.4.4
-    version: 2.4.4(@types/node@20.1.2)(sass@1.62.1)(sharp@0.32.1)
+    specifier: ^2.5.1
+    version: 2.5.1(@types/node@20.2.3)(sass@1.62.1)(sharp@0.32.1)
   astro-robots-txt:
     specifier: ^0.5.0
     version: 0.5.0
@@ -41,14 +41,14 @@ devDependencies:
     specifier: ^3.0.3
     version: 3.0.3
   preact:
-    specifier: ^10.13.2
-    version: 10.13.2
+    specifier: ^10.15.0
+    version: 10.15.0
   react:
     specifier: npm:@preact/compat@latest
-    version: /@preact/compat@17.1.2(preact@10.13.2)
+    version: /@preact/compat@17.1.2(preact@10.15.0)
   react-dom:
     specifier: npm:@preact/compat@latest
-    version: /@preact/compat@17.1.2(preact@10.13.2)
+    version: /@preact/compat@17.1.2(preact@10.15.0)
   sass:
     specifier: ^1.62.1
     version: 1.62.1
@@ -223,17 +223,17 @@ packages:
     resolution: {integrity: sha512-aXAxapNWZwGN41P+Am/ma/2kAzKOhMNaY6YuvLkUHFv+UZkmDHD6F0fE1sQA2Up0bLjgPQa1VQzoAaii5tZWaA==}
     dev: true
 
-  /@astrojs/image@0.16.7(astro@2.4.4)(sharp@0.32.1):
-    resolution: {integrity: sha512-8X1DnMh3lUTA7BNt7dF0rfWTXNwvLoPWWXtLi+TdO3CW1SvdY9LJRuCEWwHfnKzcQ0EC2TfLwjukpbtJuCRxjw==}
+  /@astrojs/image@0.16.9(astro@2.5.1)(sharp@0.32.1):
+    resolution: {integrity: sha512-8RfGGd1MAIQ6xCHgmu+xXBKWE14gvWYcIv61PxWlToEBgMUbmFdN5ICBQ1bea24rx6o5WvsvRjfOnkjPpf2eew==}
     peerDependencies:
-      astro: ^2.3.4
+      astro: ^2.5.0
       sharp: '>=0.31.0'
     peerDependenciesMeta:
       sharp:
         optional: true
     dependencies:
       '@altano/tiny-async-pool': 1.0.2
-      astro: 2.4.4(@types/node@20.1.2)(sass@1.62.1)(sharp@0.32.1)
+      astro: 2.5.1(@types/node@20.2.3)(sass@1.62.1)(sharp@0.32.1)
       http-cache-semantics: 4.1.1
       image-size: 1.0.2
       kleur: 4.1.5
@@ -261,13 +261,13 @@ packages:
       vscode-uri: 3.0.7
     dev: true
 
-  /@astrojs/markdown-remark@2.2.0(astro@2.4.4):
-    resolution: {integrity: sha512-4M1+GzQwDqF0KfX9Ahug43b0avorcK+iTapEaVuNnaCUVS6sZKRkztT3g6hmXiFmGHSL8qYaS9IVEmKtP6hYmw==}
+  /@astrojs/markdown-remark@2.2.1(astro@2.5.1):
+    resolution: {integrity: sha512-VF0HRv4GpC1XEMLnsKf6jth7JSmlt9qpqP0josQgA2eSpCIAC/Et+y94mgdBIZVBYH/yFnMoIxgKVe93xfO2GA==}
     peerDependencies:
-      astro: ^2.4.0
+      astro: ^2.5.0
     dependencies:
-      '@astrojs/prism': 2.1.1
-      astro: 2.4.4(@types/node@20.1.2)(sass@1.62.1)(sharp@0.32.1)
+      '@astrojs/prism': 2.1.2
+      astro: 2.5.1(@types/node@20.2.3)(sass@1.62.1)(sharp@0.32.1)
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.1
       rehype-raw: 6.1.1
@@ -284,24 +284,24 @@ packages:
       - supports-color
     dev: true
 
-  /@astrojs/preact@2.1.0(preact@10.13.2):
-    resolution: {integrity: sha512-1AnXpnjC24/mWJyq+EN5DoWp+w9Hg/y3dwFX3728rlBhyuY573jx+4+VHuG/g0A1alzJuIAhSPtqCP0YQktUnw==}
+  /@astrojs/preact@2.2.0(preact@10.15.0):
+    resolution: {integrity: sha512-SP8ODC/ywPFytVF9jX0Nrf9JoMFgXdsRPritLV9v4zPnarIwypW0kIFgm3rjT4ot8CQQj9J5cztqmD+hrDOvMg==}
     engines: {node: '>=16.12.0'}
     peerDependencies:
       preact: ^10.6.5
     dependencies:
       '@babel/core': 7.21.0
       '@babel/plugin-transform-react-jsx': 7.21.0(@babel/core@7.21.0)
-      '@preact/signals': 1.1.3(preact@10.13.2)
+      '@preact/signals': 1.1.3(preact@10.15.0)
       babel-plugin-module-resolver: 5.0.0
-      preact: 10.13.2
-      preact-render-to-string: 5.2.6(preact@10.13.2)
+      preact: 10.15.0
+      preact-render-to-string: 5.2.6(preact@10.15.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@astrojs/prism@2.1.1:
-    resolution: {integrity: sha512-Gnwnlb1lGJzCQEg89r4/WqgfCGPNFC7Kuh2D/k289Cbdi/2PD7Lrdstz86y1itDvcb2ijiRqjqWnJ5rsfu/QOA==}
+  /@astrojs/prism@2.1.2:
+    resolution: {integrity: sha512-3antim1gb34689GHRQFJ88JEo93HuZKQBnmxDT5W/nxiNz1p/iRxnCTEhIbJhqMOTRbbo5h2ldm5qSxx+TMFQA==}
     engines: {node: '>=16.12.0'}
     dependencies:
       prismjs: 1.29.0
@@ -330,15 +330,16 @@ packages:
       - supports-color
     dev: true
 
-  /@astrojs/vercel@3.3.0(@preact/compat@17.1.2)(astro@2.4.4):
-    resolution: {integrity: sha512-OwbxRL7kw5TFVwPn18/M9Dqp14SrPlEUSqzx+7WSvID/3W/MMuiwC5Ey0CoKUVPYruXxOaacDJKa1bzNoYgV/A==}
+  /@astrojs/vercel@3.4.0(@preact/compat@17.1.2)(astro@2.5.1):
+    resolution: {integrity: sha512-pTD7PUos5uoUFZZXooiNN2vcALLQtGF1urtaFCEMWJVbmpYUC8YlA8RsISbF2ICEpTgDWMHttRJE10aCBHrmKA==}
     peerDependencies:
-      astro: ^2.3.4
+      astro: ^2.5.0
     dependencies:
       '@astrojs/webapi': 2.1.1
       '@vercel/analytics': 0.1.11(@preact/compat@17.1.2)
       '@vercel/nft': 0.22.6
-      astro: 2.4.4(@types/node@20.1.2)(sass@1.62.1)(sharp@0.32.1)
+      astro: 2.5.1(@types/node@20.2.3)(sass@1.62.1)(sharp@0.32.1)
+      esbuild: 0.17.18
       fast-glob: 3.2.12
       set-cookie-parser: 2.5.1
       web-vitals: 3.1.1
@@ -585,12 +586,12 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@docsearch/css@3.3.4:
-    resolution: {integrity: sha512-vDwCDoVXDgopw/hvr0zEADew2wWaGP8Qq0Bxhgii1Ewz2t4fQeyJwIRN/mWADeLFYPVkpz8TpEbxya/i6Tm0WA==}
+  /@docsearch/css@3.3.5:
+    resolution: {integrity: sha512-NaXVp3I8LdmJ54fn038KHgG7HmbIzZlKS2FkVf6mKcW5bYMJovkx4947joQyZk5yubxOZ+ddHSh79y39Aevufg==}
     dev: true
 
-  /@docsearch/react@3.3.4(@algolia/client-search@4.17.0)(@preact/compat@17.1.2)(@preact/compat@17.1.2):
-    resolution: {integrity: sha512-aeOf1WC5zMzBEi2SI6WWznOmIo9rnpN4p7a3zHXxowVciqlI4HsZGtOR9nFOufLeolv7HibwLlaM0oyUqJxasw==}
+  /@docsearch/react@3.3.5(@algolia/client-search@4.17.0)(@preact/compat@17.1.2)(@preact/compat@17.1.2):
+    resolution: {integrity: sha512-Zuxf4z5PZ9eIQkVCNu76v1H+KAztKItNn3rLzZa7kpBS+++TgNARITnZeUS7C1DKoAhJZFr6T/H+Lvc6h/iiYg==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 19.0.0'
       react: '>= 16.8.0 < 19.0.0'
@@ -605,10 +606,10 @@ packages:
     dependencies:
       '@algolia/autocomplete-core': 1.8.2
       '@algolia/autocomplete-preset-algolia': 1.8.2(@algolia/client-search@4.17.0)(algoliasearch@4.15.0)
-      '@docsearch/css': 3.3.4
+      '@docsearch/css': 3.3.5
       algoliasearch: 4.15.0
-      react: /@preact/compat@17.1.2(preact@10.13.2)
-      react-dom: /@preact/compat@17.1.2(preact@10.13.2)
+      react: /@preact/compat@17.1.2(preact@10.15.0)
+      react-dom: /@preact/compat@17.1.2(preact@10.15.0)
     transitivePeerDependencies:
       - '@algolia/client-search'
     dev: true
@@ -920,25 +921,25 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /@preact/compat@17.1.2(preact@10.13.2):
+  /@preact/compat@17.1.2(preact@10.15.0):
     resolution: {integrity: sha512-7pOZN9lMDDRQ+6aWvjwTp483KR8/zOpfS83wmOo3zfuLKdngS8/5RLbsFWzFZMGdYlotAhX980hJ75bjOHTwWg==}
     peerDependencies:
       preact: '*'
     dependencies:
-      preact: 10.13.2
+      preact: 10.15.0
     dev: true
 
   /@preact/signals-core@1.2.3:
     resolution: {integrity: sha512-Kui4p7PMcEQevBgsTO0JBo3gyQ88Q3qzEvsVCuSp11t0JcN4DmGCTJcGRVSCq7Bn7lGxJBO+57jNSzDoDJ+QmA==}
     dev: true
 
-  /@preact/signals@1.1.3(preact@10.13.2):
+  /@preact/signals@1.1.3(preact@10.15.0):
     resolution: {integrity: sha512-N09DuAVvc90bBZVRwD+aFhtGyHAmJLhS3IFoawO/bYJRcil4k83nBOchpCEoS0s5+BXBpahgp0Mjf+IOqP57Og==}
     peerDependencies:
       preact: 10.x
     dependencies:
       '@preact/signals-core': 1.2.3
-      preact: 10.13.2
+      preact: 10.15.0
     dev: true
 
   /@rollup/pluginutils@4.2.1:
@@ -1018,8 +1019,8 @@ packages:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
     dev: true
 
-  /@types/node@20.1.2:
-    resolution: {integrity: sha512-CTO/wa8x+rZU626cL2BlbCDzydgnFNgc19h4YvizpTO88MFQxab8wqisxaofQJ/9bLGugRdWIuX/TbIs6VVF6g==}
+  /@types/node@20.2.3:
+    resolution: {integrity: sha512-pg9d0yC4rVNWQzX8U7xb4olIOFuuVL9za3bzMT2pu2SU0SNEi66i2qrvhE2qt0HvkhuCaWJu7pLNOt/Pj8BIrw==}
     dev: true
 
   /@types/parse5@6.0.3:
@@ -1033,7 +1034,7 @@ packages:
   /@types/sax@1.2.4:
     resolution: {integrity: sha512-pSAff4IAxJjfAXUG6tFkO7dsSbTmf8CtUpfhhZ5VhkRpC4628tJhh3+V6H1E+/Gs9piSzYKT5yzHO5M4GG9jkw==}
     dependencies:
-      '@types/node': 20.1.2
+      '@types/node': 20.2.3
     dev: true
 
   /@types/unist@2.0.6:
@@ -1049,7 +1050,7 @@ packages:
     peerDependencies:
       react: ^16.8||^17||^18
     dependencies:
-      react: /@preact/compat@17.1.2(preact@10.13.2)
+      react: /@preact/compat@17.1.2(preact@10.15.0)
     dev: true
 
   /@vercel/nft@0.22.6:
@@ -1194,6 +1195,10 @@ packages:
       sprintf-js: 1.0.3
     dev: true
 
+  /argparse@2.0.1:
+    resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
+    dev: true
+
   /array-iterate@2.0.1:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
     dev: true
@@ -1209,8 +1214,8 @@ packages:
     resolution: {integrity: sha512-YnSqj4E6vbF7wRk3gcxOPHBjenhfgaINEJlTsnu4sovAyfyGEdQksbioYKoZ+vERRDaYvEricfSzC6fc9lieww==}
     dev: true
 
-  /astro@2.4.4(@types/node@20.1.2)(sass@1.62.1)(sharp@0.32.1):
-    resolution: {integrity: sha512-2DFxcnZySS/OzBbiuWpoVGJBikcHfbwO5xmk5ohItswoMs+PfZ5P/B6mXplTjaosjm3M43c0OIsd8Mq6UksQZQ==}
+  /astro@2.5.1(@types/node@20.2.3)(sass@1.62.1)(sharp@0.32.1):
+    resolution: {integrity: sha512-tOVlDWxxE8VBGoolW0AS0kUo7ynAMjfOPKK0XyqprAtcN7pvYZ29gLG6RJTitDhzzP3HDt+Vecg9PuUOtHrITg==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
     peerDependencies:
@@ -1221,7 +1226,7 @@ packages:
     dependencies:
       '@astrojs/compiler': 1.4.1
       '@astrojs/language-server': 1.0.4
-      '@astrojs/markdown-remark': 2.2.0(astro@2.4.4)
+      '@astrojs/markdown-remark': 2.2.1(astro@2.5.1)
       '@astrojs/telemetry': 2.1.1
       '@astrojs/webapi': 2.1.1
       '@babel/core': 7.21.0
@@ -1243,12 +1248,14 @@ packages:
       devalue: 4.3.0
       diff: 5.1.0
       es-module-lexer: 1.2.0
+      esbuild: 0.17.18
       estree-walker: 3.0.0
       execa: 6.1.0
       fast-glob: 3.2.12
       github-slugger: 2.0.0
       gray-matter: 4.0.3
       html-escaper: 3.0.3
+      js-yaml: 4.1.0
       kleur: 4.1.5
       magic-string: 0.27.0
       mime: 3.0.0
@@ -1269,7 +1276,7 @@ packages:
       typescript: 5.0.4
       unist-util-visit: 4.1.2
       vfile: 5.3.7
-      vite: 4.3.1(@types/node@20.1.2)(sass@1.62.1)
+      vite: 4.3.1(@types/node@20.2.3)(sass@1.62.1)
       vitefu: 0.2.4(vite@4.3.1)
       yargs-parser: 21.1.1
       zod: 3.21.4
@@ -2241,6 +2248,13 @@ packages:
       esprima: 4.0.1
     dev: true
 
+  /js-yaml@4.1.0:
+    resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
+    hasBin: true
+    dependencies:
+      argparse: 2.0.1
+    dev: true
+
   /jsesc@2.5.2:
     resolution: {integrity: sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==}
     engines: {node: '>=4'}
@@ -3073,17 +3087,17 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /preact-render-to-string@5.2.6(preact@10.13.2):
+  /preact-render-to-string@5.2.6(preact@10.15.0):
     resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
     peerDependencies:
       preact: '>=10'
     dependencies:
-      preact: 10.13.2
+      preact: 10.15.0
       pretty-format: 3.8.0
     dev: true
 
-  /preact@10.13.2:
-    resolution: {integrity: sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==}
+  /preact@10.15.0:
+    resolution: {integrity: sha512-nZSa8M2R2m1n7nJSBlzDpxRJaIsejrTO1vlFbdpFvyC8qM1iU+On2y0otfoUm6SRB5o0lF0CKDFxg6grEFU0iQ==}
     dev: true
 
   /prebuild-install@7.1.1:
@@ -3857,7 +3871,7 @@ packages:
       vfile-message: 3.1.4
     dev: true
 
-  /vite@4.3.1(@types/node@20.1.2)(sass@1.62.1):
+  /vite@4.3.1(@types/node@20.2.3)(sass@1.62.1):
     resolution: {integrity: sha512-EPmfPLAI79Z/RofuMvkIS0Yr091T2ReUoXQqc5ppBX/sjFRhHKiPPF/R46cTdoci/XgeQpB23diiJxq5w30vdg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -3882,7 +3896,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.1.2
+      '@types/node': 20.2.3
       esbuild: 0.17.18
       postcss: 8.4.21
       rollup: 3.21.0
@@ -3899,7 +3913,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.3.1(@types/node@20.1.2)(sass@1.62.1)
+      vite: 4.3.1(@types/node@20.2.3)(sass@1.62.1)
     dev: true
 
   /vscode-css-languageservice@6.2.4:
