@@ -24,7 +24,7 @@ Use the _Your Localization Here_ column to write your localizations, and copy th
 ```csharp
 private void Awake() {
     string localizationPath = Path.Combine(Plugin.PluginPath, "Assets", "<YourLocalization>.language");
-    Localization.LoadLocalization("BadlyTranslated", localizationPath);
+    CustomLocalizationManager.LoadLocalization("BadlyTranslated", localizationPath);
 }
 ```
 
