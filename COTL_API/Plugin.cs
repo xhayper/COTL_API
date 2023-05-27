@@ -55,6 +55,10 @@ public class Plugin : BaseUnityPlugin
 
     private ConfigEntry<bool>? _debug { get; set; }
     public bool Debug => _debug?.Value ?? false;
+
+    private ConfigEntry<bool>? _skipSplashScreen { get; set; }
+    public bool SkipSplashScreen => _skipSplashScreen?.Value ?? false;
+
     internal static bool Started { get; private set; }
 
     internal static ObjectDictionary? SettingsData => Instance != null ? Instance.ModdedSettingsData.Data : null;
@@ -81,17 +85,22 @@ public class Plugin : BaseUnityPlugin
         Logger = base.Logger;
 
         PluginPath = Path.GetDirectoryName(Info.Location) ?? string.Empty;
-        _debug = Config.Bind("Debug", "API Debug", false,
-            "API debug mode. Will add debug content to your game for testing. Not recommended for normal play.");
-        UnityDebug = Config.Bind("Debug", "Unity Debug Logging", true,
-            "Unity debug logging. Helpful to filter out unrelated entries during testing.");
-        UnityDebug.SettingChanged += (_, _) => { UnityEngine.Debug.unityLogger.logEnabled = UnityDebug.Value; };
 
         ModdedSaveManager.RegisterModdedSave(ModdedSettingsData);
         ModdedSaveManager.RegisterModdedSave(APIData);
         ModdedSaveManager.RegisterModdedSave(APISlotData);
 
         RunSavePatch();
+
+        _skipSplashScreen = Config.Bind("Miscellaneous", "Skip Splash Screen", false,
+            "Should we skip the splash screen or not?");
+
+        _debug = Config.Bind("Debug", "API Debug", false,
+            "API debug mode. Will add debug content to your game for testing. Not recommended for normal play.");
+        UnityDebug = Config.Bind("Debug", "Unity Debug Logging", true,
+            "Unity debug logging. Helpful to filter out unrelated entries during testing.");
+
+        UnityDebug.SettingChanged += (_, _) => { UnityEngine.Debug.unityLogger.logEnabled = UnityDebug.Value; };
 
         Skin S1()
         {
@@ -122,8 +131,7 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
             });
 
-        //the onValueChanged is not needed for BepInEx configs - it already has native support for it
-        CustomSettingsManager.AddBepInExConfig("API", "Unity Debug Logging", UnityDebug);
+        CustomSettingsManager.AddBepInExConfig("API", "Skip Splash Screen", _skipSplashScreen);
 
         CustomSettingsManager.AddBepInExConfig("API", "Debug Mode", _debug, delegate(bool isActivated)
         {
@@ -139,6 +147,8 @@ public class Plugin : BaseUnityPlugin
                 AddDebugContent();
             }
         });
+
+        CustomSettingsManager.AddBepInExConfig("API", "Unity Debug Logging", UnityDebug);
 
         if (Debug) AddDebugContent();
 
@@ -183,7 +193,6 @@ public class Plugin : BaseUnityPlugin
 
     private void RunSavePatch()
     {
-        
         // LOAD_AFTER_START handler
         SaveAndLoad.OnLoadComplete += delegate
         {
