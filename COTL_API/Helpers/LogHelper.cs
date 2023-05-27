@@ -38,6 +38,6 @@ internal static class LogHelper
     internal static void LogDebug(object data)
     {
         if (Plugin.Instance == null || !Plugin.Instance.Debug) return;
-        Log(LogLevel.Info, data);
+        Log(LogLevel.Message, data);
     }
 }

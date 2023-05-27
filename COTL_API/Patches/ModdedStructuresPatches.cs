@@ -13,13 +13,12 @@ using Object = UnityEngine.Object;
 namespace COTL_API.UI.Helpers;
 
 [HarmonyPatch]
-public static class VanillaPatches
+public static class ModdedStructuresPatches
 {
     private const string MatingTentMod = "MatingTentMod";
     private const string MiniMods = "InfernoDragon0.cotl.CotLChef";
 
-
-    //game object name as seen in Unity Explorer
+    // game object name as seen in Unity Explorer
     private static readonly string[] ModdedVanillaStructures =
     {
         "Building Fishing Hut(Clone)",
@@ -28,7 +27,7 @@ public static class VanillaPatches
         "Mating Tent"
     };
 
-    //last part of the prefab path as seen in Unity Explorer (navigate to StructureData for that particular object)
+    // last part of the prefab path as seen in Unity Explorer (navigate to StructureData for that particular object)
     private static readonly string[] ModdedVanillaPrefabPaths =
     {
         "Building Fishing Hut",
@@ -38,7 +37,7 @@ public static class VanillaPatches
     //removes "Steam informs us the controller is a {0}" log spam
     [HarmonyTranspiler]
     [HarmonyPatch(typeof(ControlUtilities), nameof(ControlUtilities.GetCurrentInputType))]
-    public static IEnumerable<CodeInstruction> ControlUtilities_GetCurrentInputType(
+    private static IEnumerable<CodeInstruction> ControlUtilities_GetCurrentInputType(
         IEnumerable<CodeInstruction> instructions,
         MethodBase originalMethod)
     {
@@ -67,7 +66,7 @@ public static class VanillaPatches
     //removes "tween is invalid" log spam
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Debugger), nameof(Debugger.LogInvalidTween))]
-    public static bool Debugger_LogInvalidTween()
+    private static bool Debugger_LogInvalidTween()
     {
         return false;
     }
