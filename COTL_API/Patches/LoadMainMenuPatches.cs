@@ -16,7 +16,7 @@ public static class LoadMainMenuPatches
     [HarmonyPrefix]
     private static bool LoadMainMenu_RunSplashScreens(ref IEnumerator __result)
     {
-        if (Plugin.Instance is not null && !Plugin.Instance.SkipSplashScreen) return true;
+        if (Plugin.Instance != null && !Plugin.Instance.SkipSplashScreen) return true;
 
         __result = GetEmptyEnumerator();
         MMTransition.Play(MMTransition.TransitionType.ChangeSceneAutoResume, MMTransition.Effect.BlackFade, "Main Menu",
