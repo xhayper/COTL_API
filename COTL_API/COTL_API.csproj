@@ -7,11 +7,15 @@
         <PackageProjectUrl>https://github.com/xhayper/COTL_API</PackageProjectUrl>
         <RepositoryUrl>https://github.com/xhayper/COTL_API</RepositoryUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
-    <Import Project="../COTL_API.Common.props"/>
+    <Import Project="../COTL_API.Common.props" />
 
     <ItemGroup>
-        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.2.6.18-r.0"/>
+        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.2.6.18-r.0" />
+        <None Include="../README.md" Pack="true" PackagePath="/"/>
+        <None Include="../LICENSE" Pack="true" PackagePath="/"/>
     </ItemGroup>
 </Project>
