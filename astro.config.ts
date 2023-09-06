@@ -5,6 +5,7 @@ const site = "https://cotl-api.vercel.app/";
 
 // https://astro.build/config
 export default defineConfig({
+    site,
     integrations: [
         starlight({
             title: "COTL_API",
