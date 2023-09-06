@@ -1,0 +1,43 @@
+---
+title: COTL_API
+description: Introduction to COTL_API.
+template: splash
+hero:
+    tagline: A modding API for a game called Cult Of The Lamb
+    image:
+        file: ../../assets/logo.svg
+    actions:
+        - text: Get Started
+          link: /getting-started/
+          icon: right-arrow
+          variant: primary
+        - text: Contribute on GitHub
+          link: https://github.com/xhayper/COTL_API/tree/docs
+          icon: external
+---
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+## Features
+
+<CardGrid stagger>
+    <LinkCard title="Custom Follower Command" href="/reference/follower-commands/" />
+    <LinkCard title="Custom Item" href="/reference/items/" />
+    <LinkCard title="Modded Localization" href="/reference/localization/" />
+    <LinkCard title="Custom Objectives" href="/reference/objectives/" />
+    <LinkCard title="Modded Save Data" href="/reference/save-data/" />
+    <LinkCard title="Modded Settings" href="/reference/settings/" />
+</CardGrid>
+
+## Experimental Features
+
+<CardGrid>
+    <LinkCard title="Custom Missions" href="/reference/missions/" />
+    <LinkCard title="Custom Rituals" href="/reference/rituals/" />
+    <LinkCard title="Custom Skins" href="/reference/skins/" />
+    <LinkCard title="Modded Sound" href="/reference/sound/" />
+    <LinkCard title="Custom Structures" href="/reference/structures/" />
+    <LinkCard title="Custom Tarot Cards" href="/reference/tarot-cards/" />
+    <LinkCard title="Custom Follower Task" href="/reference/tasks/" />
+    <LinkCard title="Modded UI" href="/reference/ui/" />
+</CardGrid>
