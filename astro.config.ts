@@ -1,14 +1,10 @@
 import { defineConfig } from "astro/config";
-import vercel from "@astrojs/vercel/static";
 import starlight from "@astrojs/starlight";
 
 const site = "https://cotl-api.vercel.app/";
 
 // https://astro.build/config
 export default defineConfig({
-    site,
-    output: "static",
-    adapter: vercel(),
     integrations: [
         starlight({
             title: "COTL_API",
