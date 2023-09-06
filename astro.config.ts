@@ -13,7 +13,7 @@ export default defineConfig({
                 src: "./src/assets/logo.svg"
             },
             editLink: {
-                baseUrl: "https://github.com/xhayper/COTL_API/edit/main/docs-starlight"
+                baseUrl: "https://github.com/xhayper/COTL_API/edit/main/docs"
             },
             social: {
                 github: "https://github.com/xhayper/COTL_API",
