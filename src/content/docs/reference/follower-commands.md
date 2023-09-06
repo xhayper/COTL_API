@@ -42,7 +42,7 @@ internal class ExampleFollowerCommand : CustomFollowerCommand
 | string                          | GetLockedDescription(Follower follower)                                                                     | LocalizationManager.GetTranslation($"FollowerInteractions/{ModPrefix}.{InternalName}/NotAvailable") |
 | bool                            | ShouldAppearFor(Follower follower)                                                                          | true                                                                                                |
 | bool                            | IsAvailable(Follower follower)                                                                              | true                                                                                                |
-| void                            | Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand = FollowerCommands.None) | interaction.Close(true, reshowMenu: false);                                                                                 |
+| void                            | Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand = FollowerCommands.None) | interaction.Close(true, reshowMenu: false);                                                         |
 
 ## Coroutines
 
