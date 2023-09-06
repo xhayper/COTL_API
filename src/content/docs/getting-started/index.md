@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-description: Introduction on how to get started with modding with the Cult of the Lamb API
+description: Introduction on how to get started with modding with the COTL_API
 ---
 
 ## Creating the Project
