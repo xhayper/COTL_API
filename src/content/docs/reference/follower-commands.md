@@ -1,4 +1,3 @@
-![image](https://github.com/xhayper/COTL_API/assets/46065349/46dd4aae-97b7-42dc-9197-61a927a04e4e)---
 title: Follower Commands
 description: Documentation on how to add a custom follower command using Cult of the Lamb API
 ---
