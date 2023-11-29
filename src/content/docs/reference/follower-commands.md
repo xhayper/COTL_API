@@ -1,4 +1,4 @@
----
+![image](https://github.com/xhayper/COTL_API/assets/46065349/46dd4aae-97b7-42dc-9197-61a927a04e4e)---
 title: Follower Commands
 description: Documentation on how to add a custom follower command using Cult of the Lamb API
 ---
@@ -26,6 +26,7 @@ internal class ExampleFollowerCommand : CustomFollowerCommand
     public override void Execute(interaction_FollowerInteraction interaction, FollowerCommands finalCommand)
     {
         interaction.follower.Brain.MakeOld();
+        interaction.Close(true, reshowMenu: false);
     }
 }
 ```
@@ -57,6 +58,7 @@ public override void Execute(interaction_FollowerInteraction interaction, Follow
         interaction.eventListener.PlayFollowerVO(interaction.generalAcknowledgeVO);
         interaction.follower.Brain.HardSwapToTask(new FollowerTask_Vomit());
     }));
+    interaction.Close(true, reshowMenu: false);
 }
 ```
 
