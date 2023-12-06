@@ -1,3 +1,4 @@
+---
 title: Follower Commands
 description: Documentation on how to add a custom follower command using Cult of the Lamb API
 ---
