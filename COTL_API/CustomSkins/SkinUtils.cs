@@ -44,24 +44,18 @@ internal static class SkinUtils
 
                 var diffX = maxX - minX;
                 var diffY = maxY - minY;
-
-                minX += translationX;
-                minY += translationY;
-
+                
                 var centerX = minX + diffX / 2.0f;
                 var centerY = minY + diffY / 2.0f;
-
-                minX = centerX - diffX / 2.0f * scaleX;
-                minY = centerY - diffY / 2.0f * scaleY;
 
                 var regionAttachment = new RegionAttachment("Custom" + ovrName);
                 regionAttachment.SetRegion(atlasRegion);
 
-                regionAttachment.X = minY + diffY / 2.0f;
-                regionAttachment.Y = minX + diffX / 2.0f;
+                regionAttachment.X = centerY - translationY;
+                regionAttachment.Y = centerX - translationX;
                 regionAttachment.rotation = -90;
-                regionAttachment.ScaleX = 1;
-                regionAttachment.ScaleY = 1;
+                regionAttachment.ScaleX = scaleX;
+                regionAttachment.ScaleY = scaleY;
                 regionAttachment.Width = diffX;
                 regionAttachment.Height = diffY;
                 skin.SetAttachment(slot, ovrName, regionAttachment);
@@ -78,7 +72,7 @@ internal static class SkinUtils
                 regionAttachment.ScaleX = scaleX;
                 regionAttachment.ScaleY = scaleY;
                 regionAttachment.rotation = -90;
-
+                
                 skin.SetAttachment(slot, ovrName, regionAttachment);
                 break;
             default:

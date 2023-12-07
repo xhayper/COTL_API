@@ -173,7 +173,7 @@ public class Plugin : BaseUnityPlugin
         {
             var targets = new List<Health>(Health.team2);
             var entityObject = GameObject.FindWithTag("Player");
-            targets.DoIf(x => x != null, x => x.DealDamage(999999, entityObject, entityObject.transform.position));
+            targets.DoIf(x => x != null, x => x.DealDamage(999999, null, entityObject.transform.position));
         }
     }
 
