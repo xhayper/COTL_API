@@ -36,7 +36,7 @@ jobs:
                   dotnet tool install -g tcli
                   tcli build
             - name: Upload Artifacts
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   path: "build/*.*"
                   name: ${{ matrix.os }}
