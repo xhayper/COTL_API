@@ -1,4 +1,4 @@
-﻿using COTL_API.CustomStructures;
+using COTL_API.CustomStructures;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -95,15 +95,13 @@ public static class CustomPrefabManager
 
     public static GameObject CreatePlacementObjectFor(CustomStructure structure)
     {
-        var obj =
-            Addressables.LoadAssetAsync<GameObject>(
-                "Assets/Prefabs/Placement Objects/Placement Object Security Turret Lvl2.prefab");
-        obj.WaitForCompletion();
-
-        var po = obj.Result.GetComponentInChildren<PlacementObject>();
+        var obj = TypeAndPlacementObjects.GetByType(StructureBrain.TYPES.BED).PlacementObject;
+        
+        var po = obj.GetComponent<PlacementObject>();
         po.ToBuildAsset = structure.PrefabPath;
         po.StructureType = structure.StructureType;
         po.Bounds = structure.Bounds;
-        return obj.Result;
+
+        return obj;
     }
 }
