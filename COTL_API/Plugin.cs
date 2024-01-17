@@ -154,7 +154,7 @@ public class Plugin : BaseUnityPlugin
 
         LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
 
-        GameHash.LogGameInfo();
+        //GameHash.LogGameInfo();
     }
 
     private void Start()
