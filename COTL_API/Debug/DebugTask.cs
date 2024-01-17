@@ -1,4 +1,4 @@
-﻿using COTL_API.CustomTasks;
+using COTL_API.CustomTasks;
 using UnityEngine;
 
 namespace COTL_API.Debug;
@@ -53,12 +53,12 @@ public class DebugTask : CustomTask
     {
         base.Setup(follower);
         _follower = follower;
-        follower.SetHat(HatType.Miner);
+        follower.SetHat(FollowerHatType.Miner);
     }
 
     public override void Cleanup(Follower follower)
     {
-        follower.SetHat(HatType.None);
+        follower.SetHat(FollowerHatType.None);
         base.Cleanup(follower);
     }
 
