@@ -59,6 +59,9 @@ public class Plugin : BaseUnityPlugin
     private ConfigEntry<bool>? _skipSplashScreen { get; set; }
     public bool SkipSplashScreen => _skipSplashScreen?.Value ?? false;
 
+    private ConfigEntry<bool>? _dontSaveAchievement { get; set; }
+    public bool DontSaveAchievement => _dontSaveAchievement?.Value ?? true;
+
     internal static bool Started { get; private set; }
 
     internal static ObjectDictionary? SettingsData => Instance != null ? Instance.ModdedSettingsData.Data : null;
@@ -94,6 +97,8 @@ public class Plugin : BaseUnityPlugin
 
         _skipSplashScreen = Config.Bind("Miscellaneous", "Skip Splash Screen", false,
             "Should we skip the splash screen or not?");
+        _dontSaveAchievement = Config.Bind("Miscellaneous", "Don't Save Achievement", true,
+            "Should we save the achievement to the cloud or not? (Cloud being Steam / GOG / PSN)");
 
         _debug = Config.Bind("Debug", "API Debug", false,
             "API debug mode. Will add debug content to your game for testing. Not recommended for normal play.");
@@ -132,6 +137,14 @@ public class Plugin : BaseUnityPlugin
             });
 
         CustomSettingsManager.AddBepInExConfig("API", "Skip Splash Screen", _skipSplashScreen);
+        CustomSettingsManager.AddBepInExConfig("API", "Don't Save Achievement", _dontSaveAchievement,
+            delegate(bool isActivated)
+            {
+                if (isActivated) return;
+                
+                AchievementsWrapper.LoadAchievementData();
+                AchievementsWrapper.compareAchievements();
+            });
 
         CustomSettingsManager.AddBepInExConfig("API", "Debug Mode", _debug, delegate(bool isActivated)
         {
@@ -154,7 +167,7 @@ public class Plugin : BaseUnityPlugin
 
         LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
 
-        //GameHash.LogGameInfo();
+        // GameHash.LogGameInfo();
     }
 
     private void Start()
