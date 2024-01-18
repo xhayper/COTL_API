@@ -1,4 +1,4 @@
-﻿using System.Reflection.Emit;
+using System.Reflection.Emit;
 using HarmonyLib;
 using MMTools;
 
@@ -11,7 +11,7 @@ namespace COTL_API.CustomObjectives;
 public static partial class CustomObjectiveManager
 {
     [HarmonyPatch(typeof(interaction_FollowerInteraction), nameof(interaction_FollowerInteraction.GetConversationEntry),
-        typeof(Follower.ComplaintType), typeof(ObjectivesData))]
+        typeof(Follower.ComplaintType), typeof(ObjectivesData), typeof(FollowerTask_GetAttention))]
     [HarmonyPostfix]
     private static void interaction_FollowerInteraction_GetConversationEntry(ObjectivesData objective,
         ref List<ConversationEntry> __result)
