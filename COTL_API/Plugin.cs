@@ -97,7 +97,7 @@ public class Plugin : BaseUnityPlugin
 
         _skipSplashScreen = Config.Bind("Miscellaneous", "Skip Splash Screen", false,
             "Should we skip the splash screen or not?");
-        _dontSaveAchievement = Config.Bind("Miscellaneous", "Don't Save Achievement", true,
+        _dontSaveAchievement = Config.Bind("Miscellaneous", "Dont Save Achievement", true,
             "Should we save the achievement to the cloud or not? (Cloud being Steam / GOG / PSN)");
 
         _debug = Config.Bind("Debug", "API Debug", false,
