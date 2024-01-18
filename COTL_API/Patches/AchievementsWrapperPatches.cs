@@ -10,8 +10,7 @@ public static class AchievementsWrapperPatches
     [HarmonyPrefix]
     private static bool AchievementsWrapper_UnlockAchievement(ref Achievement achievementId)
     {
-        var achievementSaved = Plugin.Instance == null || !Plugin.Instance.DontSaveAchievement;
-        if (achievementSaved)
+        if (Plugin.Instance == null || !Plugin.Instance.DontSaveAchievement)
             return true;
         
         if (AchievementsWrapper.unlockedAchievements.Contains(achievementId.id))
