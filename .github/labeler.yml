@@ -1,5 +1,9 @@
 API:
-    - COTL_API/**/*
+  - changed-files:
+      - any-glob-to-any-file:
+          - COTL_API/**/*
 CI:
-    - .github/workflows/**/*
-    - .github/labeler.yml
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/workflows/**/*
+          - .github/labeler.yml
