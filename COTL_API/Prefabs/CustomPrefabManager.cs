@@ -96,7 +96,7 @@ public static class CustomPrefabManager
     public static GameObject CreatePlacementObjectFor(CustomStructure structure)
     {
         var obj = TypeAndPlacementObjects.GetByType(StructureBrain.TYPES.BED).PlacementObject;
-        
+
         var po = obj.GetComponent<PlacementObject>();
         po.ToBuildAsset = structure.PrefabPath;
         po.StructureType = structure.StructureType;

@@ -44,7 +44,7 @@ internal static class SkinUtils
 
                 var diffX = maxX - minX;
                 var diffY = maxY - minY;
-                
+
                 var centerX = minX + diffX / 2.0f;
                 var centerY = minY + diffY / 2.0f;
 
@@ -72,7 +72,7 @@ internal static class SkinUtils
                 regionAttachment.ScaleX = scaleX;
                 regionAttachment.ScaleY = scaleY;
                 regionAttachment.rotation = -90;
-                
+
                 skin.SetAttachment(slot, ovrName, regionAttachment);
                 break;
             default:

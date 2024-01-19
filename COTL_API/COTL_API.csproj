@@ -11,10 +11,10 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
-    <Import Project="../COTL_API.Common.props" />
+    <Import Project="../COTL_API.Common.props"/>
 
     <ItemGroup>
-        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.3.3.344-r.0" />
+        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.3.3.344-r.0"/>
         <Reference Include="UnifyLibrary">
             <HintPath>..\lib\UnifyLibrary.dll</HintPath>
         </Reference>
