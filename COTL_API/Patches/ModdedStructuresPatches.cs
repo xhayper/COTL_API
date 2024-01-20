@@ -1,13 +1,13 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Reflection.Emit;
-using BepInEx.Bootstrap;
+﻿using Debugger = DG.Tweening.Core.Debugger;
 using COTL_API.CustomStructures;
-using HarmonyLib;
-using I2.Loc;
+using System.Reflection.Emit;
+using System.Diagnostics;
+using System.Reflection;
+using BepInEx.Bootstrap;
 using MMRoomGeneration;
 using UnityEngine;
-using Debugger = DG.Tweening.Core.Debugger;
+using HarmonyLib;
+using I2.Loc;
 using Object = UnityEngine.Object;
 
 namespace COTL_API.UI.Helpers;
@@ -15,23 +15,19 @@ namespace COTL_API.UI.Helpers;
 [HarmonyPatch]
 public static class ModdedStructuresPatches
 {
-    private const string MatingTentMod = "MatingTentMod";
     private const string MiniMods = "InfernoDragon0.cotl.CotLChef";
 
     // game object name as seen in Unity Explorer
     private static readonly string[] ModdedVanillaStructures =
     {
         "Building Fishing Hut(Clone)",
-        "Building Fishing Hut",
-        "Mating Tent(Clone)",
-        "Mating Tent"
+        "Building Fishing Hut"
     };
 
     // last part of the prefab path as seen in Unity Explorer (navigate to StructureData for that particular object)
     private static readonly string[] ModdedVanillaPrefabPaths =
     {
-        "Building Fishing Hut",
-        "Building Mating Tent"
+        "Building Fishing Hut"
     };
 
     //removes "Steam informs us the controller is a {0}" log spam
@@ -206,9 +202,7 @@ public static class ModdedStructuresPatches
 
     private static bool ModdedVanillaStructureExists()
     {
-        var matingTentMod = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains(MatingTentMod))
-            .Value;
         var miniMods = Chainloader.PluginInfos.FirstOrDefault(a => a.Value.Metadata.GUID.Contains(MiniMods)).Value;
-        return matingTentMod != null || miniMods != null;
+        return miniMods != null;
     }
 }
