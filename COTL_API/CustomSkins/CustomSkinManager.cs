@@ -618,16 +618,18 @@ public static partial class CustomSkinManager
             customAttachment.SetRegion(atlasRegion);
             atlasRegion.name = "CustomTarotSkin_" + atlasRegion.name;
             customAttachment.HullLength = 4;
-            customAttachment.Triangles = new[] { 1, 2, 3, 1, 3, 0 };
+            customAttachment.Triangles = [1, 2, 3, 1, 3, 0];
             float pw = atlasRegion.page.width;
             float ph = atlasRegion.page.height;
             float x = atlasRegion.x;
             float y = atlasRegion.y;
             float w = atlasRegion.width;
             float h = atlasRegion.height;
-            customAttachment.UVs = new[]
-                { (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph };
-            customAttachment.Vertices = new[] { minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1 };
+            customAttachment.UVs =
+            [
+                (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph
+            ];
+            customAttachment.Vertices = [minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1];
             customAttachment.WorldVerticesLength = 8;
 
             skin.SetAttachment(front.SlotIndex, front.Name, customAttachment);

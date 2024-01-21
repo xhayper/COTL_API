@@ -11,9 +11,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Dropdown = COTL_API.CustomSettings.Elements.Dropdown;
-using Object = UnityEngine.Object;
 using Slider = COTL_API.CustomSettings.Elements.Slider;
 using Toggle = COTL_API.CustomSettings.Elements.Toggle;
+using Object = UnityEngine.Object;
 
 namespace COTL_API.UI;
 
