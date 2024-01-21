@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
         <Version>0.2.2</Version>
         <LangVersion>latest</LangVersion>
         <DebugType>portable</DebugType>

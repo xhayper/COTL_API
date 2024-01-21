@@ -58,8 +58,8 @@ public class Plugin : BaseUnityPlugin
     private ConfigEntry<bool>? _skipSplashScreen { get; set; }
     public bool SkipSplashScreen => _skipSplashScreen?.Value ?? false;
 
-    private ConfigEntry<bool>? _dontSaveAchievement { get; set; }
-    public bool DontSaveAchievement => _dontSaveAchievement?.Value ?? true;
+    private ConfigEntry<bool>? _disableAchievement { get; set; }
+    public bool DisableAchievement => _disableAchievement?.Value ?? true;
 
     internal static bool Started { get; private set; }
 
@@ -96,8 +96,8 @@ public class Plugin : BaseUnityPlugin
 
         _skipSplashScreen = Config.Bind("Miscellaneous", "Skip Splash Screen", false,
             "Should we skip the splash screen or not?");
-        _dontSaveAchievement = Config.Bind("Miscellaneous", "Dont Save Achievement", true,
-            "Should we save the achievement to the cloud or not? (Cloud being Steam / GOG / PSN)");
+        _disableAchievement = Config.Bind("Miscellaneous", "Disable Achievement", true,
+            "Should we disable the achievement system? (You will still be able to get achievement but it won't save)");
 
         _debug = Config.Bind("Debug", "API Debug", false,
             "API debug mode. Will add debug content to your game for testing. Not recommended for normal play.");
@@ -136,7 +136,7 @@ public class Plugin : BaseUnityPlugin
             });
 
         CustomSettingsManager.AddBepInExConfig("API", "Skip Splash Screen", _skipSplashScreen);
-        CustomSettingsManager.AddBepInExConfig("API", "Don't Save Achievement", _dontSaveAchievement,
+        CustomSettingsManager.AddBepInExConfig("API", "Disable Achievement", _disableAchievement,
             delegate(bool isActivated)
             {
                 if (isActivated) return;
@@ -295,13 +295,13 @@ public class Plugin : BaseUnityPlugin
         test.InitialQuestText = "This is my custom quest text for this objective.";
 
         CustomSettingsManager.AddDropdown("Debug", "Dropdown", "Option 1",
-            new[] { "Option 1", "Option 2", "Option 3" }, i => { LogDebug($"Dropdown selected {i}"); });
+            ["Option 1", "Option 2", "Option 3"], i => { LogDebug($"Dropdown selected {i}"); });
 
         CustomSettingsManager.AddKeyboardShortcutDropdown("Debug", "Keyboard Shortcut", KeyCode.None,
             i => { LogDebug($"Keyboard Shortcut selected {i}"); });
 
         CustomSettingsManager.AddHorizontalSelector("Debug", "Horizontal Selector", "Option 1",
-            new[] { "Option 1", "Option 2", "Option 3" },
+            ["Option 1", "Option 2", "Option 3"],
             i => { LogDebug($"Horizontal Selector selected {i}"); });
 
         CustomSettingsManager.AddSlider("Debug", "Slider", 0, -100, 100, 1, MMSlider.ValueDisplayFormat.RawValue,

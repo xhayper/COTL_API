@@ -130,8 +130,10 @@ public static partial class CustomMissionManager
         }
 
         if (chance > num)
-            __result = new[]
-                { new InventoryItem(CustomMissionList[type].RewardType, CustomMissionList[type].RewardRange.Random()) };
+            __result =
+            [
+                new InventoryItem(CustomMissionList[type].RewardType, CustomMissionList[type].RewardRange.Random())
+            ];
 
         return false;
     }
