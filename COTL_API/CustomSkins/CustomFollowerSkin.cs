@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace COTL_API.CustomSkins;
 
@@ -19,11 +19,11 @@ public abstract class CustomFollowerSkin : CustomSkin
                 new("ARM_RIGHT_SKIN", new Color(0, 0, 0)),
                 new("LEG_LEFT_SKIN", new Color(1, 0, 1)),
                 new("LEG_RIGHT_SKIN", new Color(0, 0, 0)),
-                new("BODY_SKIN", new Color(1, 0, 1)),
-                new("BODY_SKIN_BOWED", new Color(1, 0, 1)),
-                new("BODY_SKIN_UP", new Color(1, 0, 1)),
-                new("HEAD_SKIN_BTM", new Color(1, 0, 1)),
-                new("HEAD_SKIN_TOP", new Color(0, 0, 0))
+                new("Body_Naked", new Color(1, 0, 1)),
+                new("Body_Naked_Up", new Color(1, 0, 1)),
+                new("BODY_BTM", new Color(1, 0, 1)),
+                new("BODY_BTM_UP", new Color(1, 0, 1)),
+                new("BODY_TOP", new Color(0, 0, 0))
             }
         }
     };
