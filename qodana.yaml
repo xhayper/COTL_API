@@ -5,10 +5,11 @@ linter: jetbrains/qodana-dotnet:2024.1
 dotnet:
   solution: COTL_API.sln
 exclude:
-  - name: Debugging
+  - name: All
     paths:
       - COTL_API/Helpers/Debugging.cs
       - COTL_API/Debug/
+      - .editorconfig
   - name: UnusedAutoPropertyAccessor.Global
   - name: UnusedMethodReturnValue.Local
   - name: VirtualMemberNeverOverridden.Global
@@ -25,3 +26,17 @@ exclude:
   - name: UnassignedGetOnlyAutoProperty
   - name: EventNeverSubscribedTo.Global
   - name: ClassNeverInstantiated.Global
+  - name: MemberCanBePrivate.Global
+  - name: AutoPropertyCanBeMadeGetOnly.Global
+  - name: MemberCanBePrivate.Local
+  - name: MemberCanBeProtected.Global
+  - name: FieldCanBeMadeReadOnly.Global
+  - name: HeapView.ObjectAllocation
+  - name: HeapView.BoxingAllocation
+  - name: HeapView.ObjectAllocation.Evident
+  - name: HeapView.ObjectAllocation.Possible
+  - name: HeapView.ClosureAllocation
+  - name: HeapView.DelegateAllocation
+  - name: HeapView.PossibleBoxingAllocation
+  - name: ReplaceAutoPropertyWithComputedProperty
+  - name: ParameterHidesMember
