@@ -2,7 +2,6 @@ version: "1.0"
 profile:
   name: qodana.recommended
 linter: jetbrains/qodana-dotnet:2024.1
-ide: QDNET
 dotnet:
   solution: COTL_API.sln
 exclude:
