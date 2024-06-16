@@ -135,7 +135,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedName), new Type[] { })]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedName), [])]
     [HarmonyPrefix]
     private static bool StructuresData_GetLocalizedName(StructuresData __instance, ref string __result)
     {
@@ -155,7 +155,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedDescription), new Type[] { })]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedDescription), [])]
     [HarmonyPrefix]
     private static bool StructuresData_GetLocalizedDescription(StructuresData __instance, ref string __result)
     {
@@ -164,7 +164,7 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedLore), new Type[] { })]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetLocalizedLore), [])]
     [HarmonyPrefix]
     private static bool StructuresData_GetLocalizedLore(StructuresData __instance, ref string __result)
     {

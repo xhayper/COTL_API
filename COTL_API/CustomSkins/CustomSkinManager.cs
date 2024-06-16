@@ -508,24 +508,24 @@ public static partial class CustomSkinManager
         if (FollowerSkinDict.TryGetValue(simpleName, out var simplified))
         {
             region.name = simplified.Item1 + ":" + simplified.Item2 + add;
-            return new List<Tuple<int, string>> { simplified };
+            return [simplified];
         }
 
-        if (!simpleName.Contains(":")) return new List<Tuple<int, string>>();
+        if (!simpleName.Contains(":")) return [];
 
         try
         {
             var rName = simpleName.Split(':')[1];
             var regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0]);
             region.name = regionIndex + ":" + rName + "#" + add;
-            return new List<Tuple<int, string>> { Tuple.Create(regionIndex, rName) };
+            return [Tuple.Create(regionIndex, rName)];
         }
         catch (Exception)
         {
             // ignored
         }
 
-        return new List<Tuple<int, string>>();
+        return [];
     }
 
     internal static void CreateNewFollowerType(string name, List<WorshipperData.SlotsAndColours> colors,
@@ -534,13 +534,13 @@ public static partial class CustomSkinManager
         WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData
         {
             Title = name,
-            Skin = new List<WorshipperData.CharacterSkin>
-            {
-                new()
+            Skin =
+            [
+                new WorshipperData.CharacterSkin
                 {
                     Skin = name
                 }
-            },
+            ],
             SlotAndColours = colors,
             TwitchPremium = twitchPremium,
             _hidden = hidden,
@@ -603,15 +603,16 @@ public static partial class CustomSkinManager
             float maxY = int.MinValue;
 
             for (var j = 0; j < customAttachment.Vertices.Length; j++)
-                if (j % 3 == 0)
+                switch (j % 3)
                 {
-                    minY = Math.Min(minY, customAttachment.Vertices[j]);
-                    maxY = Math.Max(maxY, customAttachment.Vertices[j]);
-                }
-                else if (j % 3 == 1)
-                {
-                    minX = Math.Min(minX, customAttachment.Vertices[j]);
-                    maxX = Math.Max(maxX, customAttachment.Vertices[j]);
+                    case 0:
+                        minY = Math.Min(minY, customAttachment.Vertices[j]);
+                        maxY = Math.Max(maxY, customAttachment.Vertices[j]);
+                        break;
+                    case 1:
+                        minX = Math.Min(minX, customAttachment.Vertices[j]);
+                        maxX = Math.Max(maxX, customAttachment.Vertices[j]);
+                        break;
                 }
 
             customAttachment.Name = "CustomTarotSkin_" + skinName;
@@ -655,7 +656,7 @@ public static partial class CustomSkinManager
             mainTexture = tex
         };
 
-        Material[] materials = { mat };
+        Material[] materials = [mat];
         var atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
         NumGenericAtlases++;
         return atlas;
@@ -663,12 +664,12 @@ public static partial class CustomSkinManager
 
     public static void SetPlayerSkinOverride(Skin? normalSkin, Skin? hurtSkin = null, Skin? hurtSkin2 = null)
     {
-        List<Skin?> skins = new()
-        {
+        List<Skin?> skins =
+        [
             normalSkin,
             hurtSkin,
             hurtSkin2
-        };
+        ];
 
         if (PlayerSkinOverride != null)
             LogDebug("PlayerSkinOverride already exists. Overwriting.");

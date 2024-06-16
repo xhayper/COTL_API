@@ -121,16 +121,18 @@ public partial class CustomSkinManager
         var skin2 = __instance.Spine.Skeleton.Data.FindSkin("Weapons/" + text);
         __instance.PlayerSkin.AddSkin(skin2);
         if (__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
-            __instance.health.SpiritHearts <= 1f && DataManager.Instance.PLAYER_TOTAL_HEALTH != 2f)
+            __instance.health.SpiritHearts <= 1f && !Mathf.Approximately(DataManager.Instance.PLAYER_TOTAL_HEALTH, 2f))
         {
             var skin3 = PlayerSkinOverride[2] ?? PlayerSkinOverride[1] ??
                 PlayerSkinOverride[0] ?? __instance.Spine.Skeleton.Data.FindSkin("Hurt2");
             __instance.PlayerSkin.AddSkin(skin3);
         }
         else if ((__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
-                     __instance.health.SpiritHearts <= 2f && DataManager.Instance.PLAYER_TOTAL_HEALTH != 2f) ||
+                  __instance.health.SpiritHearts <= 2f &&
+                  !Mathf.Approximately(DataManager.Instance.PLAYER_TOTAL_HEALTH, 2f)) ||
                  (__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
-                     __instance.health.SpiritHearts <= 1f && DataManager.Instance.PLAYER_TOTAL_HEALTH == 2f))
+                  __instance.health.SpiritHearts <= 1f &&
+                  Mathf.Approximately(DataManager.Instance.PLAYER_TOTAL_HEALTH, 2f)))
         {
             var skin4 = PlayerSkinOverride[1] ?? PlayerSkinOverride[2] ??
                 PlayerSkinOverride[0] ?? __instance.Spine.Skeleton.Data.FindSkin("Hurt1");

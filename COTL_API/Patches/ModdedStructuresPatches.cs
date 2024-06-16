@@ -19,16 +19,16 @@ public static class ModdedStructuresPatches
 
     // game object name as seen in Unity Explorer
     private static readonly string[] ModdedVanillaStructures =
-    {
+    [
         "Building Fishing Hut(Clone)",
         "Building Fishing Hut"
-    };
+    ];
 
     // last part of the prefab path as seen in Unity Explorer (navigate to StructureData for that particular object)
     private static readonly string[] ModdedVanillaPrefabPaths =
-    {
+    [
         "Building Fishing Hut"
-    };
+    ];
 
     //removes "Steam informs us the controller is a {0}" log spam
     [HarmonyTranspiler]

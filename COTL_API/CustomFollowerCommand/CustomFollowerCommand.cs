@@ -10,7 +10,7 @@ public abstract class CustomFollowerCommand : CommandItem
     public abstract string InternalName { get; }
 
     public virtual List<FollowerCommandCategory> Categories { get; } =
-        new() { FollowerCommandCategory.DEFAULT_COMMAND };
+        [FollowerCommandCategory.DEFAULT_COMMAND];
 
     public virtual Sprite CommandIcon { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));

@@ -8,7 +8,7 @@ namespace COTL_API.CustomSettings;
 
 public static class CustomSettingsManager
 {
-    internal static List<ISettingsElement> SettingsElements { get; } = new();
+    internal static List<ISettingsElement> SettingsElements { get; } = [];
 
     internal static ReadOnlyCollection<Slider> Sliders => SettingsElements.OfType<Slider>().ToList().AsReadOnly();
     internal static ReadOnlyCollection<Dropdown> Dropdowns => SettingsElements.OfType<Dropdown>().ToList().AsReadOnly();

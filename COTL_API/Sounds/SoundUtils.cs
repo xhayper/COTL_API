@@ -41,17 +41,13 @@ public static class SoundUtils
 
     internal static float GetVolume(VolumeCategory x)
     {
-        switch (x)
+        return x switch
         {
-            case VolumeCategory.MUSIC:
-                return MusicVolume;
-            case VolumeCategory.SFX:
-                return SfxVolume;
-            case VolumeCategory.VO:
-                return VoVolume;
-            default:
-                return MasterVolume;
-        }
+            VolumeCategory.MUSIC => MusicVolume,
+            VolumeCategory.SFX => SfxVolume,
+            VolumeCategory.VO => VoVolume,
+            _ => MasterVolume
+        };
     }
 
     internal static void IfErrorPrintWith(this RESULT result, string where)

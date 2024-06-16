@@ -6,7 +6,7 @@ namespace COTL_API.CustomLocalization;
 public partial class CustomLocalizationManager
 {
     public static Dictionary<string, Dictionary<string, string>> LocalizationMap { get; } = new();
-    public static List<string> LanguageList { get; } = new();
+    public static List<string> LanguageList { get; } = [];
 
     /// <summary>
     ///     Loads a localization file from a path.

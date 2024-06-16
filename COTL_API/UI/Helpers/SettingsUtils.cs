@@ -24,7 +24,7 @@ internal static class SettingsUtils
         }
 
         var header = Object.Instantiate(HeaderTemplate, parent);
-        header.name = text;
+        header.name = text!;
         var headerText = header.GetComponentInChildren<TextMeshProUGUI>();
         headerText.text = text;
     }

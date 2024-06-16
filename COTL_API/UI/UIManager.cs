@@ -65,7 +65,7 @@ public static class UIManager
         var tab = newSettings.GetComponent<SettingsTab>();
         tab._menu = copy;
         copy._defaultSelectable = copy._scrollRect.content.GetComponentInChildren<Selectable>();
-        copy._defaultSelectableFallbacks = Array.Empty<Selectable>();
+        copy._defaultSelectableFallbacks = [];
         var onShow = originalGraphicsSettings.OnShow;
         var onHide = originalGraphicsSettings.OnHide;
         var onShowDelegates = onShow.GetInvocationList();

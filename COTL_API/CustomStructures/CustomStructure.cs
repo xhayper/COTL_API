@@ -36,7 +36,7 @@ public abstract class CustomStructure : StructureBrain
 
     public virtual Vector2Int Bounds => new(1, 1);
 
-    public virtual List<StructuresData.ItemCost> Cost => new();
+    public virtual List<StructuresData.ItemCost> Cost => [];
 
     internal TypeAndPlacementObject GetTypeAndPlacementObject()
     {

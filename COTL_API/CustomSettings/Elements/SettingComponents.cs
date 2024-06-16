@@ -10,120 +10,93 @@ public interface ISettingsElement
     public string Text { get; }
 }
 
-public class Slider : ISettingsElement
+public class Slider(
+    string? category,
+    string text,
+    float value,
+    float min,
+    float max,
+    int increment,
+    MMSlider.ValueDisplayFormat displayFormat,
+    Action<float>? onValueChanged)
+    : ISettingsElement
 {
-    public Slider(string? category, string text, float value, float min, float max, int increment,
-        MMSlider.ValueDisplayFormat displayFormat, Action<float>? onValueChanged)
-    {
-        Category = category;
-        Text = text;
-        Value = value;
-        Min = min;
-        Max = max;
-        Increment = increment;
-        DisplayFormat = displayFormat;
-        OnValueChanged = onValueChanged;
-    }
+    public string? Category { get; set; } = category;
 
-    public string? Category { get; set; }
+    public string Text { get; set; } = text;
 
-    public string Text { get; set; }
+    public float Value { get; set; } = value;
+    public float Min { get; set; } = min;
+    public float Max { get; set; } = max;
+    public int Increment { get; set; } = increment;
+    public MMSlider.ValueDisplayFormat DisplayFormat { get; set; } = displayFormat;
 
-    public float Value { get; set; }
-    public float Min { get; set; }
-    public float Max { get; set; }
-    public int Increment { get; set; }
-    public MMSlider.ValueDisplayFormat DisplayFormat { get; set; }
-
-    public Action<float>? OnValueChanged { get; set; }
+    public Action<float>? OnValueChanged { get; set; } = onValueChanged;
 
     string? ISettingsElement.Category => Category;
 
     string ISettingsElement.Text => Text;
 }
 
-public class Dropdown : ISettingsElement
+public class Dropdown(string? category, string text, string? value, string?[] options, Action<int>? onValueChanged)
+    : ISettingsElement
 {
-    public Dropdown(string? category, string text, string? value, string?[] options, Action<int>? onValueChanged)
-    {
-        Category = category;
-        Text = text;
-        Value = value;
-        Options = options;
-        OnValueChanged = onValueChanged;
-    }
+    public string? Category { get; set; } = category;
 
-    public string? Category { get; set; }
+    public string Text { get; set; } = text;
 
-    public string Text { get; set; }
-
-    public string? Value { get; set; }
-    public string?[] Options { get; set; }
-    public Action<int>? OnValueChanged { get; set; }
+    public string? Value { get; set; } = value;
+    public string?[] Options { get; set; } = options;
+    public Action<int>? OnValueChanged { get; set; } = onValueChanged;
 
     string? ISettingsElement.Category => Category;
 
     string ISettingsElement.Text => Text;
 }
 
-public class KeyboardShortcutDropdown : ISettingsElement
+public class KeyboardShortcutDropdown(
+    string? category,
+    string text,
+    KeyCode? value,
+    Action<KeyboardShortcut>? onValueChanged)
+    : ISettingsElement
 {
-    public KeyboardShortcutDropdown(string? category, string text, KeyCode? value,
-        Action<KeyboardShortcut>? onValueChanged)
-    {
-        Category = category;
-        Text = text;
-        Value = value;
-        OnValueChanged = onValueChanged;
-    }
-
-    public KeyCode? Value { get; set; }
-    public Action<KeyboardShortcut>? OnValueChanged { get; set; }
-    public string? Category { get; set; }
-    public string Text { get; set; }
+    public KeyCode? Value { get; set; } = value;
+    public Action<KeyboardShortcut>? OnValueChanged { get; set; } = onValueChanged;
+    public string? Category { get; set; } = category;
+    public string Text { get; set; } = text;
 }
 
-public class HorizontalSelector : ISettingsElement
+public class HorizontalSelector(
+    string? category,
+    string text,
+    string? value,
+    string?[] options,
+    Action<int>? onValueChanged)
+    : ISettingsElement
 {
-    public HorizontalSelector(string? category, string text, string? value, string?[] options,
-        Action<int>? onValueChanged)
-    {
-        Category = category;
-        Text = text;
-        Value = value;
-        Options = options;
-        OnValueChanged = onValueChanged;
-    }
+    public string? Category { get; set; } = category;
 
-    public string? Category { get; set; }
+    public string Text { get; set; } = text;
 
-    public string Text { get; set; }
-
-    public string? Value { get; set; }
-    public string?[] Options { get; set; }
-    public Action<int>? OnValueChanged { get; set; }
+    public string? Value { get; set; } = value;
+    public string?[] Options { get; set; } = options;
+    public Action<int>? OnValueChanged { get; set; } = onValueChanged;
 
     string? ISettingsElement.Category => Category;
 
     string ISettingsElement.Text => Text;
 }
 
-public class Toggle : ISettingsElement
+public class Toggle(string? category, string text, bool value, Action<bool>? onValueChanged)
+    : ISettingsElement
 {
-    public Toggle(string? category, string text, bool value, Action<bool>? onValueChanged)
-    {
-        Category = category;
-        Text = text;
-        Value = value;
-        OnValueChanged = onValueChanged;
-    }
+    public string? Category { get; set; } = category;
 
-    public string? Category { get; set; }
+    public string Text { get; set; } = text;
 
-    public string Text { get; set; }
-
-    public bool Value { get; set; }
-    public Action<bool>? OnValueChanged { get; set; }
+    public bool Value { get; set; } = value;
+    public Action<bool>? OnValueChanged { get; set; } = onValueChanged;
 
     string? ISettingsElement.Category => Category;
 

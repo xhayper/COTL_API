@@ -13,7 +13,7 @@ internal static class SkinUtils
 
     public static event Action OnFindSkin = () =>
     {
-        SkinToLoad?.Invoke();
+        SkinToLoad.Invoke();
         SkinsLoaded = true;
     };
 
@@ -122,15 +122,15 @@ internal static class SkinUtils
         };
         skinMaterial = mat;
 
-        Material[] materials = { mat };
+        Material[] materials = [mat];
         var atlas = SpineAtlasAsset.CreateRuntimeInstance(new TextAsset(atlasText), materials, true);
         atlasAsset = atlas;
 
-        List<Tuple<int, string>> overrideRegions = new();
+        List<Tuple<int, string>> overrideRegions = [];
 
         foreach (var ovrs in atlas.GetAtlas().regions.Select(regionOverrideFunction)) overrideRegions.AddRange(ovrs);
 
-        List<Tuple<int, string, float, float, float, float>> overrides = new();
+        List<Tuple<int, string, float, float, float, float>> overrides = [];
         List<AtlasRegion> list = atlas.GetAtlas().regions;
         for (var index = 0; index < list.Count; index++)
         {

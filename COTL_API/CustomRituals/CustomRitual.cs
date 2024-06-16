@@ -12,7 +12,7 @@ public abstract class CustomRitual : Ritual
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
     public virtual List<StructuresData.ItemCost> ItemCosts { get; } =
-        new() { new StructuresData.ItemCost(InventoryItem.ITEM_TYPE.LOG, 1) };
+        [new StructuresData.ItemCost(InventoryItem.ITEM_TYPE.LOG, 1)];
 
     public override UpgradeSystem.Type RitualType => UpgradeType;
     public virtual string GetLocalizedName => $"Custom_Ritual_{InternalName}";

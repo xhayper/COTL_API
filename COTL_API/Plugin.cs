@@ -181,11 +181,12 @@ public class Plugin : BaseUnityPlugin
         if (!Debug) return;
 
         // Kill all enemies
+        // ReSharper disable once InvertIf
         if (Input.GetKeyDown(KeyCode.F1))
         {
             var targets = new List<Health>(Health.team2);
             var entityObject = GameObject.FindWithTag("Player");
-            targets.DoIf(x => x != null, x => x.DealDamage(999999, null, entityObject.transform.position));
+            targets.DoIf(x => x, x => x.DealDamage(999999, null, entityObject.transform.position));
         }
     }
 
