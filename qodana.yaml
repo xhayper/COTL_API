@@ -1,0 +1,6 @@
+version: "1.0"
+profile:
+  name: qodana.recommended
+linter: jetbrains/qodana-dotnet:2024.1
+dotnet:
+  solution: COTL_API.sln
