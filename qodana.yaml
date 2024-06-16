@@ -4,3 +4,8 @@ profile:
 linter: jetbrains/qodana-dotnet:2024.1
 dotnet:
   solution: COTL_API.sln
+exclude:
+    - name: All
+      paths:
+          - COTL_API/Helpers/Debugging.cs
+          - COTL_API/Debug/
