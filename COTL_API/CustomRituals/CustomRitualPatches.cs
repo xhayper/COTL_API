@@ -26,6 +26,7 @@ public static partial class CustomRitualManager
 
         if (!DataManager.Instance.UnlockedUpgrades.Contains(ritualType))
             DataManager.Instance.UnlockedUpgrades.Add(ritualType);
+
         return true;
     }
 
@@ -33,9 +34,9 @@ public static partial class CustomRitualManager
     [HarmonyPrefix]
     private static bool DoctrineUpgradeSystem_GetIconForRitual(ref Sprite __result, UpgradeSystem.Type type)
     {
-        if (!CustomRitualList.ContainsKey(type)) return true;
+        if (!CustomRitualList.TryGetValue(type, out var value)) return true;
 
-        __result = CustomRitualList[type].Sprite;
+        __result = value.Sprite;
         return false;
     }
 
@@ -43,9 +44,9 @@ public static partial class CustomRitualManager
     [HarmonyPrefix]
     private static bool UpgradeSystem_GetCost(ref List<StructuresData.ItemCost> __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualList.ContainsKey(Type)) return true;
+        if (!CustomRitualList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomRitualList[Type].ItemCosts;
+        __result = value.ItemCosts;
         return false;
     }
 
@@ -53,9 +54,9 @@ public static partial class CustomRitualManager
     [HarmonyPrefix]
     private static bool UpgradeSystem_GetLocalizedName(ref string __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualList.ContainsKey(Type)) return true;
+        if (!CustomRitualList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomRitualList[Type].GetLocalizedName;
+        __result = value.GetLocalizedName;
         return false;
     }
 
@@ -63,9 +64,9 @@ public static partial class CustomRitualManager
     [HarmonyPrefix]
     private static bool UpgradeSystem_GetLocalizedDescription(ref string __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualList.ContainsKey(Type)) return true;
+        if (!CustomRitualList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomRitualList[Type].GetLocalizedDescription;
+        __result = value.GetLocalizedDescription;
         return false;
     }
 
@@ -73,9 +74,9 @@ public static partial class CustomRitualManager
     [HarmonyPrefix]
     private static bool UpgradeSystem_GetRitualFaithChange(ref float __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualList.ContainsKey(Type)) return true;
+        if (!CustomRitualList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomRitualList[Type].FaithChange;
+        __result = value.FaithChange;
         return false;
     }
 
@@ -83,9 +84,9 @@ public static partial class CustomRitualManager
     [HarmonyPrefix]
     private static bool UpgradeSystem_GetRitualTrait(ref FollowerTrait.TraitType __result, UpgradeSystem.Type Type)
     {
-        if (!CustomRitualList.ContainsKey(Type)) return true;
+        if (!CustomRitualList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomRitualList[Type].RitualTrait;
+        __result = value.RitualTrait;
         return false;
     }
 
@@ -94,10 +95,10 @@ public static partial class CustomRitualManager
     private static void Interaction_TempleAltar_PerformRitual(Interaction_TempleAltar __instance,
         UpgradeSystem.Type RitualType)
     {
-        if (!CustomRitualList.ContainsKey(RitualType)) return;
+        if (!CustomRitualList.TryGetValue(RitualType, out var value)) return;
 
         var ritual =
-            (CustomRitual)__instance.gameObject.AddComponent(CustomRitualList[RitualType].GetType());
+            (CustomRitual)__instance.gameObject.AddComponent(value.GetType());
         ritual.UpgradeType = CustomRitualList[RitualType].UpgradeType;
         ritual.ModPrefix = CustomRitualList[RitualType].ModPrefix;
         __instance.CurrentRitual = ritual;
@@ -108,10 +109,10 @@ public static partial class CustomRitualManager
     [HarmonyPostfix]
     private static void Interaction_TempleAltar_RitualOnEnd(Interaction_TempleAltar __instance, bool cancelled)
     {
-        if (!CustomRitualList.ContainsKey(__instance.RitualType)) return;
+        if (!CustomRitualList.TryGetValue(__instance.RitualType, out var value)) return;
 
         if (!cancelled)
             UpgradeSystem.AddCooldown(__instance.RitualType,
-                CustomRitualList[__instance.RitualType].Cooldown);
+                value.Cooldown);
     }
 }

@@ -56,9 +56,9 @@ public static partial class CustomItemManager
     [HarmonyPatch(typeof(RefineryInfoCard), nameof(RefineryInfoCard.Configure), typeof(InventoryItem.ITEM_TYPE))]
     public static void RefineryInfoCard_Configure(ref RefineryInfoCard __instance, ref InventoryItem.ITEM_TYPE config)
     {
-        if (!CustomItemList.ContainsKey(config)) return;
+        if (!CustomItemList.TryGetValue(config, out var value)) return;
 
-        __instance._descriptionText.text = CustomItemList[config].LocalizedDescription();
+        __instance._descriptionText.text = value.LocalizedDescription();
         __instance._headerText.text = CustomItemList[config].LocalizedName();
     }
 }

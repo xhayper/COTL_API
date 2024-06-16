@@ -15,9 +15,9 @@ public static partial class CustomItemManager
     [HarmonyPostfix]
     private static void ItemInfoCard_Configure(ItemInfoCard __instance, InventoryItem.ITEM_TYPE config)
     {
-        if (!CustomItemList.ContainsKey(config)) return;
+        if (!CustomItemList.TryGetValue(config, out var value)) return;
 
-        __instance._itemHeader.text = CustomItemList[config].Name();
+        __instance._itemHeader.text = value.Name();
         __instance._itemLore.text = CustomItemList[config].Lore();
         __instance._itemDescription.text = CustomItemList[config].Description();
     }
@@ -62,8 +62,8 @@ public static partial class CustomItemManager
     private static bool FollowerCommandItems_GiftCommandItem_GetTitle(FollowerCommandItems.GiftCommandItem __instance,
         Follower follower, ref string __result)
     {
-        if (!CustomItemList.ContainsKey(__instance._itemType)) return true;
-        __result = CustomItemList[__instance._itemType].GiftTitle(follower);
+        if (!CustomItemList.TryGetValue(__instance._itemType, out var value)) return true;
+        __result = value.GiftTitle(follower);
         return false;
     }
 
@@ -71,8 +71,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool FontImageNames_GetIconByType(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].InventoryStringIcon();
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.InventoryStringIcon();
         return false;
     }
 
@@ -81,8 +81,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryIconMapping_GetImage(InventoryItem.ITEM_TYPE type, ref Sprite __result)
     {
-        if (!CustomItemList.ContainsKey(type)) return true;
-        __result = CustomItemList[type].InventoryIcon;
+        if (!CustomItemList.TryGetValue(type, out var value)) return true;
+        __result = value.InventoryIcon;
         return false;
     }
 
@@ -90,8 +90,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_Name(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].Name();
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.Name();
         return false;
     }
 
@@ -99,8 +99,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_LocalizedName(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].LocalizedName();
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.LocalizedName();
         return false;
     }
 
@@ -108,8 +108,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_Description(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].Description();
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.Description();
         return false;
     }
 
@@ -117,8 +117,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_LocalizedDescription(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].LocalizedDescription();
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.LocalizedDescription();
         return false;
     }
 
@@ -126,8 +126,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_Lore(InventoryItem.ITEM_TYPE Type, ref string __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].Lore();
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.Lore();
         return false;
     }
 
@@ -136,8 +136,8 @@ public static partial class CustomItemManager
     private static bool InventoryItem_ItemCategory(InventoryItem.ITEM_TYPE type,
         ref InventoryItem.ITEM_CATEGORIES __result)
     {
-        if (!CustomItemList.ContainsKey(type)) return true;
-        __result = CustomItemList[type].ItemCategory;
+        if (!CustomItemList.TryGetValue(type, out var value)) return true;
+        __result = value.ItemCategory;
         return false;
     }
 
@@ -145,8 +145,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_GetSeedType(InventoryItem.ITEM_TYPE type, ref InventoryItem.ITEM_TYPE __result)
     {
-        if (!CustomItemList.ContainsKey(type)) return true;
-        __result = CustomItemList[type].SeedType;
+        if (!CustomItemList.TryGetValue(type, out var value)) return true;
+        __result = value.SeedType;
         return false;
     }
 
@@ -154,8 +154,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_FuelWeight(InventoryItem.ITEM_TYPE type, ref int __result)
     {
-        if (!CustomItemList.ContainsKey(type)) return true;
-        __result = CustomItemList[type].FuelWeight;
+        if (!CustomItemList.TryGetValue(type, out var value)) return true;
+        __result = value.FuelWeight;
         return false;
     }
 
@@ -163,8 +163,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_FoodSatitation(InventoryItem.ITEM_TYPE Type, ref int __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].FoodSatitation;
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.FoodSatitation;
         return false;
     }
 
@@ -172,8 +172,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_IsFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].IsFish;
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.IsFish;
         return false;
     }
 
@@ -181,8 +181,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_IsFood(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].IsFood;
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.IsFood;
         return false;
     }
 
@@ -190,8 +190,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_IsBigFish(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].IsBigFish;
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.IsBigFish;
         return false;
     }
 
@@ -199,8 +199,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_CanBeGivenToFollower(InventoryItem.ITEM_TYPE Type, ref bool __result)
     {
-        if (!CustomItemList.ContainsKey(Type)) return true;
-        __result = CustomItemList[Type].CanBeGivenToFollower;
+        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+        __result = value.CanBeGivenToFollower;
         return false;
     }
 
@@ -208,8 +208,8 @@ public static partial class CustomItemManager
     [HarmonyPrefix]
     private static bool InventoryItem_CapacityString(InventoryItem.ITEM_TYPE type, int minimum, ref string __result)
     {
-        if (!CustomItemList.ContainsKey(type)) return true;
-        __result = CustomItemList[type].CapacityString(minimum);
+        if (!CustomItemList.TryGetValue(type, out var value)) return true;
+        __result = value.CapacityString(minimum);
         return false;
     }
 
@@ -228,9 +228,9 @@ public static partial class CustomItemManager
         if (!CustomItemList.ContainsKey(Type)) return true;
         __result = (follower, type, callback) =>
         {
-            if (!CustomItemList.ContainsKey(type))
+            if (!CustomItemList.TryGetValue(type, out var value))
                 InventoryItem.GiveToFollowerCallbacks(type)(follower, type, callback);
-            else CustomItemList[type].OnGiftTo(follower, callback);
+            else value.OnGiftTo(follower, callback);
         };
         return false;
     }
