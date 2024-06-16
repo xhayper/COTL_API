@@ -9,9 +9,9 @@ public partial class CustomTarotCardManager
 {
     private static void UpdateUIWeaponCard(UIWeaponCard UICard, TarotCards.TarotCard Card)
     {
-        if (!CustomTarotCardList.ContainsKey(Card.CardType)) return;
+        if (!CustomTarotCardList.TryGetValue(Card.CardType, out var value)) return;
 
-        UICard.NameText.text = CustomTarotCardList[Card.CardType].LocalisedName();
+        UICard.NameText.text = value.LocalisedName();
         UICard.SubtitleText.text = CustomTarotCardList[Card.CardType].LocalisedLore();
         UICard.EffectText.text = CustomTarotCardList[Card.CardType].LocalisedDescription();
     }
@@ -46,9 +46,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetCardCategory(TarotCards.Card Type, ref TarotCards.CardCategory __result)
     {
-        if (!CustomTarotCardList.ContainsKey(Type)) return true;
+        if (!CustomTarotCardList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomTarotCardList[Type].Category;
+        __result = value.Category;
 
         return false;
     }
@@ -57,9 +57,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_LocalisedName(TarotCards.Card type, ref string __result)
     {
-        if (!CustomTarotCardList.ContainsKey(type)) return true;
+        if (!CustomTarotCardList.TryGetValue(type, out var value)) return true;
 
-        __result = CustomTarotCardList[type].LocalisedName();
+        __result = value.LocalisedName();
 
         return false;
     }
@@ -68,9 +68,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_LocalisedName(TarotCards.Card Card, int upgradeIndex, ref string __result)
     {
-        if (!CustomTarotCardList.ContainsKey(Card)) return true;
+        if (!CustomTarotCardList.TryGetValue(Card, out var value)) return true;
 
-        __result = CustomTarotCardList[Card].LocalisedName(upgradeIndex);
+        __result = value.LocalisedName(upgradeIndex);
 
         return false;
     }
@@ -79,9 +79,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_LocalisedDescription(TarotCards.Card Type, ref string __result)
     {
-        if (!CustomTarotCardList.ContainsKey(Type)) return true;
+        if (!CustomTarotCardList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomTarotCardList[Type].LocalisedDescription();
+        __result = value.LocalisedDescription();
 
         return false;
     }
@@ -90,9 +90,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_LocalisedDescription(TarotCards.Card Type, int upgradeIndex, ref string __result)
     {
-        if (!CustomTarotCardList.ContainsKey(Type)) return true;
+        if (!CustomTarotCardList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomTarotCardList[Type].LocalisedDescription(upgradeIndex);
+        __result = value.LocalisedDescription(upgradeIndex);
 
         return false;
     }
@@ -101,9 +101,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_LocalisedLore(TarotCards.Card Type, ref string __result)
     {
-        if (!CustomTarotCardList.ContainsKey(Type)) return true;
+        if (!CustomTarotCardList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomTarotCardList[Type].LocalisedLore();
+        __result = value.LocalisedLore();
 
         return false;
     }
@@ -129,9 +129,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetTarotCardWeight(TarotCards.Card cardType, ref int __result)
     {
-        if (!CustomTarotCardList.ContainsKey(cardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(cardType, out var value)) return true;
 
-        __result = CustomTarotCardList[cardType].TarotCardWeight;
+        __result = value.TarotCardWeight;
 
         return false;
     }
@@ -140,9 +140,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetMaxTarotCardLevel(TarotCards.Card cardType, ref int __result)
     {
-        if (!CustomTarotCardList.ContainsKey(cardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(cardType, out var value)) return true;
 
-        __result = CustomTarotCardList[cardType].MaxTarotCardLevel;
+        __result = value.MaxTarotCardLevel;
 
         return false;
     }
@@ -151,9 +151,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_AnimationSuffix(TarotCards.Card Type, ref string __result)
     {
-        if (!CustomTarotCardList.ContainsKey(Type)) return true;
+        if (!CustomTarotCardList.TryGetValue(Type, out var value)) return true;
 
-        __result = CustomTarotCardList[Type].AnimationSuffix;
+        __result = value.AnimationSuffix;
 
         return false;
     }
@@ -162,9 +162,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_IsCurseRelatedTarotCard(TarotCards.Card card, ref bool __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card)) return true;
+        if (!CustomTarotCardList.TryGetValue(card, out var value)) return true;
 
-        __result = CustomTarotCardList[card].IsCursedRelated;
+        __result = value.IsCursedRelated;
 
         return false;
     }
@@ -175,9 +175,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_ApplyInstantEffects(TarotCards.TarotCard card)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        CustomTarotCardList[card.CardType].ApplyInstantEffects(card);
+        value.ApplyInstantEffects(card);
 
         return false;
     }
@@ -186,9 +186,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetSpiritHeartCount(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetSpiritHeartCount(card);
+        __result = value.GetSpiritHeartCount(card);
 
         return false;
     }
@@ -197,9 +197,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetSpiritAmmoCount(TarotCards.TarotCard card, ref int __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetSpiritAmmoCount(card);
+        __result = value.GetSpiritAmmoCount(card);
 
         return false;
     }
@@ -208,9 +208,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetWeaponDamageMultiplerIncrease(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetWeaponDamageMultiplerIncrease(card);
+        __result = value.GetWeaponDamageMultiplerIncrease(card);
 
         return false;
     }
@@ -219,9 +219,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetCurseDamageMultiplerIncrease(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetCurseDamageMultiplerIncrease(card);
+        __result = value.GetCurseDamageMultiplerIncrease(card);
 
         return false;
     }
@@ -230,9 +230,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetWeaponCritChanceIncrease(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetWeaponCritChanceIncrease(card);
+        __result = value.GetWeaponCritChanceIncrease(card);
 
         return false;
     }
@@ -243,9 +243,9 @@ public partial class CustomTarotCardManager
         TarotCards.TarotCard card,
         InventoryItem.ITEM_TYPE itemType, ref int __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetLootIncreaseModifier(card, itemType);
+        __result = value.GetLootIncreaseModifier(card, itemType);
 
         return false;
     }
@@ -254,9 +254,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetMovementSpeedMultiplier(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetMovementSpeedMultiplier(card);
+        __result = value.GetMovementSpeedMultiplier(card);
 
         return false;
     }
@@ -265,9 +265,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetAttackRateMultiplier(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetAttackRateMultiplier(card);
+        __result = value.GetAttackRateMultiplier(card);
 
         return false;
     }
@@ -276,9 +276,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetBlackSoulsMultiplier(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetBlackSoulsMultiplier(card);
+        __result = value.GetBlackSoulsMultiplier(card);
 
         return false;
     }
@@ -287,9 +287,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetHealChance(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetHealChance(card);
+        __result = value.GetHealChance(card);
 
         return false;
     }
@@ -298,9 +298,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetNegateDamageChance(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetNegateDamageChance(card);
+        __result = value.GetNegateDamageChance(card);
 
         return false;
     }
@@ -309,9 +309,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetDamageAllEnemiesAmount(TarotCards.TarotCard card, ref int __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetDamageAllEnemiesAmount(card);
+        __result = value.GetDamageAllEnemiesAmount(card);
 
         return false;
     }
@@ -320,9 +320,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetHealthAmountMultiplier(TarotCards.TarotCard card, ref int __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetHealthAmountMultiplier(card);
+        __result = value.GetHealthAmountMultiplier(card);
 
         return false;
     }
@@ -331,9 +331,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetAmmoEfficiency(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetAmmoEfficiency(card);
+        __result = value.GetAmmoEfficiency(card);
 
         return false;
     }
@@ -342,9 +342,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetBlackSoulsOnDamage(TarotCards.TarotCard card, ref int __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetBlackSoulsOnDamage(card);
+        __result = value.GetBlackSoulsOnDamage(card);
 
         return false;
     }
@@ -353,10 +353,10 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetItemToDrop(TarotCards.TarotCard card, ref InventoryItem __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
 #pragma warning disable CS8601
-        __result = CustomTarotCardList[card.CardType].GetItemToDrop(card);
+        __result = value.GetItemToDrop(card);
 #pragma warning restore CS8601
 
         return false;
@@ -366,9 +366,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetChanceOfGainingBlueHeart(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetChanceOfGainingBlueHeart(card);
+        __result = value.GetChanceOfGainingBlueHeart(card);
 
         return false;
     }
@@ -377,9 +377,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetChanceForRelicsMultiplier(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetChanceForRelicsMultiplier(card);
+        __result = value.GetChanceForRelicsMultiplier(card);
 
         return false;
     }
@@ -388,9 +388,9 @@ public partial class CustomTarotCardManager
     [HarmonyPrefix]
     private static bool TarotCards_GetRelicChargeMultiplier(TarotCards.TarotCard card, ref float __result)
     {
-        if (!CustomTarotCardList.ContainsKey(card.CardType)) return true;
+        if (!CustomTarotCardList.TryGetValue(card.CardType, out var value)) return true;
 
-        __result = CustomTarotCardList[card.CardType].GetRelicChargeMultiplier(card);
+        __result = value.GetRelicChargeMultiplier(card);
 
         return false;
     }

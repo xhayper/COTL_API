@@ -32,8 +32,8 @@ public static class TypeManager
 
     private static string GetModIdFromAssembly(Assembly assembly)
     {
-        if (ModIds.ContainsKey(assembly.FullName))
-            return ModIds[assembly.FullName];
+        if (ModIds.TryGetValue(assembly.FullName, out var fromAssembly))
+            return fromAssembly;
 
         foreach (var t in assembly.GetTypes())
         {

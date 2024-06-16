@@ -10,8 +10,8 @@ public partial class CustomFollowerCommandManager
     [HarmonyPrefix]
     private static bool CommandItem_GetTitle(CommandItem __instance, Follower follower, ref string __result)
     {
-        if (!CustomFollowerCommandList.ContainsKey(__instance.Command)) return true;
-        __result = CustomFollowerCommandList[__instance.Command].GetTitle(follower);
+        if (!CustomFollowerCommandList.TryGetValue(__instance.Command, out var value)) return true;
+        __result = value.GetTitle(follower);
         return false;
     }
 
@@ -19,8 +19,8 @@ public partial class CustomFollowerCommandManager
     [HarmonyPrefix]
     private static bool CommandItem_IsAvailable(CommandItem __instance, Follower follower, ref bool __result)
     {
-        if (!CustomFollowerCommandList.ContainsKey(__instance.Command)) return true;
-        __result = CustomFollowerCommandList[__instance.Command].IsAvailable(follower);
+        if (!CustomFollowerCommandList.TryGetValue(__instance.Command, out var value)) return true;
+        __result = value.IsAvailable(follower);
         return false;
     }
 
@@ -28,8 +28,8 @@ public partial class CustomFollowerCommandManager
     [HarmonyPrefix]
     private static bool CommandItem_GetDescription(CommandItem __instance, Follower follower, ref string __result)
     {
-        if (!CustomFollowerCommandList.ContainsKey(__instance.Command)) return true;
-        __result = CustomFollowerCommandList[__instance.Command].GetDescription(follower);
+        if (!CustomFollowerCommandList.TryGetValue(__instance.Command, out var value)) return true;
+        __result = value.GetDescription(follower);
         return false;
     }
 
@@ -37,8 +37,8 @@ public partial class CustomFollowerCommandManager
     [HarmonyPrefix]
     private static bool CommandItem_GetLockedDescription(CommandItem __instance, Follower follower, ref string __result)
     {
-        if (!CustomFollowerCommandList.ContainsKey(__instance.Command)) return true;
-        __result = CustomFollowerCommandList[__instance.Command].GetLockedDescription(follower);
+        if (!CustomFollowerCommandList.TryGetValue(__instance.Command, out var value)) return true;
+        __result = value.GetLockedDescription(follower);
         return false;
     }
 
@@ -131,9 +131,9 @@ public partial class CustomFollowerCommandManager
     private static bool FontImageNames_IconForCommand(FollowerCommands followerCommands,
         ref string __result)
     {
-        if (!CustomFollowerCommandList.ContainsKey(followerCommands)) return true;
+        if (!CustomFollowerCommandList.TryGetValue(followerCommands, out var value)) return true;
 
-        __result = CustomFollowerCommandList[followerCommands].CommandStringIcon();
+        __result = value.CommandStringIcon();
 
         return false;
     }

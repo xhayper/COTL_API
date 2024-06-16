@@ -19,11 +19,9 @@ public partial class CustomSkinManager
     {
         if (__result != null) return;
         if (skinName.StartsWith("CustomTarotSkin_")) __result = CreateOrGetTarotSkinFromTemplate(__instance, skinName);
-        if (CustomFollowerSkins.ContainsKey(skinName))
-        {
-            if (AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
-            __result = CustomFollowerSkins[skinName];
-        }
+        if (!CustomFollowerSkins.TryGetValue(skinName, out var skin)) return;
+        if (AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
+        __result = skin;
     }
 
     [HarmonyPatch(typeof(Graphics), nameof(Graphics.CopyTexture), typeof(Texture), typeof(int), typeof(int),

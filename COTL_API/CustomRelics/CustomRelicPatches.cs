@@ -39,9 +39,9 @@ public partial class CustomRelicManager
     [HarmonyPrefix]
     private static bool RelicData_GetChargeCategory(RelicType relicType, ref RelicChargeCategory __result)
     {
-        if (!CustomRelicDataList.ContainsKey(relicType)) return true;
+        if (!CustomRelicDataList.TryGetValue(relicType, out var value)) return true;
 
-        __result = CustomRelicDataList[relicType].GetChargeCategory();
+        __result = value.GetChargeCategory();
 
         return false;
     }
@@ -50,9 +50,9 @@ public partial class CustomRelicManager
     [HarmonyPrefix]
     private static bool RelicData_GetChargeCategory(RelicData relicData, ref RelicChargeCategory __result)
     {
-        if (!CustomRelicDataList.ContainsKey(relicData.RelicType)) return true;
+        if (!CustomRelicDataList.TryGetValue(relicData.RelicType, out var value)) return true;
 
-        __result = CustomRelicDataList[relicData.RelicType].GetChargeCategory();
+        __result = value.GetChargeCategory();
 
         return false;
     }

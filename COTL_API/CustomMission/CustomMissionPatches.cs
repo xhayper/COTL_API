@@ -67,21 +67,21 @@ public static partial class CustomMissionManager
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.LocalizedName), typeof(InventoryItem.ITEM_TYPE))]
     public static void PrefixPatchesOne(ref InventoryItem.ITEM_TYPE Type)
     {
-        if (CustomMissionList.ContainsKey(Type)) Type = CustomMissionList[Type].RewardType;
+        if (CustomMissionList.TryGetValue(Type, out var value)) Type = value.RewardType;
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(MissionaryManager), nameof(MissionaryManager.GetDurationDeterministic))]
     public static void MissionaryManager_GetDurationDeterministic(ref InventoryItem.ITEM_TYPE type)
     {
-        if (CustomMissionList.ContainsKey(type)) type = CustomMissionList[type].RewardType;
+        if (CustomMissionList.TryGetValue(type, out var value)) type = value.RewardType;
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Inventory), nameof(Inventory.GetItemQuantity), typeof(InventoryItem.ITEM_TYPE))]
     public static void Inventory_GetItemQuantity(ref InventoryItem.ITEM_TYPE itemType)
     {
-        if (CustomMissionList.ContainsKey(itemType)) itemType = CustomMissionList[itemType].RewardType;
+        if (CustomMissionList.TryGetValue(itemType, out var value)) itemType = value.RewardType;
     }
 
     [HarmonyPrefix]
@@ -89,11 +89,11 @@ public static partial class CustomMissionManager
     public static bool MissionaryManager_GetChance(ref float __result, InventoryItem.ITEM_TYPE type,
         FollowerInfo followerInfo, StructureBrain.TYPES missionaryType)
     {
-        if (!CustomMissionList.ContainsKey(type)) return true;
+        if (!CustomMissionList.TryGetValue(type, out var value)) return true;
 
 
         var baseChanceMultiplier =
-            MissionaryManager.GetBaseChanceMultiplier(CustomMissionList[type].RewardType, followerInfo);
+            MissionaryManager.GetBaseChanceMultiplier(value.RewardType, followerInfo);
         var random = new Random((int)(followerInfo.ID + CustomMissionList[type].RewardType));
 
         __result = Mathf.Clamp(
@@ -108,9 +108,9 @@ public static partial class CustomMissionManager
     [HarmonyPatch(typeof(MissionaryManager), nameof(MissionaryManager.GetRewardRange))]
     public static bool MissionaryManager_GetRewardRange(ref IntRange __result, InventoryItem.ITEM_TYPE type)
     {
-        if (!CustomMissionList.ContainsKey(type)) return true;
+        if (!CustomMissionList.TryGetValue(type, out var value)) return true;
 
-        __result = CustomMissionList[type].RewardRange;
+        __result = value.RewardRange;
         return false;
     }
 

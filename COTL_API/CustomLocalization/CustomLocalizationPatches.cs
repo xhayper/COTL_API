@@ -20,8 +20,8 @@ public partial class CustomLocalizationManager
         }
 
         var lang = SettingsManager.Settings.Game.Language;
-        if (!LocalizationMap.ContainsKey(lang)) return true;
-        if (!LocalizationMap[lang].ContainsKey(__instance.Term)) return true;
+        if (!LocalizationMap.TryGetValue(lang, out var value)) return true;
+        if (!value.ContainsKey(__instance.Term)) return true;
         __result = LocalizationMap[lang][__instance.Term];
 
         return false;
@@ -32,8 +32,8 @@ public partial class CustomLocalizationManager
     private static bool LanguageSourceData_TryGetTranslation(string term, ref string Translation, ref bool __result)
     {
         var lang = SettingsManager.Settings.Game.Language;
-        if (!LocalizationMap.ContainsKey(lang)) return true;
-        if (!LocalizationMap[lang].ContainsKey(term)) return true;
+        if (!LocalizationMap.TryGetValue(lang, out var value)) return true;
+        if (!value.ContainsKey(term)) return true;
         Translation = LocalizationMap[lang][term];
         __result = true;
 
