@@ -5,7 +5,23 @@ linter: jetbrains/qodana-dotnet:2024.1
 dotnet:
   solution: COTL_API.sln
 exclude:
-    - name: All
-      paths:
-          - COTL_API/Helpers/Debugging.cs
-          - COTL_API/Debug/
+  - name: Debugging
+    paths:
+      - COTL_API/Helpers/Debugging.cs
+      - COTL_API/Debug/
+  - name: UnusedAutoPropertyAccessor.Global
+  - name: UnusedMethodReturnValue.Local
+  - name: VirtualMemberNeverOverridden.Global
+  - name: UnusedMember.Global
+  - name: UnusedParameter.Local
+  - name: UnusedMember.Local
+  - name: UnusedParameter.Global
+  - name: UnusedVariable
+  - name: UnusedAutoPropertyAccessor.Local
+  - name: UnusedMethodReturnValue.Global
+  - name: UnusedMemberInSuper.Global
+  - name: NotAccessedField.Global
+  - name: UnusedType.Global
+  - name: UnassignedGetOnlyAutoProperty
+  - name: EventNeverSubscribedTo.Global
+  - name: ClassNeverInstantiated.Global
