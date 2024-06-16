@@ -3,18 +3,12 @@ using UnityEngine;
 
 namespace COTL_API.CustomSkins;
 
-internal class OverridingPlayerSkin : CustomPlayerSkin
+internal class OverridingPlayerSkin(string name, Func<Skin?> overrideSkin) : CustomPlayerSkin
 {
     private Skin? _cachedSkin;
-    internal Func<Skin?> overrideSkin;
+    internal Func<Skin?> overrideSkin = overrideSkin;
 
-    public OverridingPlayerSkin(string name, Func<Skin?> overrideSkin)
-    {
-        this.overrideSkin = overrideSkin;
-        Name = name;
-    }
-
-    public override string Name { get; }
+    public override string Name { get; } = name;
 
     public override Texture2D Texture => null!;
     public override List<SkinOverride> Overrides => null!;

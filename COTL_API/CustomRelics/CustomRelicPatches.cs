@@ -71,6 +71,9 @@ public partial class CustomRelicManager
             case RelicSubType.Dammed:
                 CustomRelicDataList[relicType].OnUseDamned(forceConsumableAnimation);
                 break;
+            case RelicSubType.Any:
+                CustomRelicDataList[relicType].OnUseAny(forceConsumableAnimation);
+                break;
             default:
                 CustomRelicDataList[relicType].OnUse(forceConsumableAnimation);
                 break;

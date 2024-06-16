@@ -40,3 +40,4 @@ exclude:
   - name: HeapView.PossibleBoxingAllocation
   - name: ReplaceAutoPropertyWithComputedProperty
   - name: ParameterHidesMember
+  - name: PublicConstructorInAbstractClass

@@ -6,10 +6,10 @@ namespace COTL_API.Sounds;
 public class SoundLoader : MonoBehaviour
 {
     // All existent SoundLoader instances, for management purposes.
-    internal static readonly List<SoundLoader> InstanceList = new();
+    internal static readonly List<SoundLoader> InstanceList = [];
 
     // The new sound cache.
-    private readonly List<ChannelWrapper> _channelList = new();
+    private readonly List<ChannelWrapper> _channelList = [];
 
     // Sound cache
     private readonly Dictionary<string, SoundWrapper> _soundCache = new();

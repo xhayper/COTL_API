@@ -57,6 +57,11 @@ public abstract class CustomRelicData : RelicData
         OnUse(forceConsumableAnimation);
     }
 
+    public virtual void OnUseAny(bool forceConsumableAnimation = false)
+    {
+        OnUse(forceConsumableAnimation);
+    }
+
     public CustomRelicData ToBlessed()
     {
         var clone = (CustomRelicData)MemberwiseClone();

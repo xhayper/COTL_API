@@ -16,10 +16,10 @@ public static partial class CustomItemManager
     {
         if (!CustomItemList.ContainsKey(Item)) return;
 
-        __result = new List<StructuresData.ItemCost>
-        {
-            new(CustomItemList[Item].RefineryInput, CustomItemList[Item].RefineryInputQty)
-        };
+        __result =
+        [
+            new StructuresData.ItemCost(CustomItemList[Item].RefineryInput, CustomItemList[Item].RefineryInputQty)
+        ];
     }
 
     [HarmonyPostfix]

@@ -29,8 +29,8 @@ internal static class CustomIconManager
         spriteAsset.hashCode = TMP_TextUtilities.GetSimpleHashCode(spriteAsset.name);
         spriteAsset.spriteSheet = texture;
 
-        spriteAsset.spriteGlyphTable = new List<TMP_SpriteGlyph>();
-        spriteAsset.spriteCharacterTable = new List<TMP_SpriteCharacter>();
+        spriteAsset.spriteGlyphTable = [];
+        spriteAsset.spriteCharacterTable = [];
 
         TMP_SpriteGlyph spriteGlyph = new()
         {

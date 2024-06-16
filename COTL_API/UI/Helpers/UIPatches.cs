@@ -8,8 +8,8 @@ namespace COTL_API.UI.Helpers;
 
 internal static class UIPatches
 {
-    public static readonly List<Type> PauseMenuQueue = new();
-    public static readonly List<Type> StartMenuQueue = new();
+    public static readonly List<Type> PauseMenuQueue = [];
+    public static readonly List<Type> StartMenuQueue = [];
 
     [HarmonyPatch]
     public static class PauseMenuPatch

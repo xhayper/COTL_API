@@ -35,7 +35,7 @@ public static class AchievementsWrapperPatches
         if (Plugin.Instance == null || !Plugin.Instance.DisableAchievement)
             return true;
 
-        // Expect Error
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (result == null || result.Count == 0)
             return false;
 

@@ -11,7 +11,7 @@ namespace COTL_API.CustomMission;
 public static partial class CustomMissionManager
 {
     private static MissionButton? _newMissionButton;
-    private static readonly List<MissionInstance> MissionInstanceList = new();
+    private static readonly List<MissionInstance> MissionInstanceList = [];
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(MissionInfoCard), nameof(MissionInfoCard.Configure))]
@@ -138,19 +138,15 @@ public static partial class CustomMissionManager
         return false;
     }
 
-    public class MissionInstance
+    public class MissionInstance(
+        int instance,
+        MissionButton? button,
+        InventoryItem.ITEM_TYPE type,
+        CustomMission mission)
     {
-        public MissionInstance(int instance, MissionButton? button, InventoryItem.ITEM_TYPE type, CustomMission mission)
-        {
-            Instance = instance;
-            Button = button;
-            Type = type;
-            Mission = mission;
-        }
-
-        public int Instance { get; }
-        public MissionButton? Button { get; }
-        private InventoryItem.ITEM_TYPE Type { get; }
-        public CustomMission Mission { get; }
+        public int Instance { get; } = instance;
+        public MissionButton? Button { get; } = button;
+        private InventoryItem.ITEM_TYPE Type { get; } = type;
+        public CustomMission Mission { get; } = mission;
     }
 }
