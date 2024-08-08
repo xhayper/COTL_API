@@ -494,6 +494,12 @@ public static partial class CustomSkinManager
                 new[] { "Default" }.Concat(CustomPlayerSkins.Keys).ToArray();
     }
 
+    public static void AddTarotBackSkin(Sprite skin)
+    {
+        var name = "CustomCardBack";
+        if (!TarotSprites.ContainsKey(name)) TarotSprites.Add(name, skin);
+    }
+
     private static List<Tuple<int, string>> RegionOverrideFunction(AtlasRegion region)
     {
         var simpleName = region.name;
@@ -592,7 +598,59 @@ public static partial class CustomSkinManager
         var atlasRegion = atlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT").Clone();
         var back = template.Attachments.ToList()[0];
         back = new Skin.SkinEntry(back.SlotIndex, back.Name, back.Attachment.Copy());
-        skin.SetAttachment(back.SlotIndex, back.Name, back.Attachment);
+
+        if (back.Attachment is MeshAttachment customAttachmentBack && TarotSprites.ContainsKey("CustomCardBack"))
+        {
+            var backSprite = TarotSprites["CustomCardBack"];
+            var backAtlas = CreateSingleTextureAtlas(backSprite);
+            var backAtlasRegion = backAtlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT").Clone();
+
+            float minX = int.MaxValue;
+            float maxX = int.MinValue;
+            float minY = int.MaxValue;
+            float maxY = int.MinValue;
+
+            for (var j = 0; j < customAttachmentBack.Vertices.Length; j++)
+                switch (j % 3)
+                {
+                    case 0:
+                        minY = Math.Min(minY, customAttachmentBack.Vertices[j]);
+                        maxY = Math.Max(maxY, customAttachmentBack.Vertices[j]);
+                        break;
+                    case 1:
+                        minX = Math.Min(minX, customAttachmentBack.Vertices[j]);
+                        maxX = Math.Max(maxX, customAttachmentBack.Vertices[j]);
+                        break;
+                }
+
+            customAttachmentBack.Name = "CustomTarotSkin_" + skinName;
+            customAttachmentBack.SetRegion(backAtlasRegion, false);
+            backAtlasRegion.name = "CustomTarotSkin_" + atlasRegion.name;
+            customAttachmentBack.HullLength = 4;
+            customAttachmentBack.Triangles = [1, 2, 3, 1, 3, 0];
+
+            float pw = backAtlasRegion.page.width;
+            float ph = backAtlasRegion.page.height;
+            float x = backAtlasRegion.x;
+            float y = backAtlasRegion.y;
+            float w = backAtlasRegion.width;
+            float h = backAtlasRegion.height;
+            customAttachmentBack.UVs =
+            [
+                (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph
+            ];
+            customAttachmentBack.Vertices = [minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1];
+            customAttachmentBack.WorldVerticesLength = 8;
+            customAttachmentBack.UpdateUVs();
+
+            skin.SetAttachment(back.SlotIndex, back.Name, customAttachmentBack);
+        }
+        else
+        {
+            skin.SetAttachment(back.SlotIndex, back.Name, back.Attachment);
+        }
+
+
         var front = template.Attachments.ToList()[1];
         front = new Skin.SkinEntry(front.SlotIndex, front.Name, front.Attachment.Copy());
         if (front.Attachment is MeshAttachment customAttachment)
@@ -616,10 +674,11 @@ public static partial class CustomSkinManager
                 }
 
             customAttachment.Name = "CustomTarotSkin_" + skinName;
-            customAttachment.SetRegion(atlasRegion);
+            customAttachment.SetRegion(atlasRegion, false);
             atlasRegion.name = "CustomTarotSkin_" + atlasRegion.name;
             customAttachment.HullLength = 4;
             customAttachment.Triangles = [1, 2, 3, 1, 3, 0];
+
             float pw = atlasRegion.page.width;
             float ph = atlasRegion.page.height;
             float x = atlasRegion.x;
@@ -632,6 +691,8 @@ public static partial class CustomSkinManager
             ];
             customAttachment.Vertices = [minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1];
             customAttachment.WorldVerticesLength = 8;
+            customAttachment.UpdateUVs();
+
 
             skin.SetAttachment(front.SlotIndex, front.Name, customAttachment);
         }
