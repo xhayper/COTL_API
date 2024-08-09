@@ -650,7 +650,6 @@ public static partial class CustomSkinManager
             skin.SetAttachment(back.SlotIndex, back.Name, back.Attachment);
         }
 
-
         var front = template.Attachments.ToList()[1];
         front = new Skin.SkinEntry(front.SlotIndex, front.Name, front.Attachment.Copy());
         if (front.Attachment is MeshAttachment customAttachment)
@@ -692,7 +691,6 @@ public static partial class CustomSkinManager
             customAttachment.Vertices = [minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1];
             customAttachment.WorldVerticesLength = 8;
             customAttachment.UpdateUVs();
-
 
             skin.SetAttachment(front.SlotIndex, front.Name, customAttachment);
         }
