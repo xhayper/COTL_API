@@ -7,17 +7,9 @@ namespace COTL_API.Helpers;
 /// </summary>
 public static class ItemPickUp
 {
-    /// <summary>
-    ///     Returns a GameObject of the specified item type (if it exists). Will return poop if the item type is not
-    ///     found.
-    /// </summary>
-    /// <param name="type">The type of item to return.</param>
-    /// <returns>The specified item as a game object.</returns>
-    public static GameObject? GetItemPickUpObject(InventoryItem.ITEM_TYPE type)
+    public static string GetItemPickUpPath(InventoryItem.ITEM_TYPE type)
     {
-        LogWarning($"ImitatePickUpObject: {type}");
-        
-        var itemText = type switch
+        return type switch
         {
             InventoryItem.ITEM_TYPE.LOG => "Log",
             InventoryItem.ITEM_TYPE.STONE => "Rock1",
@@ -159,6 +151,19 @@ public static class ItemPickUp
             InventoryItem.ITEM_TYPE.Necklace_Bell => "Necklace Bell",
             _ => "Poop"
         };
+    }
+
+    /// <summary>
+    ///     Returns a GameObject of the specified item type (if it exists). Will return poop if the item type is not
+    ///     found.
+    /// </summary>
+    /// <param name="type">The type of item to return.</param>
+    /// <returns>The specified item as a game object.</returns>
+    public static GameObject? GetItemPickUpObject(InventoryItem.ITEM_TYPE type)
+    {
+        LogWarning($"ImitatePickUpObject: {type}");
+
+        var itemText = GetItemPickUpPath(type);
 
         LogWarning($"ImitateItemPickUpText: {itemText}");
 
@@ -166,5 +171,35 @@ public static class ItemPickUp
             return Resources.Load("Prefabs/Resources/" + itemText) as GameObject;
 
         return Resources.Load(itemText) as GameObject;
+    }
+
+    public static bool ShouldUseObjectPool(InventoryItem.ITEM_TYPE type)
+    {
+        return type switch
+        {
+            InventoryItem.ITEM_TYPE.MEAL => true,
+            InventoryItem.ITEM_TYPE.MEAL_GRASS => true,
+            InventoryItem.ITEM_TYPE.MEAL_MEAT => true,
+            InventoryItem.ITEM_TYPE.MEAL_GREAT => true,
+            InventoryItem.ITEM_TYPE.MEAL_GOOD_FISH => true,
+            InventoryItem.ITEM_TYPE.MEAL_FOLLOWER_MEAT => true,
+            InventoryItem.ITEM_TYPE.MEAL_POOP => true,
+            InventoryItem.ITEM_TYPE.MEAL_MUSHROOMS => true,
+            InventoryItem.ITEM_TYPE.MEAL_GREAT_FISH => true,
+            InventoryItem.ITEM_TYPE.MEAL_BAD_FISH => true,
+            InventoryItem.ITEM_TYPE.MEAL_BERRIES => true,
+            InventoryItem.ITEM_TYPE.MEAL_MEDIUM_VEG => true,
+            InventoryItem.ITEM_TYPE.MEAL_BAD_MIXED => true,
+            InventoryItem.ITEM_TYPE.MEAL_MEDIUM_MIXED => true,
+            InventoryItem.ITEM_TYPE.MEAL_GREAT_MIXED => true,
+            InventoryItem.ITEM_TYPE.MEAL_DEADLY => true,
+            InventoryItem.ITEM_TYPE.MEAL_BAD_MEAT => true,
+            InventoryItem.ITEM_TYPE.MEAL_GREAT_MEAT => true,
+            InventoryItem.ITEM_TYPE.MEAL_BURNED => true,
+            InventoryItem.ITEM_TYPE.WEBBER_SKULL => true,
+            InventoryItem.ITEM_TYPE.EGG_FOLLOWER => true,
+            InventoryItem.ITEM_TYPE.MEAL_EGG => true,
+            _ => false
+        };
     }
 }
