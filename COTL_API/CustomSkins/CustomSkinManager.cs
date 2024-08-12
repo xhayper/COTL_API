@@ -481,7 +481,7 @@ public static partial class CustomSkinManager
         { "effects/slam_effect0004", Tuple.Create(60, "effects/slam_effect0004") },
         { "effects/slam_effect0003", Tuple.Create(60, "effects/slam_effect0003") },
         { "effects/slam_effect0002", Tuple.Create(60, "effects/slam_effect0002") },
-        { "effects/slam_effect0001", Tuple.Create(60, "effects/slam_effect0001") },
+        { "effects/slam_effect0001", Tuple.Create(60, "effects/slam_effect0001") }
     };
 
     internal static List<Skin?>? PlayerSkinOverride { get; set; }
@@ -618,7 +618,8 @@ public static partial class CustomSkinManager
         var back = template.Attachments.ToList()[0];
         back = new Skin.SkinEntry(back.SlotIndex, back.Name, back.Attachment.Copy());
 
-        if (back.Attachment is MeshAttachment customAttachmentBack && TarotBackSprites.TryGetValue("CustomTarotSkin/" + skinName, out var backSprite))
+        if (back.Attachment is MeshAttachment customAttachmentBack &&
+            TarotBackSprites.TryGetValue(skinName, out var backSprite))
         {
             var backAtlas = CreateSingleTextureAtlas(backSprite);
             var backAtlasRegion = backAtlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT").Clone();
@@ -641,9 +642,9 @@ public static partial class CustomSkinManager
                         break;
                 }
 
-            customAttachmentBack.Name = "CustomTarotSkin/" + skinName;
+            customAttachmentBack.Name = skinName;
             customAttachmentBack.SetRegion(backAtlasRegion, false);
-            backAtlasRegion.name = "CustomTarotSkin/" + atlasRegion.name;
+            backAtlasRegion.name = skinName + "/" + atlasRegion.name;
             customAttachmentBack.HullLength = 4;
             customAttachmentBack.Triangles = [1, 2, 3, 1, 3, 0];
 
@@ -690,9 +691,9 @@ public static partial class CustomSkinManager
                         break;
                 }
 
-            customAttachment.Name = "CustomTarotSkin/" + skinName;
+            customAttachment.Name = skinName;
             customAttachment.SetRegion(atlasRegion, false);
-            atlasRegion.name = "CustomTarotSkin/" + atlasRegion.name;
+            atlasRegion.name = skinName + "/" + atlasRegion.name;
             customAttachment.HullLength = 4;
             customAttachment.Triangles = [1, 2, 3, 1, 3, 0];
 
