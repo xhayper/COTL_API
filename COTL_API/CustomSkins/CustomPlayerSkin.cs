@@ -14,7 +14,7 @@ public abstract class CustomPlayerSkin : CustomSkin
             {
                 var from = PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Lamb");
                 Skin to = new(Name);
-
+                
                 var overrides = SkinUtils.CreateSkinAtlas(Name, Texture, GenerateAtlasText(),
                     delegate(AtlasRegion region)
                     {
@@ -32,7 +32,7 @@ public abstract class CustomPlayerSkin : CustomSkin
                             region.name = simplified.Item1 + ":" + simplified.Item2 + add;
                             return [simplified];
                         }
-
+                        
                         var atts = from.Attachments.Where(x => x.Name == simpleName);
                         List<Tuple<int, string>> tuples = [];
                         if (from.Attachments.All(x => x.Name != simpleName)) return [];
