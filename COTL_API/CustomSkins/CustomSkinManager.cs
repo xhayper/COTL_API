@@ -573,7 +573,7 @@ public static partial class CustomSkinManager
     {
         var name = $"CustomTarotSkin/{internalName}";
         if (!TarotSprites.ContainsKey(name)) TarotSprites.Add(name, skin);
-        if (backSkin != null && !TarotSprites.ContainsKey(name)) TarotBackSprites.Add(name, backSkin);
+        if (backSkin != null && !TarotBackSprites.ContainsKey(name)) TarotBackSprites.Add(name, backSkin);
         return name;
     }
 
