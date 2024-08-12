@@ -188,6 +188,16 @@ public class Plugin : BaseUnityPlugin
             var entityObject = GameObject.FindWithTag("Player");
             targets.DoIf(x => x, x => x.DealDamage(999999, null, entityObject.transform.position));
         }
+
+        // ReSharper disable once InvertIf
+        if (Input.GetKeyDown(KeyCode.F2))
+            foreach (var x in PlayerFarming.Instance.Spine.Skeleton.Skin.Attachments)
+                LogInfo($"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
+
+        // ReSharper disable once InvertIf
+        if (Input.GetKeyDown(KeyCode.F3))
+            foreach (var x in PlayerFarming.Instance.Spine.Skeleton.Skin.Attachments)
+                LogInfo($"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
     }
 
     private void OnEnable()
