@@ -16,7 +16,7 @@ public static class ItemPickUp
     public static GameObject? GetItemPickUpObject(InventoryItem.ITEM_TYPE type)
     {
         LogWarning($"ImitatePickUpObject: {type}");
-        
+
         var itemText = type switch
         {
             InventoryItem.ITEM_TYPE.LOG => "Log",

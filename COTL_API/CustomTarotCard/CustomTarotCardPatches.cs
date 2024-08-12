@@ -117,12 +117,11 @@ public partial class CustomTarotCardManager
         {
             __result = CustomSkinManager.GetOrCreateTarotSkin(
                 $"Custom/{CustomTarotCardList[Type].ModPrefix}.{CustomTarotCardList[Type].InternalName}",
-                CustomTarotCardList[Type].CustomSprite!, CustomTarotCardList[Type].CustomBackSprite!);
+                CustomTarotCardList[Type].CustomSprite!, CustomTarotCardList[Type].CustomBackSprite);
             return false;
         }
 
         __result = CustomTarotCardList[Type].Skin;
-
         return false;
     }
 
