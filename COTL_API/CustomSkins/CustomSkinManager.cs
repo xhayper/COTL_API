@@ -16,6 +16,7 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, Material> SkinMaterials = new();
     internal static readonly Dictionary<string, Skin> TarotSkins = new();
     internal static readonly Dictionary<string, Sprite> TarotSprites = new();
+    internal static readonly Dictionary<string, Sprite> TarotBackSprites = new();
 
     internal static int NumGenericAtlases;
 
@@ -517,11 +518,11 @@ public static partial class CustomSkinManager
                 new[] { "Default" }.Concat(CustomPlayerSkins.Keys).ToArray();
     }
 
-    public static void AddTarotBackSkin(string internalName, Sprite skin)
-    {
-        var spriteName = $"CustomTarotBack_{internalName}";
-        if (!TarotSprites.ContainsKey(spriteName)) TarotSprites.Add(spriteName, skin);
-    }
+    // public static void AddTarotBackSkin(string internalName, Sprite skin)
+    // {
+    //     var spriteName = $"CustomTarotBack/{internalName}";
+    //     if (!TarotBackSprites.ContainsKey(spriteName)) TarotBackSprites.Add(spriteName, skin);
+    // }
 
     private static List<Tuple<int, string>> RegionOverrideFunction(AtlasRegion region)
     {
@@ -597,10 +598,11 @@ public static partial class CustomSkinManager
             Plugin.OnStart += Action;
     }
 
-    internal static string GetOrCreateTarotSkin(string internalName, Sprite skin)
+    internal static string GetOrCreateTarotSkin(string internalName, Sprite skin, Sprite? backSkin)
     {
-        var name = $"CustomTarotSkin_{internalName}";
+        var name = $"CustomTarotSkin/{internalName}";
         if (!TarotSprites.ContainsKey(name)) TarotSprites.Add(name, skin);
+        if (backSkin != null && !TarotSprites.ContainsKey(name)) TarotBackSprites.Add(name, backSkin);
         return name;
     }
 
@@ -622,7 +624,7 @@ public static partial class CustomSkinManager
         var back = template.Attachments.ToList()[0];
         back = new Skin.SkinEntry(back.SlotIndex, back.Name, back.Attachment.Copy());
 
-        if (back.Attachment is MeshAttachment customAttachmentBack && TarotSprites.TryGetValue("CustomTarotBack_" + skinName, out var backSprite))
+        if (back.Attachment is MeshAttachment customAttachmentBack && TarotSprites.TryGetValue("CustomTarotSkin/" + skinName, out var backSprite))
         {
             var backAtlas = CreateSingleTextureAtlas(backSprite);
             var backAtlasRegion = backAtlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT").Clone();
@@ -645,9 +647,9 @@ public static partial class CustomSkinManager
                         break;
                 }
 
-            customAttachmentBack.Name = "CustomTarotSkin_" + skinName;
+            customAttachmentBack.Name = "CustomTarotSkin/" + skinName;
             customAttachmentBack.SetRegion(backAtlasRegion, false);
-            backAtlasRegion.name = "CustomTarotSkin_" + atlasRegion.name;
+            backAtlasRegion.name = "CustomTarotSkin/" + atlasRegion.name;
             customAttachmentBack.HullLength = 4;
             customAttachmentBack.Triangles = [1, 2, 3, 1, 3, 0];
 
@@ -694,9 +696,9 @@ public static partial class CustomSkinManager
                         break;
                 }
 
-            customAttachment.Name = "CustomTarotSkin_" + skinName;
+            customAttachment.Name = "CustomTarotSkin/" + skinName;
             customAttachment.SetRegion(atlasRegion, false);
-            atlasRegion.name = "CustomTarotSkin_" + atlasRegion.name;
+            atlasRegion.name = "CustomTarotSkin/" + atlasRegion.name;
             customAttachment.HullLength = 4;
             customAttachment.Triangles = [1, 2, 3, 1, 3, 0];
 
