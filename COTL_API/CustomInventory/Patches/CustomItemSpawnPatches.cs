@@ -41,15 +41,31 @@ public static partial class CustomItemManager
                 if (transform == null)
                     break;
 
-                var customObject = GetObject.GetCustomObject(CustomItemList[type]).Spawn(transform);
-                customObject.transform.position = position;
-                customObject.transform.eulerAngles = Vector3.zero;
-                pickUp = customObject.GetComponent<PickUp>();
+                if (ItemPickUp.ShouldUseObjectPool(CustomItemList[type].ItemPickUpToImitate))
+                {
+                    ObjectPool.Spawn(ItemPickUp.GetItemPickUpPath(CustomItemList[type].ItemPickUpToImitate), position,
+                        Quaternion.identity, transform,
+                        o =>
+                        {
+                            var pickUp = o.GetComponent<PickUp>();
+                            if (pickUp == null) return;
 
-                if (pickUp == null) continue;
+                            pickUp.type = type;
+                            pickUp.Speed = StartSpeed;
+                        });
+                }
+                else
+                {
+                    var customObject = GetObject.GetCustomObject(CustomItemList[type]).Spawn(transform);
+                    customObject.transform.position = position;
+                    customObject.transform.eulerAngles = Vector3.zero;
+                    pickUp = customObject.GetComponent<PickUp>();
 
-                pickUp.type = type;
-                pickUp.Speed = StartSpeed;
+                    if (pickUp == null) continue;
+
+                    pickUp.type = type;
+                    pickUp.Speed = StartSpeed;
+                }
             }
 
             //whatever the user chose to imitate, all those objects get converted into the custom item without this....
