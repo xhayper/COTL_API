@@ -517,9 +517,10 @@ public static partial class CustomSkinManager
                 new[] { "Default" }.Concat(CustomPlayerSkins.Keys).ToArray();
     }
 
-    public static void AddTarotBackSkin(Sprite skin)
+    public static void AddTarotBackSkin(string internalName, Sprite skin)
     {
-        if (!TarotSprites.ContainsKey("CustomCardBack")) TarotSprites.Add("CustomCardBack", skin);
+        var spriteName = $"CustomTarotBack_{internalName}";
+        if (!TarotSprites.ContainsKey(spriteName)) TarotSprites.Add(spriteName, skin);
     }
 
     private static List<Tuple<int, string>> RegionOverrideFunction(AtlasRegion region)
@@ -621,9 +622,8 @@ public static partial class CustomSkinManager
         var back = template.Attachments.ToList()[0];
         back = new Skin.SkinEntry(back.SlotIndex, back.Name, back.Attachment.Copy());
 
-        if (back.Attachment is MeshAttachment customAttachmentBack && TarotSprites.ContainsKey("CustomCardBack"))
+        if (back.Attachment is MeshAttachment customAttachmentBack && TarotSprites.TryGetValue("CustomTarotBack_" + skinName, out var backSprite))
         {
-            var backSprite = TarotSprites["CustomCardBack"];
             var backAtlas = CreateSingleTextureAtlas(backSprite);
             var backAtlasRegion = backAtlas.GetAtlas().FindRegion("GENERIC_ATTACHMENT").Clone();
 
