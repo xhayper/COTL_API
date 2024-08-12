@@ -16,6 +16,9 @@ public abstract class CustomTarotCard
     public virtual Sprite? CustomSprite { get; internal set; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
+    public virtual Sprite? CustomBackSprite { get; internal set; } =
+        TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
+
     public virtual string Skin => "Custom";
 
     public virtual int TarotCardWeight => 150;
