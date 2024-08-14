@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using Lamb.UI;
 using LeTai.Asset.TranslucentImage;
 using Spine;
@@ -114,17 +114,22 @@ public partial class CustomSkinManager
 
         if (PlayerSkinOverride == null) return true;
 
+        __instance.IsGoat = DataManager.Instance.PlayerVisualFleece == 1003;
         __instance.PlayerSkin = new Skin("Player Skin");
+
         var skin = PlayerSkinOverride[0] ??
+                    (!__instance.isLamb || __instance.IsGoat ? __instance.Spine.Skeleton.Data.FindSkin("Goat") :
                    __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerFleece +
-                                                           (BlackAndWhite ? "_BW" : ""));
+                                                           (BlackAndWhite ? "_BW" : "")));
         __instance.PlayerSkin.AddSkin(skin);
         var text = WeaponData.Skins.Normal.ToString();
-        if (DataManager.Instance.CurrentWeapon != EquipmentType.None)
-            text = EquipmentManager.GetWeaponData(DataManager.Instance.CurrentWeapon).Skin.ToString();
+        
+        if (__instance.currentWeapon != EquipmentType.None)
+            text = EquipmentManager.GetWeaponData(__instance.currentWeapon).Skin.ToString();
 
         var skin2 = __instance.Spine.Skeleton.Data.FindSkin("Weapons/" + text);
         __instance.PlayerSkin.AddSkin(skin2);
+
         if (__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
             __instance.health.SpiritHearts <= 1f && !Mathf.Approximately(DataManager.Instance.PLAYER_TOTAL_HEALTH, 2f))
         {
@@ -144,6 +149,7 @@ public partial class CustomSkinManager
             __instance.PlayerSkin.AddSkin(skin4);
         }
 
+        __instance.PlayerSkin.AddSkin(__instance.Spine.Skeleton.Data.FindSkin("Mops/" + Mathf.Clamp(__instance.isLamb ? DataManager.Instance.ChoreXPLevel + 1 : DataManager.Instance.ChoreXPLevel_Coop + 1, 0, 9).ToString()));
         __instance.Spine.Skeleton.SetSkin(__instance.PlayerSkin);
         __instance.Spine.Skeleton.SetSlotsToSetupPose();
         __result = __instance.PlayerSkin;
