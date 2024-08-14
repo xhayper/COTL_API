@@ -50,7 +50,9 @@ public partial class CustomLocalizationManager
             SettingsManager.Settings.Game.Language = text;
             LocalizationManager.CurrentLanguage = text;
             __instance._cachedLanguage = text;
-            if (TwitchAuthentication.IsAuthenticated) TwitchRequest.SendEBSData();
+            
+            if (TwitchAuthentication.IsAuthenticated)
+                TwitchManager.SetLanguage(LocalizationManager.CurrentLanguageCode);
 
             UnityEngine.Debug.Log("GameSettings - Change Language to " + text);
             LocalizationManager.LocalizeAll(true);

@@ -76,7 +76,7 @@ public static partial class CustomItemManager
     }
 
     [HarmonyPatch(typeof(ObjectPool), nameof(ObjectPool.Spawn), typeof(string), typeof(Vector3), typeof(Quaternion),
-        typeof(Transform), typeof(Action<GameObject>))]
+        typeof(Transform), typeof(Action<GameObject>), typeof(bool))]
     private static class ObjectPoolSpawnStringPatches
     {
         [HarmonyPrefix]

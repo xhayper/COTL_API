@@ -36,9 +36,6 @@ public class DebugCode
     {
         if (Plugin.Instance == null || !Plugin.Instance.Debug) return true;
 
-        DataManager.Instance.PlayerRunTrinkets.Remove(card1);
-        DataManager.Instance.PlayerRunTrinkets.Remove(card2);
-
         __instance._card1 = GetRandModdedCard();
         __instance._card2 = GetRandVanillaCard();
         __instance._uiCard1.Play(__instance._card1);
@@ -52,7 +49,7 @@ public class DebugCode
         List<TarotCards.Card> vanillaCardList = new(DataManager.Instance.PlayerFoundTrinkets);
         vanillaCardList.RemoveAll(c =>
             CustomTarotCardManager.CustomTarotCardList.ContainsKey(c) ||
-            DataManager.Instance.PlayerRunTrinkets.Any(t => t.CardType == c));
+            PlayerFarming.Instance.RunTrinkets.Any(t => t.CardType == c));
 
         return new TarotCards.TarotCard(
             vanillaCardList.ElementAt(Random.Range(0,

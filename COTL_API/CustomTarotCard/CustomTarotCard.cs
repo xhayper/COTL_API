@@ -32,8 +32,8 @@ public abstract class CustomTarotCard
     public virtual string LocalisedName()
     {
         var upgradeIndex =
-            (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
-                where playerRunTrinket.CardType == CardType
+            (from playerRunTrinket in PlayerFarming.Instance.RunTrinkets
+             where playerRunTrinket.CardType == CardType
                 select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedName(upgradeIndex);
@@ -58,8 +58,8 @@ public abstract class CustomTarotCard
     public virtual string LocalisedDescription()
     {
         var upgradeIndex =
-            (from playerRunTrinket in DataManager.Instance.PlayerRunTrinkets
-                where playerRunTrinket.CardType == CardType
+            (from playerRunTrinket in PlayerFarming.Instance.RunTrinkets
+             where playerRunTrinket.CardType == CardType
                 select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedDescription(upgradeIndex);

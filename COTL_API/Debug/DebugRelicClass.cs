@@ -1,4 +1,4 @@
-﻿using COTL_API.CustomRelics;
+using COTL_API.CustomRelics;
 
 namespace COTL_API.Debug;
 
@@ -23,7 +23,8 @@ public class DebugRelicClass : CustomRelicData
     {
         UISprite = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
         UISpriteOutline = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
-        WorldSprite = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
+        CleansedSprite = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
+        CleansedSpriteOutline = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
         DamageRequiredToCharge = 5.0f;
     }
 

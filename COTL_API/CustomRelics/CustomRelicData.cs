@@ -1,4 +1,5 @@
-﻿using I2.Loc;
+using I2.Loc;
+using UnityEngine;
 
 namespace COTL_API.CustomRelics;
 
@@ -10,9 +11,11 @@ public abstract class CustomRelicData : RelicData
     {
         UISprite = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
         UISpriteOutline = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
-        WorldSprite = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
+        CleansedSprite = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
+        CleansedSpriteOutline = TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
         InteractionType = RelicInteractionType.Charging;
     }
+
 
     public abstract string InternalName { get; }
 
