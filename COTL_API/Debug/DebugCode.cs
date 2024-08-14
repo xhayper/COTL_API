@@ -36,9 +36,6 @@ public class DebugCode
     {
         if (Plugin.Instance == null || !Plugin.Instance.Debug) return true;
 
-        /*DataManager.Instance.PlayerRunTrinkets.Remove(card1);
-        DataManager.Instance.PlayerRunTrinkets.Remove(card2);*/
-
         __instance._card1 = GetRandModdedCard();
         __instance._card2 = GetRandVanillaCard();
         __instance._uiCard1.Play(__instance._card1);
