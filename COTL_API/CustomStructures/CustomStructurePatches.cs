@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using Lamb.UI.BuildMenu;
 using UnityEngine;
 
@@ -227,9 +227,9 @@ public partial class CustomStructureManager
         return false;
     }
 
-    [HarmonyPatch(typeof(Structure), nameof(Structure.Start))]
+    [HarmonyPatch(typeof(Structure), nameof(Structure.BrainAssigned))]
     [HarmonyPostfix]
-    private static void Structure_Start(Structure __instance)
+    private static void Structure_BrainAssigned(Structure __instance)
     {
         if (!CustomStructureList.TryGetValue(__instance.Type, out var value)) return;
         if (value.Interaction == null) return;
