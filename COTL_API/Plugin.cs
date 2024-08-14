@@ -249,8 +249,9 @@ public class Plugin : BaseUnityPlugin
             SettingsManager.Settings.Game.Language = "English";
             LocalizationManager.CurrentLanguage = "English";
 
-            if (TwitchAuthentication.IsAuthenticated)
-                TwitchRequest.SendEBSData();
+            /*if (TwitchAuthentication.IsAuthenticated)
+                TwitchRequest.InitialiseEBS();*/
+            TwitchManager.SetLanguage(LocalizationManager.CurrentLanguageCode);
 
             LocalizationManager.LocalizeAll(true);
         };
