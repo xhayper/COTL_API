@@ -110,15 +110,13 @@ public partial class CustomSkinManager
     [HarmonyPrefix]
     private static bool PlayerFarming_SetSkin(ref Skin __result, PlayerFarming __instance, bool BlackAndWhite)
     {
-        SkinUtils.InvokeOnFindSkin(!__instance.isLamb || __instance.IsGoat ? PlayerType.P2 : PlayerType.P1);
+        var playerType = !__instance.isLamb || __instance.IsGoat ? PlayerType.P2 : PlayerType.P1;
+
+        SkinUtils.InvokeOnFindSkin(playerType);
 
         if (PlayerSkinOverride == null) return true;
 
-        var skinToUse = !__instance.isLamb || __instance.IsGoat
-            ? PlayerSkinOverride.ContainsKey(PlayerType.P2) ? PlayerSkinOverride[PlayerType.P2] : null
-            : PlayerSkinOverride.ContainsKey(PlayerType.P1)
-                ? PlayerSkinOverride[PlayerType.P1]
-                : null;
+        var skinToUse = PlayerSkinOverride.ContainsKey(playerType) ? PlayerSkinOverride[playerType] : null;
 
         __instance.IsGoat = DataManager.Instance.PlayerVisualFleece == 1003;
         __instance.PlayerSkin = new Skin("Player Skin");
