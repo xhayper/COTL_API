@@ -7,14 +7,24 @@ namespace COTL_API.CustomSkins;
 
 internal static class SkinUtils
 {
-    public static bool SkinsLoaded { get; internal set; }
+    public static bool SkinP1Loaded { get; internal set; }
 
-    public static Action? SkinToLoad { get; set; } = () => { };
+    public static Action? SkinP1ToLoad { get; set; } = () => { };
 
-    public static event Action OnFindSkin = () =>
+    public static bool SkinP2Loaded { get; internal set; }
+
+    public static Action? SkinP2ToLoad { get; set; } = () => { };
+
+    public static event Action OnFindSkinP1 = () =>
     {
-        SkinToLoad.Invoke();
-        SkinsLoaded = true;
+        SkinP1ToLoad.Invoke();
+        SkinP1Loaded = true;
+    };
+
+    public static event Action OnFindSkinP2 = () =>
+    {
+        SkinP2ToLoad.Invoke();
+        SkinP2Loaded = true;
     };
 
     public static void ApplyOverride(Skin skin, Attachment a, int slot, string ovrName, AtlasRegion atlasRegion,
@@ -131,7 +141,7 @@ internal static class SkinUtils
         foreach (var ovrs in atlas.GetAtlas().regions.Select(regionOverrideFunction)) overrideRegions.AddRange(ovrs);
 
         List<Tuple<int, string, float, float, float, float>> overrides = [];
-        List<AtlasRegion> list = atlas.GetAtlas().regions;
+        var list = atlas.GetAtlas().regions;
         for (var index = 0; index < list.Count; index++)
         {
             var scale = new[] { 0f, 0f, 1f, 1f };
@@ -168,9 +178,17 @@ internal static class SkinUtils
         return overrides;
     }
 
-    internal static void InvokeOnFindSkin()
+    internal static void InvokeOnFindSkin(PlayerType who)
     {
-        OnFindSkin.Invoke();
-        OnFindSkin = delegate { };
+        if (who == PlayerType.P1)
+        {
+            OnFindSkinP1.Invoke();
+            OnFindSkinP1 = delegate { };
+        }
+        else
+        {
+            OnFindSkinP2.Invoke();
+            OnFindSkinP2 = delegate { };
+        }
     }
 }

@@ -138,7 +138,7 @@ public class Plugin : BaseUnityPlugin
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
                 if (0 >= i)
-                    CustomSkinManager.ResetPlayerSkin();
+                    CustomSkinManager.ResetPlayerSkin(PlayerType.P1);
                 else
                     CustomSkinManager.SetPlayerSkinOverride(
                         PlayerType.P1,
@@ -150,7 +150,7 @@ public class Plugin : BaseUnityPlugin
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
                 if (0 >= i)
-                    CustomSkinManager.ResetPlayerSkin();
+                    CustomSkinManager.ResetPlayerSkin(PlayerType.P2);
                 else
                     CustomSkinManager.SetPlayerSkinOverride(
                         PlayerType.P2,
@@ -171,11 +171,17 @@ public class Plugin : BaseUnityPlugin
         {
             if (!isActivated)
             {
-                if (SkinP1Settings?.Value != "Debug Skin") return;
-                SkinP1Settings.Value = "Lamb";
-                if (SkinP2Settings?.Value != "Debug Skin") return;
-                SkinP2Settings.Value = "Goat";
-                CustomSkinManager.ResetPlayerSkin();
+                if (SkinP1Settings?.Value == "Debug Skin")
+                {
+                    SkinP1Settings.Value = "Lamb";
+                    CustomSkinManager.ResetPlayerSkin(PlayerType.P1);
+                }
+
+                if (SkinP2Settings?.Value == "Debug Skin")
+                {
+                    SkinP2Settings.Value = "Goat";
+                    CustomSkinManager.ResetPlayerSkin(PlayerType.P2);
+                }
             }
             else
             {
