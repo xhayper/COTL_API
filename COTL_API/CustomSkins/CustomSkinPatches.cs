@@ -114,9 +114,9 @@ public partial class CustomSkinManager
 
         SkinUtils.InvokeOnFindSkin(playerType);
 
-        if (PlayerSkinOverride == null) return true;
+        if (!PlayerSkinOverride.ContainsKey(playerType)) return true;
 
-        var skinToUse = PlayerSkinOverride.ContainsKey(playerType) ? PlayerSkinOverride[playerType] : null;
+        var skinToUse = PlayerSkinOverride[playerType];
 
         __instance.IsGoat = DataManager.Instance.PlayerVisualFleece == 1003;
         __instance.PlayerSkin = new Skin("Player Skin");
