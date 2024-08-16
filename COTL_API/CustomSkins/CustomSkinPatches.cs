@@ -117,14 +117,12 @@ public partial class CustomSkinManager
         if (!PlayerSkinOverride.ContainsKey(playerType)) return true;
 
         var skinToUse = PlayerSkinOverride[playerType];
+        if (skinToUse == null) return true;
 
         __instance.IsGoat = DataManager.Instance.PlayerVisualFleece == 1003;
         __instance.PlayerSkin = new Skin("Player Skin");
 
-        var skin = skinToUse != null ? skinToUse[0] :
-            !__instance.isLamb || __instance.IsGoat ? __instance.Spine.Skeleton.Data.FindSkin("Goat") :
-            __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerVisualFleece +
-                                                    (BlackAndWhite ? "_BW" : ""));
+        var skin = skinToUse[0];
 
         __instance.PlayerSkin.AddSkin(skin);
         var text = WeaponData.Skins.Normal.ToString();
@@ -139,12 +137,10 @@ public partial class CustomSkinManager
             __instance.health.SpiritHearts <= 1f && !Mathf.Approximately(DataManager.Instance.PLAYER_TOTAL_HEALTH, 2f))
         {
             var skin3 = __instance.Spine.Skeleton.Data.FindSkin("Hurt2");
-            if (skinToUse != null)
-            {
-                if (skinToUse[2] != null) skin3 = skinToUse[2];
-                else if (skinToUse[1] != null) skin3 = skinToUse[1];
-                else if (skinToUse[0] != null) skin3 = skinToUse[0];
-            }
+
+            if (skinToUse[2] != null) skin3 = skinToUse[2];
+            else if (skinToUse[1] != null) skin3 = skinToUse[1];
+            else if (skinToUse[0] != null) skin3 = skinToUse[0];
 
             __instance.PlayerSkin.AddSkin(skin3);
         }
