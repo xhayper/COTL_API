@@ -65,12 +65,12 @@ public class Plugin : BaseUnityPlugin
 
     internal static bool Started { get; private set; }
 
-    internal static ObjectDictionary? SettingsData => Instance != null ? Instance.ModdedSettingsData.Data : null;
+    internal static ObjectDictionary? SettingsData => Instance?.ModdedSettingsData.Data;
 
     internal static Dictionary<int, CustomObjective>? QuestData =>
         Instance != null ? Instance.APISlotData.Data?.QuestData : null;
 
-    internal static ObjectDictionary? EnumData => Instance != null ? Instance.APIData.Data?.EnumData : null;
+    internal static ObjectDictionary? EnumData => Instance?.APIData.Data?.EnumData;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     internal InventoryItem.ITEM_TYPE DebugItem { get; private set; }
@@ -142,7 +142,7 @@ public class Plugin : BaseUnityPlugin
                 else
                     CustomSkinManager.SetPlayerSkinOverride(
                         PlayerType.P1,
-                        CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
+                        CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i));
             });
 
         SkinP2Settings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Player 2 Skin",
@@ -154,7 +154,7 @@ public class Plugin : BaseUnityPlugin
                 else
                     CustomSkinManager.SetPlayerSkinOverride(
                         PlayerType.P2,
-                        CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
+                        CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i));
             });
 
         CustomSettingsManager.AddBepInExConfig("API", "Skip Splash Screen", _skipSplashScreen);
