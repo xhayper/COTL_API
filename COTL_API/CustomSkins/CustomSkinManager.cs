@@ -671,8 +671,8 @@ public static partial class CustomSkinManager
             customAttachment.Name = skinName;
             customAttachment.SetRegion(atlasRegion, false);
             atlasRegion.name = skinName + "/" + atlasRegion.name;
-            customAttachment.HullLength = 4;
-            customAttachment.Triangles = [1, 2, 3, 1, 3, 0];
+            /*customAttachment.HullLength = 4;
+            customAttachment.Triangles = [1, 2, 3, 1, 3, 0];*/
 
             float pw = atlasRegion.page.width;
             float ph = atlasRegion.page.height;
@@ -684,8 +684,8 @@ public static partial class CustomSkinManager
             [
                 (x + w) / pw, y / ph, (x + w) / pw, (y + h) / ph, x / pw, (y + h) / ph, x / pw, y / ph
             ];
-            customAttachment.Vertices = [minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1];
-            customAttachment.WorldVerticesLength = 8;
+            /*customAttachment.Vertices = [minY, minX, 1, maxY, minX, 1, maxY, maxX, 1, minY, maxX, 1];
+            customAttachment.WorldVerticesLength = 8;*/
             customAttachment.UpdateUVs();
 
             skin.SetAttachment(front.SlotIndex, front.Name, customAttachment);
