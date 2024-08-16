@@ -748,6 +748,14 @@ public static partial class CustomSkinManager
     public static void ResetPlayerSkin()
     {
         PlayerSkinOverride = [];
-        SkinUtils.SkinToLoad = null;
+        SkinUtils.SkinP1ToLoad = null;
+        SkinUtils.SkinP2ToLoad = null;
+    }
+
+    public static void ResetPlayerSkin(PlayerType who)
+    {
+        PlayerSkinOverride[who] = null;
+        if (who == PlayerType.P1) SkinUtils.SkinP1ToLoad = null;
+        else SkinUtils.SkinP1ToLoad = null;
     }
 }

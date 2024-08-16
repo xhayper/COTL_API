@@ -22,9 +22,19 @@ internal class OverridingPlayerSkin(string name, Func<Skin?> overrideSkin) : Cus
             CustomSkinManager.SetPlayerSkinOverride(who, _cachedSkin);
         }
 
-        if (!SkinUtils.SkinsLoaded)
-            SkinUtils.SkinToLoad = Action;
+        if (who == PlayerType.P1)
+        {
+            if (!SkinUtils.SkinP1Loaded)
+                SkinUtils.SkinP1ToLoad = Action;
+            else
+                Action();
+        }
         else
-            Action();
+        {
+            if (!SkinUtils.SkinP2Loaded)
+                SkinUtils.SkinP2ToLoad = Action;
+            else
+                Action();
+        }
     }
 }
