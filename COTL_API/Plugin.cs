@@ -29,7 +29,8 @@ namespace COTL_API;
 [HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
-    internal static Dropdown? SkinSettings;
+    internal static Dropdown? SkinP1Settings;
+    internal static Dropdown? SkinP2Settings;
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
     internal readonly ModdedSaveData<ApiData> APIData = new(MyPluginInfo.PLUGIN_GUID)
@@ -125,13 +126,27 @@ public class Plugin : BaseUnityPlugin
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S2));
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
 
-        SkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Lamb Skin", "Default",
-            new[] { "Default" }.Concat(CustomSkinManager.CustomPlayerSkins.Keys).ToArray(), i =>
+        SkinP1Settings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Player 1 Skin",
+            "Default",
+            ["Default", .. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
                 if (0 >= i)
                     CustomSkinManager.ResetPlayerSkin();
                 else
                     CustomSkinManager.SetPlayerSkinOverride(
+                        PlayerType.P1,
+                        CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
+            });
+
+        SkinP2Settings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Player 2 Skin",
+            "Default",
+            ["Default", .. CustomSkinManager.CustomPlayerSkins.Keys], i =>
+            {
+                if (0 >= i)
+                    CustomSkinManager.ResetPlayerSkin();
+                else
+                    CustomSkinManager.SetPlayerSkinOverride(
+                        PlayerType.P2,
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i - 1));
             });
 
@@ -149,8 +164,10 @@ public class Plugin : BaseUnityPlugin
         {
             if (!isActivated)
             {
-                if (SkinSettings?.Value != "Debug Skin") return;
-                SkinSettings.Value = "Default";
+                if (SkinP1Settings?.Value != "Debug Skin") return;
+                SkinP1Settings.Value = "Default";
+                if (SkinP2Settings?.Value != "Debug Skin") return;
+                SkinP2Settings.Value = "Default";
                 CustomSkinManager.ResetPlayerSkin();
             }
             else

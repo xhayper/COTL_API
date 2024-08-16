@@ -87,8 +87,8 @@ internal static class SkinUtils
     {
         var name = to.name;
         from.Attachments.ToList().ForEach(att => { to.SetAttachment(att.SlotIndex, att.Name, att.Attachment.Copy()); });
-        from.Bones.ToList().ForEach(bone => { to.Bones.Add(bone); });
-        from.Constraints.ToList().ForEach(con => { to.Constraints.Add(con); });
+        from.Bones.ToList().ForEach(to.Bones.Add);
+        from.Constraints.ToList().ForEach(to.Constraints.Add);
 
         foreach (var (slot, ovrName, translationX, translationY, scaleX, scaleY) in overrides)
         {

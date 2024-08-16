@@ -18,13 +18,13 @@ public partial class CustomSkinManager
     private static void SkeletonData_FindSkin(ref Skin? __result, SkeletonData __instance, string skinName)
     {
         if (__result != null) return;
-        
+
         if (skinName.StartsWith("CustomTarotSkin/"))
         {
             __result = CreateOrGetTarotSkinFromTemplate(__instance, skinName);
             return;
         }
-        
+
         if (CustomFollowerSkins.TryGetValue(skinName, out var skin)) __result = skin;
         if (AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
     }
@@ -114,16 +114,21 @@ public partial class CustomSkinManager
 
         if (PlayerSkinOverride == null) return true;
 
+        var skinToUse = !__instance.isLamb || __instance.IsGoat
+            ? PlayerSkinOverride[PlayerType.P2]
+            : PlayerSkinOverride[PlayerType.P1];
+
         __instance.IsGoat = DataManager.Instance.PlayerVisualFleece == 1003;
         __instance.PlayerSkin = new Skin("Player Skin");
 
-        var skin = PlayerSkinOverride[0] ??
-                    (!__instance.isLamb || __instance.IsGoat ? __instance.Spine.Skeleton.Data.FindSkin("Goat") :
-                   __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerFleece +
-                                                           (BlackAndWhite ? "_BW" : "")));
+        var skin = skinToUse != null ? skinToUse[0] :
+            !__instance.isLamb || __instance.IsGoat ? __instance.Spine.Skeleton.Data.FindSkin("Goat") :
+            __instance.Spine.Skeleton.Data.FindSkin("Lamb_" + DataManager.Instance.PlayerVisualFleece +
+                                                    (BlackAndWhite ? "_BW" : ""));
+
         __instance.PlayerSkin.AddSkin(skin);
         var text = WeaponData.Skins.Normal.ToString();
-        
+
         if (__instance.currentWeapon != EquipmentType.None)
             text = EquipmentManager.GetWeaponData(__instance.currentWeapon).Skin.ToString();
 
@@ -133,8 +138,14 @@ public partial class CustomSkinManager
         if (__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
             __instance.health.SpiritHearts <= 1f && !Mathf.Approximately(DataManager.Instance.PLAYER_TOTAL_HEALTH, 2f))
         {
-            var skin3 = PlayerSkinOverride[2] ?? PlayerSkinOverride[1] ??
-                PlayerSkinOverride[0] ?? __instance.Spine.Skeleton.Data.FindSkin("Hurt2");
+            var skin3 = __instance.Spine.Skeleton.Data.FindSkin("Hurt2");
+            if (skinToUse != null)
+            {
+                if (skinToUse[2] != null) skin3 = skinToUse[2];
+                if (skinToUse[1] != null) skin3 = skinToUse[1];
+                if (skinToUse[0] != null) skin3 = skinToUse[0];
+            }
+
             __instance.PlayerSkin.AddSkin(skin3);
         }
         else if ((__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
@@ -144,12 +155,24 @@ public partial class CustomSkinManager
                   __instance.health.SpiritHearts <= 1f &&
                   Mathf.Approximately(DataManager.Instance.PLAYER_TOTAL_HEALTH, 2f)))
         {
-            var skin4 = PlayerSkinOverride[1] ?? PlayerSkinOverride[2] ??
-                PlayerSkinOverride[0] ?? __instance.Spine.Skeleton.Data.FindSkin("Hurt1");
+            var skin4 = __instance.Spine.Skeleton.Data.FindSkin("Hurt1");
+            if (skinToUse != null)
+            {
+                if (skinToUse[1] != null) skin4 = skinToUse[1];
+                if (skinToUse[0] != null) skin4 = skinToUse[0];
+            }
+
             __instance.PlayerSkin.AddSkin(skin4);
         }
 
-        __instance.PlayerSkin.AddSkin(__instance.Spine.Skeleton.Data.FindSkin("Mops/" + Mathf.Clamp(__instance.isLamb ? DataManager.Instance.ChoreXPLevel + 1 : DataManager.Instance.ChoreXPLevel_Coop + 1, 0, 9).ToString()));
+        __instance.PlayerSkin.AddSkin(__instance.Spine.Skeleton.Data.FindSkin("Mops/" +
+                                                                              Mathf.Clamp(
+                                                                                  __instance.isLamb
+                                                                                      ? DataManager.Instance
+                                                                                          .ChoreXPLevel + 1
+                                                                                      : DataManager.Instance
+                                                                                          .ChoreXPLevel_Coop + 1, 0,
+                                                                                  9)));
         __instance.Spine.Skeleton.SetSkin(__instance.PlayerSkin);
         __instance.Spine.Skeleton.SetSlotsToSetupPose();
         __result = __instance.PlayerSkin;

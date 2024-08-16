@@ -86,12 +86,12 @@ public partial class CustomRelicManager
     {
         foreach (var relic in CustomRelicDataList.Select(relic => relic.Value))
         {
-            __result = __result.Append(relic).ToArray();
+            __result = [.. __result, relic];
             if (relic.CanBeBlessed)
-                __result = __result.Append(relic.ToBlessed()).ToArray();
+                __result = [.. __result, relic.ToBlessed()];
 
             if (relic.CanBeDamned)
-                __result = __result.Append(relic.ToDamned()).ToArray();
+                __result = [.. __result, relic.ToDamned()];
         }
     }
 }

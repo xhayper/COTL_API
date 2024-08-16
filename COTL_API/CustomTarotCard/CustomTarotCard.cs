@@ -33,7 +33,7 @@ public abstract class CustomTarotCard
     {
         var upgradeIndex =
             (from playerRunTrinket in PlayerFarming.Instance.RunTrinkets
-             where playerRunTrinket.CardType == CardType
+                where playerRunTrinket.CardType == CardType
                 select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedName(upgradeIndex);
@@ -59,7 +59,7 @@ public abstract class CustomTarotCard
     {
         var upgradeIndex =
             (from playerRunTrinket in PlayerFarming.Instance.RunTrinkets
-             where playerRunTrinket.CardType == CardType
+                where playerRunTrinket.CardType == CardType
                 select playerRunTrinket.UpgradeIndex).FirstOrDefault();
 
         return LocalisedDescription(upgradeIndex);
