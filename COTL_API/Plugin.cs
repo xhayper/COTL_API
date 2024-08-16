@@ -137,7 +137,7 @@ public class Plugin : BaseUnityPlugin
             "Lamb",
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
-                if (0 >= i)
+                if (0 > i)
                     CustomSkinManager.ResetPlayerSkin(PlayerType.P1);
                 else
                     CustomSkinManager.SetPlayerSkinOverride(
@@ -149,7 +149,7 @@ public class Plugin : BaseUnityPlugin
             "Goat",
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
-                if (0 >= i)
+                if (0 > i)
                     CustomSkinManager.ResetPlayerSkin(PlayerType.P2);
                 else
                     CustomSkinManager.SetPlayerSkinOverride(
