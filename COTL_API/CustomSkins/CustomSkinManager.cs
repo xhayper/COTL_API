@@ -6,6 +6,12 @@ using UnityEngine;
 
 namespace COTL_API.CustomSkins;
 
+public enum PlayerType
+{
+    P1,
+    P2
+}
+
 [HarmonyPatch]
 public static partial class CustomSkinManager
 {
@@ -461,7 +467,7 @@ public static partial class CustomSkinManager
         { "Curses/Icon_Curse_Tentacle", Tuple.Create(122, "Curses/Icon_Curse_Tentacle") }
     };
 
-    internal static List<Skin?>? PlayerSkinOverride { get; set; }
+    internal static Dictionary<PlayerType, List<Skin?>?> PlayerSkinOverride { get; set; } = [];
 
     public static void AddFollowerSkin(CustomFollowerSkin followerSkin)
     {
@@ -490,9 +496,13 @@ public static partial class CustomSkinManager
     {
         CustomPlayerSkins.Add(playerSkin.Name, playerSkin);
 
-        if (Plugin.SkinSettings != null)
-            Plugin.SkinSettings.Options =
-                new[] { "Default" }.Concat(CustomPlayerSkins.Keys).ToArray();
+        if (Plugin.SkinP1Settings != null)
+            Plugin.SkinP1Settings.Options =
+                ["Default", .. CustomPlayerSkins.Keys];
+
+        if (Plugin.SkinP2Settings != null)
+            Plugin.SkinP2Settings.Options =
+                ["Default", .. CustomPlayerSkins.Keys];
     }
 
     private static List<Tuple<int, string>> RegionOverrideFunction(AtlasRegion region)
@@ -717,7 +727,8 @@ public static partial class CustomSkinManager
         return atlas;
     }
 
-    public static void SetPlayerSkinOverride(Skin? normalSkin, Skin? hurtSkin = null, Skin? hurtSkin2 = null)
+    public static void SetPlayerSkinOverride(PlayerType who, Skin? normalSkin, Skin? hurtSkin = null,
+        Skin? hurtSkin2 = null)
     {
         List<Skin?> skins =
         [
@@ -726,20 +737,17 @@ public static partial class CustomSkinManager
             hurtSkin2
         ];
 
-        if (PlayerSkinOverride != null)
-            LogDebug("PlayerSkinOverride already exists. Overwriting.");
-
-        PlayerSkinOverride = skins;
+        PlayerSkinOverride[who] = skins;
     }
 
-    public static void SetPlayerSkinOverride(CustomPlayerSkin skin)
+    public static void SetPlayerSkinOverride(PlayerType who, CustomPlayerSkin skin)
     {
-        skin.Apply();
+        skin.Apply(who);
     }
 
     public static void ResetPlayerSkin()
     {
-        PlayerSkinOverride = null;
+        PlayerSkinOverride = [];
         SkinUtils.SkinToLoad = null;
     }
 }

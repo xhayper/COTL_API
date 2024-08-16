@@ -6,7 +6,7 @@ public abstract class CustomPlayerSkin : CustomSkin
 {
     private Skin? _cachedSkin;
 
-    public virtual void Apply()
+    public virtual void Apply(PlayerType who)
     {
         void Action()
         {
@@ -49,7 +49,7 @@ public abstract class CustomPlayerSkin : CustomSkin
                 _cachedSkin = overrideSkin;
             }
 
-            CustomSkinManager.SetPlayerSkinOverride(_cachedSkin);
+            CustomSkinManager.SetPlayerSkinOverride(who, _cachedSkin);
         }
 
         if (!SkinUtils.SkinsLoaded)

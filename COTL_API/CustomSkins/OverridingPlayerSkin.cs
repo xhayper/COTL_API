@@ -13,13 +13,13 @@ internal class OverridingPlayerSkin(string name, Func<Skin?> overrideSkin) : Cus
     public override Texture2D Texture => null!;
     public override List<SkinOverride> Overrides => null!;
 
-    public override void Apply()
+    public override void Apply(PlayerType who)
     {
         void Action()
         {
             _cachedSkin ??= overrideSkin.Invoke();
 
-            CustomSkinManager.SetPlayerSkinOverride(_cachedSkin);
+            CustomSkinManager.SetPlayerSkinOverride(who, _cachedSkin);
         }
 
         if (!SkinUtils.SkinsLoaded)

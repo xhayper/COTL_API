@@ -19,11 +19,22 @@ public static class SettingsPatches
     [HarmonyPostfix]
     private static void LoadMenu_OnTryLoadSaveSlot()
     {
-        if (Plugin.SkinSettings?.Value is null or "Default") return;
+        // ReSharper disable once InvertIf
+        if (Plugin.SkinP1Settings?.Value is not null and not "Default")
+        {
+            if (CustomSkinManager.CustomPlayerSkins.TryGetValue(Plugin.SkinP1Settings.Value, out var skin))
+                CustomSkinManager.SetPlayerSkinOverride(PlayerType.P1, skin);
+            else
+                Plugin.SkinP1Settings.Value = "Default";
+        }
 
-        if (CustomSkinManager.CustomPlayerSkins.TryGetValue(Plugin.SkinSettings.Value, out var skin))
-            CustomSkinManager.SetPlayerSkinOverride(skin);
-        else
-            Plugin.SkinSettings.Value = "Default";
+        // ReSharper disable once InvertIf
+        if (Plugin.SkinP2Settings?.Value is not null and not "Default")
+        {
+            if (CustomSkinManager.CustomPlayerSkins.TryGetValue(Plugin.SkinP2Settings.Value, out var skin))
+                CustomSkinManager.SetPlayerSkinOverride(PlayerType.P2, skin);
+            else
+                Plugin.SkinP2Settings.Value = "Default";
+        }
     }
 }

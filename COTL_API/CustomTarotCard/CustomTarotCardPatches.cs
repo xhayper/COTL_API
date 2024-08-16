@@ -75,9 +75,11 @@ public partial class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedDescription), typeof(TarotCards.Card), typeof(PlayerFarming))]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedDescription), typeof(TarotCards.Card),
+        typeof(PlayerFarming))]
     [HarmonyPrefix]
-    private static bool TarotCards_LocalisedDescription(TarotCards.Card Type, PlayerFarming playerFarming, ref string __result)
+    private static bool TarotCards_LocalisedDescription(TarotCards.Card Type, PlayerFarming playerFarming,
+        ref string __result)
     {
         if (!CustomTarotCardList.TryGetValue(Type, out var value)) return true;
 
@@ -86,9 +88,11 @@ public partial class CustomTarotCardManager
         return false;
     }
 
-    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedDescription), typeof(TarotCards.Card), typeof(int), typeof(PlayerFarming))]
+    [HarmonyPatch(typeof(TarotCards), nameof(TarotCards.LocalisedDescription), typeof(TarotCards.Card), typeof(int),
+        typeof(PlayerFarming))]
     [HarmonyPrefix]
-    private static bool TarotCards_LocalisedDescription(TarotCards.Card Type, PlayerFarming playerFarming, int upgradeIndex, ref string __result)
+    private static bool TarotCards_LocalisedDescription(TarotCards.Card Type, PlayerFarming playerFarming,
+        int upgradeIndex, ref string __result)
     {
         if (!CustomTarotCardList.TryGetValue(Type, out var value)) return true;
 
