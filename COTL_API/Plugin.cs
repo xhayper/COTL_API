@@ -31,6 +31,7 @@ public class Plugin : BaseUnityPlugin
 {
     internal static Dropdown? SkinP1Settings;
     internal static Dropdown? SkinP2Settings;
+
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
     internal readonly ModdedSaveData<ApiData> APIData = new(MyPluginInfo.PLUGIN_GUID)
@@ -109,26 +110,32 @@ public class Plugin : BaseUnityPlugin
 
         Skin S1()
         {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
+            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Lamb");
         }
 
         Skin S2()
         {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
+            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
         }
 
         Skin S3()
         {
+            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
+        }
+
+        Skin S4()
+        {
             return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake");
         }
 
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", S1));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S2));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S3));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Lamb", S1));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", S2));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S3));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S4));
 
         SkinP1Settings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Player 1 Skin",
-            "Default",
-            ["Default", .. CustomSkinManager.CustomPlayerSkins.Keys], i =>
+            "Lamb",
+            [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
                 if (0 >= i)
                     CustomSkinManager.ResetPlayerSkin();
@@ -139,8 +146,8 @@ public class Plugin : BaseUnityPlugin
             });
 
         SkinP2Settings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Player 2 Skin",
-            "Default",
-            ["Default", .. CustomSkinManager.CustomPlayerSkins.Keys], i =>
+            "Goat",
+            [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
                 if (0 >= i)
                     CustomSkinManager.ResetPlayerSkin();
@@ -165,9 +172,9 @@ public class Plugin : BaseUnityPlugin
             if (!isActivated)
             {
                 if (SkinP1Settings?.Value != "Debug Skin") return;
-                SkinP1Settings.Value = "Default";
+                SkinP1Settings.Value = "Lamb";
                 if (SkinP2Settings?.Value != "Debug Skin") return;
-                SkinP2Settings.Value = "Default";
+                SkinP2Settings.Value = "Goat";
                 CustomSkinManager.ResetPlayerSkin();
             }
             else

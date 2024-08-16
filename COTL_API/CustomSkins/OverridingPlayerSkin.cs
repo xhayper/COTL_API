@@ -13,7 +13,7 @@ internal class OverridingPlayerSkin(string name, Func<Skin?> overrideSkin) : Cus
     public override Texture2D Texture => null!;
     public override List<SkinOverride> Overrides => null!;
 
-    public override void Apply(PlayerType who)
+    public override void Apply(PlayerType who = PlayerType.P1)
     {
         void Action()
         {
