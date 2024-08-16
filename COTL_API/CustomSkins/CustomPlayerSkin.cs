@@ -6,13 +6,13 @@ public abstract class CustomPlayerSkin : CustomSkin
 {
     private Skin? _cachedSkin;
 
-    public virtual void Apply(PlayerType who)
+    public virtual void Apply(PlayerType who = PlayerType.P1)
     {
         void Action()
         {
             if (_cachedSkin == null)
             {
-                var from = PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Lamb");
+                var from = PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin(who == PlayerType.P1 ? "Lamb" : "Goat");
                 Skin to = new(Name);
 
                 var overrides = SkinUtils.CreateSkinAtlas(Name, Texture, GenerateAtlasText(),

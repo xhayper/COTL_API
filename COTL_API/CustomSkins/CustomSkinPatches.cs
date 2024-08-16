@@ -115,8 +115,10 @@ public partial class CustomSkinManager
         if (PlayerSkinOverride == null) return true;
 
         var skinToUse = !__instance.isLamb || __instance.IsGoat
-            ? PlayerSkinOverride[PlayerType.P2]
-            : PlayerSkinOverride[PlayerType.P1];
+            ? PlayerSkinOverride.ContainsKey(PlayerType.P2) ? PlayerSkinOverride[PlayerType.P2] : null
+            : PlayerSkinOverride.ContainsKey(PlayerType.P1)
+                ? PlayerSkinOverride[PlayerType.P1]
+                : null;
 
         __instance.IsGoat = DataManager.Instance.PlayerVisualFleece == 1003;
         __instance.PlayerSkin = new Skin("Player Skin");

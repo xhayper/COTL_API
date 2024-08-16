@@ -498,11 +498,11 @@ public static partial class CustomSkinManager
 
         if (Plugin.SkinP1Settings != null)
             Plugin.SkinP1Settings.Options =
-                ["Default", .. CustomPlayerSkins.Keys];
+                [.. CustomPlayerSkins.Keys];
 
         if (Plugin.SkinP2Settings != null)
             Plugin.SkinP2Settings.Options =
-                ["Default", .. CustomPlayerSkins.Keys];
+                [.. CustomPlayerSkins.Keys];
     }
 
     private static List<Tuple<int, string>> RegionOverrideFunction(AtlasRegion region)

@@ -20,21 +20,21 @@ public static class SettingsPatches
     private static void LoadMenu_OnTryLoadSaveSlot()
     {
         // ReSharper disable once InvertIf
-        if (Plugin.SkinP1Settings?.Value is not null and not "Default")
+        if (Plugin.SkinP1Settings?.Value is not null)
         {
             if (CustomSkinManager.CustomPlayerSkins.TryGetValue(Plugin.SkinP1Settings.Value, out var skin))
                 CustomSkinManager.SetPlayerSkinOverride(PlayerType.P1, skin);
             else
-                Plugin.SkinP1Settings.Value = "Default";
+                Plugin.SkinP1Settings.Value = "Lamb";
         }
 
         // ReSharper disable once InvertIf
-        if (Plugin.SkinP2Settings?.Value is not null and not "Default")
+        if (Plugin.SkinP2Settings?.Value is not null)
         {
             if (CustomSkinManager.CustomPlayerSkins.TryGetValue(Plugin.SkinP2Settings.Value, out var skin))
                 CustomSkinManager.SetPlayerSkinOverride(PlayerType.P2, skin);
             else
-                Plugin.SkinP2Settings.Value = "Default";
+                Plugin.SkinP2Settings.Value = "Goat";
         }
     }
 }
