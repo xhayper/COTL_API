@@ -171,12 +171,14 @@ public class Plugin : BaseUnityPlugin
         {
             if (!isActivated)
             {
+                // ReSharper disable once InvertIf
                 if (SkinP1Settings?.Value == "Debug Skin")
                 {
                     SkinP1Settings.Value = "Lamb";
                     CustomSkinManager.ResetPlayerSkin(PlayerType.P1);
                 }
 
+                // ReSharper disable once InvertIf
                 if (SkinP2Settings?.Value == "Debug Skin")
                 {
                     SkinP2Settings.Value = "Goat";
