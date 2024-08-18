@@ -26,7 +26,7 @@ public partial class CustomSkinManager
         }
 
         if (CustomFollowerSkins.TryGetValue(skinName, out var skin)) __result = skin;
-        if (AlwaysUnlockedSkins.ContainsKey(skinName) && AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
+        if (AlwaysUnlockedSkins.TryGetValue(skinName, out var alwaysUnlocked) && alwaysUnlocked) DataManager.SetFollowerSkinUnlocked(skinName);
     }
 
     [HarmonyPatch(typeof(Graphics), nameof(Graphics.CopyTexture), typeof(Texture), typeof(int), typeof(int),
@@ -57,8 +57,8 @@ public partial class CustomSkinManager
         var fullPix = orig.GetPixels32();
         var croppedPix = new Color32[srcWidth * srcHeight];
         for (var i = 0; i < srcHeight; i++)
-        for (var j = 0; j < srcWidth; j++)
-            croppedPix[i * srcWidth + j] = fullPix[(i + srcY) * orig.width + j + srcX];
+            for (var j = 0; j < srcWidth; j++)
+                croppedPix[i * srcWidth + j] = fullPix[(i + srcY) * orig.width + j + srcX];
 
         dst2d.SetPixels32(croppedPix);
 
