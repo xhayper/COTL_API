@@ -26,7 +26,7 @@ public partial class CustomSkinManager
         }
 
         if (CustomFollowerSkins.TryGetValue(skinName, out var skin)) __result = skin;
-        if (AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
+        if (AlwaysUnlockedSkins.ContainsKey(skinName) && AlwaysUnlockedSkins[skinName]) DataManager.SetFollowerSkinUnlocked(skinName);
     }
 
     [HarmonyPatch(typeof(Graphics), nameof(Graphics.CopyTexture), typeof(Texture), typeof(int), typeof(int),
