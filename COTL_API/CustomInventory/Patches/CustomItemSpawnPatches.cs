@@ -1,6 +1,7 @@
 using HarmonyLib;
 using MMBiomeGeneration;
 using MMRoomGeneration;
+using MMTools;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
@@ -47,11 +48,19 @@ public static partial class CustomItemManager
                         Quaternion.identity, transform,
                         o =>
                         {
+                            var item = CustomItemList[type];
+
+                            o.name = item.InternalName;
+                            o.transform.localScale = item.LocalScale;
+                            var sprite = o.GetComponentInChildren<SpriteRenderer>();
+                            sprite.sprite = item.Sprite;
+
                             var pickUp = o.GetComponent<PickUp>();
                             if (pickUp == null) return;
 
                             pickUp.type = type;
                             pickUp.Speed = StartSpeed;
+
                         });
                 }
                 else
