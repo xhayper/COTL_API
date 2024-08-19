@@ -55,6 +55,13 @@ public static partial class CustomItemManager
                             var sprite = o.GetComponentInChildren<SpriteRenderer>();
                             sprite.sprite = item.Sprite;
 
+                            var meal = o.GetComponent<Meal>();
+                            if (meal != null)
+                            {
+                                meal.CreateStructureOnStop = true;
+                                meal.CreateStructureLocation = FollowerLocation.Base;
+                            }
+
                             var pickUp = o.GetComponent<PickUp>();
                             if (pickUp == null) return;
 
