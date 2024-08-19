@@ -50,14 +50,6 @@ namespace COTL_API.CustomInventory
         {
             var customMeals = CustomItemList.Values.Where(x => x.GetType().IsSubclassOf(typeof(CustomMeal))).ToArray();
             var customItems = CustomItemList.Keys.Where(x => CustomItemList[x].GetType().IsSubclassOf(typeof(CustomMeal))).ToArray(); // ????
-#if DEBUG
-            LogInfo("customMeals.Length: " + customMeals.Length);
-            LogInfo("customItems.Length: " + customItems.Length);
-            foreach (var v in CustomItemList.Values)
-            {
-                LogInfo($"{v.GetType().Name} : {v.GetType().IsSubclassOf(typeof(CustomMeal))}");
-            }
-#endif
             var newResult = new InventoryItem.ITEM_TYPE[__result.Length + customMeals.Length];
 
             for (var i = 0; i < __result.Length; i++)
