@@ -48,8 +48,16 @@ namespace COTL_API.CustomInventory
         [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllMeals)), HarmonyPostfix]
         public static void AddCustomMeal(ref InventoryItem.ITEM_TYPE[] __result)
         {
-            var customMeals = (CustomMeal[])CustomItemList.Values.Where(x => x is CustomMeal).ToArray();
-            var customItems = CustomItemList.Keys.Where(x => CustomItemList[x] is CustomMeal).ToArray(); // ????
+            var customMeals = CustomItemList.Values.Where(x => x.GetType().IsSubclassOf(typeof(CustomMeal))).ToArray();
+            var customItems = CustomItemList.Keys.Where(x => CustomItemList[x].GetType().IsSubclassOf(typeof(CustomMeal))).ToArray(); // ????
+#if DEBUG
+            LogInfo("customMeals.Length: " + customMeals.Length);
+            LogInfo("customItems.Length: " + customItems.Length);
+            foreach (var v in CustomItemList.Values)
+            {
+                LogInfo($"{v.GetType().Name} : {v.GetType().IsSubclassOf(typeof(CustomMeal))}");
+            }
+#endif
             var newResult = new InventoryItem.ITEM_TYPE[__result.Length + customMeals.Length];
 
             for (var i = 0; i < __result.Length; i++)
