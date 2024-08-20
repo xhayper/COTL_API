@@ -1,6 +1,9 @@
-﻿using System.Reflection;
+using System.Reflection;
+using COTL_API.CustomInventory;
 using COTL_API.Guid;
 using HarmonyLib;
+using UnityEngine;
+using UnityEngine.Bindings;
 
 namespace COTL_API.CustomStructures;
 
@@ -18,6 +21,18 @@ public static partial class CustomStructureManager
         structure.StructureType = structureType;
         structure.ModPrefix = guid;
         CustomStructureList.Add(structureType, structure);
+
+        if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
+        return structureType;
+    }
+
+    public static StructureBrain.TYPES Add(CustomMeal meal)
+    {
+        var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
+
+        var structureType =
+            GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, meal.InternalName);
+        meal.ModPrefix = guid;
 
         if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
         return structureType;
