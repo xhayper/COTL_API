@@ -1,3 +1,4 @@
+using COTL_API.CustomStructures;
 using HarmonyLib;
 using Socket.Newtonsoft.Json;
 using src.UI.InfoCards;
@@ -64,6 +65,23 @@ namespace COTL_API.CustomInventory
 
             __result = newResult;
         }
+        [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetLocalizedName)), HarmonyPostfix]
+        public static void GetCustomMealName(InventoryItem.ITEM_TYPE mealType, ref string __result)
+        {
+            if (CustomItemList.Keys.Contains(mealType))
+            {
+                __result = CustomItemList[mealType].LocalizedName();
+            }
+        }
+
+        [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetLocalizedDescription)), HarmonyPostfix]
+        public static void GetCustomMealDescription(InventoryItem.ITEM_TYPE mealType, ref string __result)
+        {
+            if (CustomItemList.Keys.Contains(mealType))
+            {
+                __result = CustomItemList[mealType].Description();
+            }
+        }
 
         [HarmonyPatch(typeof(RecipeInfoCard), nameof(RecipeInfoCard.Configure)), HarmonyPrefix]
         public static void AddCustomStarRating(RecipeInfoCard __instance, InventoryItem.ITEM_TYPE config)
@@ -71,6 +89,34 @@ namespace COTL_API.CustomInventory
             var satationLevel = CookingData.GetSatationLevel(config);
             for (var index = 0; index < __instance._starFills.Length; ++index)
                 __instance._starFills[index].SetActive(satationLevel >= index + 1);
+        }
+
+
+        // TODO : rewrite, i don't like it
+        [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetMealFromStructureType)), HarmonyPostfix]
+        public static void GetCustomMealFromStructure(StructureBrain.TYPES structureType, ref InventoryItem.ITEM_TYPE __result)
+        {
+            var item = CustomItemList.Keys
+                .FirstOrDefault(x => CustomItemList[x].GetType().IsSubclassOf(typeof(CustomMeal)) && 
+                (CustomItemList[x] as CustomMeal)!._mealTypel == structureType);
+
+            if (item != InventoryItem.ITEM_TYPE.NONE)
+                __result = item;
+        }
+
+        [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetInfoByType)), HarmonyPostfix]
+        public static void GetCustomInfoByType(StructureBrain.TYPES Type, ref StructuresData __result)
+        {
+            if (CustomItemList.Values.Any(x => x.GetType().IsSubclassOf(typeof(CustomMeal)) && (x as CustomMeal)!._mealTypel == Type))
+            {
+                var data = new StructuresData
+                {
+                    PrefabPath = "Prefabs/Structures/Other/Meal",
+                    IgnoreGrid = true,
+                };
+                data.Type = Type;
+                __result = data;
+            }
         }
     }
 }

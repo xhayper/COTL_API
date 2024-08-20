@@ -9,6 +9,8 @@ namespace COTL_API.CustomInventory
 {
     public abstract class CustomMeal : CustomInventoryItem
     {
+        internal StructureBrain.TYPES _mealTypel { get; set; }
+
         /// <summary>
         /// This Meal's Recepie <br/>
         /// This is a List of Lists, but the first list should only be of length 1, containing a list of all the items for this recepie

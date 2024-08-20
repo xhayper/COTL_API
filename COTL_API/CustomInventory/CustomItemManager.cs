@@ -1,5 +1,8 @@
 using System.Reflection;
+using COTL_API.CustomStructures;
 using COTL_API.Guid;
+using Sirenix.Serialization.Utilities;
+using src.Extensions;
 using Random = UnityEngine.Random;
 
 namespace COTL_API.CustomInventory;
@@ -25,6 +28,12 @@ public static partial class CustomItemManager
         item.ItemType = itemType;
         item.ModPrefix = guid;
         item.InternalObjectName = $"CustomItem_{item.InternalName}";
+
+        if (item.GetType().InheritsFrom(typeof(CustomMeal)))
+        {
+            var meal = item as CustomMeal;
+            meal!._mealTypel = CustomStructureManager.Add(meal!);
+        }
 
         CustomItemList.Add(itemType, item);
 
