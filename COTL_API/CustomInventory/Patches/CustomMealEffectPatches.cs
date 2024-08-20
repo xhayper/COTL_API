@@ -10,16 +10,16 @@ namespace COTL_API.CustomInventory
         [HarmonyPatch(typeof(CookingData),nameof(CookingData.DoMealEffect)), HarmonyPostfix]
         public static void DoCustomEffect(InventoryItem.ITEM_TYPE meal, FollowerBrain follower) 
         {
-            //var customMealEffects = (MealEffect[])GetMealEffects(meal).Where(x => CustomEffectList.Keys.Contains(x.MealEffectType));
-            //foreach (var effect in customMealEffects)
-            //{ 
-            //    var chance = UnityEngine.Random.Range(0, 100);
+            var customMealEffects = CookingData.GetMealEffects(meal).Where(x => CustomEffectList.Keys.Contains(x.MealEffectType));
+            foreach (var effect in customMealEffects)
+            {
+                var chance = UnityEngine.Random.Range(0, 100);
 
-            //    if(chance >= effect.Chance)
-            //        continue;
+                if (chance >= effect.Chance)
+                    continue;
 
-            //    CustomEffectList[effect.MealEffectType].Effect(follower);
-            //}
+                CustomEffectList[effect.MealEffectType].Effect(follower);
+            }
         }
     }
 }
