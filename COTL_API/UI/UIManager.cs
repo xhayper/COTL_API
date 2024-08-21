@@ -26,13 +26,13 @@ public static class UIManager
     [HarmonyPostfix]
     private static void UISettingsMenuController_OnShowStarted(UISettingsMenuController __instance)
     {
+        if (SettingsUtils.SliderTemplate == null)
+            SettingsUtils.SliderTemplate = __instance._audioSettings.GetComponentInChildren<ScrollRect>()
+                .content.GetChild(0).gameObject;
+
         if (SettingsUtils.HeaderTemplate == null)
             SettingsUtils.HeaderTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>()
                 .content.GetChild(0).gameObject;
-
-        if (SettingsUtils.SliderTemplate == null)
-            SettingsUtils.SliderTemplate = __instance._gameSettings.GetComponentInChildren<ScrollRect>()
-                .content.GetChild(2).gameObject;
 
         if (SettingsUtils.DropdownTemplate == null)
             SettingsUtils.DropdownTemplate = __instance._graphicsSettings.GetComponentInChildren<ScrollRect>()
