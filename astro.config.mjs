@@ -1,6 +1,7 @@
 import vercel from "@astrojs/vercel/serverless";
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import tailwind from "@astrojs/tailwind";
 
 const site = "https://cotl-api.vercel.app/";
 
@@ -9,11 +10,14 @@ export default defineConfig({
   site,
   output: "server",
   adapter: vercel({
-    webAnalytics: { enabled: true }
+    webAnalytics: {
+      enabled: true
+    }
   }),
   integrations: [
     starlight({
       title: "COTL_API",
+      customCss: ["./src/tailwind.css", "@fontsource-variable/inter", "@fontsource-variable/jetbrains-mono"],
       logo: {
         src: "./src/assets/logo.svg"
       },
@@ -56,6 +60,7 @@ export default defineConfig({
       ],
       lastUpdated: true,
       credits: true
-    })
+    }),
+    tailwind({ applyBaseStyles: false })
   ]
 });
