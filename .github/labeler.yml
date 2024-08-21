@@ -1,5 +1,5 @@
 documentation:
-    - "*"
+  - "*"
 CI:
-    - .github/workflows/**/*
-    - .github/labeler.yml
+  - .github/workflows/**/*
+  - .github/labeler.yml
