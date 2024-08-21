@@ -1,4 +1,4 @@
-import starlightLinksValidator from "starlight-links-validator";
+import vercel from "@astrojs/vercel/serverless";
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
@@ -7,9 +7,10 @@ const site = "https://cotl-api.vercel.app/";
 // https://astro.build/config
 export default defineConfig({
   site,
+  output: "server",
+  adapter: vercel(),
   integrations: [
     starlight({
-      plugins: [starlightLinksValidator()],
       title: "COTL_API",
       logo: {
         src: "./src/assets/logo.svg"
@@ -24,21 +25,31 @@ export default defineConfig({
       head: [
         {
           tag: "meta",
-          attrs: { property: "og:image", content: `${site}img/banner.png` }
+          attrs: {
+            property: "og:image",
+            content: `${site}img/banner.png`
+          }
         },
         {
           tag: "meta",
-          attrs: { property: "twitter:image", content: `${site}img/banner.png` }
+          attrs: {
+            property: "twitter:image",
+            content: `${site}img/banner.png`
+          }
         }
       ],
       sidebar: [
         {
           label: "Getting Started",
-          autogenerate: { directory: "getting-started" }
+          autogenerate: {
+            directory: "getting-started"
+          }
         },
         {
           label: "Reference",
-          autogenerate: { directory: "reference" }
+          autogenerate: {
+            directory: "reference"
+          }
         }
       ],
       lastUpdated: true,
