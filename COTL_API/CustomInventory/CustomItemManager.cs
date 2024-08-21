@@ -32,7 +32,7 @@ public static partial class CustomItemManager
         if (item.GetType().InheritsFrom(typeof(CustomMeal)))
         {
             var meal = item as CustomMeal;
-            meal!._mealTypel = CustomStructureManager.Add(meal!);
+            meal!.MealType = CustomStructureManager.Add(meal!);
         }
 
         CustomItemList.Add(itemType, item);

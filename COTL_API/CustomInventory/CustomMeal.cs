@@ -9,7 +9,7 @@ namespace COTL_API.CustomInventory
 {
     public abstract class CustomMeal : CustomInventoryItem
     {
-        internal StructureBrain.TYPES _mealType { get; set; }
+        internal StructureBrain.TYPES MealType { get; set; }
 
         /// <summary>
         /// This Meal's Recepie <br/>
