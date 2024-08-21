@@ -1,7 +1,6 @@
 using HarmonyLib;
 using MMBiomeGeneration;
 using MMRoomGeneration;
-using MMTools;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
@@ -60,7 +59,6 @@ public static partial class CustomItemManager
 
                             pickUp.type = type;
                             pickUp.Speed = StartSpeed;
-
                         });
                 }
                 else
