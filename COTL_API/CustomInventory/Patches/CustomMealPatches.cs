@@ -98,7 +98,7 @@ namespace COTL_API.CustomInventory
         {
             var item = CustomItemList.Keys
                 .FirstOrDefault(x => CustomItemList[x].GetType().IsSubclassOf(typeof(CustomMeal)) && 
-                (CustomItemList[x] as CustomMeal)!._mealTypel == structureType);
+                (CustomItemList[x] as CustomMeal)!.MealType == structureType);
 
             if (item != InventoryItem.ITEM_TYPE.NONE)
                 __result = item;
@@ -107,16 +107,39 @@ namespace COTL_API.CustomInventory
         [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetInfoByType)), HarmonyPostfix]
         public static void GetCustomInfoByType(StructureBrain.TYPES Type, ref StructuresData __result)
         {
-            if (CustomItemList.Values.Any(x => x.GetType().IsSubclassOf(typeof(CustomMeal)) && (x as CustomMeal)!._mealTypel == Type))
+            if (CustomItemList.Values.Any(x => x.GetType().IsSubclassOf(typeof(CustomMeal)) && (x as CustomMeal)!.MealType == Type))
             {
                 var data = new StructuresData
                 {
                     PrefabPath = "Prefabs/Structures/Other/Meal",
                     IgnoreGrid = true,
+                    Location = FollowerLocation.Base,
                 };
                 data.Type = Type;
                 __result = data;
             }
+        }
+
+        // TODO: rewrite this to be a Postfix so that it doesn't have to skip other patches
+        // TODO: maybe(?) rewrite this such that it's not a carbon copy of the original method
+        [HarmonyPatch(typeof(StructureBrain),nameof(StructureBrain.CreateBrain)),HarmonyPrefix]
+        public static bool CreateBrainForCustomMeal(ref StructuresData data, ref StructureBrain __result) 
+        {
+            StructureBrain sb;
+            var type = data.Type;
+            if (CustomItemList.Values.Any(x => x.GetType().IsSubclassOf(typeof(CustomMeal)) && (x as CustomMeal)!.MealType == type))
+            {
+                sb = new Structures_Meal();
+
+                StructureBrain.ApplyConfigToData(data);
+                sb.Init(data);
+                StructureBrain._brainsByID.Add(data.ID, sb);
+                StructureManager.StructuresAtLocation(data.Location).Add(sb);
+                __result = sb;
+
+                return false;
+            }
+            return true;
         }
     }
 }
