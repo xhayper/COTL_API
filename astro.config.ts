@@ -8,7 +8,9 @@ const site = "https://cotl-api.vercel.app/";
 export default defineConfig({
   site,
   output: "server",
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: { enabled: true }
+  }),
   integrations: [
     starlight({
       title: "COTL_API",
