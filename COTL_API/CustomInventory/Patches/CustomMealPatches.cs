@@ -1,5 +1,6 @@
 using COTL_API.CustomStructures;
 using HarmonyLib;
+using Lamb.UI.FollowerInteractionWheel;
 using Socket.Newtonsoft.Json;
 using src.UI.InfoCards;
 using System;
@@ -157,6 +158,41 @@ namespace COTL_API.CustomInventory
                 return false;
             }
             return true;
+        }
+
+        [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.MealCommands)), HarmonyPostfix]
+        public static void AddCustomMealCommands(ref List<InventoryItem.ITEM_TYPE> availableMeals, ref List<CommandItem> __result)
+        {
+            foreach (var item in CustomMealList.Keys)
+            {
+                if (availableMeals.Contains(item))
+                {
+                    __result.Add(new FollowerCommandItems.FoodCommandItem()
+                    {
+                        Command = CustomMealList[item].FollowerCommand
+                    }); ;
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem), nameof(FollowerCommandItems.FoodCommandItem.GetTitle))]
+        public static void GetFoodCommandItemTitle(ref FollowerCommandItems.FoodCommandItem __instance, ref string __result)
+        { 
+            var command = __instance.Command;
+            if (CustomMealList.Values.Any(x => x.FollowerCommand == command))
+            { 
+                __result = CustomMealList.Values.First(x => x.FollowerCommand == command).LocalizedName();
+            }
+        }
+        
+        [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem), nameof(FollowerCommandItems.FoodCommandItem.GetDescription))]
+        public static void GetFoodCommandItemDescription(ref FollowerCommandItems.FoodCommandItem __instance, ref string __result)
+        { 
+            var command = __instance.Command;
+            if (CustomMealList.Values.Any(x => x.FollowerCommand == command))
+            { 
+                __result = CustomMealList.Values.First(x => x.FollowerCommand == command).LocalizedDescription();
+            }
         }
     }
 }
