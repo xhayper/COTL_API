@@ -19,6 +19,7 @@ public static partial class CustomItemManager
     }
 
     public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItemList { get; } = new();
+    public static Dictionary<InventoryItem.ITEM_TYPE, CustomMeal> CustomMealList { get; } = [];
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
@@ -32,7 +33,8 @@ public static partial class CustomItemManager
         if (item.GetType().InheritsFrom(typeof(CustomMeal)))
         {
             var meal = item as CustomMeal;
-            meal!.MealType = CustomStructureManager.Add(meal!);
+            meal!.StructureType = CustomStructureManager.Add(meal!);
+            CustomMealList.Add(itemType,meal);
         }
 
         CustomItemList.Add(itemType, item);

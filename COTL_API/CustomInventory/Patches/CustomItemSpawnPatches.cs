@@ -62,9 +62,9 @@ public static partial class CustomItemManager
                             {
                                 meal.CreateStructureOnStop = true;
                                 // not sure these are nessacery? not gonna waste my time testing it.
-                                meal.CreateStructureLocation = FollowerLocation.Base;
-                                meal.spriteRenderer.sprite = (item as CustomMeal)!.Sprite;
-                                meal.structure.Type = (item as CustomMeal)!.MealType;
+                                //meal.CreateStructureLocation = FollowerLocation.Base;
+                                //meal.spriteRenderer.sprite = (item as CustomMeal)!.Sprite;
+                                //meal.structure.Type = (item as CustomMeal)!.StructureType;
                             }
 
                             var pickUp = o.GetComponent<PickUp>();
