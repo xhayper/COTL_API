@@ -26,12 +26,11 @@ public static partial class CustomStructureManager
         return structureType;
     }
 
-    public static StructureBrain.TYPES Add(CustomMeal meal)
+    internal static StructureBrain.TYPES Add(CustomMeal meal)
     {
         var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
-        var structureType =
-            GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, meal.InternalName);
+        var structureType = GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, meal.InternalName);
         meal.ModPrefix = guid;
 
         if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
