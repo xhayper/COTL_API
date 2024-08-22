@@ -1,4 +1,5 @@
 using System.Reflection;
+using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomStructures;
 using COTL_API.Guid;
 using Sirenix.Serialization.Utilities;
@@ -33,7 +34,13 @@ public static partial class CustomItemManager
         if (item.GetType().InheritsFrom(typeof(CustomMeal)))
         {
             var meal = item as CustomMeal;
-            meal!.StructureType = CustomStructureManager.Add(meal!);
+
+            meal!.FollowerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, meal.InternalName);
+            var structureType = GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, meal.InternalName);
+            meal.StructureType = structureType;
+
+            if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
+
             CustomMealList.Add(itemType,meal);
         }
 
