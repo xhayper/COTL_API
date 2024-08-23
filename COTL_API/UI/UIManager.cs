@@ -79,8 +79,12 @@ public static class UIManager
         originalGraphicsSettings.OnShow -= showDelegate;
         originalGraphicsSettings.OnHide -= hideDelegate;
 
-        __instance.transform.GetComponentInChildren<SettingsTabNavigatorBase>()._tabs = __instance.transform
-            .GetComponentInChildren<SettingsTabNavigatorBase>()._tabs.Append(tab).ToArray();
+        __instance.transform.GetComponentInChildren<SettingsTabNavigatorBase>()._tabs =
+        [
+            .. __instance.transform
+                .GetComponentInChildren<SettingsTabNavigatorBase>()._tabs,
+            tab
+        ];
         var button = newSettings.GetComponentInChildren<MMButton>();
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => stnb.TransitionTo(tab));

@@ -74,7 +74,7 @@ public static class UIFollowerInteractionWheelOverlayControllerPatches
 
             __instance.Hide();
             ____commandHistory.Push(item.CommandItem.Command);
-            __instance.OnItemChosen?.Invoke(____commandHistory.ToArray());
+            __instance.OnItemChosen?.Invoke([.. ____commandHistory]);
         }
     }
 }
