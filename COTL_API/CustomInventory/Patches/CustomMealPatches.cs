@@ -171,6 +171,21 @@ public static partial class CustomItemManager
         }
     }
 
+    [HarmonyPatch(typeof(FollowerTask_EatMeal), nameof(FollowerTask_EatMeal.GetMealReaction)), HarmonyPostfix]
+    public static void GetCustomMealReaction(StructureBrain.TYPES type, ref string __result)
+    {
+        if (CustomMealList.Values.Any(x => x.StructureType == type))
+        { 
+            var quality = CustomMealList.Values.First(x => x.StructureType == type).Quality;
+            __result = quality switch
+            {
+                MealQuality.Bad => "Food/food-finish-bad",
+                MealQuality.Normal => "Food/food-finish",
+                MealQuality.Good => "Food/Food-finsih-good",
+                _ => "Food/Food-finish"
+            };
+        }
+    }
     [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem), nameof(FollowerCommandItems.FoodCommandItem.GetTitle)), HarmonyPostfix]
     private static void GetFoodCommandItemTitle(ref FollowerCommandItems.FoodCommandItem __instance, ref string __result)
     {
