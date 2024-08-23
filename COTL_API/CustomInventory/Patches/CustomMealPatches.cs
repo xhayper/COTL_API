@@ -1,6 +1,7 @@
 using HarmonyLib;
 using Lamb.UI.FollowerInteractionWheel;
 using src.UI.InfoCards;
+using System.Diagnostics.Tracing;
 
 namespace COTL_API.CustomInventory;
 
@@ -123,7 +124,6 @@ public static partial class CustomItemManager
 
         if (inventoryItem != null)
         {
-            LogInfo($"Getting Custom Meal Type From StructureType: ST: {structureType} to IT {inventoryItem.ItemType}");
             __result = inventoryItem.ItemType;
         }
     }
@@ -203,6 +203,21 @@ public static partial class CustomItemManager
         if (CustomMealList.Values.Any(x => x.FollowerCommand == command))
         {
             __result = CustomMealList.Values.First(x => x.FollowerCommand == command).LocalizedDescription();
+        }
+    }
+
+    [HarmonyPatch(typeof(interaction_FollowerInteraction), nameof(interaction_FollowerInteraction.OnFollowerCommandFinalized))]
+    private static void FindCustomMeal(ref FollowerCommands[] followerCommands, ref interaction_FollowerInteraction __instance)
+    {
+        FollowerCommands command = followerCommands[0];
+
+        if (CustomMealList.Values.Any(x => x.FollowerCommand == command))
+        {
+            var meal = CustomMealList.Values.First(x => x.FollowerCommand == command);
+            __instance.follower.Brain.CancelTargetedMeal(meal.StructureType);
+            __instance.eventListener.PlayFollowerVO(__instance.generalAcknowledgeVO);
+            __instance.follower.Brain.SetPersonalOverrideTask(FollowerTaskType.EatMeal, meal.StructureType);
+            __instance.follower.Brain.CompleteCurrentTask();
         }
     }
 }
