@@ -7,24 +7,24 @@ namespace COTL_API.CustomSkins;
 
 internal static class SkinUtils
 {
-    public static bool SkinP1Loaded { get; internal set; }
+    public static bool LambFleeceSkinLoaded { get; internal set; }
 
-    public static Action? SkinP1ToLoad { get; set; } = () => { };
+    public static Action? LambFleeceSkinToLoad { get; set; } = () => { };
 
-    public static bool SkinP2Loaded { get; internal set; }
+    public static bool GoatFleeceSkinLoaded { get; internal set; }
 
-    public static Action? SkinP2ToLoad { get; set; } = () => { };
+    public static Action? GoatFleeceToLoad { get; set; } = () => { };
 
-    public static event Action OnFindSkinP1 = () =>
+    public static event Action OnFindLambFleeceSkin = () =>
     {
-        SkinP1ToLoad.Invoke();
-        SkinP1Loaded = true;
+        LambFleeceSkinToLoad.Invoke();
+        LambFleeceSkinLoaded = true;
     };
 
-    public static event Action OnFindSkinP2 = () =>
+    public static event Action OnFindGoatFleeceSkin = () =>
     {
-        SkinP2ToLoad.Invoke();
-        SkinP2Loaded = true;
+        GoatFleeceToLoad.Invoke();
+        GoatFleeceSkinLoaded = true;
     };
 
     public static void ApplyOverride(Skin skin, Attachment a, int slot, string ovrName, AtlasRegion atlasRegion,
@@ -180,15 +180,15 @@ internal static class SkinUtils
 
     internal static void InvokeOnFindSkin(PlayerType who)
     {
-        if (who == PlayerType.P1)
+        if (who == PlayerType.LAMB)
         {
-            OnFindSkinP1.Invoke();
-            OnFindSkinP1 = delegate { };
+            OnFindLambFleeceSkin.Invoke();
+            OnFindLambFleeceSkin = delegate { };
         }
         else
         {
-            OnFindSkinP2.Invoke();
-            OnFindSkinP2 = delegate { };
+            OnFindGoatFleeceSkin.Invoke();
+            OnFindGoatFleeceSkin = delegate { };
         }
     }
 }

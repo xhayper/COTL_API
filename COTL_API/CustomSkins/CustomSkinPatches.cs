@@ -111,7 +111,7 @@ public partial class CustomSkinManager
     [HarmonyPrefix]
     private static bool PlayerFarming_SetSkin(ref Skin __result, PlayerFarming __instance, bool BlackAndWhite)
     {
-        var playerType = !__instance.isLamb || __instance.IsGoat ? PlayerType.P2 : PlayerType.P1;
+        var playerType = !__instance.isLamb || __instance.IsGoat ? PlayerType.GOAT : PlayerType.LAMB;
 
         SkinUtils.InvokeOnFindSkin(playerType);
 
