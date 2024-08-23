@@ -21,6 +21,7 @@ public abstract class BaseModdedSaveData
 
     public abstract void CreateDefault();
     public abstract void Save(bool encrypt = true, bool backup = true);
+    public abstract void Saving();
     public abstract void Load(int? saveSlot = null);
     public abstract bool SaveExist(int? saveSlot = null);
     public abstract void DeleteSaveSlot(int? saveSlot = null);

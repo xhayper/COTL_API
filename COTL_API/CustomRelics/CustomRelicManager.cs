@@ -5,7 +5,7 @@ namespace COTL_API.CustomRelics;
 
 public static partial class CustomRelicManager
 {
-    public static Dictionary<RelicType, CustomRelicData> CustomRelicDataList { get; } = new();
+    public static Dictionary<RelicType, CustomRelicData> CustomRelicDataList { get; } = [];
 
     public static RelicType Add(CustomRelicData relicData)
     {

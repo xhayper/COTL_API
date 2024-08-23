@@ -15,7 +15,7 @@ public static partial class CustomItemManager
         RARE
     }
 
-    public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItemList { get; } = new();
+    public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItemList { get; } = [];
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {

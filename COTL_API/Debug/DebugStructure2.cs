@@ -16,8 +16,8 @@ public class DebugStructure2 : CustomStructure
 
     public override int BuildDurationMinutes => 30;
 
-    public override List<StructuresData.ItemCost> Cost => new()
-    {
+    public override List<StructuresData.ItemCost> Cost =>
+    [
         new StructuresData.ItemCost(Plugin.Instance!.DebugItem2, 2)
-    };
+    ];
 }

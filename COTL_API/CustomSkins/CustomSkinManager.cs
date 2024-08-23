@@ -15,18 +15,18 @@ public enum PlayerType
 [HarmonyPatch]
 public static partial class CustomSkinManager
 {
-    internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = new();
-    internal static readonly Dictionary<string, Skin?> CustomFollowerSkins = new();
-    internal static readonly Dictionary<string, bool> AlwaysUnlockedSkins = new();
-    internal static readonly Dictionary<string, Texture2D> SkinTextures = new();
-    internal static readonly Dictionary<string, Material> SkinMaterials = new();
-    internal static readonly Dictionary<string, Skin> TarotSkins = new();
-    internal static readonly Dictionary<string, Sprite> TarotSprites = new();
-    internal static readonly Dictionary<string, Sprite> TarotBackSprites = new();
+    internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = [];
+    internal static readonly Dictionary<string, Skin?> CustomFollowerSkins = [];
+    internal static readonly Dictionary<string, bool> AlwaysUnlockedSkins = [];
+    internal static readonly Dictionary<string, Texture2D> SkinTextures = [];
+    internal static readonly Dictionary<string, Material> SkinMaterials = [];
+    internal static readonly Dictionary<string, Skin> TarotSkins = [];
+    internal static readonly Dictionary<string, Sprite> TarotSprites = [];
+    internal static readonly Dictionary<string, Sprite> TarotBackSprites = [];
 
     internal static int NumGenericAtlases;
 
-    internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = new();
+    internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = [];
 
     internal static readonly Dictionary<string, Tuple<int, string>> FollowerSkinDict = new()
     {
@@ -201,7 +201,7 @@ public static partial class CustomSkinManager
         { "LESHY_FACE_SCARED", Tuple.Create(92, "LESHY_FACE_SCARED") },
         { "LESHY_FACE_SIN", Tuple.Create(92, "LESHY_FACE_SIN") },
         { "LESHY_FACE_BRAINWASHED", Tuple.Create(92, "LESHY_FACE_BRAINWASHED") },
-        { "LESHY_FACE_SICK", Tuple.Create(92, "LESHY_FACE_SICK") },
+        { "LESHY_FACE_SICK", Tuple.Create(92, "LESHY_FACE_SICK") }
     };
 
     internal static readonly Dictionary<string, Tuple<int, string>> PlayerSkinDict = new()

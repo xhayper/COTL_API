@@ -12,7 +12,7 @@ public class SoundLoader : MonoBehaviour
     private readonly List<ChannelWrapper> _channelList = [];
 
     // Sound cache
-    private readonly Dictionary<string, SoundWrapper> _soundCache = new();
+    private readonly Dictionary<string, SoundWrapper> _soundCache = [];
 
     private void OnDestroy()
     {

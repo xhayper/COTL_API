@@ -13,5 +13,5 @@ public class ApiSlotData
 
     public string OwO => _randomEasteregg[Random.Range(0, _randomEasteregg.Length)];
 
-    public Dictionary<int, CustomObjective> QuestData { get; set; } = new();
+    public Dictionary<int, CustomObjective> QuestData { get; set; } = [];
 }

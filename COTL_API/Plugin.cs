@@ -19,7 +19,6 @@ using HarmonyLib;
 using I2.Loc;
 using Lamb.UI;
 using MonoMod.Utils;
-using Spine;
 using UnityEngine;
 
 namespace COTL_API;
@@ -108,32 +107,17 @@ public class Plugin : BaseUnityPlugin
 
         UnityDebug.SettingChanged += (_, _) => { UnityEngine.Debug.unityLogger.logEnabled = UnityDebug.Value; };
 
-        Skin S1()
-        {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Lamb");
-        }
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Lamb",
+            () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Lamb")));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat",
+            () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat")));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl",
+            () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl")));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake",
+            () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake")));
 
-        Skin S2()
-        {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
-        }
-
-        Skin S3()
-        {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
-        }
-
-        Skin S4()
-        {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake");
-        }
-
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Lamb", S1));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", S2));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S3));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S4));
-
-        LambFleeceSkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Lamb Fleece Skin",
+        LambFleeceSkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Lamb Fleece Skin",
             "Lamb",
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
@@ -145,7 +129,8 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i));
             });
 
-        GoatFleeceSkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Goat Fleece Skin",
+        GoatFleeceSkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Goat Fleece Skin",
             "Goat",
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
@@ -257,7 +242,7 @@ public class Plugin : BaseUnityPlugin
                 saveData.Load(SaveAndLoad.SAVE_SLOT);
 
             LogDebug("Re-adding any custom quests from the players existing objectives.");
-            Dictionary<int, CustomObjective> tempObjectives = new();
+            Dictionary<int, CustomObjective> tempObjectives = [];
 
             if (QuestData == null) return;
 

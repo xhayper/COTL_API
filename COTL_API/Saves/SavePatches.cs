@@ -20,6 +20,14 @@ public static partial class ModdedSaveManager
         foreach (var saveData in ModdedSaveDataList.Values) saveData.Save();
     }
 
+    [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Saving))]
+    [HarmonyPostfix]
+    private static void SaveAndLoad_Saving()
+    {
+        foreach (var saveData in ModdedSaveDataList.Values)
+            saveData.Saving();
+    }
+
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.ResetSave))]
     [HarmonyPostfix]
     private static void SaveAndLoad_ResetSave(int saveSlot, bool newGame)
