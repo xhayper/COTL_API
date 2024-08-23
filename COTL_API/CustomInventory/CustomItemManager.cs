@@ -1,9 +1,6 @@
 using System.Reflection;
-using COTL_API.CustomFollowerCommand;
-using COTL_API.CustomStructures;
 using COTL_API.Guid;
 using Sirenix.Serialization.Utilities;
-using src.Extensions;
 using Random = UnityEngine.Random;
 
 namespace COTL_API.CustomInventory;
