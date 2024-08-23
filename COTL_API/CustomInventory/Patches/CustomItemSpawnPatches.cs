@@ -71,7 +71,6 @@ public static partial class CustomItemManager
 
                             pickUp.type = type;
                             pickUp.Speed = StartSpeed;
-
                         });
                 }
                 else
