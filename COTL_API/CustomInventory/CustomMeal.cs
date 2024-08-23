@@ -22,7 +22,7 @@ public abstract class CustomMeal : CustomInventoryItem
     /// <summary>
     /// A list of the effects that will occur when eating this meal
     /// </summary>
-    public abstract MealEffect[] MealEffects { get; }
+    public virtual MealEffect[] MealEffects { get; } = [];
 
     public override bool IsFood => true;
 
@@ -38,5 +38,12 @@ public abstract class CustomMeal : CustomInventoryItem
     /// </summary>
     public abstract float TummyRating { get; }
 
+    public virtual MealQuality Quality { get; } = MealQuality.Normal;
+}
 
+public enum MealQuality
+{ 
+    Bad,
+    Normal,
+    Good,
 }
