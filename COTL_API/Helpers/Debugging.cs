@@ -5,7 +5,6 @@ using COTL_API.CustomObjectives;
 using COTL_API.CustomRelics;
 using COTL_API.CustomStructures;
 using COTL_API.CustomTasks;
-using COTL_API.Prefabs;
 
 namespace COTL_API.Helpers;
 

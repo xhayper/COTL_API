@@ -11,7 +11,7 @@ namespace COTL_API.CustomSkins;
 [HarmonyPatch]
 public partial class CustomSkinManager
 {
-    internal static readonly Dictionary<string, Texture2D> CachedTextures = new();
+    internal static readonly Dictionary<string, Texture2D> CachedTextures = [];
 
     [HarmonyPatch(typeof(SkeletonData), nameof(SkeletonData.FindSkin), typeof(string))]
     [HarmonyPostfix]

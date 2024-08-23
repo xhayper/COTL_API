@@ -6,7 +6,7 @@ public static class GuidManager
 
     private const string MaxDataKey = "maximumStoredValueForEnum";
 
-    private static readonly Dictionary<int, Type> ReverseMapper = new();
+    private static readonly Dictionary<int, Type> ReverseMapper = [];
 
     public static string GetFullyQualifiedName(string guid, string value)
     {

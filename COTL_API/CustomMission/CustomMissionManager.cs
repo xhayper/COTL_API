@@ -5,7 +5,7 @@ namespace COTL_API.CustomMission;
 
 public static partial class CustomMissionManager
 {
-    internal static Dictionary<InventoryItem.ITEM_TYPE, CustomMission> CustomMissionList { get; } = new();
+    internal static Dictionary<InventoryItem.ITEM_TYPE, CustomMission> CustomMissionList { get; } = [];
 
     public static InventoryItem.ITEM_TYPE Add(CustomMission mission)
     {
