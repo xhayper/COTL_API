@@ -212,9 +212,6 @@ public class Plugin : BaseUnityPlugin
     {
         if (!Debug) return;
 
-        if (Input.GetKeyDown(KeyCode.Keypad5))
-            StructureManager.GetAllStructuresOfType<Structures_Meal>(PlayerFarming.Location).Do(x => LogInfo(x.Data.GetLocalizedName()));
-
         // Kill all enemies
         // ReSharper disable once InvertIf
         if (Input.GetKeyDown(KeyCode.F1))
