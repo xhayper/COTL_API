@@ -1,4 +1,5 @@
-﻿using I2.Loc;
+﻿using COTL_API.Prefabs;
+using I2.Loc;
 using Lamb.UI.BuildMenu;
 using UnityEngine;
 
