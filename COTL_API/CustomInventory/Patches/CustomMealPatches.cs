@@ -11,38 +11,38 @@ public static partial class CustomItemManager
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetRecipe)), HarmonyPostfix]
     private static void AddCustomRecepies(ref List<List<InventoryItem>> __result, InventoryItem.ITEM_TYPE mealType)
     {
-        if (!CustomMealList.ContainsKey(mealType))
+        if (!CustomMealList.TryGetValue(mealType, out var value))
             return;
 
-        __result = CustomMealList[mealType].Recipe;
+        __result = value.Recipe;
     }
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetMealEffects)), HarmonyPostfix]
     private static void AddCustomMealEffects(ref CookingData.MealEffect[] __result, InventoryItem.ITEM_TYPE mealType)
     {
-        if (!CustomMealList.ContainsKey(mealType))
+        if (!CustomMealList.TryGetValue(mealType, out var value))
             return;
 
-        __result = CustomMealList[mealType].MealEffects;
+        __result = value.MealEffects;
     }
 
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetTummyRating)), HarmonyPostfix]
     private static void GetCustomMealTummyRating(ref float __result, InventoryItem.ITEM_TYPE meal)
     {
-        if (!CustomMealList.ContainsKey(meal))
+        if (!CustomMealList.TryGetValue(meal, out var value))
             return;
 
-        __result = CustomMealList[meal].TummyRating;
+        __result = value.TummyRating;
     }
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetSatationLevel)), HarmonyPostfix]
     private static void GetCustomSatiationLevel(ref int __result, InventoryItem.ITEM_TYPE meal)
     {
-        if (!CustomMealList.ContainsKey(meal))
+        if (!CustomMealList.TryGetValue(meal, out var value))
             return;
 
-        __result = CustomMealList[meal].SatiationLevel;
+        __result = value.SatiationLevel;
     }
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllMeals)), HarmonyPostfix]
@@ -68,10 +68,10 @@ public static partial class CustomItemManager
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetLocalizedName)), HarmonyPostfix]
     private static void GetCustomMealName(InventoryItem.ITEM_TYPE mealType, ref string __result)
     {
-        if (CustomMealList.Keys.Contains(mealType))
-        {
-            __result = CustomMealList[mealType].LocalizedName();
-        }
+        if (!CustomMealList.TryGetValue(mealType, out var value))
+            return;
+
+        __result = value.LocalizedName();
     }
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetLocalizedDescription)), HarmonyPostfix]
@@ -84,7 +84,8 @@ public static partial class CustomItemManager
     }
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetMealFromStructureType)), HarmonyPostfix]
-    private static void GetCustomMealFromStructure(StructureBrain.TYPES structureType, ref InventoryItem.ITEM_TYPE __result)
+    private static void GetCustomMealFromStructure(StructureBrain.TYPES structureType,
+        ref InventoryItem.ITEM_TYPE __result)
     {
         var item = CustomMealList.Keys
             .FirstOrDefault(x => CustomMealList[x].StructureType == structureType);
@@ -99,6 +100,12 @@ public static partial class CustomItemManager
         var satationLevel = CookingData.GetSatationLevel(config);
         for (var index = 0; index < __instance._starFills.Length; ++index)
             __instance._starFills[index].SetActive(satationLevel >= index + 1);
+
+        if (!CustomItemList.TryGetValue(config, out var value))
+            return;
+
+        __instance._itemDescription.text = value.Description();
+        __instance._itemHeader.text = value.LocalizedName();
     }
 
     [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetInfoByType)), HarmonyPostfix]
@@ -127,6 +134,7 @@ public static partial class CustomItemManager
             __result = inventoryItem.ItemType;
         }
     }
+
     [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealStructureType)), HarmonyPostfix]
     private static void GetCustomMealStructurelType(InventoryItem.ITEM_TYPE mealType, ref StructureBrain.TYPES __result)
     {
@@ -153,41 +161,45 @@ public static partial class CustomItemManager
 
             return false;
         }
+
         return true;
     }
 
     [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.MealCommands)), HarmonyPostfix]
-    private static void AddCustomMealCommands(ref List<InventoryItem.ITEM_TYPE> availableMeals, ref List<CommandItem> __result)
+    private static void AddCustomMealCommands(ref List<InventoryItem.ITEM_TYPE> availableMeals,
+        ref List<CommandItem> __result)
     {
         foreach (var item in CustomMealList.Keys)
         {
-            if (availableMeals.Contains(item))
+            if (!availableMeals.Contains(item)) continue;
+
+            __result.Add(new FollowerCommandItems.FoodCommandItem()
             {
-                __result.Add(new FollowerCommandItems.FoodCommandItem()
-                {
-                    Command = CustomMealList[item].FollowerCommand
-                }); ;
-            }
+                Command = CustomMealList[item].FollowerCommand
+            });
+            ;
         }
     }
 
     [HarmonyPatch(typeof(FollowerTask_EatMeal), nameof(FollowerTask_EatMeal.GetMealReaction)), HarmonyPostfix]
     public static void GetCustomMealReaction(StructureBrain.TYPES type, ref string __result)
     {
-        if (CustomMealList.Values.Any(x => x.StructureType == type))
-        { 
-            var quality = CustomMealList.Values.First(x => x.StructureType == type).Quality;
-            __result = quality switch
-            {
-                MealQuality.Bad => "Food/food-finish-bad",
-                MealQuality.Normal => "Food/food-finish",
-                MealQuality.Good => "Food/Food-finsih-good",
-                _ => "Food/Food-finish"
-            };
-        }
+        if (CustomMealList.Values.All(x => x.StructureType != type)) return;
+
+        var quality = CustomMealList.Values.First(x => x.StructureType == type).Quality;
+        __result = quality switch
+        {
+            MealQuality.BAD => "Food/food-finish-bad",
+            MealQuality.NORMAL => "Food/food-finish",
+            MealQuality.GOOD => "Food/Food-finsih-good",
+            _ => "Food/Food-finish"
+        };
     }
-    [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem), nameof(FollowerCommandItems.FoodCommandItem.GetTitle)), HarmonyPostfix]
-    private static void GetFoodCommandItemTitle(ref FollowerCommandItems.FoodCommandItem __instance, ref string __result)
+
+    [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem), nameof(FollowerCommandItems.FoodCommandItem.GetTitle)),
+     HarmonyPostfix]
+    private static void GetFoodCommandItemTitle(ref FollowerCommandItems.FoodCommandItem __instance,
+        ref string __result)
     {
         var command = __instance.Command;
         if (CustomMealList.Values.Any(x => x.FollowerCommand == command))
@@ -196,8 +208,10 @@ public static partial class CustomItemManager
         }
     }
 
-    [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem), nameof(FollowerCommandItems.FoodCommandItem.GetDescription)), HarmonyPostfix]
-    private static void GetFoodCommandItemDescription(ref FollowerCommandItems.FoodCommandItem __instance, ref string __result)
+    [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem),
+         nameof(FollowerCommandItems.FoodCommandItem.GetDescription)), HarmonyPostfix]
+    private static void GetFoodCommandItemDescription(ref FollowerCommandItems.FoodCommandItem __instance,
+        ref string __result)
     {
         var command = __instance.Command;
         if (CustomMealList.Values.Any(x => x.FollowerCommand == command))
@@ -206,18 +220,19 @@ public static partial class CustomItemManager
         }
     }
 
-    [HarmonyPatch(typeof(interaction_FollowerInteraction), nameof(interaction_FollowerInteraction.OnFollowerCommandFinalized))]
-    private static void FindCustomMeal(ref FollowerCommands[] followerCommands, ref interaction_FollowerInteraction __instance)
+    [HarmonyPatch(typeof(interaction_FollowerInteraction),
+        nameof(interaction_FollowerInteraction.OnFollowerCommandFinalized))]
+    private static void FindCustomMeal(ref FollowerCommands[] followerCommands,
+        ref interaction_FollowerInteraction __instance)
     {
-        FollowerCommands command = followerCommands[0];
+        var command = followerCommands[0];
 
-        if (CustomMealList.Values.Any(x => x.FollowerCommand == command))
-        {
-            var meal = CustomMealList.Values.First(x => x.FollowerCommand == command);
-            __instance.follower.Brain.CancelTargetedMeal(meal.StructureType);
-            __instance.eventListener.PlayFollowerVO(__instance.generalAcknowledgeVO);
-            __instance.follower.Brain.SetPersonalOverrideTask(FollowerTaskType.EatMeal, meal.StructureType);
-            __instance.follower.Brain.CompleteCurrentTask();
-        }
+        if (CustomMealList.Values.All(x => x.FollowerCommand != command)) return;
+
+        var meal = CustomMealList.Values.First(x => x.FollowerCommand == command);
+        __instance.follower.Brain.CancelTargetedMeal(meal.StructureType);
+        __instance.eventListener.PlayFollowerVO(__instance.generalAcknowledgeVO);
+        __instance.follower.Brain.SetPersonalOverrideTask(FollowerTaskType.EatMeal, meal.StructureType);
+        __instance.follower.Brain.CompleteCurrentTask();
     }
 }
