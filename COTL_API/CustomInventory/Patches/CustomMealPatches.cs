@@ -221,7 +221,7 @@ public static partial class CustomItemManager
     }
 
     [HarmonyPatch(typeof(interaction_FollowerInteraction),
-        nameof(interaction_FollowerInteraction.OnFollowerCommandFinalized))]
+        nameof(interaction_FollowerInteraction.OnFollowerCommandFinalized)), HarmonyPrefix]
     private static void FindCustomMeal(ref FollowerCommands[] followerCommands,
         ref interaction_FollowerInteraction __instance)
     {
