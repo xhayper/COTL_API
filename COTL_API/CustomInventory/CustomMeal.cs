@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static CookingData;
 
 namespace COTL_API.CustomInventory;
@@ -14,8 +9,7 @@ public abstract class CustomMeal : CustomInventoryItem
     internal FollowerCommands FollowerCommand { get; set; }
 
     /// <summary>
-    /// This Meal's Recepie <br/>
-    /// This is a List of Lists, but the first list should only be of length 1, containing a list of all the items for this recepie
+    /// This Meal's Recipe
     /// </summary>
     public abstract List<List<InventoryItem>> Recipe { get; }
 
@@ -38,12 +32,12 @@ public abstract class CustomMeal : CustomInventoryItem
     /// </summary>
     public abstract float TummyRating { get; }
 
-    public virtual MealQuality Quality { get; } = MealQuality.Normal;
+    public virtual MealQuality Quality { get; } = MealQuality.NORMAL;
 }
 
 public enum MealQuality
 { 
-    Bad,
-    Normal,
-    Good,
+    BAD,
+    NORMAL,
+    GOOD,
 }
