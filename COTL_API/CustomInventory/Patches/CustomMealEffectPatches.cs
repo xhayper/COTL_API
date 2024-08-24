@@ -1,9 +1,9 @@
 using HarmonyLib;
+using src.UI.InfoCards;
 using UnityEngine;
 
 namespace COTL_API.CustomInventory;
 
-// TODO: Test this proper, in theory this works but i haven't tested it yet
 [HarmonyPatch]
 public static partial class CustomMealEffectManager
 {
@@ -21,4 +21,33 @@ public static partial class CustomMealEffectManager
             CustomEffectList[effect.MealEffectType].Effect(follower);
         }
     }
+    
+    [HarmonyPatch(typeof(RecipeInfoCard), nameof(RecipeInfoCard.Configure)), HarmonyPostfix]
+    private static void ConfigureCustomMealEffect(RecipeInfoCard __instance, InventoryItem.ITEM_TYPE config)
+    {
+        var mealEffects = CookingData.GetMealEffects(config);
+    }
+    
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetEffectDescription)), HarmonyPostfix]
+    private static void GetCustomMealEffectDescription(ref CookingData.MealEffect mealEffect, ref string __result)
+    {
+        if (!CustomEffectList.Keys.Contains(mealEffect.MealEffectType)) return;
+
+        var effect = CustomEffectList[mealEffect.MealEffectType];
+
+        var description = effect.Description();
+        var descriptionSuffix = effect.DescriptionSuffix();
+        var icon = effect.Positive() ? "<sprite name=\"icon_FaithUp\">" : "<sprite name=\"icon_FaithDown\">";
+        var enabled = effect.EffectEnabled();
+
+        var formattedDescription = $"{icon} <color=#FFD201>{mealEffect.Chance}%</color> {description}";
+        
+        if (!enabled)
+        {
+            formattedDescription = $"<s>{formattedDescription}</s>";
+        }
+        
+        __result = formattedDescription + descriptionSuffix;
+    }
+    
 }

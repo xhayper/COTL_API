@@ -103,7 +103,7 @@ public static partial class CustomItemManager
             __result = item;
     }
 
-    [HarmonyPatch(typeof(RecipeInfoCard), nameof(RecipeInfoCard.Configure)), HarmonyPrefix]
+    [HarmonyPatch(typeof(RecipeInfoCard), nameof(RecipeInfoCard.Configure)), HarmonyPostfix]
     private static void AddCustomStarRating(RecipeInfoCard __instance, InventoryItem.ITEM_TYPE config)
     {
         var satationLevel = CookingData.GetSatationLevel(config);
@@ -145,7 +145,7 @@ public static partial class CustomItemManager
     }
 
     [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealStructureType)), HarmonyPostfix]
-    private static void GetCustomMealStructurelType(InventoryItem.ITEM_TYPE mealType, ref StructureBrain.TYPES __result)
+    private static void GetCustomMealStructureType(InventoryItem.ITEM_TYPE mealType, ref StructureBrain.TYPES __result)
     {
         if (CustomMealList.Keys.Contains(mealType))
             __result = CustomMealList.Values.First(x => x.ItemType == mealType).StructureType;
@@ -186,7 +186,6 @@ public static partial class CustomItemManager
             {
                 Command = CustomMealList[item].FollowerCommand
             });
-            ;
         }
     }
 

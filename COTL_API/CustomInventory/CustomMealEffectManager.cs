@@ -17,9 +17,10 @@ public static partial class CustomMealEffectManager
         var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
         var effectType = GuidManager.GetEnumValue<CookingData.MealEffectType>(guid, effect.InternalName);
+        LogInfo("Regestering effect with effecType " + effectType);
         effect._mealEffect = effectType;
         effect._modPrefix = guid;
-        effect._internalObjectName = $"CustomItem_{effect.InternalName}";
+        effect._internalObjectName = $"CustomEffect_{effect.InternalName}";
 
         CustomEffectList.Add(effectType, effect);
 
@@ -27,16 +28,3 @@ public static partial class CustomMealEffectManager
     }
 }
 
-public abstract class CustomMealEffect
-{
-    internal string _internalObjectName = "";
-    internal CookingData.MealEffectType _mealEffect;
-    internal string _modPrefix = "";
-
-    public abstract string InternalName { get; }
-
-    /// <summary>
-    /// This is the effect that will occur when the follower eats this dish.
-    /// </summary>
-    public abstract Action<FollowerBrain> Effect { get; }
-}
