@@ -32,7 +32,7 @@ public static partial class CustomItemManager
         {
             var meal = item as CustomMeal;
 
-            if (!IsMeal(meal!.ItemType))
+            if (!IsMeal(meal!.ItemPickUpToImitate))
                 throw new ArgumentException("Custom Meal Imitation Item is not a meal!", item.InternalName);
 
             meal!.FollowerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, meal.InternalName);
@@ -65,12 +65,7 @@ public static partial class CustomItemManager
             InventoryItem.ITEM_TYPE.MEAL_POOP, InventoryItem.ITEM_TYPE.MEAL_SPICY
         ];
 
-        foreach (var item in meals)
-        {
-            if(itemType == item)
-                return true;
-        }
-        return false;
+        return meals.Any(item => itemType == item);
     }
 
     /// <summary>

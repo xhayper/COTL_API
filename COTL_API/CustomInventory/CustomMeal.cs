@@ -19,7 +19,7 @@ public abstract class CustomMeal : CustomInventoryItem
     public virtual MealEffect[] MealEffects { get; } = [];
 
     public override bool IsFood => true;
-
+    public override InventoryItem.ITEM_TYPE ItemPickUpToImitate { get; } = InventoryItem.ITEM_TYPE.MEAL_BERRIES;
     /// <summary>
     /// "Star" level of this food
     /// Range: 0-3

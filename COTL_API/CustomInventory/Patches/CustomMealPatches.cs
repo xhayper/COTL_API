@@ -44,6 +44,15 @@ public static partial class CustomItemManager
 
         __result = value.SatiationLevel;
     }
+    
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetSatationAmount)), HarmonyPostfix]
+    private static void GetCustomSatiationAmount(ref int __result, InventoryItem.ITEM_TYPE meal)
+    {
+        if (!CustomMealList.TryGetValue(meal, out var value))
+            return;
+
+        __result = value.FoodSatitation;
+    }
 
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllMeals)), HarmonyPostfix]
     private static void AddCustomMeal(ref InventoryItem.ITEM_TYPE[] __result)
