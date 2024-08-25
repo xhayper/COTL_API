@@ -19,7 +19,7 @@ internal static class Debugging
             foreach (var item in items)
                 LogInfo($"{item.Key}: {item.Value.InternalName}");
         
-        var mealEffects = CustomMealEffectManager.CustomEffectList;
+        var mealEffects = CustomFoodEffectManager.CustomEffectList;
         LogInfo($"Meal Effects: {mealEffects.Count}");
         if (printNames)
             foreach (var mealEffect in mealEffects)

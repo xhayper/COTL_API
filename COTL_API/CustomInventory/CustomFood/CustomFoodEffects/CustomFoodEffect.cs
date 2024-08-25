@@ -2,7 +2,7 @@ using I2.Loc;
 
 namespace COTL_API.CustomInventory;
 
-public abstract class CustomMealEffect
+public abstract class CustomFoodEffect
 {
     internal string InternalObjectName = "";
 

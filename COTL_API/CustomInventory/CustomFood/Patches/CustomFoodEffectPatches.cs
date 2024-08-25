@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 namespace COTL_API.CustomInventory;
 
 [HarmonyPatch]
-public static partial class CustomMealEffectManager
+public static partial class CustomFoodEffectManager
 {
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.DoMealEffect))]
     [HarmonyPostfix]

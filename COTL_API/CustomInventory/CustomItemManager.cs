@@ -17,8 +17,6 @@ public static partial class CustomItemManager
     }
 
     public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItemList { get; } = [];
-    public static Dictionary<InventoryItem.ITEM_TYPE, CustomMeal> CustomMealList { get; } = [];
-
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
@@ -28,23 +26,7 @@ public static partial class CustomItemManager
         item.ItemType = itemType;
         item.ModPrefix = guid;
         item.InternalObjectName = $"CustomItem_{item.InternalName}";
-
-        if (item.GetType().InheritsFrom(typeof(CustomMeal)))
-        {
-            var meal = item as CustomMeal;
-
-            if (!CookingData.GetAllMeals().Contains(meal!.ItemType))
-                throw new ArgumentException("Custom Meal Imitation Item is not a meal!", item.InternalName);
-
-            meal!.FollowerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, meal.InternalName);
-            var structureType = GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, meal.InternalName);
-            meal.StructureType = structureType;
-
-            if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
-
-            CustomMealList.Add(itemType, meal);
-        }
-
+        
         CustomItemList.Add(itemType, item);
 
         return itemType;
@@ -70,7 +52,7 @@ public static partial class CustomItemManager
     }
 
     /// <summary>
-    ///     Used to retrieve the custom item from the custom item dictionary based on it's internal object name.
+    ///     Used to retrieve the custom item from the custom item dictionary based on its internal object name.
     /// </summary>
     /// <param name="name">Name of the items internal object to search for.</param>
     /// <returns>If found, returns the CustomInventoryItem object.</returns>

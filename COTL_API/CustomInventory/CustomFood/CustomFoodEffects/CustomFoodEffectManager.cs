@@ -3,11 +3,11 @@ using COTL_API.Guid;
 
 namespace COTL_API.CustomInventory;
 
-public static partial class CustomMealEffectManager
+public static partial class CustomFoodEffectManager
 {
-    public static Dictionary<CookingData.MealEffectType, CustomMealEffect> CustomEffectList { get; } = [];
+    public static Dictionary<CookingData.MealEffectType, CustomFoodEffect> CustomEffectList { get; } = [];
 
-    public static CookingData.MealEffectType Add(CustomMealEffect effect)
+    public static CookingData.MealEffectType Add(CustomFoodEffect effect)
     {
         var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
 
