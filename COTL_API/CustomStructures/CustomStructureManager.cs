@@ -1,6 +1,9 @@
-﻿using System.Reflection;
+using System.Reflection;
+using COTL_API.CustomInventory;
 using COTL_API.Guid;
 using HarmonyLib;
+using UnityEngine;
+using UnityEngine.Bindings;
 
 namespace COTL_API.CustomStructures;
 

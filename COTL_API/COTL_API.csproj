@@ -11,7 +11,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
-    <Import Project="../COTL_API.Common.props"/>
+    <Import Project="../COTL_API.Common.props" />
 
     <ItemGroup>
         <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.4.4.590-r.0"/>
@@ -19,7 +19,7 @@
             <HintPath>..\lib\UnifyLibrary.dll</HintPath>
         </Reference>
 
-        <None Include="../README.md" Pack="true" PackagePath="/"/>
-        <None Include="../LICENSE" Pack="true" PackagePath="/"/>
+        <None Include="../README.md" Pack="true" PackagePath="/" />
+        <None Include="../LICENSE" Pack="true" PackagePath="/" />
     </ItemGroup>
 </Project>
