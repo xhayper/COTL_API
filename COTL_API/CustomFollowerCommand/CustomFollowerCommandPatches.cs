@@ -1,6 +1,6 @@
+using COTL_API.CustomInventory;
 using HarmonyLib;
 using Lamb.UI.FollowerInteractionWheel;
-using COTL_API.CustomInventory;
 
 namespace COTL_API.CustomFollowerCommand;
 
@@ -142,7 +142,8 @@ public partial class CustomFollowerCommandManager
         var command0 = followerCommands;
         if (CustomItemManager.CustomMealList.Values.Any(x => x.FollowerCommand == command0))
         {
-            __result = CustomItemManager.CustomMealList.Values.First(x => x.FollowerCommand == command0).InventoryStringIcon();
+            __result = CustomItemManager.CustomMealList.Values.First(x => x.FollowerCommand == command0)
+                .InventoryStringIcon();
             return false;
         }
 

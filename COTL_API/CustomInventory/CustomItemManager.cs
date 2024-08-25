@@ -15,7 +15,7 @@ public static partial class CustomItemManager
         COMMON,
         RARE
     }
-    
+
     public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItemList { get; } = [];
     public static Dictionary<InventoryItem.ITEM_TYPE, CustomMeal> CustomMealList { get; } = [];
 
@@ -42,14 +42,14 @@ public static partial class CustomItemManager
 
             if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
 
-            CustomMealList.Add(itemType,meal);
+            CustomMealList.Add(itemType, meal);
         }
 
         CustomItemList.Add(itemType, item);
 
         return itemType;
     }
-    
+
     /// <summary>
     ///     A method to return whether to drop loot or not based on the custom items chances to drop. Defaults to the items
     ///     DungeonChestSpawnChance unless a custom chance is provided.
@@ -64,9 +64,8 @@ public static partial class CustomItemManager
             ? customChance
             : customInventoryItem.DungeonChestSpawnChance +
               customInventoryItem.DungeonChestSpawnChance * DataManager.Instance.GetLuckMultiplier();
-        if (Plugin.Instance != null && Plugin.Instance.Debug)
-            LogDebug(
-                $"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");
+        LogDebug(
+            $"{customInventoryItem.InternalObjectName} Roll/Chance: {roll} / {chance}: Win? {roll <= chance}");
         return roll <= chance;
     }
 
