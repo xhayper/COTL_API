@@ -7,7 +7,7 @@ namespace COTL_API.Icons;
 
 internal static class CustomIconManager
 {
-    private static Dictionary<Sprite, TMP_SpriteAsset> Icons { get; } = new();
+    private static Dictionary<Sprite, TMP_SpriteAsset> Icons { get; } = [];
 
     internal static TMP_SpriteAsset GetIcon(Sprite icon, string name, GlyphMetrics iconMetrics)
     {

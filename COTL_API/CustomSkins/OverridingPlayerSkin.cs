@@ -13,7 +13,7 @@ internal class OverridingPlayerSkin(string name, Func<Skin?> overrideSkin) : Cus
     public override Texture2D Texture => null!;
     public override List<SkinOverride> Overrides => null!;
 
-    public override void Apply(PlayerType who = PlayerType.P1)
+    public override void Apply(PlayerType who = PlayerType.LAMB)
     {
         void Action()
         {
@@ -22,17 +22,17 @@ internal class OverridingPlayerSkin(string name, Func<Skin?> overrideSkin) : Cus
             CustomSkinManager.SetPlayerSkinOverride(who, _cachedSkin);
         }
 
-        if (who == PlayerType.P1)
+        if (who == PlayerType.LAMB)
         {
-            if (!SkinUtils.SkinP1Loaded)
-                SkinUtils.SkinP1ToLoad = Action;
+            if (!SkinUtils.LambFleeceSkinLoaded)
+                SkinUtils.LambFleeceSkinToLoad = Action;
             else
                 Action();
         }
         else
         {
-            if (!SkinUtils.SkinP2Loaded)
-                SkinUtils.SkinP2ToLoad = Action;
+            if (!SkinUtils.GoatFleeceSkinLoaded)
+                SkinUtils.GoatFleeceToLoad = Action;
             else
                 Action();
         }

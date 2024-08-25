@@ -5,7 +5,7 @@ namespace COTL_API.CustomLocalization;
 [HarmonyPatch]
 public partial class CustomLocalizationManager
 {
-    public static Dictionary<string, Dictionary<string, string>> LocalizationMap { get; } = new();
+    public static Dictionary<string, Dictionary<string, string>> LocalizationMap { get; } = [];
     public static List<string> LanguageList { get; } = [];
 
     /// <summary>
@@ -16,7 +16,7 @@ public partial class CustomLocalizationManager
     public static void LoadLocalization(string name, string path)
     {
         if (!LocalizationMap.ContainsKey(name))
-            LocalizationMap.Add(name, new Dictionary<string, string>());
+            LocalizationMap.Add(name, []);
 
         if (!LanguageList.Contains(name))
             LanguageList.Add(name);

@@ -15,7 +15,7 @@ public static partial class CustomObjectiveManager
     /// <summary>
     ///     Holds the list of instantiated custom objectives.
     /// </summary>
-    internal static Dictionary<int, CustomObjective> CustomObjectiveList { get; } = new();
+    internal static Dictionary<int, CustomObjective> CustomObjectiveList { get; } = [];
 
     /// <param name="followerName">The name of the follower.</param>
     /// <returns>The original instance of the objective if it exists, otherwise returns a new instance.</returns>

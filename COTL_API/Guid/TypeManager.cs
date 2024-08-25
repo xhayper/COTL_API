@@ -10,9 +10,9 @@ namespace COTL_API.Guid;
 [HarmonyPatch]
 public static class TypeManager
 {
-    private static readonly Dictionary<string, Type> TypeCache = new();
+    private static readonly Dictionary<string, Type> TypeCache = [];
 
-    private static readonly Dictionary<string, string> ModIds = new();
+    private static readonly Dictionary<string, string> ModIds = [];
 
     internal static void Add(string key, Type value)
     {
