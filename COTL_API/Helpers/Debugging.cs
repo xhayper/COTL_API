@@ -18,6 +18,12 @@ internal static class Debugging
         if (printNames)
             foreach (var item in items)
                 LogInfo($"{item.Key}: {item.Value.InternalName}");
+        
+        var mealEffects = CustomMealEffectManager.CustomEffectList;
+        LogInfo($"Meal Effects: {mealEffects.Count}");
+        if (printNames)
+            foreach (var mealEffect in mealEffects)
+                LogInfo($"{mealEffect.Key}: {mealEffect.Value.InternalName}");
 
         var structures = CustomStructureManager.CustomStructureList;
         LogInfo($"Structures: {structures.Count}");
