@@ -83,7 +83,7 @@ using System.IO;
 public class ExampleMealEffect : CustomMealEffect
 {
     public override string Internal name => "ExampleEffect";
-    public override Action<FollowerBrain> Effect = DoSomething:
+    public override Action<FollowerBrain> Effect = DoSomething;
 
     public void DoSomething(FollowerBrain follower)
     {
@@ -107,6 +107,18 @@ private void Awake()
 ```
 
 Assigning the result of `CustomMealEffectmManager.Add()` allows you to reference that meal elsewhere in your code using `Plugin.ExampleMealEffect`.
+
+> WARNING: Make sure to register Custom Meal Effects before you register your custom meals, otherwise any custom meal effects Won't work. Alternatively use Lazy loading.
+
+`CustomMealEffect` supports the following overrides:
+| Type | Name | Default |
+|-|-|-|
+| string | InternalName | \[REQUIRED\] |
+| Action\<FollowerBrain\> | Effect | \[REQUIRED\]|
+|bool | EffectEnabled()| true |
+|bool|Positive()|true|
+|string| Description()|$"CookingData/{InternalName}/Description"|
+|string|DescriptioNSuffix()|""|
 
 ## Final Steps
 
