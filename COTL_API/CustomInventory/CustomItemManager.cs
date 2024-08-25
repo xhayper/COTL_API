@@ -1,5 +1,6 @@
 using System.Reflection;
 using COTL_API.Guid;
+using Sirenix.Serialization.Utilities;
 using Random = UnityEngine.Random;
 
 namespace COTL_API.CustomInventory;
@@ -14,8 +15,10 @@ public static partial class CustomItemManager
         COMMON,
         RARE
     }
-
+    
     public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItemList { get; } = [];
+    public static Dictionary<InventoryItem.ITEM_TYPE, CustomMeal> CustomMealList { get; } = [];
+
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
@@ -26,11 +29,27 @@ public static partial class CustomItemManager
         item.ModPrefix = guid;
         item.InternalObjectName = $"CustomItem_{item.InternalName}";
 
+        if (item.GetType().InheritsFrom(typeof(CustomMeal)))
+        {
+            var meal = item as CustomMeal;
+
+            if (!CookingData.GetAllMeals().Contains(meal!.ItemType))
+                throw new ArgumentException("Custom Meal Imitation Item is not a meal!", item.InternalName);
+
+            meal!.FollowerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, meal.InternalName);
+            var structureType = GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, meal.InternalName);
+            meal.StructureType = structureType;
+
+            if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
+
+            CustomMealList.Add(itemType,meal);
+        }
+
         CustomItemList.Add(itemType, item);
 
         return itemType;
     }
-
+    
     /// <summary>
     ///     A method to return whether to drop loot or not based on the custom items chances to drop. Defaults to the items
     ///     DungeonChestSpawnChance unless a custom chance is provided.

@@ -1,6 +1,9 @@
+using COTL_API.CustomStructures;
 using HarmonyLib;
 using MMBiomeGeneration;
 using MMRoomGeneration;
+using MMTools;
+using Sirenix.Serialization.Utilities;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
@@ -53,6 +56,15 @@ public static partial class CustomItemManager
                             o.transform.localScale = item.LocalScale;
                             var sprite = o.GetComponentInChildren<SpriteRenderer>();
                             sprite.sprite = item.Sprite;
+
+                            var meal = o.GetComponent<Meal>();
+                            if (meal != null)
+                            {
+                                meal.CreateStructureOnStop = true;
+                                meal.CreateStructureLocation = FollowerLocation.Base;
+                                meal.spriteRenderer.sprite = (item as CustomMeal)!.Sprite;
+                                meal.structure.Type = (item as CustomMeal)!.StructureType;
+                            }
 
                             var pickUp = o.GetComponent<PickUp>();
                             if (pickUp == null) return;
