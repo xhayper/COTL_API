@@ -12,5 +12,5 @@ internal class ApiData
 
     public string OwO => _randomEasterEgg[Random.Range(0, _randomEasterEgg.Length)];
 
-    public ObjectDictionary EnumData { get; set; } = new();
+    public ObjectDictionary EnumData { get; set; } = [];
 }

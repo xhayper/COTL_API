@@ -7,7 +7,7 @@ namespace COTL_API.CustomTasks;
 [HarmonyPatch]
 public static partial class CustomTaskManager
 {
-    public static Dictionary<FollowerTaskType, CustomTask> CustomTaskList { get; } = new();
+    public static Dictionary<FollowerTaskType, CustomTask> CustomTaskList { get; } = [];
 
     public static FollowerTaskType Add(CustomTask task)
     {

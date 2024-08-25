@@ -10,7 +10,7 @@ namespace COTL_API.CustomStructures;
 [HarmonyPatch]
 public static partial class CustomStructureManager
 {
-    public static Dictionary<StructureBrain.TYPES, CustomStructure> CustomStructureList { get; } = new();
+    public static Dictionary<StructureBrain.TYPES, CustomStructure> CustomStructureList { get; } = [];
 
     public static StructureBrain.TYPES Add(CustomStructure structure)
     {

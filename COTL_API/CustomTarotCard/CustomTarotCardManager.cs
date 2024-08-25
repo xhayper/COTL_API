@@ -5,7 +5,7 @@ namespace COTL_API.CustomTarotCard;
 
 public static partial class CustomTarotCardManager
 {
-    public static Dictionary<TarotCards.Card, CustomTarotCard> CustomTarotCardList { get; } = new();
+    public static Dictionary<TarotCards.Card, CustomTarotCard> CustomTarotCardList { get; } = [];
 
     public static TarotCards.Card Add(CustomTarotCard card)
     {

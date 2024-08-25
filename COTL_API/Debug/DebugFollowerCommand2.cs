@@ -11,7 +11,7 @@ public class DebugFollowerCommandClass2 : CustomFollowerCommand.CustomFollowerCo
 
     public override string InternalName => "DEBUG_FOLLOWER_COMMAND_2";
 
-    public override List<FollowerCommandCategory> Categories => new() { FollowerCommandCategory.MAKE_DEMAND_COMMAND };
+    public override List<FollowerCommandCategory> Categories => [FollowerCommandCategory.MAKE_DEMAND_COMMAND];
 
     public override void Execute(interaction_FollowerInteraction interaction,
         FollowerCommands finalCommand = FollowerCommands.None)

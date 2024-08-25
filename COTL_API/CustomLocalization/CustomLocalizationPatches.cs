@@ -68,7 +68,7 @@ public partial class CustomLocalizationManager
     private static bool GameSettings_GetLanguageIndex(GameSettings __instance, ref int __result)
     {
         __instance._languageSelector._prefilledContent =
-            __instance._languageSelector._prefilledContent.AddRange(LocalizationMap.Keys.ToArray());
+            __instance._languageSelector._prefilledContent.AddRange([.. LocalizationMap.Keys]);
         __instance._languageSelector.UpdateContent(__instance._languageSelector._prefilledContent);
         if (!LanguageList.Contains(SettingsManager.Settings.Game.Language)) return true;
         __result = LanguageUtilities.AllLanguages.Length + LanguageList.IndexOf(SettingsManager.Settings.Game.Language);
