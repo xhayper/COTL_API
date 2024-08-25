@@ -140,9 +140,9 @@ public partial class CustomFollowerCommandManager
         }
 
         var command0 = followerCommands;
-        if (CustomItemManager.CustomMealList.Values.Any(x => x.FollowerCommand == command0))
+        if (CustomItemManager.CustomFoodList.Values.Any(x => x.FollowerCommand == command0))
         {
-            __result = CustomItemManager.CustomMealList.Values.First(x => x.FollowerCommand == command0)
+            __result = CustomItemManager.CustomFoodList.Values.First(x => x.FollowerCommand == command0)
                 .InventoryStringIcon();
             return false;
         }
