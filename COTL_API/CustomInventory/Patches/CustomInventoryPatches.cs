@@ -254,9 +254,10 @@ public static partial class CustomItemManager
     private static void CookingData_GetAllFoods(ref InventoryItem.ITEM_TYPE[] __result)
     {
         var copy = __result;
-        __result = __result
-            .Concat(CustomItemList.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key))
-            .ToArray();
+        __result =
+        [
+            .. __result, .. CustomItemList.Where(i => !copy.Contains(i.Key) && i.Value.IsFood).Select(i => i.Key)
+        ];
     }
 
 
