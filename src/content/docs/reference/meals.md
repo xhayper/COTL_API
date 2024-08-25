@@ -52,7 +52,7 @@ Custom Meals support all the overrides that custom items do, despite the fact th
 > WARNING:
 > Overriding `ItemPickupToImitate` with any item that isn't a meal will cause an error!
 
-## Adding Items
+## Adding Meals
 
 To add an meal to the game, simply use `CustomItemManager.Add()`.  
 Example:
@@ -118,7 +118,7 @@ Assigning the result of `CustomMealEffectmManager.Add()` allows you to reference
 |bool | EffectEnabled()| true |
 |bool|Positive()|true|
 |string| Description()|$"CookingData/{InternalName}/Description"|
-|string|DescriptioNSuffix()|""|
+|string|DescriptionSuffix()|""|
 
 ## Final Steps
 
