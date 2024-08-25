@@ -1,5 +1,6 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using Lamb.UI.FollowerInteractionWheel;
+using COTL_API.CustomInventory;
 
 namespace COTL_API.CustomFollowerCommand;
 
@@ -131,10 +132,20 @@ public partial class CustomFollowerCommandManager
     private static bool FontImageNames_IconForCommand(FollowerCommands followerCommands,
         ref string __result)
     {
-        if (!CustomFollowerCommandList.TryGetValue(followerCommands, out var value)) return true;
+        if (CustomFollowerCommandList.TryGetValue(followerCommands, out var value))
+        {
+            __result = value.CommandStringIcon();
 
-        __result = value.CommandStringIcon();
+            return false;
+        }
 
-        return false;
+        var command0 = followerCommands;
+        if (CustomItemManager.CustomMealList.Values.Any(x => x.FollowerCommand == command0))
+        {
+            __result = CustomItemManager.CustomMealList.Values.First(x => x.FollowerCommand == command0).InventoryStringIcon();
+            return false;
+        }
+
+        return true;
     }
 }
