@@ -5,7 +5,6 @@
 [![Thunderstore](https://img.shields.io/static/v1?label=&message=thunderstore&style=flat&color=informational)](https://cult-of-the-lamb.thunderstore.io/package/xhayper/COTL_API/)
 [![nexusmods](https://img.shields.io/static/v1?label=&message=nexusmods&style=flat&color=yellow)](https://www.nexusmods.com/cultofthelamb/mods/30)
 
-
 A library to easily interact with [`Cult of the Lamb`](https://store.steampowered.com/app/1313140/Cult_of_the_Lamb)
 
 ## NOTE

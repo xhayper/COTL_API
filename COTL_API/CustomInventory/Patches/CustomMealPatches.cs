@@ -1,14 +1,14 @@
 using HarmonyLib;
 using Lamb.UI.FollowerInteractionWheel;
 using src.UI.InfoCards;
-using System.Diagnostics.Tracing;
 
 namespace COTL_API.CustomInventory;
 
 [HarmonyPatch]
 public static partial class CustomItemManager
 {
-    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetRecipe)), HarmonyPostfix]
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetRecipe))]
+    [HarmonyPostfix]
     private static void CookingData_GetRecipe(ref List<List<InventoryItem>> __result, InventoryItem.ITEM_TYPE mealType)
     {
         if (!CustomMealList.TryGetValue(mealType, out var value))
@@ -17,8 +17,10 @@ public static partial class CustomItemManager
         __result = value.Recipe;
     }
 
-    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetMealEffects)), HarmonyPostfix]
-    private static void CookingData_GetMealEffects(ref CookingData.MealEffect[] __result, InventoryItem.ITEM_TYPE mealType)
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetMealEffects))]
+    [HarmonyPostfix]
+    private static void CookingData_GetMealEffects(ref CookingData.MealEffect[] __result,
+        InventoryItem.ITEM_TYPE mealType)
     {
         if (!CustomMealList.TryGetValue(mealType, out var value))
             return;
@@ -27,7 +29,8 @@ public static partial class CustomItemManager
     }
 
 
-    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetTummyRating)), HarmonyPostfix]
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetTummyRating))]
+    [HarmonyPostfix]
     private static void CookingData_GetTummyRating(ref float __result, InventoryItem.ITEM_TYPE meal)
     {
         if (!CustomMealList.TryGetValue(meal, out var value))
@@ -36,7 +39,8 @@ public static partial class CustomItemManager
         __result = value.TummyRating;
     }
 
-    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetSatationLevel)), HarmonyPostfix]
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetSatationLevel))]
+    [HarmonyPostfix]
     private static void CookingData_GetSatationLevel(ref int __result, InventoryItem.ITEM_TYPE meal)
     {
         if (!CustomMealList.TryGetValue(meal, out var value))
@@ -44,8 +48,9 @@ public static partial class CustomItemManager
 
         __result = value.SatiationLevel;
     }
-    
-    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetSatationAmount)), HarmonyPostfix]
+
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetSatationAmount))]
+    [HarmonyPostfix]
     private static void CookingData_GetSatationAmount(ref int __result, InventoryItem.ITEM_TYPE meal)
     {
         if (!CustomMealList.TryGetValue(meal, out var value))
@@ -54,27 +59,23 @@ public static partial class CustomItemManager
         __result = value.FoodSatitation;
     }
 
-    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllMeals)), HarmonyPostfix]
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllMeals))]
+    [HarmonyPostfix]
     private static void CookingData_GetAllMeals(ref InventoryItem.ITEM_TYPE[] __result)
     {
         var customMeals = CustomMealList.Values.ToArray();
         var customItems = CustomMealList.Keys.ToArray();
         var newResult = new InventoryItem.ITEM_TYPE[__result.Length + customMeals.Length];
 
-        for (var i = 0; i < __result.Length; i++)
-        {
-            newResult[i] = __result[i];
-        }
+        for (var i = 0; i < __result.Length; i++) newResult[i] = __result[i];
 
-        for (var i = 0; i < customMeals.Length; i++)
-        {
-            newResult[__result.Length + i] = customItems[i];
-        }
+        for (var i = 0; i < customMeals.Length; i++) newResult[__result.Length + i] = customItems[i];
 
         __result = newResult;
     }
 
-    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetLocalizedName)), HarmonyPostfix]
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetLocalizedName))]
+    [HarmonyPostfix]
     private static void CookingData_GetLocalizedName(InventoryItem.ITEM_TYPE mealType, ref string __result)
     {
         if (!CustomMealList.TryGetValue(mealType, out var value))
@@ -83,16 +84,15 @@ public static partial class CustomItemManager
         __result = value.LocalizedName();
     }
 
-    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetLocalizedDescription)), HarmonyPostfix]
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetLocalizedDescription))]
+    [HarmonyPostfix]
     private static void CookingData_GetLocalizedDescription(InventoryItem.ITEM_TYPE mealType, ref string __result)
     {
-        if (CustomMealList.Keys.Contains(mealType))
-        {
-            __result = CustomMealList[mealType].Description();
-        }
+        if (CustomMealList.Keys.Contains(mealType)) __result = CustomMealList[mealType].Description();
     }
 
-    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetMealFromStructureType)), HarmonyPostfix]
+    [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetMealFromStructureType))]
+    [HarmonyPostfix]
     private static void CookingData_GetMealFromStructureType(StructureBrain.TYPES structureType,
         ref InventoryItem.ITEM_TYPE __result)
     {
@@ -103,7 +103,8 @@ public static partial class CustomItemManager
             __result = item;
     }
 
-    [HarmonyPatch(typeof(RecipeInfoCard), nameof(RecipeInfoCard.Configure)), HarmonyPostfix]
+    [HarmonyPatch(typeof(RecipeInfoCard), nameof(RecipeInfoCard.Configure))]
+    [HarmonyPostfix]
     private static void RecipeInfoCard_Configure(RecipeInfoCard __instance, InventoryItem.ITEM_TYPE config)
     {
         var satationLevel = CookingData.GetSatationLevel(config);
@@ -117,7 +118,8 @@ public static partial class CustomItemManager
         __instance._itemHeader.text = value.LocalizedName();
     }
 
-    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetInfoByType)), HarmonyPostfix]
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetInfoByType))]
+    [HarmonyPostfix]
     private static void StructuresData_GetInfoByType(StructureBrain.TYPES Type, ref StructuresData __result)
     {
         if (CustomMealList.Values.Any(x => x.StructureType == Type))
@@ -126,26 +128,27 @@ public static partial class CustomItemManager
             {
                 PrefabPath = "Prefabs/Structures/Other/Meal",
                 IgnoreGrid = true,
-                Location = FollowerLocation.Base,
+                Location = FollowerLocation.Base
             };
             data.Type = Type;
             __result = data;
         }
     }
 
-    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealType)), HarmonyPostfix]
-    private static void StructuresData_GetMealType(StructureBrain.TYPES structureType, ref InventoryItem.ITEM_TYPE __result)
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealType))]
+    [HarmonyPostfix]
+    private static void StructuresData_GetMealType(StructureBrain.TYPES structureType,
+        ref InventoryItem.ITEM_TYPE __result)
     {
         var inventoryItem = CustomMealList.Values.FirstOrDefault(x => x.StructureType == structureType);
 
-        if (inventoryItem != null)
-        {
-            __result = inventoryItem.ItemType;
-        }
+        if (inventoryItem != null) __result = inventoryItem.ItemType;
     }
 
-    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealStructureType)), HarmonyPostfix]
-    private static void StructuresData_GetMealStructureType(InventoryItem.ITEM_TYPE mealType, ref StructureBrain.TYPES __result)
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealStructureType))]
+    [HarmonyPostfix]
+    private static void StructuresData_GetMealStructureType(InventoryItem.ITEM_TYPE mealType,
+        ref StructureBrain.TYPES __result)
     {
         if (CustomMealList.Keys.Contains(mealType))
             __result = CustomMealList.Values.First(x => x.ItemType == mealType).StructureType;
@@ -153,7 +156,8 @@ public static partial class CustomItemManager
 
     // TODO: rewrite this to be a Postfix so that it doesn't have to skip other patches
     // TODO: maybe(?) rewrite this such that it's not a carbon copy of the original method
-    [HarmonyPatch(typeof(StructureBrain), nameof(StructureBrain.CreateBrain)), HarmonyPrefix]
+    [HarmonyPatch(typeof(StructureBrain), nameof(StructureBrain.CreateBrain))]
+    [HarmonyPrefix]
     private static bool StructureBrain_CreateBrain(ref StructuresData data, ref StructureBrain __result)
     {
         StructureBrain sb;
@@ -174,7 +178,8 @@ public static partial class CustomItemManager
         return true;
     }
 
-    [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.MealCommands)), HarmonyPostfix]
+    [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.MealCommands))]
+    [HarmonyPostfix]
     private static void FollowerCommandGroups_MealCommands(ref List<InventoryItem.ITEM_TYPE> availableMeals,
         ref List<CommandItem> __result)
     {
@@ -182,14 +187,15 @@ public static partial class CustomItemManager
         {
             if (!availableMeals.Contains(item)) continue;
 
-            __result.Add(new FollowerCommandItems.FoodCommandItem()
+            __result.Add(new FollowerCommandItems.FoodCommandItem
             {
                 Command = CustomMealList[item].FollowerCommand
             });
         }
     }
 
-    [HarmonyPatch(typeof(FollowerTask_EatMeal), nameof(FollowerTask_EatMeal.GetMealReaction)), HarmonyPostfix]
+    [HarmonyPatch(typeof(FollowerTask_EatMeal), nameof(FollowerTask_EatMeal.GetMealReaction))]
+    [HarmonyPostfix]
     public static void FollowerTask_EatMeal_GetMealReaction(StructureBrain.TYPES type, ref string __result)
     {
         if (CustomMealList.Values.All(x => x.StructureType != type)) return;
@@ -204,33 +210,32 @@ public static partial class CustomItemManager
         };
     }
 
-    [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem), nameof(FollowerCommandItems.FoodCommandItem.GetTitle)),
-     HarmonyPostfix]
+    [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem), nameof(FollowerCommandItems.FoodCommandItem.GetTitle))]
+    [HarmonyPostfix]
     private static void FoodCommandItem_GetTitle(ref FollowerCommandItems.FoodCommandItem __instance,
         ref string __result)
     {
         var command = __instance.Command;
         if (CustomMealList.Values.Any(x => x.FollowerCommand == command))
-        {
             __result = CustomMealList.Values.First(x => x.FollowerCommand == command).LocalizedName();
-        }
     }
 
     [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem),
-         nameof(FollowerCommandItems.FoodCommandItem.GetDescription)), HarmonyPostfix]
+        nameof(FollowerCommandItems.FoodCommandItem.GetDescription))]
+    [HarmonyPostfix]
     private static void FoodCommandItem_GetDescription(ref FollowerCommandItems.FoodCommandItem __instance,
         ref string __result)
     {
         var command = __instance.Command;
         if (CustomMealList.Values.Any(x => x.FollowerCommand == command))
-        {
             __result = CustomMealList.Values.First(x => x.FollowerCommand == command).LocalizedDescription();
-        }
     }
 
     [HarmonyPatch(typeof(interaction_FollowerInteraction),
-        nameof(interaction_FollowerInteraction.OnFollowerCommandFinalized)), HarmonyPrefix]
-    private static void interaction_FollowerInteraction_OnFollowerCommandFinalized(ref FollowerCommands[] followerCommands,
+        nameof(interaction_FollowerInteraction.OnFollowerCommandFinalized))]
+    [HarmonyPrefix]
+    private static void interaction_FollowerInteraction_OnFollowerCommandFinalized(
+        ref FollowerCommands[] followerCommands,
         ref interaction_FollowerInteraction __instance)
     {
         var command = followerCommands[0];
