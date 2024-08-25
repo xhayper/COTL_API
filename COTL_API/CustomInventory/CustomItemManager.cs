@@ -33,7 +33,7 @@ public static partial class CustomItemManager
         {
             var meal = item as CustomMeal;
 
-            if (!IsMeal(meal!.ItemPickUpToImitate))
+            if (!CookingData.GetAllMeals().Contains(meal!.ItemType))
                 throw new ArgumentException("Custom Meal Imitation Item is not a meal!", item.InternalName);
 
             meal!.FollowerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, meal.InternalName);
@@ -49,26 +49,7 @@ public static partial class CustomItemManager
 
         return itemType;
     }
-
-    private static bool IsMeal(InventoryItem.ITEM_TYPE itemType)
-    {
-        List<InventoryItem.ITEM_TYPE> meals = [
-            InventoryItem.ITEM_TYPE.MEAL , InventoryItem.ITEM_TYPE.MEALS,
-            InventoryItem.ITEM_TYPE.MEAL_BAD_FISH , InventoryItem.ITEM_TYPE.MEAL_BAD_MEAT,
-            InventoryItem.ITEM_TYPE.MEAL_BAD_MIXED , InventoryItem.ITEM_TYPE.MEAL_BERRIES,
-            InventoryItem.ITEM_TYPE.MEAL_DEADLY , InventoryItem.ITEM_TYPE.MEAL_EGG,
-            InventoryItem.ITEM_TYPE.MEAL_FOLLOWER_MEAT , InventoryItem.ITEM_TYPE.MEAL_GOOD_FISH,
-            InventoryItem.ITEM_TYPE.MEAL_GRASS, InventoryItem.ITEM_TYPE.MEAL_GREAT,
-            InventoryItem.ITEM_TYPE.MEAL_GREAT_FISH, InventoryItem.ITEM_TYPE.MEAL_GREAT_FISH,
-            InventoryItem.ITEM_TYPE.MEAL_GREAT_MEAT, InventoryItem.ITEM_TYPE.MEAL_GREAT_MIXED,
-            InventoryItem.ITEM_TYPE.MEAL_MEAT, InventoryItem.ITEM_TYPE.MEAL_MEDIUM_MIXED,
-            InventoryItem.ITEM_TYPE.MEAL_MEDIUM_MIXED, InventoryItem.ITEM_TYPE.MEAL_MUSHROOMS,
-            InventoryItem.ITEM_TYPE.MEAL_POOP, InventoryItem.ITEM_TYPE.MEAL_SPICY
-        ];
-
-        return meals.Any(item => itemType == item);
-    }
-
+    
     /// <summary>
     ///     A method to return whether to drop loot or not based on the custom items chances to drop. Defaults to the items
     ///     DungeonChestSpawnChance unless a custom chance is provided.
