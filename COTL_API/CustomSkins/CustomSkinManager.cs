@@ -8,25 +8,25 @@ namespace COTL_API.CustomSkins;
 
 public enum PlayerType
 {
-    P1,
-    P2
+    LAMB,
+    GOAT
 }
 
 [HarmonyPatch]
 public static partial class CustomSkinManager
 {
-    internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = new();
-    internal static readonly Dictionary<string, Skin?> CustomFollowerSkins = new();
-    internal static readonly Dictionary<string, bool> AlwaysUnlockedSkins = new();
-    internal static readonly Dictionary<string, Texture2D> SkinTextures = new();
-    internal static readonly Dictionary<string, Material> SkinMaterials = new();
-    internal static readonly Dictionary<string, Skin> TarotSkins = new();
-    internal static readonly Dictionary<string, Sprite> TarotSprites = new();
-    internal static readonly Dictionary<string, Sprite> TarotBackSprites = new();
+    internal static readonly Dictionary<string, SpineAtlasAsset> CustomAtlases = [];
+    internal static readonly Dictionary<string, Skin?> CustomFollowerSkins = [];
+    internal static readonly Dictionary<string, bool> AlwaysUnlockedSkins = [];
+    internal static readonly Dictionary<string, Texture2D> SkinTextures = [];
+    internal static readonly Dictionary<string, Material> SkinMaterials = [];
+    internal static readonly Dictionary<string, Skin> TarotSkins = [];
+    internal static readonly Dictionary<string, Sprite> TarotSprites = [];
+    internal static readonly Dictionary<string, Sprite> TarotBackSprites = [];
 
     internal static int NumGenericAtlases;
 
-    internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = new();
+    internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = [];
 
     internal static readonly Dictionary<string, Tuple<int, string>> FollowerSkinDict = new()
     {
@@ -201,7 +201,7 @@ public static partial class CustomSkinManager
         { "LESHY_FACE_SCARED", Tuple.Create(92, "LESHY_FACE_SCARED") },
         { "LESHY_FACE_SIN", Tuple.Create(92, "LESHY_FACE_SIN") },
         { "LESHY_FACE_BRAINWASHED", Tuple.Create(92, "LESHY_FACE_BRAINWASHED") },
-        { "LESHY_FACE_SICK", Tuple.Create(92, "LESHY_FACE_SICK") },
+        { "LESHY_FACE_SICK", Tuple.Create(92, "LESHY_FACE_SICK") }
     };
 
     internal static readonly Dictionary<string, Tuple<int, string>> PlayerSkinDict = new()
@@ -532,12 +532,12 @@ public static partial class CustomSkinManager
     {
         CustomPlayerSkins.Add(playerSkin.Name, playerSkin);
 
-        if (Plugin.SkinP1Settings != null)
-            Plugin.SkinP1Settings.Options =
+        if (Plugin.LambFleeceSkinSettings != null)
+            Plugin.LambFleeceSkinSettings.Options =
                 [.. CustomPlayerSkins.Keys];
 
-        if (Plugin.SkinP2Settings != null)
-            Plugin.SkinP2Settings.Options =
+        if (Plugin.GoatFleeceSkinSettings != null)
+            Plugin.GoatFleeceSkinSettings.Options =
                 [.. CustomPlayerSkins.Keys];
     }
 
@@ -784,14 +784,14 @@ public static partial class CustomSkinManager
     public static void ResetPlayerSkin()
     {
         PlayerSkinOverride = [];
-        SkinUtils.SkinP1ToLoad = null;
-        SkinUtils.SkinP2ToLoad = null;
+        SkinUtils.LambFleeceSkinToLoad = null;
+        SkinUtils.GoatFleeceToLoad = null;
     }
 
     public static void ResetPlayerSkin(PlayerType who)
     {
         PlayerSkinOverride[who] = null;
-        if (who == PlayerType.P1) SkinUtils.SkinP1ToLoad = null;
-        else SkinUtils.SkinP1ToLoad = null;
+        if (who == PlayerType.LAMB) SkinUtils.LambFleeceSkinToLoad = null;
+        else SkinUtils.LambFleeceSkinToLoad = null;
     }
 }

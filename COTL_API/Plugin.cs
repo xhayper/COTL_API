@@ -19,7 +19,6 @@ using HarmonyLib;
 using I2.Loc;
 using Lamb.UI;
 using MonoMod.Utils;
-using Spine;
 using UnityEngine;
 
 namespace COTL_API;
@@ -29,8 +28,8 @@ namespace COTL_API;
 [HarmonyPatch]
 public class Plugin : BaseUnityPlugin
 {
-    internal static Dropdown? SkinP1Settings;
-    internal static Dropdown? SkinP2Settings;
+    internal static Dropdown? LambFleeceSkinSettings;
+    internal static Dropdown? GoatFleeceSkinSettings;
 
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
@@ -108,52 +107,38 @@ public class Plugin : BaseUnityPlugin
 
         UnityDebug.SettingChanged += (_, _) => { UnityEngine.Debug.unityLogger.logEnabled = UnityDebug.Value; };
 
-        Skin S1()
-        {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Lamb");
-        }
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Lamb",
+            () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Lamb")));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat",
+            () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat")));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl",
+            () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl")));
+        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake",
+            () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake")));
 
-        Skin S2()
-        {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Goat");
-        }
-
-        Skin S3()
-        {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Owl");
-        }
-
-        Skin S4()
-        {
-            return PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake");
-        }
-
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Lamb", S1));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Goat", S2));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Owl", S3));
-        CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake", S4));
-
-        SkinP1Settings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Player 1 Skin",
+        LambFleeceSkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Lamb Fleece Skin",
             "Lamb",
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
                 if (0 >= i)
-                    CustomSkinManager.ResetPlayerSkin(PlayerType.P1);
+                    CustomSkinManager.ResetPlayerSkin(PlayerType.LAMB);
                 else
                     CustomSkinManager.SetPlayerSkinOverride(
-                        PlayerType.P1,
+                        PlayerType.LAMB,
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i));
             });
 
-        SkinP2Settings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID, "Player 2 Skin",
+        GoatFleeceSkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Goat Fleece Skin",
             "Goat",
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
                 if (i is < 0 or 1)
-                    CustomSkinManager.ResetPlayerSkin(PlayerType.P2);
+                    CustomSkinManager.ResetPlayerSkin(PlayerType.GOAT);
                 else
                     CustomSkinManager.SetPlayerSkinOverride(
-                        PlayerType.P2,
+                        PlayerType.GOAT,
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i));
             });
 
@@ -172,17 +157,17 @@ public class Plugin : BaseUnityPlugin
             if (!isActivated)
             {
                 // ReSharper disable once InvertIf
-                if (SkinP1Settings?.Value == "Debug Skin")
+                if (LambFleeceSkinSettings?.Value == "Debug Skin")
                 {
-                    SkinP1Settings.Value = "Lamb";
-                    CustomSkinManager.ResetPlayerSkin(PlayerType.P1);
+                    LambFleeceSkinSettings.Value = "Lamb";
+                    CustomSkinManager.ResetPlayerSkin(PlayerType.LAMB);
                 }
 
                 // ReSharper disable once InvertIf
-                if (SkinP2Settings?.Value == "Debug Skin")
+                if (GoatFleeceSkinSettings?.Value == "Debug Skin")
                 {
-                    SkinP2Settings.Value = "Goat";
-                    CustomSkinManager.ResetPlayerSkin(PlayerType.P2);
+                    GoatFleeceSkinSettings.Value = "Goat";
+                    CustomSkinManager.ResetPlayerSkin(PlayerType.GOAT);
                 }
             }
             else
@@ -257,7 +242,7 @@ public class Plugin : BaseUnityPlugin
                 saveData.Load(SaveAndLoad.SAVE_SLOT);
 
             LogDebug("Re-adding any custom quests from the players existing objectives.");
-            Dictionary<int, CustomObjective> tempObjectives = new();
+            Dictionary<int, CustomObjective> tempObjectives = [];
 
             if (QuestData == null) return;
 

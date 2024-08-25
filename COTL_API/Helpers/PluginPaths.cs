@@ -4,8 +4,7 @@ internal static class PluginPaths
 {
     internal static string ResolvePath(params string[] paths)
     {
-        return Path.Combine(new List<string> { Plugin.Instance != null ? Plugin.Instance.PluginPath : "" }.Concat(paths)
-            .ToArray());
+        return Path.Combine([Plugin.Instance != null ? Plugin.Instance.PluginPath : "", .. paths]);
     }
 
     internal static string ResolveAssetPath(params string[] paths)

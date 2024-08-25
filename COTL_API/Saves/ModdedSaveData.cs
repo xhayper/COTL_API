@@ -52,6 +52,13 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
                 backup);
     }
 
+    public override void Saving()
+    {
+        if (Data != null)
+            _dataReadWriter.Write(Data,
+                MakeSaveSlot(LoadOrder == ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE ? null : SAVE_SLOT));
+    }
+
     public override void Load(int? saveSlot = null)
     {
         if (LoadOrder != ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE && CheatConsole.IN_DEMO)

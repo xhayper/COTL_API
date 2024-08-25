@@ -6,13 +6,15 @@ public abstract class CustomPlayerSkin : CustomSkin
 {
     private Skin? _cachedSkin;
 
-    public virtual void Apply(PlayerType who = PlayerType.P1)
+    public virtual void Apply(PlayerType who = PlayerType.LAMB)
     {
         void Action()
         {
             if (_cachedSkin == null)
             {
-                var from = PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin(who == PlayerType.P1 ? "Lamb" : "Goat");
+                var from = PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin(who == PlayerType.LAMB
+                    ? "Lamb"
+                    : "Goat");
                 Skin to = new(Name);
 
                 var overrides = SkinUtils.CreateSkinAtlas(Name, Texture, GenerateAtlasText(),
@@ -52,17 +54,17 @@ public abstract class CustomPlayerSkin : CustomSkin
             CustomSkinManager.SetPlayerSkinOverride(who, _cachedSkin);
         }
 
-        if (who == PlayerType.P1)
+        if (who == PlayerType.LAMB)
         {
-            if (!SkinUtils.SkinP1Loaded)
-                SkinUtils.SkinP1ToLoad = Action;
+            if (!SkinUtils.LambFleeceSkinLoaded)
+                SkinUtils.LambFleeceSkinToLoad = Action;
             else
                 Action();
         }
         else
         {
-            if (!SkinUtils.SkinP2Loaded)
-                SkinUtils.SkinP2ToLoad = Action;
+            if (!SkinUtils.GoatFleeceSkinLoaded)
+                SkinUtils.GoatFleeceToLoad = Action;
             else
                 Action();
         }
