@@ -8,7 +8,7 @@ namespace COTL_API.CustomInventory;
 public static partial class CustomMealEffectManager
 {
     [HarmonyPatch(typeof(CookingData),nameof(CookingData.DoMealEffect)), HarmonyPostfix]
-    public static void DoCustomEffect(InventoryItem.ITEM_TYPE meal, FollowerBrain follower) 
+    public static void CookingData_DoMealEffect(InventoryItem.ITEM_TYPE meal, FollowerBrain follower) 
     {
         var customMealEffects = CookingData.GetMealEffects(meal).Where(x => CustomEffectList.Keys.Contains(x.MealEffectType));
         foreach (var effect in customMealEffects)
@@ -23,13 +23,13 @@ public static partial class CustomMealEffectManager
     }
     
     [HarmonyPatch(typeof(RecipeInfoCard), nameof(RecipeInfoCard.Configure)), HarmonyPostfix]
-    private static void ConfigureCustomMealEffect(RecipeInfoCard __instance, InventoryItem.ITEM_TYPE config)
+    private static void RecipeInfoCard_Configure(RecipeInfoCard __instance, InventoryItem.ITEM_TYPE config)
     {
         var mealEffects = CookingData.GetMealEffects(config);
     }
     
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetEffectDescription)), HarmonyPostfix]
-    private static void GetCustomMealEffectDescription(ref CookingData.MealEffect mealEffect, ref string __result)
+    private static void CookingData_GetEffectDescription(ref CookingData.MealEffect mealEffect, ref string __result)
     {
         if (!CustomEffectList.Keys.Contains(mealEffect.MealEffectType)) return;
 
