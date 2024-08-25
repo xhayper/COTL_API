@@ -31,7 +31,7 @@ public abstract class CustomMealEffect
     /// <returns>The suffix to the description</returns>
     public virtual string DescriptionSuffix()
     {
-        return LocalizationManager.GetTranslation($"CookingData/{ModPrefix}.{InternalName}/DescriptionSuffix");
+        return "";
     }
 
     /// <summary>
