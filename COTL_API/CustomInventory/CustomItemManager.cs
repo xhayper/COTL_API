@@ -1,5 +1,6 @@
 using System.Reflection;
 using COTL_API.Guid;
+using Sirenix.Serialization.Utilities;
 using Random = UnityEngine.Random;
 
 namespace COTL_API.CustomInventory;
@@ -16,6 +17,7 @@ public static partial class CustomItemManager
     }
 
     public static Dictionary<InventoryItem.ITEM_TYPE, CustomInventoryItem> CustomItemList { get; } = new();
+    public static Dictionary<InventoryItem.ITEM_TYPE, CustomMeal> CustomMealList { get; } = [];
 
     public static InventoryItem.ITEM_TYPE Add(CustomInventoryItem item)
     {
@@ -26,9 +28,44 @@ public static partial class CustomItemManager
         item.ModPrefix = guid;
         item.InternalObjectName = $"CustomItem_{item.InternalName}";
 
+        if (item.GetType().InheritsFrom(typeof(CustomMeal)))
+        {
+            var meal = item as CustomMeal;
+
+            if (!IsMeal(meal!.ItemPickUpToImitate))
+                throw new ArgumentException("Custom Meal Imitation Item is not a meal!", item.InternalName);
+
+            meal!.FollowerCommand = GuidManager.GetEnumValue<FollowerCommands>(guid, meal.InternalName);
+            var structureType = GuidManager.GetEnumValue<StructureBrain.TYPES>(guid, meal.InternalName);
+            meal.StructureType = structureType;
+
+            if (!StructuresData.AllStructures.Contains(structureType)) StructuresData.AllStructures.Add(structureType);
+
+            CustomMealList.Add(itemType,meal);
+        }
+
         CustomItemList.Add(itemType, item);
 
         return itemType;
+    }
+
+    private static bool IsMeal(InventoryItem.ITEM_TYPE itemType)
+    {
+        List<InventoryItem.ITEM_TYPE> meals = [
+            InventoryItem.ITEM_TYPE.MEAL , InventoryItem.ITEM_TYPE.MEALS,
+            InventoryItem.ITEM_TYPE.MEAL_BAD_FISH , InventoryItem.ITEM_TYPE.MEAL_BAD_MEAT,
+            InventoryItem.ITEM_TYPE.MEAL_BAD_MIXED , InventoryItem.ITEM_TYPE.MEAL_BERRIES,
+            InventoryItem.ITEM_TYPE.MEAL_DEADLY , InventoryItem.ITEM_TYPE.MEAL_EGG,
+            InventoryItem.ITEM_TYPE.MEAL_FOLLOWER_MEAT , InventoryItem.ITEM_TYPE.MEAL_GOOD_FISH,
+            InventoryItem.ITEM_TYPE.MEAL_GRASS, InventoryItem.ITEM_TYPE.MEAL_GREAT,
+            InventoryItem.ITEM_TYPE.MEAL_GREAT_FISH, InventoryItem.ITEM_TYPE.MEAL_GREAT_FISH,
+            InventoryItem.ITEM_TYPE.MEAL_GREAT_MEAT, InventoryItem.ITEM_TYPE.MEAL_GREAT_MIXED,
+            InventoryItem.ITEM_TYPE.MEAL_MEAT, InventoryItem.ITEM_TYPE.MEAL_MEDIUM_MIXED,
+            InventoryItem.ITEM_TYPE.MEAL_MEDIUM_MIXED, InventoryItem.ITEM_TYPE.MEAL_MUSHROOMS,
+            InventoryItem.ITEM_TYPE.MEAL_POOP, InventoryItem.ITEM_TYPE.MEAL_SPICY
+        ];
+
+        return meals.Any(item => itemType == item);
     }
 
     /// <summary>
