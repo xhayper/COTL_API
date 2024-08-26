@@ -29,6 +29,18 @@ public static partial class CustomItemManager
         __result = newResult;
     }
 
+    [HarmonyPatch(typeof(Meal), nameof(Meal.MealSafeToEat))]
+    [HarmonyPostfix]
+    private static void Meal_MealSafeToEat(Meal __instance, ref bool __result)
+    {
+        if(__instance.StructureInfo != null) return;
+
+        var type = CookingData.GetMealFromStructureType(__instance.StructureInfo.Type);
+        
+        if(CustomMealList.TryGetValue(type, out var value))
+            __result = value.MealSafeToEat;
+    }
+
     [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetInfoByType))]
     [HarmonyPostfix]
     private static void StructuresData_GetInfoByType(StructureBrain.TYPES Type, ref StructuresData __result)
