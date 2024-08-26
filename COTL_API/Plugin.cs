@@ -144,7 +144,7 @@ public class Plugin : BaseUnityPlugin
 
         CustomSettingsManager.AddBepInExConfig("API", "Skip Splash Screen", _skipSplashScreen);
         CustomSettingsManager.AddBepInExConfig("API", "Disable Achievement", _disableAchievement,
-            delegate (bool isActivated)
+            delegate(bool isActivated)
             {
                 if (isActivated) return;
 
@@ -152,7 +152,7 @@ public class Plugin : BaseUnityPlugin
                 AchievementsWrapper.compareAchievements();
             });
 
-        CustomSettingsManager.AddBepInExConfig("API", "Debug Mode", _debug, delegate (bool isActivated)
+        CustomSettingsManager.AddBepInExConfig("API", "Debug Mode", _debug, delegate(bool isActivated)
         {
             if (!isActivated)
             {
@@ -209,12 +209,12 @@ public class Plugin : BaseUnityPlugin
         // ReSharper disable once InvertIf
         if (Input.GetKeyDown(KeyCode.F2))
             foreach (var x in PlayerFarming.Instance.Spine.Skeleton.Skin.Attachments)
-                LogInfo($"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
+                LogDebug($"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
 
         // ReSharper disable once InvertIf
         if (Input.GetKeyDown(KeyCode.F3))
             foreach (var x in PlayerFarming.Instance.Spine.Skeleton.Skin.Attachments)
-                LogInfo($"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
+                LogDebug($"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
     }
 
     private void OnEnable()
