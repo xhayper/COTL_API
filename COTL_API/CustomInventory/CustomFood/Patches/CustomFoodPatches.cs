@@ -1,5 +1,7 @@
 using HarmonyLib;
 using src.UI.InfoCards;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace COTL_API.CustomInventory;
 
@@ -39,17 +41,16 @@ public static partial class CustomItemManager
     [HarmonyPostfix]
     private static void CookingData_GetSatationLevel(ref int __result, InventoryItem.ITEM_TYPE meal)
     {
-        if (CustomMealList.TryGetValue(meal, out var value))  __result = value.SatiationLevel;
+        if (CustomFoodList.TryGetValue(meal, out var value))  __result = value.SatiationLevel;
     }
     
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetSatationAmount))]
     [HarmonyPostfix]
     private static void CookingData_GetSatationAmount(ref int __result, InventoryItem.ITEM_TYPE meal)
     {
-        if (CustomMealList.TryGetValue(meal, out var value)) __result = value.FoodSatitation;
+        if (CustomFoodList.TryGetValue(meal, out var value)) __result = value.FoodSatitation;
     }
     
-    // game devs say "get Meal from StructureType" but this applies to drinks too...
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetMealFromStructureType))]
     [HarmonyPostfix]
     private static void CookingData_GetMealFromStructureType(StructureBrain.TYPES structureType,
@@ -80,7 +81,7 @@ public static partial class CustomItemManager
     {
         var command = __instance.Command;
         if (CustomFoodList.Values.Any(x => x.FollowerCommand == command))
-            __result = CustomMealList.Values.First(x => x.FollowerCommand == command).LocalizedName();
+            __result = CustomFoodList.Values.First(x => x.FollowerCommand == command).LocalizedName();
     }
 
     [HarmonyPatch(typeof(FollowerCommandItems.FoodCommandItem),
@@ -91,7 +92,7 @@ public static partial class CustomItemManager
     {
         var command = __instance.Command;
         if (CustomFoodList.Values.Any(x => x.FollowerCommand == command))
-            __result = CustomMealList.Values.First(x => x.FollowerCommand == command).LocalizedDescription();
+            __result = CustomFoodList.Values.First(x => x.FollowerCommand == command).LocalizedDescription();
     }
     
     [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealType))]
@@ -110,9 +111,9 @@ public static partial class CustomItemManager
         ref StructureBrain.TYPES __result)
     {
         if (CustomFoodList.Keys.Contains(mealType))
-            __result = CustomMealList.Values.First(x => x.ItemType == mealType).StructureType;
+            __result = CustomFoodList.Values.First(x => x.ItemType == mealType).StructureType;
     }
-    
+
     [HarmonyPatch(typeof(interaction_FollowerInteraction),
         nameof(interaction_FollowerInteraction.OnFollowerCommandFinalized))]
     [HarmonyPrefix]
@@ -131,11 +132,40 @@ public static partial class CustomItemManager
         __instance.follower.Brain.CompleteCurrentTask();
     }
 
-    [HarmonyPatch(typeof(FontImageNames), nameof(FontImageNames.GetIconByType))]
+    [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.SetImage),
+        typeof(InventoryItem.ITEM_TYPE), typeof(bool))]
     [HarmonyPostfix]
-    private static void FontImageNames_GetIconByType(ref string __result, ref InventoryItem.ITEM_TYPE Type)
+    private static void InventoryItemDisplay_SetImage
+        (ref InventoryItemDisplay __instance, ref InventoryItem.ITEM_TYPE Type)
     {
-        if (CustomFoodList.TryGetValue(Type, out var value)) 
-            __result = value.InventoryStringIcon();
+        var transform = __instance.spriteRenderer.transform;
+        if (CustomFoodList.TryGetValue(Type, out var value))
+        {
+            transform.localScale = value.LocalScale;
+            transform.localPosition += value.ItemDisplayOffset;
+        }
+        else
+        {
+            transform.localScale = Vector3.one;
+            transform.localPosition = __instance.GetComponent<TransformHolder>().localPosition;
+        }
+    }
+    
+    // please forgive this hacky-ness it's the only way i could think of to do this
+    [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.Awake))]
+    [HarmonyPostfix]
+    private static void InventoryItemDisplay_Awake(ref InventoryItemDisplay __instance)
+    {
+        __instance.gameObject.AddComponent<TransformHolder>();
+    }
+
+    private class TransformHolder : MonoBehaviour
+    {
+        public Vector3 localPosition;
+
+        public void Awake()
+        {
+            localPosition = transform.localPosition;
+        }
     }
 }
