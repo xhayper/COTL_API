@@ -77,7 +77,7 @@ public static partial class CustomItemManager
     {
         foreach (var item in CustomMealList.Keys)
         {
-            if (availableMeals.Contains(item)) continue;
+            if (!availableMeals.Contains(item)) continue;
 
             __result.Add(new FollowerCommandItems.FoodCommandItem
             {
@@ -101,5 +101,13 @@ public static partial class CustomItemManager
             _ => "Food/Food-finish"
         };
     }
-
+    
+    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealType))]
+    [HarmonyPostfix]
+    private static void StructuresData_GetMealType(StructureBrain.TYPES structureType,
+        ref InventoryItem.ITEM_TYPE __result)
+    {
+        if (CustomMealList.Values.Any(x => x.StructureType == structureType))
+            __result = CustomMealList.Values.First(x => x.StructureType == structureType).ItemType;
+    }
 }
