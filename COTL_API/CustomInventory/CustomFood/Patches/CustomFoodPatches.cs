@@ -95,16 +95,6 @@ public static partial class CustomItemManager
             __result = CustomFoodList.Values.First(x => x.FollowerCommand == command).LocalizedDescription();
     }
     
-    [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealType))]
-    [HarmonyPostfix]
-    private static void StructuresData_GetMealType(StructureBrain.TYPES structureType,
-        ref InventoryItem.ITEM_TYPE __result)
-    {
-        var inventoryItem = CustomFoodList.Values.FirstOrDefault(x => x.StructureType == structureType);
-
-        if (inventoryItem != null) __result = inventoryItem.ItemType;
-    }
-        
     [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealStructureType))]
     [HarmonyPostfix]
     private static void StructuresData_GetMealStructureType(InventoryItem.ITEM_TYPE mealType,
@@ -132,10 +122,18 @@ public static partial class CustomItemManager
         __instance.follower.Brain.CompleteCurrentTask();
     }
 
+    [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.DoScale))]
+    [HarmonyPrefix]
+    private static bool InventoryItemDisplay_DoScale(ref InventoryItemDisplay __instance)
+    {
+        var sprite = __instance.spriteRenderer.sprite;
+        return CustomFoodList.Values.All(x => x.Sprite != sprite);
+    }
+    
     [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.SetImage),
         typeof(InventoryItem.ITEM_TYPE), typeof(bool))]
     [HarmonyPostfix]
-    private static void InventoryItemDisplay_SetImage
+    private static void InventoryItemDisplay_SetImage_Postfix
         (ref InventoryItemDisplay __instance, ref InventoryItem.ITEM_TYPE Type)
     {
         var transform = __instance.spriteRenderer.transform;
@@ -150,7 +148,7 @@ public static partial class CustomItemManager
             transform.localPosition = __instance.GetComponent<TransformHolder>().localPosition;
         }
     }
-    
+
     // please forgive this hacky-ness it's the only way i could think of to do this
     [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.Awake))]
     [HarmonyPostfix]
