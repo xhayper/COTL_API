@@ -33,7 +33,7 @@ public static partial class CustomItemManager
     [HarmonyPostfix]
     private static void Meal_MealSafeToEat(Meal __instance, ref bool __result)
     {
-        if(__instance.StructureInfo != null) return;
+        if(__instance.StructureInfo == null) return;
 
         var type = CookingData.GetMealFromStructureType(__instance.StructureInfo.Type);
         
