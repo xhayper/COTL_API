@@ -10,6 +10,7 @@ public abstract class CustomMeal : CustomFood
 
     public override InventoryItem.ITEM_TYPE ItemPickUpToImitate { get; } = InventoryItem.ITEM_TYPE.MEAL;
     public virtual MealQuality Quality { get; } = MealQuality.NORMAL;
+    public virtual bool MealSafeToEat { get; } = true;
 }
 
 public enum MealQuality
