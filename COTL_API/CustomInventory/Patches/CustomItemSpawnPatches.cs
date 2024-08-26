@@ -1,9 +1,6 @@
-using COTL_API.CustomStructures;
 using HarmonyLib;
 using MMBiomeGeneration;
 using MMRoomGeneration;
-using MMTools;
-using Sirenix.Serialization.Utilities;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
@@ -27,7 +24,6 @@ public static partial class CustomItemManager
             ref Action<PickUp> result, ref PickUp __result)
         {
             if (!CustomItemList.ContainsKey(type)) return true;
-            LogWarning($"Running custom spawn. Item type = {type}, Qty: {quantity}");
 
             var gameObject = GameObject.FindGameObjectWithTag("Unit Layer");
             var transform = gameObject != null ? gameObject.transform : null;
@@ -62,8 +58,11 @@ public static partial class CustomItemManager
                             {
                                 meal.CreateStructureOnStop = true;
                                 meal.CreateStructureLocation = FollowerLocation.Base;
-                                meal.spriteRenderer.sprite = (item as CustomMeal)!.Sprite;
-                                meal.structure.Type = (item as CustomMeal)!.StructureType;
+                                if ((item as CustomMeal) != null)
+                                {
+                                    meal.spriteRenderer.sprite = (item as CustomMeal)!.Sprite;
+                                    meal.structure.Type = (item as CustomMeal)!.StructureType;
+                                }
                             }
 
                             var pickUp = o.GetComponent<PickUp>();
@@ -116,7 +115,6 @@ public static partial class CustomItemManager
                 if (myObject != null) myObject.SetActive(true);
                 myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.Value.ItemPickUpToImitate), null,
                     instantiateInWorldSpace: false) as GameObject;
-                LogWarning($"myObject is NULL? {myObject == null}");
                 myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Value.Sprite;
                 myObject.name = item.Value.InternalObjectName;
                 myObject.transform.localScale = item.Value.LocalScale;
@@ -140,7 +138,6 @@ public static partial class CustomItemManager
 
             _myObject = Object.Instantiate(ItemPickUp.GetItemPickUpObject(item.ItemPickUpToImitate), null,
                 instantiateInWorldSpace: false) as GameObject;
-            LogWarning($"_myObject is NULL? {_myObject == null}");
             _myObject!.GetComponentInChildren<SpriteRenderer>().sprite = item.Sprite;
             _myObject.name = item.InternalObjectName;
             _myObject.transform.localScale = item.LocalScale;
