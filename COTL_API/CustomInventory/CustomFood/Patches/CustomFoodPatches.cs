@@ -14,14 +14,14 @@ public static partial class CustomItemManager
     {
         if (CustomFoodList.TryGetValue(mealType, out var value)) __result = value.LocalizedName();
     }
-    
+
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetLocalizedDescription))]
     [HarmonyPostfix]
     private static void CookingData_GetLocalizedDescription(InventoryItem.ITEM_TYPE mealType, ref string __result)
     {
         if (CustomFoodList.TryGetValue(mealType, out var value)) __result = value.Description();
     }
-    
+
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetRecipe))]
     [HarmonyPostfix]
     private static void CookingData_GetRecipe(ref List<List<InventoryItem>> __result, InventoryItem.ITEM_TYPE mealType)
@@ -36,21 +36,21 @@ public static partial class CustomItemManager
     {
         if (CustomFoodList.TryGetValue(mealType, out var value)) __result = value.MealEffects;
     }
-    
+
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetSatationLevel))]
     [HarmonyPostfix]
     private static void CookingData_GetSatationLevel(ref int __result, InventoryItem.ITEM_TYPE meal)
     {
-        if (CustomFoodList.TryGetValue(meal, out var value))  __result = value.SatiationLevel;
+        if (CustomFoodList.TryGetValue(meal, out var value)) __result = value.SatiationLevel;
     }
-    
+
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetSatationAmount))]
     [HarmonyPostfix]
     private static void CookingData_GetSatationAmount(ref int __result, InventoryItem.ITEM_TYPE meal)
     {
         if (CustomFoodList.TryGetValue(meal, out var value)) __result = value.FoodSatitation;
     }
-    
+
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetMealFromStructureType))]
     [HarmonyPostfix]
     private static void CookingData_GetMealFromStructureType(StructureBrain.TYPES structureType,
@@ -94,7 +94,7 @@ public static partial class CustomItemManager
         if (CustomFoodList.Values.Any(x => x.FollowerCommand == command))
             __result = CustomFoodList.Values.First(x => x.FollowerCommand == command).LocalizedDescription();
     }
-    
+
     [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealStructureType))]
     [HarmonyPostfix]
     private static void StructuresData_GetMealStructureType(InventoryItem.ITEM_TYPE mealType,
@@ -129,7 +129,7 @@ public static partial class CustomItemManager
         var sprite = __instance.spriteRenderer.sprite;
         return CustomFoodList.Values.All(x => x.Sprite != sprite);
     }
-    
+
     [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.SetImage),
         typeof(InventoryItem.ITEM_TYPE), typeof(bool))]
     [HarmonyPostfix]
@@ -137,6 +137,7 @@ public static partial class CustomItemManager
         (ref InventoryItemDisplay __instance, ref InventoryItem.ITEM_TYPE Type)
     {
         var transform = __instance.spriteRenderer.transform;
+        transform.localPosition = __instance.GetComponent<TransformHolder>().localPosition;
         if (CustomFoodList.TryGetValue(Type, out var value))
         {
             transform.localScale = value.LocalScale;
@@ -145,7 +146,6 @@ public static partial class CustomItemManager
         else
         {
             transform.localScale = Vector3.one;
-            transform.localPosition = __instance.GetComponent<TransformHolder>().localPosition;
         }
     }
 
