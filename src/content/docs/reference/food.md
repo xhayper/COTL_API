@@ -2,9 +2,13 @@
 title: Meals
 description: Documentation on how to add a custom Meal using the Cult Of The Lamb API
 ---
+# Custom Food
+Creating custom food is almost identical to creating custom items, and custom food posses all the overrides that custom items do.
+Custom food can also have custom MealEffects that trigger upon consuming the food. 
+
 ## Creating Meals
 
-Creating meals is almost identical to creating Custom items. You first create a class overriding `CustomMeal`. Example:
+To create a custom meal, create a class that overrides `CustomMeal`:
 
 ```csharp
 using COTL_API.CustomInventory;
@@ -39,22 +43,34 @@ public class ExampleMeal : CustomMeal
     ];
 }
 
-// this is the "Star Rating" of the meal. Range: 0-3
+// this is the "Star Rating" of the meal. Range: [0, 3]
 public override int SatiationLevel => 3;
 
-//this is the amount that the "hunger circle" is filled when cooking the meal. Range: 0-1
+//this is the amount that the "hunger circle" is filled when cooking the meal. Range: [0, 1]
 public override float TummyRating => 0.6f;
 ```
 
 
 Custom Meals support all the overrides that custom items do, despite the fact that many of them are non-functional. all overrides that modify the behaviour of the item in-inventory don't function, as you don't pick up meals into your inventory.
 
-> WARNING:
+> WARNING: 
 > Overriding `ItemPickupToImitate` with any item that isn't a meal will cause an error!
+
+`CustomMeal` support the following overrides:
+
+| Type | Name | Default |
+|-|-|-|
+|List<List<InventoryItem.ITEM_TYPE>>|Recipe|\[REQUIRED\]|
+|CookingData.MealEffects[]|MealEffects|\[REQUIRED\]|
+|Vector3|ItemDisplayOffset|null|
+|MealQuality|Quality|MealQuality.NORMAL|
+|float|TummyRating|0|
+|int|SatiationLevel|0|
+|bool|MealSafeToEat|true|
 
 ## Adding Meals
 
-To add an meal to the game, simply use `CustomItemManager.Add()`.  
+To add a custom meal into the game, simply use `CustomItemManager.Add()`.  
 Example:
 
 ```csharp
@@ -69,6 +85,79 @@ private void Awake()
 ```
 
 Assigning the result of `CustomItemManager.Add()` allows you to reference that meal elsewhere in your code using `Plugin.ExampleMeal`.
+
+## Creating Drinks
+
+To create a custom drink, create a class that overrides `CustomDrink`:
+
+```csharp
+using COTL_API.CustomInventory;
+using COTL_API.Helpers;
+using UnityEngine;
+using System.IO;
+
+public class ExampleDrink : CustomDrink
+{
+    override string InternalName => "Example_Drink";
+    public override string LocalizedName() { return "Example Drink"; }
+    public override string LocalizedDescription() { return "This is an example drink"; }
+    //used for spawning object in the world
+    public override Sprite Sprite => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_drink.png"));
+
+    // A list of Effects that will occur when drinking this Drink
+    override MealEffect[] MealEffects =>
+    [
+        new MealEffect()
+        {
+            MealEffectType = CookingData.MealEffectType.CausesDrunk,
+            Chance = 75
+        }
+    ];
+    // used for brewing the drink. 
+    //the outer list is for storing different recipes for the same Drink 
+    //the inner list is for the items and quantities that the recipe requires
+    public override List<List<InventoryItem>> Recipe =>
+    [
+        [
+        ]
+    ];
+}
+
+// this is the "Star Rating" of the drink. Range: 0-3
+public override int SatiationLevel => 2;
+
+// this is the amount of Sin gained by the follower who drinks this Drink,
+// range: [0, 65]
+public override int Pleasure => 50;
+```
+>WARNING:
+> Overriding `ItemPickupToImitate` with any item that isn't a drink will cause an error!
+
+`CustomDrink` supports the following overrides:
+
+| Type | Name | Default |
+|-|-|-|
+|List<List<InventoryItem.ITEM_TYPE>>|Recipe|\[REQUIRED\]|
+|CookingData.MealEffects[]|MealEffects|\[REQUIRED\]|
+|int|SatiationLevel|0|
+|Vector3|ItemDisplayOffset|null|
+|int|Pleasure|0|
+
+## Adding Drinks
+
+To add a custom drink into the game, simply use `CustomItemManager.Add()`.  
+Example:
+
+```csharp
+using COTL_API.CustomInventory;
+
+public static InventoryItem.ITEM_TYPE ExampleDrink { get; private set; }
+
+private void Awake()
+{
+    ExampleDrink = CustomItemManager.Add(new ExampleDrink());
+}
+```
 
 ## Creating MealEffects
 
@@ -111,6 +200,7 @@ Assigning the result of `CustomMealEffectmManager.Add()` allows you to reference
 > WARNING: Make sure to register Custom Meal Effects before you register your custom meals, otherwise any custom meal effects Won't work. Alternatively use Lazy loading.
 
 `CustomMealEffect` supports the following overrides:
+
 | Type | Name | Default |
 |-|-|-|
 | string | InternalName | \[REQUIRED\] |
@@ -122,12 +212,13 @@ Assigning the result of `CustomMealEffectmManager.Add()` allows you to reference
 
 ## Final Steps
 
-For the icon to load, you need to put it in the appropriate location. For the example, this would be `/Assets/example_item.png` relative to the root folder containing the .dll  
+For the icon to load, you need to put it in the appropriate location. For the example, this would be `/Assets/example_food.png` relative to the root folder containing the .dll  
 Directory structure:
 
 ```
 📂plugins
  ┣📂Assets
  ┃ ┗🖼️example_meal.png
+ ┃ ┗🖼️example_drink.png
  ┗📜mod_name.dll
 ```
