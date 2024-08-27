@@ -28,7 +28,7 @@ public static partial class CustomItemManager
     {
         foreach (var item in CustomDrinkList.Keys)
         {
-            if (availableDrinks.Contains(item)) continue;
+            if (!availableDrinks.Contains(item)) continue;
 
             __result.Add(new FollowerCommandItems.FoodCommandItem
             {
