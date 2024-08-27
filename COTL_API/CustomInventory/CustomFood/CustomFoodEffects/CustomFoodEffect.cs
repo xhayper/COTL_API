@@ -31,7 +31,7 @@ public abstract class CustomFoodEffect
     /// <returns>The suffix to the description</returns>
     public virtual string DescriptionSuffix()
     {
-        return "";
+        return string.Empty;
     }
 
     /// <summary>
