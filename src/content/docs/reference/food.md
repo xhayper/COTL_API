@@ -1,8 +1,7 @@
 ---
-title: Meals
+title: Food
 description: Documentation on how to add a custom Meal using the Cult Of The Lamb API
 ---
-# Custom Food
 Creating custom food is almost identical to creating custom items, and custom food posses all the overrides that custom items do.
 Custom food can also have custom MealEffects that trigger upon consuming the food. 
 
