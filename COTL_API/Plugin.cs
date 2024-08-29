@@ -30,6 +30,8 @@ public class Plugin : BaseUnityPlugin
 {
     internal static Dropdown? LambFleeceSkinSettings;
     internal static Dropdown? GoatFleeceSkinSettings;
+    internal static Dropdown? LambBleatSettings;
+    internal static Dropdown? GoatBleatSettings;
 
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
@@ -141,6 +143,23 @@ public class Plugin : BaseUnityPlugin
                         PlayerType.GOAT,
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i));
             });
+
+        LambBleatSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Lamb Bleat",
+            "Lamb",
+            Enum.GetNames(typeof(PlayerBleat)), i =>
+            {
+                CustomSkinManager.SetPlayerBleatOverride(PlayerType.LAMB, (PlayerBleat) i);
+            }); 
+        
+        GoatBleatSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Goat Bleat",
+            "Goat",
+            Enum.GetNames(typeof(PlayerBleat)), i =>
+            {
+                CustomSkinManager.SetPlayerBleatOverride(PlayerType.GOAT, (PlayerBleat) i);
+            });
+            
 
         CustomSettingsManager.AddBepInExConfig("API", "Skip Splash Screen", _skipSplashScreen);
         CustomSettingsManager.AddBepInExConfig("API", "Disable Achievement", _disableAchievement,

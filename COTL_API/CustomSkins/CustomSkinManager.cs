@@ -12,6 +12,14 @@ public enum PlayerType
     GOAT
 }
 
+public enum PlayerBleat
+{
+    DEFAULT,
+    LAMB,
+    GOAT,
+    COWBOY
+}
+
 [HarmonyPatch]
 public static partial class CustomSkinManager
 {
@@ -527,6 +535,7 @@ public static partial class CustomSkinManager
     };
 
     internal static Dictionary<PlayerType, List<Skin?>?> PlayerSkinOverride { get; set; } = [];
+    internal static Dictionary<PlayerType, PlayerBleat?> PlayerBleatOverride { get; set; } = [];
 
     public static void AddFollowerSkin(CustomFollowerSkin followerSkin)
     {
@@ -802,6 +811,12 @@ public static partial class CustomSkinManager
     public static void SetPlayerSkinOverride(PlayerType who, CustomPlayerSkin skin)
     {
         skin.Apply(who);
+    }
+
+    public static void SetPlayerBleatOverride(PlayerType who, PlayerBleat? bleat)
+    {
+        if (bleat == PlayerBleat.DEFAULT) PlayerBleatOverride[who] = null;
+        else PlayerBleatOverride[who] = bleat;
     }
 
     public static void ResetPlayerSkin()
