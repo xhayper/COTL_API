@@ -17,6 +17,11 @@ internal class OverridingPlayerSkin(string name, Func<Skin?> overrideSkin) : Cus
     {
         void Action()
         {
+            if (who == PlayerType.LAMB && Name == "Lamb") {
+                CustomSkinManager.ResetPlayerSkin(who); 
+                return;
+            }
+
             _cachedSkin ??= overrideSkin.Invoke();
 
             CustomSkinManager.SetPlayerSkinOverride(who, _cachedSkin);
