@@ -207,9 +207,12 @@ public class Plugin : BaseUnityPlugin
         }
 
         // ReSharper disable once InvertIf
-        if (Input.GetKeyDown(KeyCode.F2))
-            foreach (var x in PlayerFarming.Instance.Spine.Skeleton.Skin.Attachments)
-                LogDebug($"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
+        if (Input.GetKeyDown(KeyCode.F2)) {
+            var slots = PlayerFarming.Instance.Spine.Skeleton.Skin.Attachments;
+            var sortedSlots = slots.OrderBy(x => x.SlotIndex).ToList();
+            var jsonOutput = sortedSlots.Select(x => $"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
+            LogDebug(string.Join(",\n", jsonOutput));
+        }
 
         // ReSharper disable once InvertIf
         if (Input.GetKeyDown(KeyCode.F3))
