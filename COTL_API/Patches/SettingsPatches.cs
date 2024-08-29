@@ -36,5 +36,12 @@ public static class SettingsPatches
             else
                 Plugin.GoatFleeceSkinSettings.Value = "Goat";
         }
+
+        if (Plugin.LambBleatSettings?.Value is not null && Plugin.LambBleatSettings.Value != "Default") 
+            CustomSkinManager.SetPlayerBleatOverride(PlayerType.LAMB, (PlayerBleat)Enum.Parse(typeof(PlayerBleat), Plugin.LambBleatSettings.Value));
+
+        if (Plugin.GoatBleatSettings?.Value is not null && Plugin.GoatBleatSettings.Value != "Default")
+            CustomSkinManager.SetPlayerBleatOverride(PlayerType.GOAT, (PlayerBleat)Enum.Parse(typeof(PlayerBleat), Plugin.GoatBleatSettings.Value));
+            
     }
 }
