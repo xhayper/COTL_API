@@ -133,7 +133,7 @@ public static partial class CustomItemManager
     [HarmonyPatch(typeof(InventoryItemDisplay), nameof(InventoryItemDisplay.SetImage),
         typeof(InventoryItem.ITEM_TYPE), typeof(bool))]
     [HarmonyPostfix]
-    private static void InventoryItemDisplay_SetImage_Postfix
+    private static void InventoryItemDisplay_SetImage
         (ref InventoryItemDisplay __instance, ref InventoryItem.ITEM_TYPE Type)
     {
         var transform = __instance.spriteRenderer.transform;
