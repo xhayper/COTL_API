@@ -30,8 +30,8 @@ public class Plugin : BaseUnityPlugin
 {
     internal static Dropdown? LambFleeceSkinSettings;
     internal static Dropdown? GoatFleeceSkinSettings;
-    internal static Dropdown? LambBleatSettings;
-    internal static Dropdown? GoatBleatSettings;
+    internal static Dropdown? LambFleeceBleatSettings;
+    internal static Dropdown? GoatFleeceBleatSettings;
 
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
@@ -144,16 +144,16 @@ public class Plugin : BaseUnityPlugin
                         CustomSkinManager.CustomPlayerSkins.Values.ElementAt(i));
             });
 
-        LambBleatSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
-            "Lamb Bleat",
+        LambFleeceBleatSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Lamb Fleece Bleat",
             "Lamb",
             Enum.GetNames(typeof(PlayerBleat)), i =>
             {
                 CustomSkinManager.SetPlayerBleatOverride(PlayerType.LAMB, (PlayerBleat) i);
             }); 
         
-        GoatBleatSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
-            "Goat Bleat",
+        GoatFleeceBleatSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Goat Fleece Bleat",
             "Goat",
             Enum.GetNames(typeof(PlayerBleat)), i =>
             {
