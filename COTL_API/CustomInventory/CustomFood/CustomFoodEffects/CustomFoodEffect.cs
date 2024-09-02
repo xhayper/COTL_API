@@ -2,7 +2,7 @@ using I2.Loc;
 
 namespace COTL_API.CustomInventory;
 
-public abstract class CustomMealEffect
+public abstract class CustomFoodEffect
 {
     internal string InternalObjectName = "";
 
@@ -31,7 +31,7 @@ public abstract class CustomMealEffect
     /// <returns>The suffix to the description</returns>
     public virtual string DescriptionSuffix()
     {
-        return "";
+        return string.Empty;
     }
 
     /// <summary>
