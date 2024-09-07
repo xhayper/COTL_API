@@ -555,18 +555,10 @@ public static partial class CustomSkinManager
         List<WorshipperData.SlotsAndColours> colors, bool hidden = false, bool unlocked = true,
         bool twitchPremium = false, bool invariant = false)
     {
-        // var overrides =
-        //     SkinUtils.CreateSkinAtlas(name, sheet, atlasText, RegionOverrideFunction, out var mat, out var atlas);
-
-        // SkinTextures.Add(name, sheet);
-        // SkinMaterials.Add(name, mat);
-        // CustomAtlases.Add(name, atlas);
-
         List<string> variantNames = [];
 
         for (var i = 0; i < variants.Count; i++)
         {
-            //first variantName should be base name
             var variantName = i == 0 ? name : name + "_" + i;
             variantNames.Add(variantName);
             var variantOverrides =
@@ -581,8 +573,6 @@ public static partial class CustomSkinManager
         }
 
         CreateNewFollowerType(name, variantNames, colors, hidden, twitchPremium, invariant);
-
-        // CreateFollowerSkin(name, overrides, unlocked);
     }
 
     public static void AddPlayerSkin(CustomPlayerSkin playerSkin)
