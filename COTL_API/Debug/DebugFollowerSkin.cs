@@ -8,7 +8,7 @@ public class DebugFollowerSkin : CustomFollowerSkin
     public override string Name => "Debug Skin";
 
     public override Texture2D Texture =>
-        TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("debug_sheet.png"));
+        TextureHelper.CreateTextureFromPath(PluginPaths.ResolveAssetPath("debug_sheet2.png"));
 
     public override List<SkinOverride> Overrides =>
     [

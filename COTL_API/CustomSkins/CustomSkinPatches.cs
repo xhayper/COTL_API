@@ -3,6 +3,7 @@ using HarmonyLib;
 using Lamb.UI;
 using LeTai.Asset.TranslucentImage;
 using Spine;
+using src.Alerts;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using Object = UnityEngine.Object;
@@ -30,6 +31,17 @@ public partial class CustomSkinManager
         if (AlwaysUnlockedSkins.TryGetValue(skinName, out var alwaysUnlocked) && alwaysUnlocked)
             DataManager.SetFollowerSkinUnlocked(skinName);
     }
+
+    [HarmonyPatch(typeof(CharacterSkinAlerts), nameof(CharacterSkinAlerts.OnSkinUnlocked), typeof(string))]
+    [HarmonyPrefix]
+    private static bool CharacterSkinAlerts_OnSkinUnlocked(string skinName)
+    {
+
+        if (CustomFollowerSkins.TryGetValue(skinName, out _)) return false;
+
+        return true;
+    }
+
 
     [HarmonyPatch(typeof(Graphics), nameof(Graphics.CopyTexture), typeof(Texture), typeof(int), typeof(int),
         typeof(int), typeof(int), typeof(int), typeof(int), typeof(Texture), typeof(int), typeof(int), typeof(int),

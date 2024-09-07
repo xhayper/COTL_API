@@ -537,27 +537,52 @@ public static partial class CustomSkinManager
     internal static Dictionary<PlayerType, List<Skin?>?> PlayerSkinOverride { get; set; } = [];
     internal static Dictionary<PlayerType, PlayerBleat?> PlayerBleatOverride { get; set; } = [];
 
-    public static void AddFollowerSkin(CustomFollowerSkin followerSkin)
-    {
-        var atlasText = followerSkin.GenerateAtlasText();
-        AddFollowerSkin(followerSkin.Name, followerSkin.Texture, atlasText, followerSkin.Colors, followerSkin.Hidden,
-            followerSkin.Unlocked, followerSkin.TwitchPremium,
-            followerSkin.Invariant);
+    public static void AddFollowerSkin(CustomFollowerSkin followerSkin) {
+        AddFollowerSkin([followerSkin]);
     }
 
-    public static void AddFollowerSkin(string name, Texture2D sheet, string atlasText,
+    public static void AddFollowerSkin(List<CustomFollowerSkin> followerVariants)
+    {
+        var variantAtlasTexts = followerVariants.Select(f => f.GenerateAtlasText()).ToList();
+        var followerForm = followerVariants[0];
+        
+        AddFollowerSkin(followerForm.Name, followerForm.Texture, variantAtlasTexts, followerForm.Colors, followerForm.Hidden,
+                followerForm.Unlocked, followerForm.TwitchPremium,
+                followerForm.Invariant);
+    }
+
+    public static void AddFollowerSkin(string name, Texture2D sheet, List<string> variants,
         List<WorshipperData.SlotsAndColours> colors, bool hidden = false, bool unlocked = true,
         bool twitchPremium = false, bool invariant = false)
     {
-        var overrides =
-            SkinUtils.CreateSkinAtlas(name, sheet, atlasText, RegionOverrideFunction, out var mat, out var atlas);
+        // var overrides =
+        //     SkinUtils.CreateSkinAtlas(name, sheet, atlasText, RegionOverrideFunction, out var mat, out var atlas);
 
-        SkinTextures.Add(name, sheet);
-        SkinMaterials.Add(name, mat);
-        CustomAtlases.Add(name, atlas);
+        // SkinTextures.Add(name, sheet);
+        // SkinMaterials.Add(name, mat);
+        // CustomAtlases.Add(name, atlas);
 
-        CreateNewFollowerType(name, colors, hidden, twitchPremium, invariant);
-        CreateFollowerSkin(name, overrides, unlocked);
+        List<string> variantNames = [];
+
+        for (var i = 0; i < variants.Count; i++)
+        {
+            //first variantName should be base name
+            var variantName = i == 0 ? name : name + "_" + i;
+            variantNames.Add(variantName);
+            var variantOverrides =
+                SkinUtils.CreateSkinAtlas(variantName, sheet, variants[i], RegionOverrideFunction, out var variantMat,
+                    out var variantAtlas);
+
+            SkinTextures.Add(variantName, sheet);
+            SkinMaterials.Add(variantName, variantMat);
+            CustomAtlases.Add(variantName, variantAtlas);
+
+            CreateFollowerSkin(variantName, variantOverrides, unlocked);
+        }
+
+        CreateNewFollowerType(name, variantNames, colors, hidden, twitchPremium, invariant);
+
+        // CreateFollowerSkin(name, overrides, unlocked);
     }
 
     public static void AddPlayerSkin(CustomPlayerSkin playerSkin)
@@ -607,19 +632,19 @@ public static partial class CustomSkinManager
         return [];
     }
 
-    internal static void CreateNewFollowerType(string name, List<WorshipperData.SlotsAndColours> colors,
+    internal static void CreateNewFollowerType(string name, List<string> variantNames, List<WorshipperData.SlotsAndColours> colors,
         bool hidden = false, bool twitchPremium = false, bool invariant = false)
     {
+        var skins = variantNames.Select(v => new WorshipperData.CharacterSkin
+            {
+                Skin = v
+            }).ToList();
+
+
         WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData
         {
             Title = name,
-            Skin =
-            [
-                new WorshipperData.CharacterSkin
-                {
-                    Skin = name
-                }
-            ],
+            Skin = skins,
             SlotAndColours = colors,
             TwitchPremium = twitchPremium,
             _hidden = hidden,

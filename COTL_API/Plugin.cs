@@ -320,7 +320,7 @@ public class Plugin : BaseUnityPlugin
         CustomLocalizationManager.LoadLocalization("English",
             Path.Combine(PluginPath, "Assets", "English-Debug.language"));
 
-        CustomSkinManager.AddFollowerSkin(new DebugFollowerSkin());
+        CustomSkinManager.AddFollowerSkin([new DebugFollowerSkin(), new DebugFollowerSkin2()]);
         CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
 
         CustomFollowerCommandManager.Add(new DebugFollowerCommand());
