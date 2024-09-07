@@ -36,10 +36,7 @@ public partial class CustomSkinManager
     [HarmonyPrefix]
     private static bool CharacterSkinAlerts_OnSkinUnlocked(string skinName)
     {
-
-        if (CustomFollowerSkins.TryGetValue(skinName, out _)) return false;
-
-        return true;
+        return false;
     }
 
 
