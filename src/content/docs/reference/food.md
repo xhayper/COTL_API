@@ -56,7 +56,7 @@ public class ExampleMeal : CustomMeal
     public override float TummyRating => 0.6f;
 }
 ```
-
+Recipes defined first are crafted first, and will consume materials untill they can't be crafted. unfortuntely there is no way swap recipies at will, so it's advised to define "cheaper" recipes first.
 
 Custom Meals support all the overrides that custom items do, despite the fact that many of them are non-functional. all overrides that modify the behaviour of the item in-inventory don't function, as you don't pick up meals into your inventory.
 
