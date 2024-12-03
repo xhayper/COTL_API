@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace COTL_API.CustomInventory;
 
-public abstract class CustomSeed : CustomInventoryItem
+public abstract class CustomCrop : CustomInventoryItem
 {
+    internal InventoryItem.ITEM_TYPE ItemType;
     internal StructureBrain.TYPES StructureType { get; set; }
     internal int CropStatesCount => CropStates.Count;
     public sealed override bool IsPlantable { get; } = true;
@@ -14,8 +15,11 @@ public abstract class CustomSeed : CustomInventoryItem
     /// </summary>
     public virtual List<Sprite> CropStates { get; } = [];
 
+    /// <summary>
+    ///     The time it takes for this crop to grow, in game ticks.
+    /// </summary>
     public virtual float CropGrowthTime => 9f;
-
+    
     /// <summary>
     ///     How many resources this will drop upon collecting
     /// </summary>
@@ -26,7 +30,7 @@ public abstract class CustomSeed : CustomInventoryItem
     /// </summary>
     public virtual DropMultipleLootOnDeath.ItemAndProbability[] HarvestResult => [];
     
-    /// <summary>s
+    /// <summary>
     ///     TODO: Find out what this does, it's probably how long it takes to break but that's an odd name for it
     /// </summary>
     public virtual int ProgressTarget => 10;
