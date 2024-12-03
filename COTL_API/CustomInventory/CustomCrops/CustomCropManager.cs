@@ -1,125 +1,122 @@
 using COTL_API.Guid;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Bindings;
-using UnityEngine.Rendering;
-using Object = UnityEngine.Object;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using static UnityEngine.Object;
 
 namespace COTL_API.CustomInventory;
 
 public static partial class CustomItemManager
 {
-    public static Dictionary<InventoryItem.ITEM_TYPE, CustomSeed> CustomCropList { get; } = [];
+    private static GameObject CropPrefab;
 
-    public static Dictionary<InventoryItem.ITEM_TYPE, CropController> CustomCropControllers { get; } = [];
+    public static Dictionary<InventoryItem.ITEM_TYPE, CustomCrop> CustomCropList { get; } = [];
+    internal static Dictionary<InventoryItem.ITEM_TYPE, GameObject> CropObjectList { get; } = [];
 
-    public static InventoryItem.ITEM_TYPE Add(CustomSeed seed)
+    private static readonly List<CustomCrop> s_toRegister = [];
+
+    public static InventoryItem.ITEM_TYPE Add(CustomCrop crop)
     {
-        var item = Add(seed as CustomInventoryItem);
-        seed.StructureType =
-            GuidManager.GetEnumValue<StructureBrain.TYPES>(CustomItemList[item].ModPrefix, seed.InternalName);
+        var item = Add(crop as CustomInventoryItem);
+        crop.ItemType = item;
+        crop.StructureType =
+            GuidManager.GetEnumValue<StructureBrain.TYPES>(CustomItemList[item].ModPrefix, crop.InternalName);
 
-        CustomCropList.Add(item, seed);
-        CustomCropControllers.Add(item, CreateCropController(seed));
+        CustomCropList.Add(item, crop);
+        CropObjectList.Add(item, CreateCropObject(crop));
 
         return item;
     }
 
-    #region Custom CropControllers
-
-    private static CropController ControllerPrefab;
-
-    private static CropController CreateCropController(CustomSeed seed)
+    private static GameObject CreateCropObject(CustomCrop crop)
     {
-        if (!ControllerPrefab)
+        if (CropPrefab == null)
+            GetCropAsset();
+
+        if (CropPrefab == null)
+            throw new NullReferenceException(":/ Send a bug report");
+
+        var duplicate = Instantiate(CropPrefab);
+
+        if (duplicate == null)
+            throw new NullReferenceException("Somehow, the Crop Prefab could not be instantiated, send a bug report");
+
+        duplicate.hideFlags = HideFlags.HideAndDontSave;
+        duplicate.name = $"{crop.Name()} Crop";
+
+        var cropController = duplicate.GetComponent<CropController>();
+
+        cropController.CropStates = [];
+        cropController.SeedType = crop.ItemType;
+
+        Destroy(duplicate.transform.GetChild(1)); // Stage 2
+        Destroy(duplicate.transform.GetChild(1)); // Stage 3
+        Destroy(duplicate.transform.GetChild(1)); // Stage 4
+
+        /*
+         * DEV NOTE: this is insane, why are you like this game?  why the fuck are there two of them? why do they have
+         * identical scripts? Harvest is what happens if a crop grows out without fertilizer, and BumperHarvest is with
+         * fertilizer. the only difference seems to be a tiny sign...
+         * it also skips stage 2 of the crop states, it goes 1,3,4, (Bumper)Harvest. WHY? why is stage 2 there?
+         */
+
+        // "Harvest" object 
+        var harvest = duplicate.transform.GetChild(1);
+        // "bush1" -> sprite of the final harvest crop bush
+        //                 "Harvest"/"GameObject (2)/"To Shake(2)"/"Bush1"/
+        var bush1 = harvest.GetChild(2).GetChild(0).GetChild(0);
+
+        // "Bumper Harvest" object
+        var bumperHarvest = duplicate.transform.GetChild(2);
+        // "bumperBush1" -> the final stage that gets activated with fertilizer
+        //                       "BumperHarvest"/"GameObject (2)/"To Shake(2)"/"Bush1"/
+        var bumperBush1 = bumperHarvest.GetChild(3).GetChild(0).GetChild(0);
+
+        bush1.GetComponent<SpriteRenderer>().sprite = crop.CropStates.Last();
+        bumperBush1.GetComponent<SpriteRenderer>().sprite = crop.CropStates.Last();
+
+        var cropState = duplicate.transform.GetChild(0);
+        cropState.GetComponent<SpriteRenderer>().sprite = crop.CropStates[0];
+        cropController.CropStates.Add(cropState.gameObject);
+        foreach (var sprite in crop.CropStates)
         {
-            ControllerPrefab = CreateGenericController();
+            var newState = Instantiate(cropState, duplicate.transform);
+            newState.GetComponent<SpriteRenderer>().sprite = sprite;
+            cropController.CropStates.Add(newState.gameObject);
         }
-
-        var holderObject = new GameObject();
-        holderObject.SetActive(false);
-
-        var customController =
-            Object.Instantiate(ControllerPrefab, null, instantiateInWorldSpace: false) as CropController;
-
-        customController.transform.SetParent(holderObject.transform);
-
-        customController.SeedType = seed.ItemType;
-
-        var cropStage = customController.CropStates[0];
-        var finalCrop = customController.CropStates[customController.CropStates.Count - 1];
-
-        customController.CropStates = [];
-
-        for (var i = 0; i < seed.CropStates.Count - 1; i++)
-        {
-            var sprite = seed.CropStates[i];
-            var newObj = Object.Instantiate(cropStage, null, instantiateInWorldSpace: false) as GameObject;
-            newObj?.transform.SetParent(customController.transform);
-            Object.DontDestroyOnLoad(newObj);
-            customController.CropStates.Add(newObj);
-            customController.CropStates[i].GetComponent<SpriteRenderer>().sprite = sprite;
-        }
-
-        var newFinalCrop = Object.Instantiate(finalCrop, null, instantiateInWorldSpace: false) as GameObject;
-        newFinalCrop?.transform.SetParent(customController.transform);
-        finalCrop.GetComponent<SpriteRenderer>().sprite = seed.CropStates[seed.CropStates.Count-1];
-        Object.DontDestroyOnLoad(newFinalCrop);
-        customController.CropStates.Add(newFinalCrop);
-
-        customController.CropStates[customController.CropStates.Count - 1]
-            .GetComponentInChildren<SpriteRenderer>()
-            .sprite = seed.CropStates[seed.CropStates.Count - 1];
-
-        customController.CropStates[customController.CropStates.Count - 1].GetComponent<Structure>().Type =
-            seed.StructureType;
-
-        Object.DontDestroyOnLoad(customController);
-        return customController;
+        
+        cropController.CropStates.Add(harvest.gameObject);
+        
+        return duplicate;
     }
 
-    private static CropController CreateGenericController()
+    private static void GetCropAsset()
     {
-        var cropController = new GameObject("Custom Crop").AddComponent<CropController>();
+        LogInfo("GETTING CROP ASSET");
+        var op = Addressables.Instance.LoadAssetAsync<GameObject>("Prefabs/Structures/Crops/Berry Crop");
 
-        var cropState = new GameObject("Crop");
-        cropState.AddComponent<SpriteRenderer>();
-
-        var finalCropState = new GameObject("Harvest");
-        finalCropState.AddComponent<StateMachine>();
-        finalCropState.AddComponent<DropMultipleLootOnDeath>();
-        //var interactionBerries = finalCropState.AddComponent<Interaction_Berries>();
-        var structure = finalCropState.AddComponent<Structure>();
-        finalCropState.AddComponent<Health>();
-
-        var playerPosLeft = new GameObject("PlayerPositionLeft");
-        var playerPosRight = new GameObject("PlayerPositionRight");
-        playerPosLeft.transform.SetParent(finalCropState.transform);
-        playerPosRight.transform.SetParent(finalCropState.transform);
-
-        var bush = new GameObject("bush");
-        bush.AddComponent<SpriteRenderer>();
-        var toShake = new GameObject("ToShake");
-        var gameObj = new GameObject("GamObject");
-        var stump = new GameObject("Stump");
-        bush.transform.SetParent(toShake.transform);
-        toShake.transform.SetParent(gameObj.transform);
-        stump.transform.SetParent(gameObj.transform);
-        gameObj.transform.SetParent(finalCropState.transform);
-
-
-        // interactionBerries.berryToShake = toShake;
-        // interactionBerries.berryBush_Normal = gameObj;
-        // interactionBerries.Structure = structure;
-        // interactionBerries.PlayerPositionLeft = playerPosLeft;
-        // interactionBerries.PlayerPositionRight = playerPosRight;
-        // interactionBerries.berryToShake = stump;
-
-        cropController.CropStates.Add(cropState);
-        cropController.CropStates.Add(finalCropState);
-
-        return cropController;
+        op.Completed += (handle) =>
+        {
+            LogInfo("OPERATION COMPLETED");
+            if (op.Status == AsyncOperationStatus.Succeeded)
+            {
+                LogInfo("ASYNC OPERATION WE HAVE THE CROP PREFAB RESULT");
+                LogInfo("ASYNC OPERATION WE HAVE THE CROP PREFAB RESULT");
+                LogInfo("ASYNC OPERATION WE HAVE THE CROP PREFAB RESULT");
+                LogInfo("ASYNC OPERATION WE HAVE THE CROP PREFAB RESULT");
+                CropPrefab = handle.Result;
+                CropPrefab.hideFlags = HideFlags.HideAndDontSave;
+                DontDestroyOnLoad(CropPrefab);
+            }
+            else
+            {
+                LogInfo("ASYNC OPERATION FAILED WE DONT HAVE IT WE SUCK");
+                LogInfo("ASYNC OPERATION FAILED WE DONT HAVE IT WE SUCK");
+                LogInfo("ASYNC OPERATION FAILED WE DONT HAVE IT WE SUCK");
+                LogInfo("ASYNC OPERATION FAILED WE DONT HAVE IT WE SUCK");
+                //throw new NullReferenceException("Couldn't Find Berry Crop Object, Send a bug report!");
+            }
+        };
+        LogInfo("FINSIHED GETTING CROP ASSET");
     }
-
-    #endregion
 }
