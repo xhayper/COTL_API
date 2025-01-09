@@ -190,8 +190,19 @@ public partial class CustomSkinManager
     [HarmonyPrefix]
     private static bool PlayerFarming_BleatRoutine(PlayerFarming __instance)
     {
-        var playerType = !__instance.isLamb || __instance.IsGoat ? PlayerType.GOAT : PlayerType.LAMB;
-        var playerInstance = !__instance.isLamb || __instance.IsGoat ? PlayerFarming.players[1] : PlayerFarming.players[0];
+        var playerType = PlayerType.LAMB;
+
+        //TODO: TEMPFIX. find out what happened in the update, why is both isLamb and isGoat returning false?
+        LogInfo("IsLamb" +  __instance.isLamb);
+        LogInfo("IsGoat" + __instance.IsGoat);
+
+        var playerInstance = PlayerFarming.players[0];
+
+        if (CoopManager.CoopActive)
+        {
+            playerType = !__instance.isLamb || __instance.IsGoat ? PlayerType.GOAT : PlayerType.LAMB;
+            playerInstance = !__instance.isLamb || __instance.IsGoat ? PlayerFarming.players[1] : PlayerFarming.players[0];
+        }
 
         if (!PlayerBleatOverride.ContainsKey(playerType)) return true;
 
