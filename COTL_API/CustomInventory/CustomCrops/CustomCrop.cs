@@ -4,14 +4,13 @@ namespace COTL_API.CustomInventory;
 
 public abstract class CustomCrop : CustomInventoryItem
 {
-    internal InventoryItem.ITEM_TYPE ItemType;
     internal StructureBrain.TYPES StructureType { get; set; }
     internal int CropStatesCount => CropStates.Count;
-    public sealed override bool IsPlantable { get; } = true;
-    public sealed override bool IsSeed { get; } = true;
+    public sealed override bool IsPlantable => true;
+    public sealed override bool IsSeed => true;
 
     /// <summary>
-    ///     The States of this crop, the last state should be the fully grown state. 
+    ///     The States of this crop, the last state should be the fully grown state. Requires at least two states.
     /// </summary>
     public virtual List<Sprite> CropStates { get; } = [];
 
@@ -19,24 +18,24 @@ public abstract class CustomCrop : CustomInventoryItem
     ///     The time it takes for this crop to grow, in game ticks.
     /// </summary>
     public virtual float CropGrowthTime => 9f;
-    
-    /// <summary>
-    ///     How many resources this will drop upon collecting
-    /// </summary>
-    public virtual Vector2Int HarvestsPerSeedRange => new(2, 5);
 
     /// <summary>
-    ///     The Items, (and probabilities) dropped when harvesting this crop
+    ///     The Crop and Seed that drops when this is harvested. Must be size 2
     /// </summary>
-    public virtual DropMultipleLootOnDeath.ItemAndProbability[] HarvestResult => [];
-    
-    /// <summary>
-    ///     TODO: Find out what this does, it's probably how long it takes to break but that's an odd name for it
-    /// </summary>
-    public virtual int ProgressTarget => 10;
+    public abstract List<InventoryItem.ITEM_TYPE> HarvestResult { get; }
 
     /// <summary>
-    ///     TODO: Find out what this does, it's probably how many of the item drops, but then what's HarvestsPerSeedRange?
+    ///     How long (in seconds) it takes to pick this crop. 
+    /// </summary>
+    public virtual float PickingTime => 2.5f;
+
+    /// <summary>
+    ///     The range in how many resources will drop when collecting.
     /// </summary>
     public virtual Vector2Int CropCountToDropRange => new(3, 4);
+
+    /// <summary>
+    ///     Shows when hovering the crop to harvest it.
+    /// </summary>
+    public virtual string HarvestText => "Pick <color=#FD1D03>Berries</color>";
 }

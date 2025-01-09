@@ -26,16 +26,6 @@ public static partial class CustomItemManager
         __result = item.CropGrowthTime;
     }
     
-    [HarmonyPatch(typeof(CropController), nameof(CropController.GetHarvestsPerSeedRange))]
-    [HarmonyPostfix]
-    private static void CropController_GetHarvestsPerSeedRange(InventoryItem.ITEM_TYPE seedType,
-        ref Vector2Int __result)
-    {
-        if (!CustomCropList.TryGetValue(seedType, out var item)) return;
-    
-        __result = item.HarvestsPerSeedRange;
-    }
-    
     
     [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetInfoByType))]
     [HarmonyPostfix]
@@ -44,18 +34,16 @@ public static partial class CustomItemManager
         if (CustomCropList.Values.All(x => x.StructureType != Type)) return;
     
         var crop = CustomCropList.Values.First(x => x.StructureType == Type);
-    
+        // Not sure that this is necessary but just in case?
         __result = new StructuresData
         {
             PrefabPath = "Prefabs/Structures/Other/Berry Bush",
             DontLoadMe = true,
-            ProgressTarget = crop.ProgressTarget,
-            MultipleLootToDrop = crop.HarvestResult.Select(item => item.Type).ToList(),
-            MultipleLootToDropChance = crop.HarvestResult.Select(item => item.Probability).ToList(),
+            ProgressTarget = crop.PickingTime,
+            MultipleLootToDrop = crop.HarvestResult,
             LootCountToDropRange = crop.CropCountToDropRange,
-            CropLootCountToDropRange = crop.CropCountToDropRange
+            Type = crop.StructureType
         };
-        __result.Type = crop.StructureType;
     }
     
     [HarmonyPatch(typeof(StructureBrain), nameof(StructureBrain.CreateBrain))]
@@ -66,17 +54,39 @@ public static partial class CustomItemManager
     
         __result = new Structures_BerryBush();
     }
-
+    
     [HarmonyPatch(typeof(FarmPlot), nameof(FarmPlot.Awake))]
-    [HarmonyPrefix]
-    private static void FarmPlot_Awake_Prefix(FarmPlot __instance)
+    [HarmonyPostfix]
+    private static void FarmPlot_Postfix(FarmPlot __instance)
     {
-        __instance._cropPrefabsBySeedType.AddRange(CropObjectList);
+        foreach(var kvp in CropObjectList)
+        {
+            __instance._cropPrefabsBySeedType.Add(kvp.Key, kvp.Value);
+        }
     }
-    // [HarmonyPatch(typeof(FarmPlot), nameof(FarmPlot.Awake))]
-    // [HarmonyPostfix]
-    // private static void FarmPlot_Awake_Postfix(FarmPlot __instance)
-    // {
-    //     __instance.CropPrefabs.AddRange(CropObjectList.Select(x => x.Value.GetComponent<CropController>()));
-    // }
-}
+
+    [HarmonyPatch(typeof(Interaction_Berries), nameof(Interaction_Berries.OnBrainAssigned))]
+    [HarmonyPostfix]
+    private static void Interaction_Berries_OnBrainAssigned(Interaction_Berries __instance)
+    {
+        var cropController = __instance.GetComponentInParent<CropController>();
+        
+        if (cropController == null) return;
+        if (!CustomCropList.TryGetValue(cropController.SeedType, out var crop)) return;
+
+        __instance.StructureBrain.Data.MultipleLootToDrop = crop.HarvestResult;
+        __instance.StructureBrain.Data.LootCountToDropRange = crop.CropCountToDropRange;
+        __instance.BerryPickingIncrements = 1.25f / crop.PickingTime;
+    }
+    
+    [HarmonyPatch(typeof(Interaction_Berries), nameof(Interaction_Berries.UpdateLocalisation))]
+    [HarmonyPostfix]
+    private static void Interaction_Berries_UpdateLocalisation(Interaction_Berries __instance)
+    {
+        var cropController = __instance.GetComponentInParent<CropController>();
+        if (cropController == null) return;
+        if (!CustomCropList.TryGetValue(cropController.SeedType, out var crop)) return;
+        
+        __instance.sLabelName = crop.HarvestText;
+    }
+}   
