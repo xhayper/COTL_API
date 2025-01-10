@@ -217,7 +217,7 @@ public static partial class CustomItemManager
     [HarmonyPostfix]
     private static void InventoryItem_AllPlantables(ref List<InventoryItem.ITEM_TYPE> __result)
     {
-        __result.AddRange(CustomItemList.Where(x => x.Value.IsPlantable).Select(x => x.Key));
+        __result.AddRange(CustomCropList.Select(x => x.Key));
     }
 
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.GiveToFollowerCallbacks))]
