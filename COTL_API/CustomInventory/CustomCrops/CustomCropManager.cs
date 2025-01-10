@@ -55,14 +55,17 @@ public static partial class CustomItemManager
 
         var bumperHarvest = duplicate.transform.GetChild(2);
         var bumperBush = bumperHarvest.GetChild(3).GetChild(0).GetChild(0);
-        
-        bush.GetComponent<SpriteRenderer>().sprite = crop.CropStates.Last();
-        bumperBush.GetComponent<SpriteRenderer>().sprite = crop.CropStates.Last(); ;
 
         var cropState = duplicate.transform.GetChild(0);
-        cropState.GetComponent<SpriteRenderer>().sprite = crop.CropStates[0];
         cropController.CropStates.Add(cropState.gameObject);
-
+        
+        if (crop.CropStates.Count > 0)
+        {
+            bush.GetComponent<SpriteRenderer>().sprite = crop.CropStates.Last();
+            bumperBush.GetComponent<SpriteRenderer>().sprite = crop.CropStates.Last();
+            cropState.GetComponent<SpriteRenderer>().sprite = crop.CropStates[0];
+        }
+        
         for (var i = 1; i < crop.CropStates.Count - 1; i++)
         {
             var newState = Instantiate(cropState, duplicate.transform);
