@@ -6,8 +6,7 @@ namespace COTL_API.Debug;
 public class DebugItemClass4 : CustomInventoryItem
 {
     public override string InternalName => "DEBUG_ITEM_4";
-
-    public override bool IsPlantable => true;
+    
 
     public override InventoryItem.ITEM_TYPE ItemPickUpToImitate => InventoryItem.ITEM_TYPE.BLACK_GOLD;
     public override CustomItemManager.ItemRarity Rarity => CustomItemManager.ItemRarity.COMMON;
