@@ -6,7 +6,6 @@ public abstract class CustomCrop : CustomInventoryItem
 {
     internal StructureBrain.TYPES StructureType { get; set; }
     internal int CropStatesCount => CropStates.Count;
-    //public sealed override bool IsPlantable => true;
     
     /// <summary>
     ///     The States of this crop, the last state should be the fully grown state. Requires at least two states.
