@@ -192,7 +192,7 @@ public class ExampleMealEffect : CustomMealEffect
 
     public void DoSomething(FollowerBrain follower)
     {
-        LogInfo($"my name is {FollowerBrain.Info.Name} and I just ate something.");
+        LogInfo($"my name is {follower.Info.Name} and I just ate something.");
     }
 }
 ```
