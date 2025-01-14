@@ -60,9 +60,6 @@ Recipes defined first are crafted first, and will consume materials untill they 
 
 Custom Meals support all the overrides that custom items do, despite the fact that many of them are non-functional. all overrides that modify the behaviour of the item in-inventory don't function, as you don't pick up meals into your inventory.
 
-> WARNING: 
-> Overriding `ItemPickupToImitate` with any item that isn't a meal will cause an error!
-
 `CustomMeal` support the following overrides:
 
 | Type | Name | Default |
@@ -146,8 +143,6 @@ public class ExampleDrink : CustomDrink
     public override int Pleasure => 50;
 }
 ```
->WARNING:
-> Overriding `ItemPickupToImitate` with any item that isn't a drink will cause an error!
 
 `CustomDrink` supports the following overrides:
 
