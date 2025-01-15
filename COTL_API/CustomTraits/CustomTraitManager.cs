@@ -17,7 +17,7 @@ public static partial class CustomTraitManager
         trait.TraitType = traitType;
         trait.ModPrefix = guid;
         
-        ManageTraitFlags(trait);
+        HandleTraitFlags(trait);
         foreach (var exclusive in trait.ExclusiveTraits)
         {
             FollowerTrait.ExclusiveTraits.Add(traitType, exclusive);
@@ -28,7 +28,7 @@ public static partial class CustomTraitManager
         return traitType;
     }
 
-    private static void ManageTraitFlags(CustomTrait item)
+    private static void HandleTraitFlags(CustomTrait item)
     {
         if (item.TraitFlags.HasFlag(TraitFlags.StartingTrait))
             FollowerTrait.StartingTraits.Add(item.TraitType);
