@@ -604,5 +604,6 @@ FodyWeavers.xsd
 
 !COTL_API/Debug/
 build/
+.idea
 
 global.json
