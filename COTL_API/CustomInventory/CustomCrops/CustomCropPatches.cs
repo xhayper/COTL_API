@@ -57,7 +57,7 @@ public static partial class CustomItemManager
     
     [HarmonyPatch(typeof(FarmPlot), nameof(FarmPlot.Awake))]
     [HarmonyPostfix]
-    private static void FarmPlot_Postfix(FarmPlot __instance)
+    private static void FarmPlot_Awake(FarmPlot __instance)
     {
         foreach(var kvp in CropObjectList)
         {

@@ -9,7 +9,7 @@ namespace COTL_API.CustomInventory;
 
 public static partial class CustomItemManager
 {
-    private static GameObject s_cropPrefab = null!;
+    internal static GameObject CropPrefab = null!;
 
     public static Dictionary<InventoryItem.ITEM_TYPE, CustomCrop> CustomCropList { get; } = [];
     private static Dictionary<InventoryItem.ITEM_TYPE, CropController> CropObjectList { get; } = [];
@@ -30,10 +30,10 @@ public static partial class CustomItemManager
 
     private static void CreateCropObject(CustomCrop crop)
     {
-        if (s_cropPrefab == null)
+        if (CropPrefab == null)
             throw new NullReferenceException("This REALLY shouldn't happen, send a bug report!");
 
-        var duplicate = Instantiate(s_cropPrefab);
+        var duplicate = Instantiate(CropPrefab);
 
         if (duplicate == null)
             throw new NullReferenceException("Somehow, the Crop Prefab could not be instantiated, send a bug report");
@@ -92,7 +92,7 @@ public static partial class CustomItemManager
             if (op.Status != AsyncOperationStatus.Succeeded)
                 throw new NullReferenceException("Couldn't Find Berry Crop Object, Send a bug report!");
 
-            s_cropPrefab = handle.Result;
+            CropPrefab = handle.Result;
             CustomCropList.Do(x => CreateCropObject(x.Value));
         };
     }
