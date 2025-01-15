@@ -1,5 +1,5 @@
 using HarmonyLib;
-using UnityEngine.ProBuilder.Shapes;
+using UnityEngine;
 
 namespace FoodPlus.CustomTraits;
 
