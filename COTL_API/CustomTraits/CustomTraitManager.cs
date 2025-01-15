@@ -30,25 +30,28 @@ public static partial class CustomTraitManager
 
     private static void HandleTraitFlags(CustomTrait item)
     {
-        if (item.TraitFlags.HasFlag(TraitFlags.StartingTrait))
+        if (item.TraitFlags.HasFlag(TraitFlags.STARTING_TRAIT))
             FollowerTrait.StartingTraits.Add(item.TraitType);
         
-        if (item.TraitFlags.HasFlag(TraitFlags.FaithfulTrait))
+        if (item.TraitFlags.HasFlag(TraitFlags.FAITHFUL_TRAIT))
             FollowerTrait.FaithfulTraits.Add(item.TraitType);
         
-        if (item.TraitFlags.HasFlag(TraitFlags.RareStartingTrait))
+        if (item.TraitFlags.HasFlag(TraitFlags.RARE_STARTING_TRAIT))
             FollowerTrait.RareStartingTraits.Add(item.TraitType);
         
-        if (item.TraitFlags.HasFlag(TraitFlags.SingleTrait))
+        if (item.TraitFlags.HasFlag(TraitFlags.SINGLE_TRAIT))
             FollowerTrait.SingleTraits.Add(item.TraitType);
         
-        if (item.TraitFlags.HasFlag(TraitFlags.ExcludeFromMating))
+        if (item.TraitFlags.HasFlag(TraitFlags.SIN_TRAIT))
+            FollowerTrait.SinTraits.Add(item.TraitType);
+        
+        if (item.TraitFlags.HasFlag(TraitFlags.EXCLUDE_FROM_MATING))
             FollowerTrait.ExcludedFromMating.Add(item.TraitType);
         
-        if (item.TraitFlags.HasFlag(TraitFlags.PureBloodTrait))
+        if (item.TraitFlags.HasFlag(TraitFlags.PURE_BLOOD_TRAIT))
             FollowerTrait.PureBloodTraits.Add(item.TraitType);
         
-        if (item.TraitFlags.HasFlag(TraitFlags.RequiresOnboardingComplete))
+        if (item.TraitFlags.HasFlag(TraitFlags.REQUIRES_ONBOARDING_COMPLETE))
             FollowerTrait.RequiresOnboardingCompleted.Add(item.TraitType);
     }
 }

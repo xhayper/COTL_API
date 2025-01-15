@@ -18,7 +18,7 @@ public abstract class CustomTrait
 
     public virtual bool IsTraitUnavailable() => false;
 
-    public virtual TraitFlags TraitFlags => TraitFlags.None;
+    public virtual TraitFlags TraitFlags => TraitFlags.NONE;
     
     public virtual List<FollowerTrait.TraitType> ExclusiveTraits => [];
     public virtual Sprite Icon => null;
@@ -29,13 +29,13 @@ public abstract class CustomTrait
 [Flags]
 public enum TraitFlags
 {
-    None = 0,
-    StartingTrait = 1 << 0,
-    FaithfulTrait = 1 << 1,
-    RareStartingTrait = 1 << 2,
-    SingleTrait = 1 << 3,
-    ExcludeFromMating = 1 << 4,
-    SinTrait = 1 << 5,
-    PureBloodTrait = 1 << 6,
-    RequiresOnboardingComplete = 1 << 7,
+    NONE = 0,
+    STARTING_TRAIT = 1 << 0,
+    FAITHFUL_TRAIT = 1 << 1,
+    RARE_STARTING_TRAIT = 1 << 2,
+    SINGLE_TRAIT = 1 << 3,
+    EXCLUDE_FROM_MATING = 1 << 4,
+    SIN_TRAIT = 1 << 5,
+    PURE_BLOOD_TRAIT = 1 << 6,
+    REQUIRES_ONBOARDING_COMPLETE = 1 << 7,
 }
