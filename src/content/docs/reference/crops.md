@@ -35,7 +35,7 @@ public class ExampleSeed : CustomCrop
 
     public override float CropGrowthTime => 9f;
 
-    public override float PickingTime => 10;
+    public override float PickingTime => 10f;
     
     // this will be the result of picking the crop. the first Must be the "crop" result (e.g: pumpkins) and the second Must be the seed (e.g: pumpking seed). it must be at least size 2, anything after 2 is ignored.
     public override List<InventoryItem.ITEM_TYPE> HarvestResult =>
