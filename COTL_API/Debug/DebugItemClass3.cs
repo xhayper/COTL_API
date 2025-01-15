@@ -6,5 +6,4 @@ public class DebugItemClass3 : CustomInventoryItem
 {
     public override string InternalName => "DEBUG_ITEM_3";
 
-    public override bool IsPlantable => true;
 }

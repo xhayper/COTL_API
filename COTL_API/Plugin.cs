@@ -251,7 +251,10 @@ public class Plugin : BaseUnityPlugin
         LogInfo($"{MyPluginInfo.PLUGIN_NAME} unloaded!");
     }
 
-    internal static event Action OnStart = delegate { };
+    internal static event Action OnStart = delegate
+    {
+        CustomItemManager.InitiateCustomCrops();
+    };
 
     private void RunSavePatch()
     {

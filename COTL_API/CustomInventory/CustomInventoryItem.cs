@@ -29,8 +29,6 @@ public abstract class CustomInventoryItem
     public virtual bool IsFood => false;
     public virtual bool IsBigFish => false;
     public virtual bool IsCurrency => false;
-    public virtual bool IsSeed => false;
-    public virtual bool IsPlantable => false;
     public virtual bool IsBurnableFuel => false;
 
     public virtual bool CanBeGivenToFollower => false;

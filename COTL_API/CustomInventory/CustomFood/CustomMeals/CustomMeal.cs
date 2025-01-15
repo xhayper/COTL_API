@@ -8,7 +8,7 @@ public abstract class CustomMeal : CustomFood
     /// </summary>
     public abstract float TummyRating { get; }
 
-    public override InventoryItem.ITEM_TYPE ItemPickUpToImitate { get; } = InventoryItem.ITEM_TYPE.MEAL;
+    public sealed override InventoryItem.ITEM_TYPE ItemPickUpToImitate { get; } = InventoryItem.ITEM_TYPE.MEAL;
     public virtual MealQuality Quality { get; } = MealQuality.NORMAL;
     public virtual bool MealSafeToEat { get; } = true;
 }
