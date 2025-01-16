@@ -19,7 +19,7 @@ public abstract class CustomTrait
     public virtual TraitFlags TraitFlags => TraitFlags.NONE;
     
     public virtual List<FollowerTrait.TraitType> ExclusiveTraits => [];
-    public virtual Sprite Icon => null;
+    public virtual Sprite Icon => TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
     public virtual bool Positive => true;
     
 }
