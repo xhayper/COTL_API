@@ -63,7 +63,7 @@ There is no diffrence between cult traits and regular traits. Cult traits are ad
 | string | InternalName | \[REQUIRED\] |
 |bool|Positive| true|
 |bool|IsTraitUnavailable()|false|
-|Sprite|Icon|null|
+|Sprite|Icon|TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));|
 |List<FollowerTrait.TraitType>| ExclusiveTraits|[]|
 TraitFlags|TraitFlags|TraitFlags.None|
 |string|LocalizedTitle()|LocalizationManager.GetTranslation($"Traits/{ModPrefix}.{InternalName}")|
