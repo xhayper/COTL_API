@@ -2,7 +2,8 @@
 title: Crops
 description: Documentation on how to add Custom Seeds that grow crops using the Cult Of The Lamb API
 ---
-Custom Crops are actually custom items, the item created is a seed that is planeted in a farm plot and grows the custom crops. 
+
+Custom Crops are actually custom items, the item created is a seed that is planeted in a farm plot and grows the custom crops.
 
 ## Creating Crops
 
@@ -23,7 +24,7 @@ public class ExampleSeed : CustomCrop
     public override Sprite Sprite => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_seed.png"));
     // used for the inventory
     public override Sprite InventoryIcon => Sprite;
-    
+
     // these will be the stages of growth for the crop. the last stage is the stage that will get harvested
     public override List<Sprite> CropStates { get; } =
     [
@@ -36,7 +37,7 @@ public class ExampleSeed : CustomCrop
     public override float CropGrowthTime => 9f;
 
     public override float PickingTime => 10f;
-    
+
     // this will be the result of picking the crop. the first Must be the "crop" result (e.g: pumpkins) and the second Must be the seed (e.g: pumpking seed). it must be at least size 2, anything after 2 is ignored.
     public override List<InventoryItem.ITEM_TYPE> HarvestResult =>
     [
@@ -49,19 +50,18 @@ public class ExampleSeed : CustomCrop
 }
 ```
 
-
 `CustomCrop` support the following overrides:
 
-| Type | Name | Default |
-|-|-|-|
-List\<InventoryItem.ITEM_TYPE\> | HarvestResult | REQUIRED
-List\<Sprite\>|CropStates | []|
-float| CropGrowthTime | 9f|
-float|PickingTime|2.5f|
-Vector2Int|CropCountToDropRange|(3,4)|
-string|HarvestText | "Pick <color=#FD1D03>Berries</color>"
+| Type                            | Name                 | Default                               |
+| ------------------------------- | -------------------- | ------------------------------------- |
+| List\<InventoryItem.ITEM_TYPE\> | HarvestResult        | REQUIRED                              |
+| List\<Sprite\>                  | CropStates           | []                                    |
+| float                           | CropGrowthTime       | 9f                                    |
+| float                           | PickingTime          | 2.5f                                  |
+| Vector2Int                      | CropCountToDropRange | (3,4)                                 |
+| string                          | HarvestText          | "Pick <color=#FD1D03>Berries</color>" |
 
-Custom Crops also support all overrides available for Custom Items. 
+Custom Crops also support all overrides available for Custom Items.
 
 ## Adding Crops
 
@@ -80,6 +80,7 @@ private void Awake()
 ```
 
 Assigning the result of `CustomItemManager.Add()` allows you to reference that crop elsewhere in your code using `Plugin.ExampleSeed`.
+
 ## Final Steps
 
 For the icon to load, you need to put it in the appropriate location. For the example, this would be `/Assets/example_seed.png` relative to the root folder containing the .dll  

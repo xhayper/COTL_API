@@ -19,11 +19,11 @@ using System.IO;
 internal class ExampleTrait : CustomTrait
      {
          public override string InternalName => "ExampleTrait";
-     
+
          public override bool Positive => true;
-     
+
         // exclusive traits are traits that can't appear along with this trait!
-        // if they are also custom defined trait, you only need to exclude it on 
+        // if they are also custom defined trait, you only need to exclude it on
         // one of the traits.
          public override List<FollowerTrait.TraitType> ExclusiveTraits =>
          [
@@ -31,26 +31,26 @@ internal class ExampleTrait : CustomTrait
          ];
 
          public override TraitFlags TraitFlags => TraitFlags.RareStartingTrait;
-         
+
          public override string LocalizedTitle() => "Example Trait";
-         
+
          public override string LocalizedDescription() => "this trait is just an example :).";
-     
+
          public override Sprite Icon => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "ExampleTrait.png"));
-     
-        // by default, no behaviour for custom traits is added. use patches check in 
-        // your own code for the presence of the trait, and change the game's 
+
+        // by default, no behaviour for custom traits is added. use patches check in
+        // your own code for the presence of the trait, and change the game's
         // behvaiour accordingly.
          [HarmonyPatch(typeof(FollowerBrain), nameof(FollowerBrain.GetPoopType))]
          [HarmonyPrefix]
          private static bool FollowerBrain_GetPoopType(ref FollowerBrain __instance, ref StructureBrain.TYPES __result)
          {
              if (!__instance.Info.Traits.Contains(Plugin.ExampleTrait)) return true;
-             
+
              __result = StructureBrain.TYPES.POOP_RAINBOW;
              DataManager.Instance.DaySinceLastSpecialPoop = TimeManager.CurrentDay;
              return false;
-     
+
          }
 }
 ```

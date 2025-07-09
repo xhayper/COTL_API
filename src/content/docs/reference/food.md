@@ -2,8 +2,9 @@
 title: Food
 description: Documentation on how to add a custom Meal using the Cult Of The Lamb API
 ---
+
 Creating custom food is almost identical to creating custom items, and custom food posses all the overrides that custom items do.
-Custom food can also have custom MealEffects that trigger upon consuming the food. 
+Custom food can also have custom MealEffects that trigger upon consuming the food.
 
 ## Creating Meals
 
@@ -24,7 +25,7 @@ public class ExampleMeal : CustomMeal
     public override Sprite Sprite => TextureHelper.CreateSpriteFromPath(Path.Combine(Plugin.PluginPath, "Assets", "example_meal.png"));
     // used for the cooking menu/inventory
     public override Sprite InventoryIcon => Sprite;
-    
+
     // A list of Effects that will occur when eating this Meal
     override MealEffect[] MealEffects =>
     [
@@ -34,8 +35,8 @@ public class ExampleMeal : CustomMeal
             Chance = 50;
         }
     ];
-    // used for cooking the meal. 
-    //the outer list is for storing different recipes for the same Meal 
+    // used for cooking the meal.
+    //the outer list is for storing different recipes for the same Meal
     //the inner list is for the items and quantities that the recipe requires
     public override List<List<InventoryItem>> Recipe =>
     [
@@ -56,21 +57,22 @@ public class ExampleMeal : CustomMeal
     public override float TummyRating => 0.6f;
 }
 ```
+
 Recipes defined first are crafted first, and will consume materials untill they can't be crafted. unfortuntely there is no way swap recipies at will, so it's advised to define "cheaper" recipes first.
 
 Custom Meals support all the overrides that custom items do, despite the fact that many of them are non-functional. all overrides that modify the behaviour of the item in-inventory don't function, as you don't pick up meals into your inventory.
 
 `CustomMeal` support the following overrides:
 
-| Type | Name | Default |
-|-|-|-|
-|List<List<InventoryItem.ITEM_TYPE>>|Recipe|\[REQUIRED\]|
-|CookingData.MealEffects[]|MealEffects|\[REQUIRED\]|
-|Vector3|ItemDisplayOffset|null|
-|MealQuality|Quality|MealQuality.NORMAL|
-|float|TummyRating|0|
-|int|SatiationLevel|0|
-|bool|MealSafeToEat|true|
+| Type                                | Name              | Default            |
+| ----------------------------------- | ----------------- | ------------------ |
+| List<List<InventoryItem.ITEM_TYPE>> | Recipe            | \[REQUIRED\]       |
+| CookingData.MealEffects[]           | MealEffects       | \[REQUIRED\]       |
+| Vector3                             | ItemDisplayOffset | null               |
+| MealQuality                         | Quality           | MealQuality.NORMAL |
+| float                               | TummyRating       | 0                  |
+| int                                 | SatiationLevel    | 0                  |
+| bool                                | MealSafeToEat     | true               |
 
 ## Adding Meals
 
@@ -119,8 +121,8 @@ public class ExampleDrink : CustomDrink
             Chance = 75
         }
     ];
-    // used for brewing the drink. 
-    //the outer list is for storing different recipes for the same Drink 
+    // used for brewing the drink.
+    //the outer list is for storing different recipes for the same Drink
     //the inner list is for the items and quantities that the recipe requires
     public override List<List<InventoryItem>> Recipe =>
     [
@@ -134,7 +136,7 @@ public class ExampleDrink : CustomDrink
             new InventoryItem(InventoryItem.ITEM_TYPE.GOD_TEAR, 1),
         ],
     ];
-    
+
     // this is the "Star Rating" of the drink. Range: 0-3
     public override int SatiationLevel => 2;
 
@@ -146,13 +148,13 @@ public class ExampleDrink : CustomDrink
 
 `CustomDrink` supports the following overrides:
 
-| Type | Name | Default |
-|-|-|-|
-|List<List<InventoryItem.ITEM_TYPE>>|Recipe|\[REQUIRED\]|
-|CookingData.MealEffects[]|MealEffects|\[REQUIRED\]|
-|int|SatiationLevel|0|
-|Vector3|ItemDisplayOffset|null|
-|int|Pleasure|0|
+| Type                                | Name              | Default      |
+| ----------------------------------- | ----------------- | ------------ |
+| List<List<InventoryItem.ITEM_TYPE>> | Recipe            | \[REQUIRED\] |
+| CookingData.MealEffects[]           | MealEffects       | \[REQUIRED\] |
+| int                                 | SatiationLevel    | 0            |
+| Vector3                             | ItemDisplayOffset | null         |
+| int                                 | Pleasure          | 0            |
 
 ## Adding Drinks
 
@@ -212,14 +214,14 @@ Assigning the result of `CustomMealEffectmManager.Add()` allows you to reference
 
 `CustomMealEffect` supports the following overrides:
 
-| Type | Name | Default |
-|-|-|-|
-| string | InternalName | \[REQUIRED\] |
-| Action\<FollowerBrain\> | Effect | \[REQUIRED\]|
-|bool | EffectEnabled()| true |
-|bool|Positive()|true|
-|string| Description()|$"CookingData/{InternalName}/Description"|
-|string|DescriptionSuffix()|""|
+| Type                    | Name                | Default                                   |
+| ----------------------- | ------------------- | ----------------------------------------- |
+| string                  | InternalName        | \[REQUIRED\]                              |
+| Action\<FollowerBrain\> | Effect              | \[REQUIRED\]                              |
+| bool                    | EffectEnabled()     | true                                      |
+| bool                    | Positive()          | true                                      |
+| string                  | Description()       | $"CookingData/{InternalName}/Description" |
+| string                  | DescriptionSuffix() | ""                                        |
 
 ## Final Steps
 

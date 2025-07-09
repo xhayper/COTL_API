@@ -1,6 +1,6 @@
 #!/bin/bash
 
-allowedChanges=("astro.config.ts" "package.json" "pnpm-lock.yaml" "src/" "public/" "tsconfig.json" "ignore-step.sh")
+allowedChanges=("astro.config.ts" "package.json" "bun.lock" "src/" "public/" "tsconfig.json" "ignore-step.sh")
 
 for i in "${allowedChanges[@]}"; do
   flag=$(git diff HEAD^ HEAD "$i")

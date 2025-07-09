@@ -20,6 +20,7 @@ hero:
 ---
 
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import { ContributorList } from "starlight-contributor-list";
 
 ## Features
 
@@ -47,3 +48,7 @@ import { LinkCard, CardGrid } from "@astrojs/starlight/components";
   <LinkCard title="Custom Follower Task" href="/reference/tasks/" />
   <LinkCard title="Custom UI" href="/reference/ui/" />
 </CardGrid>
+
+# Contributors
+
+<ContributorList githubRepo="xhayper/COTL_API" ignore={["renovate[bot]"]} />

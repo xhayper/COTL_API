@@ -1,33 +1,45 @@
-import vercel from "@astrojs/vercel/serverless";
+import catppuccin from "@catppuccin/starlight";
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import tailwind from "@astrojs/tailwind";
+import vercel from "@astrojs/vercel";
+
+import sitemap from "@astrojs/sitemap";
 
 const site = "https://cotl-api.vercel.app/";
 
 // https://astro.build/config
 export default defineConfig({
   site,
+
   output: "server",
+
   adapter: vercel({
     webAnalytics: {
       enabled: true
     }
   }),
+
   integrations: [
     starlight({
       title: "COTL_API",
-      customCss: ["./src/tailwind.css", "@fontsource-variable/inter", "@fontsource-variable/jetbrains-mono"],
       logo: {
         src: "./src/assets/logo.svg"
       },
       editLink: {
-        baseUrl: "https://github.com/xhayper/COTL_API/edit/main/docs"
+        baseUrl: "https://github.com/xhayper/COTL_API/tree/docs"
       },
-      social: {
-        github: "https://github.com/xhayper/COTL_API",
-        discord: "https://discord.gg/jZ2DytX3TX"
-      },
+      social: [
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/xhayper/COTL_API"
+        },
+        {
+          icon: "discord",
+          label: "Discord",
+          href: "https://discord.gg/jZ2DytX3TX"
+        }
+      ],
       head: [
         {
           tag: "meta",
@@ -58,9 +70,13 @@ export default defineConfig({
           }
         }
       ],
+      components: {
+        Head: "./src/components/Head.astro"
+      },
       lastUpdated: true,
-      credits: true
+      credits: true,
+      plugins: [catppuccin()]
     }),
-    tailwind({ applyBaseStyles: false })
+    sitemap()
   ]
 });
