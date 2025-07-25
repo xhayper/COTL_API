@@ -31,6 +31,9 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, Skin> TarotSkins = [];
     internal static readonly Dictionary<string, Sprite> TarotSprites = [];
     internal static readonly Dictionary<string, Sprite> TarotBackSprites = [];
+    internal static readonly Dictionary<string, SkeletonDataAsset> CustomPlayerSpines = [];
+    internal static string SelectedSpine = "";
+    internal static string SelectedSpineSkin = "Lamb";
 
     internal static int NumGenericAtlases;
 
@@ -537,15 +540,41 @@ public static partial class CustomSkinManager
     internal static Dictionary<PlayerType, List<Skin?>?> PlayerSkinOverride { get; set; } = [];
     internal static Dictionary<PlayerType, PlayerBleat?> PlayerBleatOverride { get; set; } = [];
 
-    public static void AddFollowerSkin(CustomFollowerSkin followerSkin) {
-        AddFollowerSkin([followerSkin]);
+    public static void AddPlayerSpine(string name, SkeletonDataAsset skeletonDataAsset)
+    {
+        CustomPlayerSpines[name] = skeletonDataAsset;
     }
 
+    public static void ChangeSelectedPlayerSpine(string name)
+    {
+        if (!CustomPlayerSpines.ContainsKey(name)) return;
+        SelectedSpine = name;
+        
+        //Can only initialize when playerfarming starts, or everything will go wrong
+        // if (PlayerFarming.Instance != null)
+        // {
+        //     var runtimeSkeletonAsset = CustomPlayerSpines[SelectedSpine];
+        //     PlayerFarming.Instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
+        //     PlayerFarming.Instance.Spine.initialSkinName = Plugin.Instance?.SkinToLoad;
+        //     PlayerFarming.Instance.Spine.Initialize(true);
+        // }
+    }
+
+    public static void ChangeSelectedPlayerSpineSkin(string name)
+    {
+        SelectedSpineSkin = name;
+    }
+
+    public static void AddFollowerSkin(CustomFollowerSkin followerSkin)
+    {
+        AddFollowerSkin([followerSkin]);
+    }
+    
     public static void AddFollowerSkin(List<CustomFollowerSkin> followerVariants)
     {
         var variantAtlasTexts = followerVariants.Select(f => f.GenerateAtlasText()).ToList();
         var followerForm = followerVariants[0];
-        
+
         AddFollowerSkin(followerForm.Name, followerForm.Texture, variantAtlasTexts, followerForm.Colors, followerForm.Hidden,
                 followerForm.Unlocked, followerForm.TwitchPremium,
                 followerForm.Invariant);

@@ -125,33 +125,46 @@ public partial class CustomSkinManager
 
         SkinUtils.InvokeOnFindSkin(playerType);
 
-        if (!PlayerSkinOverride.ContainsKey(playerType)) return true;
-
-        var skinToUse = PlayerSkinOverride[playerType];
-        if (skinToUse == null) return true;
+        if (!PlayerSkinOverride.ContainsKey(playerType) && CustomPlayerSpines.Count == 0) return true;
 
         __instance.IsGoat = DataManager.Instance.PlayerVisualFleece == 1003;
         __instance.PlayerSkin = new Skin("Player Skin");
+        List<Skin?>? skinToUse = null;
 
-        var skin = skinToUse[0];
+        if (PlayerSkinOverride.ContainsKey(playerType) && CustomPlayerSpines.Count == 0) //TODO: change this to selected custom skin
+        {
+            skinToUse = PlayerSkinOverride[playerType];
+            if (skinToUse == null) return true;
+            //Add the Base Lamb Skin
+            var skin = skinToUse[0];
+            __instance.PlayerSkin.AddSkin(skin);
+        }
+        else
+        {
+            __instance.PlayerSkin.AddSkin(__instance.Spine.Skeleton.Data.FindSkin(SelectedSpineSkin));
+        }
 
-        __instance.PlayerSkin.AddSkin(skin);
+        //Add Weapon
         var text = WeaponData.Skins.Normal.ToString();
 
         if (__instance.currentWeapon != EquipmentType.None)
             text = EquipmentManager.GetWeaponData(__instance.currentWeapon).Skin.ToString();
 
-        var skin2 = __instance.Spine.Skeleton.Data.FindSkin("Weapons/" + text);
-        __instance.PlayerSkin.AddSkin(skin2);
+        var weaponSkin = __instance.Spine.Skeleton.Data.FindSkin("Weapons/" + text);
+        __instance.PlayerSkin.AddSkin(weaponSkin);
 
+        //Add Health Damaged Skin
         if (__instance.health.HP + __instance.health.BlackHearts + __instance.health.BlueHearts +
             __instance.health.SpiritHearts <= 1f && !Mathf.Approximately(DataManager.Instance.PLAYER_TOTAL_HEALTH, 2f))
         {
             var skin3 = __instance.Spine.Skeleton.Data.FindSkin("Hurt2");
 
-            if (skinToUse[2] != null) skin3 = skinToUse[2];
-            else if (skinToUse[1] != null) skin3 = skinToUse[1];
-            else if (skinToUse[0] != null) skin3 = skinToUse[0];
+            if (skinToUse != null)
+            {
+                if (skinToUse[2] != null) skin3 = skinToUse[2];
+                else if (skinToUse[1] != null) skin3 = skinToUse[1];
+                else if (skinToUse[0] != null) skin3 = skinToUse[0];
+            }
 
             __instance.PlayerSkin.AddSkin(skin3);
         }
@@ -172,14 +185,13 @@ public partial class CustomSkinManager
             __instance.PlayerSkin.AddSkin(skin4);
         }
 
-        __instance.PlayerSkin.AddSkin(__instance.Spine.Skeleton.Data.FindSkin("Mops/" +
-                                                                              Mathf.Clamp(
-                                                                                  __instance.isLamb
-                                                                                      ? DataManager.Instance
-                                                                                          .ChoreXPLevel + 1
-                                                                                      : DataManager.Instance
-                                                                                          .ChoreXPLevel_Coop + 1, 0,
-                                                                                  9)));
+        //Add Mops
+        __instance.PlayerSkin.AddSkin(
+            __instance.Spine.Skeleton.Data.FindSkin("Mops/" + Mathf.Clamp(
+                __instance.isLamb ? DataManager.Instance.ChoreXPLevel + 1 :
+                DataManager.Instance.ChoreXPLevel_Coop + 1, 0, 9)));
+
+        //Finalize Skin         
         __instance.Spine.Skeleton.SetSkin(__instance.PlayerSkin);
         __instance.Spine.Skeleton.SetSlotsToSetupPose();
         __result = __instance.PlayerSkin;
@@ -192,7 +204,6 @@ public partial class CustomSkinManager
     {
         var playerType = PlayerType.LAMB;
 
-        //TODO: TEMPFIX. find out what happened in the update, why is both isLamb and isGoat returning false?
         LogInfo("IsLamb" +  __instance.isLamb);
         LogInfo("IsGoat" + __instance.IsGoat);
 
@@ -213,10 +224,25 @@ public partial class CustomSkinManager
         return false;
         
     }
+    [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.Start))]
+    [HarmonyPrefix]
+    private static bool PlayerFarming_Start(PlayerFarming __instance)
+    {
+        if (SelectedSpine == "") return true;
+        if (!CustomPlayerSpines.ContainsKey(SelectedSpine)) return true;
 
-    private static IEnumerator BleatOverrideRoutine(PlayerFarming instance, PlayerBleat? bleatOverride) {
+        var runtimeSkeletonAsset = CustomPlayerSpines[SelectedSpine];
+        PlayerFarming.Instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
+        PlayerFarming.Instance.Spine.initialSkinName = SelectedSpineSkin;
+        PlayerFarming.Instance.Spine.Initialize(true);
+        LogInfo("Loaded Custom Spine " + SelectedSpine + " with skin " + SelectedSpineSkin);
+        return true;
+    }
+
+    private static IEnumerator BleatOverrideRoutine(PlayerFarming instance, PlayerBleat? bleatOverride)
+    {
         instance.state.CURRENT_STATE = StateMachine.State.CustomAnimation;
-        
+
         var anim = bleatOverride switch
         {
             PlayerBleat.LAMB => "bleat",
