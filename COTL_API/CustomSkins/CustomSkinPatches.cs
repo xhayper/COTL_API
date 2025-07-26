@@ -125,13 +125,13 @@ public partial class CustomSkinManager
 
         SkinUtils.InvokeOnFindSkin(playerType);
 
-        if (!PlayerSkinOverride.ContainsKey(playerType) && CustomPlayerSpines.Count == 0) return true;
+        if (!PlayerSkinOverride.ContainsKey(playerType) && !CustomPlayerSpines.ContainsKey(SelectedSpine)) return true;
 
         __instance.IsGoat = DataManager.Instance.PlayerVisualFleece == 1003;
         __instance.PlayerSkin = new Skin("Player Skin");
         List<Skin?>? skinToUse = null;
 
-        if (PlayerSkinOverride.ContainsKey(playerType) && CustomPlayerSpines.Count == 0) //TODO: change this to selected custom skin
+        if (PlayerSkinOverride.ContainsKey(playerType) && !CustomPlayerSpines.ContainsKey(SelectedSpine))
         {
             skinToUse = PlayerSkinOverride[playerType];
             if (skinToUse == null) return true;
@@ -141,7 +141,8 @@ public partial class CustomSkinManager
         }
         else
         {
-            __instance.PlayerSkin.AddSkin(__instance.Spine.Skeleton.Data.FindSkin(SelectedSpineSkin));
+            var selectedSpineSkin = SelectedSpine.Split(['/'], 2)[1];
+            __instance.PlayerSkin.AddSkin(__instance.Spine.Skeleton.Data.FindSkin(selectedSpineSkin));
         }
 
         //Add Weapon
@@ -228,14 +229,20 @@ public partial class CustomSkinManager
     [HarmonyPrefix]
     private static bool PlayerFarming_Start(PlayerFarming __instance)
     {
+        if (CustomPlayerSpines.Count == 0)
+        {
+            AddPlayerSpine("Default", PlayerFarming.Instance.Spine.skeletonDataAsset, ["Lamb", "Goat", "Owl", "Snake"]);
+        }
+
         if (SelectedSpine == "") return true;
         if (!CustomPlayerSpines.ContainsKey(SelectedSpine)) return true;
 
+        var selectedSpineSkin = SelectedSpine.Split(['/'], 2)[1];
         var runtimeSkeletonAsset = CustomPlayerSpines[SelectedSpine];
         PlayerFarming.Instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
-        PlayerFarming.Instance.Spine.initialSkinName = SelectedSpineSkin;
+        PlayerFarming.Instance.Spine.initialSkinName = selectedSpineSkin;
         PlayerFarming.Instance.Spine.Initialize(true);
-        LogInfo("Loaded Custom Spine " + SelectedSpine + " with skin " + SelectedSpineSkin);
+        LogInfo("Loaded Custom Spine " + SelectedSpine + " with skin " + selectedSpineSkin);
         return true;
     }
 

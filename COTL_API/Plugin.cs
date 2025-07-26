@@ -33,6 +33,7 @@ public class Plugin : BaseUnityPlugin
     internal static Dropdown? LambFleeceBleatSettings;
     internal static Dropdown? GoatFleeceBleatSettings;
 
+    internal static Dropdown? CustomPlayerSpineSettings;
     private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
     internal readonly ModdedSaveData<ApiData> APIData = new(MyPluginInfo.PLUGIN_GUID)
@@ -158,6 +159,15 @@ public class Plugin : BaseUnityPlugin
             Enum.GetNames(typeof(PlayerBleat)), i =>
             {
                 CustomSkinManager.SetPlayerBleatOverride(PlayerType.GOAT, (PlayerBleat)i);
+            });
+
+        CustomPlayerSpineSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Custom Player Spine",
+            "Lamb Spine",
+            [.. CustomSkinManager.CustomPlayerSpines.Keys], i =>
+            {
+                CustomSkinManager.ChangeSelectedPlayerSpine(
+                    CustomSkinManager.CustomPlayerSpines.Keys.ElementAt(i));
             });
 
         CustomSettingsManager.AddBepInExConfig("API", "Skip Splash Screen", _skipSplashScreen);
