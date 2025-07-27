@@ -3,7 +3,7 @@ title: Skins
 description: Documentation on how to add a custom skin using the Cult of the Lamb API
 ---
 
-# Skins
+## Skins
 
 This section is for loading custom spine using code, if you prefer using easier format (ie, JSON), check out [JSONSkin Loader](https://thunderstore.io/c/cult-of-the-lamb/p/KellyBetty/COTL_JSONLoader/) or [CustomSpineLoader](https://www.nexusmods.com/cultofthelamb/mods/49)
 
@@ -11,7 +11,7 @@ There are currently two methods of customizing skins:
 - Custom Spine Override
 - Skin texture Override
 
-# Creating Custom Spine Overrides
+## Creating Custom Spine Overrides
 
 Follow this if you have a Spine Skeleton and Atlas file. If not, you will need to use Skin Overrides instead.
 
@@ -45,7 +45,7 @@ CustomSkinManager.ChangeSelectedPlayerSpine(playerSpineName + "/" + skinName);
 ```
 
 
-# Creating Skin Texture Overrides
+## Creating Skin Texture Overrides
 
 Follow this if you are NOT making a Spine Override. This is for Skin Overrides.
 
