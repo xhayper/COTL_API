@@ -1,0 +1,45 @@
+name: CD
+
+on:
+    release:
+        types:
+            - published
+
+jobs:
+    upload-asset:
+        runs-on: windows-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: '8'
+            - uses: nuget/setup-nuget@v2
+              with:
+                  nuget-api-key: ${{ secrets.NuGetAPIKey }}
+            - name: Restore
+              run: |
+                  dotnet restore
+            - name: Build
+              run: |
+                  dotnet build -c Release
+            - name: Package
+              run: |
+                  dotnet tool install -g tcli
+                  tcli build
+                  nuget pack
+            - name: Upload mod file to release
+              uses: svenstaro/upload-release-action@v2
+              with:
+                  repo_token: '${{ secrets.GITHUB_TOKEN }}'
+                  file: build/*.*
+                  tag: '${{ github.ref }}'
+                  overwrite: true
+            - name: Upload mod file to Thunderstore
+              env:
+                  TCLI_AUTH_TOKEN: '${{ secrets.TCLI_AUTH_TOKEN }}'
+              run: |
+                  tcli publish
+            - name: Upload mod file to NuGet
+              run: |
+                    nuget push *.nupkg

@@ -25,6 +25,8 @@ jobs:
             - uses: actions/setup-dotnet@v4
               with:
                   dotnet-version: "8"
+            - uses: nuget/setup-nuget@v2
+              if: matrix.os == 'windows-latest'
             - name: Restore
               run: |
                   dotnet restore
@@ -35,8 +37,13 @@ jobs:
               run: |
                   dotnet tool install -g tcli
                   tcli build
+            - name: Package NuGet
+              if: matrix.os == 'windows-latest'
+              run: nuget pack
             - name: Upload Artifacts
               uses: actions/upload-artifact@v4
               with:
-                  path: "build/*.*"
+                  path: |
+                    "build/*.*"
+                    "*.nupkg"
                   name: ${{ matrix.os }}
