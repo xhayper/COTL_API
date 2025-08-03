@@ -16,7 +16,7 @@ jobs:
                   dotnet-version: '8'
             - uses: nuget/setup-nuget@v2
               with:
-                  nuget-api-key: ${{ secrets.NuGetAPIKey }}
+                  nuget-api-key: ${{ secrets.NUGET_API_KEY }}
             - name: Restore
               run: |
                   dotnet restore
@@ -27,7 +27,6 @@ jobs:
               run: |
                   dotnet tool install -g tcli
                   tcli build
-                  nuget pack COTL_API.nuspec
             - name: Upload mod file to release
               uses: svenstaro/upload-release-action@v2
               with:
@@ -42,4 +41,4 @@ jobs:
                   tcli publish
             - name: Upload mod file to NuGet
               run: |
-                    nuget push *.nupkg
+                    nuget push bin/Release/COTL_API/*.nupkg

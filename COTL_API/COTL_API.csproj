@@ -4,11 +4,13 @@
         <Product>COTL_API</Product>
         <Title>Cult of the Lamb Modding API</Title>
         <Description>A modding API for Cult of the Lamb</Description>
+        <Authors>xhayper</Authors>
         <PackageProjectUrl>https://github.com/xhayper/COTL_API</PackageProjectUrl>
         <RepositoryUrl>https://github.com/xhayper/COTL_API</RepositoryUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <Import Project="../COTL_API.Common.props"/>
@@ -18,8 +20,8 @@
         <Reference Include="UnifyLibrary">
             <HintPath>..\lib\UnifyLibrary.dll</HintPath>
         </Reference>
-
         <None Include="../README.md" Pack="true" PackagePath="/"/>
         <None Include="../LICENSE" Pack="true" PackagePath="/"/>
+        <None Include="../icon.png" Pack="true" PackagePath="/"/>
     </ItemGroup>
 </Project>
