@@ -32,4 +32,4 @@ repository = "https://thunderstore.io"
 communities = ["cult-of-the-lamb"]
 
 [publish.categories]
-cult-of-the-lamb = [ "artifacts", "skills" ]
+cult-of-the-lamb = ["libraries"]

@@ -6,7 +6,7 @@ on:
             - published
 
 jobs:
-    continueus-deployment:
+    continuous-deployment:
         runs-on: windows-latest
         steps:
             - name: Checkout code
