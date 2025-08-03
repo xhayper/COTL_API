@@ -35,11 +35,11 @@ jobs:
                   file_glob: true
                   tag: "${{ github.ref }}"
                   overwrite: true
-            - name: Upload mod file to Thunderstore
-              env:
-                  TCLI_AUTH_TOKEN: "${{ secrets.TCLI_AUTH_TOKEN }}"
-              run: |
-                  tcli publish
+            # - name: Upload mod file to Thunderstore
+            #   env:
+            #       TCLI_AUTH_TOKEN: "${{ secrets.TCLI_AUTH_TOKEN }}"
+            #   run: |
+            #       tcli publish
             - name: Upload mod file to NuGet
               run: |
-                  nuget push bin/Release/COTL_API/*.nupkg
+                  nuget push bin/Release/COTL_API/*.nupkg -Source https://api.nuget.org/v3/index.json
