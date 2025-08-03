@@ -39,6 +39,6 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                   path: |
-                      "build/*.*"
+                      "build/*"
                       "bin/Release/COTL_API/*.nupkg"
                   name: ${{ matrix.os }}
