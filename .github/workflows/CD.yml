@@ -42,4 +42,5 @@ jobs:
             #       tcli publish
             - name: Upload mod file to NuGet
               run: |
-                  nuget push bin/Release/COTL_API/*.nupkg -Source https://api.nuget.org/v3/index.json
+                  cp bin/Release/COTL_API/*.nupkg COTL_API.nupkg
+                  nuget push COTL_API.nupkg -Source https://api.nuget.org/v3/index.json
