@@ -9,14 +9,6 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-    
-    <PropertyGroup>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <None Include="$(SolutionDir)LICENSE" Pack="true" PackagePath="" />
-    </ItemGroup>
 
     <PropertyGroup>
         <BepInExPluginGuid Condition="'$(BepInExPluginGuid )' == ''">$(Guid)</BepInExPluginGuid>

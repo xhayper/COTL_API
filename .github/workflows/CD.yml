@@ -27,7 +27,7 @@ jobs:
               run: |
                   dotnet tool install -g tcli
                   tcli build
-                  nuget pack
+                  nuget pack COTL_API.nuspec
             - name: Upload mod file to release
               uses: svenstaro/upload-release-action@v2
               with:
