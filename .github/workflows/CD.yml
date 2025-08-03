@@ -6,7 +6,7 @@ on:
             - published
 
 jobs:
-    upload-asset:
+    continueus-deployment:
         runs-on: windows-latest
         steps:
             - name: Checkout code

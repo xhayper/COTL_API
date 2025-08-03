@@ -25,7 +25,11 @@ target = "plugins/io.github.xhayper.COTL_API/COTL_API.dll"
 source = "Assets"
 target = "plugins/io.github.xhayper.COTL_API/Assets"
 
+[general]
+repository = "https://thunderstore.io"
+
 [publish]
-repository = "https://cult-of-the-lamb.thunderstore.io"
 communities = ["cult-of-the-lamb"]
-categories = ["libraries"]
+
+[publish.categories]
+cult-of-the-lamb = [ "artifacts", "skills" ]
