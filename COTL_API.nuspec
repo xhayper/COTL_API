@@ -23,6 +23,5 @@
   </metadata>
   <files>
     <file src=".\icon.png" target="images\" />
-    <file src=".\LICENSE" target="\" />
   </files>
 </package>
