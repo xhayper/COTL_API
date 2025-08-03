@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>COTL_API</id>
-    <version>0.2.8</version>
+    <version>0.2.9</version>
     <title>Cult of the Lamb Modding API</title>
     <icon>images\icon.png</icon>
     <authors>xhayper</authors>

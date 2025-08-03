@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
         <TargetFramework>net472</TargetFramework>
-        <Version>0.2.8</Version>
+        <Version>0.2.9</Version>
         <LangVersion>latest</LangVersion>
         <DebugType>portable</DebugType>
         <IsPackable>true</IsPackable>
