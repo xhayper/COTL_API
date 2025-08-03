@@ -22,5 +22,8 @@
   </metadata>
   <files>
     <file src=".\icon.png" target="images\" />
+    <file src="bin\Release\**\*" target="lib\net472" />
+    <file src="README.md" target="" />
+    <file src="LICENSE" target="" />
   </files>
 </package>
