@@ -236,6 +236,7 @@ public partial class CustomSkinManager
 
         if (SelectedSpine == "") return true;
         if (!CustomPlayerSpines.ContainsKey(SelectedSpine)) return true;
+        if (CustomPlayerSpines[SelectedSpine] == null) return true;
 
         var selectedSpineSkin = SelectedSpine.Split(['/'], 2)[1];
         var runtimeSkeletonAsset = CustomPlayerSpines[SelectedSpine];
@@ -243,6 +244,7 @@ public partial class CustomSkinManager
         PlayerFarming.Instance.Spine.initialSkinName = selectedSpineSkin;
         PlayerFarming.Instance.Spine.Initialize(true);
         LogInfo("Loaded Custom Spine " + SelectedSpine + " with skin " + selectedSpineSkin);
+
         return true;
     }
 

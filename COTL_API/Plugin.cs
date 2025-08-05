@@ -119,6 +119,9 @@ public class Plugin : BaseUnityPlugin
         CustomSkinManager.AddPlayerSkin(new OverridingPlayerSkin("Snake",
             () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake")));
 
+        //This is to load the dropdown as it needs at least 1 entry
+        CustomSkinManager.AddPlayerSpine("Placeholder", null, ["Placeholder Selection"]); 
+
         LambFleeceSkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
             "Lamb Fleece Skin",
             "Lamb",

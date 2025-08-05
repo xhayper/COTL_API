@@ -32,7 +32,7 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, Skin> TarotSkins = [];
     internal static readonly Dictionary<string, Sprite> TarotSprites = [];
     internal static readonly Dictionary<string, Sprite> TarotBackSprites = [];
-    internal static readonly Dictionary<string, SkeletonDataAsset> CustomPlayerSpines = [];
+    internal static readonly Dictionary<string, SkeletonDataAsset?> CustomPlayerSpines = [];
     internal static string SelectedSpine = "";
     internal static int NumGenericAtlases;
 
@@ -539,7 +539,7 @@ public static partial class CustomSkinManager
     internal static Dictionary<PlayerType, List<Skin?>?> PlayerSkinOverride { get; set; } = [];
     internal static Dictionary<PlayerType, PlayerBleat?> PlayerBleatOverride { get; set; } = [];
 
-    public static void AddPlayerSpine(string name, SkeletonDataAsset skeletonDataAsset, List<string> options)
+    public static void AddPlayerSpine(string name, SkeletonDataAsset? skeletonDataAsset, List<string> options)
     {
         if (options.Count == 0)
         {
@@ -560,7 +560,7 @@ public static partial class CustomSkinManager
     public static void ChangeSelectedPlayerSpine(string name)
     {
         // var splitted = name.Split(['/'], 2);
-        if (!CustomPlayerSpines.ContainsKey(name)) return;
+        if (!CustomPlayerSpines.ContainsKey(name) || CustomPlayerSpines[name] == null) return;
         SelectedSpine = name;
         
         LogInfo($"Selected Spine: {SelectedSpine}");
