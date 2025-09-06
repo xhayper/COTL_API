@@ -243,6 +243,14 @@ public partial class CustomSkinManager
         PlayerFarming.Instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
         PlayerFarming.Instance.Spine.initialSkinName = selectedSpineSkin;
         PlayerFarming.Instance.Spine.Initialize(true);
+
+        //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
+        //enable the spine animator event tracker after replacing spine
+        PlayerFarming.Instance.simpleSpineAnimator.anim.AnimationState.Event -=
+            new Spine.AnimationState.TrackEntryEventDelegate(PlayerFarming.Instance.simpleSpineAnimator.SpineEventHandler);
+        PlayerFarming.Instance.simpleSpineAnimator.anim.AnimationState.Event +=
+            new Spine.AnimationState.TrackEntryEventDelegate(PlayerFarming.Instance.simpleSpineAnimator.SpineEventHandler);
+
         LogInfo("Loaded Custom Spine " + SelectedSpine + " with skin " + selectedSpineSkin);
 
         return true;
