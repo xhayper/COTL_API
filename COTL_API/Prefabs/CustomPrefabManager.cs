@@ -49,8 +49,17 @@ public static class CustomPrefabManager
             var spriteRenderer = obj.Result.GetComponentInChildren<SpriteRenderer>();
             var structure = obj.Result.GetComponentInChildren<Structure>();
             structure.Type = PrefabStrings[name].StructureType;
-            var scaledSprite = Sprite.Create(sprite.texture, sprite.rect, new Vector2(0.5f, 0));
-            spriteRenderer.sprite = scaledSprite;
+            if (PrefabStrings[name].BuildingParts.Count > 0)
+            {
+                LogInfo($"Overriding building parts for {name}");
+                CustomStructureManager.OverrideStructureBuilding(obj.Result, PrefabStrings[name].BuildingParts);
+            }
+            else
+            {
+                var scaledSprite = Sprite.Create(sprite.texture, sprite.rect, new Vector2(0.5f, 0));
+                spriteRenderer.sprite = scaledSprite;
+            }
+            
             obj.Result.name = name + " (Custom Structure)";
         };
     }

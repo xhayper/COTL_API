@@ -15,6 +15,8 @@ public abstract class CustomStructure : StructureBrain
     public virtual Sprite Sprite { get; } =
         TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
 
+    public virtual List<CustomStructureBuildingData> BuildingParts => [];
+
     public virtual FollowerCategory.Category Category => FollowerCategory.Category.Misc;
 
     public virtual string PrefabPath => CustomPrefabManager.GetOrCreateBuildingPrefab(this);
