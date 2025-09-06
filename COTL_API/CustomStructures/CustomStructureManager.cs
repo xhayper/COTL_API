@@ -47,10 +47,6 @@ public static partial class CustomStructureManager
     internal static GameObject CreateBuildingPart(CustomStructureBuildingData data)
     {
         var go = new GameObject("Part");
-        go.transform.localPosition = data.Offset;
-        go.transform.localScale = new Vector3(data.Scale.x, data.Scale.y, data.Scale.z);
-        go.transform.localRotation = Quaternion.Euler(data.Rotation);
-
         var sr = go.AddComponent<SpriteRenderer>();
         sr.sprite = data.Sprite;
 
@@ -73,11 +69,14 @@ public static partial class CustomStructureManager
             if (sr.gameObject == existingStructure) continue;
             sr.gameObject.SetActive(false); //or destroy?
         }
-        
+
         foreach (var part in buildingParts)
         {
             var partGO = CreateBuildingPart(part);
             partGO.transform.SetParent(buildingParent.transform);
+            partGO.transform.localPosition = new Vector3(part.Offset.x, part.Offset.y, part.Offset.z);
+            partGO.transform.localScale = new Vector3(part.Scale.x, part.Scale.y, part.Scale.z);
+            partGO.transform.localRotation = Quaternion.Euler(part.Rotation);
         }
     }
 }
