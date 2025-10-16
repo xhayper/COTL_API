@@ -17,29 +17,31 @@ public class CinematicCameraManager
         GameManager.GetInstance().CameraResetTargetZoom();
     }
 
-    public static SimpleSetCamera CreateAndActivateFocusPoint(Vector3 position)
+    public static SimpleSetCamera CreateAndActivateFocusPoint(Vector3 position, Quaternion rotation)
     {
-        var cam = CreateFocusPoint(position);
+        var cam = CreateFocusPoint(position, rotation);
         cam.Play();
         return cam;
     }
 
-    public static void CreateAndPrepareTimedFocusPoint(Vector3 position, float duration)
+    public static void CreateAndPrepareTimedFocusPoint(Vector3 position, Quaternion rotation, float duration)
     {
-        ActiveFocusPoints.Add(CreateTimedFocusPoint(position, duration));
+        ActiveFocusPoints.Add(CreateTimedFocusPoint(position, rotation, duration));
     }
 
-    private static IEnumerator CreateTimedFocusPoint(Vector3 position, float duration)
+    private static IEnumerator CreateTimedFocusPoint(Vector3 position, Quaternion rotation, float duration, float zoom = 1f)
     {
-        var cam = CreateFocusPoint(position);
+        var cam = CreateFocusPoint(position, rotation);
         cam.Play();
+        Zoom(zoom);
         yield return new WaitForSeconds(duration);
     }
 
-    private static SimpleSetCamera CreateFocusPoint(Vector3 position)
+    private static SimpleSetCamera CreateFocusPoint(Vector3 position, Quaternion rotation)
     {
         var cam = new GameObject("CinematicCameraFocusPoint");
         cam.transform.position = position;
+        cam.transform.rotation = rotation;
         var ssc = cam.AddComponent<SimpleSetCamera>();
         ssc.AutomaticallyActivate = false;
         return ssc;
