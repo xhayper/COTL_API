@@ -192,7 +192,11 @@ public class Plugin : BaseUnityPlugin
 
         CustomSettingsManager.AddBepInExConfig("API", "Unity debug logging", UnityDebug);
 
-        if (Debug) DebugManager.AddDebugContent();
+        if (Debug)
+        {
+            DebugManager.AddDebugContent();
+            DebugManager.CheckCustomClasses();
+        }
 
         LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
     }
