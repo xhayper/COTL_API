@@ -8,6 +8,7 @@ using COTL_API.CustomSkins;
 using COTL_API.CustomStructures;
 using COTL_API.CustomTarotCard;
 using COTL_API.CustomTasks;
+using FoodPlus.CustomTraits;
 using Lamb.UI;
 using UnityEngine;
 
@@ -25,6 +26,77 @@ internal class DebugManager
     internal static FollowerCommands DebugGiftFollowerCommand { get; private set; }
 
     internal static RelicType DebugRelic { get; private set; }
+
+    internal static Dictionary<Type, Type> CustomClassMappings = new()
+    {
+        { typeof(InventoryItem), typeof(CustomInventoryItem) },
+        // { typeof(CommandItem), typeof(CustomFollowerCommand.CustomFollowerCommand) },
+        // { typeof(RelicData), typeof(CustomRelicData) },
+        // { typeof(StructureBrain), typeof(CustomStructure) },
+        { typeof(TarotCards), typeof(CustomTarotCard.CustomTarotCard) },
+        { typeof(FollowerTrait), typeof(CustomTrait) }
+    };
+
+    private static string BeautifyNamespace(string? str)
+    {
+        return str is null or "" ? "" : str + ".";
+    }
+
+    private static void ShowDiff(Type a, Type b)
+    {
+        LogDebug($"Showing diff between {BeautifyNamespace(a.Namespace)}{a.Name} and {BeautifyNamespace(b.Namespace)}{b.Name}");
+        
+        LogDebug("Methods");
+        foreach (var method in a.GetMethods())
+        {
+            if (method.Name.StartsWith("get_") || method.Name.StartsWith("set_"))
+                continue;
+            
+            var corrspondingMethod = b.GetMethods().FirstOrDefault(m => m.Name == method.Name);
+
+            if (corrspondingMethod is null)
+            {
+                LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name}: missing corrsponding method");
+                continue;  
+            }
+
+            if (!method.ReturnType.IsAssignableFrom(corrspondingMethod.ReturnType))
+            {
+                LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name} and {BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name} have mismatched return type");
+                continue;
+            }
+
+            var corrospondingParameters = method.GetParameters();
+
+            var parameters = method.GetParameters();
+            
+            if (parameters.Length == 1 && parameters[0].GetType().IsEnum) 
+                parameters = parameters.Skip(1).ToArray();
+
+            var parameterMatches = parameters.Length == corrospondingParameters.Length && parameters.All(info =>
+            {
+                return info.ParameterType.IsAssignableFrom(corrospondingParameters[info.Position].ParameterType);
+            });
+
+            if (!parameterMatches)
+            {
+                LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name} and {BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name} have mismatched parameters");
+                LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name}: {parameters}");
+                LogDebug($"{BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name}: {corrospondingParameters}");
+                continue;
+            }
+            
+            LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name} matches {BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name}");
+        }
+    }
+
+    internal static void CheckCustomClasses()
+    {
+        foreach (var type in CustomClassMappings)
+        {
+            ShowDiff(type.Key, type.Value);
+        }
+    }
 
     internal static void AddDebugContent()
     {
