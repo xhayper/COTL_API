@@ -1,5 +1,6 @@
 using System.Reflection;
 using COTL_API.Guid;
+using COTL_API.HarmonyUtils;
 using Random = UnityEngine.Random;
 
 namespace COTL_API.CustomInventory;
@@ -27,6 +28,7 @@ public static partial class CustomItemManager
         item.InternalObjectName = $"CustomItem_{item.InternalName}";
 
         CustomItemList.Add(itemType, item);
+        RegistryManager.GetRegistry(typeof(InventoryItem.ITEM_TYPE)).Add(itemType, item);
 
         return itemType;
     }

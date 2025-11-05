@@ -86,50 +86,50 @@ public static partial class CustomItemManager
         return false;
     }
 
-    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Name))]
-    [HarmonyPrefix]
-    private static bool InventoryItem_Name(InventoryItem.ITEM_TYPE Type, ref string __result)
-    {
-        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
-        __result = value.Name();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.LocalizedName))]
-    [HarmonyPrefix]
-    private static bool InventoryItem_LocalizedName(InventoryItem.ITEM_TYPE Type, ref string __result)
-    {
-        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
-        __result = value.LocalizedName();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Description))]
-    [HarmonyPrefix]
-    private static bool InventoryItem_Description(InventoryItem.ITEM_TYPE Type, ref string __result)
-    {
-        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
-        __result = value.Description();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.LocalizedDescription))]
-    [HarmonyPrefix]
-    private static bool InventoryItem_LocalizedDescription(InventoryItem.ITEM_TYPE Type, ref string __result)
-    {
-        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
-        __result = value.LocalizedDescription();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Lore))]
-    [HarmonyPrefix]
-    private static bool InventoryItem_Lore(InventoryItem.ITEM_TYPE Type, ref string __result)
-    {
-        if (!CustomItemList.TryGetValue(Type, out var value)) return true;
-        __result = value.Lore();
-        return false;
-    }
+    // [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Name))]
+    // [HarmonyPrefix]
+    // private static bool InventoryItem_Name(InventoryItem.ITEM_TYPE Type, ref string __result)
+    // {
+    //     if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+    //     __result = value.Name();
+    //     return false;
+    // }
+    //
+    // [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.LocalizedName))]
+    // [HarmonyPrefix]
+    // private static bool InventoryItem_LocalizedName(InventoryItem.ITEM_TYPE Type, ref string __result)
+    // {
+    //     if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+    //     __result = value.LocalizedName();
+    //     return false;
+    // }
+    //
+    // [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Description))]
+    // [HarmonyPrefix]
+    // private static bool InventoryItem_Description(InventoryItem.ITEM_TYPE Type, ref string __result)
+    // {
+    //     if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+    //     __result = value.Description();
+    //     return false;
+    // }
+    //
+    // [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.LocalizedDescription))]
+    // [HarmonyPrefix]
+    // private static bool InventoryItem_LocalizedDescription(InventoryItem.ITEM_TYPE Type, ref string __result)
+    // {
+    //     if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+    //     __result = value.LocalizedDescription();
+    //     return false;
+    // }
+    //
+    // [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.Lore))]
+    // [HarmonyPrefix]
+    // private static bool InventoryItem_Lore(InventoryItem.ITEM_TYPE Type, ref string __result)
+    // {
+    //     if (!CustomItemList.TryGetValue(Type, out var value)) return true;
+    //     __result = value.Lore();
+    //     return false;
+    // }
 
     [HarmonyPatch(typeof(InventoryItem), nameof(InventoryItem.GetItemCategory))]
     [HarmonyPrefix]

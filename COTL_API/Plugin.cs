@@ -8,6 +8,7 @@ using COTL_API.CustomSettings;
 using COTL_API.CustomSettings.Elements;
 using COTL_API.CustomSkins;
 using COTL_API.Debug;
+using COTL_API.HarmonyUtils;
 using COTL_API.Saves;
 using HarmonyLib;
 using I2.Loc;
@@ -27,6 +28,7 @@ public class Plugin : BaseUnityPlugin
     internal static Dropdown? GoatFleeceBleatSettings;
 
     internal static Dropdown? CustomPlayerSpineSettings;
+    internal static Patcher _patcher = new();
     internal readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
     internal readonly ModdedSaveData<ApiData> APIData = new(MyPluginInfo.PLUGIN_GUID)
@@ -72,6 +74,8 @@ public class Plugin : BaseUnityPlugin
     {
         Instance = this;
         Logger = base.Logger;
+
+        _patcher.PatchAll(typeof(InventoryItem));
 
         PluginPath = Path.GetDirectoryName(Info.Location) ?? string.Empty;
 
