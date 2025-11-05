@@ -15,8 +15,8 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <!-- First one is "Forced Access" warning, second one is "Missing XML" comment -->
-        <NoWarn>$(NoWarn);Publicizer001;CS1591</NoWarn>
+        <!-- First one is "Forced Access" warning, second one is "Missing XML" comment, third one is "Stable release of a package..." -->
+        <NoWarn>$(NoWarn);Publicizer001;CS1591;NU5104</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>
