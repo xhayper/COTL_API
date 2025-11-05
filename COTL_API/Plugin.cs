@@ -27,7 +27,7 @@ public class Plugin : BaseUnityPlugin
     internal static Dropdown? GoatFleeceBleatSettings;
 
     internal static Dropdown? CustomPlayerSpineSettings;
-    private readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
+    internal readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
     internal readonly ModdedSaveData<ApiData> APIData = new(MyPluginInfo.PLUGIN_GUID)
     {
