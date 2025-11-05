@@ -20,7 +20,7 @@ public static partial class CustomItemManager
 
         __result = newResult;
     }
-    
+
     [HarmonyPatch(typeof(FollowerCommandGroups), nameof(FollowerCommandGroups.DrinkCommands))]
     [HarmonyPostfix]
     private static void FollowerCommandGroups_DrinkCommands(ref List<InventoryItem.ITEM_TYPE> availableDrinks,

@@ -13,7 +13,7 @@ public static partial class CustomTraitManager
         if (!CustomTraitList.TryGetValue(Type, out var value)) return;
         __result = value.Icon;
     }
-    
+
     [HarmonyPatch(typeof(FollowerTrait), nameof(FollowerTrait.IsPositiveTrait))]
     [HarmonyPostfix]
     private static void FollowerTrait_IsPositiveTrait(FollowerTrait.TraitType traitType, ref bool __result)
@@ -21,7 +21,7 @@ public static partial class CustomTraitManager
         if (!CustomTraitList.TryGetValue(traitType, out var value)) return;
         __result = value.Positive;
     }
-    
+
     [HarmonyPatch(typeof(FollowerTrait), nameof(FollowerTrait.GetLocalizedTitle))]
     [HarmonyPostfix]
     private static void FollowerTrait_GetLocalizedTitle(FollowerTrait.TraitType Type, ref string __result)

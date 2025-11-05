@@ -5,7 +5,7 @@ namespace COTL_API.CustomInventory;
 public static partial class CustomItemManager
 {
     internal static Dictionary<InventoryItem.ITEM_TYPE, CustomFood> CustomFoodList { get; } = [];
-    
+
     private static InventoryItem.ITEM_TYPE Add(CustomFood food)
     {
         var itemType = Add(food as CustomInventoryItem);

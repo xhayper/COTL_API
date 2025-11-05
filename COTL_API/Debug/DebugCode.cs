@@ -16,14 +16,14 @@ public class DebugCode
     {
         if (Plugin.Instance == null || !Plugin.Instance.Debug) return;
 
-        Inventory.AddItem(Plugin.Instance.DebugItem, 1, true);
-        Inventory.AddItem(Plugin.Instance.DebugItem2, 1, true);
-        Inventory.AddItem(Plugin.Instance.DebugItem3, 1, true);
-        Inventory.AddItem(Plugin.Instance.DebugItem4, 1, true);
+        Inventory.AddItem(DebugManager.DebugItem, 1, true);
+        Inventory.AddItem(DebugManager.DebugItem2, 1, true);
+        Inventory.AddItem(DebugManager.DebugItem3, 1, true);
+        Inventory.AddItem(DebugManager.DebugItem4, 1, true);
 
         if (PlayerFarming.Instance.playerRelic.CurrentRelic == null ||
-            PlayerFarming.Instance.playerRelic.CurrentRelic.RelicType != Plugin.Instance.DebugRelic)
-            PlayerFarming.Instance.playerRelic.EquipRelic(EquipmentManager.GetRelicData(Plugin.Instance.DebugRelic));
+            PlayerFarming.Instance.playerRelic.CurrentRelic.RelicType != DebugManager.DebugRelic)
+            PlayerFarming.Instance.playerRelic.EquipRelic(EquipmentManager.GetRelicData(DebugManager.DebugRelic));
 
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";

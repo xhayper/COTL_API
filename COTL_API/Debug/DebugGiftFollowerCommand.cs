@@ -18,7 +18,7 @@ public class DebugGiftFollowerCommand : CustomFollowerCommand.CustomFollowerComm
         {
             interaction.eventListener.PlayFollowerVO(interaction.positiveAcknowledgeVO);
             interaction.follower.Brain.HardSwapToTask(new FollowerTask_InstantPoop());
-            Inventory.ChangeItemQuantity(Plugin.Instance.DebugItem, -1);
+            Inventory.ChangeItemQuantity(DebugManager.DebugItem, -1);
         }));
         interaction.Close(true, reshowMenu: false);
     }

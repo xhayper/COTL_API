@@ -1,6 +1,5 @@
 using System.Reflection;
 using COTL_API.Guid;
-using Sirenix.Serialization.Utilities;
 using Random = UnityEngine.Random;
 
 namespace COTL_API.CustomInventory;
@@ -26,7 +25,7 @@ public static partial class CustomItemManager
         item.ItemType = itemType;
         item.ModPrefix = guid;
         item.InternalObjectName = $"CustomItem_{item.InternalName}";
-        
+
         CustomItemList.Add(itemType, item);
 
         return itemType;

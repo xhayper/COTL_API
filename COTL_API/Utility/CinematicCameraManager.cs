@@ -6,9 +6,9 @@ namespace COTL_API.Utility;
 
 public class CinematicCameraManager
 {
-
     public static List<IEnumerator> ActiveFocusPoints = [];
     public static Quaternion defaultCameraRotation = Quaternion.Euler(315f, 0f, 0f);
+
     public static void Zoom(float targetZoom)
     {
         GameManager.GetInstance().CameraSetTargetZoom(targetZoom);
@@ -35,7 +35,8 @@ public class CinematicCameraManager
         ActiveFocusPoints.Add(CreateTimedFocusPoint(position, rotation, duration));
     }
 
-    private static IEnumerator CreateTimedFocusPoint(Vector3 position, Quaternion rotation, float duration, float zoom = 1f)
+    private static IEnumerator CreateTimedFocusPoint(Vector3 position, Quaternion rotation, float duration,
+        float zoom = 1f)
     {
         var cam = CreateFocusPoint(position, rotation);
         SetFollowTarget(cam);
@@ -56,10 +57,7 @@ public class CinematicCameraManager
 
     public static IEnumerator ActivateAllCreatedFocusPoints()
     {
-        foreach (var cam in ActiveFocusPoints)
-        {
-            yield return cam;
-        }
+        foreach (var cam in ActiveFocusPoints) yield return cam;
         ResetAllFocusPoints();
     }
 
@@ -114,7 +112,9 @@ public class CinematicCameraManager
         }
 
         else
+        {
             LetterBox.Hide(showHudAfterHide);
+        }
     }
 
     public static void ShowHUD(bool show, int delay = 1)

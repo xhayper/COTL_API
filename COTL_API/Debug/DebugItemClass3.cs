@@ -5,5 +5,4 @@ namespace COTL_API.Debug;
 public class DebugItemClass3 : CustomInventoryItem
 {
     public override string InternalName => "DEBUG_ITEM_3";
-
 }

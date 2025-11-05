@@ -53,7 +53,8 @@ public static partial class CustomStructureManager
         return go;
     }
 
-    public static void OverrideStructureBuilding(GameObject existingStructure, List<CustomStructureBuildingData> buildingParts)
+    public static void OverrideStructureBuilding(GameObject existingStructure,
+        List<CustomStructureBuildingData> buildingParts)
     {
         var buildingParent = new GameObject("CustomBuilding");
         buildingParent.transform.SetParent(existingStructure.transform);
@@ -84,7 +85,7 @@ public static partial class CustomStructureManager
 public class CustomStructureBuildingData
 {
     public Vector3 Offset = Vector3.zero;
-    public Vector3 Scale = Vector3.one;
     public Vector3 Rotation = Vector3.zero;
+    public Vector3 Scale = Vector3.one;
     public Sprite? Sprite;
 }

@@ -59,7 +59,7 @@ public static class CustomPrefabManager
                 var scaledSprite = Sprite.Create(sprite.texture, sprite.rect, new Vector2(0.5f, 0));
                 spriteRenderer.sprite = scaledSprite;
             }
-            
+
             obj.Result.name = name + " (Custom Structure)";
         };
     }

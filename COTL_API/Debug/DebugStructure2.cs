@@ -18,6 +18,6 @@ public class DebugStructure2 : CustomStructure
 
     public override List<StructuresData.ItemCost> Cost =>
     [
-        new StructuresData.ItemCost(Plugin.Instance!.DebugItem2, 2)
+        new(DebugManager.DebugItem2, 2)
     ];
 }

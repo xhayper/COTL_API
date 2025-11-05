@@ -5,23 +5,31 @@ namespace FoodPlus.CustomTraits;
 
 public abstract class CustomTrait
 {
-    public abstract string InternalName { get; }
+    internal string ModPrefix = "";
 
     internal FollowerTrait.TraitType TraitType;
-    internal string ModPrefix = "";
-    
-    public virtual string LocalizedTitle() => LocalizationManager.GetTranslation($"Traits/{ModPrefix}.{InternalName}");
-    
-    public virtual string LocalizedDescription() => LocalizationManager.GetTranslation($"Traits/{InternalName}.description");
-
-    public virtual bool IsTraitUnavailable() => false;
+    public abstract string InternalName { get; }
 
     public virtual TraitFlags TraitFlags => TraitFlags.NONE;
-    
+
     public virtual List<FollowerTrait.TraitType> ExclusiveTraits => [];
     public virtual Sprite Icon => TextureHelper.CreateSpriteFromPath(PluginPaths.ResolveAssetPath("placeholder.png"));
     public virtual bool Positive => true;
-    
+
+    public virtual string LocalizedTitle()
+    {
+        return LocalizationManager.GetTranslation($"Traits/{ModPrefix}.{InternalName}");
+    }
+
+    public virtual string LocalizedDescription()
+    {
+        return LocalizationManager.GetTranslation($"Traits/{InternalName}.description");
+    }
+
+    public virtual bool IsTraitUnavailable()
+    {
+        return false;
+    }
 }
 
 [Flags]
@@ -35,5 +43,5 @@ public enum TraitFlags
     EXCLUDE_FROM_MATING = 1 << 4,
     SIN_TRAIT = 1 << 5,
     PURE_BLOOD_TRAIT = 1 << 6,
-    REQUIRES_ONBOARDING_COMPLETE = 1 << 7,
+    REQUIRES_ONBOARDING_COMPLETE = 1 << 7
 }

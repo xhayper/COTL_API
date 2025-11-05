@@ -1,7 +1,6 @@
 using HarmonyLib;
 using src.UI.InfoCards;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace COTL_API.CustomInventory;
 

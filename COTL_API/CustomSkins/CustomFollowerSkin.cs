@@ -11,7 +11,7 @@ public abstract class CustomFollowerSkin : CustomSkin
 
     public virtual List<WorshipperData.SlotsAndColours> Colors { get; } =
     [
-        new WorshipperData.SlotsAndColours
+        new()
         {
             SlotAndColours =
             [

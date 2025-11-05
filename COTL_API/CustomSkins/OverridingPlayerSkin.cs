@@ -17,8 +17,9 @@ internal class OverridingPlayerSkin(string name, Func<Skin?> overrideSkin) : Cus
     {
         void Action()
         {
-            if (who == PlayerType.LAMB && Name == "Lamb") {
-                CustomSkinManager.ResetPlayerSkin(who); 
+            if (who == PlayerType.LAMB && Name == "Lamb")
+            {
+                CustomSkinManager.ResetPlayerSkin(who);
                 return;
             }
 

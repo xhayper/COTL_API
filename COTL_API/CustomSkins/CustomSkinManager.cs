@@ -1,4 +1,3 @@
-using COTL_API.CustomSettings;
 using HarmonyLib;
 using Spine;
 using Spine.Unity;
@@ -546,12 +545,10 @@ public static partial class CustomSkinManager
             LogInfo("Must have Spine Options for " + name);
             return;
         }
+
         var strippedName = name.Replace("/", "");
         //string example: DebugSpine/Lamb
-        foreach (var option in options)
-        {
-            CustomPlayerSpines[strippedName + "/" + option] = skeletonDataAsset;
-        }
+        foreach (var option in options) CustomPlayerSpines[strippedName + "/" + option] = skeletonDataAsset;
 
         if (Plugin.CustomPlayerSpineSettings != null)
             Plugin.CustomPlayerSpineSettings.Options = [.. CustomPlayerSpines.Keys];
@@ -562,7 +559,7 @@ public static partial class CustomSkinManager
         // var splitted = name.Split(['/'], 2);
         if (!CustomPlayerSpines.ContainsKey(name) || CustomPlayerSpines[name] == null) return;
         SelectedSpine = name;
-        
+
         LogInfo($"Selected Spine: {SelectedSpine}");
     }
 
@@ -570,15 +567,16 @@ public static partial class CustomSkinManager
     {
         AddFollowerSkin([followerSkin]);
     }
-    
+
     public static void AddFollowerSkin(List<CustomFollowerSkin> followerVariants)
     {
         var variantAtlasTexts = followerVariants.Select(f => f.GenerateAtlasText()).ToList();
         var followerForm = followerVariants[0];
 
-        AddFollowerSkin(followerForm.Name, followerForm.Texture, variantAtlasTexts, followerForm.Colors, followerForm.Hidden,
-                followerForm.Unlocked, followerForm.TwitchPremium,
-                followerForm.Invariant);
+        AddFollowerSkin(followerForm.Name, followerForm.Texture, variantAtlasTexts, followerForm.Colors,
+            followerForm.Hidden,
+            followerForm.Unlocked, followerForm.TwitchPremium,
+            followerForm.Invariant);
     }
 
     public static void AddFollowerSkin(string name, Texture2D sheet, List<string> variants,
@@ -652,13 +650,14 @@ public static partial class CustomSkinManager
         return [];
     }
 
-    internal static void CreateNewFollowerType(string name, List<string> variantNames, List<WorshipperData.SlotsAndColours> colors,
+    internal static void CreateNewFollowerType(string name, List<string> variantNames,
+        List<WorshipperData.SlotsAndColours> colors,
         bool hidden = false, bool twitchPremium = false, bool invariant = false)
     {
         var skins = variantNames.Select(v => new WorshipperData.CharacterSkin
-            {
-                Skin = v
-            }).ToList();
+        {
+            Skin = v
+        }).ToList();
 
 
         WorshipperData.Instance.Characters.Add(new WorshipperData.SkinAndData

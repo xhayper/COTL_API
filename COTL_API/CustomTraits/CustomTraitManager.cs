@@ -6,7 +6,7 @@ namespace FoodPlus.CustomTraits;
 public static partial class CustomTraitManager
 {
     private static Dictionary<FollowerTrait.TraitType, CustomTrait> CustomTraitList { get; } = [];
-    
+
     public static FollowerTrait.TraitType Add(CustomTrait trait)
     {
         var guid = TypeManager.GetModIdFromCallstack(Assembly.GetCallingAssembly());
@@ -14,12 +14,9 @@ public static partial class CustomTraitManager
         var traitType = GuidManager.GetEnumValue<FollowerTrait.TraitType>(guid, trait.InternalName);
         trait.TraitType = traitType;
         trait.ModPrefix = guid;
-        
+
         HandleTraitFlags(trait);
-        foreach (var exclusive in trait.ExclusiveTraits)
-        {
-            FollowerTrait.ExclusiveTraits.Add(traitType, exclusive);
-        }
+        foreach (var exclusive in trait.ExclusiveTraits) FollowerTrait.ExclusiveTraits.Add(traitType, exclusive);
 
         CustomTraitList.Add(traitType, trait);
 
@@ -37,15 +34,14 @@ public static partial class CustomTraitManager
             { TraitFlags.SIN_TRAIT, () => FollowerTrait.SinTraits.Add(item.TraitType) },
             { TraitFlags.EXCLUDE_FROM_MATING, () => FollowerTrait.ExcludedFromMating.Add(item.TraitType) },
             { TraitFlags.PURE_BLOOD_TRAIT, () => FollowerTrait.PureBloodTraits.Add(item.TraitType) },
-            { TraitFlags.REQUIRES_ONBOARDING_COMPLETE, () => FollowerTrait.RequiresOnboardingCompleted.Add(item.TraitType) }
-        };
-        
-        foreach (var flagAction in flagActions)
-        {
-            if (item.TraitFlags.HasFlag(flagAction.Key))
             {
-                flagAction.Value();
+                TraitFlags.REQUIRES_ONBOARDING_COMPLETE,
+                () => FollowerTrait.RequiresOnboardingCompleted.Add(item.TraitType)
             }
-        }
+        };
+
+        foreach (var flagAction in flagActions)
+            if (item.TraitFlags.HasFlag(flagAction.Key))
+                flagAction.Value();
     }
 }

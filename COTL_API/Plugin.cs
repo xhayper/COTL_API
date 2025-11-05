@@ -2,23 +2,15 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
-using COTL_API.CustomFollowerCommand;
 using COTL_API.CustomInventory;
-using COTL_API.CustomLocalization;
 using COTL_API.CustomObjectives;
-using COTL_API.CustomRelics;
 using COTL_API.CustomSettings;
 using COTL_API.CustomSettings.Elements;
 using COTL_API.CustomSkins;
-using COTL_API.CustomStructures;
-using COTL_API.CustomTarotCard;
-using COTL_API.CustomTasks;
 using COTL_API.Debug;
 using COTL_API.Saves;
-using COTL_API.Utility;
 using HarmonyLib;
 using I2.Loc;
-using Lamb.UI;
 using MonoMod.Utils;
 using UnityEngine;
 
@@ -49,7 +41,6 @@ public class Plugin : BaseUnityPlugin
         LoadOrder = ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE
     };
 
-    internal bool DebugContentAdded;
     internal static ConfigEntry<bool> UnityDebug { get; private set; } = null!;
     internal static Plugin? Instance { get; private set; }
 
@@ -76,15 +67,6 @@ public class Plugin : BaseUnityPlugin
     internal static ObjectDictionary? EnumData => Instance?.APIData.Data?.EnumData;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    internal InventoryItem.ITEM_TYPE DebugItem { get; private set; }
-    internal InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
-    internal InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
-    internal InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
-
-    internal FollowerCommands DebugGiftFollowerCommand { get; private set; }
-
-    internal RelicType DebugRelic { get; private set; }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Awake()
     {
@@ -99,14 +81,14 @@ public class Plugin : BaseUnityPlugin
 
         RunSavePatch();
 
-        _skipSplashScreen = Config.Bind("Miscellaneous", "Skip Splash Screen", false,
+        _skipSplashScreen = Config.Bind("Miscellaneous", "Skip splash screen", false,
             "Should we skip the splash screen or not?");
-        _disableAchievement = Config.Bind("Miscellaneous", "Disable Achievement", true,
-            "Should we disable the achievement system? (You will still be able to get achievement but it won't save)");
+        _disableAchievement = Config.Bind("Miscellaneous", "Disable new achievement", true,
+            "Should we disable saving new achievements? (You will still be able to get achievement but it won't save)");
 
-        _debug = Config.Bind("Debug", "API Debug", false,
+        _debug = Config.Bind("Debug", "API debug", false,
             "API debug mode. Will add debug content to your game for testing. Not recommended for normal play.");
-        UnityDebug = Config.Bind("Debug", "Unity Debug Logging", true,
+        UnityDebug = Config.Bind("Debug", "Unity debug logging", false,
             "Unity debug logging. Helpful to filter out unrelated entries during testing.");
 
         UnityDebug.SettingChanged += (_, _) => { UnityEngine.Debug.unityLogger.logEnabled = UnityDebug.Value; };
@@ -121,10 +103,10 @@ public class Plugin : BaseUnityPlugin
             () => PlayerFarming.Instance.Spine.Skeleton.Data.FindSkin("Snake")));
 
         //This is to load the dropdown as it needs at least 1 entry
-        CustomSkinManager.AddPlayerSpine("Placeholder", null, ["Placeholder Selection"]); 
+        CustomSkinManager.AddPlayerSpine("Placeholder", null, ["Placeholder selection"]);
 
         LambFleeceSkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
-            "Lamb Fleece Skin",
+            "Lamb fleece skin",
             "Lamb",
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
@@ -137,7 +119,7 @@ public class Plugin : BaseUnityPlugin
             });
 
         GoatFleeceSkinSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
-            "Goat Fleece Skin",
+            "Goat fleece skin",
             "Goat",
             [.. CustomSkinManager.CustomPlayerSkins.Keys], i =>
             {
@@ -150,23 +132,19 @@ public class Plugin : BaseUnityPlugin
             });
 
         LambFleeceBleatSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
-            "Lamb Fleece Bleat",
+            "Lamb fleece bleat",
             "Lamb",
-            Enum.GetNames(typeof(PlayerBleat)), i =>
-            {
-                CustomSkinManager.SetPlayerBleatOverride(PlayerType.LAMB, (PlayerBleat)i);
-            });
+            Enum.GetNames(typeof(PlayerBleat)),
+            i => { CustomSkinManager.SetPlayerBleatOverride(PlayerType.LAMB, (PlayerBleat)i); });
 
         GoatFleeceBleatSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
-            "Goat Fleece Bleat",
+            "Goat fleece bleat",
             "Goat",
-            Enum.GetNames(typeof(PlayerBleat)), i =>
-            {
-                CustomSkinManager.SetPlayerBleatOverride(PlayerType.GOAT, (PlayerBleat)i);
-            });
+            Enum.GetNames(typeof(PlayerBleat)),
+            i => { CustomSkinManager.SetPlayerBleatOverride(PlayerType.GOAT, (PlayerBleat)i); });
 
         CustomPlayerSpineSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
-            "Custom Player Spine",
+            "Custom player spine",
             "Lamb Spine",
             [.. CustomSkinManager.CustomPlayerSpines.Keys], i =>
             {
@@ -174,9 +152,9 @@ public class Plugin : BaseUnityPlugin
                     CustomSkinManager.CustomPlayerSpines.Keys.ElementAt(i));
             });
 
-        CustomSettingsManager.AddBepInExConfig("API", "Skip Splash Screen", _skipSplashScreen);
-        CustomSettingsManager.AddBepInExConfig("API", "Disable Achievement", _disableAchievement,
-            delegate (bool isActivated)
+        CustomSettingsManager.AddBepInExConfig("API", "Skip splash screen", _skipSplashScreen);
+        CustomSettingsManager.AddBepInExConfig("API", "Disable new achievement", _disableAchievement,
+            delegate(bool isActivated)
             {
                 if (isActivated) return;
 
@@ -184,19 +162,19 @@ public class Plugin : BaseUnityPlugin
                 AchievementsWrapper.compareAchievements();
             });
 
-        CustomSettingsManager.AddBepInExConfig("API", "Debug Mode", _debug, delegate (bool isActivated)
+        CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug, delegate(bool isActivated)
         {
             if (!isActivated)
             {
                 // ReSharper disable once InvertIf
-                if (LambFleeceSkinSettings?.Value == "Debug Skin")
+                if (LambFleeceSkinSettings?.Value is "Debug" or "Debug_1")
                 {
                     LambFleeceSkinSettings.Value = "Lamb";
                     CustomSkinManager.ResetPlayerSkin(PlayerType.LAMB);
                 }
 
                 // ReSharper disable once InvertIf
-                if (GoatFleeceSkinSettings?.Value == "Debug Skin")
+                if (GoatFleeceSkinSettings?.Value is "Debug" or "Debug_1")
                 {
                     GoatFleeceSkinSettings.Value = "Goat";
                     CustomSkinManager.ResetPlayerSkin(PlayerType.GOAT);
@@ -204,17 +182,15 @@ public class Plugin : BaseUnityPlugin
             }
             else
             {
-                if (DebugContentAdded) return;
-                AddDebugContent();
+                DebugManager.AddDebugContent();
             }
         });
 
-        CustomSettingsManager.AddBepInExConfig("API", "Unity Debug Logging", UnityDebug);
+        CustomSettingsManager.AddBepInExConfig("API", "Unity debug logging", UnityDebug);
 
-        if (Debug) AddDebugContent();
+        if (Debug) DebugManager.AddDebugContent();
 
         LogInfo($"{MyPluginInfo.PLUGIN_NAME} loaded!");
-        
     }
 
     private void Start()
@@ -238,7 +214,8 @@ public class Plugin : BaseUnityPlugin
         }
 
         // ReSharper disable once InvertIf
-        if (Input.GetKeyDown(KeyCode.F2)) {
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
             var slots = PlayerFarming.Instance.Spine.Skeleton.Skin.Attachments;
             var sortedSlots = slots.OrderBy(x => x.SlotIndex).ToList();
             var jsonOutput = sortedSlots.Select(x => $"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
@@ -263,10 +240,7 @@ public class Plugin : BaseUnityPlugin
         LogInfo($"{MyPluginInfo.PLUGIN_NAME} unloaded!");
     }
 
-    internal static event Action OnStart = delegate
-    {
-        CustomItemManager.InitiateCustomCrops();
-    };
+    internal static event Action OnStart = delegate { CustomItemManager.InitiateCustomCrops(); };
 
     private void RunSavePatch()
     {
@@ -326,59 +300,5 @@ public class Plugin : BaseUnityPlugin
                 quest.QuestIndex = Quests.QuestsAll.Count - 1;
             }
         };
-    }
-
-    private void AddDebugContent()
-    {
-        if (DebugContentAdded) return;
-
-        CustomLocalizationManager.LoadLocalization("English",
-            Path.Combine(PluginPath, "Assets", "English-Debug.language"));
-
-        CustomSkinManager.AddFollowerSkin([new DebugFollowerSkin(), new DebugFollowerSkin2()]);
-        CustomSkinManager.AddPlayerSkin(new DebugPlayerSkin());
-
-        CustomFollowerCommandManager.Add(new DebugFollowerCommand());
-        CustomFollowerCommandManager.Add(new DebugFollowerCommandClass2());
-        CustomFollowerCommandManager.Add(new DebugFollowerCommandClass3());
-        DebugGiftFollowerCommand = CustomFollowerCommandManager.Add(new DebugGiftFollowerCommand());
-
-        DebugItem = CustomItemManager.Add(new DebugItemClass());
-        DebugItem2 = CustomItemManager.Add(new DebugItemClass2());
-        DebugItem3 = CustomItemManager.Add(new DebugItemClass3());
-        DebugItem4 = CustomItemManager.Add(new DebugItemClass4());
-
-        CustomStructureManager.Add(new DebugStructure());
-        CustomStructureManager.Add(new DebugStructure2());
-        CustomStructureManager.Add(new DebugStructure3());
-
-        CustomTarotCardManager.Add(new DebugTarotCard());
-
-        CustomTaskManager.Add(new DebugTask());
-
-        var test = CustomObjectiveManager.BedRest("Test");
-        test.InitialQuestText = "This is my custom quest text for this objective.";
-
-        CustomSettingsManager.AddDropdown("Debug", "Dropdown", "Option 1",
-            ["Option 1", "Option 2", "Option 3"], i => { LogDebug($"Dropdown selected {i}"); });
-
-        CustomSettingsManager.AddKeyboardShortcutDropdown("Debug", "Keyboard Shortcut", KeyCode.None,
-            i => { LogDebug($"Keyboard Shortcut selected {i}"); });
-
-        CustomSettingsManager.AddHorizontalSelector("Debug", "Horizontal Selector", "Option 1",
-            ["Option 1", "Option 2", "Option 3"],
-            i => { LogDebug($"Horizontal Selector selected {i}"); });
-
-        CustomSettingsManager.AddSlider("Debug", "Slider", 0, -100, 100, 1, MMSlider.ValueDisplayFormat.RawValue,
-            i => { LogDebug($"Slider value: {i}"); });
-
-        CustomSettingsManager.AddToggle("Debug", "Toggle", true,
-            i => { LogDebug($"Toggled: {i}"); });
-
-        DebugRelic = CustomRelicManager.Add(ScriptableObject.CreateInstance<DebugRelicClass>());
-
-        LogDebug("Debug mode enabled!");
-
-        DebugContentAdded = true;
     }
 }

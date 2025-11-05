@@ -14,5 +14,5 @@ public class DebugItemClass : CustomInventoryItem
     public override int FuelWeight => 100;
 
     public override bool CanBeGivenToFollower => true;
-    public override FollowerCommands GiftCommand => Plugin.Instance!.DebugGiftFollowerCommand;
+    public override FollowerCommands GiftCommand => DebugManager.DebugGiftFollowerCommand;
 }

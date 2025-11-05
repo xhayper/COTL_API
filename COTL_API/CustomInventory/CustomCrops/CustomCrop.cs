@@ -6,7 +6,7 @@ public abstract class CustomCrop : CustomInventoryItem
 {
     internal StructureBrain.TYPES StructureType { get; set; }
     internal int CropStatesCount => CropStates.Count;
-    
+
     /// <summary>
     ///     The States of this crop, the last state should be the fully grown state. Requires at least two states.
     /// </summary>
@@ -23,7 +23,7 @@ public abstract class CustomCrop : CustomInventoryItem
     public abstract List<InventoryItem.ITEM_TYPE> HarvestResult { get; }
 
     /// <summary>
-    ///     How long (in seconds) it takes to pick this crop. 
+    ///     How long (in seconds) it takes to pick this crop.
     /// </summary>
     public virtual float PickingTime => 2.5f;
 

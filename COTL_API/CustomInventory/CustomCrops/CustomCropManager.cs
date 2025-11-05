@@ -9,12 +9,11 @@ namespace COTL_API.CustomInventory;
 
 public static partial class CustomItemManager
 {
+    private const string AssetPath = "Prefabs/Structures/Crops/Berry Crop";
     internal static GameObject CropPrefab = null!;
 
     public static Dictionary<InventoryItem.ITEM_TYPE, CustomCrop> CustomCropList { get; } = [];
     private static Dictionary<InventoryItem.ITEM_TYPE, CropController> CropObjectList { get; } = [];
-
-    private const string AssetPath = "Prefabs/Structures/Crops/Berry Crop";
 
     public static InventoryItem.ITEM_TYPE Add(CustomCrop crop)
     {
@@ -58,14 +57,14 @@ public static partial class CustomItemManager
 
         var cropState = duplicate.transform.GetChild(0);
         cropController.CropStates.Add(cropState.gameObject);
-        
+
         if (crop.CropStates.Count > 0)
         {
             bush.GetComponent<SpriteRenderer>().sprite = crop.CropStates.Last();
             bumperBush.GetComponent<SpriteRenderer>().sprite = crop.CropStates.Last();
             cropState.GetComponent<SpriteRenderer>().sprite = crop.CropStates[0];
         }
-        
+
         for (var i = 1; i < crop.CropStates.Count - 1; i++)
         {
             var newState = Instantiate(cropState, duplicate.transform);
@@ -74,7 +73,7 @@ public static partial class CustomItemManager
             newState.GetComponent<SpriteRenderer>().sprite = crop.CropStates[i];
             cropController.CropStates.Add(newState.gameObject);
         }
-        
+
         cropController.CropStates.Add(harvest.gameObject);
 
         // Ensures that the object doesn't get deleted between scene loads
@@ -87,7 +86,7 @@ public static partial class CustomItemManager
     {
         LogInfo("Getting Crop Asset");
         var op = Addressables.Instance.LoadAssetAsync<GameObject>(AssetPath);
-        op.Completed += (handle) =>
+        op.Completed += handle =>
         {
             if (op.Status != AsyncOperationStatus.Succeeded)
                 throw new NullReferenceException("Couldn't Find Berry Crop Object, Send a bug report!");

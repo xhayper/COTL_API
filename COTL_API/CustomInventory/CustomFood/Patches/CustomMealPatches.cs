@@ -1,6 +1,5 @@
 using HarmonyLib;
 using Lamb.UI.FollowerInteractionWheel;
-using src.UI.InfoCards;
 
 namespace COTL_API.CustomInventory;
 
@@ -13,7 +12,7 @@ public static partial class CustomItemManager
     {
         if (CustomMealList.TryGetValue(meal, out var value)) __result = value.TummyRating;
     }
-    
+
     [HarmonyPatch(typeof(CookingData), nameof(CookingData.GetAllMeals))]
     [HarmonyPostfix]
     private static void CookingData_GetAllMeals(ref InventoryItem.ITEM_TYPE[] __result)
@@ -33,11 +32,11 @@ public static partial class CustomItemManager
     [HarmonyPostfix]
     private static void Meal_MealSafeToEat(Meal __instance, ref bool __result)
     {
-        if(__instance.StructureInfo == null) return;
+        if (__instance.StructureInfo == null) return;
 
         var type = CookingData.GetMealFromStructureType(__instance.StructureInfo.Type);
-        
-        if(CustomMealList.TryGetValue(type, out var value))
+
+        if (CustomMealList.TryGetValue(type, out var value))
             __result = value.MealSafeToEat;
     }
 
@@ -113,7 +112,7 @@ public static partial class CustomItemManager
             _ => "Food/Food-finish"
         };
     }
-    
+
     [HarmonyPatch(typeof(StructuresData), nameof(StructuresData.GetMealType))]
     [HarmonyPostfix]
     private static void StructuresData_GetMealType(StructureBrain.TYPES structureType,

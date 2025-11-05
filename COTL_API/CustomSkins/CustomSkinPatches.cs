@@ -189,8 +189,8 @@ public partial class CustomSkinManager
         //Add Mops
         __instance.PlayerSkin.AddSkin(
             __instance.Spine.Skeleton.Data.FindSkin("Mops/" + Mathf.Clamp(
-                __instance.isLamb ? DataManager.Instance.ChoreXPLevel + 1 :
-                DataManager.Instance.ChoreXPLevel_Coop + 1, 0, 9)));
+                __instance.isLamb ? DataManager.Instance.ChoreXPLevel + 1 : DataManager.Instance.ChoreXPLevel_Coop + 1,
+                0, 9)));
 
         //Finalize Skin         
         __instance.Spine.Skeleton.SetSkin(__instance.PlayerSkin);
@@ -205,7 +205,7 @@ public partial class CustomSkinManager
     {
         var playerType = PlayerType.LAMB;
 
-        LogInfo("IsLamb" +  __instance.isLamb);
+        LogInfo("IsLamb" + __instance.isLamb);
         LogInfo("IsGoat" + __instance.IsGoat);
 
         var playerInstance = PlayerFarming.players[0];
@@ -213,7 +213,9 @@ public partial class CustomSkinManager
         if (CoopManager.CoopActive)
         {
             playerType = !__instance.isLamb || __instance.IsGoat ? PlayerType.GOAT : PlayerType.LAMB;
-            playerInstance = !__instance.isLamb || __instance.IsGoat ? PlayerFarming.players[1] : PlayerFarming.players[0];
+            playerInstance = !__instance.isLamb || __instance.IsGoat
+                ? PlayerFarming.players[1]
+                : PlayerFarming.players[0];
         }
 
         if (!PlayerBleatOverride.ContainsKey(playerType)) return true;
@@ -223,16 +225,14 @@ public partial class CustomSkinManager
 
         PlayerFarming.Instance.StartCoroutine(BleatOverrideRoutine(playerInstance, bleatOverride));
         return false;
-        
     }
+
     [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.Start))]
     [HarmonyPrefix]
     private static bool PlayerFarming_Start(PlayerFarming __instance)
     {
         if (CustomPlayerSpines.Count == 0)
-        {
             AddPlayerSpine("Default", PlayerFarming.Instance.Spine.skeletonDataAsset, ["Lamb", "Goat", "Owl", "Snake"]);
-        }
 
         if (SelectedSpine == "") return true;
         if (!CustomPlayerSpines.ContainsKey(SelectedSpine)) return true;
@@ -247,9 +247,9 @@ public partial class CustomSkinManager
         //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
         //enable the spine animator event tracker after replacing spine
         PlayerFarming.Instance.simpleSpineAnimator.anim.AnimationState.Event -=
-            new Spine.AnimationState.TrackEntryEventDelegate(PlayerFarming.Instance.simpleSpineAnimator.SpineEventHandler);
+            PlayerFarming.Instance.simpleSpineAnimator.SpineEventHandler;
         PlayerFarming.Instance.simpleSpineAnimator.anim.AnimationState.Event +=
-            new Spine.AnimationState.TrackEntryEventDelegate(PlayerFarming.Instance.simpleSpineAnimator.SpineEventHandler);
+            PlayerFarming.Instance.simpleSpineAnimator.SpineEventHandler;
 
         LogInfo("Loaded Custom Spine " + SelectedSpine + " with skin " + selectedSpineSkin);
 
@@ -283,7 +283,5 @@ public partial class CustomSkinManager
         if (instance.state.CURRENT_STATE == StateMachine.State.CustomAnimation)
             instance.state.CURRENT_STATE = StateMachine.State.Idle;
         yield return null;
-
     }
-
 }

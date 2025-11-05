@@ -10,9 +10,9 @@ public class DebugItemClass2 : CustomCrop
 
     public override bool IsFood => true;
 
-    public override List<InventoryItem.ITEM_TYPE> HarvestResult { get; } = 
-        [
-            Plugin.Instance.DebugItem,
-            Plugin.Instance.DebugItem2,
-        ];
+    public override List<InventoryItem.ITEM_TYPE> HarvestResult { get; } =
+    [
+        DebugManager.DebugItem,
+        DebugManager.DebugItem2
+    ];
 }

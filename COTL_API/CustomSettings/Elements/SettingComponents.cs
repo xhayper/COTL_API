@@ -6,8 +6,8 @@ namespace COTL_API.CustomSettings.Elements;
 
 public interface ISettingsElement
 {
-    public string? Category { get; }
-    public string Text { get; }
+    string? Category { get; }
+    string Text { get; }
 }
 
 public class Slider(
