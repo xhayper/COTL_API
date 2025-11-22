@@ -32,6 +32,7 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, Sprite> TarotSprites = [];
     internal static readonly Dictionary<string, Sprite> TarotBackSprites = [];
     internal static readonly Dictionary<string, SkeletonDataAsset?> CustomPlayerSpines = [];
+    internal static readonly Dictionary<string, SkeletonDataAsset?> CustomFollowerSpines = [];
     internal static string SelectedSpine = "";
     internal static int NumGenericAtlases;
 
@@ -562,6 +563,35 @@ public static partial class CustomSkinManager
 
         LogInfo($"Selected Spine: {SelectedSpine}");
     }
+
+    public static void AddFollowerSpine(string name, SkeletonDataAsset? skeletonDataAsset)
+    {
+        CustomFollowerSpines[name] = skeletonDataAsset;
+    }
+
+    public static void ChangeSelectedFollowerSpine(string name, int followerid)
+    {
+        if (!CustomFollowerSpines.ContainsKey(name) || CustomFollowerSpines[name] == null) return;
+        LogInfo($"Selected Follower Spine: {name} for follower {followerid}");
+
+        //get follower
+        var follower = FollowerManager.FindFollowerByID(followerid);
+        if (follower == null) return;
+
+        follower.Spine.skeletonDataAsset = CustomFollowerSpines[name];
+        follower.Spine.Initialize(true);
+        follower.Spine.AnimationState.Start -= new Spine.AnimationState.TrackEntryDelegate(follower.SetEmotionAnimation);
+        follower.Spine.AnimationState.Start += new Spine.AnimationState.TrackEntryDelegate(follower.SetEmotionAnimation);
+        // follower.SimpleAnimator.anim.AnimationState.Event -=
+        //     follower.SimpleAnimator.SpineEventHandler;
+        // follower.SimpleAnimator.anim.AnimationState.Event +=
+        //     follower.SimpleAnimator.SpineEventHandler;
+
+        LogInfo($"Changed Follower {followerid} Spine to {name}");
+
+
+    }
+
 
     public static void AddFollowerSkin(CustomFollowerSkin followerSkin)
     {
