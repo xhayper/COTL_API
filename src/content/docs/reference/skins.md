@@ -243,7 +243,7 @@ LEFT_EYE_FIRE_7
 
 #### Player Skin Overrides
 
-The following overrrides are supported for player skins: 
+The following overrrides are supported for player skins:
 
 ```
 
