@@ -46,8 +46,8 @@ internal class DebugManager
     };
 
     // TODO: Can't we just harmony.GetPatchedMethods().Select(mB => mB.DeclaringType);
-    internal static List<Type> PatchedClass = new()
-    {
+    internal static List<Type> PatchedClass =
+    [
         typeof(CropController),
         typeof(StructuresData),
         typeof(StructureBrain),
@@ -124,7 +124,7 @@ internal class DebugManager
         typeof(Interaction_TempleAltar),
         typeof(Interaction),
         typeof(UITarotChoiceOverlayController)
-    };
+    ];
 
     internal static InventoryItem.ITEM_TYPE DebugItem { get; private set; }
     internal static InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
