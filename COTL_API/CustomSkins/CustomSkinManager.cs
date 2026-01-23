@@ -580,16 +580,14 @@ public static partial class CustomSkinManager
 
         follower.Spine.skeletonDataAsset = CustomFollowerSpines[name];
         follower.Spine.Initialize(true);
-        follower.Spine.AnimationState.Start -= new Spine.AnimationState.TrackEntryDelegate(follower.SetEmotionAnimation);
-        follower.Spine.AnimationState.Start += new Spine.AnimationState.TrackEntryDelegate(follower.SetEmotionAnimation);
+        follower.Spine.AnimationState.Start -= follower.SetEmotionAnimation;
+        follower.Spine.AnimationState.Start += follower.SetEmotionAnimation;
         // follower.SimpleAnimator.anim.AnimationState.Event -=
         //     follower.SimpleAnimator.SpineEventHandler;
         // follower.SimpleAnimator.anim.AnimationState.Event +=
         //     follower.SimpleAnimator.SpineEventHandler;
 
         LogInfo($"Changed Follower {followerid} Spine to {name}");
-
-
     }
 
 

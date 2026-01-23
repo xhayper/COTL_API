@@ -9,23 +9,31 @@ using COTL_API.CustomStructures;
 using COTL_API.CustomTarotCard;
 using COTL_API.CustomTasks;
 using FoodPlus.CustomTraits;
+using I2.Loc;
 using Lamb.UI;
+using Lamb.UI.Assets;
+using Lamb.UI.BuildMenu;
+using Lamb.UI.FollowerInteractionWheel;
+using Lamb.UI.MainMenu;
+using Lamb.UI.PauseMenu;
+using Lamb.UI.Rituals;
+using Lamb.UI.Settings;
+using Lamb.UI.SettingsMenu;
+using MMRoomGeneration;
+using Spine;
+using src.Alerts;
+using src.UI.InfoCards;
+using src.UI.Menus;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using AudioSettings = UnityEngine.AudioSettings;
 
 namespace COTL_API.Debug;
 
 internal class DebugManager
 {
     internal static bool DebugContentAdded;
-
-    internal static InventoryItem.ITEM_TYPE DebugItem { get; private set; }
-    internal static InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
-    internal static InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
-    internal static InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
-
-    internal static FollowerCommands DebugGiftFollowerCommand { get; private set; }
-
-    internal static RelicType DebugRelic { get; private set; }
 
     internal static Dictionary<Type, Type> CustomClassMappings = new()
     {
@@ -36,54 +44,149 @@ internal class DebugManager
         { typeof(TarotCards), typeof(CustomTarotCard.CustomTarotCard) },
         { typeof(FollowerTrait), typeof(CustomTrait) }
     };
-    
+
+    // TODO: Can't we just harmony.GetPatchedMethods().Select(mB => mB.DeclaringType);
+    internal static List<Type> PatchedClass = new()
+    {
+        typeof(CropController),
+        typeof(StructuresData),
+        typeof(StructureBrain),
+        typeof(FarmPlot),
+        typeof(Interaction_Berries),
+        typeof(InventoryItem),
+        typeof(ObjectPool),
+        typeof(ItemInfoCard),
+        typeof(Interaction_AddFuel),
+        typeof(Inventory),
+        typeof(FollowerCommandGroups),
+        typeof(FollowerCommandItems),
+        typeof(FontImageNames),
+        typeof(InventoryIconMapping),
+        typeof(CookingData),
+        typeof(InventoryMenu),
+        typeof(Structures_Refinery),
+        typeof(UIMenuBase),
+        typeof(RefineryInfoCard),
+        typeof(Interaction_Chest),
+        typeof(InventoryItemDisplay),
+        typeof(Interaction_OfferingShrine),
+        typeof(Structures_OfferingShrine),
+        typeof(RecipeInfoCard),
+        typeof(interaction_FollowerInteraction),
+        typeof(Meal),
+        typeof(FollowerTask_EatMeal),
+        typeof(UISettingsMenuController),
+        typeof(GraphicsSettings),
+        typeof(UIPauseMenuController),
+        typeof(MainMenuController),
+        typeof(SkeletonData),
+        typeof(CharacterSkinAlerts),
+        typeof(Graphics),
+        typeof(FollowerInformationBox),
+        typeof(UIFollowerIndoctrinationMenuController),
+        typeof(PlayerFarming),
+        typeof(FollowerTrait),
+        typeof(FollowerCategory),
+        typeof(TypeAndPlacementObjects),
+        typeof(Structure),
+        typeof(AddressablesImpl),
+        typeof(ResourceManager),
+        typeof(ControlUtilities),
+        typeof(LocationManager),
+        typeof(GenerateRoom),
+        typeof(UIFollowerInteractionWheelOverlayController),
+        typeof(LoadMainMenu),
+        typeof(MMHorizontalSelector),
+        typeof(LoadMenu),
+        typeof(TMP_SpriteAsset),
+        typeof(AchievementsWrapper),
+        typeof(TermData),
+        typeof(LanguageSourceData),
+        typeof(GameSettings),
+        typeof(Quests),
+        typeof(UIWeaponCard),
+        typeof(TarotInfoCard),
+        typeof(TarotCards),
+        typeof(LocalizationManager),
+        typeof(RelicData),
+        typeof(PlayerRelic),
+        typeof(EquipmentManager),
+        typeof(CommandItem),
+        typeof(AudioSettings),
+        typeof(SaveAndLoad),
+        typeof(MissionInfoCard),
+        typeof(MissionaryManager),
+        typeof(CustomType),
+        typeof(UIRitualsMenuController),
+        typeof(RitualItem),
+        typeof(RitualIconMapping),
+        typeof(UpgradeSystem),
+        typeof(Interaction_TempleAltar),
+        typeof(Interaction),
+        typeof(UITarotChoiceOverlayController)
+    };
+
+    internal static InventoryItem.ITEM_TYPE DebugItem { get; private set; }
+    internal static InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
+    internal static InventoryItem.ITEM_TYPE DebugItem3 { get; private set; }
+    internal static InventoryItem.ITEM_TYPE DebugItem4 { get; private set; }
+
+    internal static FollowerCommands DebugGiftFollowerCommand { get; private set; }
+
+    internal static RelicType DebugRelic { get; private set; }
+
     private static string BeautifyNamespace(string? str)
     {
         return str is null or "" ? "" : str + ".";
     }
-    
+
     internal void ShowPatches(Type a)
     {
         var harmony = Plugin.Instance._harmony;
         var patchedMethods = harmony.GetPatchedMethods().Where(methodBase => methodBase.DeclaringType == a);
 
         foreach (var method in a.GetMethods())
-        {
             LogDebug(patchedMethods.Contains(method)
                 ? $"{BeautifyNamespace(a.Namespace)}{a.Name}: Patched"
                 : $"{BeautifyNamespace(a.Namespace)}{a.Name}: Unpatched");
-        }
     }
 
-    private static void ShowDiff(Type a, Type b)
+    internal void ShowPatchedClasses()
     {
-        LogDebug($"Showing diff between {BeautifyNamespace(a.Namespace)}{a.Name} and {BeautifyNamespace(b.Namespace)}{b.Name}");
-        
+        foreach (var cl in PatchedClass) ShowPatches(cl);
+    }
+
+    internal static void ShowDiff(Type a, Type b)
+    {
+        LogDebug(
+            $"Showing diff between {BeautifyNamespace(a.Namespace)}{a.Name} and {BeautifyNamespace(b.Namespace)}{b.Name}");
+
         LogDebug("Methods");
         foreach (var method in a.GetMethods())
         {
             if (method.Name.StartsWith("get_") || method.Name.StartsWith("set_"))
                 continue;
-            
+
             var corrspondingMethod = b.GetMethods().FirstOrDefault(m => m.Name == method.Name);
 
             if (corrspondingMethod is null)
             {
                 LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name}: missing corrsponding method");
-                continue;  
+                continue;
             }
 
             if (!method.ReturnType.IsAssignableFrom(corrspondingMethod.ReturnType))
             {
-                LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name} and {BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name} have mismatched return type");
+                LogDebug(
+                    $"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name} and {BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name} have mismatched return type");
                 continue;
             }
 
             var corrospondingParameters = method.GetParameters();
 
             var parameters = method.GetParameters();
-            
-            if (parameters.Length == 1 && parameters[0].GetType().IsEnum) 
+
+            if (parameters.Length == 1 && parameters[0].GetType().IsEnum)
                 parameters = parameters.Skip(1).ToArray();
 
             var parameterMatches = parameters.Length == corrospondingParameters.Length && parameters.All(info =>
@@ -93,22 +196,21 @@ internal class DebugManager
 
             if (!parameterMatches)
             {
-                LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name} and {BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name} have mismatched parameters");
+                LogDebug(
+                    $"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name} and {BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name} have mismatched parameters");
                 LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name}: {parameters}");
                 LogDebug($"{BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name}: {corrospondingParameters}");
                 continue;
             }
-            
-            LogDebug($"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name} matches {BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name}");
+
+            LogDebug(
+                $"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name} matches {BeautifyNamespace(b.Namespace)}{b.Name}.{method.Name}");
         }
     }
 
     internal static void CheckCustomClasses()
     {
-        foreach (var type in CustomClassMappings)
-        {
-            ShowDiff(type.Key, type.Value);
-        }
+        foreach (var type in CustomClassMappings) ShowDiff(type.Key, type.Value);
     }
 
     internal static void AddDebugContent()
