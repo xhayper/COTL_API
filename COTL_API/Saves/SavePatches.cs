@@ -17,7 +17,7 @@ public static partial class ModdedSaveManager
     [HarmonyPostfix]
     private static void SaveAndLoad_Save()
     {
-        foreach (var saveData in ModdedSaveDataList.Values) saveData.Save(!Plugin.Instance.DecryptSaveFile);
+        foreach (var saveData in ModdedSaveDataList.Values) saveData.Save();
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.Saving))]
@@ -26,7 +26,6 @@ public static partial class ModdedSaveManager
     {
         foreach (var saveData in ModdedSaveDataList.Values)
             saveData.Saving();
-        SaveAndLoad.Instance._saveFileReadWriter.Write(DataManager.Instance, SaveAndLoad.MakeSaveSlot(SaveAndLoad.SAVE_SLOT), !Plugin.Instance.DecryptSaveFile);
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.ResetSave))]
