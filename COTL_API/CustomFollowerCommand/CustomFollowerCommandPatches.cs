@@ -16,7 +16,7 @@ public partial class CustomFollowerCommandManager
         return false;
     }
 
-    [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.IsAvailable))]
+    [HarmonyPatch(typeof(CommandItem), nameof(CommandItem.IsAvailable), typeof(Follower))]
     [HarmonyPrefix]
     private static bool CommandItem_IsAvailable(CommandItem __instance, Follower follower, ref bool __result)
     {
