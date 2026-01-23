@@ -36,10 +36,23 @@ internal class DebugManager
         { typeof(TarotCards), typeof(CustomTarotCard.CustomTarotCard) },
         { typeof(FollowerTrait), typeof(CustomTrait) }
     };
-
+    
     private static string BeautifyNamespace(string? str)
     {
         return str is null or "" ? "" : str + ".";
+    }
+    
+    internal void ShowPatches(Type a)
+    {
+        var harmony = Plugin.Instance._harmony;
+        var patchedMethods = harmony.GetPatchedMethods().Where(methodBase => methodBase.DeclaringType == a);
+
+        foreach (var method in a.GetMethods())
+        {
+            LogDebug(patchedMethods.Contains(method)
+                ? $"{BeautifyNamespace(a.Namespace)}{a.Name}: Patched"
+                : $"{BeautifyNamespace(a.Namespace)}{a.Name}: Unpatched");
+        }
     }
 
     private static void ShowDiff(Type a, Type b)
