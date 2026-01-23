@@ -71,7 +71,7 @@ public static partial class CustomItemManager
 
             StructureBrain.ApplyConfigToData(data);
             sb.Init(data);
-            StructureBrain._brainsByID.Add(data.ID, sb);
+            StructureBrain.TryAddBrain(data.ID, sb);
             StructureManager.StructuresAtLocation(data.Location).Add(sb);
             __result = sb;
 

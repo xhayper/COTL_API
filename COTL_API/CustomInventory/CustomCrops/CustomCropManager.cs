@@ -93,6 +93,7 @@ public static partial class CustomItemManager
 
             CropPrefab = handle.Result;
             CustomCropList.Do(x => CreateCropObject(x.Value));
+            CropPrefab.SetActive(false);
         };
     }
 }

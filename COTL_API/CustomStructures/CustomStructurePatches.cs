@@ -17,7 +17,7 @@ public partial class CustomStructureManager
 
         StructureBrain.ApplyConfigToData(data);
         structureBrain?.Init(data);
-        StructureBrain._brainsByID.Add(data.ID, structureBrain);
+        StructureBrain.TryAddBrain(data.ID, structureBrain);
         StructureManager.StructuresAtLocation(data.Location).Add(structureBrain);
         __result = structureBrain!;
         return false;
