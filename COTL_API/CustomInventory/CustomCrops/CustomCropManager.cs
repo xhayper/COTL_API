@@ -92,6 +92,7 @@ public static partial class CustomItemManager
                 throw new NullReferenceException("Couldn't Find Berry Crop Object, Send a bug report!");
 
             CropPrefab = handle.Result;
+            CropPrefab.SetActive(false);
             CustomCropList.Do(x => CreateCropObject(x.Value));
         };
     }

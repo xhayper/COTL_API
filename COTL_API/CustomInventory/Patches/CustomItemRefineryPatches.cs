@@ -53,12 +53,13 @@ public static partial class CustomItemManager
     }
 
     [HarmonyPostfix]
-    [HarmonyPatch(typeof(RefineryInfoCard), nameof(RefineryInfoCard.Configure), typeof(InventoryItem.ITEM_TYPE))]
-    public static void RefineryInfoCard_Configure(ref RefineryInfoCard __instance, ref InventoryItem.ITEM_TYPE config)
+    [HarmonyPatch(typeof(RefineryInfoCard), nameof(RefineryInfoCard.Configure))]
+    public static void RefineryInfoCard_Configure(ref RefineryInfoCard __instance, ref RefineryItem config)
     {
-        if (!CustomItemList.TryGetValue(config, out var value)) return;
+        var itemtype = config.Type;
+        if (!CustomItemList.TryGetValue(itemtype, out var value)) return;
 
         __instance._descriptionText.text = value.LocalizedDescription();
-        __instance._headerText.text = CustomItemList[config].LocalizedName();
+        __instance._headerText.text = CustomItemList[itemtype].LocalizedName();
     }
 }

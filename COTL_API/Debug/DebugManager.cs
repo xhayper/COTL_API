@@ -46,8 +46,8 @@ internal class DebugManager
     };
 
     // TODO: Can't we just harmony.GetPatchedMethods().Select(mB => mB.DeclaringType);
-    internal static List<Type> PatchedClass = new()
-    {
+    internal static List<Type> PatchedClass =
+    [
         typeof(CropController),
         typeof(StructuresData),
         typeof(StructureBrain),
@@ -124,7 +124,7 @@ internal class DebugManager
         typeof(Interaction_TempleAltar),
         typeof(Interaction),
         typeof(UITarotChoiceOverlayController)
-    };
+    ];
 
     internal static InventoryItem.ITEM_TYPE DebugItem { get; private set; }
     internal static InventoryItem.ITEM_TYPE DebugItem2 { get; private set; }
@@ -140,18 +140,18 @@ internal class DebugManager
         return str is null or "" ? "" : str + ".";
     }
 
-    internal void ShowPatches(Type a)
+    internal static void ShowPatches(Type a)
     {
         var harmony = Plugin.Instance._harmony;
         var patchedMethods = harmony.GetPatchedMethods().Where(methodBase => methodBase.DeclaringType == a);
 
         foreach (var method in a.GetMethods())
             LogDebug(patchedMethods.Contains(method)
-                ? $"{BeautifyNamespace(a.Namespace)}{a.Name}: Patched"
-                : $"{BeautifyNamespace(a.Namespace)}{a.Name}: Unpatched");
+                ? $"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name}: Patched"
+                : $"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name}: Unpatched");
     }
 
-    internal void ShowPatchedClasses()
+    internal static void ShowPatchedClasses()
     {
         foreach (var cl in PatchedClass) ShowPatches(cl);
     }

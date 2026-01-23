@@ -166,12 +166,14 @@ public static partial class CustomObjectiveManager
     }
 
     /// <param name="category">The category of structure to place.</param>
+    /// <param name="type">The type of structure to place.</param>
     /// <param name="target">The target amount to complete the objective.</param>
     /// <param name="expireDuration">How long the player has to complete the objective.</param>
     /// <returns>Returns a CustomObjective object.</returns>
-    public static CustomObjective PlaceStructure(StructureBrain.Categories category, int target, float expireDuration)
+    public static CustomObjective PlaceStructure(StructureBrain.Categories category,
+        Objectives_PlaceStructure.DecorationType type, int target, float expireDuration)
     {
-        Objectives_PlaceStructure q = new(GroupId, category, target, expireDuration);
+        Objectives_PlaceStructure q = new(GroupId, category, type, target, expireDuration);
         return WorkMagic(q.ID, DefaultQuestText, q);
     }
 
