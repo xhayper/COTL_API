@@ -140,7 +140,7 @@ internal class DebugManager
         return str is null or "" ? "" : str + ".";
     }
 
-    internal void ShowPatches(Type a)
+    internal static void ShowPatches(Type a)
     {
         var harmony = Plugin.Instance._harmony;
         var patchedMethods = harmony.GetPatchedMethods().Where(methodBase => methodBase.DeclaringType == a);
@@ -151,7 +151,7 @@ internal class DebugManager
                 : $"{BeautifyNamespace(a.Namespace)}{a.Name}: Unpatched");
     }
 
-    internal void ShowPatchedClasses()
+    internal static void ShowPatchedClasses()
     {
         foreach (var cl in PatchedClass) ShowPatches(cl);
     }
