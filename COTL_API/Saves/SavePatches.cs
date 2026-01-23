@@ -26,7 +26,8 @@ public static partial class ModdedSaveManager
     {
         foreach (var saveData in ModdedSaveDataList.Values)
             saveData.Saving();
-        SaveAndLoad.Instance._saveFileReadWriter.Write(DataManager.Instance, SaveAndLoad.MakeSaveSlot(SaveAndLoad.SAVE_SLOT), !Plugin.Instance.DecryptSaveFile);
+        SaveAndLoad.Instance._saveFileReadWriter.Write(DataManager.Instance,
+            SaveAndLoad.MakeSaveSlot(SaveAndLoad.SAVE_SLOT), !Plugin.Instance.DecryptSaveFile);
     }
 
     [HarmonyPatch(typeof(SaveAndLoad), nameof(SaveAndLoad.ResetSave))]

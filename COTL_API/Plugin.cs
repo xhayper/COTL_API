@@ -56,8 +56,8 @@ public class Plugin : BaseUnityPlugin
 
     private ConfigEntry<bool>? _disableAchievement { get; set; }
     public bool DisableAchievement => _disableAchievement?.Value ?? true;
-    
-    private ConfigEntry<bool>? _decryptSaveFile { get; set;  }
+
+    private ConfigEntry<bool>? _decryptSaveFile { get; set; }
     public bool DecryptSaveFile => _decryptSaveFile?.Value ?? false;
 
     internal static bool Started { get; private set; }
@@ -89,7 +89,7 @@ public class Plugin : BaseUnityPlugin
         _disableAchievement = Config.Bind("Miscellaneous", "Disable new achievement", true,
             "Should we disable saving new achievements? (You will still be able to get achievement but it won't save)");
         _decryptSaveFile = Config.Bind("Miscellaneous", "Decrypt save file", false);
-        
+
         _debug = Config.Bind("Debug", "API debug", false,
             "API debug mode. Will add debug content to your game for testing. Not recommended for normal play.");
         UnityDebug = Config.Bind("Debug", "Unity debug logging", false,
@@ -165,7 +165,12 @@ public class Plugin : BaseUnityPlugin
                 AchievementsWrapper.LoadAchievementData();
                 AchievementsWrapper.compareAchievements();
             });
-        CustomSettingsManager.AddBepInExConfig("API", "Decrypt save file", _decryptSaveFile);
+        CustomSettingsManager.AddBepInExConfig("API", "Decrypt save file", _decryptSaveFile, delegate(bool isActivated)
+        {
+            if (!isActivated) return;
+
+            foreach (var save in ModdedSaveManager.ModdedSaveDataList.Values) save.Save(!_decryptSaveFile.Value);
+        });
 
         CustomSettingsManager.AddBepInExConfig("API", "Debug", _debug, delegate(bool isActivated)
         {
