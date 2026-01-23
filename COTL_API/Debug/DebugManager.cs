@@ -147,8 +147,8 @@ internal class DebugManager
 
         foreach (var method in a.GetMethods())
             LogDebug(patchedMethods.Contains(method)
-                ? $"{BeautifyNamespace(a.Namespace)}{method.Name}: Patched"
-                : $"{BeautifyNamespace(a.Namespace)}{method.Name}: Unpatched");
+                ? $"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name}: Patched"
+                : $"{BeautifyNamespace(a.Namespace)}{a.Name}.{method.Name}: Unpatched");
     }
 
     internal static void ShowPatchedClasses()
