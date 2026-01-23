@@ -54,9 +54,22 @@ public class ModdedSaveData<T> : BaseModdedSaveData where T : class, new()
 
     public override void Saving()
     {
-        if (Data != null)
-            _dataReadWriter.Write(Data,
-                MakeSaveSlot(LoadOrder == ModdedSaveLoadOrder.LOAD_AS_SOON_AS_POSSIBLE ? null : SAVE_SLOT));
+        if (Data == null)
+            return;
+        
+        var deletePreviousSave = false;
+        if (SAVE_SLOT >= 10 && !SaveExist(SAVE_SLOT - 10))
+        {
+            SAVE_SLOT -= 10;
+            deletePreviousSave = true;
+        }
+        _dataReadWriter.Write(Data, SaveAndLoad.MakeSaveSlot(SaveAndLoad.SAVE_SLOT), !Plugin.Instance.DecryptSaveFile);
+        _dataReadWriter.OnWriteCompleted += (() =>
+        {
+            if (!deletePreviousSave)
+                return;
+            DeleteSaveSlot(SaveAndLoad.SAVE_SLOT + 10);
+        });
     }
 
     public override void Load(int? saveSlot = null)
