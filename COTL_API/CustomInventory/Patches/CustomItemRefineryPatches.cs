@@ -54,7 +54,8 @@ public static partial class CustomItemManager
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(RefineryInfoCard), nameof(RefineryInfoCard.Configure))]
-    public static void RefineryInfoCard_Configure(ref RefineryInfoCard __instance, ref RefineryItem config) {
+    public static void RefineryInfoCard_Configure(ref RefineryInfoCard __instance, ref RefineryItem config)
+    {
         var itemtype = config.Type;
         if (!CustomItemList.TryGetValue(itemtype, out var value)) return;
 
