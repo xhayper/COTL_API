@@ -1,3 +1,4 @@
+using System;
 using HarmonyLib;
 using Spine;
 using Spine.Unity;
@@ -666,7 +667,7 @@ public static partial class CustomSkinManager
         try
         {
             var rName = simpleName.Split(':')[1];
-            var regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0]);
+            var regionIndex = (int)(SkinSlots)Enum.Parse(typeof(SkinSlots), simpleName.Split(':')[0], true);
             region.name = regionIndex + ":" + rName + "#" + add;
             return [Tuple.Create(regionIndex, rName)];
         }
