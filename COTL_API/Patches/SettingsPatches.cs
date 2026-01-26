@@ -1,4 +1,5 @@
-﻿using COTL_API.CustomSkins;
+﻿using System;
+using COTL_API.CustomSkins;
 using HarmonyLib;
 using Lamb.UI;
 using Lamb.UI.MainMenu;
@@ -39,10 +40,10 @@ public static class SettingsPatches
 
         if (Plugin.LambFleeceBleatSettings?.Value is not null && Plugin.LambFleeceBleatSettings.Value != "Default")
             CustomSkinManager.SetPlayerBleatOverride(PlayerType.LAMB,
-                (PlayerBleat)Enum.Parse(typeof(PlayerBleat), Plugin.LambFleeceBleatSettings.Value));
+                (PlayerBleat)Enum.Parse(typeof(PlayerBleat), Plugin.LambFleeceBleatSettings.Value, true));
 
         if (Plugin.GoatFleeceBleatSettings?.Value is not null && Plugin.GoatFleeceBleatSettings.Value != "Default")
             CustomSkinManager.SetPlayerBleatOverride(PlayerType.GOAT,
-                (PlayerBleat)Enum.Parse(typeof(PlayerBleat), Plugin.GoatFleeceBleatSettings.Value));
+                (PlayerBleat)Enum.Parse(typeof(PlayerBleat), Plugin.GoatFleeceBleatSettings.Value, true));
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace COTL_API.Helpers;
 
@@ -11,7 +12,7 @@ public static class KeyCodes
 
     public static KeyCode StringToKeyCode(string keyCodeString)
     {
-        return (KeyCode)Enum.Parse(typeof(KeyCode), keyCodeString);
+        return (KeyCode)Enum.Parse(typeof(KeyCode), keyCodeString, true);
     }
 
     public static string[] GetKeyCodeOptions()
