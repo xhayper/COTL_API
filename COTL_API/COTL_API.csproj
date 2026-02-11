@@ -13,15 +13,19 @@
         <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
-    <Import Project="../COTL_API.Common.props"/>
+    <Import Project="../COTL_API.Common.props" />
 
     <ItemGroup>
-        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.5.15.979-r.0"/>
+        <PackageReference Include="CultOfTheLamb.GameLibs" Version="1.5.15.979-r.0" />
         <Reference Include="UnifyLibrary">
             <HintPath>..\lib\UnifyLibrary.dll</HintPath>
         </Reference>
-        <None Include="../README.md" Pack="true" PackagePath="/"/>
-        <None Include="../LICENSE" Pack="true" PackagePath="/"/>
-        <None Include="../icon.png" Pack="true" PackagePath="/"/>
+        <None Include="../README.md" Pack="true" PackagePath="/" />
+        <None Include="../LICENSE" Pack="true" PackagePath="/" />
+        <None Include="../icon.png" Pack="true" PackagePath="/" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="CustomEnemy\" />
     </ItemGroup>
 </Project>
