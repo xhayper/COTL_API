@@ -1,5 +1,4 @@
-﻿using System;
-using COTL_API.CustomSkins;
+﻿using COTL_API.CustomSkins;
 using HarmonyLib;
 using Lamb.UI;
 using Lamb.UI.MainMenu;
