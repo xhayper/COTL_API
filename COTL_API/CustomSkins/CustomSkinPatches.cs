@@ -229,17 +229,20 @@ public partial class CustomSkinManager
         return false;
     }
 
+    // [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.Awake))]
+    // [HarmonyPrefix]
+    // private static bool PlayerFarming_Awake(PlayerFarming __instance)
+    // {
+    //     // add default spine when player enters the game
+    //     if (!CustomPlayerSpines.ContainsKey("Default"))
+    //         AddPlayerSpine("Default", __instance.Spine.skeletonDataAsset, ["Lamb", "Goat", "Owl", "Snake"]);
+    //     return true;
+    // }
+
     [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.Start))]
     [HarmonyPrefix]
     private static bool PlayerFarming_Start(PlayerFarming __instance)
     {
-        // swap the placeholder with the default spine when player enters the game
-        if (!CustomPlayerSpines.ContainsKey("Default"))
-            AddPlayerSpine("Default", PlayerFarming.Instance.Spine.skeletonDataAsset, ["Lamb", "Goat", "Owl", "Snake"]);
-
-        if (CustomPlayerSpines.ContainsKey("Placeholder"))
-            CustomPlayerSpines.Remove("Placeholder");
-
         var spineOverride = (CoopManager.CoopActive && __instance.playerID == 1) ? SelectedSpine2 : SelectedSpine;
         if (spineOverride == "") return true;
         if (!CustomPlayerSpines.ContainsKey(spineOverride)) return true;
