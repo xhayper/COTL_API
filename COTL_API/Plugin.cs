@@ -2,6 +2,7 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
+using COTL_API.CustomEnemy;
 using COTL_API.CustomInventory;
 using COTL_API.CustomObjectives;
 using COTL_API.CustomSettings;
@@ -27,6 +28,7 @@ public class Plugin : BaseUnityPlugin
     internal static Dropdown? GoatFleeceBleatSettings;
 
     internal static Dropdown? CustomPlayerSpineSettings;
+    internal static Dropdown? CustomPlayer2SpineSettings;
     internal readonly Harmony _harmony = new(MyPluginInfo.PLUGIN_GUID);
 
     internal readonly ModdedSaveData<ApiData> APIData = new(MyPluginInfo.PLUGIN_GUID)
@@ -149,7 +151,16 @@ public class Plugin : BaseUnityPlugin
             [.. CustomSkinManager.CustomPlayerSpines.Keys], i =>
             {
                 CustomSkinManager.ChangeSelectedPlayerSpine(
-                    CustomSkinManager.CustomPlayerSpines.Keys.ElementAt(i));
+                    CustomSkinManager.CustomPlayerSpines.Keys.ElementAt(i), 0);
+            });
+        
+        CustomPlayer2SpineSettings = CustomSettingsManager.AddSavedDropdown("API", MyPluginInfo.PLUGIN_GUID,
+            "Custom player 2 spine",
+            "Lamb Spine",
+            [.. CustomSkinManager.CustomPlayerSpines.Keys], i =>
+            {
+                CustomSkinManager.ChangeSelectedPlayerSpine(
+                    CustomSkinManager.CustomPlayerSpines.Keys.ElementAt(i), 1);
             });
 
         CustomSettingsManager.AddBepInExConfig("API", "Skip splash screen", _skipSplashScreen);
@@ -226,6 +237,21 @@ public class Plugin : BaseUnityPlugin
         if (Input.GetKeyDown(KeyCode.F3))
             foreach (var x in PlayerFarming.Instance.Spine.Skeleton.Skin.Attachments)
                 LogDebug($"{{ \"{x.Name}\", Tuple.Create({x.SlotIndex}, \"{x.Name}\") }}");
+
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            var enemyPrefab = new DebugEnemy();
+            var enemy = CustomEnemyManager.Add(enemyPrefab);
+            StartCoroutine(CustomEnemyManager.BuildEnemyPrefab(enemyPrefab));
+            LogInfo($"Generated Enemy Prefab: {enemyPrefab.EnemyToMimic}");
+
+        }
+        if (Input.GetKeyDown(KeyCode.F11))
+        {
+            if (CustomEnemyManager.CustomEnemyList.Count < 0) return;
+            CustomEnemyManager.Spawn(CustomEnemyManager.CustomEnemyList.Keys.ElementAt(0), PlayerFarming.Instance.transform.position);
+            LogInfo($"Spawned debug enemy: {CustomEnemyManager.CustomEnemyList.Keys.ElementAt(0)}");
+        }
     }
 
     private void OnEnable()

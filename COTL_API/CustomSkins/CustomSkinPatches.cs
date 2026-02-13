@@ -125,13 +125,15 @@ public partial class CustomSkinManager
 
         SkinUtils.InvokeOnFindSkin(playerType);
 
-        if (!PlayerSkinOverride.ContainsKey(playerType) && !CustomPlayerSpines.ContainsKey(SelectedSpine)) return true;
+        var spineOverride = (CoopManager.CoopActive && __instance.playerID == 1) ? SelectedSpine2 : SelectedSpine;
+
+        if (!PlayerSkinOverride.ContainsKey(playerType) && !CustomPlayerSpines.ContainsKey(spineOverride)) return true;
 
         __instance.IsGoat = DataManager.Instance.PlayerVisualFleece == 1003;
         __instance.PlayerSkin = new Skin("Player Skin");
         List<Skin?>? skinToUse = null;
 
-        if (PlayerSkinOverride.ContainsKey(playerType) && !CustomPlayerSpines.ContainsKey(SelectedSpine))
+        if (PlayerSkinOverride.ContainsKey(playerType) && !CustomPlayerSpines.ContainsKey(spineOverride))
         {
             skinToUse = PlayerSkinOverride[playerType];
             if (skinToUse == null) return true;
@@ -141,7 +143,7 @@ public partial class CustomSkinManager
         }
         else
         {
-            var selectedSpineSkin = SelectedSpine.Split(['/'], 2)[1];
+            var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
             __instance.PlayerSkin.AddSkin(__instance.Spine.Skeleton.Data.FindSkin(selectedSpineSkin));
         }
 
@@ -231,15 +233,20 @@ public partial class CustomSkinManager
     [HarmonyPrefix]
     private static bool PlayerFarming_Start(PlayerFarming __instance)
     {
-        if (CustomPlayerSpines.Count == 0)
+        // swap the placeholder with the default spine when player enters the game
+        if (!CustomPlayerSpines.ContainsKey("Default"))
             AddPlayerSpine("Default", PlayerFarming.Instance.Spine.skeletonDataAsset, ["Lamb", "Goat", "Owl", "Snake"]);
 
-        if (SelectedSpine == "") return true;
-        if (!CustomPlayerSpines.ContainsKey(SelectedSpine)) return true;
-        if (CustomPlayerSpines[SelectedSpine] == null) return true;
+        if (CustomPlayerSpines.ContainsKey("Placeholder"))
+            CustomPlayerSpines.Remove("Placeholder");
 
-        var selectedSpineSkin = SelectedSpine.Split(['/'], 2)[1];
-        var runtimeSkeletonAsset = CustomPlayerSpines[SelectedSpine];
+        var spineOverride = (CoopManager.CoopActive && __instance.playerID == 1) ? SelectedSpine2 : SelectedSpine;
+        if (spineOverride == "") return true;
+        if (!CustomPlayerSpines.ContainsKey(spineOverride)) return true;
+        if (CustomPlayerSpines[spineOverride] == null) return true;
+
+        var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
+        var runtimeSkeletonAsset = CustomPlayerSpines[spineOverride];
         PlayerFarming.Instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
         PlayerFarming.Instance.Spine.initialSkinName = selectedSpineSkin;
         PlayerFarming.Instance.Spine.Initialize(true);
@@ -251,7 +258,7 @@ public partial class CustomSkinManager
         PlayerFarming.Instance.simpleSpineAnimator.anim.AnimationState.Event +=
             PlayerFarming.Instance.simpleSpineAnimator.SpineEventHandler;
 
-        LogInfo("Loaded Custom Spine " + SelectedSpine + " with skin " + selectedSpineSkin);
+        LogInfo("Loaded Custom Spine " + spineOverride + " with skin " + selectedSpineSkin + " For player ID " + __instance.playerID);
 
         return true;
     }

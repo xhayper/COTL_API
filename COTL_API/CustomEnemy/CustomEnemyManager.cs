@@ -23,8 +23,6 @@ public static partial class CustomEnemyManager
 
         CustomEnemyList.Add(innerType, customEnemy);
         LogWarning($"Added: {innerType} {customEnemy.InternalName} {customEnemy.ModPrefix}");
-
-        var enemyPrefab = BuildEnemyPrefab(customEnemy);
         
         return innerType;
     }
@@ -54,7 +52,6 @@ public static partial class CustomEnemyManager
 
     public static UnitObject? Spawn(Enemy enemyType, Vector3 position)
     {
-        //check if enemyType is in CustomEnemyPrefabList
         if (!CustomEnemyPrefabList.ContainsKey(enemyType))
         {
             LogWarning($"No custom enemy prefab found for {enemyType}!");
@@ -62,11 +59,26 @@ public static partial class CustomEnemyManager
         }
 
         var prefab = CustomEnemyPrefabList[enemyType];
+        var objInfo = CustomEnemyList[enemyType];
         var obj = UnityEngine.Object.Instantiate(prefab, position, Quaternion.identity);
         var unitObject = obj.GetComponent<UnitObject>();
 
         if (unitObject != null)
         {
+            unitObject.health.totalHP = objInfo.maxHealth;
+            unitObject.health.HP = objInfo.maxHealth;
+
+            if (objInfo.SpineOverride != null)
+            {
+                //apply spine override here
+            }
+
+            if (objInfo.EnemyController != null)
+            {
+                //apply enemy controller here, remove original controller
+            }
+
+
             CustomSpawnedEnemies.Add(unitObject);
             return unitObject;
         }

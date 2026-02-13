@@ -34,6 +34,7 @@ public static partial class CustomSkinManager
     internal static readonly Dictionary<string, SkeletonDataAsset?> CustomPlayerSpines = [];
     internal static readonly Dictionary<string, SkeletonDataAsset?> CustomFollowerSpines = [];
     internal static string SelectedSpine = "";
+    internal static string SelectedSpine2 = "";
     internal static int NumGenericAtlases;
 
     internal static readonly Dictionary<string, CustomPlayerSkin> CustomPlayerSkins = [];
@@ -553,15 +554,31 @@ public static partial class CustomSkinManager
 
         if (Plugin.CustomPlayerSpineSettings != null)
             Plugin.CustomPlayerSpineSettings.Options = [.. CustomPlayerSpines.Keys];
+
+        if (Plugin.CustomPlayer2SpineSettings != null)
+            Plugin.CustomPlayer2SpineSettings.Options = [.. CustomPlayerSpines.Keys];
     }
 
-    public static void ChangeSelectedPlayerSpine(string name)
+    public static void ChangeSelectedPlayerSpine(string name, int playerId = 0)
     {
         // var splitted = name.Split(['/'], 2);
         if (!CustomPlayerSpines.ContainsKey(name) || CustomPlayerSpines[name] == null) return;
-        SelectedSpine = name;
 
-        LogInfo($"Selected Spine: {SelectedSpine}");
+        switch (playerId)
+        {
+            case 0:
+                SelectedSpine = name;
+                break;
+            case 1:
+                SelectedSpine2 = name;
+                break;
+            default:
+                SelectedSpine = name;
+            break;
+        }
+        
+
+        LogInfo($"Selected Spine P1: {SelectedSpine} , P2: {SelectedSpine2}");
     }
 
     public static void AddFollowerSpine(string name, SkeletonDataAsset? skeletonDataAsset)
