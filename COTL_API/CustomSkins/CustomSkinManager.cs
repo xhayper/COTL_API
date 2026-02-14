@@ -561,24 +561,59 @@ public static partial class CustomSkinManager
 
     public static void ChangeSelectedPlayerSpine(string name, int playerId = 0)
     {
-        // var splitted = name.Split(['/'], 2);
+        var splitted = name.Split(['/'], 2);
+        var playerSpineHasChanged = false;
+        //check if first part of the name is same as selectedSpine of the playerID
         if (!CustomPlayerSpines.ContainsKey(name) || CustomPlayerSpines[name] == null) return;
 
         switch (playerId)
         {
             case 0:
+                var splittedSelectedSpine = SelectedSpine.Split(['/'], 2);
+                playerSpineHasChanged = !splittedSelectedSpine[0].Equals(splitted[0]);
                 SelectedSpine = name;
                 break;
             case 1:
+                var splittedSelectedSpine2 = SelectedSpine2.Split(['/'], 2);
+                playerSpineHasChanged = !splittedSelectedSpine2[0].Equals(splitted[0]);
                 SelectedSpine2 = name;
                 break;
             default:
+                playerSpineHasChanged = true;
                 SelectedSpine = name;
-            break;
+                break;
         }
         
-
         LogInfo($"Selected Spine P1: {SelectedSpine} , P2: {SelectedSpine2}");
+
+        if (PlayerFarming.Instance != null && playerSpineHasChanged)
+        {
+            var isCoopChange = CoopManager.CoopActive && playerId == 1;
+            var instance = isCoopChange ? PlayerFarming.players[1] : PlayerFarming.Instance;
+            LogWarning("player instance hotswap spine: " + instance + "! Actions may not work as intended until a location change!");
+
+            var spineOverride = isCoopChange ? SelectedSpine2 : SelectedSpine;
+            if (spineOverride == "") return;
+            if (!CustomPlayerSpines.ContainsKey(spineOverride)) return;
+            if (CustomPlayerSpines[spineOverride] == null) return;
+
+            var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
+            var runtimeSkeletonAsset = CustomPlayerSpines[spineOverride];
+            instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
+            instance.Spine.initialSkinName = selectedSpineSkin;
+            instance.Spine.Initialize(true);
+
+            //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
+            //enable the spine animator event tracker after replacing spine
+            instance.simpleSpineAnimator.anim.AnimationState.Event -=
+                instance.simpleSpineAnimator.SpineEventHandler;
+            instance.simpleSpineAnimator.anim.AnimationState.Event +=
+                instance.simpleSpineAnimator.SpineEventHandler;
+
+            NotificationCentre.Instance.PlayGenericNotification(
+                "<color=\"yellow\">Warning: Spine hotswap detected!</color> Actions may not work as intended until a location change.",
+                NotificationBase.Flair.Winter);
+        }
     }
 
     public static void AddFollowerSpine(string name, SkeletonDataAsset? skeletonDataAsset)

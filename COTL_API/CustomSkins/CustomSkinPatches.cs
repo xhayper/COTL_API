@@ -229,15 +229,15 @@ public partial class CustomSkinManager
         return false;
     }
 
-    // [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.Awake))]
-    // [HarmonyPrefix]
-    // private static bool PlayerFarming_Awake(PlayerFarming __instance)
-    // {
-    //     // add default spine when player enters the game
-    //     if (!CustomPlayerSpines.ContainsKey("Default"))
-    //         AddPlayerSpine("Default", __instance.Spine.skeletonDataAsset, ["Lamb", "Goat", "Owl", "Snake"]);
-    //     return true;
-    // }
+    [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.Awake))]
+    [HarmonyPrefix]
+    private static bool PlayerFarming_Awake(PlayerFarming __instance)
+    {
+        // add default spine when player enters the game
+        if (!CustomPlayerSpines.ContainsKey("Default"))
+            AddPlayerSpine("Default", __instance.Spine.skeletonDataAsset, ["Lamb", "Goat", "Owl", "Snake"]);
+        return true;
+    }
 
     [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.Start))]
     [HarmonyPrefix]
