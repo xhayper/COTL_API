@@ -71,6 +71,18 @@ public static partial class CustomEnemyManager
             if (objInfo.SpineOverride != null)
             {
                 //apply spine override here
+                var spineFlash = obj.GetComponentsInChildren<SimpleSpineFlash>();
+                if (spineFlash.Length <= 0)
+                {
+                    LogWarning("No spine found on spawned custom enemy! " + prefab);
+                }
+                else
+                {
+                    spineFlash[0].Spine.skeletonDataAsset = objInfo.SpineOverride;
+                    spineFlash[0].Spine.skeleton.SetBonesToSetupPose();
+                    spineFlash[0].Spine.Update(0);
+                }
+
             }
 
             if (objInfo.EnemyController != null)

@@ -250,18 +250,109 @@ public partial class CustomSkinManager
 
         var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
         var runtimeSkeletonAsset = CustomPlayerSpines[spineOverride];
-        PlayerFarming.Instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
-        PlayerFarming.Instance.Spine.initialSkinName = selectedSpineSkin;
-        PlayerFarming.Instance.Spine.Initialize(true);
+        __instance.simpleSpineAnimator = __instance.GetComponentInChildren<SimpleSpineAnimator>();
+        __instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
+        __instance.Spine.initialSkinName = selectedSpineSkin;
+        __instance.Spine.Initialize(true);
 
         //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
         //enable the spine animator event tracker after replacing spine
-        PlayerFarming.Instance.simpleSpineAnimator.anim.AnimationState.Event -=
-            PlayerFarming.Instance.simpleSpineAnimator.SpineEventHandler;
-        PlayerFarming.Instance.simpleSpineAnimator.anim.AnimationState.Event +=
-            PlayerFarming.Instance.simpleSpineAnimator.SpineEventHandler;
+        __instance.simpleSpineAnimator.anim.AnimationState.Event -=
+            __instance.simpleSpineAnimator.SpineEventHandler;
+        __instance.simpleSpineAnimator.anim.AnimationState.Event +=
+            __instance.simpleSpineAnimator.SpineEventHandler;
 
-        LogInfo("Loaded Custom Spine " + spineOverride + " with skin " + selectedSpineSkin + " For player ID " + __instance.playerID);
+        LogInfo("PLAYERFARMING_START: Loaded Custom Spine " + spineOverride + " with skin " + selectedSpineSkin + " For player ID " + __instance.playerID);
+
+        return true;
+    }
+
+    [HarmonyPatch(typeof(PlayerFarming), nameof(PlayerFarming.OnEnable))]
+    [HarmonyPrefix]
+    private static bool PlayerFarming_OnEnable(PlayerFarming __instance)
+    {
+        // var spineOverride = (CoopManager.CoopActive && __instance.playerID == 1) ? SelectedSpine2 : SelectedSpine;
+        // if (spineOverride == "") return true;
+        // if (!CustomPlayerSpines.ContainsKey(spineOverride)) return true;
+        // if (CustomPlayerSpines[spineOverride] == null) return true;
+
+        // var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
+        // var runtimeSkeletonAsset = CustomPlayerSpines[spineOverride];
+        // __instance.simpleSpineAnimator = __instance.GetComponentInChildren<SimpleSpineAnimator>();
+        // __instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
+        // __instance.Spine.initialSkinName = selectedSpineSkin;
+        // __instance.Spine.Initialize(true);
+        // __instance.Spine.skeleton.SetToSetupPose();
+
+        // //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
+        // //enable the spine animator event tracker after replacing spine
+        // __instance.simpleSpineAnimator.anim.AnimationState.Event -=
+        //     __instance.simpleSpineAnimator.SpineEventHandler;
+        // __instance.simpleSpineAnimator.anim.AnimationState.Event +=
+        //     __instance.simpleSpineAnimator.SpineEventHandler;
+
+        // LogInfo("PLAYERFARMING_ONENABLE (Respawn/Others): Loaded Custom Spine " + spineOverride + " with skin " + selectedSpineSkin + " For player ID " + __instance.playerID);
+        LogInfo("PLAYERFARMING_ONENABLE (Respawn/Others): Reapplying Custom Spine!");
+        __instance.Start();
+        return true;
+    }
+
+    [HarmonyPatch(typeof(PlayerPrisonerController), nameof(PlayerPrisonerController.Start))]
+    [HarmonyPrefix]
+    private static bool PlayerPrisonerController_Start(PlayerPrisonerController __instance)
+    {
+        var spineOverride = SelectedSpine;
+        if (spineOverride == "") return true;
+        if (!CustomPlayerSpines.ContainsKey(spineOverride)) return true;
+        if (CustomPlayerSpines[spineOverride] == null) return true;
+
+
+        var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
+        var runtimeSkeletonAsset = CustomPlayerSpines[spineOverride];
+
+        var originalSkin = runtimeSkeletonAsset?.skeletonData.FindSkin("Lamb_Intro") ?? __instance.Spine.skeleton.Skin;
+        
+
+        __instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
+        __instance.Spine.initialSkinName = selectedSpineSkin;
+        __instance.Spine.Initialize(true);
+
+        var tempSkin = new Skin("temp");
+        tempSkin.AddSkin(__instance.Spine.skeleton.Skin);
+
+        List<(string, string)> FleeceOverrideSlots = [ //(slot index, slot name)
+            ("images/PonchoLeft", "PonchoLeft"),
+            ("images/PonchoRight", "PonchoRight"),
+            ("images/PonchoLeft", "PonchoLeft2"),
+            ("images/PonchoRight", "PonchoRight2"),
+            ("images/PonchoExtra", "PonchoExtra"),
+            ("images/PonchoRightCorner2", "PonchoRightCorner"),
+            ("images/PonchoRightCorner", "PonchoRightCorner"),
+            ("images/PonchoShoulder", "PonchoShoulder"),
+            ("images/PonchoShoulder2", "PonchoShoulder_Right"),
+            ("RopeTopLeft", "images/RopeTopLeft"),
+            ("RopeTopRight", "images/RopeTopRight"),
+            ("images/Rope", "images/Rope"),
+            ("images/Bell", "Bell"),
+            ("images/Body", "Body")
+        ]; //Tuple<string, string>
+
+        foreach (var slot in FleeceOverrideSlots)
+        {
+            var slotIndex = __instance.Spine.Skeleton.FindSlotIndex(slot.Item1);
+            var attachment = originalSkin.GetAttachment(slotIndex, slot.Item2);
+
+            if (attachment == null)
+                tempSkin.RemoveAttachment(slotIndex, slot.Item2);
+            else
+                tempSkin.SetAttachment(slotIndex, slot.Item2, attachment);
+        }
+
+        __instance.Spine.skeleton.SetSkin(tempSkin);
+        __instance.Spine.skeleton.SetSlotsToSetupPose();
+        __instance.Spine.AnimationState.SetAnimation(0, "intro/idle", true);
+
+        LogInfo("INTRO PLAYER (Others): Loaded Custom Spine " + spineOverride + " with skin " + selectedSpineSkin);
 
         return true;
     }
