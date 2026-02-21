@@ -1,8 +1,11 @@
 using System.Collections;
+using System.Reflection;
 using HarmonyLib;
 using Lamb.UI;
 using LeTai.Asset.TranslucentImage;
+using Sirenix.Serialization.Utilities;
 using Spine;
+using Spine.Unity;
 using src.Alerts;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
@@ -248,19 +251,78 @@ public partial class CustomSkinManager
         if (!CustomPlayerSpines.ContainsKey(spineOverride)) return true;
         if (CustomPlayerSpines[spineOverride] == null) return true;
 
+        __instance.simpleSpineAnimator = __instance.GetComponentInChildren<SimpleSpineAnimator>();
+        //attempt to collect the event delegates via reflection
+        MulticastDelegate delegates;
+        try {
+            LogWarning("Reflection start BEFORE");
+            var target = __instance.simpleSpineAnimator.anim.AnimationState;
+            var field = target.GetType().GetField("Event", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
+            LogWarning("Reflection field 1");
+
+            delegates = field.GetValue(target) as MulticastDelegate;
+
+            LogWarning("Reflection field 2 delegate success, size is " + delegates.GetInvocationList().Length);
+            delegates.GetInvocationList().ForEach(x => __instance.simpleSpineAnimator.anim.AnimationState.Event += x as Spine.AnimationState.TrackEntryEventDelegate);
+            
+
+        }
+        catch (Exception e) {
+            delegates = null; 
+            LogWarning(e.ToString());
+        }
+
         var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
         var runtimeSkeletonAsset = CustomPlayerSpines[spineOverride];
-        __instance.simpleSpineAnimator = __instance.GetComponentInChildren<SimpleSpineAnimator>();
         __instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
         __instance.Spine.initialSkinName = selectedSpineSkin;
         __instance.Spine.Initialize(true);
 
         //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
         //enable the spine animator event tracker after replacing spine
+        try {
+            if (delegates != null)
+            {
+                
+                foreach (var delegateX in delegates.GetInvocationList())
+                {
+                    LogWarning("Attempting to Reapply animation handler - " + delegateX.GetMethodInfo().DeclaringType + "." + delegateX.GetMethodInfo().Name);
+                    __instance.simpleSpineAnimator.anim.AnimationState.Event -= delegateX as Spine.AnimationState.TrackEntryEventDelegate;
+                    __instance.simpleSpineAnimator.anim.AnimationState.Event += delegateX as Spine.AnimationState.TrackEntryEventDelegate;
+                }
+            }
+        }
+        catch (Exception e) {
+            LogWarning("Error trying to add animation handlers! Some actions may not work! " + e.ToString());
+        }
         __instance.simpleSpineAnimator.anim.AnimationState.Event -=
             __instance.simpleSpineAnimator.SpineEventHandler;
         __instance.simpleSpineAnimator.anim.AnimationState.Event +=
             __instance.simpleSpineAnimator.SpineEventHandler;
+
+        // try
+        // {
+        //     LogWarning("Reapplying Animation Handlers");
+        //     __instance.simpleSpineAnimator.anim.AnimationState.Event += __instance.playerController.HandleAnimationStateEvent;
+        //     __instance.simpleSpineAnimator.anim.AnimationState.Event += __instance.playerWeapon.HandleAnimationStateEvent;
+
+        // }
+        // catch (Exception e)
+        // {
+        //     LogWarning("Error adding animation handlers! Some actions may not work! " + e.ToString());
+        // }
+        //remove player shaders to prevent random sprites from showing
+        __instance.Spine.CustomMaterialOverride.Clear();
+        __instance.Spine.CustomSlotMaterials.Clear();
+
+        var allShaderRenderers = __instance.GetComponentsInChildren<SkeletonRendererCustomMaterials>();
+        foreach (var shaderRenderer in allShaderRenderers)
+        {
+            shaderRenderer.customMaterialOverrides.Clear();
+            shaderRenderer.customSlotMaterials.Clear();
+            shaderRenderer.enabled = false;
+        }
+
 
         LogInfo("PLAYERFARMING_START: Loaded Custom Spine " + spineOverride + " with skin " + selectedSpineSkin + " For player ID " + __instance.playerID);
 

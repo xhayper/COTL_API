@@ -590,28 +590,29 @@ public static partial class CustomSkinManager
         {
             var isCoopChange = CoopManager.CoopActive && playerId == 1;
             var instance = isCoopChange ? PlayerFarming.players[1] : PlayerFarming.Instance;
-            LogWarning("player instance hotswap spine: " + instance + "! Actions may not work as intended until a location change!");
+            LogWarning("player instance hotswap spine: " + instance + "!");
 
             var spineOverride = isCoopChange ? SelectedSpine2 : SelectedSpine;
             if (spineOverride == "") return;
             if (!CustomPlayerSpines.ContainsKey(spineOverride)) return;
             if (CustomPlayerSpines[spineOverride] == null) return;
 
-            var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
-            var runtimeSkeletonAsset = CustomPlayerSpines[spineOverride];
-            instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
-            instance.Spine.initialSkinName = selectedSpineSkin;
-            instance.Spine.Initialize(true);
+            // var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
+            // var runtimeSkeletonAsset = CustomPlayerSpines[spineOverride];
+            // instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
+            // instance.Spine.initialSkinName = selectedSpineSkin;
+            // instance.Spine.Initialize(true);
 
-            //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
-            //enable the spine animator event tracker after replacing spine
-            instance.simpleSpineAnimator.anim.AnimationState.Event -=
-                instance.simpleSpineAnimator.SpineEventHandler;
-            instance.simpleSpineAnimator.anim.AnimationState.Event +=
-                instance.simpleSpineAnimator.SpineEventHandler;
+            // //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
+            // //enable the spine animator event tracker after replacing spine
+            // instance.simpleSpineAnimator.anim.AnimationState.Event -=
+            //     instance.simpleSpineAnimator.SpineEventHandler;
+            // instance.simpleSpineAnimator.anim.AnimationState.Event +=
+            //     instance.simpleSpineAnimator.SpineEventHandler;
+            instance.Start(); //rerun the start prefix patch
 
             NotificationCentre.Instance.PlayGenericNotification(
-                "<color=\"yellow\">Warning: Spine hotswap detected!</color> Actions may not work as intended until a location change.",
+                "<color=\"yellow\">Experimental: Spine hotswap detected!</color> If you encounter any issues, please report them in the <color=\"yellow\">COTL Modding Discord</color>.",
                 NotificationBase.Flair.Winter);
         }
     }
