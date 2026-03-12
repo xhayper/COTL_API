@@ -333,27 +333,7 @@ public partial class CustomSkinManager
     [HarmonyPrefix]
     private static bool PlayerFarming_OnEnable(PlayerFarming __instance)
     {
-        // var spineOverride = (CoopManager.CoopActive && __instance.playerID == 1) ? SelectedSpine2 : SelectedSpine;
-        // if (spineOverride == "") return true;
-        // if (!CustomPlayerSpines.ContainsKey(spineOverride)) return true;
-        // if (CustomPlayerSpines[spineOverride] == null) return true;
-
-        // var selectedSpineSkin = spineOverride.Split(['/'], 2)[1];
-        // var runtimeSkeletonAsset = CustomPlayerSpines[spineOverride];
-        // __instance.simpleSpineAnimator = __instance.GetComponentInChildren<SimpleSpineAnimator>();
-        // __instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
-        // __instance.Spine.initialSkinName = selectedSpineSkin;
-        // __instance.Spine.Initialize(true);
-        // __instance.Spine.skeleton.SetToSetupPose();
-
-        // //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
-        // //enable the spine animator event tracker after replacing spine
-        // __instance.simpleSpineAnimator.anim.AnimationState.Event -=
-        //     __instance.simpleSpineAnimator.SpineEventHandler;
-        // __instance.simpleSpineAnimator.anim.AnimationState.Event +=
-        //     __instance.simpleSpineAnimator.SpineEventHandler;
-
-        // LogInfo("PLAYERFARMING_ONENABLE (Respawn/Others): Loaded Custom Spine " + spineOverride + " with skin " + selectedSpineSkin + " For player ID " + __instance.playerID);
+        if (PlayerFarming.players.Count <= 0 || PlayerFarming.Instance == null) return true; //no need to call yet if too early.
         LogInfo("PLAYERFARMING_ONENABLE (Respawn/Others): Reapplying Custom Spine!");
         __instance.Start();
         return true;
