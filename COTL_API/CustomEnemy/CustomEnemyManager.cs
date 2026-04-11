@@ -88,9 +88,54 @@ public static partial class CustomEnemyManager
             if (objInfo.EnemyController != null)
             {
                 //apply enemy controller here, remove original controller
+                LogInfo($"Adding custom enemy controller for {enemyType}...");
+                try
+                {
+                    var newController = (CustomEnemyController)obj.AddComponent(objInfo.EnemyController);
+                    var originalController = (EnemySwordsmanWolf)unitObject;
+
+                    newController.Spine = originalController.Spine;
+                    newController.SimpleSpineFlash = originalController.SimpleSpineFlash;
+                    newController.ghost = originalController.ghost;
+                    newController.damageColliderEvents = originalController.damageColliderEvents;
+                    if (newController.damageColliderEvents != null)
+                    {
+                        newController.damageColliderEvents.OnTriggerEnterEvent += new ColliderEvents.TriggerEvent(newController.OnDamageTriggerEnter);
+                        newController.damageColliderEvents.SetActive(false);
+                    }
+
+                    // Copy all fields from unitObject to newController using reflection (mm yummy reflection)
+                    LogInfo("Copying fields from original UnitObject to custom enemy controller...");
+                    var fields = typeof(UnitObject).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    foreach (var field in fields)
+                    {
+                        if (!field.IsStatic)
+                        {
+                            try
+                            {
+                                field.SetValue(newController, field.GetValue(unitObject));
+                            }
+                            catch (Exception fieldEx)
+                            {
+                                LogError($"Failed to copy field '{field.Name}' to custom enemy controller: {fieldEx.Message}");
+                            }
+                        }
+                    }
+
+                    // Remove the original controller
+                    LogInfo("Removing original UnitObject controller and returning custom enemy controller...");
+                    UnityEngine.Object.Destroy(unitObject);
+
+                    CustomSpawnedEnemies.Add(newController);
+                    return newController;
+                }
+                catch (Exception ex)
+                {
+                    LogError($"Failed to add custom enemy controller for {enemyType}: {ex}");
+                }
             }
 
-
+            LogInfo("Returning original UnitObject for custom enemy spawn.");
             CustomSpawnedEnemies.Add(unitObject);
             return unitObject;
         }

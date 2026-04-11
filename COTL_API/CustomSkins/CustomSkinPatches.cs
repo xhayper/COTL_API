@@ -199,7 +199,7 @@ public partial class CustomSkinManager
 
         //Finalize Skin         
         __instance.Spine.Skeleton.SetSkin(__instance.PlayerSkin);
-        __instance.Spine.Skeleton.SetSlotsToSetupPose();
+        __instance.Spine.Skeleton.SetToSetupPose();
         __result = __instance.PlayerSkin;
         return false;
     }
@@ -277,6 +277,8 @@ public partial class CustomSkinManager
         __instance.Spine.skeletonDataAsset = runtimeSkeletonAsset;
         __instance.Spine.initialSkinName = selectedSpineSkin;
         __instance.Spine.Initialize(true);
+        __instance.Spine.AnimationState.ClearTracks();
+        __instance.Spine.AnimationState.SetEmptyAnimation(0, 0);
 
         //this.anim.AnimationState.Event += new Spine.AnimationState.TrackEntryEventDelegate(this.SpineEventHandler);
         //enable the spine animator event tracker after replacing spine
@@ -391,7 +393,7 @@ public partial class CustomSkinManager
         }
 
         __instance.Spine.skeleton.SetSkin(tempSkin);
-        __instance.Spine.skeleton.SetSlotsToSetupPose();
+        __instance.Spine.skeleton.SetToSetupPose();
         __instance.Spine.AnimationState.SetAnimation(0, "intro/idle", true);
 
         LogInfo("INTRO PLAYER (Others): Loaded Custom Spine " + spineOverride + " with skin " + selectedSpineSkin);
