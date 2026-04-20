@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace COTL_API.CustomEnemy;
 
+//this custom enemy controller class is a MELEE enemy class. it is an AI that will
+//chase the player and attack them when in range.
+//if you need ranged attacks or multiple attack choices, extend this class
+//and override the functions to make your own attacks.
 public class CustomEnemyController : UnitObject, IAttackResilient
 {
     public int NewPositionDistance = 3;
@@ -28,7 +32,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
     public bool DoubleAttack = true;
     public bool ChargeAndAttack = true;
     public bool requireLineOfSite = true;
-    
+
     public string AttackVO = "event:/dlc/dungeon05/enemy/wolf_swordsman/calm_attack";
     public string DeathVO = "event:/dlc/dungeon05/enemy/vocals_shared/dog_humanoid_small/death";
     public string EnragedDeathVO = "event:/dlc/dungeon05/enemy/wolf_swordsman/enraged_death_vo";
@@ -101,18 +105,18 @@ public class CustomEnemyController : UnitObject, IAttackResilient
     public override void OnDisable()
     {
         CleanupEventInstances();
-        
+
         health.invincible = false;
         health.IsDeflecting = false;
         SimpleSpineFlash.FlashWhite(false);
-        
+
         base.OnDisable();
 
         customEnemyControllers.Remove(this);
-        
+
         if (damageColliderEvents != null)
             damageColliderEvents.OnTriggerEnterEvent -= new ColliderEvents.TriggerEvent(OnDamageTriggerEnter);
-        
+
         ClearPaths();
         StopAllCoroutines();
         DisableForces = false;
@@ -125,7 +129,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
         Health Victim,
         Health.AttackTypes AttackType,
         Health.AttackFlags AttackFlags)
-    { 
+    {
         if (health.HP <= 0.0 && !AttackFlags.HasFlag(Health.AttackFlags.ForceKill))
         {
             //this allows a second life kind of interaction, such as enemy enraging etc.
@@ -183,19 +187,19 @@ public class CustomEnemyController : UnitObject, IAttackResilient
         bool FromBehind)
     {
         base.OnHit(Attacker, AttackLocation, AttackType, FromBehind);
-        
+
         if (health.HasShield || health.WasJustParried) return;
 
         if (damageColliderEvents != null) damageColliderEvents.SetActive(false);
 
         if (!string.IsNullOrEmpty(onHitSoundPath)) AudioManager.Instance.PlayOneShot(onHitSoundPath, transform.position);
-        
+
         var soundPath = GetHitVO;
         if (!string.IsNullOrEmpty(soundPath))
             AudioManager.Instance.PlayOneShot(soundPath, transform.position);
 
         Spine.AnimationState.SetAnimation(1, "hurt-eyes", false); //TODO: be variable
-        
+
         if (MyState != State.Attacking)
         {
             SimpleSpineFlash.FlashWhite(false);
@@ -210,7 +214,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
 
             if (AttackLocation.x < (double)transform.position.x && state.CURRENT_STATE != StateMachine.State.HitLeft)
                 state.CURRENT_STATE = StateMachine.State.HitLeft;
-            
+
             if (AttackType != Health.AttackTypes.Heavy && (!(AttackType == Health.AttackTypes.Projectile & FromBehind) || health.HasShield))
                 StartCoroutine(HurtRoutine());
         }
@@ -221,22 +225,22 @@ public class CustomEnemyController : UnitObject, IAttackResilient
         }
         if (AttackType != Health.AttackTypes.NoKnockBack)
             StartCoroutine(ApplyForceRoutine(Attacker));
-        
+
         SimpleSpineFlash.FlashFillRed();
     }
 
     public virtual IEnumerator ApplyForceRoutine(GameObject Attacker)
     {
-        
+
         DisableForces = true;
         Force = (transform.position - Attacker.transform.position).normalized * 500f;
         rb.AddForce((Vector2)(Force * KnockbackModifier));
-        
+
         var time = 0.0f;
 
         while ((time += Time.deltaTime * Spine.timeScale) < 0.5)
             yield return null;
-            
+
         DisableForces = false;
     }
 
@@ -249,14 +253,14 @@ public class CustomEnemyController : UnitObject, IAttackResilient
 
         StartCoroutine(WaitForTarget());
     }
-    
+
     public virtual IEnumerator WaitForTarget()
     {
         while (Spine == null)
-            yield return new WaitForEndOfFrame();;
+            yield return new WaitForEndOfFrame(); ;
 
         Spine.Initialize(false);
-        
+
         while (!GameManager.RoomActive)
             yield return null;
 
@@ -291,10 +295,10 @@ public class CustomEnemyController : UnitObject, IAttackResilient
                 state.LookAngle = Utils.GetAngle(transform.position, TargetPosition);
                 Spine.skeleton.ScaleX = state.LookAngle <= 90.0 || state.LookAngle >= 270.0 ? -1f : 1f;
             }
-            
+
             yield return null;
         }
-        
+
         var InRange = false;
         while (!InRange)
         {
@@ -315,7 +319,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
 
             yield return null;
         }
-        
+
         StartCoroutine(ChasePlayer());
     }
 
@@ -325,13 +329,13 @@ public class CustomEnemyController : UnitObject, IAttackResilient
             return;
 
         var angle = Utils.GetAngle(transform.position, GetClosestTarget().transform.position);
-        
+
         state.facingAngle = angle;
         state.LookAngle = angle;
 
         if (!(Spine.AnimationName != "jeer")) //TODO: become variable
             return;
-        
+
         Spine.randomOffset = true;
         Spine.AnimationState.SetAnimation(0, "jeer", true); //TODO: become variable
     }
@@ -346,7 +350,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
             AttackDelay = 2.5f;
 
         MaxAttackDelay = UnityEngine.Random.Range(MaxAttackDelayRandomRange.x, MaxAttackDelayRandomRange.y);
-        
+
         var Loop = true;
         while (Loop)
         {
@@ -358,7 +362,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
 
             if (damageColliderEvents != null)
                 damageColliderEvents.SetActive(false);
-            
+
             TeleportDelay -= Time.deltaTime * Spine.timeScale;
             AttackDelay -= Time.deltaTime * Spine.timeScale;
             MaxAttackDelay -= Time.deltaTime * Spine.timeScale;
@@ -426,7 +430,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
                 }
 
             }
-            
+
             Seperate(0.5f);
             yield return null;
         }
@@ -440,11 +444,11 @@ public class CustomEnemyController : UnitObject, IAttackResilient
             AudioManager.Instance.PlayOneShot(DrawbackSwordSFX, transform.position);
 
         this.TargetObject = TargetObject;
-        
+
         var a = Vector3.Distance(TargetObject.transform.position, transform.position);
         if ((double)a > VisionRange)
             return;
-            
+
         if (!requireLineOfSite || CheckLineOfSightOnTarget(TargetObject, TargetObject.transform.position, Mathf.Min(a, VisionRange)))
             StartCoroutine(WaitForTarget());
         else
@@ -456,38 +460,38 @@ public class CustomEnemyController : UnitObject, IAttackResilient
     public virtual void FindPath(Vector3 PointToCheck)
     {
         RepathTimer = 0.2f;
-        var raycastHit2D = Physics2D.CircleCast((Vector2) transform.position, 0.2f, (Vector2) Vector3.Normalize(PointToCheck - transform.position), NewPositionDistance, (int) layerToCheck);
+        var raycastHit2D = Physics2D.CircleCast((Vector2)transform.position, 0.2f, (Vector2)Vector3.Normalize(PointToCheck - transform.position), NewPositionDistance, (int)layerToCheck);
         if (raycastHit2D.collider != null)
         {
-        if ((double) Vector3.Distance(transform.position, (Vector3) raycastHit2D.centroid) > 1.0)
-        {
-            if (ShowDebug)
+            if ((double)Vector3.Distance(transform.position, (Vector3)raycastHit2D.centroid) > 1.0)
             {
-                Points.Add(new Vector3(raycastHit2D.centroid.x, raycastHit2D.centroid.y) + Vector3.Normalize(transform.position - PointToCheck) * CircleCastOffset);
-                PointsLink.Add(new Vector3(transform.position.x, transform.position.y));
+                if (ShowDebug)
+                {
+                    Points.Add(new Vector3(raycastHit2D.centroid.x, raycastHit2D.centroid.y) + Vector3.Normalize(transform.position - PointToCheck) * CircleCastOffset);
+                    PointsLink.Add(new Vector3(transform.position.x, transform.position.y));
+                }
+                TargetPosition = (Vector3)raycastHit2D.centroid + Vector3.Normalize(transform.position - PointToCheck) * CircleCastOffset;
+                givePath(TargetPosition);
             }
-            TargetPosition = (Vector3) raycastHit2D.centroid + Vector3.Normalize(transform.position - PointToCheck) * CircleCastOffset;
-            givePath(TargetPosition);
-        }
-        else
-        {
-            if (TeleportDelay >= 0.0)
-            return;
-            Teleport();
-        }
+            else
+            {
+                if (TeleportDelay >= 0.0)
+                    return;
+                Teleport();
+            }
         }
         else if (FollowPlayer && PlayerFarming.Instance != null)
         {
             if (Vector3.Distance(transform.position, PlayerFarming.Instance.transform.position) <= 1.5)
                 return;
-            
-            TargetPosition = PlayerFarming.Instance.transform.position + (Vector3) UnityEngine.Random.insideUnitCircle;
+
+            TargetPosition = PlayerFarming.Instance.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle;
             givePath(TargetPosition);
         }
         else
         {
-        TargetPosition = PointToCheck;
-        givePath(PointToCheck);
+            TargetPosition = PointToCheck;
+            givePath(PointToCheck);
         }
     }
 
@@ -495,20 +499,20 @@ public class CustomEnemyController : UnitObject, IAttackResilient
     {
         if (MyState != State.WaitAndTaunt || health.HP <= 0.0)
             return;
-        
+
         var num1 = 100f;
         float num2;
 
         if ((num2 = num1 - 1f) <= 0.0 || TargetObject == null)
             return;
-        
-        var f = (float) ((Utils.GetAngle(transform.position, TargetObject.transform.position) + UnityEngine.Random.Range(-90, 90)) * (Math.PI / 180.0));
+
+        var f = (float)((Utils.GetAngle(transform.position, TargetObject.transform.position) + UnityEngine.Random.Range(-90, 90)) * (Math.PI / 180.0));
         var distance = 4.5f;
         var radius = 0.2f;
-        
+
         var Position = TargetObject.transform.position + new Vector3(distance * Mathf.Cos(f), distance * Mathf.Sin(f));
         var raycastHit2D = Physics2D.CircleCast((Vector2)transform.position, radius, (Vector2)Vector3.Normalize(Position - transform.position), distance, (int)layerToCheck);
-        
+
         if (raycastHit2D.collider != null)
         {
             if (ShowDebug)
@@ -516,7 +520,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
                 Points.Add(new Vector3(raycastHit2D.centroid.x, raycastHit2D.centroid.y) + Vector3.Normalize(transform.position - Position) * CircleCastOffset);
                 PointsLink.Add(new Vector3(transform.position.x, transform.position.y));
             }
-            StartCoroutine(TeleportRoutine((Vector3) raycastHit2D.centroid));
+            StartCoroutine(TeleportRoutine((Vector3)raycastHit2D.centroid));
         }
         else
         {
@@ -532,22 +536,22 @@ public class CustomEnemyController : UnitObject, IAttackResilient
     public virtual IEnumerator TeleportRoutine(Vector3 Position)
     {
         ClearPaths();
-        
+
         state.CURRENT_STATE = StateMachine.State.Moving;
         UsePathing = false;
         health.invincible = true;
         SeperateObject = false;
         MyState = State.Teleporting;
-        
+
         ClearPaths();
-        
+
         var position = transform.position;
         var Progress = 0.0f;
-        
+
         Spine.AnimationState.SetAnimation(0, "roll", true); //TODO: become variable
         state.facingAngle = state.LookAngle = Utils.GetAngle(transform.position, Position);
         Spine.skeleton.ScaleX = state.LookAngle <= 90.0 || state.LookAngle >= 270.0 ? -1f : 1f;
-        
+
         var b = Position;
         var Duration = Vector3.Distance(position, b) / 10f;
 
@@ -558,11 +562,11 @@ public class CustomEnemyController : UnitObject, IAttackResilient
             speed = 10f * Time.deltaTime * Spine.timeScale;
             yield return null;
         }
-        
+
         state.CURRENT_STATE = StateMachine.State.Idle;
         Spine.AnimationState.SetAnimation(0, "roll-stop", false); //TODO: become variable
         var time = 0.0f;
-        
+
         while ((time += Time.deltaTime * Spine.timeScale) < 0.3)
             yield return null;
         UsePathing = true;
@@ -585,24 +589,24 @@ public class CustomEnemyController : UnitObject, IAttackResilient
         state.CURRENT_STATE = StateMachine.State.CustomAnimation;
 
         yield return new WaitForEndOfFrame();
-        
+
         Spine.AnimationState.SetAnimation(0, longAnim ? "grave-spawn-long" : "grave-spawn", false); //TODO: become variable
         Spine.AnimationState.AddAnimation(0, "idle", true, 0.0f); //TODO: become variable
 
         yield return new WaitForSeconds(1.5f);
-        
+
         health.invincible = false;
         state.CURRENT_STATE = StateMachine.State.Idle;
-        
+
         StartCoroutine(WaitForTarget());
     }
 
     public virtual void OnDrawGizmos()
     {
         Utils.DrawCircleXY(transform.position, VisionRange, Color.yellow);
-        
+
         var index1 = -1;
-        
+
         while (++index1 < Points.Count)
         {
             Utils.DrawCircleXY(PointsLink[index1], 0.5f, Color.blue);
@@ -610,7 +614,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
             Utils.DrawLine(Points[index1], PointsLink[index1], Color.blue);
         }
         var index2 = -1;
-        
+
         while (++index2 < EndPoints.Count)
         {
             Utils.DrawCircleXY(EndPointsLink[index2], 0.5f, Color.red);
@@ -626,10 +630,10 @@ public class CustomEnemyController : UnitObject, IAttackResilient
 
         givePath(TargetObject.transform.position);
         Spine.AnimationState.SetAnimation(0, "run-charge", true); //TODO: become variable
-        
+
         if (!string.IsNullOrEmpty(DrawbackSwordSFX))
             AudioManager.Instance.PlayOneShot(DrawbackSwordSFX, gameObject);
-        
+
         var distanceResetTimer = 0.0f;
         var previousPosition = (Vector2)transform.position;
         RepathTimer = 0.0f;
@@ -639,7 +643,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
         var AttackSpeed = MaxAttackSpeed;
         var Loop = true;
         var SignPostDelay = 0.5f;
-        
+
         while (Loop)
         {
             if (Spine == null || Spine.AnimationState == null || Spine.Skeleton == null)
@@ -679,7 +683,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
                             {
                                 var magnitude = ((Vector2)transform.position - previousPosition).magnitude;
                                 previousPosition = (Vector2)transform.position;
-                                
+
                                 if (magnitude <= 0.14)
                                 {
                                     distanceResetTimer += Time.deltaTime * Spine.timeScale;
@@ -714,19 +718,19 @@ public class CustomEnemyController : UnitObject, IAttackResilient
 
                         if (damageColliderEvents != null)
                             damageColliderEvents.SetActive(false);
-                        
+
                         SimpleSpineFlash.FlashWhite(state.Timer / SignPostDelay);
                         state.Timer += Time.deltaTime * Spine.timeScale;
-                        
+
                         if (state.Timer >= (double)SignPostDelay - signPostParryWindow)
                             canBeParried = true;
-                        
+
                         if (state.Timer >= (double)SignPostDelay)
                         {
                             SimpleSpineFlash.FlashWhite(false);
                             CameraManager.shakeCamera(0.4f, state.LookAngle);
                             state.CURRENT_STATE = StateMachine.State.RecoverFromAttack;
-                            
+
                             speed = AttackSpeed * 0.0166666675f;
                             Spine.AnimationState.SetAnimation(0, AttackCount == NumAttacks ? "grunt-attack-impact2" : "grunt-attack-impact", false); //TODO: become variable
 
@@ -742,18 +746,18 @@ public class CustomEnemyController : UnitObject, IAttackResilient
                                 AudioManager.Instance.PlayOneShot(AttackVO, transform.position);
                                 break;
                             }
-                            
+
                             break;
                         }
                         break;
                     case StateMachine.State.RecoverFromAttack:
                         if (AttackSpeed > 0.0)
                             AttackSpeed -= 1f * GameManager.DeltaTime * Spine.timeScale;
-                        
+
                         speed = AttackSpeed * Time.deltaTime * Spine.timeScale;
                         SimpleSpineFlash.FlashWhite(false);
                         canBeParried = state.Timer <= attackParryWindow;
-                        
+
                         if ((state.Timer += Time.deltaTime * Spine.timeScale) >= (AttackCount + 1 <= NumAttacks ? 0.5 : 1.0))
                         {
                             if (++AttackCount <= NumAttacks)
@@ -773,7 +777,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
                 yield return null;
             }
         }
-        
+
         TargetObject = null;
         StartCoroutine(WaitForTarget());
     }
@@ -781,8 +785,8 @@ public class CustomEnemyController : UnitObject, IAttackResilient
     public virtual IEnumerator PlaceIE()
     {
         ClearPaths();
-        
-        var offset = (Vector3) UnityEngine.Random.insideUnitCircle;
+
+        var offset = (Vector3)UnityEngine.Random.insideUnitCircle;
         while (PlayerFarming.Instance.GoToAndStopping)
         {
             state.CURRENT_STATE = StateMachine.State.Moving;
@@ -793,7 +797,7 @@ public class CustomEnemyController : UnitObject, IAttackResilient
             transform.position = vector3;
             yield return null;
         }
-        
+
         state.CURRENT_STATE = StateMachine.State.Idle;
         Spine.AnimationState.SetAnimation(0, "idle-enemy", true); //TODO: become variable
     }
@@ -802,16 +806,16 @@ public class CustomEnemyController : UnitObject, IAttackResilient
     {
         EnemyHealth = collider.GetComponent<Health>();
         if (!(EnemyHealth != null))
-        return;
+            return;
         if (EnemyHealth.team != health.team)
         {
-        EnemyHealth.DealDamage(Damage, gameObject, Vector3.Lerp(transform.position, EnemyHealth.transform.position, 0.7f));
+            EnemyHealth.DealDamage(Damage, gameObject, Vector3.Lerp(transform.position, EnemyHealth.transform.position, 0.7f));
         }
         else
         {
-        if (health.team != Health.Team.PlayerTeam || health.isPlayerAlly || EnemyHealth.isPlayer)
-            return;
-        EnemyHealth.DealDamage(Damage, gameObject, Vector3.Lerp(transform.position, EnemyHealth.transform.position, 0.7f));
+            if (health.team != Health.Team.PlayerTeam || health.isPlayerAlly || EnemyHealth.isPlayer)
+                return;
+            EnemyHealth.DealDamage(Damage, gameObject, Vector3.Lerp(transform.position, EnemyHealth.transform.position, 0.7f));
         }
     }
 
@@ -824,11 +828,11 @@ public class CustomEnemyController : UnitObject, IAttackResilient
                 yield return null;
 
             damageColliderEvents.SetActive(true);
-            
+
             time = 0.0f;
             while ((double)(time += Time.deltaTime * Spine.timeScale) < (double)duration)
                 yield return null;
-            
+
             damageColliderEvents.SetActive(false);
         }
 
@@ -839,12 +843,12 @@ public class CustomEnemyController : UnitObject, IAttackResilient
     {
         if (!(PlayerFarming.Instance != null) || !FollowPlayer)
             return;
-        
+
         ClearPaths();
         state.CURRENT_STATE = StateMachine.State.Idle;
         Spine.AnimationState.SetAnimation(0, "idle-enemy", true);
     }
-    
+
     public virtual void ResetResilience()
     {
         LogInfo("Resetting resilience for " + gameObject.name);

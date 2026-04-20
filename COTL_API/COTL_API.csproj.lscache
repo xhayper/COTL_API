@@ -1,0 +1,346 @@
+version=1
+
+# This file caches language service data to improve the performance of C# Dev Kit.
+# It is not intended for manual editing. It can safely be deleted and will be
+# regenerated automatically.
+#
+# To exclude from version control, add *.lscache to your .gitignore file.
+#
+# To disable caching, add the following to your VS Code settings:
+#   "dotnet.projectsystem.enableLanguageServiceCache": false
+
+[project]
+language=C#
+primary
+lastDtbSucceeded
+
+[properties]
+AssemblyName=COTL_API
+CommandLineArgsForDesignTimeEvaluation=-langversion:latest -define:TRACE -doc:"bin/Debug/COTL_API/COTL_API.xml"
+CompilerGeneratedFilesOutputPath=
+MaxSupportedLangVersion=7.3
+ProjectAssetsFile=<PATH>obj/project.assets.json
+RootNamespace=COTL_API
+RunAnalyzers=
+RunAnalyzersDuringLiveAnalysis=
+SolutionPath=<PATH>../COTL_API.sln
+TargetFrameworkIdentifier=.NETFramework
+TargetPath=<PATH>../bin/Debug/COTL_API/COTL_API.dll
+TargetRefPath=
+TemporaryDependencyNodeTargetIdentifier=net472
+
+[commandLineArguments]
+/noconfig
+/unsafe+
+/checked-
+/nowarn:1701,1702,Publicizer001,CS1591,NU5104,1701,1702
+/fullpaths
+/nostdlib+
+/errorreport:prompt
+/warn:4
+/doc:bin/Debug/COTL_API/COTL_API.xml
+/define:TRACE;DEBUG;NETFRAMEWORK;NET472;NET20_OR_GREATER;NET30_OR_GREATER;NET35_OR_GREATER;NET40_OR_GREATER;NET45_OR_GREATER;NET451_OR_GREATER;NET452_OR_GREATER;NET46_OR_GREATER;NET461_OR_GREATER;NET462_OR_GREATER;NET47_OR_GREATER;NET471_OR_GREATER;NET472_OR_GREATER
+/highentropyva+
+/nullable:enable
+/debug+
+/debug:portable
+/filealign:512
+/optimize-
+/out:obj\Debug\COTL_API.dll
+/subsystemversion:6.00
+/target:library
+/warnaserror-
+/utf8output
+/deterministic+
+/langversion:latest
+/warnaserror+:NU1605
+
+[sourceFiles]
+CustomEnemy/
+ CustomEnemy.cs
+ CustomEnemyController.cs
+ CustomEnemyManager.cs
+CustomFollowerCommand/
+ CustomFollowerCommand.cs
+ CustomFollowerCommandManager.cs
+ CustomFollowerCommandPatches.cs
+ FollowerCommandCategory.cs
+CustomInventory/CustomCrops/
+ CustomCrop.cs
+ CustomCropManager.cs
+ CustomCropPatches.cs
+CustomInventory/CustomFood/CustomDrinks/
+ CustomDrink.cs
+ CustomDrinkManager.cs
+CustomInventory/CustomFood/
+ CustomFood.cs
+ CustomFoodEffects/
+  CustomFoodEffect.cs
+  CustomFoodEffectManager.cs
+ CustomFoodManager.cs
+ CustomMeals/
+  CustomMeal.cs
+  CustomMealManager.cs
+ Patches/
+  CustomDrinkPatches.cs
+  CustomFoodEffectPatches.cs
+  CustomFoodPatches.cs
+  CustomMealPatches.cs
+CustomInventory/
+ CustomInventoryItem.cs
+ CustomInventoryItemType.cs
+ CustomItemManager.cs
+ Patches/
+  CustomInventoryPatches.cs
+  CustomItemDungeonPatches.cs
+  CustomItemRefineryPatches.cs
+  CustomItemShrinePatches.cs
+  CustomItemSpawnPatches.cs
+CustomLocalization/
+ CustomLocalizationManager.cs
+ CustomLocalizationPatches.cs
+CustomMission/
+ CustomMission.cs
+ CustomMissionManager.cs
+ CustomMissionPatches.cs
+CustomObjectives/
+ CustomObjective.cs
+ CustomObjectiveManager.cs
+ CustomObjectivePatches.cs
+CustomRelics/
+ CustomRelicData.cs
+ CustomRelicManager.cs
+ CustomRelicPatches.cs
+CustomRituals/
+ CustomRitual.cs
+ CustomRitualManager.cs
+ CustomRitualPatches.cs
+CustomSettings/
+ CustomSettingsManager.cs
+ Elements/SettingComponents.cs
+CustomSkins/
+ CustomFollowerSkin.cs
+ CustomPlayerSkin.cs
+ CustomSkin.cs
+ CustomSkinManager.cs
+ CustomSkinPatches.cs
+ OverridingPlayerSkin.cs
+ SkinSlots.cs
+ SkinUtils.cs
+CustomStructures/
+ CustomStructure.cs
+ CustomStructureManager.cs
+ CustomStructurePatches.cs
+ CustomStructureWithTask.cs
+CustomTarotCard/
+ CustomTarotCard.cs
+ CustomTarotCardManager.cs
+ CustomTarotCardPatches.cs
+CustomTasks/
+ CustomTask.cs
+ CustomTaskManager.cs
+ CustomTaskPatches.cs
+CustomTraits/
+ CustomTrait.cs
+ CustomTraitManager.cs
+ CustomTraitPatches.cs
+CustomType.cs
+Debug/
+ DebugCode.cs
+ DebugEnemy.cs
+ DebugFollowerCommand.cs
+ DebugFollowerCommand2.cs
+ DebugFollowerCommand3.cs
+ DebugFollowerSkin.cs
+ DebugFollowerSkin2.cs
+ DebugGiftFollowerCommand.cs
+ DebugItemClass.cs
+ DebugItemClass2.cs
+ DebugItemClass3.cs
+ DebugItemClass4.cs
+ DebugManager.cs
+ DebugPlayerSkin.cs
+ DebugRelicClass.cs
+ DebugStructure.cs
+ DebugStructure2.cs
+ DebugStructure3.cs
+ DebugTarotCard.cs
+ DebugTask.cs
+ DebugTaskFollowerCommand.cs
+Globals.cs
+Guid/
+ GuidManager.cs
+ TypeManager.cs
+Helpers/
+ BaseClassReversePatches.cs
+ Debugging.cs
+ Extensions.cs
+ GameHash.cs
+ HashCode.cs
+ ItemPickUp.cs
+ KeyCodes.cs
+ LogHelper.cs
+ ObjectDictionary.cs
+ PluginPaths.cs
+ TaskUtils.cs
+ TextureHelper.cs
+Icons/CustomIconManager.cs
+obj/Debug/
+ .NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+ COTL_API.AssemblyInfo.cs
+ COTL_API.GlobalUsings.g.cs
+ MyPluginInfo.cs
+Patches/
+ AchievementsWrapperPatches.cs
+ IconPatcher.cs
+ LoadMainMenuPatches.cs
+ ModdedStructuresPatches.cs
+ SettingsPatches.cs
+ UIFollowerInteractionWheelOverlayControllerPatches.cs
+Plugin.cs
+Prefabs/CustomPrefabManager.cs
+Saves/
+ ApiData.cs
+ ApiSlotData.cs
+ BaseModdedSaveData.cs
+ ModdedSaveData.cs
+ ModdedSaveManager.cs
+ SavePatches.cs
+Sounds/
+ ChannelWrapper.cs
+ Patches/SoundSyncPatches.cs
+ SoundLoader.cs
+ SoundLoaderExtensions.cs
+ SoundUtils.cs
+ SoundWrapper.cs
+UI/Helpers/
+ FontHelpers.cs
+ GameObjectExtensions.cs
+ SettingsUtils.cs
+ UIBehaviourHelpers.cs
+ UIButton.cs
+ UIHelpers.cs
+ UIMenuBase.cs
+ UIPatches.cs
+UI/UIManager.cs
+Utility/CinematicCameraManager.cs
+
+[metadataReferences]
+../lib/UnifyLibrary.dll
+<NUGET>/
+ bepinex.baselib/5.4.20/lib/net35/BepInEx.dll
+ cultofthelamb.gamelibs/1.5.15.979-r.0/lib/netstandard2.0/
+  Assembly-CSharp-firstpass.dll
+  Assembly-CSharp.dll
+  DOTween.dll
+  FMODUnity.dll
+  GalaxyCSharp.dll
+  LeTai.TranslucentImage.dll
+  Rewired_Core.dll
+  Rewired_Windows.dll
+  Sirenix.Serialization.dll
+  Sirenix.Utilities.dll
+  spine-unity.dll
+  Unity.Addressables.dll
+  Unity.Mathematics.dll
+  Unity.ProBuilder.dll
+  Unity.ResourceManager.dll
+  Unity.TextMeshPro.dll
+  UnityEngine.UI.dll
+ harmonyx/2.7.0/lib/net45/0Harmony.dll
+ microsoft.netframework.referenceassemblies.net472/1.0.3/build/.NETFramework/v4.7.2/
+  Facades/netstandard.dll
+  mscorlib.dll
+  System.Core.dll
+  System.Data.dll
+  System.dll
+  System.Drawing.dll
+  System.IO.Compression.FileSystem.dll
+  System.Numerics.dll
+  System.Runtime.Serialization.dll
+  System.Xml.dll
+  System.Xml.Linq.dll
+ mono.cecil/0.11.4/lib/net40/
+  Mono.Cecil.dll
+  Mono.Cecil.Mdb.dll
+  Mono.Cecil.Pdb.dll
+  Mono.Cecil.Rocks.dll
+ monomod.runtimedetour/21.12.13.1/lib/net452/MonoMod.RuntimeDetour.dll
+ monomod.utils/21.12.13.1/lib/net452/MonoMod.Utils.dll
+ newtonsoft.json/12.0.3/lib/net45/Newtonsoft.Json.dll
+ unityengine.modules/2021.3.16/lib/net45/
+  UnityEngine.AccessibilityModule.dll
+  UnityEngine.AIModule.dll
+  UnityEngine.AndroidJNIModule.dll
+  UnityEngine.AnimationModule.dll
+  UnityEngine.AssetBundleModule.dll
+  UnityEngine.AudioModule.dll
+  UnityEngine.ClothModule.dll
+  UnityEngine.ClusterInputModule.dll
+  UnityEngine.ClusterRendererModule.dll
+  UnityEngine.CoreModule.dll
+  UnityEngine.CrashReportingModule.dll
+  UnityEngine.DirectorModule.dll
+  UnityEngine.dll
+  UnityEngine.DSPGraphModule.dll
+  UnityEngine.GameCenterModule.dll
+  UnityEngine.GIModule.dll
+  UnityEngine.GridModule.dll
+  UnityEngine.HotReloadModule.dll
+  UnityEngine.ImageConversionModule.dll
+  UnityEngine.IMGUIModule.dll
+  UnityEngine.InputLegacyModule.dll
+  UnityEngine.InputModule.dll
+  UnityEngine.JSONSerializeModule.dll
+  UnityEngine.LocalizationModule.dll
+  UnityEngine.ParticleSystemModule.dll
+  UnityEngine.PerformanceReportingModule.dll
+  UnityEngine.Physics2DModule.dll
+  UnityEngine.PhysicsModule.dll
+  UnityEngine.ProfilerModule.dll
+  UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll
+  UnityEngine.ScreenCaptureModule.dll
+  UnityEngine.SharedInternalsModule.dll
+  UnityEngine.SpriteMaskModule.dll
+  UnityEngine.SpriteShapeModule.dll
+  UnityEngine.StreamingModule.dll
+  UnityEngine.SubstanceModule.dll
+  UnityEngine.SubsystemsModule.dll
+  UnityEngine.TerrainModule.dll
+  UnityEngine.TerrainPhysicsModule.dll
+  UnityEngine.TextCoreFontEngineModule.dll
+  UnityEngine.TextCoreTextEngineModule.dll
+  UnityEngine.TextRenderingModule.dll
+  UnityEngine.TilemapModule.dll
+  UnityEngine.TLSModule.dll
+  UnityEngine.UIElementsModule.dll
+  UnityEngine.UIElementsNativeModule.dll
+  UnityEngine.UIModule.dll
+  UnityEngine.UmbraModule.dll
+  UnityEngine.UNETModule.dll
+  UnityEngine.UnityAnalyticsCommonModule.dll
+  UnityEngine.UnityAnalyticsModule.dll
+  UnityEngine.UnityConnectModule.dll
+  UnityEngine.UnityCurlModule.dll
+  UnityEngine.UnityTestProtocolModule.dll
+  UnityEngine.UnityWebRequestAssetBundleModule.dll
+  UnityEngine.UnityWebRequestAudioModule.dll
+  UnityEngine.UnityWebRequestModule.dll
+  UnityEngine.UnityWebRequestTextureModule.dll
+  UnityEngine.UnityWebRequestWWWModule.dll
+  UnityEngine.VehiclesModule.dll
+  UnityEngine.VFXModule.dll
+  UnityEngine.VideoModule.dll
+  UnityEngine.VirtualTexturingModule.dll
+  UnityEngine.VRModule.dll
+  UnityEngine.WindModule.dll
+  UnityEngine.XRModule.dll
+
+[analyzerReferences]
+<NUGET>/bepinex.analyzers/1.0.8/analyzers/dotnet/cs/
+ BepInEx.Analyzers.CodeFixes.dll
+ BepInEx.Analyzers.dll
+
+[analyzerConfigFiles]
+../.editorconfig
+obj/Debug/COTL_API.GeneratedMSBuildEditorConfig.editorconfig

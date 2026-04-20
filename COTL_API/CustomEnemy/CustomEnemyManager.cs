@@ -68,22 +68,7 @@ public static partial class CustomEnemyManager
             unitObject.health.totalHP = objInfo.maxHealth;
             unitObject.health.HP = objInfo.maxHealth;
 
-            if (objInfo.SpineOverride != null)
-            {
-                //apply spine override here
-                var spineFlash = obj.GetComponentsInChildren<SimpleSpineFlash>();
-                if (spineFlash.Length <= 0)
-                {
-                    LogWarning("No spine found on spawned custom enemy! " + prefab);
-                }
-                else
-                {
-                    spineFlash[0].Spine.skeletonDataAsset = objInfo.SpineOverride;
-                    spineFlash[0].Spine.skeleton.SetBonesToSetupPose();
-                    spineFlash[0].Spine.Update(0);
-                }
-
-            }
+            
 
             if (objInfo.EnemyController != null)
             {
@@ -102,6 +87,31 @@ public static partial class CustomEnemyManager
                     {
                         newController.damageColliderEvents.OnTriggerEnterEvent += new ColliderEvents.TriggerEvent(newController.OnDamageTriggerEnter);
                         newController.damageColliderEvents.SetActive(false);
+                    }
+
+                    if (objInfo.SpineOverride != null)
+                    {
+                    //apply spine override here
+                        var spine = newController.Spine;
+                        if (spine == null)
+                        {
+                            LogWarning("No spine found on spawned custom enemy! " + prefab);
+                        }
+                        else
+                        {
+                            spine.skeletonDataAsset = objInfo.SpineOverride;
+                            LogInfo("Attempting to get skin named " + objInfo.SpineSkinName + " from spine override...");
+                            // var skin = spine.skeleton.Data.FindSkin(objInfo.SpineSkinName);
+                            spine.initialSkinName = objInfo.SpineSkinName;
+                            // if (skin != null)
+                            // {
+                            //     LogInfo("Successfully found skin on spine override, applying to custom enemy...");
+                            //     spine.skeleton.SetSkin(skin);
+                            // }
+                            spine.Initialize(true);
+                            spine.skeleton.SetToSetupPose();
+                            spine.Update(0);
+                        }
                     }
 
                     // Copy all fields from unitObject to newController using reflection (mm yummy reflection)
