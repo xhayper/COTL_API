@@ -70,11 +70,11 @@ public partial class CustomWorldMapNodeManager
             worldMapIcon._localPoint = nodeMarkerTransform;
             if (customWorldMapNode.OnLocationSelected is null)
             {
-                worldMapIcon.OnLocationSelected = (Action<WorldMapIcon>)Delegate.Combine(worldMapIcon.OnLocationSelected, new Action<WorldMapIcon>(__instance.OnLocationSelected));
+                worldMapIcon.OnLocationSelected += new Action<WorldMapIcon>(__instance.OnLocationSelected);
             }
             else
             {
-                worldMapIcon.OnLocationSelected = (Action<WorldMapIcon>)Delegate.Combine(new Action<WorldMapIcon>(worldMapIcon =>
+                worldMapIcon.OnLocationSelected = new Action<WorldMapIcon>(worldMapIcon =>
                 {
                     if (__instance.isLoadingAssets)
                     {
@@ -92,7 +92,8 @@ public partial class CustomWorldMapNodeManager
                             DataManager.Instance.VisitedLocations.Add(worldMapIcon.Location);
                         }
                     }
-                }), customWorldMapNode.OnLocationSelected);
+                });
+                worldMapIcon.OnLocationSelected += customWorldMapNode.OnLocationSelected;
             }
             if (customWorldMapNode.ShowConditions is null)
             { 
