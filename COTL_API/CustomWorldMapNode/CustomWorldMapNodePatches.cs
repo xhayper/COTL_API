@@ -58,7 +58,7 @@ public partial class CustomWorldMapNodeManager
             var layerToPutMarker = layersTransform.Find(customWorldMapNode.LayerLocation);
             if (layerToPutMarker is null)
             {
-                layersTransform.Find("Base");
+                layerToPutMarker = layersTransform.Find("Base");
                 Log(BepInEx.Logging.LogLevel.Warning, "Can't find layer to put marker, check the layer name");
             }
             if (layerToPutMarker is null) throw new Exception("Something gone horribly wrong");
