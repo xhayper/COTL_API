@@ -96,20 +96,19 @@ public partial class CustomWorldMapNodeManager
                 worldMapIcon.OnLocationSelected += customWorldMapNode.OnLocationSelected;
             }
             if (customWorldMapNode.ShowConditions is null)
-            { 
-                if (!DataManager.Instance.DiscoveredLocations.Contains(worldMapIcon.Location) && __instance._revealLocation != worldMapIcon.Location)
-                {
-                    worldMapIcon.gameObject.SetActive(false);
-                }
-                if (__instance._revealLocation != FollowerLocation.None)
-                {
-                    worldMapIcon.gameObject.SetActive(false);
-                }
-                worldMapIcon.gameObject.SetActive(true);
-            } else
             {
-                if (!customWorldMapNode.ShowConditions()) worldMapIcon.gameObject.SetActive(false);
-                worldMapIcon.gameObject.SetActive(true);
+                if (DataManager.Instance.DiscoveredLocations.Contains(worldMapIcon.Location) || __instance._revealLocation == worldMapIcon.Location)
+                {
+                    worldMapIcon.gameObject.SetActive(true);
+                }
+                if (__instance._revealLocation == FollowerLocation.None)
+                {
+                    worldMapIcon.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                if (customWorldMapNode.ShowConditions()) worldMapIcon.gameObject.SetActive(true);
             }
             CustomWorldMapNodeList.Add(customWorldMapNode.MapRegion, newWorldMapNode);
         }
