@@ -8,6 +8,7 @@ using COTL_API.CustomSkins;
 using COTL_API.CustomStructures;
 using COTL_API.CustomTarotCard;
 using COTL_API.CustomTasks;
+using COTL_API.CustomWorldMapNode;
 using FoodPlus.CustomTraits;
 using I2.Loc;
 using Lamb.UI;
@@ -240,6 +241,8 @@ internal class DebugManager
         CustomTarotCardManager.Add(new DebugTarotCard());
 
         CustomTaskManager.Add(new DebugTask());
+
+        CustomWorldMapNodeManager.Add(new DebugWorldMapNode());
 
         var test = CustomObjectiveManager.BedRest("Test");
         test.InitialQuestText = "This is my custom quest text for this objective.";
