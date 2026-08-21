@@ -101,10 +101,6 @@ public partial class CustomWorldMapNodeManager
                 {
                     worldMapIcon.gameObject.SetActive(true);
                 }
-                if (__instance._revealLocation == FollowerLocation.None)
-                {
-                    worldMapIcon.gameObject.SetActive(true);
-                }
             }
             else
             {
